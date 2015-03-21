@@ -14,7 +14,7 @@ tests.
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
 Version: \tab 1.0.0\cr
-Date: \tab 2015-03-20\cr
+Date: \tab 2015-03-21\cr
 License: \tab GPL-3\cr
 }
 }
