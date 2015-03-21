@@ -1,0 +1,12 @@
+Version 1.0.0
+------------------------------------------------------------------------------
+General:
+* First release of this package - it contains all utility, recode and statistical test functions from the "sjPlot" package.
+
+New functions:
+* "rec" to recode variables.
+* "cv" to compute coefficient of variance.
+* "rmse" to compute root-mean-square error.
+
+Changes to former sjPlot-functions:
+* Improved internal management of imported data via "haven" and "foreign" packages, so users don't need to care of structure and classed of data read with either haven, foreign or sjPlot's read-functions.

@@ -1,0 +1,20 @@
+Package: sjmisc
+Type: Package
+Encoding: UTF-8
+Title: Miscellaneous Data Management Tools
+Version: 1.0.0
+Date: 2015-03-20
+Author: Daniel Lüdecke <d.luedecke@uke.de>
+Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
+Description: Collection of several utility functions for reading or writing data, recoding and labelling variables and some frequently used statistical tests.
+License: GPL-3
+Imports:
+    MASS
+Suggests:
+    coin,
+    foreign,
+    haven,
+    lme4,
+    stringdist
+URL: https://github.com/sjPlot/sjmisc
+BugReports: https://github.com/sjPlot/sjmisc/issues
