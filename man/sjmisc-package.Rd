@@ -13,8 +13,8 @@ tests.
 \tabular{rl}{
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
-Version: \tab 1.0.0\cr
-Date: \tab 2015-03-21\cr
+Version: \tab 1.0.0-1\cr
+Date: \tab 2015-03-23\cr
 License: \tab GPL-3\cr
 }
 }

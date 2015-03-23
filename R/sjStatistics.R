@@ -186,9 +186,14 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
   if (!requireNamespace("coin", quietly = TRUE)) {
     stop("Package 'coin' needed for this function to work. Please install it.", call. = FALSE)
   }
+  # do we have a factor? if yes, make numeric
+  if (is.factor(grp)) grp <- to_value(grp)
   # group "counter" (index) should start with 1, not 0
   if (min(grp, na.rm = TRUE) == 0) grp <- grp + 1
-  cnt <- length(unique(na.omit(grp)))
+  # retrieve unique group values. need to iterate all values
+  grp_values <- unique(na.omit(grp))
+  # length of value range
+  cnt <- length(grp_values)
   labels <- autoSetValueLabels(grp)
   message("Performing Mann-Whitney-U-Test...")
   message("---------------------------------")
@@ -198,8 +203,8 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
     for (j in i:cnt) {
       if (i != j) {
         # retrieve cases (rows) of subgroups
-        xsub <- var[which(grp == i | grp == j)]
-        ysub <- grp[which(grp == i | grp == j)]
+        xsub <- var[which(grp == grp_values[i] | grp == grp_values[j])]
+        ysub <- grp[which(grp == grp_values[i] | grp == grp_values[j])]
         # only use rows with non-missings
         ysub <- ysub[which(!is.na(xsub))]
         # adjust weights, pick rows from subgroups (see above)
@@ -224,21 +229,22 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
         p <- coin::pvalue(wt)
         r <- abs(z / sqrt(length(var)))
         w <- wilcox.test(xsub, ysub.n, paired = TRUE)$statistic
-        rkm.i <- mean(rank(xsub)[which(ysub.n == i)], na.rm = TRUE)
-        rkm.j <- mean(rank(xsub)[which(ysub.n == j)], na.rm = TRUE)
+        rkm.i <- mean(rank(xsub)[which(ysub.n == grp_values[i])], na.rm = TRUE)
+        rkm.j <- mean(rank(xsub)[which(ysub.n == grp_values[j])], na.rm = TRUE)
         if (is.null(labels)) {
           cat(sprintf("Groups (%i|%i), n = %i/%i:\n",
-                      i,
-                      j,
-                      length(xsub[which(ysub.n == i)]),
-                      length(xsub[which(ysub.n == j)])))
+                      grp_values[i],
+                      grp_values[j],
+                      length(xsub[which(ysub.n == grp_values[i])]),
+                      length(xsub[which(ysub.n == grp_values[j])])))
         } else {
           cat(sprintf("Groups %i = %s (n = %i) | %i = %s (n = %i):\n",
-                      i,
+                      grp_values[i],
                       labels[i],
-                      length(xsub[which(ysub.n == i)]),
-                      j, labels[j],
-                      length(xsub[which(ysub.n == j)])))
+                      length(xsub[which(ysub.n == grp_values[i])]),
+                      grp_values[j], 
+                      labels[j],
+                      length(xsub[which(ysub.n == grp_values[j])])))
         }
         if (p < 0.001) {
           p <- 0.001
@@ -248,8 +254,8 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
         }
         cat(sprintf("  U = %.3f, W = %.3f, p %s %.3f, Z = %.3f\n  effect-size r = %.3f\n  rank-mean(%i) = %.2f\n  rank-mean(%i) = %.2f\n\n", u, w, p.string, p, z, r, i, rkm.i, j, rkm.j))
         df <- rbind(df,
-                    cbind(grp1 = i,
-                          grp2 = j,
+                    cbind(grp1 = grp_values[i],
+                          grp2 = grp_values[j],
                           u = u,
                           w = w,
                           p = p,

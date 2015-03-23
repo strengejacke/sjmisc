@@ -30,6 +30,14 @@ install.packages("sjmisc")
 
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
+
+### Changelog of current development build 1.0.0-1
+
+#### Bug fixes
+* `mwu` did not accept factors as grouping levels - fixed.
+* `mwu` did not work when value range of `grp` vector was not continuously - fixed.
+
+
 ### Changelog of current stable build 1.0.0
 
 #### General

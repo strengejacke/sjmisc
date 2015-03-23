@@ -1,3 +1,9 @@
+Version 1.0.1
+------------------------------------------------------------------------------
+Bug fixes:
+* "mwu" did not accept factors as grouping levels - fixed.
+* "mwu" did not work when value range of "grp" vector was not continuously - fixed.
+
 Version 1.0.0
 ------------------------------------------------------------------------------
 General:
