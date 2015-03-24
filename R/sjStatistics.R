@@ -160,7 +160,8 @@ sjs.stdmm <- function(fit) {
 #' @param weights defining integer valued weights for the observations. By default,
 #'          this is \code{NULL}.
 #' @return (Invisibly) returns a data frame with U, p and Z-values for each group-comparison
-#'         as well as effect-size r.
+#'         as well as effect-size r; additionally, group-labels and groups' n's are
+#'         also included.
 #'
 #' @note This function calls the \code{\link[coin]{wilcox_test}} with formula. If \code{grp}
 #'         has more than two groups, additionally a Kruskal-Wallis-Test (see \code{\link{kruskal.test}})
@@ -173,10 +174,9 @@ sjs.stdmm <- function(fit) {
 #'        }
 #'
 #' @examples
-#' \dontrun{
 #' data(efc)
 #' # Mann-Whitney-U-Tests for elder's age by elder's dependency.
-#' mwu(efc$e17age, efc$e42dep)}
+#' mwu(efc$e17age, efc$e42dep)
 #'
 #' @export
 mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
@@ -191,7 +191,7 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
   # group "counter" (index) should start with 1, not 0
   if (min(grp, na.rm = TRUE) == 0) grp <- grp + 1
   # retrieve unique group values. need to iterate all values
-  grp_values <- unique(na.omit(grp))
+  grp_values <- sort(unique(na.omit(grp)))
   # length of value range
   cnt <- length(grp_values)
   labels <- autoSetValueLabels(grp)
@@ -231,20 +231,24 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
         w <- wilcox.test(xsub, ysub.n, paired = TRUE)$statistic
         rkm.i <- mean(rank(xsub)[which(ysub.n == grp_values[i])], na.rm = TRUE)
         rkm.j <- mean(rank(xsub)[which(ysub.n == grp_values[j])], na.rm = TRUE)
+        # compute n for each group
+        n_grp1 <- length(xsub[which(ysub.n == grp_values[i])])
+        n_grp2 <- length(xsub[which(ysub.n == grp_values[j])])
+        # print to console
         if (is.null(labels)) {
           cat(sprintf("Groups (%i|%i), n = %i/%i:\n",
                       grp_values[i],
                       grp_values[j],
-                      length(xsub[which(ysub.n == grp_values[i])]),
-                      length(xsub[which(ysub.n == grp_values[j])])))
+                      n_grp1,
+                      n_grp2))
         } else {
           cat(sprintf("Groups %i = %s (n = %i) | %i = %s (n = %i):\n",
                       grp_values[i],
                       labels[i],
-                      length(xsub[which(ysub.n == grp_values[i])]),
-                      grp_values[j], 
+                      n_grp1,
+                      grp_values[j],
                       labels[j],
-                      length(xsub[which(ysub.n == grp_values[j])])))
+                      n_grp2))
         }
         if (p < 0.001) {
           p <- 0.001
@@ -255,7 +259,11 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
         cat(sprintf("  U = %.3f, W = %.3f, p %s %.3f, Z = %.3f\n  effect-size r = %.3f\n  rank-mean(%i) = %.2f\n  rank-mean(%i) = %.2f\n\n", u, w, p.string, p, z, r, i, rkm.i, j, rkm.j))
         df <- rbind(df,
                     cbind(grp1 = grp_values[i],
+                          grp1.label = labels[i],
+                          grp1.n = n_grp1,
                           grp2 = grp_values[j],
+                          grp2.label = labels[j],
+                          grp2.n = n_grp2,
                           u = u,
                           w = w,
                           p = p,
@@ -282,7 +290,25 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
     }
     cat(sprintf("p %s %.3f\n", p.string, p))
   }
-  invisible(df)
+  # prepare a data frame that can be used for 'sjt.df'.
+  tab.df <- data.frame(Groups = sprintf("%s<br>%s",
+                                        df$grp1.label,
+                                        df$grp2.label),
+                       N = sprintf("%s<br>%s",
+                                   df$grp1.n,
+                                   df$grp2.n),
+                       'Mean Rank' = sprintf("%.2f<br>%.2f",
+                                             as.numeric(as.character(df$rank.mean.grp1)),
+                                             as.numeric(as.character(df$rank.mean.grp2))),
+                       'Mann-Whitney-U' = df$u,
+                       'Wilcoxon-W' = df$w,
+                       Z = sprintf("%.3f", as.numeric(as.character(df$z))),
+                       'Effect Size' = sprintf("%.3f", as.numeric(as.character(df$r))),
+                       p = sprintf("%.3f", as.numeric(as.character(df$p))))
+  # replace 0.001 with <0.001
+  levels(tab.df$p)[which(levels(tab.df$p) == "0.001")] <- "<0.001"
+  # return both data frames
+  invisible (structure(class = "mwu",list(df = df, tab.df = tab.df)))
 }
 
 

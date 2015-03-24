@@ -20,7 +20,8 @@ this is \code{NULL}.}
 }
 \value{
 (Invisibly) returns a data frame with U, p and Z-values for each group-comparison
-        as well as effect-size r.
+        as well as effect-size r; additionally, group-labels and groups' n's are
+        also included.
 }
 \description{
 This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
@@ -44,9 +45,8 @@ This function calls the \code{\link[coin]{wilcox_test}} with formula. If \code{g
        }
 }
 \examples{
-\dontrun{
 data(efc)
 # Mann-Whitney-U-Tests for elder's age by elder's dependency.
-mwu(efc$e17age, efc$e42dep)}
+mwu(efc$e17age, efc$e42dep)
 }
 
