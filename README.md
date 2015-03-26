@@ -21,7 +21,7 @@ To install the latest stable release from CRAN, type following command into the 
 install.packages("sjmisc")
 ```
 
-### References, documentation and exmaples
+### References, documentation and examples
 
 - [Documentation and examples](http://www.strengejacke.de/sjPlot/)
 
