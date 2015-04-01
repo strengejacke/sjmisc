@@ -31,9 +31,13 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.0-1
+### Changelog of current development build 1.0.0-2
+
+#### Changes to functions
+* `std_beta` now accepts `plm`-objects.
 
 #### Bug fixes
+* `std_beta` did not work in some cases - fixed.
 * `mwu` did not accept factors as grouping levels - fixed.
 * `mwu` did not work when value range of `grp` vector was not continuously - fixed.
 

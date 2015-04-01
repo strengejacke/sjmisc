@@ -103,8 +103,8 @@ std_beta <- function(fit, include.ci = FALSE) {
     return (sjs.stdmm(fit))
   } else {
     b <- summary(fit)$coef[-1, 1]
-    sx <- sapply(fit$model[-1], sd)
-    sy <- sapply(fit$model[1], sd)
+    sx <- sapply(as.data.frame(fit$model)[-1], sd, na.rm = T)
+    sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
     beta <- b * sx / sy
     se <- summary(fit)$coefficients[-1, 2]
     beta.se <- se * sx / sy

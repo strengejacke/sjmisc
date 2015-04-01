@@ -1,6 +1,10 @@
 Version 1.0.1
 ------------------------------------------------------------------------------
+Changes to functions:
+* "std_beta" now accepts plm-objects.
+
 Bug fixes:
+* "std_beta" did not work in some cases - fixed.
 * "mwu" did not accept factors as grouping levels - fixed.
 * "mwu" did not work when value range of "grp" vector was not continuously - fixed.
 
