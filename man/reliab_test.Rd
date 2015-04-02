@@ -4,10 +4,10 @@
 \alias{reliab_test}
 \title{Performs a reliability test on an item scale.}
 \usage{
-reliab_test(df, scaleItems = FALSE, digits = 3)
+reliab_test(x, scaleItems = FALSE, digits = 3)
 }
 \arguments{
-\item{df}{A data frame with items (from a scale)}
+\item{x}{A data frame with items (from a scale)}
 
 \item{scaleItems}{If \code{TRUE}, the data frame's vectors will be scaled. Recommended,
 when the variables have different measures / scales.}
@@ -22,7 +22,7 @@ A data frame with the corrected item-total correlations (item discrimination)
 }
 \description{
 This function calculates the item discriminations (corrected item-total
-               correlations for each item of \code{df} with the remaining items) and
+               correlations for each item of \code{x} with the remaining items) and
                the Cronbach's alpha for each item, if it was deleted from the
                scale.
 }
@@ -46,25 +46,25 @@ start <- which(colnames(efc) == "c82cop1")
 end <- which(colnames(efc) == "c90cop9")
 
 # create data frame with COPE-index scale
-df <- as.data.frame(efc[, c(start:end)])
-colnames(df) <- varlabs[c(start:end)]
+x <- data.frame(efc[, c(start:end)])
+colnames(x) <- varlabs[c(start:end)]
 
 \dontrun{
-sjt.df(reliab_test(df),
+sjt.df(reliab_test(x),
        describe = FALSE,
        showCommentRow = TRUE,
        commentString = sprintf("Cronbach's &alpha;=\%.2f",
-                               cronb(df)))}
+                               cronb(x)))}
 
 # ---------------------------------------
 # Compute PCA on Cope-Index, and perform a
 # reliability check on each extracted factor.
 # ---------------------------------------
 \dontrun{
-factors <- sjt.pca(df)$factor.index
+factors <- sjt.pca(x)$factor.index
 findex <- sort(unique(factors))
 for (i in 1:length(findex)) {
- rel.df <- subset(df, select = which(factors == findex[i]))
+ rel.df <- subset(x, select = which(factors == findex[i]))
  if (ncol(rel.df) >= 3) {
    sjt.df(reliab_test(rel.df),
           describe = FALSE,

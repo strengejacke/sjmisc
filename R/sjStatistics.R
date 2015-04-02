@@ -17,8 +17,8 @@ if(getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
 #'         }
 #'
 #' @references \itemize{
-#'               \item \href{http://stats.stackexchange.com/questions/78808/}{stack exchange 1}
-#'               \item \href{http://stats.stackexchange.com/questions/15958/}{stack exchange 2}
+#'               \item \href{http://stats.stackexchange.com/questions/78808/}{How to compute eta-sq in ANOVA by hand?}
+#'               \item \href{http://stats.stackexchange.com/questions/15958/}{How to interpret and report eta squared?}
 #'               \item \href{http://en.wikiversity.org/wiki/Eta-squared}{Wikipedia: Eta-squared}
 #'               \item Levine TR, Hullett CR (2002): Eta Squared, Partial Eta Squared, and Misreporting of Effect Size in Communication Research (\href{https://www.msu.edu/~levinet/eta\%20squared\%20hcr.pdf}{pdf})
 #'             }
@@ -360,8 +360,8 @@ chisq_gof <- function(var, prob, weights=NULL) {
 cronb <- function(df) {
   df <- na.omit(df)
   if (is.null(ncol(df)) || ncol(df) < 2) {
-    cat("\nToo less columns in this factor to calculate alpha value!\n")
-    return(0)
+    warning("Too less columns in this factor to calculate alpha value!", call. = F)
+    return (NULL)
   }
   return (dim(df)[2] / (dim(df)[2] - 1) * (1 - sum(apply(df, 2, var)) / var(rowSums(df))))
 }
@@ -370,13 +370,13 @@ cronb <- function(df) {
 #' @title Performs a reliability test on an item scale.
 #' @name reliab_test
 #' @description This function calculates the item discriminations (corrected item-total
-#'                correlations for each item of \code{df} with the remaining items) and
+#'                correlations for each item of \code{x} with the remaining items) and
 #'                the Cronbach's alpha for each item, if it was deleted from the
 #'                scale.
 #'
 #' @seealso \code{\link{cronb}}
 #'
-#' @param df A data frame with items (from a scale)
+#' @param x A data frame with items (from a scale)
 #' @param scaleItems If \code{TRUE}, the data frame's vectors will be scaled. Recommended,
 #'          when the variables have different measures / scales.
 #' @param digits Amount of digits for Cronbach's Alpha and correlation values in
@@ -404,25 +404,25 @@ cronb <- function(df) {
 #' end <- which(colnames(efc) == "c90cop9")
 #'
 #' # create data frame with COPE-index scale
-#' df <- as.data.frame(efc[, c(start:end)])
-#' colnames(df) <- varlabs[c(start:end)]
+#' x <- data.frame(efc[, c(start:end)])
+#' colnames(x) <- varlabs[c(start:end)]
 #'
 #' \dontrun{
-#' sjt.df(reliab_test(df),
+#' sjt.df(reliab_test(x),
 #'        describe = FALSE,
 #'        showCommentRow = TRUE,
 #'        commentString = sprintf("Cronbach's &alpha;=%.2f",
-#'                                cronb(df)))}
+#'                                cronb(x)))}
 #'
 #' # ---------------------------------------
 #' # Compute PCA on Cope-Index, and perform a
 #' # reliability check on each extracted factor.
 #' # ---------------------------------------
 #' \dontrun{
-#' factors <- sjt.pca(df)$factor.index
+#' factors <- sjt.pca(x)$factor.index
 #' findex <- sort(unique(factors))
 #' for (i in 1:length(findex)) {
-#'  rel.df <- subset(df, select = which(factors == findex[i]))
+#'  rel.df <- subset(x, select = which(factors == findex[i]))
 #'  if (ncol(rel.df) >= 3) {
 #'    sjt.df(reliab_test(rel.df),
 #'           describe = FALSE,
@@ -435,16 +435,23 @@ cronb <- function(df) {
 #'  }}
 #'
 #' @export
-reliab_test <- function(df, scaleItems=FALSE, digits=3) {
+reliab_test <- function(x, scaleItems=FALSE, digits=3) {
   # -----------------------------------
   # remove missings, so correlation works
   # -----------------------------------
-  df <- na.omit(df)
+  x <- na.omit(x)
+  # -----------------------------------
+  # check param
+  # -----------------------------------
+  if (!is.matrix(x) && !is.data.frame(x)) {
+    warning("'x' needs to be a data frame or matrix.", call. = F)
+    return (NULL)
+  }
   # -----------------------------------
   # remember item (column) names for return value
   # return value gets column names of initial data frame
   # -----------------------------------
-  df.names <- colnames(df)
+  df.names <- colnames(x)
   # -----------------------------------
   # check for minimum amount of columns
   # can't be less than 3, because the reliability
@@ -452,12 +459,12 @@ reliab_test <- function(df, scaleItems=FALSE, digits=3) {
   # item is deleted. If data frame has only two columns
   # and one is deleted, Cronbach's alpha cannot be calculated.
   # -----------------------------------
-  if (ncol(df) > 2) {
+  if (ncol(x) > 2) {
     # -----------------------------------
     # Check whether items should be scaled. Needed,
     # when items have different measures / scales
     # -----------------------------------
-    if (scaleItems) df <- data.frame(scale(df, center = TRUE, scale = TRUE))
+    if (scaleItems) x <- data.frame(scale(x, center = TRUE, scale = TRUE))
     # -----------------------------------
     # init vars
     # -----------------------------------
@@ -466,12 +473,12 @@ reliab_test <- function(df, scaleItems=FALSE, digits=3) {
     # -----------------------------------
     # iterate all items
     # -----------------------------------
-    for (i in 1:ncol(df)) {
+    for (i in 1:ncol(x)) {
       # -----------------------------------
       # create subset with all items except current one
       # (current item "deleted")
       # -----------------------------------
-      sub.df <- subset(df, select = c(-i))
+      sub.df <- subset(x, select = c(-i))
       # -----------------------------------
       # calculate cronbach-if-deleted
       # -----------------------------------
@@ -479,7 +486,7 @@ reliab_test <- function(df, scaleItems=FALSE, digits=3) {
       # -----------------------------------
       # calculate corrected total-item correlation
       # -----------------------------------
-      totalCorr <- c(totalCorr, cor(df[, i],
+      totalCorr <- c(totalCorr, cor(x[, i],
                                     apply(sub.df, 1, sum),
                                     use = "pairwise.complete.obs"))
     }
@@ -494,7 +501,7 @@ reliab_test <- function(df, scaleItems=FALSE, digits=3) {
     colnames(ret.df) <- c("Cronbach's &alpha; if item deleted", "Item discrimination")
     rownames(ret.df) <- df.names
   } else {
-    warning("Data frame needs at least three columns for reliability-test!")
+    warning("Data frame needs at least three columns for reliability-test!", call. = F)
     ret.df <- NULL
   }
   # -----------------------------------
@@ -587,7 +594,7 @@ mic <- function(data, corMethod="pearson") {
 #' @export
 table_values <- function(tab, digits=2) {
   # convert to ftable object
-  if (class(tab) != "ftable") tab <- ftable(tab)
+  if (all(class(tab) != "ftable")) tab <- ftable(tab)
   tab.cell <- round(100 * prop.table(tab), digits)
   tab.row <- round(100 * prop.table(tab, 1), digits)
   tab.col <- round(100 * prop.table(tab, 2), digits)
@@ -621,7 +628,7 @@ table_values <- function(tab, digits=2) {
 #' @export
 phi <- function(tab) {
   # convert to flat table
-  if (class(tab) != "ftable") tab <- ftable(tab)
+  if (all(class(tab) != "ftable")) tab <- ftable(tab)
   tb <- summary(MASS::loglm(~1 + 2, tab))$tests
   phi_val <- sqrt(tb[2, 1] / sum(tab))
   return (phi_val)
@@ -644,7 +651,7 @@ phi <- function(tab) {
 #'
 #' @export
 cramer <- function(tab) {
-  if (class(tab) != "ftable") tab <- ftable(tab)
+  if (all(class(tab) != "ftable")) tab <- ftable(tab)
   phi_val <- phi(tab)
   cramer <- sqrt(phi_val^2 / min(dim(tab) - 1))
   return (cramer)
@@ -698,7 +705,7 @@ cv <- function(x) {
       dv <- x@frame[[1]]
     } else if (class(x) == "lme") {
       # dependent variable in lme
-      dv <- x@data[[1]]
+      dv <- x$data[[1]]
     }
     # compute mean of dependent variable
     mw <- mean(dv, na.rm = TRUE)
@@ -776,4 +783,101 @@ levene_test <- function(depVar, grpVar) {
   } else {
     message("Groups are not homogeneous!\n")
   }
+}
+
+
+#' @title Check whether two factors are crossed
+#' @name is_crossed
+#' @description This function checks whether two factors are crossed,
+#'                i.e. if each level of one factor occurs in combination
+#'                with each level of the other factor.
+#'
+#' @param f1 a numeric vector or \code{\link{factor}}.
+#' @param f2 a numeric vector or \code{\link{factor}}.
+#' @return Logical, \code{TRUE} if factors are crossed, \code{FALSE} otherwise.
+#'
+#' @seealso \code{\link{is_nested}}
+#'
+#' @references Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
+#'
+#' @examples
+#' # crossed factors, each category of
+#' # x appears in each category of y
+#' x <- c(1,4,3,2,3,2,1,4)
+#' y <- c(1,1,1,2,2,1,2,2)
+#' # show distribution
+#' table(x, y)
+#' # check if crossed
+#' is_crossed(x, y)
+#'
+#' # not crossed factors
+#' x <- c(1,4,3,2,3,2,1,4)
+#' y <- c(1,1,1,2,1,1,2,2)
+#' # show distribution
+#' table(x, y)
+#' # check if crossed
+#' is_crossed(x, y)
+#'
+#' @export
+is_crossed <- function(f1, f2) {
+  tab <- table(f1, f2)
+  # for crossed factors, we should have no zeros in any rows
+  # (i.e. each level of f1 also contains any level of f2)
+  return (!any(apply(tab, 1, function(x) any(x==0)) == TRUE))
+}
+
+
+#' @title Check whether two factors are nested
+#' @name is_nested
+#' @description This function checks whether two factors are nested,
+#'                i.e. if each category of the first factor co-occurs
+#'                with only one category of the other.
+#'
+#' @param f1 a numeric vector or \code{\link{factor}}.
+#' @param f2 a numeric vector or \code{\link{factor}}.
+#' @return Logical, \code{TRUE} if factors are nested, \code{FALSE} otherwise.
+#'
+#' @note If factors are nested, a message is displayed to tell whether \code{f1}
+#'         is nested within \code{f2} or vice versa.
+#'
+#' @seealso \code{\link{is_crossed}}
+#'
+#' @references Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
+#'
+#' @examples
+#' # nested factors, each category of
+#' # x appears in one category of y
+#' x <- c(1,2,3,4,5,6,7,8,9)
+#' y <- c(1,1,1,2,2,2,3,3,3)
+#' # show distribution
+#' table(x, y)
+#' # check if nested
+#' is_nested(x, y)
+#' is_nested(y, x)
+#'
+#' # not nested factors
+#' x <- c(1,2,3,4,5,6,7,8,9,1,2)
+#' y <- c(1,1,1,2,2,2,3,3,3,2,3)
+#' # show distribution
+#' table(x, y)
+#' # check if nested
+#' is_nested(x, y)
+#' is_nested(y, x)
+#'
+#' @export
+is_nested <- function(f1, f2) {
+  tab <- table(f1, f2)
+  # cross tabulation of nested factors should have only 1 value per row
+  # (or column) that is not zero. If we found more, factors are not nested
+  # or rows and columns have to be swapped.
+  # check if f1 is nested within f2
+  nested <- !any(apply(tab, 1, function(x) sum(x!=0) > 1))
+  if (nested) message("'f1' is nested within 'f2'")
+  # swap rows and columns to check whether factors are nested
+  # check whether f2 is nested within f1
+  if (!nested) {
+    nested <- !any(apply(tab, 2, function(x) sum(x!=0) > 1))
+    if (nested) message("'f2' is nested within 'f1'")
+  }
+  return (nested)
 }

@@ -33,6 +33,10 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 ### Changelog of current development build 1.0.0-2
 
+#### New functions
+* `is_crossed` to check whether two factors are crossed.
+* `is_nested` to check whether two factors are nested.
+
 #### Changes to functions
 * `std_beta` now accepts `plm`-objects.
 
@@ -40,6 +44,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `std_beta` did not work in some cases - fixed.
 * `mwu` did not accept factors as grouping levels - fixed.
 * `mwu` did not work when value range of `grp` vector was not continuously - fixed.
+* `cv` did not work with `lme`-objects (from `nlme`-package) - fixed.
+* `cramer`, `phi` and `table_values` did not work with tables of class `xtabs` - fixed.
 
 
 ### Changelog of current stable build 1.0.0
