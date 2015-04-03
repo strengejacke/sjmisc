@@ -56,3 +56,14 @@ test_that("cronb und reliab_test", {
   cronb(efc[, start:end])
   reliab_test(efc[, start:end])
 })
+
+
+test_that("chisq_gof", {
+  skip_on_cran()
+  data(efc)
+
+  chisq_gof(efc$e42dep, c(0.3,0.2,0.22,0.28))
+
+  chisq_gof(efc$e42dep, prop.table(table(efc$e42dep)))
+})
+

@@ -339,8 +339,7 @@ chisq_gof <- function(var, prob, weights=NULL) {
   # goodness of fit-test. x is one-dimensional and
   # y not given
   chi2gof <- chisq.test(dummy, p = prob)
-  print(chi2gof)
-  invisible (chi2gof)
+  return (chi2gof)
 }
 
 
@@ -536,6 +535,7 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 #' df <- as.data.frame(efc[,c(start:end)])
 #'
 #' mic(df)
+#'
 #' @export
 mic <- function(data, corMethod="pearson") {
   # -----------------------------------
@@ -550,20 +550,20 @@ mic <- function(data, corMethod="pearson") {
   # -----------------------------------
   # Sum up all correlation values
   # -----------------------------------
-  mic <- c()
+  meanic <- c()
   for (j in 1:(ncol(corr) - 1)) {
     # first correlation is always "1" (self-correlation)
     for (i in (j + 1):nrow(corr)) {
       # check four valid bound
       if (i <= nrow(corr) && j <= ncol(corr)) {
         # add up all subsequent values
-        mic <- c(mic, corr[i, j])
+        meanic <- c(meanic, corr[i, j])
       } else {
-        mic <- c(mic, "NA")
+        meanic <- c(meanic, "NA")
       }
     }
   }
-  return (mean(mic))
+  return (mean(meanic))
 }
 
 
