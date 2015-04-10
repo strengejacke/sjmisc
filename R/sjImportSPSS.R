@@ -1031,19 +1031,24 @@ to_fac <- function(x) {
 #' table(to_value(test, 5))
 #'
 #' @export
-to_value <- function(x, startAt = 1, keep.labels = TRUE) {
+to_value <- function(x, startAt = NULL, keep.labels = TRUE) {
   # retrieve "value labels"
   labels <- levels(x)
   # check if we have numeric factor levels
   if (is_num_fac(x)) {
     # convert to numeric via as.vector
     new_value <- as.numeric(as.vector((x)))
-    # check if lowest value of variable differs from
-    # requested minimum conversion value
-    val_diff <- startAt - min(new_value, na.rm = T)
-    # adjust new_value
-    new_value <- new_value + val_diff
+    # new minimum value?
+    if (!is.null(startAt) && is.numeric(startAt)) {
+      # check if lowest value of variable differs from
+      # requested minimum conversion value
+      val_diff <- startAt - min(new_value, na.rm = T)
+      # adjust new_value
+      new_value <- new_value + val_diff
+    }
   } else {
+    # check startAt value
+    if (is.null(startAt)) startAt <- 1
     # get amount of categories
     l <- length(levels(x))
     # determine highest category value

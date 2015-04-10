@@ -31,7 +31,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.0-2
+### Changelog of current development build 1.0.0-3
 
 #### New functions
 * `is_crossed` to check whether two factors are crossed.
@@ -39,6 +39,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### Changes to functions
 * `std_beta` now accepts `plm`-objects.
+* `to_value` now auto-detects lowest minimum value of numeric factors, instead of always setting minimum value to 1.
 
 #### Bug fixes
 * `std_beta` did not work in some cases - fixed.
