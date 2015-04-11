@@ -4,7 +4,7 @@
 \alias{to_value}
 \title{Converts factors to numeric variables}
 \usage{
-to_value(x, startAt = 1, keep.labels = TRUE)
+to_value(x, startAt = NULL, keep.labels = TRUE)
 }
 \arguments{
 \item{x}{A (factor) variable.}

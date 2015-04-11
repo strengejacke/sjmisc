@@ -588,7 +588,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
   if (!is.null(labels)) {
     # string varibles can't get value labels
     if (is.null(var) || is.character(var)) {
-      warning("Can't attach value labels to string or NULL vectors.\n")
+      warning("Can't attach value labels to string or NULL vectors.", call. = F)
     } else {
       # check if var is a factor
       if (is.factor(var)) {
@@ -623,12 +623,12 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
         name.string <- var.name
       }
       if (is.infinite(valrange)) {
-        warning("Can't set value labels. Infinite value range.\n")
+        warning("Can't set value labels. Infinite value range.", call. = F)
       # check for valid length of labels
       } else if (valrange < lablen) {
         # we have more labels than values, so just take as many
         # labes as values are present
-        message(sprintf("More labels than values of \"%s\". Using first %i labels.\n", name.string, valrange))
+        message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
         attr(var, attr.string) <- c(as.character(c(minval:maxval)))
         names(attr(var, attr.string)) <- labels[1:valrange]
       # value range is larger than amount of labels. we may
@@ -641,7 +641,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
         valrange <- length(values)
         # still no match?
         if (valrange != lablen) {
-          warning(sprintf("Can't set value labels. Value range of \"%s\" is longer than length of \"labels\".\n", name.string))
+          warning(sprintf("Can't set value labels. Value range of \"%s\" is longer than length of \"labels\".", name.string), call. = F)
         } else {
           # else, set attributes
           attr(var, attr.string) <- as.character(valrange)

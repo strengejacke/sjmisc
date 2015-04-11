@@ -1015,7 +1015,7 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
   # check if required package is available
   # -------------------------------------
   if (!requireNamespace("stringdist", quietly = TRUE)) {
-    warning("Package 'stringdist' needed for this function to fully work. Please install it. Only partial matching indices are returned.")
+    warning("Package 'stringdist' needed for this function to fully work. Please install it. Only partial matching indices are returned.", call. = F)
     return (indices)
   }
   # -------------------------------------
@@ -1138,14 +1138,14 @@ mean_n <- function(dat, n) {
   # check if we have a data framme with at least two columns
   # ---------------------------------------
   if (!is.data.frame(dat) || ncol(dat) < 2) {
-    warning("'dat' must be a data.frame with at least two columns.")
+    warning("'dat' must be a data.frame with at least two columns.", call. = F)
     return (NA)
   }
   # ---------------------------------------
   # n may not be larger as df's amount of columns
   # ---------------------------------------
   if (ncol(dat) < n) {
-    warning("'n' must be smaller or equal to data.frame's amount of columns.")
+    warning("'n' must be smaller or equal to data.frame's amount of columns.", call. = F)
     return (NA)
   }
   apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA))
