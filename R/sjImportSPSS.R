@@ -629,7 +629,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
         # we have more labels than values, so just take as many
         # labes as values are present
         message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
-        attr(var, attr.string) <- c(as.character(c(minval:maxval)))
+        attr(var, attr.string) <- as.character(c(minval:maxval))
         names(attr(var, attr.string)) <- labels[1:valrange]
       # value range is larger than amount of labels. we may
       # have not continuous value range, e.g. "-2" as filter and
@@ -644,7 +644,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
           warning(sprintf("Can't set value labels. Value range of \"%s\" is longer than length of \"labels\".", name.string), call. = F)
         } else {
           # else, set attributes
-          attr(var, attr.string) <- as.character(valrange)
+          attr(var, attr.string) <- as.character(c(1:valrange))
           names(attr(var, attr.string)) <- labels
         }
       } else {
@@ -1012,11 +1012,15 @@ to_fac <- function(x) {
 #'
 #' @param x A (factor) variable.
 #' @param startAt the starting index, i.e. the lowest numeric value of the variable's
-#'          value range.
+#'          value range. By default, this parameter is \code{NULL}, hence the lowest
+#'          value of the returned numeric variable corresponds to the lowest factor
+#'          level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
+#'          are not numeric).
 #' @param keep.labels logical, if \code{TRUE}, former factor levels will be attached as
 #'          value labels. See \code{\link{set_val_labels}} for more details.
-#' @return A numeric variable with values ranging from \code{startAt} to
-#'           \code{startAt} + length of factor levels.
+#' @return A numeric variable with values ranging either from \code{startAt} to
+#'           \code{startAt} + length of factor levels, or to the corresponding
+#'           factor levels (if these were numeric).
 #'
 #' @examples
 #' data(efc)
@@ -1029,6 +1033,15 @@ to_fac <- function(x) {
 #' # set lowest value of new variable
 #' # to "5".
 #' table(to_value(test, 5))
+#'
+#' # numeric factor keeps values
+#' dummy <- factor(c("3", "4", "6"))
+#' table(to_value(dummy))
+#'
+#' # non-numeric factor is converted to numeric
+#' # starting at 1
+#' dummy <- factor(c("D", "F", "H"))
+#' table(to_value(dummy))
 #'
 #' @export
 to_value <- function(x, startAt = NULL, keep.labels = TRUE) {

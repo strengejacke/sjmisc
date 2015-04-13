@@ -14,6 +14,8 @@ Bug fixes:
 * "mwu" did not work when value range of "grp" vector was not continuously - fixed.
 * "cv" did not work with lme-objects (from nlme-package) - fixed.
 * "cramer", "phi" and "table_values" did not work with tables of class "xtabs" - fixed.
+* "to_value" (resp. "set_val_labels") did not work in certain situations when factor had not continuously numeric levels - fixed.
+
 
 Version 1.0.0
 ------------------------------------------------------------------------------

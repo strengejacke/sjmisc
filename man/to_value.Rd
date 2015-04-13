@@ -10,14 +10,18 @@ to_value(x, startAt = NULL, keep.labels = TRUE)
 \item{x}{A (factor) variable.}
 
 \item{startAt}{the starting index, i.e. the lowest numeric value of the variable's
-value range.}
+value range. By default, this parameter is \code{NULL}, hence the lowest
+value of the returned numeric variable corresponds to the lowest factor
+level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
+are not numeric).}
 
 \item{keep.labels}{logical, if \code{TRUE}, former factor levels will be attached as
 value labels. See \code{\link{set_val_labels}} for more details.}
 }
 \value{
-A numeric variable with values ranging from \code{startAt} to
-          \code{startAt} + length of factor levels.
+A numeric variable with values ranging either from \code{startAt} to
+          \code{startAt} + length of factor levels, or to the corresponding
+          factor levels (if these were numeric).
 }
 \description{
 This function converts (replaces) factor values with the
@@ -35,6 +39,8 @@ hist(to_value(test, 0))
 # set lowest value of new variable
 # to "5".
 table(to_value(test, 5))
+
+dummy <- factor(c("3", "4", "6"))
 }
 \seealso{
 \code{\link{to_label}} to convert a value into a factor with labelled

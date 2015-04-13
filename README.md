@@ -31,7 +31,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.0-3
+### Changelog of current development build 1.0.0-4
 
 #### New functions
 * `is_crossed` to check whether two factors are crossed.
@@ -47,17 +47,4 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `mwu` did not work when value range of `grp` vector was not continuously - fixed.
 * `cv` did not work with `lme`-objects (from `nlme`-package) - fixed.
 * `cramer`, `phi` and `table_values` did not work with tables of class `xtabs` - fixed.
-
-
-### Changelog of current stable build 1.0.0
-
-#### General
-* First release of this package - it contains all utility, recode and statistical test functions from the [sjPlot package](https://github.com/sjPlot/devel/).
-
-#### New functions
-* `rec` to recode variables.
-* `cv` to compute coefficient of variance.
-* `rmse` to compute root-mean-square error.
-
-#### Changes to former sjPlot functions
-* Improved internal management of imported data via `haven` and `foreign` packages, so users don't need to care of structure and classed of data read with either haven, foreign or sjPlot's read-functions.
+* `to_value` (resp. `set_val_labels`) did not work in certain situations when factor had not continuously numeric levels - fixed.
