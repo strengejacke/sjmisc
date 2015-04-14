@@ -7,7 +7,7 @@
 to_value(x, startAt = NULL, keep.labels = TRUE)
 }
 \arguments{
-\item{x}{A (factor) variable.}
+\item{x}{A (factor) variable or a data frame with (factor) variables.}
 
 \item{startAt}{the starting index, i.e. the lowest numeric value of the variable's
 value range. By default, this parameter is \code{NULL}, hence the lowest
@@ -21,7 +21,8 @@ value labels. See \code{\link{set_val_labels}} for more details.}
 \value{
 A numeric variable with values ranging either from \code{startAt} to
           \code{startAt} + length of factor levels, or to the corresponding
-          factor levels (if these were numeric).
+          factor levels (if these were numeric). Or a data frame with numeric
+          variables, if \code{x} was a data frame.
 }
 \description{
 This function converts (replaces) factor values with the
@@ -40,7 +41,14 @@ hist(to_value(test, 0))
 # to "5".
 table(to_value(test, 5))
 
+# numeric factor keeps values
 dummy <- factor(c("3", "4", "6"))
+table(to_value(dummy))
+
+# non-numeric factor is converted to numeric
+# starting at 1
+dummy <- factor(c("D", "F", "H"))
+table(to_value(dummy))
 }
 \seealso{
 \code{\link{to_label}} to convert a value into a factor with labelled

@@ -7,6 +7,7 @@ New functions:
 Changes to functions:
 * "std_beta" now accepts plm-objects.
 * "to_value" now auto-detects lowest minimum value of numeric factors, instead of always setting minimum value to 1.
+* "set_na", "dicho", "to_fac", "to_value" and "to_label" now also accept data frames as parameter.
 
 Bug fixes:
 * "std_beta" did not work in some cases - fixed.

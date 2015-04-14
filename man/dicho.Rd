@@ -4,10 +4,10 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(var, dichBy = "median", dichVal = -1, asNum = FALSE)
+dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE)
 }
 \arguments{
-\item{var}{The variable that should be dichotomized.}
+\item{x}{The variable (vector) or data frame that should be dichotomized.}
 
 \item{dichBy}{Indicates the split criterion where the variable is dichotomized.
 \itemize{
@@ -24,11 +24,13 @@ than 10.}
 \item{asNum}{logical, if \code{TRUE}, return value will be numeric, not a factor.}
 }
 \value{
-A dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded).
+A dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
+          respectively a data frame of dichotomized factor (or numeric) variables.
 }
 \description{
 Dichotomizes variables into dummy variables (0/1). Dichotomization is
                either done by median, mean or a specific value (see \code{dichBy}).
+               Either single vectors or complete data frames can be dichotomized.
 }
 \examples{
 data(efc)
@@ -36,5 +38,10 @@ summary(efc$c12hour)
 table(dicho(efc$c12hour))
 table(dicho(efc$c12hour, "mean"))
 table(dicho(efc$c12hour, "value", 30))
+
+# sample data frame, values from 1-4
+head(efc[, 6:10])
+# dichtomized values (1 to 2 = 0, 3 to 4 = 1)
+head(dicho(efc[, 6:10], "v", 2))
 }
 

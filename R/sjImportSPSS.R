@@ -899,9 +899,10 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #'
 #' @param x A variable of type \code{\link{numeric}}, \code{\link{atomic}}
 #'          \code{\link{factor}} or \code{\link[haven]{labelled}} (see \code{haven} package)
-#'          \emph{with associated value labels}
-#'          (see \code{\link{set_val_labels}}).
-#' @return A factor variable with the associated value labels as factor levels.
+#'          \emph{with associated value labels} (see \code{\link{set_val_labels}}),
+#'          respectively a data frame with such variables.
+#' @return A factor variable with the associated value labels as factor levels, or a
+#'           data frame with such factor variables (if \code{x} was a data frame.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
 #'         or \code{\link{set_val_labels}}) will be removed  when converting variables to factors.
@@ -924,6 +925,16 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #'
 #' @export
 to_label <- function(x) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- to_label_helper(x[[i]])
+    return (x)
+  } else {
+    return (to_label_helper(x))
+  }
+}
+
+
+to_label_helper <- function(x) {
   # check if factor has numeric factor levels
   if (is.factor(x) && !is_num_fac(x)) {
     # if not, stop here
@@ -962,8 +973,11 @@ to_label <- function(x) {
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
 #'            factor levels.
 #'
-#' @param x A (numeric or atomic) variable.
-#' @return A factor variable, including variable and value labels.
+#' @param x A (numeric or atomic) variable or a data frame with
+#'          (numeric or atomic) variables.
+#' @return A factor variable, including variable and value labels, respectively
+#'           a data frame with factor variables (including variable and value labels)
+#'           if \code{x} was a data frame.
 #'
 #' @note This function only works with vectors that have value and variable
 #'        labels attached. This is automatically done by importing SPSS data sets
@@ -985,6 +999,16 @@ to_label <- function(x) {
 #'
 #' @export
 to_fac <- function(x) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]])
+    return (x)
+  } else {
+    return (to_fac_helper(x))
+  }
+}
+
+
+to_fac_helper <- function(x) {
   # retrieve value labels
   lab <- get_val_labels(x)
   # retrieve variable labels
@@ -1010,7 +1034,7 @@ to_fac <- function(x) {
 #'            factor levels and \code{\link{to_fac}} to convert a numeric variable
 #'            into a factor (and retain labels)
 #'
-#' @param x A (factor) variable.
+#' @param x A (factor) variable or a data frame with (factor) variables.
 #' @param startAt the starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this parameter is \code{NULL}, hence the lowest
 #'          value of the returned numeric variable corresponds to the lowest factor
@@ -1020,7 +1044,8 @@ to_fac <- function(x) {
 #'          value labels. See \code{\link{set_val_labels}} for more details.
 #' @return A numeric variable with values ranging either from \code{startAt} to
 #'           \code{startAt} + length of factor levels, or to the corresponding
-#'           factor levels (if these were numeric).
+#'           factor levels (if these were numeric). Or a data frame with numeric
+#'           variables, if \code{x} was a data frame.
 #'
 #' @examples
 #' data(efc)
@@ -1045,6 +1070,16 @@ to_fac <- function(x) {
 #'
 #' @export
 to_value <- function(x, startAt = NULL, keep.labels = TRUE) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- to_value_helper(x[[i]], startAt, keep.labels)
+    return (x)
+  } else {
+    return (to_value_helper(x, startAt, keep.labels))
+  }
+}
+
+
+to_value_helper <- function(x, startAt, keep.labels) {
   # retrieve "value labels"
   labels <- levels(x)
   # check if we have numeric factor levels

@@ -7,10 +7,13 @@
 to_fac(x)
 }
 \arguments{
-\item{x}{A (numeric or atomic) variable.}
+\item{x}{A (numeric or atomic) variable or a data frame with
+(numeric or atomic) variables.}
 }
 \value{
-A factor variable, including variable and value labels.
+A factor variable, including variable and value labels, respectively
+          a data frame with factor variables (including variable and value labels)
+          if \code{x} was a data frame.
 }
 \description{
 This function converts a variable into a factor, but keeps

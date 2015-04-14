@@ -4,18 +4,22 @@
 \alias{set_na}
 \title{Set NA for specific variable values}
 \usage{
-set_na(var, values)
+set_na(x, values)
 }
 \arguments{
-\item{var}{a variable where new missing values should be defined.}
+\item{x}{a variable (vector) or a data frame where new missing values should be defined.
+If \code{x} is a data frame, each column is assumed to be a new variable,
+where missings should be defined.}
 
-\item{values}{a numeric vector with values that should be replaced with \code{\link{NA}}'s.}
+\item{values}{a numeric vector with values that should be replaced with \code{\link{NA}}'s.
+         Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.}
 }
 \value{
-The \code{var} where each value of \code{values} replaced by an \code{NA}.
+The variable or data frame \code{x}, where each value of \code{values}
+          is replaced by an \code{NA}.
 }
 \description{
-This function sets specific values of a variable \code{var}
+This function sets specific values of a variable or data frame
                as missings (\code{NA}).
 }
 \note{
@@ -24,13 +28,24 @@ Value and variable label attributes (see, for instance, \code{\link{get_val_labe
 }
 \examples{
 # create random variable
-dummy <- sample(1:8, 100, replace=TRUE)
+dummy <- sample(1:8, 100, replace = TRUE)
 # show value distribution
 table(dummy)
 # set value 1 and 8 as missings
-dummy <- set_na(dummy, c(1,8))
+dummy <- set_na(dummy, c(1, 8))
 # show value distribution, including missings
-table(dummy, exclude=NULL)
+table(dummy, exclude = NULL)
+
+# create sample data frame
+dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
+                    var2 = sample(1:10, 100, replace = TRUE),
+                    var3 = sample(1:6, 100, replace = TRUE))
+# show head of data frame
+head(dummy)
+# set value 2 and 4 as missings
+dummy <- set_na(dummy, c(2, 4))
+# show head of new data frame
+head(dummy)
 }
 \seealso{
 \code{\link{rec}} for general recoding of variables and \code{\link{recode_to}}

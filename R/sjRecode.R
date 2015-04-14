@@ -3,8 +3,9 @@
 #'
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is
 #'                either done by median, mean or a specific value (see \code{dichBy}).
+#'                Either single vectors or complete data frames can be dichotomized.
 #'
-#' @param var The variable that should be dichotomized.
+#' @param x The variable (vector) or data frame that should be dichotomized.
 #' @param dichBy Indicates the split criterion where the variable is dichotomized.
 #'          \itemize{
 #'            \item By default, \code{var} is split into two groups at the median (\code{dichBy = "median"} or \code{dichBy = "md"}).
@@ -16,7 +17,8 @@
 #'          into one group with values from lowest to 10 and another group with values greater
 #'          than 10.
 #' @param asNum logical, if \code{TRUE}, return value will be numeric, not a factor.
-#' @return A dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded).
+#' @return A dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
+#'           respectively a data frame of dichotomized factor (or numeric) variables.
 #'
 #' @examples
 #' data(efc)
@@ -25,28 +27,49 @@
 #' table(dicho(efc$c12hour, "mean"))
 #' table(dicho(efc$c12hour, "value", 30))
 #'
+#' # sample data frame, values from 1-4
+#' head(efc[, 6:10])
+#' # dichtomized values (1 to 2 = 0, 3 to 4 = 1)
+#' head(dicho(efc[, 6:10], "v", 2))
+#'
 #' @export
-dicho <- function(var, dichBy="median", dichVal=-1, asNum = FALSE) {
+dicho <- function(x, dichBy = "median", dichVal = -1, asNum = FALSE) {
   # check abbreviations
   if (dichBy == "md") dichBy <- "median"
   if (dichBy == "m") dichBy <- "mean"
   if (dichBy == "v") dichBy <- "value"
-  # check if factor
-  if (is.factor(var)) {
-    # try to convert to numeric
-    var <- as.numeric(as.character(var))
-  }
   # check for correct dichotome types
   if (dichBy != "median" && dichBy != "mean" && dichBy != "value") {
     stop("Parameter \"dichBy\" must either be \"median\", \"mean\" or \"value\"..." , call. = FALSE)
   }
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- dicho_helper(x[[i]], dichBy, dichVal, asNum)
+    return (x)
+  } else {
+    return (dicho_helper(x, dichBy, dichVal, asNum))
+  }
+}
+
+
+dicho_helper <- function(var, dichBy, dichVal, asNum) {
+  # check if factor
+  if (is.factor(var)) {
+    # non-numeric-factor cannot be converted
+    if (is_num_fac(var)) {
+      # try to convert to numeric
+      var <- as.numeric(as.character(var))
+    } else {
+      message("Could not dichotomoze non-numeric factor.")
+      return (var)
+    }
+  }
   # split at median
   if (dichBy == "median") {
     var <- ifelse(var <= median(var, na.rm = T), 0, 1)
-  # split at mean
+    # split at mean
   } else if (dichBy == "mean") {
     var <- ifelse(var <= mean(var, na.rm = T), 0, 1)
-  # split at specific value
+    # split at specific value
   } else {
     var <- ifelse(var <= dichVal, 0, 1)
   }
@@ -114,29 +137,16 @@ dicho <- function(var, dichBy="median", dichVal=-1, asNum = FALSE) {
 #'         axisLabels.x = ageGrpLab)}
 #'
 #' @export
-group_var <- function(var, groupsize=5, asNumeric=TRUE, rightInterval=FALSE, autoGroupCount=30) {
-  # minimum range. will be changed when autogrouping
-  minval <- 0
-  multip <- 2
-  # check for auto-grouping
-  if (groupsize == "auto") {
-    # determine groupsize, which is 1/30 of range
-    size <- ceiling((max(var, na.rm = TRUE) - min(var, na.rm = TRUE)) / autoGroupCount)
-    # reset groupsize var
-    groupsize <- as.numeric(size)
-    # change minvalue
-    minval <- min(var, na.rm = TRUE)
-    multip <- 1
-  }
-  # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte Faktoren gleich entfernt
-  var <- droplevels(cut(var,
-                        breaks = c(seq(minval,
-                                       max(var, na.rm = TRUE) + multip * groupsize,
-                                       by = groupsize)),
-                        right = rightInterval))
-  # Die Level der Gruppierung wird neu erstellt
+group_var <- function(var,
+                      groupsize = 5,
+                      asNumeric = TRUE,
+                      rightInterval = FALSE,
+                      autoGroupCount = 30) {
+  # group variable
+  var <- group_helper(var, groupsize, rightInterval, autoGroupCount)
+  # set new levels of grouped variable
   levels(var) <- c(1:length(levels(var)))
-  # in numerisch umwandeln
+  # convert to numeric?
   if (asNumeric) var <- as.numeric(as.character(var))
   return (var)
 }
@@ -210,7 +220,44 @@ group_var <- function(var, groupsize=5, asNumeric=TRUE, rightInterval=FALSE, aut
 #'         axisLabels.x = ageGrpLab)}
 #'
 #' @export
-group_labels <- function(var, groupsize=5, rightInterval=FALSE, autoGroupCount=30) {
+group_labels <- function(var,
+                         groupsize = 5,
+                         rightInterval = FALSE,
+                         autoGroupCount = 30) {
+  # group variable
+  var <- group_helper(var, groupsize, rightInterval, autoGroupCount)
+  # Gruppen holen
+  lvl <- levels(var)
+  # rückgabewert init
+  retval <- rep(c(""), length(lvl))
+  # alle Gruppierungen durchgehen
+  for (i in 1:length(lvl)) {
+    # Länge jedes Labels der Gruppeneinteilungen auslesen
+    sublength <- nchar(lvl[i])
+    # "(" und "]", das bei "cut"-Funktion automatisch erstellt wird,
+    # aus dem Label entfernen
+    lvlstr <- substr(lvl[i], 2, sublength - 1)
+    # Unter- und Obergrenze in jeweils einem string
+    subs <- strsplit(lvlstr, ",")
+    # Untergrenze als Zahlenwert
+    lower <- as.numeric(subs[[1]][1])
+    # Obergrenze als Zahlenwert
+    upper <- as.numeric(subs[[1]][2])
+    # Prüfen, welche Intervallgrenze ein-
+    # und welche ausgeschlossen werden soll
+    if(rightInterval) {
+      lower <- lower + 1
+    } else {
+      upper <- upper - 1
+    }
+    # Rückgabe des Strings
+    retval[i] <- c(paste(lower, "-", upper, sep = ""))
+  }
+  return (retval)
+}
+
+
+group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
   # minimum range. will be changed when autogrouping
   minval <- 0
   multip <- 2
@@ -224,38 +271,14 @@ group_labels <- function(var, groupsize=5, rightInterval=FALSE, autoGroupCount=3
     minval <- min(var, na.rm = TRUE)
     multip <- 1
   }
-  # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte Faktoren gleich entfernt
+  # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte
+  # Faktoren gleich entfernt
   var <- droplevels(cut(var,
                         breaks = c(seq(minval,
                                        max(var, na.rm = TRUE) + multip * groupsize,
                                        by = groupsize)),
                         right = rightInterval))
-  # Gruppen holen
-  lvl <- levels(var)
-  # rückgabewert init
-  retval <- rep(c(""), length(lvl))
-  # alle Gruppierungen durchgehen
-  for (i in 1:length(lvl)) {
-    # Länge jedes Labels der Gruppeneinteilungen auslesen
-    sublength <- nchar(lvl[i])
-    # "(" und "]", das bei "cut"-Funktion automatisch erstellt wird, aus dem Label entfernen
-    lvlstr <- substr(lvl[i], 2, sublength - 1)
-    # Unter- und Obergrenze in jeweils einem string
-    subs <- strsplit(lvlstr, ",")
-    # Untergrenze als Zahlenwert
-    lower <- as.numeric(subs[[1]][1])
-    # Obergrenze als Zahlenwert
-    upper <- as.numeric(subs[[1]][2])
-    # Prüfen, welche Intervallgrenze ein- und welche ausgeschlossen werden soll
-    if(rightInterval) {
-      lower <- lower+1
-    } else {
-      upper <- upper-1
-    }
-    # Rückgabe des Strings
-    retval[i] <- c(paste(c(lower), "-", c(upper), sep=""))
-  }
-  return (c(retval))
+  return (var)
 }
 
 
@@ -593,32 +616,57 @@ rec <- function(x, recodes) {
 #' @title Set NA for specific variable values
 #' @name set_na
 #'
-#' @description This function sets specific values of a variable \code{var}
+#' @description This function sets specific values of a variable or data frame
 #'                as missings (\code{NA}).
 #'
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{recode_to}}
 #'            for re-shifting value ranges.
 #'
-#' @param var a variable where new missing values should be defined.
+#' @param x a variable (vector) or a data frame where new missing values should be defined.
+#'          If \code{x} is a data frame, each column is assumed to be a new variable,
+#'          where missings should be defined.
 #' @param values a numeric vector with values that should be replaced with \code{\link{NA}}'s.
+#'          Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.
 #'
-#' @return The \code{var} where each value of \code{values} replaced by an \code{NA}.
+#' @return The variable or data frame \code{x}, where each value of \code{values}
+#'           is replaced by an \code{NA}.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
 #'         or \code{\link{set_val_labels}}) are retained.
 #'
 #' @examples
 #' # create random variable
-#' dummy <- sample(1:8, 100, replace=TRUE)
+#' dummy <- sample(1:8, 100, replace = TRUE)
 #' # show value distribution
 #' table(dummy)
 #' # set value 1 and 8 as missings
-#' dummy <- set_na(dummy, c(1,8))
+#' dummy <- set_na(dummy, c(1, 8))
 #' # show value distribution, including missings
-#' table(dummy, exclude=NULL)
+#' table(dummy, exclude = NULL)
+#'
+#' # create sample data frame
+#' dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
+#'                     var2 = sample(1:10, 100, replace = TRUE),
+#'                     var3 = sample(1:6, 100, replace = TRUE))
+#' # show head of data frame
+#' head(dummy)
+#' # set value 2 and 4 as missings
+#' dummy <- set_na(dummy, c(2, 4))
+#' # show head of new data frame
+#' head(dummy)
 #'
 #' @export
-set_na <- function(var, values) {
+set_na <- function(x, values) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- set_na_helper(x[[i]], values)
+    return (x)
+  } else {
+    return (set_na_helper(x, values))
+  }
+}
+
+
+set_na_helper <- function(var, values) {
   # ----------------------------
   # auto-detect variable label attribute
   # ----------------------------
