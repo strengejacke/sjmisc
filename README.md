@@ -31,11 +31,12 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.0-5
+### Changelog of current development build 1.0.1
 
 #### New functions
 * `is_crossed` to check whether two factors are crossed.
 * `is_nested` to check whether two factors are nested.
+* `is_num_fac` to check whether a factor has only numeric levels.
 
 #### Changes to functions
 * `std_beta` now accepts `plm`-objects.

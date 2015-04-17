@@ -3,6 +3,7 @@ Version 1.0.1
 New functions:
 * "is_crossed" to check whether two factors are crossed.
 * "is_nested" to check whether two factors are nested.
+* "is_num_fac" to check whether a factor has only numeric levels.
 
 Changes to functions:
 * "std_beta" now accepts plm-objects.
