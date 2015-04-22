@@ -31,22 +31,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.1
-
-#### New functions
-* `is_crossed` to check whether two factors are crossed.
-* `is_nested` to check whether two factors are nested.
-* `is_num_fac` to check whether a factor has only numeric levels.
+### Changelog of current development build 1.0.2
 
 #### Changes to functions
-* `std_beta` now accepts `plm`-objects.
-* `to_value` now auto-detects lowest minimum value of numeric factors, instead of always setting minimum value to 1.
-* `set_na`, `dicho`, `to_fac`, `to_value` and `to_label` now also accept data frames as parameter.
-
-#### Bug fixes
-* `std_beta` did not work in some cases - fixed.
-* `mwu` did not accept factors as grouping levels - fixed.
-* `mwu` did not work when value range of `grp` vector was not continuously - fixed.
-* `cv` did not work with `lme`-objects (from `nlme`-package) - fixed.
-* `cramer`, `phi` and `table_values` did not work with tables of class `xtabs` - fixed.
-* `to_value` (resp. `set_val_labels`) did not work in certain situations when factor had not continuously numeric levels - fixed.
+* Functions `std_beta` and `cv` now support `merModLmerTest` objects (fitted by `lmerTest` package).

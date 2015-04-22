@@ -67,7 +67,7 @@ eta_sq <- function(...) {
 #' @name std_beta
 #' @description Returns the standardized beta coefficients and confidence intervals
 #'                of a fitted linear (mixed) models, i.e. \code{fit} must either
-#'                be of class \code{lm} or \code{lmerMod} (lme4-package).
+#'                be of class \code{lm} or \code{\link[lme4]{merMod}}.
 #'
 #' @param fit A fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).
 #' @param include.ci logical, if \code{TRUE}, a data frame with confidence intervals will be returned,
@@ -99,7 +99,7 @@ eta_sq <- function(...) {
 std_beta <- function(fit, include.ci = FALSE) {
   # if we have merMod object (lme4), we need
   # other function to compute std. beta
-  if (class(fit) == "lmerMod") {
+  if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
     return (sjs.stdmm(fit))
   } else {
     b <- summary(fit)$coef[-1, 1]
@@ -696,14 +696,14 @@ std_e <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
 #' @export
 cv <- function(x) {
   # check if we have a fitted linear model
-  if (class(x) == "lm" || class(x) == "lmerMod" || class(x) == "lme") {
+  if (class(x) == "lm" || any(class(x) == "lmerMod") || any(class(x) == "lme") || any(class(x) == "merModLmerTest")) {
     if (class(x) == "lm") {
       # dependent variable in lm
       dv <- x$model[[1]]
-    } else if (class(x) == "lmerMod") {
+    } else if (any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
       # dependent variable in lmerMod
       dv <- x@frame[[1]]
-    } else if (class(x) == "lme") {
+    } else if (any(class(x) == "lme")) {
       # dependent variable in lme
       dv <- x$data[[1]]
     }
