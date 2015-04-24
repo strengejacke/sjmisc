@@ -3,6 +3,8 @@ Version 1.0.2
 Changes to functions:
 * Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by `lmerTest` package).
 
+Bug fixes:
+* "set_na" did not work with logical vectors - fixed.
 
 Version 1.0.1
 ------------------------------------------------------------------------------

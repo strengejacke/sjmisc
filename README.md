@@ -35,3 +35,6 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### Changes to functions
 * Functions `std_beta` and `cv` now support `merModLmerTest` objects (fitted by `lmerTest` package).
+
+#### Bug fixes
+* `set_na` did not work with logical vectors - fixed.

@@ -690,11 +690,20 @@ set_na_helper <- function(var, values) {
     # and set them to NA
     var[var == values[i]] <- NA
     # check if value labels exist, and if yes, remove them
-    labelpos <- which(as.numeric(vl) == values[i])
+    labelpos <- suppressWarnings(which(as.numeric(vl) == values[i]))
     # remove NA label
     if (length(labelpos > 0)) {
       vl <- vl[-labelpos]
       ln <- ln[-labelpos]
+    } else {
+      # if vl were not numeric convertable, try character conversion
+      # check if value labels exist, and if yes, remove them
+      labelpos <- suppressWarnings(which(as.character(vl) == values[i]))
+      # remove NA label
+      if (length(labelpos > 0)) {
+        vl <- vl[-labelpos]
+        ln <- ln[-labelpos]
+      }
     }
   }
   # set back updated label attribute

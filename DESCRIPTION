@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Miscellaneous Data Management Tools
-Version: 1.0.1-2
-Date: 2015-04-22
+Version: 1.0.1-3
+Date: 2015-04-24
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of several utility functions for reading or writing data, recoding and labelling variables and some frequently used statistical tests.
