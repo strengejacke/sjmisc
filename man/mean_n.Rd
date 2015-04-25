@@ -4,13 +4,16 @@
 \alias{mean_n}
 \title{Compute row means with min amount of valid values}
 \usage{
-mean_n(dat, n)
+mean_n(dat, n, digits = 2)
 }
 \arguments{
 \item{dat}{a \code{\link{data.frame}} with at least two columns, where row means are applied.}
 
 \item{n}{the amount of valid values per row to calculate the row mean. If a row's amount of valid
-         values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.}
+values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.}
+
+\item{integer}{indicating the number of decimal places to be used. Negative values
+         are allowed (see ‘Details’).}
 }
 \value{
 A vector with row mean values of \code{df} for those rows with at least \code{n}
@@ -20,6 +23,11 @@ A vector with row mean values of \code{df} for those rows with at least \code{n}
 This function is similar to the SPSS \code{MEAN.n} function and computes
                row means from a \code{\link{data.frame}} or \code{\link{matrix}} if at least \code{n}
                values of a row are valid (and not \code{\link{NA}}).
+}
+\details{
+Rounding to a negative number of digits means rounding to a power of
+           ten, so for example mean_n(df, 3, digits = -2) rounds to the
+           nearest hundred.
 }
 \examples{
 dat <- data.frame(c1 = c(1,2,NA,4),

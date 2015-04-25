@@ -1166,9 +1166,15 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
 #' @param dat a \code{\link{data.frame}} with at least two columns, where row means are applied.
 #' @param n the amount of valid values per row to calculate the row mean. If a row's amount of valid
 #'          values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.
+#' @param integer indicating the number of decimal places to be used. Negative values
+#'          are allowed (see ‘Details’).
 #'
 #' @return A vector with row mean values of \code{df} for those rows with at least \code{n}
 #'           valid values. Else, \code{\link{NA}} is returned.
+#'
+#' @details Rounding to a negative number of digits means rounding to a power of
+#'            ten, so for example mean_n(df, 3, digits = -2) rounds to the
+#'            nearest hundred.
 #'
 #' @references \itemize{
 #'              \item \href{http://candrea.ch/blog/compute-spss-like-mean-index-variables/}{candrea's blog}
@@ -1186,7 +1192,7 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
 #' mean_n(dat, 1) # all means are shown
 #'
 #' @export
-mean_n <- function(dat, n) {
+mean_n <- function(dat, n, digits = 2) {
   # ---------------------------------------
   # coerce matrix to data frame
   # ---------------------------------------
@@ -1205,5 +1211,5 @@ mean_n <- function(dat, n) {
     warning("'n' must be smaller or equal to data.frame's amount of columns.", call. = F)
     return (NA)
   }
-  apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA))
+  round(apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA)), digits)
 }
