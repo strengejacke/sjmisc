@@ -399,7 +399,7 @@ to_sjPlot <- function(x) {
 }
 
 
-#' @title Retrieve value labels of a variable or an SPSS-imported data frame
+#' @title Retrieve value labels of a variable or an imported data frame
 #' @name get_val_labels
 #'
 #' @description This function retrieves the value labels of an imported
@@ -429,8 +429,8 @@ to_sjPlot <- function(x) {
 #'            \code{haven} package style (\emph{labels} and \emph{label}). By default,
 #'            the \code{haven} package style is used. The \code{sjPlot} package accesses
 #'            these attributes to automatically read label attributes for labelling
-#'            axes categories and titles or table rows and columns. \cr Furthermore,
-#'            value and variable labels are used when saving data, e.g. to SPSS
+#'            axes categories and titles or table rows and columns. \cr \cr
+#'            Furthermore, value and variable labels are used when saving data, e.g. to SPSS
 #'            (see \code{\link{write_spss}}), which means that the written SPSS file
 #'            contains proper labels for each variable. \cr
 #'            You can set a default label style via \code{options(value_labels = "haven")}
@@ -510,7 +510,7 @@ sji.getValueLabelValues <- function(x) {
 #' @description This function attaches character labels as \code{"value.labels"} attribute
 #'                to a variable or vector \code{"x"}, resp. to all variables of a data frame
 #'                if \code{"x"} is a \code{\link{data.frame}}. These value labels will be accessed
-#'                by most of this package's functions, in order to automatically set values
+#'                by functions of the \emph{sjPlot} package, in order to automatically set values
 #'                or legend labels.
 #'
 #' @seealso \itemize{
@@ -691,11 +691,12 @@ is_num_fac <- function(x) {
 }
 
 
-#' @title Retrieve variable labels of (an SPSS-imported) data frame or of a specific variable
+#' @title Retrieve variable labels of a data frame or a variable
 #' @name get_var_labels
 #'
-#' @description This function retrieves the variable labels of an imported
-#'                SPSS data set (via \code{\link{read_spss}}) and
+#' @description This function retrieves the value labels of an imported
+#'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
+#'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
 #'                  \item if \code{x} is a data frame, returns the all variable labels as \code{\link{list}} object
 #'                  \item or, if \code{x} is a vector, returns the variable label as string.
@@ -707,10 +708,9 @@ is_num_fac <- function(x) {
 #'            \item \code{\link{set_var_labels}}
 #'            }
 #'
-#' @param x A data frame (containing imported SPSS data or with attached variable labels) or
-#'          a vector with \code{"label"} or \code{"variable.label"} attribute.
+#' @param x A data frame or a vector with \code{"label"} or \code{"variable.label"} attribute.
 #'
-#' @return A named char vector with all variable labels from the SPSS dataset,
+#' @return A named char vector with all variable labels from the data frame,
 #'           or a simple string vector with the variable label, if \code{x} is a variable.
 #'
 #' @details This package can add (and read) value and variable labels either in \code{foreign}
@@ -718,10 +718,10 @@ is_num_fac <- function(x) {
 #'            \code{haven} package style (\emph{labels} and \emph{label}). By default,
 #'            the \code{haven} package style is used. The \code{sjPlot} package accesses
 #'            these attributes to automatically read label attributes for labelling
-#'            axes categories and titles or table rows and columns. \cr Furthermore,
-#'            value and variable labels are used when saving data, e.g. to SPSS
+#'            axes categories and titles or table rows and columns. \cr \cr
+#'            Furthermore, value and variable labels are used when saving data, e.g. to SPSS
 #'            (see \code{\link{write_spss}}), which means that the written SPSS file
-#'            contains proper labels for each variable. \cr
+#'            contains proper labels for each variable. \cr \cr
 #'            You can set a default label style via \code{options(value_labels = "haven")}
 #'            or \code{options(value_labels = "foreign")}.
 #'
@@ -803,7 +803,7 @@ get_var_labels <- function(x) {
 #' @description This function sets variable labels to a single variable or to
 #'                a set of variables in a data frame. To each variable, the
 #'                attribute \code{"label"} or \code{"variable.label"} with the related variable
-#'                name is attached. Most of this package's functions can automatically
+#'                name is attached. Most functions of the \emph{sjPlot} package can automatically
 #'                retrieve the variable name to use it as axis labels or plot title
 #'                (see details).
 #'

@@ -28,7 +28,7 @@ care of this.}
 This function sets variable labels to a single variable or to
                a set of variables in a data frame. To each variable, the
                attribute \code{"label"} or \code{"variable.label"} with the related variable
-               name is attached. Most of this package's functions can automatically
+               name is attached. Most functions of the \emph{sjPlot} package can automatically
                retrieve the variable name to use it as axis labels or plot title
                (see details).
 }
@@ -46,12 +46,12 @@ This package can add (and read) value and variable labels either in \code{foreig
            or \code{options(value_labels = "foreign")}.
 }
 \note{
-With attached value and variable labels, most functions of this package
-      automatically detect labels and uses them as axis, legend or title labels
-      in plots (\code{sjp.}-functions) respectively as column or row headers
-      in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
-      and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-      label detection.
+With attached value and variable labels, most functions of the \code{sjPlot} package
+       automatically detect labels and uses them as axis, legend or title labels
+       in plots (\code{sjp.}-functions) respectively as column or row headers
+       in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
+       and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
+       label detection.
 }
 \examples{
 # sample data set, imported from SPSS. Variable labels are attached

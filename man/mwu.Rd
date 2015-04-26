@@ -25,7 +25,7 @@ this is \code{NULL}.}
 }
 \description{
 This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
-               see \code{\link{wilcox.test}} and \code{\link[coin]{wilcox_test}}
+               see \code{\link{wilcox.test}} and \code{\link[coin]{wilcox_test}})
                for the variable \code{var}, which is
                divided into groups indicated by \code{grp} (so the formula \code{var ~ grp}
                is used). If \code{grp} has more than two categories, a comparison between each
@@ -37,7 +37,7 @@ This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
 This function calls the \code{\link[coin]{wilcox_test}} with formula. If \code{grp}
         has more than two groups, additionally a Kruskal-Wallis-Test (see \code{\link{kruskal.test}})
         is performed. \cr \cr
-        Interpretation of effect sizes:
+        Interpretation of effect sizes, as a rule-of-thumb:
         \itemize{
          \item small effect >= 0.1
          \item medium effect >= 0.3

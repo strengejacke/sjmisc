@@ -20,14 +20,20 @@ Compute coefficient of variation for single variables
                linear (mixed effects) models (root mean squared error
                (RMSE) divided by mean of dependent variable).
 }
+\details{
+The advantage of the cv is that it is unitless. This allows
+           coefficient of variation to be compared to each other in ways
+           that other measures, like standard deviations or root mean
+           squared residuals, cannot be \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{source: UCLA-FAQ}.
+}
 \examples{
 data(efc)
 cv(efc$e17age)
 }
+\references{
+\href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{UCLA-FAQ: What is the coefficient of variation?}
+}
 \seealso{
-\itemize{
-           \item \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{UCLA-FAQ: What is the coefficient of variation?}
-           \item \code{\link{rmse}}
-         }
+\code{\link{rmse}}
 }
 

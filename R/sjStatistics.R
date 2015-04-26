@@ -144,7 +144,7 @@ sjs.stdmm <- function(fit) {
 #' @title Performs a Mann-Whitney-U-Test
 #' @name mwu
 #' @description This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
-#'                see \code{\link{wilcox.test}} and \code{\link[coin]{wilcox_test}}
+#'                see \code{\link{wilcox.test}} and \code{\link[coin]{wilcox_test}})
 #'                for the variable \code{var}, which is
 #'                divided into groups indicated by \code{grp} (so the formula \code{var ~ grp}
 #'                is used). If \code{grp} has more than two categories, a comparison between each
@@ -166,7 +166,7 @@ sjs.stdmm <- function(fit) {
 #' @note This function calls the \code{\link[coin]{wilcox_test}} with formula. If \code{grp}
 #'         has more than two groups, additionally a Kruskal-Wallis-Test (see \code{\link{kruskal.test}})
 #'         is performed. \cr \cr
-#'         Interpretation of effect sizes:
+#'         Interpretation of effect sizes, as a rule-of-thumb:
 #'         \itemize{
 #'          \item small effect >= 0.1
 #'          \item medium effect >= 0.3
@@ -516,10 +516,11 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 #'                of all added item's correlation values is returned.
 #'                Requires either a data frame or a computed \code{\link{cor}}-object.
 #'
-#' @param data A correlation object, built with the R-\code{\link{cor}}-function, or a data frame
+#' @param data A correlation object (see \code{\link{cor}}-function), or a data frame
 #'          which correlations should be calculated.
 #' @param corMethod Indicates the correlation computation method. May be one of
 #'          \code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
+#'          You may use initial letter only.
 #' @return The value of the computed mean inter-item-correlation.
 #'
 #' @examples
@@ -538,6 +539,12 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 #'
 #' @export
 mic <- function(data, corMethod="pearson") {
+  # -----------------------------------
+  # Check parameter
+  # -----------------------------------
+  if (corMethod == "s") corMethod <- "spearman"
+  if (corMethod == "p") corMethod <- "pearson"
+  if (corMethod == "k") corMethod <- "kendall"
   # -----------------------------------
   # Mean-interitem-corelation
   # -----------------------------------
@@ -684,10 +691,14 @@ std_e <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
 #'          \code{\link[nlme]{lme}} (nlme).
 #' @return The coefficient of variation of \code{x}.
 #'
-#' @seealso \itemize{
-#'            \item \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{UCLA-FAQ: What is the coefficient of variation?}
-#'            \item \code{\link{rmse}}
-#'          }
+#' @details The advantage of the cv is that it is unitless. This allows
+#'            coefficient of variation to be compared to each other in ways
+#'            that other measures, like standard deviations or root mean
+#'            squared residuals, cannot be \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{source: UCLA-FAQ}.
+#'
+#' @seealso \code{\link{rmse}}
+#'
+#' @references \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{UCLA-FAQ: What is the coefficient of variation?}
 #'
 #' @examples
 #' data(efc)

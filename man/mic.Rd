@@ -7,11 +7,12 @@
 mic(data, corMethod = "pearson")
 }
 \arguments{
-\item{data}{A correlation object, built with the R-\code{\link{cor}}-function, or a data frame
+\item{data}{A correlation object (see \code{\link{cor}}-function), or a data frame
 which correlations should be calculated.}
 
 \item{corMethod}{Indicates the correlation computation method. May be one of
-\code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.}
+\code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
+You may use initial letter only.}
 }
 \value{
 The value of the computed mean inter-item-correlation.

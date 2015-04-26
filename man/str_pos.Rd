@@ -22,7 +22,7 @@ of the \code{searchString}. Following values are accepted:
   \item 1 for one-step matching, which means, only substrings of same length as \code{findTerm} are extracted from \code{searchString} matching
   \item 2 for two-step matching, which means, substrings of same length as \code{findTerm} as well as strings with a slightly wider range are extracted from \code{searchString} matching
 }
-Default value is 0.}
+Default value is 0. See 'Details' for more information.}
 
 \item{showProgressBar}{If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
          Default in \code{FALSE}, hence the bar is hidden.}
@@ -36,6 +36,15 @@ A numeric vector with index position of elements in \code{searchString} that
 This function finds the element indices of partial matching or similar strings
                in a character vector. Can be used to find exact or slightly mistyped elements
                in a string vector.
+}
+\details{
+For \code{part.dist.match = 1}, a substring of \code{length(findTerm)} is extracted
+           from \code{searchString}, starting at position 0 in \code{searchString} until
+           the end of \code{searchString} is reached. Each substring is matched against
+           \code{findTerm}, and results with a maximum distance of \code{maxdist}
+           are considered as "matching". If \code{part.dist.match = 2}, the range
+           of the extracted substring is increased by 2, i.e. the extracted substring
+           is two chars longer.
 }
 \note{
 this function does \emph{not} return the position of a matching string \emph{inside}

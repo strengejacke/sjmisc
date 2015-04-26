@@ -12,7 +12,7 @@ of class \code{labelled}.}
 }
 \value{
 a data frame or single vector (depending on \code{x}) with 'sjPlot' friendly
-          vector classes.
+          object classes.
 }
 \description{
 This function converts a data frame, which was imported with any of

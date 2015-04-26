@@ -25,7 +25,7 @@ the \code{labels} will be applied to each column of \code{x}.}
 This function attaches character labels as \code{"value.labels"} attribute
                to a variable or vector \code{"x"}, resp. to all variables of a data frame
                if \code{"x"} is a \code{\link{data.frame}}. These value labels will be accessed
-               by most of this package's functions, in order to automatically set values
+               by functions of the \emph{sjPlot} package, in order to automatically set values
                or legend labels.
 }
 \details{
@@ -42,12 +42,12 @@ This package can add (and read) value and variable labels either in \code{foreig
            or \code{options(value_labels = "foreign")}.
 }
 \note{
-With attached value and variable labels, most functions of this package
-      automatically detect labels and uses them as axis, legend or title labels
-      in plots (\code{sjp.}-functions) respectively as column or row headers
-      in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
-      and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-      label detection.
+With attached value and variable labels, most functions of the \code{sjPlot} package
+       automatically detect labels and uses them as axis, legend or title labels
+       in plots (\code{sjp.}-functions) respectively as column or row headers
+       in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
+       and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
+       label detection.
 }
 \examples{
 \dontrun{

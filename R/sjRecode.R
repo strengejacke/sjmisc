@@ -344,7 +344,7 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' @title Recode variable categories into new values.
 #' @name recode_to
 #'
-#' @description Recodes the categories of a variables \code{var} into new category values, beginning
+#' @description Recodes (or "renumbers") the categories of a variables \code{var} into new category values, beginning
 #'                with the lowest value specified by parameter \code{lowest}. Useful if you want
 #'                to recode dummy variables with 1/2 coding to 0/1 coding, or recoding scales from
 #'                1-4 to 0-3 etc.
@@ -1024,7 +1024,7 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
 #'            \item 1 for one-step matching, which means, only substrings of same length as \code{findTerm} are extracted from \code{searchString} matching
 #'            \item 2 for two-step matching, which means, substrings of same length as \code{findTerm} as well as strings with a slightly wider range are extracted from \code{searchString} matching
 #'          }
-#'          Default value is 0.
+#'          Default value is 0. See 'Details' for more information.
 #' @param showProgressBar If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 #'          Default in \code{FALSE}, hence the bar is hidden.
 #'
@@ -1037,6 +1037,14 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
 #'         a (partial) match with \code{findTerm} was found. Thus, searching for "abc" in
 #'         a string "this is abc" will not return 9 (the start position of the substring),
 #'         but 1 (the element index, which is always 1 if \code{searchString} only has one element).
+#'
+#' @details For \code{part.dist.match = 1}, a substring of \code{length(findTerm)} is extracted
+#'            from \code{searchString}, starting at position 0 in \code{searchString} until
+#'            the end of \code{searchString} is reached. Each substring is matched against
+#'            \code{findTerm}, and results with a maximum distance of \code{maxdist}
+#'            are considered as "matching". If \code{part.dist.match = 2}, the range
+#'            of the extracted substring is increased by 2, i.e. the extracted substring
+#'            is two chars longer.
 #'
 #' @examples
 #' \dontrun{
@@ -1164,17 +1172,27 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
 #'                values of a row are valid (and not \code{\link{NA}}).
 #'
 #' @param dat a \code{\link{data.frame}} with at least two columns, where row means are applied.
-#' @param n the amount of valid values per row to calculate the row mean. If a row's amount of valid
-#'          values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.
-#' @param integer indicating the number of decimal places to be used. Negative values
-#'          are allowed (see ‘Details’).
+#' @param n May either be
+#'          \itemize{
+#'            \item a numeric value that indicates the amount of valid values per row to calculate the row mean;
+#'            \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see details).
+#'          }
+#'          If a row's amount of valid values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.
+#' @param digits numeric value indicating the number of decimal places to be used for rounding mean
+#'          value. Negative values are allowed (see ‘Details’).
 #'
 #' @return A vector with row mean values of \code{df} for those rows with at least \code{n}
 #'           valid values. Else, \code{\link{NA}} is returned.
 #'
-#' @details Rounding to a negative number of digits means rounding to a power of
+#' @details Rounding to a negative number of \code{digits} means rounding to a power of
 #'            ten, so for example mean_n(df, 3, digits = -2) rounds to the
-#'            nearest hundred.
+#'            nearest hundred. \cr \cr
+#'          For \code{n}, must be a numeric value from \code{0} to \code{ncol(dat)}. If
+#'            a \emph{row} in \code{dat} has at least \code{n} non-missing values, the
+#'            row mean is returned. If \code{n} is a non-integer value from 0 to 1,
+#'            \code{n} is considered to indicate the proportion of necessary non-missing
+#'            values per row. E.g., if \code{n = .75}, a row must have at least \code{ncol(dat) * n}
+#'            non-missing values for the row mean to be calculated. See examples.
 #'
 #' @references \itemize{
 #'              \item \href{http://candrea.ch/blog/compute-spss-like-mean-index-variables/}{candrea's blog}
@@ -1186,13 +1204,32 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
 #'                   c2 = c(NA,2,NA,5),
 #'                   c3 = c(NA,4,NA,NA),
 #'                   c4 = c(2,3,7,8))
+#'
+#' # needs at least 4 non-missing values per row
 #' mean_n(dat, 4) # 1 valid return value
+#'
+#' # needs at least 3 non-missing values per row
 #' mean_n(dat, 3) # 2 valid return values
+#'
+#' # needs at least 2 non-missing values per row
 #' mean_n(dat, 2)
+#'
+#' # needs at least 1 non-missing value per row
 #' mean_n(dat, 1) # all means are shown
+#'
+#' # needs at least 50% of non-missing values per row
+#' mean_n(dat, .5) # 3 valid return values
+#'
+#' # needs at least 75% of non-missing values per row
+#' mean_n(dat, .75) # 2 valid return values
 #'
 #' @export
 mean_n <- function(dat, n, digits = 2) {
+  # ---------------------------------------
+  # is 'n' indicating a proportion?
+  # ---------------------------------------
+  digs <- n%%1
+  if (digs != 0) n <- round(ncol(dat) * digs)
   # ---------------------------------------
   # coerce matrix to data frame
   # ---------------------------------------

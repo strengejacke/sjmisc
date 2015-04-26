@@ -13,8 +13,9 @@ read_spss(path, enc = NA, autoAttachVarLabels = FALSE,
 \item{enc}{The file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
 
 \item{autoAttachVarLabels}{if \code{TRUE}, variable labels will automatically be
-attached to each variable as \code{"variable.label"} attribute.
-See \code{\link{set_var_labels}} for details.
+attached to each variable as \code{"variable.label"} attribute. Use this
+parameter, if \code{option = "foreign"}, where variable labels are attached
+as list-attribute to the imported data frame.
 \emph{Not needed if \code{option = "haven"} (default).}}
 
 \item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
@@ -24,7 +25,7 @@ to \code{\link{factor}}s.}
 \item{option}{string, indicating which package will be used to read the SPSS data file.
 By default, \code{option = "haven"}, which means, the \code{read_spss} function
 from the \code{haven} package is used. Use \code{option = "foreign"} to
-use foreign's \code{read.spss} function. Use \code{options(read_spss = "foreign")}
+use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}
 to make this function always use the foreign-package \code{\link[foreign]{read.spss}} function.}
 }
 \value{
@@ -35,15 +36,17 @@ A data frame containing the SPSS data. Retrieve value labels with \code{\link{ge
 Import data from SPSS, including NA's, value and variable labels.
 }
 \note{
-This is a wrapper function for \code{\link{read_spss}} of the
-        \code{haven} package. This function adds value and variable
-        labels to the imported variables of the data frame. \cr \cr
-       With attached value and variable labels, most functions of this package
-       automatically detect labels and uses them as axis, legend or title labels
-       in plots (\code{sjp.}-functions) respectively as column or row headers
-       in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
-       and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-       label detection.
+This is a wrapper function for \code{\link[haven]{read_spss}} of the
+        \code{haven} package and \code{\link[foreign]{read.spss}} of the
+        \code{foreign} package. This function adds value and variable
+        labels as attributes to the imported variables of the data frame. \cr \cr
+        With attached value and variable labels, most functions of the
+        \code{sjPlot} package automatically detect labels and uses them as axis,
+        legend or title labels in plots (\code{sjp.}-functions) respectively
+        as column or row headers in table outputs (\code{sjt.}-functions).
+        Use \code{options(autoSetValueLabels = FALSE)}
+        and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
+        label detection.
 }
 \examples{
 \dontrun{

@@ -2,21 +2,21 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{get_var_labels}
 \alias{get_var_labels}
-\title{Retrieve variable labels of (an SPSS-imported) data frame or of a specific variable}
+\title{Retrieve variable labels of a data frame or a variable}
 \usage{
 get_var_labels(x)
 }
 \arguments{
-\item{x}{A data frame (containing imported SPSS data or with attached variable labels) or
-         a vector with \code{"label"} or \code{"variable.label"} attribute.}
+\item{x}{A data frame or a vector with \code{"label"} or \code{"variable.label"} attribute.}
 }
 \value{
-A named char vector with all variable labels from the SPSS dataset,
+A named char vector with all variable labels from the data frame,
           or a simple string vector with the variable label, if \code{x} is a variable.
 }
 \description{
-This function retrieves the variable labels of an imported
-               SPSS data set (via \code{\link{read_spss}}) and
+This function retrieves the value labels of an imported
+               SPSS, SAS or STATA data set (via \code{\link{read_spss}},
+               \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
                  \item if \code{x} is a data frame, returns the all variable labels as \code{\link{list}} object
                  \item or, if \code{x} is a vector, returns the variable label as string.
@@ -28,20 +28,20 @@ This package can add (and read) value and variable labels either in \code{foreig
            \code{haven} package style (\emph{labels} and \emph{label}). By default,
            the \code{haven} package style is used. The \code{sjPlot} package accesses
            these attributes to automatically read label attributes for labelling
-           axes categories and titles or table rows and columns. \cr Furthermore,
-           value and variable labels are used when saving data, e.g. to SPSS
+           axes categories and titles or table rows and columns. \cr \cr
+           Furthermore, value and variable labels are used when saving data, e.g. to SPSS
            (see \code{\link{write_spss}}), which means that the written SPSS file
-           contains proper labels for each variable. \cr
+           contains proper labels for each variable. \cr \cr
            You can set a default label style via \code{options(value_labels = "haven")}
            or \code{options(value_labels = "foreign")}.
 }
 \note{
 This function only works with vectors that have value and variable
-       labels attached. This is automatically done by importing SPSS data sets
-       with the \code{\link{read_spss}} function and can manually be applied
-       with the \code{\link{set_val_labels}} and \code{\link{set_var_labels}}
-       functions. \cr \cr
-       With attached value and variable labels, most functions of this package
+       labels attached. This is automatically done by importing data sets
+       with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
+       function or labels can manually be added using the \code{\link{set_val_labels}}
+       and \code{\link{set_var_labels}} functions. \cr \cr
+       With attached value and variable labels, most functions of the \code{sjPlot} package
        automatically detect labels and uses them as axis, legend or title labels
        in plots (\code{sjp.}-functions) respectively as column or row headers
        in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
