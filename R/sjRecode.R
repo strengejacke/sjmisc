@@ -59,7 +59,7 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
       # try to convert to numeric
       var <- as.numeric(as.character(var))
     } else {
-      message("Could not dichotomoze non-numeric factor.")
+      message("Could not dichotomize non-numeric factor.")
       return (var)
     }
   }
