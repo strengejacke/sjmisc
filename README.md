@@ -33,6 +33,9 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 ### Changelog of current development build 1.0.2
 
+#### New functions
+* `icc` to compute intraclass-correlations for random-intercepts of mixed models.
+
 #### Changes to functions
 * Functions `std_beta` and `cv` now support `merModLmerTest` objects (fitted by `lmerTest` package).
 * `mean_n` has a `digit` parameter to round returned mean values.
