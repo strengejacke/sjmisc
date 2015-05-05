@@ -9,6 +9,7 @@ Changes to functions:
 
 Bug fixes:
 * "set_na" did not work with logical vectors - fixed.
+* "recode_to" did not work when "var" had value-label-attributes - fixed.
 
 Version 1.0.1
 ------------------------------------------------------------------------------

@@ -404,8 +404,8 @@ recode_to <- function(var, lowest=0, highest=-1) {
   # set NA to all values out of range
   if (highest > lowest) var[var > highest] <- NA
   # set back labels, if we have any
-  if (!is.null(val_lab)) dummy <- suppressWarnings(set_val_labels(dummy, val_lab))
-  if (!is.null(var_lab)) dummy <- suppressWarnings(set_var_labels(dummy, var_lab))
+  if (!is.null(val_lab)) var <- suppressWarnings(set_val_labels(var, val_lab))
+  if (!is.null(var_lab)) var <- suppressWarnings(set_var_labels(var, var_lab))
   # return recoded var
   return(var)
 }

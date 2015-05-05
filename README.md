@@ -42,3 +42,4 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### Bug fixes
 * `set_na` did not work with logical vectors - fixed.
+* `recode_to` did not work when `var` had value-label-attributes - fixed.
