@@ -1000,3 +1000,11 @@ lmer_var <- function(fit) {
   return(list('Between group variance' = vars,
               'Within group variance' = resid_var))
 }
+
+
+lm_pval_fstat <- function(x) {
+  if (class(x) != "lm") stop("Not an object of class 'lm'.", call. = F)
+  f <- summary(x)$fstatistic
+  p <- pf(f[1], f[2], f[3], lower.tail = F)
+  return(as.vector(p))
+}
