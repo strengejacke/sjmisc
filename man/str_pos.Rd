@@ -47,7 +47,7 @@ For \code{part.dist.match = 1}, a substring of \code{length(findTerm)} is extrac
            is two chars longer.
 }
 \note{
-this function does \emph{not} return the position of a matching string \emph{inside}
+This function does \emph{not} return the position of a matching string \emph{inside}
         another string, but the element's index of the \code{searchString} vector, where
         a (partial) match with \code{findTerm} was found. Thus, searching for "abc" in
         a string "this is abc" will not return 9 (the start position of the substring),

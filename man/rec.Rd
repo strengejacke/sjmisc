@@ -8,13 +8,14 @@ rec(x, recodes)
 }
 \arguments{
 \item{x}{a numeric variable (vector) or a \code{\link{factor}} with numeric
-levels that should be recoded.}
+levels that should be recoded; or a data frame with such vectors.}
 
 \item{recodes}{a string with recode pairs of old and new values. See details for
 examples.}
 }
 \value{
-A numeric variable with recoded category values.
+A numeric variable with recoded category values, or a data frame
+          with recoded categories for all variables.
 }
 \description{
 Recodes the categories of a (numeric) variable \code{x} into new
@@ -31,8 +32,14 @@ The \code{recodes} string has following syntax:
            \item \code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA from old value into 1, and all old values from 3 to 5 into NA in the new variable)
            \item \code{"rev"} is a special token that reverses the value order (see examples)
           }
-          Variable label attributes (see, for instance, \code{\link{get_var_labels}})
-          are retained, however, value label attributes are removed.
+}
+\note{
+Please note following behaviours of the function:
+      \itemize{
+        \item Non-matching values will be set to \code{\link{NA}}.
+        \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained, however, value label attributes are removed.
+        \item If \code{x} is a data frame, all variables of the data frame should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
+      }
 }
 \examples{
 data(efc)
@@ -52,6 +59,10 @@ table(rec(efc$e42dep, "2=1; else=2"), exclude = NULL)
 
 # reverse value order
 table(rec(efc$e42dep, "rev"), exclude = NULL)
+
+# recode variables with same categorie in a data frame
+head(efc[, 6:9])
+head(rec(efc[, 6:9], "1=10;2=20;3=30;4=40"))
 }
 \seealso{
 \code{\link{set_na}} for setting \code{NA} values and \code{\link{recode_to}}

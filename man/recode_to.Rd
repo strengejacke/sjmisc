@@ -4,10 +4,10 @@
 \alias{recode_to}
 \title{Recode variable categories into new values.}
 \usage{
-recode_to(var, lowest = 0, highest = -1)
+recode_to(x, lowest = 0, highest = -1)
 }
 \arguments{
-\item{var}{The variable (vector) that should be recoded.}
+\item{x}{A variable (vector) or a data frame that should be recoded.}
 
 \item{lowest}{Indicating the lowest category value after recoding. Default is 0, so the new
 variable starts with the category value 0.}
@@ -18,7 +18,7 @@ and no NA's will be produced.}
 }
 \value{
 A new variable with recoded category values, where \code{lowest} indicates the lowest
-          value.
+          value; or a data frame where variables have been recoded as described.
 }
 \description{
 Recodes (or "renumbers") the categories of a variables \code{var} into new category values, beginning

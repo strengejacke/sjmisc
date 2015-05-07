@@ -6,6 +6,7 @@ New functions:
 Changes to functions:
 * Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by `lmerTest` package).
 * "mean_n" has a "digit" parameter to round returned mean values.
+* "rec" and "recode_to" now also accept data frames as parameter.
 
 Bug fixes:
 * "set_na" did not work with logical vectors - fixed.

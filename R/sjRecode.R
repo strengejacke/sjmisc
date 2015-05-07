@@ -44,9 +44,9 @@ dicho <- function(x, dichBy = "median", dichVal = -1, asNum = FALSE) {
   }
   if (is.matrix(x) || is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- dicho_helper(x[[i]], dichBy, dichVal, asNum)
-    return (x)
+    return(x)
   } else {
-    return (dicho_helper(x, dichBy, dichVal, asNum))
+    return(dicho_helper(x, dichBy, dichVal, asNum))
   }
 }
 
@@ -352,14 +352,14 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
 #'            for setting \code{NA} values.
 #'
-#' @param var The variable (vector) that should be recoded.
+#' @param x A variable (vector) or a data frame that should be recoded.
 #' @param lowest Indicating the lowest category value after recoding. Default is 0, so the new
 #'          variable starts with the category value 0.
 #' @param highest If specified and larger than \code{lowest}, all category values larger than
 #'          \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this parameter is ignored
 #'          and no NA's will be produced.
 #' @return A new variable with recoded category values, where \code{lowest} indicates the lowest
-#'           value.
+#'           value; or a data frame where variables have been recoded as described.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
 #'         or \code{\link{set_val_labels}}) are retained.
@@ -384,7 +384,17 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' recode_to(dummy, 1, 3)
 #'
 #' @export
-recode_to <- function(var, lowest=0, highest=-1) {
+recode_to <- function(x, lowest=0, highest=-1) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- rec_to_helper(x[[i]], lowest, highest)
+    return(x)
+  } else {
+    return(rec_to_helper(x, lowest, highest))
+  }
+}
+
+
+rec_to_helper <- function(var, lowest, highest) {
   # retrieve value labels
   val_lab <- get_val_labels(var)
   # retrieve variable label
@@ -421,10 +431,11 @@ recode_to <- function(var, lowest=0, highest=-1) {
 #'            for re-shifting value ranges.
 #'
 #' @param x a numeric variable (vector) or a \code{\link{factor}} with numeric
-#'          levels that should be recoded.
+#'          levels that should be recoded; or a data frame with such vectors.
 #' @param recodes a string with recode pairs of old and new values. See details for
 #'          examples.
-#' @return A numeric variable with recoded category values.
+#' @return A numeric variable with recoded category values, or a data frame
+#'           with recoded categories for all variables.
 #'
 #' @details  The \code{recodes} string has following syntax:
 #'           \itemize{
@@ -436,8 +447,13 @@ recode_to <- function(var, lowest=0, highest=-1) {
 #'            \item \code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA from old value into 1, and all old values from 3 to 5 into NA in the new variable)
 #'            \item \code{"rev"} is a special token that reverses the value order (see examples)
 #'           }
-#'           Variable label attributes (see, for instance, \code{\link{get_var_labels}})
-#'           are retained, however, value label attributes are removed.
+#'
+#' @note Please note following behaviours of the function:
+#'       \itemize{
+#'         \item Non-matching values will be set to \code{\link{NA}}.
+#'         \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained, however, value label attributes are removed.
+#'         \item If \code{x} is a data frame, all variables of the data frame should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
+#'       }
 #'
 #' @examples
 #' data(efc)
@@ -458,8 +474,22 @@ recode_to <- function(var, lowest=0, highest=-1) {
 #' # reverse value order
 #' table(rec(efc$e42dep, "rev"), exclude = NULL)
 #'
+#' # recode variables with same categorie in a data frame
+#' head(efc[, 6:9])
+#' head(rec(efc[, 6:9], "1=10;2=20;3=30;4=40"))
+#'
 #' @export
 rec <- function(x, recodes) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) x[[i]] <- rec_helper(x[[i]], recodes)
+    return(x)
+  } else {
+    return(rec_helper(x, recodes))
+  }
+}
+
+
+rec_helper <- function(x, recodes) {
   # retrieve variable label
   var_lab <- get_var_labels(x)
   val_lab <- NULL
@@ -609,7 +639,7 @@ rec <- function(x, recodes) {
   # set back variable and value labels
   new_var <- set_var_labels(new_var, var_lab)
   new_var <- set_val_labels(new_var, val_lab)
-  return (new_var)
+  return(new_var)
 }
 
 
@@ -1032,7 +1062,7 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
 #'           partially match or are similar to \code{findTerm}. Returns \code{-1} if no
 #'           match was found.
 #'
-#' @note this function does \emph{not} return the position of a matching string \emph{inside}
+#' @note This function does \emph{not} return the position of a matching string \emph{inside}
 #'         another string, but the element's index of the \code{searchString} vector, where
 #'         a (partial) match with \code{findTerm} was found. Thus, searching for "abc" in
 #'         a string "this is abc" will not return 9 (the start position of the substring),
@@ -1066,7 +1096,11 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
 #' str_pos("We are Sex Pistols!", "postils", part.dist.match = 1)}
 #'
 #' @export
-str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, showProgressBar = FALSE) {
+str_pos <- function(searchString,
+                    findTerm,
+                    maxdist = 2,
+                    part.dist.match = 0,
+                    showProgressBar = FALSE) {
   # -------------------------------------
   # init return value
   # -------------------------------------
@@ -1081,7 +1115,7 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
   # -------------------------------------
   if (!requireNamespace("stringdist", quietly = TRUE)) {
     warning("Package 'stringdist' needed for this function to fully work. Please install it. Only partial matching indices are returned.", call. = F)
-    return (indices)
+    return(indices)
   }
   # -------------------------------------
   # find element indices from similar strings
@@ -1096,7 +1130,7 @@ str_pos <- function(searchString, findTerm, maxdist = 2, part.dist.match = 0, sh
     # -------------------------------------
     # helper function to trim white spaces
     # -------------------------------------
-    trim <- function (x) gsub("^\\s+|\\s+$", "", x)
+    trim <- function(x) gsub("^\\s+|\\s+$", "", x)
     ftlength <- nchar(findTerm)
     # -------------------------------------
     # create progress bar
