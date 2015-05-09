@@ -638,7 +638,7 @@ phi <- function(tab) {
   if (all(class(tab) != "ftable")) tab <- ftable(tab)
   tb <- summary(MASS::loglm(~1 + 2, tab))$tests
   phi_val <- sqrt(tb[2, 1] / sum(tab))
-  return (phi_val)
+  return(phi_val)
 }
 
 
@@ -661,7 +661,7 @@ cramer <- function(tab) {
   if (all(class(tab) != "ftable")) tab <- ftable(tab)
   phi_val <- phi(tab)
   cramer <- sqrt(phi_val^2 / min(dim(tab) - 1))
-  return (cramer)
+  return(cramer)
 }
 
 
