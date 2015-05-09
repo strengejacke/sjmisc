@@ -22,10 +22,10 @@ For vectors, (insisibly) returns the object of the computed \code{\link{chisq.te
           For \code{glm}-objects, an object of class \code{chisq_gof} with
           following values:
           \itemize{
-           \item p.value	the p-value for the goodness-of-fit test
-           \item z.score the standardized z-score for the goodness-of-fit test
-           \item RSS the residual sums of squares term
-           \item X2 the pearson chi-squared statistic
+           \item \code{p.value}	the p-value for the goodness-of-fit test
+           \item \code{z.score} the standardized z-score for the goodness-of-fit test
+           \item \code{RSS} the residual sums of squares term
+           \item \code{X2} the pearson chi-squared statistic
           }
 }
 \description{

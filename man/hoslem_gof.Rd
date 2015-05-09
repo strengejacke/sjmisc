@@ -15,9 +15,9 @@ hoslem_gof(x, g = 10)
 An object of class \code{hoslem_test} with
           following values:
           \itemize{
-           \item chisq the Hosmer-Lemeshow chi-squared statistic
-           \item df degrees of freedom
-           \item p.value	the p-value for the goodness-of-fit test
+           \item \code{chisq} the Hosmer-Lemeshow chi-squared statistic
+           \item \code{df} degrees of freedom
+           \item \code{p.value}	the p-value for the goodness-of-fit test
           }
 }
 \description{
@@ -39,5 +39,8 @@ fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
            data = efc,
            family = binomial(link = "logit"))
 hoslem_gof(fit)
+}
+\seealso{
+\code{\link{pseudo_r2}}
 }
 

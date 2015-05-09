@@ -330,10 +330,10 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
 #'           For \code{glm}-objects, an object of class \code{chisq_gof} with
 #'           following values:
 #'           \itemize{
-#'            \item p.value	the p-value for the goodness-of-fit test
-#'            \item z.score the standardized z-score for the goodness-of-fit test
-#'            \item RSS the residual sums of squares term
-#'            \item X2 the pearson chi-squared statistic
+#'            \item \code{p.value}	the p-value for the goodness-of-fit test
+#'            \item \code{z.score} the standardized z-score for the goodness-of-fit test
+#'            \item \code{RSS} the residual sums of squares term
+#'            \item \code{X2} the pearson chi-squared statistic
 #'           }
 #'
 #' @note For vectors, this function is a convenient function for the \code{\link{chisq.test}},
@@ -422,14 +422,16 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 #' @return An object of class \code{hoslem_test} with
 #'           following values:
 #'           \itemize{
-#'            \item chisq the Hosmer-Lemeshow chi-squared statistic
-#'            \item df degrees of freedom
-#'            \item p.value	the p-value for the goodness-of-fit test
+#'            \item \code{chisq} the Hosmer-Lemeshow chi-squared statistic
+#'            \item \code{df} degrees of freedom
+#'            \item \code{p.value}	the p-value for the goodness-of-fit test
 #'           }
 #'
 #' @note A well-fitting model shows no significant difference between
 #'         the model and the observed data, i.e. the reported p-value should be
 #'         greater than 0.05.
+#'
+#' @seealso \code{\link{pseudo_r2}}
 #'
 #' @examples
 #' data(efc)
@@ -480,7 +482,46 @@ hoslem_gof <- function(x, g = 10) {
 }
 
 
-#' @title Performs Tjur's Coefficient of Discrimination (Pseudo R-squared)
+#' @title Computes Nagelkerke's and Cox-Snell's Pseudo R-squared
+#' @name pseudo_r2
+#'
+#' @description This method calculates Nagelkerke's and Cox-Snell's
+#'                pseudo-r-squared-values of \code{\link{glm}}s for
+#'                binary data.
+#'
+#' @param x a fitted \code{\link{glm}}.
+#'
+#' @return An object of class \code{pseudo_r2} with
+#'           following values:
+#'           \itemize{
+#'            \item \code{CoxSnell} Cox-Snell's pseudo-r-squared-value
+#'            \item \code{Nagelkerke} Nagelkerke's pseudo-r-squared-value
+#'           }
+#'
+#' @seealso \code{\link{cod}}
+#'
+#' @examples
+#' data(efc)
+#'
+#' # Pseudo-R-squared values
+#' efc$services <- dicho(efc$tot_sc_e, "v", 0, asNum = TRUE)
+#' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
+#'            data = efc,
+#'            family = binomial(link = "logit"))
+#' pseudo_r2(fit)
+#'
+#' @export
+pseudo_r2 <- function(x) {
+  n <- nrow(x$model)
+  CoxSnell <- 1 - exp((x$deviance - x$null) / n)
+  Nagelkerke <- CoxSnell / (1 - exp(-x$null / n))
+  pseudor2 <- list(CoxSnell, Nagelkerke)
+  names(pseudor2) <- c("CoxSnell", "Nagelkerke")
+  return(pseudor2)
+}
+
+
+#' @title Computes Tjur's Coefficient of Discrimination (Pseudo R-squared)
 #' @name cod
 #'
 #' @description This method calculates the Coefficient of Discrimination \code{D}

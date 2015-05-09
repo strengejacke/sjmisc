@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{cod}
 \alias{cod}
-\title{Performs Tjur's Coefficient of Discrimination (Pseudo R-squared)}
+\title{Computes Tjur's Coefficient of Discrimination (Pseudo R-squared)}
 \usage{
 cod(x)
 }

@@ -3,6 +3,8 @@ Version 1.0.2
 New functions:
 * "icc" to compute intraclass-correlations for random-intercepts of mixed models.
 * "hoslem_gof" to perform a Hosmer-Lemeshow-Goodness-of-Fit-test for logistic regression models.
+* "cod" to compute the Coefficient of Discrimination, aka Tjur's Pseudo-R2, for logistic regression models.
+* "pseudo_r2" to compute the Nagelkerke's and Cox-Snell's Pseudo-R2 for logistic regression models.
 
 Changes to functions:
 * Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by `lmerTest` package).
