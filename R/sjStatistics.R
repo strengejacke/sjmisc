@@ -480,6 +480,67 @@ hoslem_gof <- function(x, g = 10) {
 }
 
 
+#' @title Performs Tjur's Coefficient of Discrimination (Pseudo R-squared)
+#' @name cod
+#'
+#' @description This method calculates the Coefficient of Discrimination \code{D}
+#'                for \code{\link{glm}}s or \code{\link[lme4]{glmer}}s for
+#'                binary data. It is an alternative to other Pseudo-R-squared values
+#'                like Nakelkerke's R2 or Cox-Snell R2.
+#'
+#' @param x a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}}.
+#'
+#' @return The \code{D} Coefficient of Discrimination, also known as
+#'           Tjur's R-squared value.
+#'
+#' @note The Coefficient of Discrimination \code{D} can be read like any
+#'         other (Pseudo-)R-squared value.
+#'
+#' @references Tjur T (2009) Coefficients of determination in logistic regression models -
+#'               a new proposal: The coefficient of discrimination. The American Statistician,
+#'               63(4): 366-372
+#'
+#' @examples
+#' data(efc)
+#'
+#' # Tjur's R-squared value
+#' efc$services <- dicho(efc$tot_sc_e, "v", 0, asNum = TRUE)
+#' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
+#'            data = efc,
+#'            family = binomial(link = "logit"))
+#' cod(fit)
+#'
+#' @export
+cod <- function(x) {
+  # ---------------------------------------
+  # check for valid object class
+  # ---------------------------------------
+  if (!any(class(x) == "glmerMod") && !any(class(x) == "glm")) {
+    stop("'x' must be an object of class 'glm' or 'glmerMod'.", call. = F)
+  }
+  # ---------------------------------------
+  # mixed models (lme4)
+  # ---------------------------------------
+  if (any(class(x) == "glmerMod")) {
+    # ---------------------------------------
+    # check for package availability
+    # ---------------------------------------
+    if (!requireNamespace("lme4", quietly = TRUE)) {
+      stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+    }
+    y <- lme4::getME(x, "y")
+    pred <- predict(x, type = "response", re.form = NULL)
+  } else {
+    y <- x$y
+    pred <- predict.glm(x, type = "response")
+  }
+  categories <- unique(y)
+  m1 <- mean(pred[which(y == categories[1])], na.rm = T)
+  m2 <- mean(pred[which(y == categories[2])], na.rm = T)
+
+  return(abs(m2 - m1))
+}
+
 #' @title Calculates Cronbach's Alpha for a matrix
 #' @name cronb
 #' @description This function calculates the Cronbach's alpha value for each column
