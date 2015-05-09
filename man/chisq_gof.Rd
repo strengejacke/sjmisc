@@ -4,25 +4,45 @@
 \alias{chisq_gof}
 \title{Performs a Chi-square goodness-of-fit-test}
 \usage{
-chisq_gof(var, prob, weights = NULL)
+chisq_gof(x, prob = NULL, weights = NULL)
 }
 \arguments{
-\item{var}{a numeric vector / variable.}
+\item{x}{a numeric vector / variable, or a \code{\link{glm}}-object.}
 
 \item{prob}{a vector of probabilities (indicating the population probabilities) of the same length
-as \code{var}'s amount of categories / factor levels. Use \code{nrow(table(var))} to
-determine the amount of necessary values for \code{prob}.}
+as \code{x}'s amount of categories / factor levels. Use \code{nrow(table(x))} to
+determine the amount of necessary values for \code{prob}. Only used,
+when \code{x} is a vector, and not a \code{glm}-object.}
 
-\item{weights}{a vector with weights, used to weight \code{var}.}
+\item{weights}{a vector with weights, used to weight \code{x}.}
 }
 \value{
-(insisibly) returns the object of the computed \code{\link{chisq.test}}.
+For vectors, (insisibly) returns the object of the computed \code{\link{chisq.test}}.
+          \cr \cr
+          For \code{glm}-objects, an object of class \code{chisq_gof} with
+          following values:
+          \itemize{
+           \item p.value	the p-value for the goodness-of-fit test
+           \item z.score the standardized z-score for the goodness-of-fit test
+           \item RSS the residual sums of squares term
+           \item X2 the pearson chi-squared statistic
+          }
 }
 \description{
-Performs a Chi-square goodness-of-fit-test
+This method performs a Chi-square goodness-of-fit-test (GOF)
+               either on a numeric vector against probabilities, or
+               a Goodness-of-fit tests for \code{\link{glm}}s for binary data.
 }
 \note{
-This function is a convenient function for \code{\link{chisq.test}}, performing goodness-of-fit test.
+For vectors, this function is a convenient function for the \code{\link{chisq.test}},
+        performing goodness-of-fit test.
+        \cr \cr
+        For \code{glm}-objects, this function performs a goodness-of-fit test
+        based on the \code{\link[binomTools]{X2GOFtest}} function of the
+        \code{binomTools} package.
+        A well-fitting model shows no significant difference between
+        the model and the observed data, i.e. the reported p-values should be
+        greater than 0.05.
 }
 \examples{
 data(efc)
@@ -30,5 +50,12 @@ data(efc)
 chisq_gof(efc$e42dep, c(0.3,0.2,0.22,0.28))
 # equal to population
 chisq_gof(efc$e42dep, prop.table(table(efc$e42dep)))
+
+# goodness-of-fit test for logistic regression
+efc$services <- dicho(efc$tot_sc_e, "v", 0, asNum = TRUE)
+fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
+           data = efc,
+           family = binomial(link = "logit"))
+chisq_gof(fit)
 }
 

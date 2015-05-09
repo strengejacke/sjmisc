@@ -35,11 +35,13 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### New functions
 * `icc` to compute intraclass-correlations for random-intercepts of mixed models.
+* `hoslem_gof` to perform a Hosmer-Lemeshow-Goodness-of-Fit-test for logistic regression models.
 
 #### Changes to functions
 * Functions `std_beta` and `cv` now support `merModLmerTest` objects (fitted by `lmerTest` package).
 * `mean_n` has a `digit` parameter to round returned mean values.
 * `rec` and `recode_to` now also accept data frames as parameter.
+* `chisq_gof` now accepts `glm`-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.
 
 #### Bug fixes
 * `set_na` did not work with logical vectors - fixed.
