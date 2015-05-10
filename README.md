@@ -44,6 +44,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `mean_n` has a `digit` parameter to round returned mean values.
 * `rec` and `recode_to` now also accept data frames as parameter.
 * `chisq_gof` now accepts `glm`-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.
+* `set_val_labels` and `set_var_labels` can now remove label-attributes.
+* `set_na` removes label-attribute, if removed `NA` values were the last labelled values.
 
 #### Bug fixes
 * `set_na` did not work with logical vectors - fixed.

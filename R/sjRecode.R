@@ -689,9 +689,9 @@ rec_helper <- function(x, recodes) {
 set_na <- function(x, values) {
   if (is.matrix(x) || is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- set_na_helper(x[[i]], values)
-    return (x)
+    return(x)
   } else {
-    return (set_na_helper(x, values))
+    return(set_na_helper(x, values))
   }
 }
 
@@ -738,8 +738,15 @@ set_na_helper <- function(var, values) {
   }
   # set back updated label attribute
   if (!is.null(attr.string)) {
-    attr(var, attr.string) <- vl
-    names(attr(var, attr.string)) <- ln
+    # do we have any labels left?
+    if (length(vl) > 0) {
+      # if yes, set back label attribute
+      attr(var, attr.string) <- vl
+      names(attr(var, attr.string)) <- ln
+    } else {
+      # else remove attribute
+      attr(var, attr.string) <- NULL
+    }
   }
   return(var)
 }

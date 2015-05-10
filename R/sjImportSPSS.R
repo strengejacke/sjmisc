@@ -562,15 +562,15 @@ sji.getValueLabelValues <- function(x) {
 #'
 #' @export
 set_val_labels <- function(x, labels) {
-  return (sji.setValueLabelNameParam(x, labels))
+  return(sji.setValueLabelNameParam(x, labels))
 }
 
 
 sji.setValueLabelNameParam <- function(x, labels) {
   # any valid labels? if not, return vector
-  if (is.null(labels)) return (x)
+  if (is.null(labels)) return(x)
   if (is.vector(x) || is.atomic(x)) {
-    return (sji.setValueLabel.vector(x, labels))
+    return(sji.setValueLabel.vector(x, labels))
   } else if (is.data.frame(x) || is.matrix(x)) {
     for (i in 1:ncol(x)) {
       if (is.list(labels)) {
@@ -581,7 +581,7 @@ sji.setValueLabelNameParam <- function(x, labels) {
         warning("'labels' must be a list of same length as 'ncol(x)' or a vector.", call. = F)
       }
     }
-    return (x)
+    return(x)
   }
 }
 
@@ -823,6 +823,9 @@ get_var_labels <- function(x) {
 #' @param lab If \code{x} is a vector (single variable), use a single character string with
 #'          the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a
 #'          vector with character labels of same length as \code{ncol(x)}.
+#'          Use \code{lab = ""} to remove labels-attribute from \code{x}, resp.
+#'          set any value of vector \code{lab} to \code{""} to remove specific variable
+#'          label attributes from a data frame's variable.
 #' @param attr.string The attribute string for the variable label. To ensure
 #'          compatibility to the \code{foreign}-package, use the default string
 #'          \code{"variable.label"}. If you want to save data with the \code{haven}
@@ -830,7 +833,8 @@ get_var_labels <- function(x) {
 #'          \code{\link{write_spss}} to save SPSS files, so you don't need to take
 #'          care of this.
 #' @return \code{x}, with attached variable label attribute(s), which contains the
-#'           variable name(s).
+#'           variable name(s); or with removed label-attribute if
+#'            \code{lab = ""}.
 #'
 #' @details This package can add (and read) value and variable labels either in \code{foreign}
 #'            package style (\emph{value.labels} and \emph{variable.label}) or in
@@ -875,6 +879,25 @@ get_var_labels <- function(x) {
 #' \dontrun{
 #' sjp.frq(dummy, title = NULL)}
 #'
+#' # ---------------------------------------------
+#' # Set variable labels for data frame
+#' # ---------------------------------------------
+#' dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
+#'                     b = sample(1:4, 10, replace = TRUE),
+#'                     c = sample(1:4, 10, replace = TRUE))
+#' dummy <- set_var_labels(dummy,
+#'                         c("Variable A",
+#'                           "Variable B",
+#'                           "Variable C"))
+#' str(dummy)
+#'
+#' # remove one variable label
+#' dummy <- set_var_labels(dummy,
+#'                         c("Variable A",
+#'                           "",
+#'                           "Variable C"))
+#' str(dummy)
+#'
 #' @export
 set_var_labels <- function(x, lab, attr.string = NULL) {
   # ----------------------------
@@ -898,19 +921,27 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
                              max = ncol(x),
                              style = 3)
         for (i in 1:ncol(x)) {
-          # set variable label
-          attr(x[[i]], attr.string) <- lab[i]
-          # set names attribute. equals variable name
-          names(attr(x[[i]], attr.string)) <- colnames(x)[i]
+          if (nchar(lab[i]) == 0) {
+            attr(x[[i]], attr.string) <- NULL
+          } else {
+            # set variable label
+            attr(x[[i]], attr.string) <- lab[i]
+            # set names attribute. equals variable name
+            names(attr(x[[i]], attr.string)) <- colnames(x)[i]
+          }
           # update progress bar
           setTxtProgressBar(pb, i)
         }
         close(pb)
       }
-    } else {      attr(x, attr.string) <- lab
+    } else {
+      if (nchar(lab) == 0)
+        attr(x, attr.string) <- NULL
+      else
+        attr(x, attr.string) <- lab
     }
   }
-  return (x)
+  return(x)
 }
 
 

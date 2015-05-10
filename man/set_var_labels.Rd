@@ -11,7 +11,10 @@ set_var_labels(x, lab, attr.string = NULL)
 
 \item{lab}{If \code{x} is a vector (single variable), use a single character string with
 the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a
-vector with character labels of same length as \code{ncol(x)}.}
+vector with character labels of same length as \code{ncol(x)}.
+Use \code{lab = ""} to remove labels-attribute from \code{x}, resp.
+set any value of vector \code{lab} to \code{""} to remove specific variable
+label attributes from a data frame's variable.}
 
 \item{attr.string}{The attribute string for the variable label. To ensure
 compatibility to the \code{foreign}-package, use the default string
@@ -22,7 +25,8 @@ care of this.}
 }
 \value{
 \code{x}, with attached variable label attribute(s), which contains the
-          variable name(s).
+          variable name(s); or with removed label-attribute if
+           \code{lab = ""}.
 }
 \description{
 This function sets variable labels to a single variable or to
@@ -76,6 +80,25 @@ dummy <- set_var_labels(dummy, "Dummy-variable")
 # variable labels if parameter "title" set to NULL.
 \dontrun{
 sjp.frq(dummy, title = NULL)}
+
+# ---------------------------------------------
+# Set variable labels for data frame
+# ---------------------------------------------
+dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
+                    b = sample(1:4, 10, replace = TRUE),
+                    c = sample(1:4, 10, replace = TRUE))
+dummy <- set_var_labels(dummy,
+                        c("Variable A",
+                          "Variable B",
+                          "Variable C"))
+str(dummy)
+
+# remove one variable label
+dummy <- set_var_labels(dummy,
+                        c("Variable A",
+                          "",
+                          "Variable C"))
+str(dummy)
 }
 \seealso{
 \itemize{
