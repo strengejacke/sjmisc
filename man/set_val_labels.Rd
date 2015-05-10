@@ -16,10 +16,12 @@ the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
 If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
 character vectors. If \code{labels} is a list, it must have the same length as
 number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
-the \code{labels} will be applied to each column of \code{x}.}
+the \code{labels} will be applied to each column of \code{x}.
+Use \code{labels = ""} to remove labels-attribute from \code{x}.}
 }
 \value{
-\code{x} with attached value labels.
+\code{x} with attached value labels; or with removed label-attribute if
+           \code{labels = ""}.
 }
 \description{
 This function attaches character labels as \code{"value.labels"} attribute

@@ -528,7 +528,9 @@ sji.getValueLabelValues <- function(x) {
 #'          character vectors. If \code{labels} is a list, it must have the same length as
 #'          number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 #'          the \code{labels} will be applied to each column of \code{x}.
-#' @return \code{x} with attached value labels.
+#'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
+#' @return \code{x} with attached value labels; or with removed label-attribute if
+#'            \code{labels = ""}.
 #'
 #' @details This package can add (and read) value and variable labels either in \code{foreign}
 #'            package style (\emph{value.labels} and \emph{variable.label}) or in
@@ -591,8 +593,12 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
   if (is.null(attr.string)) attr.string <- "labels"
   # check for null
   if (!is.null(labels)) {
+    # if labels is empty string, remove labels
+    # attribute
+    if (length(labels) == 1 && nchar(labels) == 0) {
+      attr(var, attr.string) <- NULL
+    } else if (is.null(var) || is.character(var)) {
     # string varibles can't get value labels
-    if (is.null(var) || is.character(var)) {
       warning("Can't attach value labels to string or NULL vectors.", call. = F)
     } else {
       # check if var is a factor
@@ -658,7 +664,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
       }
     }
   }
-  return (var)
+  return(var)
 }
 
 
