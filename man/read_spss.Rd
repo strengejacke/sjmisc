@@ -39,14 +39,20 @@ Import data from SPSS, including NA's, value and variable labels.
 This is a wrapper function for \code{\link[haven]{read_spss}} of the
         \code{haven} package and \code{\link[foreign]{read.spss}} of the
         \code{foreign} package. This function adds value and variable
-        labels as attributes to the imported variables of the data frame. \cr \cr
+        labels as attributes to the imported variables of the data frame.
+        \cr \cr
         With attached value and variable labels, most functions of the
         \code{sjPlot} package automatically detect labels and uses them as axis,
         legend or title labels in plots (\code{sjp.}-functions) respectively
-        as column or row headers in table outputs (\code{sjt.}-functions).
-        Use \code{options(autoSetValueLabels = FALSE)}
-        and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-        label detection.
+        as column or row headers in table outputs (\code{sjt.}-functions). See
+        \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
+        for more details.
+        \cr \cr
+        When working with other packages, you can, e.g., use
+        \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
+        to get a vector of value and variable labels, which can then be
+        used with other functions like \code{\link{barplot}} etc.
+        See 'Examples' from \code{\link{get_val_labels}}.
 }
 \examples{
 \dontrun{

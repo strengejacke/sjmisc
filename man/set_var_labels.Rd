@@ -37,25 +37,10 @@ This function sets variable labels to a single variable or to
                (see details).
 }
 \details{
-This package can add (and read) value and variable labels either in \code{foreign}
-           package style (\emph{value.labels} and \emph{variable.label}) or in
-           \code{haven} package style (\emph{labels} and \emph{label}). By default,
-           the \code{haven} package style is used. The \code{sjPlot} package accesses
-           these attributes to automatically read label attributes for labelling
-           axes categories and titles or table rows and columns. \cr Furthermore,
-           value and variable labels are used when saving data, e.g. to SPSS
-           (see \code{\link{write_spss}}), which means that the written SPSS file
-           contains proper labels for each variable. \cr
-           You can set a default label style via \code{options(value_labels = "haven")}
-           or \code{options(value_labels = "foreign")}.
+See 'Details' in \code{\link{get_val_labels}}
 }
 \note{
-With attached value and variable labels, most functions of the \code{sjPlot} package
-       automatically detect labels and uses them as axis, legend or title labels
-       in plots (\code{sjp.}-functions) respectively as column or row headers
-       in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
-       and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-       label detection.
+See 'Note' in \code{\link{get_val_labels}}
 }
 \examples{
 # sample data set, imported from SPSS. Variable labels are attached

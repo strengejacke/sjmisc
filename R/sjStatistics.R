@@ -521,7 +521,7 @@ pseudo_r2 <- function(x) {
 }
 
 
-#' @title Computes Tjur's Coefficient of Discrimination (Pseudo R-squared)
+#' @title Computes Tjur's Coefficient of Discrimination
 #' @name cod
 #'
 #' @description This method calculates the Coefficient of Discrimination \code{D}
@@ -599,9 +599,9 @@ cronb <- function(df) {
   df <- na.omit(df)
   if (is.null(ncol(df)) || ncol(df) < 2) {
     warning("Too less columns in this factor to calculate alpha value!", call. = F)
-    return (NULL)
+    return(NULL)
   }
-  return (dim(df)[2] / (dim(df)[2] - 1) * (1 - sum(apply(df, 2, var)) / var(rowSums(df))))
+  return(dim(df)[2] / (dim(df)[2] - 1) * (1 - sum(apply(df, 2, var)) / var(rowSums(df))))
 }
 
 
@@ -683,7 +683,7 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
   # -----------------------------------
   if (!is.matrix(x) && !is.data.frame(x)) {
     warning("'x' needs to be a data frame or matrix.", call. = F)
-    return (NULL)
+    return(NULL)
   }
   # -----------------------------------
   # remember item (column) names for return value
@@ -809,7 +809,7 @@ mic <- function(data, corMethod="pearson") {
       }
     }
   }
-  return (mean(meanic))
+  return(mean(meanic))
 }
 
 
@@ -848,11 +848,11 @@ table_values <- function(tab, digits=2) {
   # -------------------------------------
   # return results
   # -------------------------------------
-  invisible (structure(class = "sjutablevalues",
-                       list(cell = tab.cell,
-                            row = tab.row,
-                            col = tab.col,
-                            expected = tab.expected)))
+  invisible(structure(class = "sjutablevalues",
+                      list(cell = tab.cell,
+                           row = tab.row,
+                           col = tab.col,
+                           expected = tab.expected)))
 }
 
 
@@ -1073,7 +1073,7 @@ is_crossed <- function(f1, f2) {
   tab <- table(f1, f2)
   # for crossed factors, we should have no zeros in any rows
   # (i.e. each level of f1 also contains any level of f2)
-  return (!any(apply(tab, 1, function(x) any(x==0)) == TRUE))
+  return(!any(apply(tab, 1, function(x) any(x == 0)) == TRUE))
 }
 
 
@@ -1121,15 +1121,15 @@ is_nested <- function(f1, f2) {
   # (or column) that is not zero. If we found more, factors are not nested
   # or rows and columns have to be swapped.
   # check if f1 is nested within f2
-  nested <- !any(apply(tab, 1, function(x) sum(x!=0) > 1))
+  nested <- !any(apply(tab, 1, function(x) sum(x != 0) > 1))
   if (nested) message("'f1' is nested within 'f2'")
   # swap rows and columns to check whether factors are nested
   # check whether f2 is nested within f1
   if (!nested) {
-    nested <- !any(apply(tab, 2, function(x) sum(x!=0) > 1))
+    nested <- !any(apply(tab, 2, function(x) sum(x != 0) > 1))
     if (nested) message("'f2' is nested within 'f1'")
   }
-  return (nested)
+  return(nested)
 }
 
 

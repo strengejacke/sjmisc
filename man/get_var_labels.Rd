@@ -11,42 +11,22 @@ get_var_labels(x)
 }
 \value{
 A named char vector with all variable labels from the data frame,
-          or a simple string vector with the variable label, if \code{x} is a variable.
+          or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
 }
 \description{
 This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame, returns the all variable labels as \code{\link{list}} object
+                 \item if \code{x} is a data frame, returns the all variable labels as names character vector of length \code{ncol(x)}.
                  \item or, if \code{x} is a vector, returns the variable label as string.
                  }
 }
 \details{
-This package can add (and read) value and variable labels either in \code{foreign}
-           package style (\emph{value.labels} and \emph{variable.label}) or in
-           \code{haven} package style (\emph{labels} and \emph{label}). By default,
-           the \code{haven} package style is used. The \code{sjPlot} package accesses
-           these attributes to automatically read label attributes for labelling
-           axes categories and titles or table rows and columns. \cr \cr
-           Furthermore, value and variable labels are used when saving data, e.g. to SPSS
-           (see \code{\link{write_spss}}), which means that the written SPSS file
-           contains proper labels for each variable. \cr \cr
-           You can set a default label style via \code{options(value_labels = "haven")}
-           or \code{options(value_labels = "foreign")}.
+See 'Details' in \code{\link{get_val_labels}}
 }
 \note{
-This function only works with vectors that have value and variable
-       labels attached. This is automatically done by importing data sets
-       with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
-       function or labels can manually be added using the \code{\link{set_val_labels}}
-       and \code{\link{set_var_labels}} functions. \cr \cr
-       With attached value and variable labels, most functions of the \code{sjPlot} package
-       automatically detect labels and uses them as axis, legend or title labels
-       in plots (\code{sjp.}-functions) respectively as column or row headers
-       in table outputs (\code{sjt.}-functions). Use \code{options(autoSetValueLabels = FALSE)}
-       and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-       label detection.
+See 'Note' in \code{\link{get_val_labels}}
 }
 \examples{
 # import SPSS data set
@@ -69,6 +49,16 @@ get_var_labels(efc$e42dep)
 
 # alternative way
 get_var_labels(efc)["e42dep"]
+
+# load sample data. This dataset has
+# attached value and variable labels
+data(efc2)
+# simple barplot
+barplot(table(efc2$e42dep))
+# get value labels to annotate barplot
+barplot(table(efc2$e42dep),
+        names.arg = get_val_labels(efc2$e42dep),
+        main = get_var_labels(efc2$e42dep))
 }
 \seealso{
 \itemize{
