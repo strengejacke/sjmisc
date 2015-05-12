@@ -10,11 +10,11 @@ is_num_fac(x)
 \item{x}{a \code{\link{factor}}.}
 }
 \value{
-Logical, \code{TRUE} if factors has numeric factor levels only,
+Logical, \code{TRUE} if factor has numeric factor levels only,
           \code{FALSE} otherwise.
 }
 \description{
-This function checks whether a factors has only numeric or
+This function checks whether a factor has only numeric or
                any non-numeric factor levels.
 }
 \examples{

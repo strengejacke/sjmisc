@@ -4,22 +4,31 @@
 \alias{rmse}
 \title{Compute root mean squared error (RMSE)}
 \usage{
-rmse(fit)
+rmse(fit, normalized = FALSE)
 }
 \arguments{
 \item{fit}{a fitted linear model of class \code{\link{lm}},
 \code{\link[lme4]{merMod}} (lme4) or \code{\link[nlme]{lme}} (nlme).}
+
+\item{normalized}{logical, use \code{TRUE} if normalized rmse should be returned.}
 }
 \value{
-The root mean squared error of \code{fit}.
+The root mean squared error of \code{fit}; or the normalized
+          root mean squared error of \code{fit} if \code{normalized = TRUE}.
 }
 \description{
 Compute root mean squared error  of fitted linear (mixed effects) models.
+}
+\details{
+For the normalized RMSE, lower values indicate less residual variance.
 }
 \examples{
 data(efc)
 fit <- lm(barthtot ~ c160age + c12hour, data=efc)
 rmse(fit)
+}
+\references{
+\href{http://en.wikipedia.org/wiki/Root-mean-square_deviation}{Wikipedia: RMSD}
 }
 \seealso{
 \code{\link{cv}}

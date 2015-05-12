@@ -21,7 +21,7 @@ A new variable with recoded category values, where \code{lowest} indicates the l
           value; or a data frame where variables have been recoded as described.
 }
 \description{
-Recodes (or "renumbers") the categories of a variables \code{var} into new category values, beginning
+Recodes (or "renumbers") the categories of \code{var} into new category values, beginning
                with the lowest value specified by parameter \code{lowest}. Useful if you want
                to recode dummy variables with 1/2 coding to 0/1 coding, or recoding scales from
                1-4 to 0-3 etc.
@@ -51,6 +51,6 @@ recode_to(dummy, 1, 3)
 }
 \seealso{
 \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
-           for setting \code{NA} values.
+           for setting \code{\link{NA}} values.
 }
 

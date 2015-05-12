@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{mic}
 \alias{mic}
-\title{Computes a mean inter-item-correlation.}
+\title{Compute mean inter-item-correlation}
 \usage{
 mic(data, corMethod = "pearson")
 }
@@ -21,7 +21,7 @@ The value of the computed mean inter-item-correlation.
 This function calculates a mean inter-item-correlation, i.e.
                a correlation matrix of \code{data} will be computed (unless
                \code{data} is already a \code{\link{cor}}-object) and the mean
-               of all added item's correlation values is returned.
+               of the sum of all item's correlation values is returned.
                Requires either a data frame or a computed \code{\link{cor}}-object.
 }
 \examples{

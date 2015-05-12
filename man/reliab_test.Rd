@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{reliab_test}
 \alias{reliab_test}
-\title{Performs a reliability test on an item scale.}
+\title{Performs a reliability test on an item scale}
 \usage{
 reliab_test(x, scaleItems = FALSE, digits = 3)
 }

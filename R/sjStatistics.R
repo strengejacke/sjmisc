@@ -482,7 +482,7 @@ hoslem_gof <- function(x, g = 10) {
 }
 
 
-#' @title Computes Nagelkerke's and Cox-Snell's Pseudo R-squared
+#' @title Compute Nagelkerke's and Cox-Snell's Pseudo R-squared
 #' @name pseudo_r2
 #'
 #' @description This method calculates Nagelkerke's and Cox-Snell's
@@ -605,7 +605,7 @@ cronb <- function(df) {
 }
 
 
-#' @title Performs a reliability test on an item scale.
+#' @title Performs a reliability test on an item scale
 #' @name reliab_test
 #' @description This function calculates the item discriminations (corrected item-total
 #'                correlations for each item of \code{x} with the remaining items) and
@@ -747,12 +747,12 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 }
 
 
-#' @title Computes a mean inter-item-correlation.
+#' @title Compute mean inter-item-correlation
 #' @name mic
 #' @description This function calculates a mean inter-item-correlation, i.e.
 #'                a correlation matrix of \code{data} will be computed (unless
 #'                \code{data} is already a \code{\link{cor}}-object) and the mean
-#'                of all added item's correlation values is returned.
+#'                of the sum of all item's correlation values is returned.
 #'                Requires either a data frame or a computed \code{\link{cor}}-object.
 #'
 #' @param data A correlation object (see \code{\link{cor}}-function), or a data frame
@@ -800,7 +800,7 @@ mic <- function(data, corMethod="pearson") {
   for (j in 1:(ncol(corr) - 1)) {
     # first correlation is always "1" (self-correlation)
     for (i in (j + 1):nrow(corr)) {
-      # check four valid bound
+      # check for valid bound
       if (i <= nrow(corr) && j <= ncol(corr)) {
         # add up all subsequent values
         meanic <- c(meanic, corr[i, j])
@@ -987,9 +987,16 @@ cv <- function(x) {
 #'
 #' @param fit a fitted linear model of class \code{\link{lm}},
 #'          \code{\link[lme4]{merMod}} (lme4) or \code{\link[nlme]{lme}} (nlme).
-#' @return The root mean squared error of \code{fit}.
+#' @param normalized logical, use \code{TRUE} if normalized rmse should be returned.
+#'
+#' @return The root mean squared error of \code{fit}; or the normalized
+#'           root mean squared error of \code{fit} if \code{normalized = TRUE}.
 #'
 #' @seealso \code{\link{cv}}
+#'
+#' @references \href{http://en.wikipedia.org/wiki/Root-mean-square_deviation}{Wikipedia: RMSD}
+#'
+#' @details For the normalized RMSE, lower values indicate less residual variance.
 #'
 #' @examples
 #' data(efc)
@@ -997,7 +1004,21 @@ cv <- function(x) {
 #' rmse(fit)
 #'
 #' @export
-rmse <- function(fit) sqrt(mean(residuals(fit)^2, na.rm = TRUE))
+rmse <- function(fit, normalized = FALSE) {
+  if (normalized == FALSE) {
+    retval <- sqrt(mean(residuals(fit)^2, na.rm = TRUE))
+  } else {
+    if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
+      resp <- lme4::getME(fit, "y")
+    } else if (any(class(fit) == "lme")) {
+      resp <- unname(nlme::getResponse(fit))
+    } else {
+      resp <- fit$model[[1]]
+    }
+    retval <- sqrt(mean(residuals(fit)^2, na.rm = TRUE)) / (max(resp, na.rm = T) - min(resp, na.rm = T))
+  }
+  retval
+}
 
 
 #' @title Plot Levene-Test for One-Way-Anova

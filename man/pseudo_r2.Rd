@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{pseudo_r2}
 \alias{pseudo_r2}
-\title{Computes Nagelkerke's and Cox-Snell's Pseudo R-squared}
+\title{Compute Nagelkerke's and Cox-Snell's Pseudo R-squared}
 \usage{
 pseudo_r2(x)
 }

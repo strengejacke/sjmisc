@@ -13,7 +13,8 @@ group_str(strings, maxdist = 2, method = "lv", strict = FALSE,
 \item{maxdist}{the maximum distance between two string elements, which is allowed to treat two
 elements as similar or equal.}
 
-\item{method}{Method for distance calculation. The default is \code{"lv"}. See \code{stringdist} package for details.}
+\item{method}{Method for distance calculation. The default is \code{"lv"}. See
+\code{\link[stringdist]{stringdist}} package for details.}
 
 \item{strict}{if \code{TRUE}, value matching is more strictly. See examples for details.}
 
@@ -30,18 +31,24 @@ character vector \code{strings}.}
 A character vector where similar string elements (values) are recoded into a new, single value.
 }
 \description{
-This function groups elements of a string vector (character or string variable) according
-               to the element's distance. The more similar two string elements are, the higher is the
+This function groups elements of a string vector (character or string
+               variable) according to the element's distance ('similatiry'). The
+               more similar two string elements are, the higher is the
                chance to be combined into a group.
 }
 \examples{
 \dontrun{
-oldstring <- c("Hello", "Helo", "Hole", "Apple", "Ape", "New", "Old", "System", "Systemic")
+oldstring <- c("Hello", "Helo", "Hole", "Apple",
+               "Ape", "New", "Old", "System", "Systemic")
 newstring <- group_str(oldstring)
-sjt.frq(data.frame(oldstring, newstring), removeStringVectors = FALSE, autoGroupStrings = FALSE)
+sjt.frq(data.frame(oldstring, newstring),
+        removeStringVectors = FALSE,
+        autoGroupStrings = FALSE)
 
 newstring <- group_str(oldstring, strict = TRUE)
-sjt.frq(data.frame(oldstring, newstring), removeStringVectors = FALSE, autoGroupStrings = FALSE)}
+sjt.frq(data.frame(oldstring, newstring),
+        removeStringVectors = FALSE,
+        autoGroupStrings = FALSE)}
 }
 \seealso{
 \code{\link{str_pos}}
