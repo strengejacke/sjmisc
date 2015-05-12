@@ -33,6 +33,16 @@ A grouped variable, either as numeric or as factor (see paramter \code{asNumeric
 \description{
 Recode count variables into grouped factors.
 }
+\details{
+If \code{groupsize} is set to a specific value, the variable is recoded
+           into several groups, where each group has a maximum range of \code{groupsize}.
+           Hence, the amount of groups differ depending on the range of \code{var}.
+           \cr \cr
+           If \code{groupsize = "auto"}, the variable is recoded into a maximum of
+           \code{autoGroupCount} groups. Hence, independent from the range of
+           \code{var}, always the same amount of groups are created, so the range
+           within each group differs (depending on \code{var}'s range).
+}
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))
 age.grp <- group_var(age, 10)

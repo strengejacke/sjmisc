@@ -933,7 +933,8 @@ std_e <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
 #' @details The advantage of the cv is that it is unitless. This allows
 #'            coefficient of variation to be compared to each other in ways
 #'            that other measures, like standard deviations or root mean
-#'            squared residuals, cannot be \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{source: UCLA-FAQ}.
+#'            squared residuals, cannot be
+#'            (\href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{source: UCLA-FAQ}).
 #'
 #' @seealso \code{\link{rmse}}
 #'

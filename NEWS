@@ -7,7 +7,7 @@ New functions:
 * "pseudo_r2" to compute the Nagelkerke's and Cox-Snell's Pseudo-R2 for logistic regression models.
 
 Changes to functions:
-* Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by `lmerTest` package).
+* Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by "lmerTest" package).
 * "mean_n" has a "digit" parameter to round returned mean values.
 * "rec" and "recode_to" now also accept data frames as parameter.
 * "chisq_gof" now accepts "glm"-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.

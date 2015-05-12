@@ -8,7 +8,7 @@ group_labels(var, groupsize = 5, rightInterval = FALSE,
   autoGroupCount = 30)
 }
 \arguments{
-\item{var}{The scale variable, which should recoded into groups.}
+\item{var}{The variable, which should recoded into groups.}
 
 \item{groupsize}{The group-size, i.e. the range for grouping. By default, for each 5 categories
 new group is built, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
@@ -32,6 +32,9 @@ A string vector containing labels based on the grouped counts of \code{var},
 \description{
 Creates the related labels for the grouped variable created by
                the \code{\link{group_var}} function.
+}
+\details{
+See 'Details' in \code{\link{group_var}}.
 }
 \note{
 Usually you should use the same values for \code{groupsize} and

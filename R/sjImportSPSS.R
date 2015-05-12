@@ -687,11 +687,11 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
 
 #' @title Check whether a factor has numeric levels only
 #' @name is_num_fac
-#' @description This function checks whether a factors has only numeric or
+#' @description This function checks whether a factor has only numeric or
 #'                any non-numeric factor levels.
 #'
 #' @param x a \code{\link{factor}}.
-#' @return Logical, \code{TRUE} if factors has numeric factor levels only,
+#' @return Logical, \code{TRUE} if factor has numeric factor levels only,
 #'           \code{FALSE} otherwise.
 #'
 #' @examples

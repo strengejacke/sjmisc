@@ -105,6 +105,15 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
 #'
 #' @return A grouped variable, either as numeric or as factor (see paramter \code{asNumeric}).
 #'
+#' @details If \code{groupsize} is set to a specific value, the variable is recoded
+#'            into several groups, where each group has a maximum range of \code{groupsize}.
+#'            Hence, the amount of groups differ depending on the range of \code{var}.
+#'            \cr \cr
+#'            If \code{groupsize = "auto"}, the variable is recoded into a maximum of
+#'            \code{autoGroupCount} groups. Hence, independent from the range of
+#'            \code{var}, always the same amount of groups are created, so the range
+#'            within each group differs (depending on \code{var}'s range).
+#'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
 #' age.grp <- group_var(age, 10)
@@ -148,7 +157,7 @@ group_var <- function(var,
   levels(var) <- c(1:length(levels(var)))
   # convert to numeric?
   if (asNumeric) var <- as.numeric(as.character(var))
-  return (var)
+  return(var)
 }
 
 
@@ -167,7 +176,7 @@ group_var <- function(var,
 #'         \code{rightInterval} as used in the \code{\link{group_var}} function
 #'         if you want to create labels for the related recoded variable.
 #'
-#' @param var The scale variable, which should recoded into groups.
+#' @param var The variable, which should recoded into groups.
 #' @param groupsize The group-size, i.e. the range for grouping. By default, for each 5 categories
 #'          new group is built, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
 #'          resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
@@ -183,6 +192,8 @@ group_var <- function(var,
 #' @return A string vector containing labels based on the grouped counts of \code{var},
 #'           formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc.
 #'           See example below.
+#'
+#' @details See 'Details' in \code{\link{group_var}}.
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
@@ -245,7 +256,7 @@ group_labels <- function(var,
     upper <- as.numeric(subs[[1]][2])
     # Prüfen, welche Intervallgrenze ein-
     # und welche ausgeschlossen werden soll
-    if(rightInterval) {
+    if (rightInterval) {
       lower <- lower + 1
     } else {
       upper <- upper - 1
@@ -253,7 +264,7 @@ group_labels <- function(var,
     # Rückgabe des Strings
     retval[i] <- c(paste(lower, "-", upper, sep = ""))
   }
-  return (retval)
+  return(retval)
 }
 
 
@@ -278,7 +289,7 @@ group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
                                        max(var, na.rm = TRUE) + multip * groupsize,
                                        by = groupsize)),
                         right = rightInterval))
-  return (var)
+  return(var)
 }
 
 
@@ -315,7 +326,7 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
     linesep <- sprintf("\\1%s", linesep)
   }
   # create regex pattern for line break
-  pattern <- c(paste('(.{1,', wrap, '})(\\s|$)', sep=""))
+  pattern <- c(paste('(.{1,', wrap, '})(\\s|$)', sep = ""))
   # iterate all labels
   for (n in 1:length(labels)) {
     # check if wrap exceeds lengths of labels
@@ -849,14 +860,16 @@ weight <- function(var, weights) {
 #'
 #' @seealso \code{\link{str_pos}}
 #'
-#' @description This function groups elements of a string vector (character or string variable) according
-#'                to the element's distance. The more similar two string elements are, the higher is the
+#' @description This function groups elements of a string vector (character or string
+#'                variable) according to the element's distance ('similatiry'). The
+#'                more similar two string elements are, the higher is the
 #'                chance to be combined into a group.
 #'
 #' @param strings a character vector with string elements
 #' @param maxdist the maximum distance between two string elements, which is allowed to treat two
 #'          elements as similar or equal.
-#' @param method Method for distance calculation. The default is \code{"lv"}. See \code{stringdist} package for details.
+#' @param method Method for distance calculation. The default is \code{"lv"}. See
+#'          \code{\link[stringdist]{stringdist}} package for details.
 #' @param strict if \code{TRUE}, value matching is more strictly. See examples for details.
 #' @param trim.whitespace if \code{TRUE} (default), leading and trailing white spaces will
 #'          be removed from string values.
@@ -869,12 +882,17 @@ weight <- function(var, weights) {
 #'
 #' @examples
 #' \dontrun{
-#' oldstring <- c("Hello", "Helo", "Hole", "Apple", "Ape", "New", "Old", "System", "Systemic")
+#' oldstring <- c("Hello", "Helo", "Hole", "Apple",
+#'                "Ape", "New", "Old", "System", "Systemic")
 #' newstring <- group_str(oldstring)
-#' sjt.frq(data.frame(oldstring, newstring), removeStringVectors = FALSE, autoGroupStrings = FALSE)
+#' sjt.frq(data.frame(oldstring, newstring),
+#'         removeStringVectors = FALSE,
+#'         autoGroupStrings = FALSE)
 #'
 #' newstring <- group_str(oldstring, strict = TRUE)
-#' sjt.frq(data.frame(oldstring, newstring), removeStringVectors = FALSE, autoGroupStrings = FALSE)}
+#' sjt.frq(data.frame(oldstring, newstring),
+#'         removeStringVectors = FALSE,
+#'         autoGroupStrings = FALSE)}
 #'
 #' @export
 group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.whitespace = TRUE, remove.empty = TRUE, showProgressBar = FALSE) {
@@ -889,10 +907,6 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
   # -------------------------------------
   if (!is.character(strings)) strings <- as.character(strings)
   # -------------------------------------
-  # helper function to trim white spaces
-  # -------------------------------------
-  trim <- function (x) gsub("^\\s+|\\s+$", "", x)
-  # -------------------------------------
   # trim white spaces
   # -------------------------------------
   if (trim.whitespace) {
@@ -906,7 +920,7 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
     for (i in 1:length(strings)) {
       if (0 == nchar(strings[i])) removers <- c(removers, i)
     }
-    if (length(removers)>0) strings <- strings[-removers]
+    if (length(removers) > 0) strings <- strings[-removers]
   }
   # -------------------------------------
   # create matrix from string values of variable
@@ -930,7 +944,7 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
         if (any(pel == curel)) elfound <- TRUE
       }
     }
-    return (elfound)
+    return(elfound)
   }
   # -------------------------------------
   # create progress bar
@@ -1038,8 +1052,24 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
   # e.g. the three values "hello", "holle" and "hole"
   # will be "recoded" into on value "hello, holle, hole"
   # -------------------------------------
-  return (strings.new)
+  return(strings.new)
 }
+
+
+#' @title Trim leading and trailing whitespaces from strings
+#' @name trim
+#'
+#' @param x a character vector or string
+#'
+#' @return Trimmed \code{x}, i.e. with leading and trailing spaces removed.
+#'
+#' @examples
+#' trim("white space at end ")
+#' trim(" white space at start and end ")
+#'
+#' @export
+trim <- function(x) gsub("^\\s+|\\s+$", "", x)
+
 
 
 #' @title Find partial matching and close distance elements in strings
