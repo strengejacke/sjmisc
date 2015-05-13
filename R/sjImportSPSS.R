@@ -950,12 +950,12 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #'            retain labels) and \code{\link{to_value}} to convert a factor into
 #'            a numeric variable.
 #'
-#' @param x A variable of type \code{\link{numeric}}, \code{\link{atomic}}
+#' @param x A variable of type \code{\link{numeric}}, \code{\link{atomic}},
 #'          \code{\link{factor}} or \code{\link[haven]{labelled}} (see \code{haven} package)
 #'          \emph{with associated value labels} (see \code{\link{set_val_labels}}),
 #'          respectively a data frame with such variables.
 #' @return A factor variable with the associated value labels as factor levels, or a
-#'           data frame with such factor variables (if \code{x} was a data frame.
+#'           data frame with such factor variables (if \code{x} was a data frame).
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
 #'         or \code{\link{set_val_labels}}) will be removed  when converting variables to factors.
@@ -1020,7 +1020,7 @@ to_label_helper <- function(x) {
 #'
 #' @description This function converts a variable into a factor, but keeps
 #'                variable and value labels, if these are attached as attributes
-#'                to the variale \code{var}. See examples.
+#'                to the variale. See examples.
 #'
 #' @seealso \code{\link{to_value}} to convert a factor into a numeric value and
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
@@ -1032,11 +1032,14 @@ to_label_helper <- function(x) {
 #'           a data frame with factor variables (including variable and value labels)
 #'           if \code{x} was a data frame.
 #'
-#' @note This function only works with vectors that have value and variable
-#'        labels attached. This is automatically done by importing SPSS data sets
-#'        with the \code{\link{read_spss}} function and can manually be applied
-#'        with the \code{\link{set_val_labels}} and \code{\link{set_var_labels}}
-#'        functions.
+#' @note This function is intended for use with vectors that have value and variable
+#'        labels attached. Unlike \code{\link{as.factor}}, \code{to_fac} converts
+#'        a variable into a factor and retains the value and variable label attributes.
+#'        \cr \cr
+#'        Attaching labels is automatically done by importing data sets
+#'        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
+#'        Else, value and variable labels can be manually added to vectors
+#'        with \code{\link{set_val_labels}} and \code{\link{set_var_labels}}.
 #'
 #' @examples
 #' \dontrun{

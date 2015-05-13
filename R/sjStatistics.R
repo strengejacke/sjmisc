@@ -1,5 +1,5 @@
 # bind global variables
-if(getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
 
 
 #' @title Compute eta-squared of fitted anova
@@ -58,7 +58,7 @@ eta_sq <- function(...) {
     fit <- aov(depVar ~ grpVar)
   }
   # return eta squared
-  return (summary.lm(fit)$r.squared)
+  return(summary.lm(fit)$r.squared)
   # return (1 - var(fit$residuals, na.rm = T) / var(fit$model[,1], na.rm = T))
 }
 
@@ -100,7 +100,7 @@ std_beta <- function(fit, include.ci = FALSE) {
   # if we have merMod object (lme4), we need
   # other function to compute std. beta
   if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
-    return (sjs.stdmm(fit))
+    return(sjs.stdmm(fit))
   } else {
     b <- summary(fit)$coef[-1, 1]
     sx <- sapply(as.data.frame(fit$model)[-1], sd, na.rm = T)
@@ -111,9 +111,9 @@ std_beta <- function(fit, include.ci = FALSE) {
     # check if confidence intervals should also be returned
     # if yes, create data frame with sb and ci
     if (include.ci) {
-      return (data.frame(beta = beta,
-                         ci.low = (beta - beta.se * 1.96),
-                         ci.hi = (beta + beta.se * 1.96)))
+      return(data.frame(beta = beta,
+                        ci.low = (beta - beta.se * 1.96),
+                        ci.hi = (beta + beta.se * 1.96)))
     } else {
       return(beta)
     }
@@ -994,9 +994,24 @@ cv <- function(x) {
 #'
 #' @seealso \code{\link{cv}}
 #'
-#' @references \href{http://en.wikipedia.org/wiki/Root-mean-square_deviation}{Wikipedia: RMSD}
+#' @references \itemize{
+#'              \item \href{http://en.wikipedia.org/wiki/Root-mean-square_deviation}{Wikipedia: RMSD}
+#'              \item \href{http://www.theanalysisfactor.com/assessing-the-fit-of-regression-models/}{Grace-Martin K: Assessing the Fit of Regression Models}
+#'             }
 #'
-#' @details For the normalized RMSE, lower values indicate less residual variance.
+#' @note The RMSE is the square root of the variance of the residuals and indicates
+#'         the absolute fit of the model to the data (difference between observed data
+#'         to model's predicted values). "RMSE can be interpreted as the standard
+#'         deviation of the unexplained variance, and has the useful property
+#'         of being in the same units as the response variable. Lower values
+#'         of RMSE indicate better fit. RMSE is a good measure of how accurately
+#'         the model predicts the response, and is the most important criterion
+#'         for fit if the main purpose of the model is prediction."
+#'         (Grace-Martin K: Assessing the Fit of Regression Models).
+#'         \cr \cr
+#'         The normalized RMSE is the proportion of the RMSE related to the
+#'         range of the response variable. Hence, lower values indicate
+#'         less residual variance.
 #'
 #' @examples
 #' data(efc)
@@ -1005,9 +1020,14 @@ cv <- function(x) {
 #'
 #' @export
 rmse <- function(fit, normalized = FALSE) {
-  if (normalized == FALSE) {
-    retval <- sqrt(mean(residuals(fit)^2, na.rm = TRUE))
-  } else {
+  # ------------------------------------------
+  # compute rmse
+  # ------------------------------------------
+  rmse_val <- sqrt(mean(residuals(fit)^2, na.rm = TRUE))
+  # ------------------------------------------
+  # if normalized, divide by range of response
+  # ------------------------------------------
+  if (normalized) {
     if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
       resp <- lme4::getME(fit, "y")
     } else if (any(class(fit) == "lme")) {
@@ -1015,9 +1035,9 @@ rmse <- function(fit, normalized = FALSE) {
     } else {
       resp <- fit$model[[1]]
     }
-    retval <- sqrt(mean(residuals(fit)^2, na.rm = TRUE)) / (max(resp, na.rm = T) - min(resp, na.rm = T))
+    rmse_val <- rmse_val / (max(resp, na.rm = T) - min(resp, na.rm = T))
   }
-  retval
+  rmse_val
 }
 
 

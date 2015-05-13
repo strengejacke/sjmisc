@@ -24,20 +24,16 @@ This function weights the variable \code{var} by
                This function sums up all \code{weights} values of the associated
                categories of \code{var}, whereas the \code{\link{weight}} function
                uses a \code{\link{xtabs}} formula to weight cases. Thus, this function
-               may return a value with a different length than that from \code{var}.
+               may return a vector of different length than \code{var}.
 }
 \note{
-The values of the returned vector are in sorted order, whereas the categories
-       of the original \code{var} may be spread randomly. Hence, \code{var} can't be
-       used, for instance, for further cross tabulation. In case you want to have
-       weighted contingency tables or (grouped) box plots etc., use the \code{weightBy}
-       parameter of most functions.
+See 'Note' in \code{\link{weight}}
 }
 \examples{
 v <- sample(1:4, 20, TRUE)
 table(v)
 w <- abs(rnorm(20))
-table(weight2(v,w))
+table(weight2(v, w))
 }
 \seealso{
 \code{\link{weight}}

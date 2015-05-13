@@ -297,17 +297,21 @@ group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
 #' @name word_wrap
 #'
 #' @description Insert line breaks in long character strings. Useful if you want to wordwrap
-#'                plot labels.
+#'                labels / titles for plots or tables.
 #'
-#' @param labels The label(s) (i.e. character string). You can also pass several strings as vector
-#'          (e.g. \code{labels=c("first long string", "second long string")})
-#' @param wrap The amount of chars per line (i.e. line length)
-#' @param linesep By default, this parameter is \code{NULL} and a regular new line
-#'          string is used. For HTML-needs, for instance, \code{linesep} could be \code{"<br>"}.
+#' @param labels the label(s) (i.e. character string) where a line break should be
+#'          inserted. You can also pass several strings as vector
+#'          (e.g. \code{labels = c("first long string", "second long string")})
+#' @param wrap the maximum amount of chars per line (i.e. line length)
+#' @param linesep by default, this parameter is \code{NULL} and a regular new line
+#'          string (\code{"\\n"}) is used. For HTML-needs, for instance, \code{linesep}
+#'          could be \code{"<br>"}.
 #' @return New label(s) with line breaks inserted at every \code{wrap}'s position.
 #'
 #' @examples
 #' word_wrap(c("A very long string", "And another even longer string!"), 10)
+#'
+#' message(word_wrap("Much too long string for just one line!", 15))
 #'
 #' @export
 word_wrap <- function(labels, wrap, linesep=NULL) {
@@ -773,7 +777,7 @@ set_na_helper <- function(var, values) {
 #'                This function sums up all \code{weights} values of the associated
 #'                categories of \code{var}, whereas the \code{\link{weight}} function
 #'                uses a \code{\link{xtabs}} formula to weight cases. Thus, this function
-#'                may return a value with a different length than that from \code{var}.
+#'                may return a vector of different length than \code{var}.
 #'
 #' @seealso \code{\link{weight}}
 #'
@@ -784,17 +788,13 @@ set_na_helper <- function(var, values) {
 #'
 #' @return The weighted \code{var}.
 #'
-#' @note The values of the returned vector are in sorted order, whereas the categories
-#'        of the original \code{var} may be spread randomly. Hence, \code{var} can't be
-#'        used, for instance, for further cross tabulation. In case you want to have
-#'        weighted contingency tables or (grouped) box plots etc., use the \code{weightBy}
-#'        parameter of most functions.
+#' @note See 'Note' in \code{\link{weight}}
 #'
 #' @examples
 #' v <- sample(1:4, 20, TRUE)
 #' table(v)
 #' w <- abs(rnorm(20))
-#' table(weight2(v,w))
+#' table(weight2(v, w))
 #'
 #' @export
 weight2 <- function(var, weights) {
@@ -804,7 +804,7 @@ weight2 <- function(var, weights) {
     newcount = round(sum(weights[which(var == items[i])]))
     newvar <- c(newvar, rep(items[i], newcount))
   }
-  return (newvar)
+  return(newvar)
 }
 
 
@@ -822,8 +822,8 @@ weight2 <- function(var, weights) {
 #'
 #' @return The weighted \code{var}.
 #'
-#' @note The values of the returned vector are in sorted order, whereas the categories
-#'        of the original \code{var} may be spread randomly. Hence, \code{var} can't be
+#' @note The values of the returned vector are in sorted order, whereas the values'
+#'        order of the original \code{var} may be spread randomly. Hence, \code{var} can't be
 #'        used, for instance, for further cross tabulation. In case you want to have
 #'        weighted contingency tables or (grouped) box plots etc., use the \code{weightBy}
 #'        parameter of most functions.
@@ -832,7 +832,7 @@ weight2 <- function(var, weights) {
 #' v <- sample(1:4, 20, TRUE)
 #' table(v)
 #' w <- abs(rnorm(20))
-#' table(weight(v,w))
+#' table(weight(v, w))
 #'
 #' @export
 weight <- function(var, weights) {

@@ -7,22 +7,26 @@
 word_wrap(labels, wrap, linesep = NULL)
 }
 \arguments{
-\item{labels}{The label(s) (i.e. character string). You can also pass several strings as vector
-(e.g. \code{labels=c("first long string", "second long string")})}
+\item{labels}{the label(s) (i.e. character string) where a line break should be
+inserted. You can also pass several strings as vector
+(e.g. \code{labels = c("first long string", "second long string")})}
 
-\item{wrap}{The amount of chars per line (i.e. line length)}
+\item{wrap}{the maximum amount of chars per line (i.e. line length)}
 
-\item{linesep}{By default, this parameter is \code{NULL} and a regular new line
-string is used. For HTML-needs, for instance, \code{linesep} could be \code{"<br>"}.}
+\item{linesep}{by default, this parameter is \code{NULL} and a regular new line
+string (\code{"\\n"}) is used. For HTML-needs, for instance, \code{linesep}
+could be \code{"<br>"}.}
 }
 \value{
 New label(s) with line breaks inserted at every \code{wrap}'s position.
 }
 \description{
 Insert line breaks in long character strings. Useful if you want to wordwrap
-               plot labels.
+               labels / titles for plots or tables.
 }
 \examples{
 word_wrap(c("A very long string", "And another even longer string!"), 10)
+
+message(word_wrap("Much too long string for just one line!", 15))
 }
 

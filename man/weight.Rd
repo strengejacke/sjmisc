@@ -21,8 +21,8 @@ This function weights the variable \code{var} by
                a specific vector of \code{weights}.
 }
 \note{
-The values of the returned vector are in sorted order, whereas the categories
-       of the original \code{var} may be spread randomly. Hence, \code{var} can't be
+The values of the returned vector are in sorted order, whereas the values'
+       order of the original \code{var} may be spread randomly. Hence, \code{var} can't be
        used, for instance, for further cross tabulation. In case you want to have
        weighted contingency tables or (grouped) box plots etc., use the \code{weightBy}
        parameter of most functions.
@@ -31,7 +31,7 @@ The values of the returned vector are in sorted order, whereas the categories
 v <- sample(1:4, 20, TRUE)
 table(v)
 w <- abs(rnorm(20))
-table(weight(v,w))
+table(weight(v, w))
 }
 \seealso{
 \code{\link{weight2}}

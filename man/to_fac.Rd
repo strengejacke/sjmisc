@@ -18,14 +18,17 @@ A factor variable, including variable and value labels, respectively
 \description{
 This function converts a variable into a factor, but keeps
                variable and value labels, if these are attached as attributes
-               to the variale \code{var}. See examples.
+               to the variale. See examples.
 }
 \note{
-This function only works with vectors that have value and variable
-       labels attached. This is automatically done by importing SPSS data sets
-       with the \code{\link{read_spss}} function and can manually be applied
-       with the \code{\link{set_val_labels}} and \code{\link{set_var_labels}}
-       functions.
+This function is intended for use with vectors that have value and variable
+       labels attached. Unlike \code{\link{as.factor}}, \code{to_fac} converts
+       a variable into a factor and retains the value and variable label attributes.
+       \cr \cr
+       Attaching labels is automatically done by importing data sets
+       with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
+       Else, value and variable labels can be manually added to vectors
+       with \code{\link{set_val_labels}} and \code{\link{set_var_labels}}.
 }
 \examples{
 \dontrun{

@@ -7,14 +7,14 @@
 to_label(x)
 }
 \arguments{
-\item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}}
+\item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}},
 \code{\link{factor}} or \code{\link[haven]{labelled}} (see \code{haven} package)
 \emph{with associated value labels} (see \code{\link{set_val_labels}}),
 respectively a data frame with such variables.}
 }
 \value{
 A factor variable with the associated value labels as factor levels, or a
-          data frame with such factor variables (if \code{x} was a data frame.
+          data frame with such factor variables (if \code{x} was a data frame).
 }
 \description{
 This function converts (replaces) variable values (also of factors)
