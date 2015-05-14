@@ -36,8 +36,17 @@ The RMSE is the square root of the variance of the residuals and indicates
 }
 \examples{
 data(efc)
-fit <- lm(barthtot ~ c160age + c12hour, data=efc)
+fit <- lm(barthtot ~ c160age + c12hour, data = efc)
 rmse(fit)
+
+library(lme4)
+fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+rmse(fit)
+
+# normalized RMSE
+library(nlme)
+fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+rmse(fit, normalized = TRUE)
 }
 \references{
 \itemize{

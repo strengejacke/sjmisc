@@ -944,6 +944,17 @@ std_e <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
 #' data(efc)
 #' cv(efc$e17age)
 #'
+#' fit <- lm(neg_c_7 ~ e42dep, data = efc)
+#' cv(fit)
+#'
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' cv(fit)
+#'
+#' library(nlme)
+#' fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+#' cv(fit)
+#'
 #' @export
 cv <- function(x) {
   # check if we have a fitted linear model
@@ -952,11 +963,19 @@ cv <- function(x) {
       # dependent variable in lm
       dv <- x$model[[1]]
     } else if (any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
+      # check for package availability
+      if (!requireNamespace("lme4", quietly = TRUE)) {
+        stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+      }
       # dependent variable in lmerMod
-      dv <- x@frame[[1]]
+      dv <- lme4::getME(fit, "y")
     } else if (any(class(x) == "lme")) {
+      # check for package availability
+      if (!requireNamespace("nlme", quietly = TRUE)) {
+        stop("Package 'nlme' needed for this function to work. Please install it.", call. = FALSE)
+      }
       # dependent variable in lme
-      dv <- x$data[[1]]
+      dv <- unname(nlme::getResponse(fit))
     }
     # compute mean of dependent variable
     mw <- mean(dv, na.rm = TRUE)
@@ -1015,8 +1034,17 @@ cv <- function(x) {
 #'
 #' @examples
 #' data(efc)
-#' fit <- lm(barthtot ~ c160age + c12hour, data=efc)
+#' fit <- lm(barthtot ~ c160age + c12hour, data = efc)
 #' rmse(fit)
+#'
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' rmse(fit)
+#'
+#' # normalized RMSE
+#' library(nlme)
+#' fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+#' rmse(fit, normalized = TRUE)
 #'
 #' @export
 rmse <- function(fit, normalized = FALSE) {
@@ -1029,8 +1057,16 @@ rmse <- function(fit, normalized = FALSE) {
   # ------------------------------------------
   if (normalized) {
     if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
+      # check for package availability
+      if (!requireNamespace("lme4", quietly = TRUE)) {
+        stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+      }
       resp <- lme4::getME(fit, "y")
     } else if (any(class(fit) == "lme")) {
+      # check for package availability
+      if (!requireNamespace("nlme", quietly = TRUE)) {
+        stop("Package 'nlme' needed for this function to work. Please install it.", call. = FALSE)
+      }
       resp <- unname(nlme::getResponse(fit))
     } else {
       resp <- fit$model[[1]]

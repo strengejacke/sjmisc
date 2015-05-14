@@ -30,6 +30,17 @@ The advantage of the cv is that it is unitless. This allows
 \examples{
 data(efc)
 cv(efc$e17age)
+
+fit <- lm(neg_c_7 ~ e42dep, data = efc)
+cv(fit)
+
+library(lme4)
+fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+cv(fit)
+
+library(nlme)
+fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+cv(fit)
 }
 \references{
 \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{UCLA-FAQ: What is the coefficient of variation?}

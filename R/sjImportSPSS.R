@@ -387,7 +387,7 @@ to_sjPlot <- function(x) {
                          max = ncol(x),
                          style = 3)
     # tell user...
-    message("Cconverting from haven to sjPlot. Please wait...\n")
+    message("Converting from haven to sjPlot. Please wait...\n")
     for (i in 1:ncol(x)) {
       # remove labelled class
       if (is_labelled(x[[i]])) x[[i]] <- unclass(x[[i]])

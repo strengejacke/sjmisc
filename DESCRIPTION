@@ -9,6 +9,6 @@ Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of several utility functions for reading or writing data, recoding and labelling variables and some frequently used statistical tests.
 License: GPL-3
 Imports: MASS
-Suggests: coin, foreign, haven, lme4, stringdist
+Suggests: coin, foreign, haven, lme4, nlme, stringdist
 URL: https://github.com/sjPlot/sjmisc
 BugReports: https://github.com/sjPlot/sjmisc/issues
