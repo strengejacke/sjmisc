@@ -340,8 +340,7 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
 #'         performing goodness-of-fit test.
 #'         \cr \cr
 #'         For \code{glm}-objects, this function performs a goodness-of-fit test
-#'         based on the \code{\link[binomTools]{X2GOFtest}} function of the
-#'         \code{binomTools} package.
+#'         based on the \code{X2GOFtest} function of the \code{binomTools} package.
 #'         A well-fitting model shows no significant difference between
 #'         the model and the observed data, i.e. the reported p-values should be
 #'         greater than 0.05.
@@ -646,6 +645,7 @@ cronb <- function(df) {
 #' colnames(x) <- varlabs[c(start:end)]
 #'
 #' \dontrun{
+#' library(sjPlot)
 #' sjt.df(reliab_test(x),
 #'        describe = FALSE,
 #'        showCommentRow = TRUE,
@@ -659,6 +659,7 @@ cronb <- function(df) {
 #' \dontrun{
 #' factors <- sjt.pca(x)$factor.index
 #' findex <- sort(unique(factors))
+#' library(sjPlot)
 #' for (i in 1:length(findex)) {
 #'  rel.df <- subset(x, select = which(factors == findex[i]))
 #'  if (ncol(rel.df) >= 3) {
@@ -768,11 +769,11 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 #' # -------------------------------
 #' data(efc)
 #' # recveive first item of COPE-index scale
-#' start <- which(colnames(efc)=="c82cop1")
+#' start <- which(colnames(efc) == "c82cop1")
 #' # recveive last item of COPE-index scale
-#' end <- which(colnames(efc)=="c90cop9")
+#' end <- which(colnames(efc) == "c90cop9")
 #' # create data frame with COPE-index scale
-#' df <- as.data.frame(efc[,c(start:end)])
+#' df <- data.frame(efc[, c(start:end)])
 #'
 #' mic(df)
 #'
@@ -906,16 +907,44 @@ cramer <- function(tab) {
 
 #' @title Compute standard error for variables
 #' @name std_e
-#' @description Compute standard error for variables
+#' @description Compute standard error for variable or for all variables
+#'                of a data frame.
 #'
-#' @param x a (numeric) vector / variable.
-#' @return The standard error of variable \code{x}.
+#' @param x a (numeric) vector / variable or a data frame.
+#' @return The standard error of variable \code{x}, or for each variable
+#'           if \code{x} is a data frame.
 #'
 #' @examples
 #' std_e(rnorm(n = 100, mean = 3))
 #'
+#' data(efc)
+#' std_e(efc[, 1:3])
+#'
 #' @export
-std_e <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
+std_e <- function(x) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    # init return variables
+    stde <- c()
+    stde_names <- c()
+    # iterate all columns
+    for (i in 1:ncol(x)) {
+      # get and save standard error for each variable
+      # of the data frame
+      stde <- c(stde, std_e_helper(x[[i]]))
+      # save column name as variable name
+      stde_names <- c(stde_names, colnames(x)[i])
+    }
+    # set names to return vector
+    names(stde) <- stde_names
+    # return results
+    return(stde)
+  } else {
+    return(std_e_helper(x))
+  }
+}
+
+std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
+
 
 
 #' @title Compute coefficient of variation

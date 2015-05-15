@@ -43,15 +43,11 @@ See 'Details' in \code{\link{get_val_labels}}
 See 'Note' in \code{\link{get_val_labels}}
 }
 \examples{
-# sample data set, imported from SPSS. Variable labels are attached
-# as attribute to the data frame (so variables currently don't have this attribute)
+# sample data set, imported from SPSS.
 data(efc)
-# get variable labels
-variable.labels <- get_var_labels(efc)
-# set variable labels as attribute to each single variable of data frame
-efc <- set_var_labels(efc, variable.labels)
 
 \dontrun{
+library(sjPlot)
 sjt.frq(efc$e42dep)
 sjt.frq(data.frame(efc$e42dep, efc$e16sex))}
 
@@ -64,6 +60,7 @@ dummy <- set_var_labels(dummy, "Dummy-variable")
 # auto-detection of value labels by default, auto-detection of
 # variable labels if parameter "title" set to NULL.
 \dontrun{
+library(sjPlot)
 sjp.frq(dummy, title = NULL)}
 
 # ---------------------------------------------

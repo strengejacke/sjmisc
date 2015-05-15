@@ -50,6 +50,7 @@ x <- data.frame(efc[, c(start:end)])
 colnames(x) <- varlabs[c(start:end)]
 
 \dontrun{
+library(sjPlot)
 sjt.df(reliab_test(x),
        describe = FALSE,
        showCommentRow = TRUE,
@@ -63,6 +64,7 @@ sjt.df(reliab_test(x),
 \dontrun{
 factors <- sjt.pca(x)$factor.index
 findex <- sort(unique(factors))
+library(sjPlot)
 for (i in 1:length(findex)) {
  rel.df <- subset(x, select = which(factors == findex[i]))
  if (ncol(rel.df) >= 3) {

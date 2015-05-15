@@ -33,6 +33,7 @@ This function is intended for use with vectors that have value and variable
 \examples{
 \dontrun{
 data(efc)
+library(sjPlot)
 # normal factor conversion, loses value attributes
 efc$e42dep <- as.factor(efc$e42dep)
 sjt.frq(efc$e42dep)

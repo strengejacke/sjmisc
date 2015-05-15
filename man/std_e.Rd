@@ -7,15 +7,20 @@
 std_e(x)
 }
 \arguments{
-\item{x}{a (numeric) vector / variable.}
+\item{x}{a (numeric) vector / variable or a data frame.}
 }
 \value{
-The standard error of variable \code{x}.
+The standard error of variable \code{x}, or for each variable
+          if \code{x} is a data frame.
 }
 \description{
-Compute standard error for variables
+Compute standard error for variable or for all variables
+               of a data frame.
 }
 \examples{
 std_e(rnorm(n = 100, mean = 3))
+
+data(efc)
+std_e(efc[, 1:3])
 }
 

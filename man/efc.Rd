@@ -5,15 +5,19 @@
 \alias{efc}
 \title{Sample dataset from the EUROFAMCARE project}
 \description{
-Sample dataset from the EUROFAMCARE project
+A SPSS sample data set, read with the \code{\link[haven]{read_spss}}
+               function.
 }
 \note{
 There are two further datasets, \code{efc2} and \code{efc3}, which
-        slightly differ in their structure. \code{efc2} has already attached
-        variable label attributes to each variable. In \code{efc3}, categorical
-        variables have been converted to labelled factors, i.e. value labels
-        are set as factor levels. However, factors in \code{efc3} no longer
-        have variable label attributes.
+        slightly differ in their structure.
+        \describe{
+         \item{efc2}{was read with the \code{\link[foreign]{read.spss}} function
+                     and also has attached variable label attributes to each variable.}
+         \item{efc3}{categorical variables have been converted to labelled factors,
+                     i.e. value labels are set as factor levels. However, factors
+                     in \code{efc3} no longer have variable label attributes.}
+         }
 }
 \examples{
 # Attach EFC-data
@@ -27,10 +31,11 @@ head(efc)
 
 # show variables
 \dontrun{
+library(sjPlot)
 view_spss(efc)
 
 # show variable labels
-get_var_label(efc)
+get_var_labels(efc)
 
 # plot efc-data frame summary
 sjt.df(efc, alternateRowColor=TRUE)}

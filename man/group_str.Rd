@@ -38,6 +38,7 @@ This function groups elements of a string vector (character or string
 }
 \examples{
 \dontrun{
+library(sjPlot)
 oldstring <- c("Hello", "Helo", "Hole", "Apple",
                "Ape", "New", "Old", "System", "Systemic")
 newstring <- group_str(oldstring)

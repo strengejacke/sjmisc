@@ -37,6 +37,9 @@ print(get_val_labels(efc)['e42dep'])
 table(efc$e42dep)
 table(to_label(efc$e42dep))
 
+head(efc$e42dep)
+head(to_label(efc$e42dep))
+
 # structure of numeric values won't be changed
 # by this function, it only applies to labelled vectors
 # (typically categorical or factor variables)

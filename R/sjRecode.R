@@ -123,26 +123,22 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
-#' efc.val <- get_val_labels(efc)
-#' efc.var <- get_var_labels(efc)
 #' \dontrun{
 #' library(sjPlot)
 #' sjp.frq(efc$e17age,
-#'         title = efc.var[['e17age']],
+#'         title = get_var_labels(efc$e17age),
 #'         type = "h",
 #'         showValueLabels = FALSE)}
 #'
 #' # bar plot with EUROFAMCARE sample dataset
 #' # grouped variable
 #' data(efc)
-#' efc.val <- get_val_labels(efc)
-#' efc.var <- get_var_labels(efc)
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
 #' \dontrun{
 #' library(sjPlot)
 #' sjp.frq(ageGrp,
-#'         title = efc.var[['e17age']],
+#'         title = get_var_labels(efc$e17age),
 #'         axisLabels.x = ageGrpLab)}
 #'
 #' @export
@@ -208,26 +204,22 @@ group_var <- function(var,
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
-#' efc.val <- get_val_labels(efc)
-#' efc.var <- get_var_labels(efc)
 #' \dontrun{
 #' library(sjPlot)
 #' sjp.frq(efc$e17age,
-#'         title = efc.var[['e17age']],
+#'         title = get_var_labels(efc$e17age),
 #'         type = "h",
 #'         showValueLabels = FALSE)}
 #'
 #' # bar plot with EUROFAMCARE sample dataset
 #' # grouped variable
 #' data(efc)
-#' efc.val <- get_val_labels(efc)
-#' efc.var <- get_var_labels(efc)
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
 #' \dontrun{
 #' library(sjPlot)
 #' sjp.frq(ageGrp,
-#'         title = efc.var[['e17age']],
+#'         title = get_var_labels(efc$e17age),
 #'         axisLabels.x = ageGrpLab)}
 #'
 #' @export
@@ -882,6 +874,7 @@ weight <- function(var, weights) {
 #'
 #' @examples
 #' \dontrun{
+#' library(sjPlot)
 #' oldstring <- c("Hello", "Helo", "Hole", "Apple",
 #'                "Ape", "New", "Old", "System", "Systemic")
 #' newstring <- group_str(oldstring)

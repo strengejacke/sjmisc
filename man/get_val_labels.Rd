@@ -81,15 +81,12 @@ This function only works with vectors that have value and variable
 data(efc)
 get_val_labels(efc$e42dep)
 
-# load sample data. This dataset has
-# attached value and variable labels
-data(efc2)
 # simple barplot
-barplot(table(efc2$e42dep))
+barplot(table(efc$e42dep))
 # get value labels to annotate barplot
-barplot(table(efc2$e42dep),
-        names.arg = get_val_labels(efc2$e42dep),
-        main = get_var_labels(efc2$e42dep))
+barplot(table(efc$e42dep),
+        names.arg = get_val_labels(efc$e42dep),
+        main = get_var_labels(efc$e42dep))
 }
 \seealso{
 \itemize{

@@ -30,11 +30,11 @@ This function calculates a mean inter-item-correlation, i.e.
 # -------------------------------
 data(efc)
 # recveive first item of COPE-index scale
-start <- which(colnames(efc)=="c82cop1")
+start <- which(colnames(efc) == "c82cop1")
 # recveive last item of COPE-index scale
-end <- which(colnames(efc)=="c90cop9")
+end <- which(colnames(efc) == "c90cop9")
 # create data frame with COPE-index scale
-df <- as.data.frame(efc[,c(start:end)])
+df <- data.frame(efc[, c(start:end)])
 
 mic(df)
 }

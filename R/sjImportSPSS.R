@@ -483,15 +483,12 @@ to_sjPlot <- function(x) {
 #' data(efc)
 #' get_val_labels(efc$e42dep)
 #'
-#' # load sample data. This dataset has
-#' # attached value and variable labels
-#' data(efc2)
 #' # simple barplot
-#' barplot(table(efc2$e42dep))
+#' barplot(table(efc$e42dep))
 #' # get value labels to annotate barplot
-#' barplot(table(efc2$e42dep),
-#'         names.arg = get_val_labels(efc2$e42dep),
-#'         main = get_var_labels(efc2$e42dep))
+#' barplot(table(efc$e42dep),
+#'         names.arg = get_val_labels(efc$e42dep),
+#'         main = get_var_labels(efc$e42dep))
 #'
 #' @export
 get_val_labels <- function(x) {
@@ -751,10 +748,6 @@ is_num_fac <- function(x) {
 #' # mydat.val <- get_val_labels(mydat)
 #'
 #' data(efc)
-#' # sample data set has not attached variable labels to each vector
-#' # so we have to do this first... use 'autoAttachVarLabels' in
-#' # function 'read_spss' to automatically perform this step.
-#' efc <- set_var_labels(efc, get_var_labels(efc))
 #'
 #' # get variable lable
 #' get_var_labels(efc$e42dep)
@@ -762,15 +755,12 @@ is_num_fac <- function(x) {
 #' # alternative way
 #' get_var_labels(efc)["e42dep"]
 #'
-#' # load sample data. This dataset has
-#' # attached value and variable labels
-#' data(efc2)
 #' # simple barplot
-#' barplot(table(efc2$e42dep))
+#' barplot(table(efc$e42dep))
 #' # get value labels to annotate barplot
-#' barplot(table(efc2$e42dep),
-#'         names.arg = get_val_labels(efc2$e42dep),
-#'         main = get_var_labels(efc2$e42dep))
+#' barplot(table(efc$e42dep),
+#'         names.arg = get_val_labels(efc$e42dep),
+#'         main = get_var_labels(efc$e42dep))
 #'
 #' @export
 get_var_labels <- function(x) {
@@ -793,6 +783,9 @@ get_var_labels <- function(x) {
         label <- attr(x[[i]], attr.string)
         # any label?
         if (!is.null(label)) {
+          # name label
+          names(label) <- colnames(x)[i]
+          # append to return result
           all.labels <- c(all.labels, label)
         } else {
           all.labels <- c(all.labels, "")
@@ -848,15 +841,11 @@ get_var_labels <- function(x) {
 #' @note See 'Note' in \code{\link{get_val_labels}}
 #'
 #' @examples
-#' # sample data set, imported from SPSS. Variable labels are attached
-#' # as attribute to the data frame (so variables currently don't have this attribute)
+#' # sample data set, imported from SPSS.
 #' data(efc)
-#' # get variable labels
-#' variable.labels <- get_var_labels(efc)
-#' # set variable labels as attribute to each single variable of data frame
-#' efc <- set_var_labels(efc, variable.labels)
 #'
 #' \dontrun{
+#' library(sjPlot)
 #' sjt.frq(efc$e42dep)
 #' sjt.frq(data.frame(efc$e42dep, efc$e16sex))}
 #'
@@ -869,6 +858,7 @@ get_var_labels <- function(x) {
 #' # auto-detection of value labels by default, auto-detection of
 #' # variable labels if parameter "title" set to NULL.
 #' \dontrun{
+#' library(sjPlot)
 #' sjp.frq(dummy, title = NULL)}
 #'
 #' # ---------------------------------------------
@@ -970,6 +960,9 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #' table(efc$e42dep)
 #' table(to_label(efc$e42dep))
 #'
+#' head(efc$e42dep)
+#' head(to_label(efc$e42dep))
+#'
 #' # structure of numeric values won't be changed
 #' # by this function, it only applies to labelled vectors
 #' # (typically categorical or factor variables)
@@ -1044,6 +1037,7 @@ to_label_helper <- function(x) {
 #' @examples
 #' \dontrun{
 #' data(efc)
+#' library(sjPlot)
 #' # normal factor conversion, loses value attributes
 #' efc$e42dep <- as.factor(efc$e42dep)
 #' sjt.frq(efc$e42dep)
