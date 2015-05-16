@@ -35,7 +35,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.2
+### Changelog of current stable build 1.0.2
 
 #### New functions
 * `icc` to compute intraclass-correlations for random-intercepts of mixed models.

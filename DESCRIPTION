@@ -3,7 +3,7 @@ Type: Package
 Encoding: UTF-8
 Title: Miscellaneous Data Management Tools
 Version: 1.0.2
-Date: 2015-05-15
+Date: 2015-05-16
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of several utility functions for reading or writing data, recoding and labelling variables and some frequently used statistical tests.
