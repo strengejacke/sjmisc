@@ -35,22 +35,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current stable build 1.0.2
-
-#### New functions
-* `icc` to compute intraclass-correlations for random-intercepts of mixed models.
-* `hoslem_gof` to perform a Hosmer-Lemeshow-Goodness-of-Fit-test for logistic regression models.
-* `cod` to compute the Coefficient of Discrimination, aka Tjur's Pseudo-R2, for logistic regression models.
-* `pseudo_r2` to compute the Nagelkerke's and Cox-Snell's Pseudo-R2 for logistic regression models.
+### Changelog of current development build 1.0.2-1
 
 #### Changes to functions
-* Functions `std_beta` and `cv` now support `merModLmerTest` objects (fitted by `lmerTest` package).
-* `mean_n` has a `digit` parameter to round returned mean values.
-* `rec`, `recode_to` and `std_e` now also accept data frames as parameter.
-* `chisq_gof` now accepts `glm`-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.
-* `set_val_labels` and `set_var_labels` can now remove label-attributes.
-* `set_na` removes label-attribute, if removed `NA` values were the last labelled values.
-
-#### Bug fixes
-* `set_na` did not work with logical vectors - fixed.
-* `recode_to` did not work when `var` had value-label-attributes - fixed.
+* `dicho` now also dichotomizes non-numeric values.

@@ -1,3 +1,8 @@
+Version 1.0.2-1
+------------------------------------------------------------------------------
+Changes to functions:
+* "dicho" now also dichotomizes non-numeric values.
+
 Version 1.0.2
 ------------------------------------------------------------------------------
 New functions:

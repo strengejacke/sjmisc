@@ -59,8 +59,10 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
       # try to convert to numeric
       var <- as.numeric(as.character(var))
     } else {
-      message("Could not dichotomize non-numeric factor.")
-      return (var)
+      # convert non-numeric factor to numeric
+      # factor levels are replaced by numeric values
+      var <- to_value(var, keep.labels = FALSE)
+      message("Trying to dichotomize non-numeric factor.")
     }
   }
   # split at median
