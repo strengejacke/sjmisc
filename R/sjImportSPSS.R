@@ -1001,7 +1001,10 @@ to_label_helper <- function(x) {
     vn <- sji.getValueLabelValues(x)
     # replace values with labels
     if (is.factor(x)) {
+      # set new levels
       levels(x) <- vl
+      # remove attributes
+      x <- remove_labels(x)
     } else {
       for (i in 1:length(vl)) x[x == vn[i]] <- vl[i]
       # to factor
@@ -1009,6 +1012,20 @@ to_label_helper <- function(x) {
     }
   }
   # return as factor
+  return(x)
+}
+
+
+remove_labels <- function(x) {
+  # find label-attribute string
+  attr.string <- getValLabelAttribute(x)
+  # remove attributes
+  if (!is.null(attr.string)) attr(x, attr.string) <- NULL
+  # find label-attribute string
+  attr.string <- getVarLabelAttribute(x)
+  # remove attributes
+  if (!is.null(attr.string)) attr(x, attr.string) <- NULL
+  # return var
   return(x)
 }
 
@@ -1164,4 +1181,64 @@ to_value_helper <- function(x, startAt, keep.labels) {
   # check if we should attach former labels as value labels
   if (keep.labels) new_value <- set_val_labels(new_value, labels)
   return(new_value)
+}
+
+
+#' @title Set back value and variable labels to subsetted data frames
+#' @name update_labels
+#'
+#' @description Subsetting-function usually drop value and variable labels from
+#'                \code{data.frame}s (if the original data.frame has value and variable
+#'                label attributes). This function adds back these value and variable
+#'                labels to subsetted data.frames that have been subsetted with \code{\link{subset}},
+#'                \code{\link[dplyr]{select}} or \code{\link[dplyr]{filter}}.
+#'                \cr \cr
+#'                In case \code{df_origin} is \code{NULL}, all possible label attributes
+#'                from \code{df_new} are removed.
+#'
+#' @param df_new the new, subsetted data frame.
+#' @param df_origin the original data frame where the subset (\code{df_new}) stems from,
+#'          or \code{NULL}, if value and variable labels from \code{df_new} should be removed.
+#' @return Returns \code{df_new} with either removed value and variable label attributes
+#'           (if \code{df_origin} was \code{NULL}) or with added value and variable label
+#'           attributes (if \code{df_origin} was the original subsetted data.frame).
+#'
+#' @note In case \code{df_origin} is \code{NULL}, all possible label attributes
+#'         from \code{df_new} are removed.
+#'
+#' @examples
+#' data(efc)
+#' efc.sub <- subset(efc, subset = e16sex == 1, select = c(4:8))
+#' str(efc.sub)
+#'
+#' efc.sub <- update_labels(efc.sub, efc)
+#' str(efc.sub)
+#'
+#' efc.sub <- update_labels(efc.sub)
+#' str(efc.sub)
+#'
+#' @export
+update_labels <- function(df_new, df_origin = NULL) {
+  # check if old df is NULL. if so, we remove all labels
+  # from the data frame.
+  if (is.null(df_origin)) {
+    # remove all labels
+    df_new <- as.data.frame(apply(df_new, 2, remove_labels))
+    # tell user
+    message("Removing all variable and value labels from data frame.")
+  } else {
+    # check params
+    if (is.data.frame(df_new) && is.data.frame(df_origin)) {
+      # retrieve variables of subsetted data frame
+      cn <- colnames(df_new)
+      # get var-labels of original data frame, and select only those
+      # labels from variables that appear in the new (subsetted) data frame
+      df_new <- set_var_labels(df_new, get_var_labels(df_origin[, cn]))
+      # same for value labels
+      df_new <- set_val_labels(df_new, get_val_labels(df_origin[, cn]))
+    } else {
+      warning("Both 'df_origin' and 'df_new' must be of class 'data.frame'.", call. = F)
+    }
+  }
+  return(df_new)
 }

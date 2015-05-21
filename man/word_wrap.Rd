@@ -14,7 +14,7 @@ inserted. You can also pass several strings as vector
 \item{wrap}{the maximum amount of chars per line (i.e. line length)}
 
 \item{linesep}{by default, this parameter is \code{NULL} and a regular new line
-string (\code{"\\n"}) is used. For HTML-needs, for instance, \code{linesep}
+string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}
 could be \code{"<br>"}.}
 }
 \value{
