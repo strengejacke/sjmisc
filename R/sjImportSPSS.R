@@ -1185,7 +1185,7 @@ to_value_helper <- function(x, startAt, keep.labels) {
 
 
 #' @title Set back value and variable labels to subsetted data frames
-#' @name update_labels
+#' @name add_labels
 #'
 #' @description Subsetting-function usually drop value and variable labels from
 #'                \code{data.frame}s (if the original data.frame has value and variable
@@ -1211,14 +1211,14 @@ to_value_helper <- function(x, startAt, keep.labels) {
 #' efc.sub <- subset(efc, subset = e16sex == 1, select = c(4:8))
 #' str(efc.sub)
 #'
-#' efc.sub <- update_labels(efc.sub, efc)
+#' efc.sub <- add_labels(efc.sub, efc)
 #' str(efc.sub)
 #'
-#' efc.sub <- update_labels(efc.sub)
+#' efc.sub <- add_labels(efc.sub)
 #' str(efc.sub)
 #'
 #' @export
-update_labels <- function(df_new, df_origin = NULL) {
+add_labels <- function(df_new, df_origin = NULL) {
   # check if old df is NULL. if so, we remove all labels
   # from the data frame.
   if (is.null(df_origin)) {
