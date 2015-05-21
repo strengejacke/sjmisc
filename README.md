@@ -39,6 +39,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### New function
 * `add_labels` to set back labels from subsetted data frame, or remove any label attributes from data frames.
+* `remove_labels` to remove any label attributes from data frames or vectors.
 
 #### Changes to functions
 * `dicho` now also dichotomizes non-numeric values.

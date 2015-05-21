@@ -42,4 +42,7 @@ str(efc.sub)
 efc.sub <- add_labels(efc.sub)
 str(efc.sub)
 }
+\seealso{
+\code{\link{remove_labels}}
+}
 

@@ -1016,7 +1016,34 @@ to_label_helper <- function(x) {
 }
 
 
+#' @title Removes value and variable labels from vector or data frame
+#' @name remove_labels
+#'
+#' @description This function removes value and variable labels to from a
+#'                vector or data.frames.
+#'
+#' @seealso \code{\link{add_labels}}
+#'
+#' @param x vector or data.frame with variable and/or value label attributes
+#' @return \code{x} with removed value and variable label attributes.
+#'
+#' @examples
+#' data(efc)
+#' str(efc)
+#' str(remove_labels(efc))
+#'
+#' @export
 remove_labels <- function(x) {
+  if (is.data.frame(x)) {
+    x <- as.data.frame(apply(x, 2, remove_labels_helper))
+  } else {
+    x <- remove_labels_helper(x)
+  }
+  return(x)
+}
+
+
+remove_labels_helper <- function(x) {
   # find label-attribute string
   attr.string <- getValLabelAttribute(x)
   # remove attributes
@@ -1196,6 +1223,8 @@ to_value_helper <- function(x, startAt, keep.labels) {
 #'                In case \code{df_origin} is \code{NULL}, all possible label attributes
 #'                from \code{df_new} are removed.
 #'
+#' @seealso \code{\link{remove_labels}}
+#'
 #' @param df_new the new, subsetted data frame.
 #' @param df_origin the original data frame where the subset (\code{df_new}) stems from,
 #'          or \code{NULL}, if value and variable labels from \code{df_new} should be removed.
@@ -1223,7 +1252,7 @@ add_labels <- function(df_new, df_origin = NULL) {
   # from the data frame.
   if (is.null(df_origin)) {
     # remove all labels
-    df_new <- as.data.frame(apply(df_new, 2, remove_labels))
+    df_new <- remove_labels(df_new)
     # tell user
     message("Removing all variable and value labels from data frame.")
   } else {
