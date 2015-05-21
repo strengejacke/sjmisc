@@ -35,7 +35,11 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.2-1
+### Changelog of current development build 1.0.2-2
 
 #### Changes to functions
 * `dicho` now also dichotomizes non-numeric values.
+
+#### Bug fixes
+* `get_var_labels` returned `NULL` if first variable in `data.frame` had no variable label (but other has) - fixed.
+* Fixed code with non-exact matching of `haven`-attributes `label` and `labels`, which in certain situation may return wrong vector attributes.

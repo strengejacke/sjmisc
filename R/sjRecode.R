@@ -298,7 +298,7 @@ group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
 #'          (e.g. \code{labels = c("first long string", "second long string")})
 #' @param wrap the maximum amount of chars per line (i.e. line length)
 #' @param linesep by default, this parameter is \code{NULL} and a regular new line
-#'          string (\code{"\\n"}) is used. For HTML-needs, for instance, \code{linesep}
+#'          string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}
 #'          could be \code{"<br>"}.
 #' @return New label(s) with line breaks inserted at every \code{wrap}'s position.
 #'
@@ -713,7 +713,7 @@ set_na_helper <- function(var, values) {
   # check if var has label attributes
   if (!is.null(attr.string)) {
     # retrieve value labels
-    vl <- attr(var, attr.string)
+    vl <- attr(var, attr.string, exact = T)
     # retrieve label names
     ln <- names(vl)
   } else {

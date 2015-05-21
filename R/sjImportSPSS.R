@@ -148,7 +148,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
       # copy column to vector
       x <- data.spss[[i]]
       # is atomic, which was factor in SPSS?
-      if (is.atomic(x) && !is.null(attr(x, attr.string))) {
+      if (is.atomic(x) && !is.null(attr(x, attr.string, exact = T))) {
         # so we have value labels (only typical for factors, not
         # continuous variables) and a variable of type "atomic" (SPSS
         # continuous variables would be imported as numeric) - this
@@ -513,11 +513,11 @@ sji.getValueLabel <- function(x) {
   # nothing found? then leave...
   if (is.null(attr.string)) return(NULL)
   # retrieve named labels
-  lab <- attr(x, attr.string)
+  lab <- attr(x, attr.string, exact = T)
   # check if we have anything
   if (!is.null(lab)) {
     # retrieve order of value labels
-    reihenfolge <- order(as.numeric(unname(attr(x, attr.string))))
+    reihenfolge <- order(as.numeric(unname(attr(x, attr.string, exact = T))))
     # retrieve label values in correct order
     labels <- names(lab)[reihenfolge]
   }
@@ -532,7 +532,7 @@ sji.getValueLabelValues <- function(x) {
   # nothing found? then leave...
   if (is.null(attr.string)) return(NULL)
   # sort values
-  val.sort <- sort(as.numeric(unname(attr(x, attr.string))))
+  val.sort <- sort(as.numeric(unname(attr(x, attr.string, exact = T))))
   # return sorted
   return(val.sort)
 }
@@ -777,7 +777,7 @@ get_var_labels <- function(x) {
   if (is.data.frame(x) || is.matrix(x)) {
     # if yes, check if we have attached label table
     # from foreign import
-    labels <- attr(x, "variable.labels")
+    labels <- attr(x, "variable.labels", exact = T)
     # if not, get labels from each single vector
     if (is.null(labels) && !is.null(attr.string)) {
       # return value
@@ -785,7 +785,7 @@ get_var_labels <- function(x) {
       # iterate df
       for (i in 1:ncol(x)) {
         # get label
-        label <- attr(x[[i]], attr.string)
+        label <- attr(x[[i]], attr.string, exact = T)
         # any label?
         if (!is.null(label)) {
           # name label
@@ -798,13 +798,13 @@ get_var_labels <- function(x) {
       }
       return(all.labels)
     } else {
-      return(attr(x, "variable.labels"))
+      return(attr(x, "variable.labels", exact = T))
     }
   } else {
     # nothing found? then leave...
     if (is.null(attr.string)) return(NULL)
     # else return attribute
-    return(attr(x, attr.string))
+    return(attr(x, attr.string, exact = T))
   }
 }
 

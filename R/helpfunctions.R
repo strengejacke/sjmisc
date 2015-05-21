@@ -12,7 +12,7 @@ autoSetValueLabels <- function(x) {
     lv <- levels(x)
     label <- NULL
     # check  if we have value labels
-    if (!is.null(vl) && length(vl)>0) {
+    if (!is.null(vl) && length(vl) > 0) {
       label <- vl
     # check  if we have factor levels
     } else if (!is.null(lv)) {
@@ -23,7 +23,7 @@ autoSetValueLabels <- function(x) {
     }
     return(label)
   }
-  return (NULL)
+  return(NULL)
 }
 
 
@@ -32,21 +32,36 @@ autoSetValueLabels <- function(x) {
 # ("variable.label")
 getVarLabelAttribute <- function(x) {
   attr.string <- NULL
-  # check if x is data frame. if yes, just retrieve one "example" variable
-  if (is.data.frame(x)) x <- x[[1]]
+  # check if x is data frame. if yes, retrieve one "example" variable
+  if (is.data.frame(x)) {
+    # we need to check all variables until first variable
+    # that has any attributes at all - SPSS variables without
+    # labels would return NULL, so if -e.g.- first variable
+    # of data set has no label attribute, but second had, this
+    # function would stop after first attribute and return NULL
+    for (i in 1:ncol(x)) {
+      # retrieve attribute names
+      an <- names(attributes(x[[i]]))
+      # check for label attributes
+      if (any(an == "label") || any(an == "variable.label")) {
+        x <- x[[i]]
+        break
+      }
+    }
+  }
   # check if vector has label attribute
-  if (!is.null(attr(x, "label"))) attr.string <- "label"
+  if (!is.null(attr(x, "label", exact = T))) attr.string <- "label"
   # check if vector has variable label attribute
-  if (!is.null(attr(x, "variable.label"))) attr.string <- "variable.label"
+  if (!is.null(attr(x, "variable.label", exact = T))) attr.string <- "variable.label"
   # not found any label yet?
   if (is.null(attr.string)) {
     # ----------------------------
     # check value_labels option
     # ----------------------------
     opt <- getOption("value_labels")
-    if (!is.null(opt)) attr.string <- ifelse (opt == "haven", "label", "variable.label")
+    if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }
-  return (attr.string)
+  return(attr.string)
 }
 
 
@@ -60,19 +75,19 @@ getValLabelAttribute <- function(x) {
     # find first variable with labels or value.labels attribute
     for (i in 1:ncol(x)) {
       # has any attribute?
-      if (!is.null(attr(x[[i]], "labels"))) {
+      if (!is.null(attr(x[[i]], "labels", exact = T))) {
         attr.string <- "labels"
         break
-      } else if (!is.null(attr(x[[i]], "value.labels"))) {
+      } else if (!is.null(attr(x[[i]], "value.labels", exact = T))) {
         attr.string <- "value.labels"
         break
       }
     }
   } else {
     # check if vector has labels attribute
-    if (!is.null(attr(x, "labels"))) attr.string <- "labels"
+    if (!is.null(attr(x, "labels", exact = T))) attr.string <- "labels"
     # check if vector has value.labels attribute
-    if (!is.null(attr(x, "value.labels"))) attr.string <- "value.labels"
+    if (!is.null(attr(x, "value.labels", exact = T))) attr.string <- "value.labels"
   }
   # not found any label yet?
   if (is.null(attr.string)) {
@@ -80,9 +95,9 @@ getValLabelAttribute <- function(x) {
     # check value_labels option
     # ----------------------------
     opt <- getOption("value_labels")
-    if (!is.null(opt)) attr.string <- ifelse (opt == "haven", "label", "variable.label")
+    if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }
-  return (attr.string)
+  return(attr.string)
 }
 
 
@@ -95,13 +110,13 @@ autoSetVariableLabels <- function(x) {
     # auto-detect variable label attribute
     attr.string <- getVarLabelAttribute(x)
     # nothing found? then leave...
-    if (is.null(attr.string)) return (NULL)
+    if (is.null(attr.string)) return(NULL)
     # check if we have variable label attribute
-    vl <- as.vector(attr(x, attr.string))
+    vl <- as.vector(attr(x, attr.string, exact = T))
     label <- NULL
     # check if we have variable labels
     if (!is.null(vl) && length(vl) > 0) label <- vl
     return(label)
   }
-  return (NULL)
+  return(NULL)
 }
