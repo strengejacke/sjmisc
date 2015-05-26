@@ -431,6 +431,9 @@ to_sjPlot <- function(x) {
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}) or a variable
 #'          (vector) with attached value labels.
+#' @param include.values logical, if \code{TRUE}, the values associated with the
+#'          value labels are returned as well (as \code{\link{names}} attribute
+#'          of the returned object).
 #' @return Either a list with all value labels from the data frame's variables,
 #'           a string with the value labels, if \code{x} is a variable,
 #'           or \code{NULL} if no value label attribute was found.
@@ -495,18 +498,21 @@ to_sjPlot <- function(x) {
 #'         names.arg = get_val_labels(efc$e42dep),
 #'         main = get_var_labels(efc$e42dep))
 #'
+#' # include associated values
+#' get_val_labels(efc$e42dep, TRUE)
+#'
 #' @export
-get_val_labels <- function(x) {
+get_val_labels <- function(x, include.values = FALSE) {
   if (is.data.frame(x) || is.matrix(x)) {
-    a <- lapply(x, FUN = sji.getValueLabel)
+    a <- lapply(x, FUN = sji.getValueLabel, include.values)
   } else {
-    a <- sji.getValueLabel(x)
+    a <- sji.getValueLabel(x, include.values)
   }
   return(a)
 }
 
 
-sji.getValueLabel <- function(x) {
+sji.getValueLabel <- function(x, include.values = FALSE) {
   labels <- NULL
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
@@ -516,10 +522,14 @@ sji.getValueLabel <- function(x) {
   lab <- attr(x, attr.string, exact = T)
   # check if we have anything
   if (!is.null(lab)) {
+    # retrieve values associated with labels
+    values <- as.numeric(unname(attr(x, attr.string, exact = T)))
     # retrieve order of value labels
-    reihenfolge <- order(as.numeric(unname(attr(x, attr.string, exact = T))))
+    reihenfolge <- order(values)
     # retrieve label values in correct order
     labels <- names(lab)[reihenfolge]
+    # include associated values?
+    if (include.values) names(labels) <- values[reihenfolge]
   }
   # return them
   return(labels)

@@ -4,13 +4,17 @@
 \alias{get_val_labels}
 \title{Retrieve value labels of a variable or an imported data frame}
 \usage{
-get_val_labels(x)
+get_val_labels(x, include.values = FALSE)
 }
 \arguments{
 \item{x}{a data frame with variables that have attached value labels (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}) or a variable
 (vector) with attached value labels.}
+
+\item{include.values}{logical, if \code{TRUE}, the values associated with the
+value labels are returned as well (as \code{\link{names}} attribute
+of the returned object).}
 }
 \value{
 Either a list with all value labels from the data frame's variables,
@@ -87,6 +91,9 @@ barplot(table(efc$e42dep))
 barplot(table(efc$e42dep),
         names.arg = get_val_labels(efc$e42dep),
         main = get_var_labels(efc$e42dep))
+
+# include associated values
+get_val_labels(efc$e42dep, TRUE)
 }
 \seealso{
 \itemize{
