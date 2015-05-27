@@ -13,8 +13,11 @@ remove_labels(x)
 \code{x} with removed value and variable label attributes.
 }
 \description{
-This function removes value and variable labels to from a
-               vector or data.frames.
+This function removes value and variable label attributes
+               from a vector or data.frames. These attributes are typically
+               added to variables when importing foreign data (see
+               \code{\link{read_spss}}) or manually adding label attributes
+               with \code{\link{set_val_labels}}.
 }
 \examples{
 data(efc)

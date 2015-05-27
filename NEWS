@@ -1,4 +1,4 @@
-Version 1.0.2-4
+Version 1.0.2-5
 ------------------------------------------------------------------------------
 New function:
 * "add_labels" to set back labels from subsetted data frame, or remove any label attributes from data frames.

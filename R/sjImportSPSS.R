@@ -1029,8 +1029,11 @@ to_label_helper <- function(x) {
 #' @title Removes value and variable labels from vector or data frame
 #' @name remove_labels
 #'
-#' @description This function removes value and variable labels to from a
-#'                vector or data.frames.
+#' @description This function removes value and variable label attributes
+#'                from a vector or data.frames. These attributes are typically
+#'                added to variables when importing foreign data (see
+#'                \code{\link{read_spss}}) or manually adding label attributes
+#'                with \code{\link{set_val_labels}}.
 #'
 #' @seealso \code{\link{add_labels}}
 #'
@@ -1045,7 +1048,7 @@ to_label_helper <- function(x) {
 #' @export
 remove_labels <- function(x) {
   if (is.data.frame(x)) {
-    x <- as.data.frame(apply(x, 2, remove_labels_helper))
+    for (i in 1:ncol(x)) x[[i]] <- remove_labels_helper(x[[i]])
   } else {
     x <- remove_labels_helper(x)
   }
