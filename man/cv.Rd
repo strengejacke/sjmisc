@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{cv}
 \alias{cv}
-\title{Compute coefficient of variation}
+\title{Coefficient of Variation}
 \usage{
 cv(x)
 }

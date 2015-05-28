@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjRecode.R
 \name{mean_n}
 \alias{mean_n}
-\title{Compute row means with min amount of valid values}
+\title{Row means with min amount of valid values}
 \usage{
 mean_n(dat, n, digits = 2)
 }

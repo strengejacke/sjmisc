@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{mwu}
 \alias{mwu}
-\title{Performs a Mann-Whitney-U-Test}
+\title{Mann-Whitney-U-Test}
 \usage{
 mwu(var, grp, distribution = "asymptotic", weights = NULL)
 }

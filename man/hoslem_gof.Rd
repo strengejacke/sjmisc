@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{hoslem_gof}
 \alias{hoslem_gof}
-\title{Performs a Hosmer-Lemeshow Goodness-of-fit-test}
+\title{Hosmer-Lemeshow Goodness-of-fit-test}
 \usage{
 hoslem_gof(x, g = 10)
 }

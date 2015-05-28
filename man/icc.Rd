@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{icc}
 \alias{icc}
-\title{Compute Intra-Class-Correlation}
+\title{Intra-Class-Correlation Coefficient}
 \usage{
 icc(x)
 }

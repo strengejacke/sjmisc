@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{cronb}
 \alias{cronb}
-\title{Calculates Cronbach's Alpha for a matrix}
+\title{Cronbach's Alpha for a matrix or data frame}
 \usage{
 cronb(df)
 }

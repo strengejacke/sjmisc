@@ -410,7 +410,7 @@ to_sjPlot <- function(x) {
 }
 
 
-#' @title Retrieve value labels of a variable or an imported data frame
+#' @title Retrieve value labels of a data frame or variable
 #' @name get_val_labels
 #'
 #' @description This function retrieves the value labels of an imported
@@ -425,6 +425,7 @@ to_sjPlot <- function(x) {
 #'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
 #'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
 #'            \item \code{\link{set_val_labels}}
+#'            \item \code{\link{get_val_labels}}
 #'            }
 #'
 #' @param x a data frame with variables that have attached value labels (e.g.
@@ -536,13 +537,48 @@ sji.getValueLabel <- function(x, include.values = FALSE) {
 }
 
 
-sji.getValueLabelValues <- function(x) {
+#' @title Retrieve values of labelled variables
+#' @name get_values
+#'
+#' @description This function retrieves the values associated with value labels
+#'                of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
+#'                \code{\link{read_sas}} or \code{\link{read_stata}}).
+#'
+#' @seealso \code{\link{get_val_labels}}
+#'
+#' @param x a variable (vector) with attached value labels.
+#' @param sort.val logical, if \code{TRUE} (default), values of associated value labels
+#'          are sorted.
+#' @return The values associated with value labels from \code{x}
+#'
+#' @details Labelled vectors are numeric by default (when imported with read-functions
+#'            like \code{\link{read_spss}}) and have variable and value labels attached.
+#'            The value labels are associated with those values from the labelled vector.
+#'            This function returns the values associated with the vector's value labels,
+#'            which may differ from actual values in the vector (e.g. due to missings)
+#'            or are not represented in sorted order.
+#'
+#' @examples
+#' data(efc)
+#' str(efc$e42dep)
+#' get_values(efc$e42dep)
+#' get_val_labels(efc$e42dep)
+#'
+#' @export
+get_values <- function(x, sort.val = TRUE) {
+  return(sji.getValueLabelValues(x, sort.val))
+}
+
+
+sji.getValueLabelValues <- function(x, sort.val = TRUE) {
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
   # nothing found? then leave...
   if (is.null(attr.string)) return(NULL)
+  # get values
+  val.sort <- as.numeric(unname(attr(x, attr.string, exact = T)))
   # sort values
-  val.sort <- sort(as.numeric(unname(attr(x, attr.string, exact = T))))
+  if (sort.val) val.sort <- sort(val.sort)
   # return sorted
   return(val.sort)
 }
@@ -726,7 +762,7 @@ is_num_fac <- function(x) {
 }
 
 
-#' @title Retrieve variable labels of a data frame or a variable
+#' @title Retrieve variable labels of a data frame or variable
 #' @name get_var_labels
 #'
 #' @description This function retrieves the value labels of an imported
@@ -942,7 +978,7 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 }
 
 
-#' @title Converts variable into factor and replaces values with associated value labels
+#' @title Convert variable into factor and replaces values with associated value labels
 #' @name to_label
 #'
 #' @description This function converts (replaces) variable values (also of factors)
@@ -1026,7 +1062,7 @@ to_label_helper <- function(x) {
 }
 
 
-#' @title Removes value and variable labels from vector or data frame
+#' @title Remove value and variable labels from vector or data frame
 #' @name remove_labels
 #'
 #' @description This function removes value and variable label attributes
@@ -1135,7 +1171,7 @@ to_fac_helper <- function(x) {
 }
 
 
-#' @title Converts factors to numeric variables
+#' @title Convert factors to numeric variables
 #' @name to_value
 #'
 #' @description This function converts (replaces) factor values with the

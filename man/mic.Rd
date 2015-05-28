@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{mic}
 \alias{mic}
-\title{Compute mean inter-item-correlation}
+\title{Mean Inter-Item-Correlation}
 \usage{
 mic(data, corMethod = "pearson")
 }

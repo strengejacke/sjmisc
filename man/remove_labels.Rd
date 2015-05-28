@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{remove_labels}
 \alias{remove_labels}
-\title{Removes value and variable labels from vector or data frame}
+\title{Remove value and variable labels from vector or data frame}
 \usage{
 remove_labels(x)
 }

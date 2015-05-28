@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{to_label}
 \alias{to_label}
-\title{Converts variable into factor and replaces values with associated value labels}
+\title{Convert variable into factor and replaces values with associated value labels}
 \usage{
 to_label(x)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{get_var_labels}
 \alias{get_var_labels}
-\title{Retrieve variable labels of a data frame or a variable}
+\title{Retrieve variable labels of a data frame or variable}
 \usage{
 get_var_labels(x)
 }

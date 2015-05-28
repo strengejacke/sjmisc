@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{phi}
 \alias{phi}
-\title{Phi value for a contingency table}
+\title{Phi value for contingency tables}
 \usage{
 phi(tab)
 }

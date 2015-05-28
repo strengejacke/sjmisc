@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{chisq_gof}
 \alias{chisq_gof}
-\title{Performs a Chi-square goodness-of-fit-test}
+\title{Chi-square goodness-of-fit-test}
 \usage{
 chisq_gof(x, prob = NULL, weights = NULL)
 }

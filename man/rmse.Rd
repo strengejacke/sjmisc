@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{rmse}
 \alias{rmse}
-\title{Compute root mean squared error (RMSE)}
+\title{Root Mean Squared Error (RMSE)}
 \usage{
 rmse(fit, normalized = FALSE)
 }

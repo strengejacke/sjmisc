@@ -350,7 +350,7 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 }
 
 
-#' @title Recode variable categories into new values.
+#' @title Recode variable categories into new values
 #' @name recode_to
 #'
 #' @description Recodes (or "renumbers") the categories of \code{var} into new category values, beginning
@@ -1227,11 +1227,11 @@ str_pos <- function(searchString,
   # return result
   # -------------------------------------
   if (length(indices) > 0) return (sort(unique(indices)))
-  return (-1)
+  return(-1)
 }
 
 
-#' @title Compute row means with min amount of valid values
+#' @title Row means with min amount of valid values
 #' @name mean_n
 #' @description This function is similar to the SPSS \code{MEAN.n} function and computes
 #'                row means from a \code{\link{data.frame}} or \code{\link{matrix}} if at least \code{n}

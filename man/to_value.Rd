@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{to_value}
 \alias{to_value}
-\title{Converts factors to numeric variables}
+\title{Convert factors to numeric variables}
 \usage{
 to_value(x, startAt = NULL, keep.labels = TRUE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{std_e}
 \alias{std_e}
-\title{Compute standard error for variables}
+\title{Standard Error for variables}
 \usage{
 std_e(x)
 }

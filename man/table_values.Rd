@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{table_values}
 \alias{table_values}
-\title{Compute expected and relative table values}
+\title{Expected and relative table values}
 \usage{
 table_values(tab, digits = 2)
 }

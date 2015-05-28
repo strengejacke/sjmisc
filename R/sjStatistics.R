@@ -2,7 +2,7 @@
 if (getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
 
 
-#' @title Compute eta-squared of fitted anova
+#' @title Eta-squared of fitted anova
 #' @name eta_sq
 #' @description Returns the eta-squared value for one-way-anovas.
 #'
@@ -63,7 +63,7 @@ eta_sq <- function(...) {
 }
 
 
-#' @title Compute std. beta coefficients and ci of lm and mixed models
+#' @title Standardized Beta coefficients and CI of lm and mixed models
 #' @name std_beta
 #' @description Returns the standardized beta coefficients and confidence intervals
 #'                of a fitted linear (mixed) models, i.e. \code{fit} must either
@@ -141,7 +141,7 @@ sjs.stdmm <- function(fit) {
 }
 
 
-#' @title Performs a Mann-Whitney-U-Test
+#' @title Mann-Whitney-U-Test
 #' @name mwu
 #' @description This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
 #'                see \code{\link{wilcox.test}} and \code{\link[coin]{wilcox_test}})
@@ -312,7 +312,7 @@ mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
 }
 
 
-#' @title Performs a Chi-square goodness-of-fit-test
+#' @title Chi-square goodness-of-fit-test
 #' @name chisq_gof
 #'
 #' @description This method performs a Chi-square goodness-of-fit-test (GOF)
@@ -408,7 +408,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 }
 
 
-#' @title Performs a Hosmer-Lemeshow Goodness-of-fit-test
+#' @title Hosmer-Lemeshow Goodness-of-fit-test
 #' @name hoslem_gof
 #'
 #' @description This method performs a Hosmer-Lemeshow goodness-of-fit-test
@@ -481,7 +481,7 @@ hoslem_gof <- function(x, g = 10) {
 }
 
 
-#' @title Compute Nagelkerke's and Cox-Snell's Pseudo R-squared
+#' @title Nagelkerke's and Cox-Snell's Pseudo R-squared
 #' @name pseudo_r2
 #'
 #' @description This method calculates Nagelkerke's and Cox-Snell's
@@ -520,7 +520,7 @@ pseudo_r2 <- function(x) {
 }
 
 
-#' @title Computes Tjur's Coefficient of Discrimination
+#' @title Tjur's Coefficient of Discrimination
 #' @name cod
 #'
 #' @description This method calculates the Coefficient of Discrimination \code{D}
@@ -581,7 +581,7 @@ cod <- function(x) {
   return(abs(m2 - m1))
 }
 
-#' @title Calculates Cronbach's Alpha for a matrix
+#' @title Cronbach's Alpha for a matrix or data frame
 #' @name cronb
 #' @description This function calculates the Cronbach's alpha value for each column
 #'                of a data frame or matrix.
@@ -748,7 +748,7 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 }
 
 
-#' @title Compute mean inter-item-correlation
+#' @title Mean Inter-Item-Correlation
 #' @name mic
 #' @description This function calculates a mean inter-item-correlation, i.e.
 #'                a correlation matrix of \code{data} will be computed (unless
@@ -814,7 +814,7 @@ mic <- function(data, corMethod="pearson") {
 }
 
 
-#' @title Compute expected and relative table values
+#' @title Expected and relative table values
 #' @name table_values
 #' @description This function calculates a table's cell, row and column percentages as
 #'                well as expected values and returns all results as lists of tables.
@@ -857,7 +857,7 @@ table_values <- function(tab, digits=2) {
 }
 
 
-#' @title Phi value for a contingency table
+#' @title Phi value for contingency tables
 #' @name phi
 #' @description Compute Phi value for a contingency table.
 #'
@@ -905,7 +905,7 @@ cramer <- function(tab) {
 }
 
 
-#' @title Compute standard error for variables
+#' @title Standard Error for variables
 #' @name std_e
 #' @description Compute standard error for variable or for all variables
 #'                of a data frame.
@@ -947,7 +947,7 @@ std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
 
 
 
-#' @title Compute coefficient of variation
+#' @title Coefficient of Variation
 #' @name cv
 #' @description Compute coefficient of variation for single variables
 #'                (standard deviation divided by mean) or for fitted
@@ -1029,7 +1029,7 @@ cv <- function(x) {
 }
 
 
-#' @title Compute root mean squared error (RMSE)
+#' @title Root Mean Squared Error (RMSE)
 #' @name rmse
 #' @description Compute root mean squared error  of fitted linear (mixed effects) models.
 #'
@@ -1240,7 +1240,7 @@ is_nested <- function(f1, f2) {
 }
 
 
-#' @title Compute Intra-Class-Correlation
+#' @title Intra-Class-Correlation Coefficient
 #' @name icc
 #' @description This function calculates the intraclass-correlation
 #'                (icc) for random intercepts of mixed effects models.

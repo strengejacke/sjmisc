@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjRecode.R
 \name{recode_to}
 \alias{recode_to}
-\title{Recode variable categories into new values.}
+\title{Recode variable categories into new values}
 \usage{
 recode_to(x, lowest = 0, highest = -1)
 }

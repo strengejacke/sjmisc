@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjStatistics.R
 \name{std_beta}
 \alias{std_beta}
-\title{Compute std. beta coefficients and ci of lm and mixed models}
+\title{Standardized Beta coefficients and CI of lm and mixed models}
 \usage{
 std_beta(fit, include.ci = FALSE)
 }

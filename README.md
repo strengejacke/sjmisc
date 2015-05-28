@@ -35,11 +35,12 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.2-5
+### Changelog of current development build 1.0.2-6
 
 #### New function
 * `add_labels` to set back labels from subsetted data frame, or remove any label attributes from data frames.
 * `remove_labels` to remove any label attributes from data frames or vectors.
+* `get_values` to return values associated with value labels from labelled vectors.
 
 #### Changes to functions
 * `dicho` now also dichotomizes non-numeric values.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{get_val_labels}
 \alias{get_val_labels}
-\title{Retrieve value labels of a variable or an imported data frame}
+\title{Retrieve value labels of a data frame or variable}
 \usage{
 get_val_labels(x, include.values = FALSE)
 }
@@ -100,6 +100,7 @@ get_val_labels(efc$e42dep, TRUE)
            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
            \item \code{\link{set_val_labels}}
+           \item \code{\link{get_val_labels}}
            }
 }
 
