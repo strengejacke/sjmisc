@@ -47,6 +47,7 @@ dummy <- set_na(dummy, c(2, 4))
 head(dummy)
 
 # create list of variables
+data(efc)
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # check original distribution of categories
 lapply(dummy, table, exclude = NULL)

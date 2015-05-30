@@ -1115,13 +1115,15 @@ group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.
 #' @title Trim leading and trailing whitespaces from strings
 #' @name trim
 #'
-#' @param x a character vector or string
+#' @param x a character vector or string. Function is vectorized, i.e. vector
+#'          may have a length greater than 1. See 'Examples'.
 #'
 #' @return Trimmed \code{x}, i.e. with leading and trailing spaces removed.
 #'
 #' @examples
 #' trim("white space at end ")
 #' trim(" white space at start and end ")
+#' trim(c(" string1 ", "   string2", "string 3   "))
 #'
 #' @export
 trim <- function(x) gsub("^\\s+|\\s+$", "", x)
@@ -1287,7 +1289,7 @@ str_pos <- function(searchString,
   # -------------------------------------
   # return result
   # -------------------------------------
-  if (length(indices) > 0) return (sort(unique(indices)))
+  if (length(indices) > 0) return(sort(unique(indices)))
   return(-1)
 }
 
@@ -1355,7 +1357,7 @@ mean_n <- function(dat, n, digits = 2) {
   # ---------------------------------------
   # is 'n' indicating a proportion?
   # ---------------------------------------
-  digs <- n%%1
+  digs <- n %% 1
   if (digs != 0) n <- round(ncol(dat) * digs)
   # ---------------------------------------
   # coerce matrix to data frame
@@ -1366,14 +1368,14 @@ mean_n <- function(dat, n, digits = 2) {
   # ---------------------------------------
   if (!is.data.frame(dat) || ncol(dat) < 2) {
     warning("'dat' must be a data.frame with at least two columns.", call. = F)
-    return (NA)
+    return(NA)
   }
   # ---------------------------------------
   # n may not be larger as df's amount of columns
   # ---------------------------------------
   if (ncol(dat) < n) {
     warning("'n' must be smaller or equal to data.frame's amount of columns.", call. = F)
-    return (NA)
+    return(NA)
   }
   round(apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA)), digits)
 }

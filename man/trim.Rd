@@ -7,7 +7,8 @@
 trim(x)
 }
 \arguments{
-\item{x}{a character vector or string}
+\item{x}{a character vector or string. Function is vectorized, i.e. vector
+         may have a length greater than 1. See 'Examples'.}
 }
 \value{
 Trimmed \code{x}, i.e. with leading and trailing spaces removed.
@@ -18,5 +19,6 @@ Trim leading and trailing whitespaces from strings
 \examples{
 trim("white space at end ")
 trim(" white space at start and end ")
+trim(c(" string1 ", "   string2", "string 3   "))
 }
 

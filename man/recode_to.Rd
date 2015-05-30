@@ -51,6 +51,7 @@ dummy <- sample(11:15, 10, replace = TRUE)
 recode_to(dummy, 1, 3)
 
 # create list of variables
+data(efc)
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # check original distribution of categories
 lapply(dummy, table)
