@@ -49,9 +49,9 @@ head(dummy)
 # create list of variables
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # check original distribution of categories
-lapply(dummy, table)
+lapply(dummy, table, exclude = NULL)
 # set 3 to NA
-lapply(set_na(dummy, 3), table)
+lapply(set_na(dummy, 3), table, exclude = NULL)
 }
 \seealso{
 \code{\link{rec}} for general recoding of variables and \code{\link{recode_to}}

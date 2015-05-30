@@ -425,6 +425,7 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' recode_to(dummy, 1, 3)
 #'
 #' # create list of variables
+#' data(efc)
 #' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 #' # check original distribution of categories
 #' lapply(dummy, table)
@@ -740,11 +741,12 @@ rec_helper <- function(x, recodes) {
 #' head(dummy)
 #'
 #' # create list of variables
+#' data(efc)
 #' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 #' # check original distribution of categories
-#' lapply(dummy, table)
+#' lapply(dummy, table, exclude = NULL)
 #' # set 3 to NA
-#' lapply(set_na(dummy, 3), table)
+#' lapply(set_na(dummy, 3), table, exclude = NULL)
 #'
 #' @export
 set_na <- function(x, values) {
