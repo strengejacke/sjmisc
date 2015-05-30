@@ -701,20 +701,19 @@ rec_helper <- function(x, recodes) {
 #' @title Set NA for specific variable values
 #' @name set_na
 #'
-#' @description This function sets specific values of a variable or data frame
-#'                as missings (\code{NA}).
+#' @description This function sets specific values of a variable, data frame
+#'                or \code{list} of variables as missings (\code{NA}).
 #'
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{recode_to}}
 #'            for re-shifting value ranges.
 #'
-#' @param x a variable (vector) or a data frame where new missing values should be defined.
-#'          If \code{x} is a data frame, each column is assumed to be a new variable,
-#'          where missings should be defined.
+#' @param x a variable (vector), data frame or \code{list} of variables where new
+#'          missing values should be defined. If \code{x} is a data frame, each
+#'          column is assumed to be a new variable, where missings should be defined.
 #' @param values a numeric vector with values that should be replaced with \code{\link{NA}}'s.
 #'          Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.
 #'
-#' @return The variable or data frame \code{x}, where each value of \code{values}
-#'           is replaced by an \code{NA}.
+#' @return \code{x}, where each value of \code{values} is replaced by an \code{NA}.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
 #'         or \code{\link{set_val_labels}}) are retained.
@@ -740,10 +739,24 @@ rec_helper <- function(x, recodes) {
 #' # show head of new data frame
 #' head(dummy)
 #'
+#' # create list of variables
+#' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+#' # check original distribution of categories
+#' lapply(dummy, table)
+#' # set 3 to NA
+#' lapply(set_na(dummy, 3), table)
+#'
 #' @export
 set_na <- function(x, values) {
-  if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- set_na_helper(x[[i]], values)
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # dichotomize all
+    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], values)
     return(x)
   } else {
     return(set_na_helper(x, values))

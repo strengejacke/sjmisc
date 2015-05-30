@@ -46,7 +46,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `dicho` now also dichotomizes non-numeric values.
 * `get_val_labels` gains a `include.values` parameter to also return values associated with the value labels.
 * `get_val_labels`, `get_var_labels`, `set_val_labels` and `set_var_labels` now also accept `list`-objects with variables.
-* `dicho` and `recode_to` now also accept `list`-objects with variables.
+* `dicho`, `set_na` and `recode_to` now also accept `list`-objects with variables.
 
 #### Bug fixes
 * `get_var_labels` returned `NULL` if first variable in `data.frame` had no variable label (but other variables had) - fixed.

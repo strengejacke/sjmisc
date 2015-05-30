@@ -7,20 +7,19 @@
 set_na(x, values)
 }
 \arguments{
-\item{x}{a variable (vector) or a data frame where new missing values should be defined.
-If \code{x} is a data frame, each column is assumed to be a new variable,
-where missings should be defined.}
+\item{x}{a variable (vector), data frame or \code{list} of variables where new
+missing values should be defined. If \code{x} is a data frame, each
+column is assumed to be a new variable, where missings should be defined.}
 
 \item{values}{a numeric vector with values that should be replaced with \code{\link{NA}}'s.
          Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.}
 }
 \value{
-The variable or data frame \code{x}, where each value of \code{values}
-          is replaced by an \code{NA}.
+\code{x}, where each value of \code{values} is replaced by an \code{NA}.
 }
 \description{
-This function sets specific values of a variable or data frame
-               as missings (\code{NA}).
+This function sets specific values of a variable, data frame
+               or \code{list} of variables as missings (\code{NA}).
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
@@ -46,6 +45,13 @@ head(dummy)
 dummy <- set_na(dummy, c(2, 4))
 # show head of new data frame
 head(dummy)
+
+# create list of variables
+dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+# check original distribution of categories
+lapply(dummy, table)
+# set 3 to NA
+lapply(set_na(dummy, 3), table)
 }
 \seealso{
 \code{\link{rec}} for general recoding of variables and \code{\link{recode_to}}
