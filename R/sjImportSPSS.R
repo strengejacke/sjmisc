@@ -417,26 +417,26 @@ to_sjPlot <- function(x) {
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame, returns the all variable's value labels as \code{\link{list}} object
+#'                  \item if \code{x} is a data frame or \code{list}-object with variables, returns the all variable's value labels as \code{\link{list}} object
 #'                  \item or, if \code{x} is a vector, returns the label as string.
 #'                  }
 #'
-#' @seealso \itemize{
-#'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'            \item \code{\link{set_val_labels}}
-#'            \item \code{\link{get_val_labels}}
-#'            }
+#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+#'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+#'            more details; \code{\link{set_val_labels}} to manually set value labels, \code{\link{get_var_labels}}
+#'            to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
 #'
-#' @param x a data frame with variables that have attached value labels (e.g.
+#' @param x a \code{\link{data.frame}} with variables that have attached value labels (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
-#'          \code{\link{read_sas}} or \code{\link{read_stata}}) or a variable
-#'          (vector) with attached value labels.
+#'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
+#'          (vector) with attached value labels; or a \code{\link{list}} of variables
+#'          with attached values labels. See 'Examples'.
 #' @param include.values logical, if \code{TRUE}, the values associated with the
 #'          value labels are returned as well (as \code{\link{names}} attribute
 #'          of the returned object).
-#' @return Either a list with all value labels from the data frame's variables,
-#'           a string with the value labels, if \code{x} is a variable,
+#' @return Either a list with all value labels from all variables if \code{x}
+#'           is a \code{data.frame} or \code{list}; a string with the value
+#'           labels, if \code{x} is a variable;
 #'           or \code{NULL} if no value label attribute was found.
 #'
 #' @details This package can add (and read) value and variable labels either in \code{foreign}
@@ -502,9 +502,14 @@ to_sjPlot <- function(x) {
 #' # include associated values
 #' get_val_labels(efc$e42dep, TRUE)
 #'
+#' # get labels from multiple variables
+#' get_val_labels(list(efc$e42dep,
+#'                     efc$e16sex,
+#'                     efc$e15relat))
+#'
 #' @export
 get_val_labels <- function(x, include.values = FALSE) {
-  if (is.data.frame(x) || is.matrix(x)) {
+  if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     a <- lapply(x, FUN = sji.getValueLabel, include.values)
   } else {
     a <- sji.getValueLabel(x, include.values)
@@ -584,22 +589,24 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 }
 
 
-#' @title Attach value labels to a variable or vector
+#' @title Attach value labels to variables
 #' @name set_val_labels
 #'
-#' @description This function attaches character labels as \code{"value.labels"} attribute
-#'                to a variable or vector \code{"x"}, resp. to all variables of a data frame
-#'                if \code{"x"} is a \code{\link{data.frame}}. These value labels will be accessed
+#' @description This function adds character labels as attribute to a variable
+#'                or vector \code{x}, resp. to a set of variables in a
+#'                \code{data.frame} or \code{list}-object. To each variable,
+#'                the attribute \code{"labels"} or \code{"value.labels"}
+#'                with the related \code{labels} is attached. These value labels will be accessed
 #'                by functions of the \emph{sjPlot} package, in order to automatically set values
 #'                or legend labels.
 #'
-#' @seealso \itemize{
-#'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'            \item \code{\link{get_val_labels}}
-#'            }
+#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+#'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+#'            more details; \code{\link{set_var_labels}} to manually set variable labels or
+#'            \code{\link{get_var_labels}} to get variable labels.
 #'
-#' @param x a variable (vector) or a data frame where labels should be attached. Replaces former value labels.
+#' @param x a variable (vector), \code{list}-object with variables or a \code{data.frame}
+#'          where value labels should be attached. Replaces former value labels.
 #' @param labels a character vector of labels that will be attached to \code{x} by setting
 #'          the \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
 #'          the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
@@ -625,6 +632,20 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #' dummy <- set_val_labels(dummy, c("very low", "low", "mid", "hi"))
 #' sjp.frq(dummy)}
 #'
+#'
+#' # setting same value labels to multiple vectors
+#'
+#' # create a set of dummy variables
+#' dummy1 <- sample(1:4, 40, replace=TRUE)
+#' dummy2 <- sample(1:4, 40, replace=TRUE)
+#' dummy3 <- sample(1:4, 40, replace=TRUE)
+#' # put them in list-object
+#' dummies <- list(dummy1, dummy2, dummy3)
+#' # and set same value labels for all three dummies
+#' dummies <- set_val_labels(dummies, c("very low", "low", "mid", "hi"))
+#' # see result...
+#' get_val_labels(dummies)
+#'
 #' @export
 set_val_labels <- function(x, labels) {
   return(sji.setValueLabelNameParam(x, labels))
@@ -634,10 +655,16 @@ set_val_labels <- function(x, labels) {
 sji.setValueLabelNameParam <- function(x, labels) {
   # any valid labels? if not, return vector
   if (is.null(labels)) return(x)
-  if (is.vector(x) || is.atomic(x)) {
+  if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
     return(sji.setValueLabel.vector(x, labels))
-  } else if (is.data.frame(x) || is.matrix(x)) {
-    for (i in 1:ncol(x)) {
+  } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    for (i in 1:nvars) {
       if (is.list(labels)) {
         x[[i]] <- sji.setValueLabel.vector(x[[i]], labels[[i]], colnames(x)[i])
       } else if (is.vector(labels)) {
@@ -769,17 +796,20 @@ is_num_fac <- function(x) {
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame, returns the all variable labels as names character vector of length \code{ncol(x)}.
+#'                  \item if \code{x} is a data frame or a \code{list}-object with variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
 #'                  \item or, if \code{x} is a vector, returns the variable label as string.
 #'                  }
 #'
-#' @seealso \itemize{
-#'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'            \item \code{\link{set_var_labels}}
-#'            }
-#'
-#' @param x A data frame or a vector with \code{"label"} or \code{"variable.label"} attribute.
+#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+#'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+#'            more details; \code{\link{set_var_labels}} to manually set variable labels or \code{\link{get_val_labels}}
+#'            to get value labels.
+
+#' @param x a \code{\link{data.frame}} with variables that have attached variable labels (e.g.
+#'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
+#'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
+#'          (vector) with attached variable label; or a \code{\link{list}} of variables
+#'          with attached variable labels. See 'Examples'.
 #'
 #' @return A named char vector with all variable labels from the data frame,
 #'           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
@@ -812,6 +842,11 @@ is_num_fac <- function(x) {
 #' barplot(table(efc$e42dep),
 #'         names.arg = get_val_labels(efc$e42dep),
 #'         main = get_var_labels(efc$e42dep))
+#'
+#' # get labels from multiple variables
+#' get_var_labels(list(efc$e42dep,
+#'                     efc$e16sex,
+#'                     efc$e15relat))
 #'
 #' @export
 get_var_labels <- function(x) {
@@ -846,6 +881,11 @@ get_var_labels <- function(x) {
     } else {
       return(attr(x, "variable.labels", exact = T))
     }
+  } else if (is.list(x)) {
+    # nothing found? then leave...
+    if (is.null(attr.string)) return(NULL)
+    # return attribute of all variables
+    return(unlist(lapply(x, attr, attr.string, exact = T)))
   } else {
     # nothing found? then leave...
     if (is.null(attr.string)) return(NULL)
@@ -855,22 +895,22 @@ get_var_labels <- function(x) {
 }
 
 
-#' @title Attach variable label(s) to a single variable or data frame
+#' @title Attach variable label(s) to variables
 #' @name set_var_labels
 #' @description This function sets variable labels to a single variable or to
-#'                a set of variables in a data frame. To each variable, the
-#'                attribute \code{"label"} or \code{"variable.label"} with the related variable
-#'                name is attached. Most functions of the \emph{sjPlot} package can automatically
-#'                retrieve the variable name to use it as axis labels or plot title
-#'                (see details).
+#'                a set of variables in a \code{data.frame} or \code{list}-object.
+#'                To each variable, the attribute \code{"label"} or \code{"variable.label"}
+#'                with the related variable name is attached. Most functions of the
+#'                \emph{sjPlot} package can automatically retrieve the variable
+#'                name to use it as axis labels or plot title (see details).
 #'
-#' @seealso \itemize{
-#'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'            \item \code{\link{get_var_labels}}
-#'            }
+#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+#'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+#'            more details; \code{\link{set_val_labels}} to manually set value labels or \code{\link{get_var_labels}}
+#'            to get variable labels.
 #'
-#' @param x A single variable (vector) or data frame with variables.
+#' @param x a variable (vector), \code{list}-object with variables or a \code{data.frame}
+#'          where variables labels should be attached.
 #' @param lab If \code{x} is a vector (single variable), use a single character string with
 #'          the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a
 #'          vector with character labels of same length as \code{ncol(x)}.
@@ -931,6 +971,20 @@ get_var_labels <- function(x) {
 #'                           "Variable C"))
 #' str(dummy)
 #'
+#'
+#' # setting same variable labels to multiple vectors
+#'
+#' # create a set of dummy variables
+#' dummy1 <- sample(1:4, 40, replace=TRUE)
+#' dummy2 <- sample(1:4, 40, replace=TRUE)
+#' dummy3 <- sample(1:4, 40, replace=TRUE)
+#' # put them in list-object
+#' dummies <- list(dummy1, dummy2, dummy3)
+#' # and set variable labels for all three dummies
+#' dummies <- set_var_labels(dummies, c("First Dummy", "2nd Dummy", "Third dummy"))
+#' # see result...
+#' get_var_labels(dummies)
+#'
 #' @export
 set_var_labels <- function(x, lab, attr.string = NULL) {
   # ----------------------------
@@ -943,24 +997,31 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
   if (!is.null(lab) && !is.null(x)) {
     # if we have a data frame, we need a variable label
     # for each column (variable) of the data frame
-    if (is.data.frame(x)) {
-      if (ncol(x) != length(lab)) {
+    if (is.data.frame(x) || is.list(x)) {
+      # get length of data frame or list, i.e.
+      # determine number of variables
+      if (is.data.frame(x))
+        nvars <- ncol(x)
+      else
+        nvars <- length(x)
+      # check for matching length of supplied labels
+      if (nvars != length(lab)) {
         message("Parameter \"lab\" must be of same length as numbers of columns in \"x\".")
       } else {
         # -------------------------------------
         # create progress bar
         # -------------------------------------
         pb <- txtProgressBar(min = 0,
-                             max = ncol(x),
+                             max = nvars,
                              style = 3)
-        for (i in 1:ncol(x)) {
+        for (i in 1:nvars) {
           if (nchar(lab[i]) == 0) {
             attr(x[[i]], attr.string) <- NULL
           } else {
             # set variable label
             attr(x[[i]], attr.string) <- lab[i]
             # set names attribute. equals variable name
-            names(attr(x[[i]], attr.string)) <- colnames(x)[i]
+            if (is.data.frame(x)) names(attr(x[[i]], attr.string)) <- colnames(x)[i]
           }
           # update progress bar
           setTxtProgressBar(pb, i)

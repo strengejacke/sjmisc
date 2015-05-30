@@ -7,18 +7,20 @@
 get_val_labels(x, include.values = FALSE)
 }
 \arguments{
-\item{x}{a data frame with variables that have attached value labels (e.g.
+\item{x}{a \code{\link{data.frame}} with variables that have attached value labels (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
-\code{\link{read_sas}} or \code{\link{read_stata}}) or a variable
-(vector) with attached value labels.}
+\code{\link{read_sas}} or \code{\link{read_stata}}); a variable
+(vector) with attached value labels; or a \code{\link{list}} of variables
+with attached values labels. See 'Examples'.}
 
 \item{include.values}{logical, if \code{TRUE}, the values associated with the
 value labels are returned as well (as \code{\link{names}} attribute
 of the returned object).}
 }
 \value{
-Either a list with all value labels from the data frame's variables,
-          a string with the value labels, if \code{x} is a variable,
+Either a list with all value labels from all variables if \code{x}
+          is a \code{data.frame} or \code{list}; a string with the value
+          labels, if \code{x} is a variable;
           or \code{NULL} if no value label attribute was found.
 }
 \description{
@@ -26,7 +28,7 @@ This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame, returns the all variable's value labels as \code{\link{list}} object
+                 \item if \code{x} is a data frame or \code{list}-object with variables, returns the all variable's value labels as \code{\link{list}} object
                  \item or, if \code{x} is a vector, returns the label as string.
                  }
 }
@@ -94,13 +96,16 @@ barplot(table(efc$e42dep),
 
 # include associated values
 get_val_labels(efc$e42dep, TRUE)
+
+# get labels from multiple variables
+get_val_labels(list(efc$e42dep,
+                    efc$e16sex,
+                    efc$e15relat))
 }
 \seealso{
-\itemize{
-           \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-           \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-           \item \code{\link{set_val_labels}}
-           \item \code{\link{get_val_labels}}
-           }
+The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+           more details; \code{\link{set_val_labels}} to manually set value labels, \code{\link{get_var_labels}}
+           to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
 }
 

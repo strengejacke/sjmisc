@@ -2,12 +2,13 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{set_var_labels}
 \alias{set_var_labels}
-\title{Attach variable label(s) to a single variable or data frame}
+\title{Attach variable label(s) to variables}
 \usage{
 set_var_labels(x, lab, attr.string = NULL)
 }
 \arguments{
-\item{x}{A single variable (vector) or data frame with variables.}
+\item{x}{a variable (vector), \code{list}-object with variables or a \code{data.frame}
+where variables labels should be attached.}
 
 \item{lab}{If \code{x} is a vector (single variable), use a single character string with
 the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a
@@ -30,11 +31,11 @@ care of this.}
 }
 \description{
 This function sets variable labels to a single variable or to
-               a set of variables in a data frame. To each variable, the
-               attribute \code{"label"} or \code{"variable.label"} with the related variable
-               name is attached. Most functions of the \emph{sjPlot} package can automatically
-               retrieve the variable name to use it as axis labels or plot title
-               (see details).
+               a set of variables in a \code{data.frame} or \code{list}-object.
+               To each variable, the attribute \code{"label"} or \code{"variable.label"}
+               with the related variable name is attached. Most functions of the
+               \emph{sjPlot} package can automatically retrieve the variable
+               name to use it as axis labels or plot title (see details).
 }
 \details{
 See 'Details' in \code{\link{get_val_labels}}
@@ -81,12 +82,25 @@ dummy <- set_var_labels(dummy,
                           "",
                           "Variable C"))
 str(dummy)
+
+
+# setting same variable labels to multiple vectors
+
+# create a set of dummy variables
+dummy1 <- sample(1:4, 40, replace=TRUE)
+dummy2 <- sample(1:4, 40, replace=TRUE)
+dummy3 <- sample(1:4, 40, replace=TRUE)
+# put them in list-object
+dummies <- list(dummy1, dummy2, dummy3)
+# and set variable labels for all three dummies
+dummies <- set_var_labels(dummies, c("First Dummy", "2nd Dummy", "Third dummy"))
+# see result...
+get_var_labels(dummies)
 }
 \seealso{
-\itemize{
-           \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-           \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-           \item \code{\link{get_var_labels}}
-           }
+The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+           more details; \code{\link{set_val_labels}} to manually set value labels or \code{\link{get_var_labels}}
+           to get variable labels.
 }
 

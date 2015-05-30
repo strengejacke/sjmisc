@@ -1,4 +1,4 @@
-Version 1.0.2-6
+Version 1.0.2-7
 ------------------------------------------------------------------------------
 New function:
 * "add_labels" to set back labels from subsetted data frame, or remove any label attributes from data frames.
@@ -8,9 +8,10 @@ New function:
 Changes to functions:
 * "dicho" now also dichotomizes non-numeric values.
 * "get_val_labels" gains a "include.values" parameter to also return values associated with the value labels.
+* "get_val_labels", "get_var_labels", "set_val_labels" and "set_var_labels" now also accept "list"-objects with variables.
 
 Bug fixes:
-* "get_var_labels" returned NULL if first variable in data.frame had no variable label (but other has) - fixed.
+* "get_var_labels" returned NULL if first variable in data.frame had no variable label (but other variables had) - fixed.
 * Fixed code with non-exact matching of "haven"-attributes "label" and "labels", which in certain situation may return wrong vector attributes.
 
 Version 1.0.2

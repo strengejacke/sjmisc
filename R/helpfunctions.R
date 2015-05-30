@@ -33,13 +33,18 @@ autoSetValueLabels <- function(x) {
 getVarLabelAttribute <- function(x) {
   attr.string <- NULL
   # check if x is data frame. if yes, retrieve one "example" variable
-  if (is.data.frame(x)) {
+  if (is.data.frame(x) || is.list(x)) {
+    # define length for loop
+    if (is.data.frame(x))
+      counter <- ncol(x)
+    else
+      counter <- length(x)
     # we need to check all variables until first variable
     # that has any attributes at all - SPSS variables without
     # labels would return NULL, so if -e.g.- first variable
     # of data set has no label attribute, but second had, this
     # function would stop after first attribute and return NULL
-    for (i in 1:ncol(x)) {
+    for (i in 1:counter) {
       # retrieve attribute names
       an <- names(attributes(x[[i]]))
       # check for label attributes

@@ -7,7 +7,11 @@
 get_var_labels(x)
 }
 \arguments{
-\item{x}{A data frame or a vector with \code{"label"} or \code{"variable.label"} attribute.}
+\item{x}{a \code{\link{data.frame}} with variables that have attached variable labels (e.g.
+         from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
+         \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
+         (vector) with attached variable label; or a \code{\link{list}} of variables
+         with attached variable labels. See 'Examples'.}
 }
 \value{
 A named char vector with all variable labels from the data frame,
@@ -18,7 +22,7 @@ This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame, returns the all variable labels as names character vector of length \code{ncol(x)}.
+                 \item if \code{x} is a data frame or a \code{list}-object with variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
                  \item or, if \code{x} is a vector, returns the variable label as string.
                  }
 }
@@ -52,12 +56,16 @@ barplot(table(efc$e42dep))
 barplot(table(efc$e42dep),
         names.arg = get_val_labels(efc$e42dep),
         main = get_var_labels(efc$e42dep))
+
+# get labels from multiple variables
+get_var_labels(list(efc$e42dep,
+                    efc$e16sex,
+                    efc$e15relat))
 }
 \seealso{
-\itemize{
-           \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-           \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-           \item \code{\link{set_var_labels}}
-           }
+The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+           more details; \code{\link{set_var_labels}} to manually set variable labels or \code{\link{get_val_labels}}
+           to get value labels.
 }
 

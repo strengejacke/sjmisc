@@ -2,12 +2,13 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{set_val_labels}
 \alias{set_val_labels}
-\title{Attach value labels to a variable or vector}
+\title{Attach value labels to variables}
 \usage{
 set_val_labels(x, labels)
 }
 \arguments{
-\item{x}{a variable (vector) or a data frame where labels should be attached. Replaces former value labels.}
+\item{x}{a variable (vector), \code{list}-object with variables or a \code{data.frame}
+where value labels should be attached. Replaces former value labels.}
 
 \item{labels}{a character vector of labels that will be attached to \code{x} by setting
 the \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
@@ -24,9 +25,11 @@ Use \code{labels = ""} to remove labels-attribute from \code{x}.}
            \code{labels = ""}.
 }
 \description{
-This function attaches character labels as \code{"value.labels"} attribute
-               to a variable or vector \code{"x"}, resp. to all variables of a data frame
-               if \code{"x"} is a \code{\link{data.frame}}. These value labels will be accessed
+This function adds character labels as attribute to a variable
+               or vector \code{x}, resp. to a set of variables in a
+               \code{data.frame} or \code{list}-object. To each variable,
+               the attribute \code{"labels"} or \code{"value.labels"}
+               with the related \code{labels} is attached. These value labels will be accessed
                by functions of the \emph{sjPlot} package, in order to automatically set values
                or legend labels.
 }
@@ -44,12 +47,25 @@ sjp.frq(dummy)
 
 dummy <- set_val_labels(dummy, c("very low", "low", "mid", "hi"))
 sjp.frq(dummy)}
+
+
+# setting same value labels to multiple vectors
+
+# create a set of dummy variables
+dummy1 <- sample(1:4, 40, replace=TRUE)
+dummy2 <- sample(1:4, 40, replace=TRUE)
+dummy3 <- sample(1:4, 40, replace=TRUE)
+# put them in list-object
+dummies <- list(dummy1, dummy2, dummy3)
+# and set same value labels for all three dummies
+dummies <- set_val_labels(dummies, c("very low", "low", "mid", "hi"))
+# see result...
+get_val_labels(dummies)
 }
 \seealso{
-\itemize{
-           \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-           \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-           \item \code{\link{get_val_labels}}
-           }
+The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
+           more details; \code{\link{set_var_labels}} to manually set variable labels or
+           \code{\link{get_var_labels}} to get variable labels.
 }
 
