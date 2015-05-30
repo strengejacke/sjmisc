@@ -8,20 +8,20 @@ group_var(var, groupsize = 5, asNumeric = TRUE, rightInterval = FALSE,
   autoGroupCount = 30)
 }
 \arguments{
-\item{var}{The count variable, which should recoded into groups.}
+\item{var}{numeric; variable, which should recoded into groups.}
 
-\item{groupsize}{The group-size, i.e. the range for grouping. By default, for each 5 categories
-a new group is defined, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
-resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
-plotting histograms). Use \code{autoGroupCount} to determin the amount of groups.}
+\item{groupsize}{numeric; group-size, i.e. the range for grouping. By default,
+for each 5 categories of \code{var} a new group is defined, i.e. \code{groupsize=5}.
+Use \code{groupsize = "auto"} to automatically resize a variable into
+a maximum of 30 groups (which is the ggplot-default grouping when
+plotting histograms). Use \code{autoGroupCount} to determin the amount
+of groups.}
 
-\item{asNumeric}{If \code{TRUE} (default), the recoded variable will be returned as numeric vector.
-If \code{FALSE}, a factor is returned.}
+\item{asNumeric}{logical; if \code{TRUE} (default), the recoded variable will
+be returned as numeric vector. If \code{FALSE}, a factor is returned.}
 
-\item{rightInterval}{If \code{TRUE}, grouping starts with the lower bound of \code{groupsize}. In this
-case, groups cover the ranges from 50-54, 55-59, 60-64 etc. \cr
-If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. In this
-case, groups cover the ranges from 51-55, 56-60, 61-65 etc.}
+\item{rightInterval}{logical; if \code{TRUE}, grouping starts with the lower
+bound of \code{groupsize}. See 'Details'.}
 
 \item{autoGroupCount}{Sets the maximum number of groups that are defined when auto-grouping is on
          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
@@ -31,7 +31,8 @@ case, groups cover the ranges from 51-55, 56-60, 61-65 etc.}
 A grouped variable, either as numeric or as factor (see paramter \code{asNumeric}).
 }
 \description{
-Recode count variables into grouped factors.
+Recode count variables into grouped factors, i.e. a variable is
+               cut into a smaller number of groups.
 }
 \details{
 If \code{groupsize} is set to a specific value, the variable is recoded
@@ -42,6 +43,16 @@ If \code{groupsize} is set to a specific value, the variable is recoded
            \code{autoGroupCount} groups. Hence, independent from the range of
            \code{var}, always the same amount of groups are created, so the range
            within each group differs (depending on \code{var}'s range).
+           \cr \cr
+           \code{rightInterval} determins which boundary values to include when
+           grouping is done. If \code{TRUE}, grouping starts with the \strong{lower
+           bound} of \code{groupsize}. For example, having a variable ranging from
+           50 to 80, groups cover the ranges from  50-54, 55-59, 60-64 etc.
+           If \code{FALSE} (default), grouping starts with the \code{upper bound}
+           of \code{groupsize}. In this case, groups cover the ranges from
+           46-50, 51-55, 56-60, 61-65 etc. \strong{Note:} This will cover
+           a range from 46-50 as first group, even if values from 46 to 49
+           are not present. See 'Examples' in \code{\link{group_labels}}.
 }
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))

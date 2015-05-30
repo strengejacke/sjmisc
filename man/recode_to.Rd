@@ -7,18 +7,19 @@
 recode_to(x, lowest = 0, highest = -1)
 }
 \arguments{
-\item{x}{A variable (vector) or a data frame that should be recoded.}
+\item{x}{variable (vector), data frame or \code{list} of variables that should be recoded.}
 
-\item{lowest}{Indicating the lowest category value after recoding. Default is 0, so the new
-variable starts with the category value 0.}
+\item{lowest}{indicating the lowest category value for recoding. Default is 0, so the new
+variable starts with value 0.}
 
-\item{highest}{If specified and larger than \code{lowest}, all category values larger than
+\item{highest}{if specified and larger than \code{lowest}, all category values larger than
 \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this parameter is ignored
 and no NA's will be produced.}
 }
 \value{
 A new variable with recoded category values, where \code{lowest} indicates the lowest
-          value; or a data frame where variables have been recoded as described.
+          value; or a data frame or \code{list} of variables where variables have
+          been recoded as described.
 }
 \description{
 Recodes (or "renumbers") the categories of \code{var} into new category values, beginning
@@ -48,6 +49,13 @@ recode_to(dummy, 1)
 # all others set to NA
 dummy <- sample(11:15, 10, replace = TRUE)
 recode_to(dummy, 1, 3)
+
+# create list of variables
+dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+# check original distribution of categories
+lapply(dummy, table)
+# renumber from 1 to 0
+lapply(recode_to(dummy), table)
 }
 \seealso{
 \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}

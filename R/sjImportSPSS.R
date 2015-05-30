@@ -417,7 +417,7 @@ to_sjPlot <- function(x) {
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame or \code{list}-object with variables, returns the all variable's value labels as \code{\link{list}} object
+#'                  \item if \code{x} is a data frame or \code{list} of variables, returns the all variable's value labels as \code{\link{list}} object
 #'                  \item or, if \code{x} is a vector, returns the label as string.
 #'                  }
 #'
@@ -605,7 +605,7 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #'            more details; \code{\link{set_var_labels}} to manually set variable labels or
 #'            \code{\link{get_var_labels}} to get variable labels.
 #'
-#' @param x a variable (vector), \code{list}-object with variables or a \code{data.frame}
+#' @param x a variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where value labels should be attached. Replaces former value labels.
 #' @param labels a character vector of labels that will be attached to \code{x} by setting
 #'          the \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
@@ -660,7 +660,7 @@ sji.setValueLabelNameParam <- function(x, labels) {
   } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x))
+    if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -796,7 +796,7 @@ is_num_fac <- function(x) {
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame or a \code{list}-object with variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
+#'                  \item if \code{x} is a data frame or a \code{list} of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
 #'                  \item or, if \code{x} is a vector, returns the variable label as string.
 #'                  }
 #'
@@ -909,7 +909,7 @@ get_var_labels <- function(x) {
 #'            more details; \code{\link{set_val_labels}} to manually set value labels or \code{\link{get_var_labels}}
 #'            to get variable labels.
 #'
-#' @param x a variable (vector), \code{list}-object with variables or a \code{data.frame}
+#' @param x a variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where variables labels should be attached.
 #' @param lab If \code{x} is a vector (single variable), use a single character string with
 #'          the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a

@@ -7,7 +7,7 @@
 set_val_labels(x, labels)
 }
 \arguments{
-\item{x}{a variable (vector), \code{list}-object with variables or a \code{data.frame}
+\item{x}{a variable (vector), \code{list} of variables or a \code{data.frame}
 where value labels should be attached. Replaces former value labels.}
 
 \item{labels}{a character vector of labels that will be attached to \code{x} by setting

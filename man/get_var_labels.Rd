@@ -22,7 +22,7 @@ This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame or a \code{list}-object with variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
+                 \item if \code{x} is a data frame or a \code{list} of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
                  \item or, if \code{x} is a vector, returns the variable label as string.
                  }
 }

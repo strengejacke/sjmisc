@@ -28,7 +28,7 @@ This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame or \code{list}-object with variables, returns the all variable's value labels as \code{\link{list}} object
+                 \item if \code{x} is a data frame or \code{list} of variables, returns the all variable's value labels as \code{\link{list}} object
                  \item or, if \code{x} is a vector, returns the label as string.
                  }
 }

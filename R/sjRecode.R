@@ -3,22 +3,24 @@
 #'
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is
 #'                either done by median, mean or a specific value (see \code{dichBy}).
-#'                Either single vectors or complete data frames can be dichotomized.
+#'                Either single vectors, a complete data frame or a \code{list} of
+#'                variables can be dichotomized.
 #'
-#' @param x The variable (vector) or data frame that should be dichotomized.
-#' @param dichBy Indicates the split criterion where the variable is dichotomized.
-#'          \itemize{
-#'            \item By default, \code{var} is split into two groups at the median (\code{dichBy = "median"} or \code{dichBy = "md"}).
-#'            \item \code{dichBy = "mean"} (or \code{dichBy = "m"}) splits \code{var} into two groups at the mean of \code{var}.
-#'            \item \code{dichBy = "value"} (or \code{dichBy = "v"}) splits \code{var} into two groups at a specific value (see \code{dichVal}).
+#' @param x variable (vector), \code{data.frame} or \code{list} of variables
+#'          that should be dichotomized
+#' @param dichBy indicates the split criterion where a variable is dichotomized
+#'          \describe{
+#'            \item{\code{"median"}}{by default, \code{var} is split into two groups at the median (\code{dichBy = "median"} or \code{dichBy = "md"})}
+#'            \item{\code{dichBy = "mean"}}{(or \code{dichBy = "m"}) splits \code{var} into two groups at the mean of \code{var}}
+#'            \item{\code{dichBy = "value"}}{(or \code{dichBy = "v"}) splits \code{var} into two groups at a specific value (see \code{dichVal})}
 #'            }
 #' @param dichVal numeric, indicates a value where \code{var} is dichotomized when \code{dichBy = "value"}.
-#'          \emph{Note that \code{dichVal} is inclusive}, i.e. \code{dichVal = 10} will split \code{var}
+#'          \strong{Note that \code{dichVal} is inclusive}, i.e. \code{dichVal = 10} will split \code{var}
 #'          into one group with values from lowest to 10 and another group with values greater
 #'          than 10.
 #' @param asNum logical, if \code{TRUE}, return value will be numeric, not a factor.
-#' @return A dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
-#'           respectively a data frame of dichotomized factor (or numeric) variables.
+#' @return a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
+#'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
 #' @examples
 #' data(efc)
@@ -32,6 +34,10 @@
 #' # dichtomized values (1 to 2 = 0, 3 to 4 = 1)
 #' head(dicho(efc[, 6:10], "v", 2))
 #'
+#' # dichtomize several variables in a list
+#' dummy <- list(efc$c12hour, efc$e17age, efc$c160age)
+#' dicho(dummy)
+#'
 #' @export
 dicho <- function(x, dichBy = "median", dichVal = -1, asNum = FALSE) {
   # check abbreviations
@@ -42,8 +48,15 @@ dicho <- function(x, dichBy = "median", dichVal = -1, asNum = FALSE) {
   if (dichBy != "median" && dichBy != "mean" && dichBy != "value") {
     stop("Parameter \"dichBy\" must either be \"median\", \"mean\" or \"value\"..." , call. = FALSE)
   }
-  if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- dicho_helper(x[[i]], dichBy, dichVal, asNum)
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # dichotomize all
+    for (i in 1:nvars) x[[i]] <- dicho_helper(x[[i]], dichBy, dichVal, asNum)
     return(x)
   } else {
     return(dicho_helper(x, dichBy, dichVal, asNum))
@@ -83,24 +96,25 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
 #' @title Recode count variables into grouped factors
 #' @name group_var
 #'
-#' @description Recode count variables into grouped factors.
+#' @description Recode count variables into grouped factors, i.e. a variable is
+#'                cut into a smaller number of groups.
 #'
 #' @seealso \itemize{
 #'            \item \code{\link{group_labels}}
 #'            \item \code{\link{group_str}}
 #'          }
 #'
-#' @param var The count variable, which should recoded into groups.
-#' @param groupsize The group-size, i.e. the range for grouping. By default, for each 5 categories
-#'          a new group is defined, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
-#'          resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
-#'          plotting histograms). Use \code{autoGroupCount} to determin the amount of groups.
-#' @param asNumeric If \code{TRUE} (default), the recoded variable will be returned as numeric vector.
-#'          If \code{FALSE}, a factor is returned.
-#' @param rightInterval If \code{TRUE}, grouping starts with the lower bound of \code{groupsize}. In this
-#'          case, groups cover the ranges from 50-54, 55-59, 60-64 etc. \cr
-#'          If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. In this
-#'          case, groups cover the ranges from 51-55, 56-60, 61-65 etc.
+#' @param var numeric; variable, which should recoded into groups.
+#' @param groupsize numeric; group-size, i.e. the range for grouping. By default,
+#'          for each 5 categories of \code{var} a new group is defined, i.e. \code{groupsize=5}.
+#'          Use \code{groupsize = "auto"} to automatically resize a variable into
+#'          a maximum of 30 groups (which is the ggplot-default grouping when
+#'          plotting histograms). Use \code{autoGroupCount} to determin the amount
+#'          of groups.
+#' @param asNumeric logical; if \code{TRUE} (default), the recoded variable will
+#'          be returned as numeric vector. If \code{FALSE}, a factor is returned.
+#' @param rightInterval logical; if \code{TRUE}, grouping starts with the lower
+#'          bound of \code{groupsize}. See 'Details'.
 #' @param autoGroupCount Sets the maximum number of groups that are defined when auto-grouping is on
 #'          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 #'          this parameter will be ignored.
@@ -115,6 +129,16 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
 #'            \code{autoGroupCount} groups. Hence, independent from the range of
 #'            \code{var}, always the same amount of groups are created, so the range
 #'            within each group differs (depending on \code{var}'s range).
+#'            \cr \cr
+#'            \code{rightInterval} determins which boundary values to include when
+#'            grouping is done. If \code{TRUE}, grouping starts with the \strong{lower
+#'            bound} of \code{groupsize}. For example, having a variable ranging from
+#'            50 to 80, groups cover the ranges from  50-54, 55-59, 60-64 etc.
+#'            If \code{FALSE} (default), grouping starts with the \code{upper bound}
+#'            of \code{groupsize}. In this case, groups cover the ranges from
+#'            46-50, 51-55, 56-60, 61-65 etc. \strong{Note:} This will cover
+#'            a range from 46-50 as first group, even if values from 46 to 49
+#'            are not present. See 'Examples' in \code{\link{group_labels}}.
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
@@ -163,7 +187,7 @@ group_var <- function(var,
 #' @name group_labels
 #'
 #' @description Creates the related labels for the grouped variable created by
-#'                the \code{\link{group_var}} function.
+#'                \code{\link{group_var}}.
 #'
 #' @seealso \itemize{
 #'            \item \code{\link{group_var}}
@@ -174,22 +198,21 @@ group_var <- function(var,
 #'         \code{rightInterval} as used in the \code{\link{group_var}} function
 #'         if you want to create labels for the related recoded variable.
 #'
-#' @param var The variable, which should recoded into groups.
-#' @param groupsize The group-size, i.e. the range for grouping. By default, for each 5 categories
-#'          new group is built, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
+#' @param var numeric variable, which should recoded into groups.
+#' @param groupsize group-size, i.e. the range for grouping. By default, for each 5 categories
+#'          new group is built, i.e. \code{groupsize = 5}. Use \code{groupsize = "auto"} to automatically
 #'          resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
 #'          plotting histograms). Use parameter \code{autoGroupCount} to define the amount of groups.
-#' @param rightInterval If \code{TRUE}, grouping starts with the lower bound of \code{groupsize}. In this
-#'          case, groups cover the ranges from 50-54, 55-59, 60-64 etc. \cr
-#'          If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. In this
-#'          case, groups cover the ranges from 51-55, 56-60, 61-65 etc.
+#' @param rightInterval logical; if \code{TRUE}, grouping starts with the lower bound of \code{groupsize}.
+#'          If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. See 'Examples'
+#'          and 'Details'.
 #' @param autoGroupCount Sets the maximum number of groups that are built when auto-grouping is on
-#'          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
+#'          (\code{groupsize = "auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 #'          this parameter will be ignored.
 #'
-#' @return A string vector containing labels based on the grouped counts of \code{var},
+#' @return A string vector containing labels based on the grouped categories of \code{var},
 #'           formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc.
-#'           See example below.
+#'           See examples below.
 #'
 #' @details See 'Details' in \code{\link{group_var}}.
 #'
@@ -202,6 +225,14 @@ group_var <- function(var,
 #' age.grpvar <- group_labels(age, 10)
 #' table(age.grp)
 #' print(age.grpvar)
+#'
+#' # create vector with values from 50 to 80
+#' dummy <- round(runif(200, 50, 80))
+#' # labels with grouping starting at lower bound
+#' group_labels(dummy)
+#' # labels with grouping startint at upper bound
+#' group_labels(dummy, rightInterval = TRUE)
+#'
 #'
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
@@ -293,8 +324,8 @@ group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
 #' @description Insert line breaks in long character strings. Useful if you want to wordwrap
 #'                labels / titles for plots or tables.
 #'
-#' @param labels the label(s) (i.e. character string) where a line break should be
-#'          inserted. You can also pass several strings as vector
+#' @param labels label(s) as character string, where a line break should be
+#'          inserted. Several strings may be passed as vector
 #'          (e.g. \code{labels = c("first long string", "second long string")})
 #' @param wrap the maximum amount of chars per line (i.e. line length)
 #' @param linesep by default, this parameter is \code{NULL} and a regular new line
@@ -361,14 +392,15 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
 #'            for setting \code{\link{NA}} values.
 #'
-#' @param x A variable (vector) or a data frame that should be recoded.
-#' @param lowest Indicating the lowest category value after recoding. Default is 0, so the new
-#'          variable starts with the category value 0.
-#' @param highest If specified and larger than \code{lowest}, all category values larger than
+#' @param x variable (vector), data frame or \code{list} of variables that should be recoded.
+#' @param lowest indicating the lowest category value for recoding. Default is 0, so the new
+#'          variable starts with value 0.
+#' @param highest if specified and larger than \code{lowest}, all category values larger than
 #'          \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this parameter is ignored
 #'          and no NA's will be produced.
 #' @return A new variable with recoded category values, where \code{lowest} indicates the lowest
-#'           value; or a data frame where variables have been recoded as described.
+#'           value; or a data frame or \code{list} of variables where variables have
+#'           been recoded as described.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
 #'         or \code{\link{set_val_labels}}) are retained.
@@ -392,10 +424,24 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' dummy <- sample(11:15, 10, replace = TRUE)
 #' recode_to(dummy, 1, 3)
 #'
+#' # create list of variables
+#' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+#' # check original distribution of categories
+#' lapply(dummy, table)
+#' # renumber from 1 to 0
+#' lapply(recode_to(dummy), table)
+#'
 #' @export
 recode_to <- function(x, lowest=0, highest=-1) {
-  if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- rec_to_helper(x[[i]], lowest, highest)
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # dichotomize all
+    for (i in 1:nvars) x[[i]] <- rec_to_helper(x[[i]], lowest, highest)
     return(x)
   } else {
     return(rec_to_helper(x, lowest, highest))

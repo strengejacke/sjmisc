@@ -8,30 +8,29 @@ group_labels(var, groupsize = 5, rightInterval = FALSE,
   autoGroupCount = 30)
 }
 \arguments{
-\item{var}{The variable, which should recoded into groups.}
+\item{var}{numeric variable, which should recoded into groups.}
 
-\item{groupsize}{The group-size, i.e. the range for grouping. By default, for each 5 categories
-new group is built, i.e. \code{groupsize=5}. Use \code{groupsize="auto"} to automatically
+\item{groupsize}{group-size, i.e. the range for grouping. By default, for each 5 categories
+new group is built, i.e. \code{groupsize = 5}. Use \code{groupsize = "auto"} to automatically
 resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
 plotting histograms). Use parameter \code{autoGroupCount} to define the amount of groups.}
 
-\item{rightInterval}{If \code{TRUE}, grouping starts with the lower bound of \code{groupsize}. In this
-case, groups cover the ranges from 50-54, 55-59, 60-64 etc. \cr
-If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. In this
-case, groups cover the ranges from 51-55, 56-60, 61-65 etc.}
+\item{rightInterval}{logical; if \code{TRUE}, grouping starts with the lower bound of \code{groupsize}.
+If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. See 'Examples'
+and 'Details'.}
 
 \item{autoGroupCount}{Sets the maximum number of groups that are built when auto-grouping is on
-         (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
+         (\code{groupsize = "auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
          this parameter will be ignored.}
 }
 \value{
-A string vector containing labels based on the grouped counts of \code{var},
+A string vector containing labels based on the grouped categories of \code{var},
           formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc.
-          See example below.
+          See examples below.
 }
 \description{
 Creates the related labels for the grouped variable created by
-               the \code{\link{group_var}} function.
+               \code{\link{group_var}}.
 }
 \details{
 See 'Details' in \code{\link{group_var}}.
@@ -50,6 +49,14 @@ hist(age.grp)
 age.grpvar <- group_labels(age, 10)
 table(age.grp)
 print(age.grpvar)
+
+# create vector with values from 50 to 80
+dummy <- round(runif(200, 50, 80))
+# labels with grouping starting at lower bound
+group_labels(dummy)
+# labels with grouping startint at upper bound
+group_labels(dummy, rightInterval = TRUE)
+
 
 # histogram with EUROFAMCARE sample dataset
 # variable not grouped
