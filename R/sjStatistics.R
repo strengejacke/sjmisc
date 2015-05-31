@@ -752,12 +752,13 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 #' @name mic
 #' @description This function calculates a mean inter-item-correlation, i.e.
 #'                a correlation matrix of \code{data} will be computed (unless
-#'                \code{data} is already a \code{\link{cor}}-object) and the mean
+#'                \code{data} is already a matrix as returned by the
+#'                \code{\link{cor}}-function) and the mean
 #'                of the sum of all item's correlation values is returned.
 #'                Requires either a data frame or a computed \code{\link{cor}}-object.
 #'
-#' @param data A correlation object (see \code{\link{cor}}-function), or a data frame
-#'          which correlations should be calculated.
+#' @param data A \code{matrix} as returned by the \code{\link{cor}}-function, or
+#'          a data frame which correlations should be calculated.
 #' @param corMethod Indicates the correlation computation method. May be one of
 #'          \code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
 #'          You may use initial letter only.
