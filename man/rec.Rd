@@ -8,10 +8,10 @@ rec(x, recodes)
 }
 \arguments{
 \item{x}{a numeric variable (vector) or a \code{\link{factor}} with numeric
-levels that should be recoded; or a data frame or \code{list} of
+levels that should be recoded; or a \code{data.frame} or \code{list} of
 variables.}
 
-\item{recodes}{a string with recode pairs of old and new values. See details for
+\item{recodes}{a string with recode pairs of old and new values. See 'Details' for
 examples.}
 }
 \value{
@@ -41,7 +41,7 @@ Please note following behaviours of the function:
         \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
         \item Non-matching values will be set to \code{\link{NA}}.
         \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained, however, value label attributes are removed.
-        \item If \code{x} is a data frame or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
+        \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
       }
 }
 \examples{
@@ -80,7 +80,7 @@ lapply(dummy, table, exclude = NULL)
 lapply(rec(dummy, "1,2=1; NA=9; else=keep"), table, exclude = NULL)
 }
 \seealso{
-\code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_NA}}
+\code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
            to replace \code{\link{NA}}'s with specific value and \code{\link{recode_to}}
            for re-shifting value ranges.
 }

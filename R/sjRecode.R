@@ -3,7 +3,7 @@
 #'
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is
 #'                either done by median, mean or a specific value (see \code{dichBy}).
-#'                Either single vectors, a complete data frame or a \code{list} of
+#'                Either single vectors, a complete data frame or a list of
 #'                variables can be dichotomized.
 #'
 #' @param x variable (vector), \code{data.frame} or \code{list} of variables
@@ -51,7 +51,7 @@ dicho <- function(x, dichBy = "median", dichVal = -1, asNum = FALSE) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -146,26 +146,19 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
 #' hist(age)
 #' hist(age.grp)
 #'
+#'
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
-#' \dontrun{
-#' library(sjPlot)
-#' sjp.frq(efc$e17age,
-#'         title = get_var_labels(efc$e17age),
-#'         type = "h",
-#'         showValueLabels = FALSE)}
+#' hist(efc$e17age, main = get_var_labels(efc$e17age))
 #'
 #' # bar plot with EUROFAMCARE sample dataset
 #' # grouped variable
-#' data(efc)
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
-#' \dontrun{
-#' library(sjPlot)
-#' sjp.frq(ageGrp,
-#'         title = get_var_labels(efc$e17age),
-#'         axisLabels.x = ageGrpLab)}
+#' barplot(table(ageGrp),
+#'         main = get_var_labels(efc$e17age),
+#'         names.arg = ageGrpLab)
 #'
 #' @export
 group_var <- function(var,
@@ -226,6 +219,7 @@ group_var <- function(var,
 #' table(age.grp)
 #' print(age.grpvar)
 #'
+#'
 #' # create vector with values from 50 to 80
 #' dummy <- round(runif(200, 50, 80))
 #' # labels with grouping starting at lower bound
@@ -237,23 +231,15 @@ group_var <- function(var,
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
-#' \dontrun{
-#' library(sjPlot)
-#' sjp.frq(efc$e17age,
-#'         title = get_var_labels(efc$e17age),
-#'         type = "h",
-#'         showValueLabels = FALSE)}
+#' hist(efc$e17age, main = get_var_labels(efc$e17age))
 #'
 #' # bar plot with EUROFAMCARE sample dataset
 #' # grouped variable
-#' data(efc)
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
-#' \dontrun{
-#' library(sjPlot)
-#' sjp.frq(ageGrp,
-#'         title = get_var_labels(efc$e17age),
-#'         axisLabels.x = ageGrpLab)}
+#' barplot(table(ageGrp),
+#'         main = get_var_labels(efc$e17age),
+#'         names.arg = ageGrpLab)
 #'
 #' @export
 group_labels <- function(var,
@@ -325,8 +311,7 @@ group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
 #'                labels / titles for plots or tables.
 #'
 #' @param labels label(s) as character string, where a line break should be
-#'          inserted. Several strings may be passed as vector
-#'          (e.g. \code{labels = c("first long string", "second long string")})
+#'          inserted. Several strings may be passed as vector  (see 'Examples').
 #' @param wrap the maximum amount of chars per line (i.e. line length)
 #' @param linesep by default, this parameter is \code{NULL} and a regular new line
 #'          string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}
@@ -392,14 +377,14 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
 #'            for setting \code{\link{NA}} values.
 #'
-#' @param x variable (vector), data frame or \code{list} of variables that should be recoded.
+#' @param x variable (vector), \code{data.frame} or \code{list} of variables that should be recoded.
 #' @param lowest indicating the lowest category value for recoding. Default is 0, so the new
 #'          variable starts with value 0.
 #' @param highest if specified and larger than \code{lowest}, all category values larger than
 #'          \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this parameter is ignored
 #'          and no NA's will be produced.
 #' @return A new variable with recoded category values, where \code{lowest} indicates the lowest
-#'           value; or a data frame or \code{list} of variables where variables have
+#'           value; or a data frame or list of variables where variables have
 #'           been recoded as described.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
@@ -437,7 +422,7 @@ recode_to <- function(x, lowest=0, highest=-1) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -483,14 +468,14 @@ rec_to_helper <- function(var, lowest, highest) {
 #' @description Recodes the categories of a (numeric) variable \code{x} into new
 #'                category values.
 #'
-#' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_NA}}
+#' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
 #'            to replace \code{\link{NA}}'s with specific value and \code{\link{recode_to}}
 #'            for re-shifting value ranges.
 #'
 #' @param x a numeric variable (vector) or a \code{\link{factor}} with numeric
-#'          levels that should be recoded; or a data frame or \code{list} of
+#'          levels that should be recoded; or a \code{data.frame} or \code{list} of
 #'          variables.
-#' @param recodes a string with recode pairs of old and new values. See details for
+#' @param recodes a string with recode pairs of old and new values. See 'Details' for
 #'          examples.
 #' @return A numeric variable with recoded category values, or a data frame
 #'           or \code{list}-object with recoded categories for all variables.
@@ -512,7 +497,7 @@ rec_to_helper <- function(var, lowest, highest) {
 #'         \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
 #'         \item Non-matching values will be set to \code{\link{NA}}.
 #'         \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained, however, value label attributes are removed.
-#'         \item If \code{x} is a data frame or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
+#'         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
 #'       }
 #'
 #' @examples
@@ -555,7 +540,7 @@ rec <- function(x, recodes) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -751,14 +736,14 @@ rec_helper <- function(x, recodes) {
 #' @name set_na
 #'
 #' @description This function sets specific values of a variable, data frame
-#'                or \code{list} of variables as missings (\code{NA}).
+#'                or list of variables as missings (\code{NA}).
 #'
-#' @seealso \code{\link{replace_NA}} to replace \code{\link{NA}}'s with specific
+#' @seealso \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
 #'            value, \code{\link{rec}} for general recoding of variables and
 #'            \code{\link{recode_to}} for re-shifting value ranges.
 #'
-#' @param x a variable (vector), data frame or \code{list} of variables where new
-#'          missing values should be defined. If \code{x} is a data frame, each
+#' @param x a variable (vector), \code{data.frame} or \code{list} of variables where new
+#'          missing values should be defined. If \code{x} is a \code{data.frame}, each
 #'          column is assumed to be a new variable, where missings should be defined.
 #' @param values a numeric vector with values that should be replaced with \code{\link{NA}}'s.
 #'          Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.
@@ -802,7 +787,7 @@ set_na <- function(x, values) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -874,14 +859,14 @@ set_na_helper <- function(var, values) {
 #' @title Replace NA with specific values
 #' @name replace_na
 #'
-#' @description This function replaces \code{\link{NA}}'s of a variable, data frame
-#'                or \code{list} of variables with \code{value}.
+#' @description This function replaces NA's of a variable, data frame
+#'                or list of variables with \code{value}.
 #'
 #' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{rec}}
 #'            for general recoding of variables and \code{\link{recode_to}}
 #'            for re-shifting value ranges.
 #'
-#' @param x a variable (vector), data frame or \code{list} of variables where
+#' @param x a variable (vector), \code{data.frame} or \code{list} of variables where
 #'          missing values should be replaced with \code{value}.
 #' @param value value that will replace the \code{\link{NA}}'s.
 #'
@@ -906,7 +891,7 @@ replace_na <- function(x, value) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -1023,7 +1008,7 @@ weight <- function(var, weights) {
 #'          elements as similar or equal.
 #' @param method Method for distance calculation. The default is \code{"lv"}. See
 #'          \code{\link[stringdist]{stringdist}} package for details.
-#' @param strict if \code{TRUE}, value matching is more strictly. See examples for details.
+#' @param strict if \code{TRUE}, value matching is more strictly. See 'Examples'.
 #' @param trim.whitespace if \code{TRUE} (default), leading and trailing white spaces will
 #'          be removed from string values.
 #' @param remove.empty if \code{TRUE} (default), empty string values will be removed from the
@@ -1402,7 +1387,7 @@ str_pos <- function(searchString,
 #' @param n May either be
 #'          \itemize{
 #'            \item a numeric value that indicates the amount of valid values per row to calculate the row mean;
-#'            \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see details).
+#'            \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see 'Details').
 #'          }
 #'          If a row's amount of valid values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.
 #' @param digits numeric value indicating the number of decimal places to be used for rounding mean
@@ -1419,7 +1404,7 @@ str_pos <- function(searchString,
 #'            row mean is returned. If \code{n} is a non-integer value from 0 to 1,
 #'            \code{n} is considered to indicate the proportion of necessary non-missing
 #'            values per row. E.g., if \code{n = .75}, a row must have at least \code{ncol(dat) * n}
-#'            non-missing values for the row mean to be calculated. See examples.
+#'            non-missing values for the row mean to be calculated. See 'Examples'.
 #'
 #' @references \itemize{
 #'              \item \href{http://candrea.ch/blog/compute-spss-like-mean-index-variables/}{candrea's blog}
@@ -1479,7 +1464,7 @@ mean_n <- function(dat, n, digits = 2) {
 }
 
 
-#' @title Check whether value is even or not
+#' @title Check whether value is even
 #' @name is_even
 #'
 #' @param x numeric vector or single numeric value
@@ -1498,7 +1483,7 @@ mean_n <- function(dat, n, digits = 2) {
 is_even <- function(x) (x %% 2) == 0
 
 
-#' @title Check whether value is odd or not
+#' @title Check whether value is odd
 #' @name is_odd
 #'
 #' @param x numeric vector or single numeric value

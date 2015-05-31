@@ -12,7 +12,7 @@ mean_n(dat, n, digits = 2)
 \item{n}{May either be
 \itemize{
   \item a numeric value that indicates the amount of valid values per row to calculate the row mean;
-  \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see details).
+  \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see 'Details').
 }
 If a row's amount of valid values is less than \code{n}, \code{\link{NA}} will be returned as row mean value.}
 
@@ -37,7 +37,7 @@ Rounding to a negative number of \code{digits} means rounding to a power of
            row mean is returned. If \code{n} is a non-integer value from 0 to 1,
            \code{n} is considered to indicate the proportion of necessary non-missing
            values per row. E.g., if \code{n = .75}, a row must have at least \code{ncol(dat) * n}
-           non-missing values for the row mean to be calculated. See examples.
+           non-missing values for the row mean to be calculated. See 'Examples'.
 }
 \examples{
 dat <- data.frame(c1 = c(1,2,NA,4),

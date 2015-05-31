@@ -31,7 +31,7 @@ a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
 \description{
 Dichotomizes variables into dummy variables (0/1). Dichotomization is
                either done by median, mean or a specific value (see \code{dichBy}).
-               Either single vectors, a complete data frame or a \code{list} of
+               Either single vectors, a complete data frame or a list of
                variables can be dichotomized.
 }
 \examples{

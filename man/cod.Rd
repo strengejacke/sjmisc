@@ -7,7 +7,7 @@
 cod(x)
 }
 \arguments{
-\item{x}{a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}}.}
+\item{x}{a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.}
 }
 \value{
 The \code{D} Coefficient of Discrimination, also known as
@@ -15,8 +15,8 @@ The \code{D} Coefficient of Discrimination, also known as
 }
 \description{
 This method calculates the Coefficient of Discrimination \code{D}
-               for \code{\link{glm}}s or \code{\link[lme4]{glmer}}s for
-               binary data. It is an alternative to other Pseudo-R-squared values
+               for generalized linear (mixed) models for binary data. It is
+               an alternative to other Pseudo-R-squared values
                like Nakelkerke's R2 or Cox-Snell R2.
 }
 \note{

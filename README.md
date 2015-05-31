@@ -1,6 +1,12 @@
 sjmisc - Miscellaneous Data Management Tools
 ------------------------------------------------------------------------------
-This package contains some tools that are useful when carrying out data analysis or interpreting data (especially intended for people coming from SPSS and/or who are new to R). These tool functions support reading and writing data (SPSS, SAS and STATA), variable recoding and weighting, statistical tests, reliability tests and much more.
+This package contains utility functions that are useful when carrying out data analysis or basic statistical tests, performing common recode and data transformation tasks or working with labelled data (especially intended for people coming from SPSS and/or who are new to R).
+
+Basically, this package covers four domains of functionality:
+* reading and writing data between other statistical packages (like SPSS) and R, based on the haven and foreign packages
+* hence, this package also includes functions to make working with labelled data easier
+* frequently used statistical tests and computation of statistical coefficients, or at least convenient wrappers for such test functions
+* frequently applied recoding and variable transformation tasks
 
 
 ### Installation
@@ -46,7 +52,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### Changes to functions
 * `dicho` now also dichotomizes non-numeric values.
-* `rec` now can keep not yet recoded values with `else=keep`.
+* `rec` now can keep (copy) not yet recoded values with `else=keep`.
 * `get_val_labels` gains a `include.values` parameter to also return values associated with the value labels.
 * `get_val_labels`, `get_var_labels`, `set_val_labels` and `set_var_labels` now also accept `list`-objects with variables.
 * `dicho`, `rec`, `set_na` and `recode_to` now also accept `list`-objects with variables.

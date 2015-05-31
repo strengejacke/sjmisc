@@ -7,8 +7,8 @@
 set_na(x, values)
 }
 \arguments{
-\item{x}{a variable (vector), data frame or \code{list} of variables where new
-missing values should be defined. If \code{x} is a data frame, each
+\item{x}{a variable (vector), \code{data.frame} or \code{list} of variables where new
+missing values should be defined. If \code{x} is a \code{data.frame}, each
 column is assumed to be a new variable, where missings should be defined.}
 
 \item{values}{a numeric vector with values that should be replaced with \code{\link{NA}}'s.
@@ -19,7 +19,7 @@ column is assumed to be a new variable, where missings should be defined.}
 }
 \description{
 This function sets specific values of a variable, data frame
-               or \code{list} of variables as missings (\code{NA}).
+               or list of variables as missings (\code{NA}).
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
@@ -55,7 +55,7 @@ lapply(dummy, table, exclude = NULL)
 lapply(set_na(dummy, 3), table, exclude = NULL)
 }
 \seealso{
-\code{\link{replace_NA}} to replace \code{\link{NA}}'s with specific
+\code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
            value, \code{\link{rec}} for general recoding of variables and
            \code{\link{recode_to}} for re-shifting value ranges.
 }

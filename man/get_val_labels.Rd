@@ -7,10 +7,10 @@
 get_val_labels(x, include.values = FALSE)
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}} with variables that have attached value labels (e.g.
+\item{x}{a \code{data.frame} with variables that have attached value labels (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-(vector) with attached value labels; or a \code{\link{list}} of variables
+(vector) with attached value labels; or a \code{list} of variables
 with attached values labels. See 'Examples'.}
 
 \item{include.values}{logical, if \code{TRUE}, the values associated with the
@@ -28,15 +28,15 @@ This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame or \code{list} of variables, returns the all variable's value labels as \code{\link{list}} object
+                 \item if \code{x} is a data frame or list of variables, returns the all variable's value labels as \code{\link{list}}
                  \item or, if \code{x} is a vector, returns the label as string.
                  }
 }
 \details{
 This package can add (and read) value and variable labels either in \code{foreign}
-           package style (\emph{value.labels} and \emph{variable.label}) or in
-           \code{haven} package style (\emph{labels} and \emph{label}). By default,
-           the \code{haven} package style is used.
+           package style (attributes are named \emph{value.labels} and \emph{variable.label})
+           or in \code{haven} package style (attributes are named \emph{labels} and
+           \emph{label}). By default, the \code{haven} package style is used.
            \cr \cr
            The \code{sjPlot} package accesses
            these attributes to automatically read label attributes for labelling
@@ -46,7 +46,7 @@ This package can add (and read) value and variable labels either in \code{foreig
            \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
            to get a vector of value and variable labels, which can then be
            used with other functions like \code{\link{barplot}} etc.
-           See 'Examples' from \code{\link{get_val_labels}}.
+           See 'Examples'.
            \cr \cr
            Furthermore, value and variable labels are used when saving data, e.g. to SPSS
            (see \code{\link{write_spss}}), which means that the written SPSS file
@@ -60,7 +60,7 @@ This package can add (and read) value and variable labels either in \code{foreig
 This function only works with vectors that have value and variable
        labels attached. This is automatically done by importing data sets
        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
-       function or labels can manually be added using the \code{\link{set_val_labels}}
+       function. Labels can also manually be added using the \code{\link{set_val_labels}}
        and \code{\link{set_var_labels}} functions.
        \cr \cr
        With attached value and variable labels, most functions of the \code{sjPlot} package

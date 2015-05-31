@@ -7,7 +7,7 @@
 pseudo_r2(x)
 }
 \arguments{
-\item{x}{a fitted \code{\link{glm}}.}
+\item{x}{a fitted \code{\link{glm}} model.}
 }
 \value{
 An object of class \code{pseudo_r2} with
@@ -19,8 +19,8 @@ An object of class \code{pseudo_r2} with
 }
 \description{
 This method calculates Nagelkerke's and Cox-Snell's
-               pseudo-r-squared-values of \code{\link{glm}}s for
-               binary data.
+               pseudo-r-squared-values of generalized linear models
+               for binary data.
 }
 \examples{
 data(efc)

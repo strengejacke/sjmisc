@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjRecode.R
 \name{is_even}
 \alias{is_even}
-\title{Check whether value is even or not}
+\title{Check whether value is even}
 \usage{
 is_even(x)
 }
@@ -14,7 +14,7 @@ is_even(x)
           odd values.
 }
 \description{
-Check whether value is even or not
+Check whether value is even
 }
 \examples{
 is_even(4)

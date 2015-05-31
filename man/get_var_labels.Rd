@@ -7,14 +7,14 @@
 get_var_labels(x)
 }
 \arguments{
-\item{x}{a \code{\link{data.frame}} with variables that have attached variable labels (e.g.
+\item{x}{a \code{data.frame} with variables that have attached variable labels (e.g.
          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-         (vector) with attached variable label; or a \code{\link{list}} of variables
+         (vector) with attached variable label; or a \code{list} of variables
          with attached variable labels. See 'Examples'.}
 }
 \value{
-A named char vector with all variable labels from the data frame,
+A named char vector with all variable labels from the data frame or list;
           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
 }
 \description{
@@ -22,15 +22,15 @@ This function retrieves the value labels of an imported
                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame or a \code{list} of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
+                 \item if \code{x} is a data frame or a list of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
                  \item or, if \code{x} is a vector, returns the variable label as string.
                  }
 }
 \details{
-See 'Details' in \code{\link{get_val_labels}}
+See 'Details' in \code{\link{get_val_labels}}.
 }
 \note{
-See 'Note' in \code{\link{get_val_labels}}
+See 'Note' in \code{\link{get_val_labels}}.
 }
 \examples{
 # import SPSS data set

@@ -16,7 +16,7 @@ elements as similar or equal.}
 \item{method}{Method for distance calculation. The default is \code{"lv"}. See
 \code{\link[stringdist]{stringdist}} package for details.}
 
-\item{strict}{if \code{TRUE}, value matching is more strictly. See examples for details.}
+\item{strict}{if \code{TRUE}, value matching is more strictly. See 'Examples'.}
 
 \item{trim.whitespace}{if \code{TRUE} (default), leading and trailing white spaces will
 be removed from string values.}

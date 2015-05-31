@@ -7,7 +7,7 @@
 replace_na(x, value)
 }
 \arguments{
-\item{x}{a variable (vector), data frame or \code{list} of variables where
+\item{x}{a variable (vector), \code{data.frame} or \code{list} of variables where
 missing values should be replaced with \code{value}.}
 
 \item{value}{value that will replace the \code{\link{NA}}'s.}
@@ -16,8 +16,8 @@ missing values should be replaced with \code{value}.}
 \code{x}, where \code{NA}'s are replaced with \code{value}.
 }
 \description{
-This function replaces \code{\link{NA}}'s of a variable, data frame
-               or \code{list} of variables with \code{value}.
+This function replaces NA's of a variable, data frame
+               or list of variables with \code{value}.
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}

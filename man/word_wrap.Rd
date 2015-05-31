@@ -8,8 +8,7 @@ word_wrap(labels, wrap, linesep = NULL)
 }
 \arguments{
 \item{labels}{label(s) as character string, where a line break should be
-inserted. Several strings may be passed as vector
-(e.g. \code{labels = c("first long string", "second long string")})}
+inserted. Several strings may be passed as vector  (see 'Examples').}
 
 \item{wrap}{the maximum amount of chars per line (i.e. line length)}
 

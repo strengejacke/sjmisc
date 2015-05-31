@@ -11,18 +11,15 @@ set_var_labels(x, lab, attr.string = NULL)
 where variables labels should be attached.}
 
 \item{lab}{If \code{x} is a vector (single variable), use a single character string with
-the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a
+the variable label for \code{x}. If \code{x} is a data frame, use a
 vector with character labels of same length as \code{ncol(x)}.
 Use \code{lab = ""} to remove labels-attribute from \code{x}, resp.
 set any value of vector \code{lab} to \code{""} to remove specific variable
 label attributes from a data frame's variable.}
 
-\item{attr.string}{The attribute string for the variable label. To ensure
-compatibility to the \code{foreign}-package, use the default string
-\code{"variable.label"}. If you want to save data with the \code{haven}
-package, use \code{attr.string = "label"}. There is a wrapper function
-\code{\link{write_spss}} to save SPSS files, so you don't need to take
-care of this.}
+\item{attr.string}{The attribute string for the variable label. \strong{Note:}
+Usually, this parameter should be ignored. It is only used internally
+for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.}
 }
 \value{
 \code{x}, with attached variable label attribute(s), which contains the
@@ -35,7 +32,7 @@ This function sets variable labels to a single variable or to
                To each variable, the attribute \code{"label"} or \code{"variable.label"}
                with the related variable name is attached. Most functions of the
                \emph{sjPlot} package can automatically retrieve the variable
-               name to use it as axis labels or plot title (see details).
+               name to use it as axis labels or plot title (see 'Details').
 }
 \details{
 See 'Details' in \code{\link{get_val_labels}}
@@ -52,9 +49,8 @@ library(sjPlot)
 sjt.frq(efc$e42dep)
 sjt.frq(data.frame(efc$e42dep, efc$e16sex))}
 
-# ---------------------------------------------
+
 # manually set value and variable labels
-# ---------------------------------------------
 dummy <- sample(1:4, 40, replace=TRUE)
 dummy <- set_val_labels(dummy, c("very low", "low", "mid", "hi"))
 dummy <- set_var_labels(dummy, "Dummy-variable")
@@ -64,9 +60,8 @@ dummy <- set_var_labels(dummy, "Dummy-variable")
 library(sjPlot)
 sjp.frq(dummy, title = NULL)}
 
-# ---------------------------------------------
+
 # Set variable labels for data frame
-# ---------------------------------------------
 dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
                     b = sample(1:4, 10, replace = TRUE),
                     c = sample(1:4, 10, replace = TRUE))

@@ -417,7 +417,7 @@ to_sjPlot <- function(x) {
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame or \code{list} of variables, returns the all variable's value labels as \code{\link{list}} object
+#'                  \item if \code{x} is a data frame or list of variables, returns the all variable's value labels as \code{\link{list}}
 #'                  \item or, if \code{x} is a vector, returns the label as string.
 #'                  }
 #'
@@ -426,10 +426,10 @@ to_sjPlot <- function(x) {
 #'            more details; \code{\link{set_val_labels}} to manually set value labels, \code{\link{get_var_labels}}
 #'            to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
 #'
-#' @param x a \code{\link{data.frame}} with variables that have attached value labels (e.g.
+#' @param x a \code{data.frame} with variables that have attached value labels (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-#'          (vector) with attached value labels; or a \code{\link{list}} of variables
+#'          (vector) with attached value labels; or a \code{list} of variables
 #'          with attached values labels. See 'Examples'.
 #' @param include.values logical, if \code{TRUE}, the values associated with the
 #'          value labels are returned as well (as \code{\link{names}} attribute
@@ -440,9 +440,9 @@ to_sjPlot <- function(x) {
 #'           or \code{NULL} if no value label attribute was found.
 #'
 #' @details This package can add (and read) value and variable labels either in \code{foreign}
-#'            package style (\emph{value.labels} and \emph{variable.label}) or in
-#'            \code{haven} package style (\emph{labels} and \emph{label}). By default,
-#'            the \code{haven} package style is used.
+#'            package style (attributes are named \emph{value.labels} and \emph{variable.label})
+#'            or in \code{haven} package style (attributes are named \emph{labels} and
+#'            \emph{label}). By default, the \code{haven} package style is used.
 #'            \cr \cr
 #'            The \code{sjPlot} package accesses
 #'            these attributes to automatically read label attributes for labelling
@@ -452,7 +452,7 @@ to_sjPlot <- function(x) {
 #'            \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
 #'            to get a vector of value and variable labels, which can then be
 #'            used with other functions like \code{\link{barplot}} etc.
-#'            See 'Examples' from \code{\link{get_val_labels}}.
+#'            See 'Examples'.
 #'            \cr \cr
 #'            Furthermore, value and variable labels are used when saving data, e.g. to SPSS
 #'            (see \code{\link{write_spss}}), which means that the written SPSS file
@@ -465,7 +465,7 @@ to_sjPlot <- function(x) {
 #' @note This function only works with vectors that have value and variable
 #'        labels attached. This is automatically done by importing data sets
 #'        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
-#'        function or labels can manually be added using the \code{\link{set_val_labels}}
+#'        function. Labels can also manually be added using the \code{\link{set_val_labels}}
 #'        and \code{\link{set_var_labels}} functions.
 #'        \cr \cr
 #'        With attached value and variable labels, most functions of the \code{sjPlot} package
@@ -657,7 +657,7 @@ sji.setValueLabelNameParam <- function(x, labels) {
   if (is.null(labels)) return(x)
   if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
     return(sji.setValueLabel.vector(x, labels))
-  } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
+  } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
     if (is.data.frame(x) || is.matrix(x))
@@ -796,7 +796,7 @@ is_num_fac <- function(x) {
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame or a \code{list} of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
+#'                  \item if \code{x} is a data frame or a list of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
 #'                  \item or, if \code{x} is a vector, returns the variable label as string.
 #'                  }
 #'
@@ -805,18 +805,18 @@ is_num_fac <- function(x) {
 #'            more details; \code{\link{set_var_labels}} to manually set variable labels or \code{\link{get_val_labels}}
 #'            to get value labels.
 
-#' @param x a \code{\link{data.frame}} with variables that have attached variable labels (e.g.
+#' @param x a \code{data.frame} with variables that have attached variable labels (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-#'          (vector) with attached variable label; or a \code{\link{list}} of variables
+#'          (vector) with attached variable label; or a \code{list} of variables
 #'          with attached variable labels. See 'Examples'.
 #'
-#' @return A named char vector with all variable labels from the data frame,
+#' @return A named char vector with all variable labels from the data frame or list;
 #'           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
 #'
-#' @details See 'Details' in \code{\link{get_val_labels}}
+#' @details See 'Details' in \code{\link{get_val_labels}}.
 #'
-#' @note See 'Note' in \code{\link{get_val_labels}}
+#' @note See 'Note' in \code{\link{get_val_labels}}.
 #'
 #' @examples
 #' # import SPSS data set
@@ -902,7 +902,7 @@ get_var_labels <- function(x) {
 #'                To each variable, the attribute \code{"label"} or \code{"variable.label"}
 #'                with the related variable name is attached. Most functions of the
 #'                \emph{sjPlot} package can automatically retrieve the variable
-#'                name to use it as axis labels or plot title (see details).
+#'                name to use it as axis labels or plot title (see 'Details').
 #'
 #' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
 #'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
@@ -912,17 +912,14 @@ get_var_labels <- function(x) {
 #' @param x a variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where variables labels should be attached.
 #' @param lab If \code{x} is a vector (single variable), use a single character string with
-#'          the variable label for \code{x}. If \code{x} is a \code{\link{data.frame}}, use a
+#'          the variable label for \code{x}. If \code{x} is a data frame, use a
 #'          vector with character labels of same length as \code{ncol(x)}.
 #'          Use \code{lab = ""} to remove labels-attribute from \code{x}, resp.
 #'          set any value of vector \code{lab} to \code{""} to remove specific variable
 #'          label attributes from a data frame's variable.
-#' @param attr.string The attribute string for the variable label. To ensure
-#'          compatibility to the \code{foreign}-package, use the default string
-#'          \code{"variable.label"}. If you want to save data with the \code{haven}
-#'          package, use \code{attr.string = "label"}. There is a wrapper function
-#'          \code{\link{write_spss}} to save SPSS files, so you don't need to take
-#'          care of this.
+#' @param attr.string The attribute string for the variable label. \strong{Note:}
+#'          Usually, this parameter should be ignored. It is only used internally
+#'          for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.
 #' @return \code{x}, with attached variable label attribute(s), which contains the
 #'           variable name(s); or with removed label-attribute if
 #'            \code{lab = ""}.
@@ -940,9 +937,8 @@ get_var_labels <- function(x) {
 #' sjt.frq(efc$e42dep)
 #' sjt.frq(data.frame(efc$e42dep, efc$e16sex))}
 #'
-#' # ---------------------------------------------
+#'
 #' # manually set value and variable labels
-#' # ---------------------------------------------
 #' dummy <- sample(1:4, 40, replace=TRUE)
 #' dummy <- set_val_labels(dummy, c("very low", "low", "mid", "hi"))
 #' dummy <- set_var_labels(dummy, "Dummy-variable")
@@ -952,9 +948,8 @@ get_var_labels <- function(x) {
 #' library(sjPlot)
 #' sjp.frq(dummy, title = NULL)}
 #'
-#' # ---------------------------------------------
+#'
 #' # Set variable labels for data frame
-#' # ---------------------------------------------
 #' dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
 #'                     b = sample(1:4, 10, replace = TRUE),
 #'                     c = sample(1:4, 10, replace = TRUE))
@@ -1127,14 +1122,14 @@ to_label_helper <- function(x) {
 #' @name remove_labels
 #'
 #' @description This function removes value and variable label attributes
-#'                from a vector or data.frames. These attributes are typically
+#'                from a vector or data frame. These attributes are typically
 #'                added to variables when importing foreign data (see
 #'                \code{\link{read_spss}}) or manually adding label attributes
 #'                with \code{\link{set_val_labels}}.
 #'
 #' @seealso \code{\link{add_labels}}
 #'
-#' @param x vector or data.frame with variable and/or value label attributes
+#' @param x vector or \code{data.frame} with variable and/or value label attributes
 #' @return \code{x} with removed value and variable label attributes.
 #'
 #' @examples
@@ -1172,7 +1167,7 @@ remove_labels_helper <- function(x) {
 #'
 #' @description This function converts a variable into a factor, but keeps
 #'                variable and value labels, if these are attached as attributes
-#'                to the variale. See examples.
+#'                to the variale. See 'Examples'.
 #'
 #' @seealso \code{\link{to_value}} to convert a factor into a numeric value and
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
@@ -1324,10 +1319,10 @@ to_value_helper <- function(x, startAt, keep.labels) {
 #' @title Set back value and variable labels to subsetted data frames
 #' @name add_labels
 #'
-#' @description Subsetting-function usually drop value and variable labels from
-#'                \code{data.frame}s (if the original data.frame has value and variable
+#' @description Subsetting-functions usually drop value and variable labels from
+#'                subsetted data frames (if the original data frame has value and variable
 #'                label attributes). This function adds back these value and variable
-#'                labels to subsetted data.frames that have been subsetted with \code{\link{subset}},
+#'                labels to subsetted data frames that have been subsetted with \code{\link{subset}},
 #'                \code{\link[dplyr]{select}} or \code{\link[dplyr]{filter}}.
 #'                \cr \cr
 #'                In case \code{df_origin} is \code{NULL}, all possible label attributes
@@ -1336,11 +1331,11 @@ to_value_helper <- function(x, startAt, keep.labels) {
 #' @seealso \code{\link{remove_labels}}
 #'
 #' @param df_new the new, subsetted data frame.
-#' @param df_origin the original data frame where the subset (\code{df_new}) stems from,
-#'          or \code{NULL}, if value and variable labels from \code{df_new} should be removed.
+#' @param df_origin the original data frame where the subset (\code{df_new}) stems from;
+#'          use \code{NULL}, if value and variable labels from \code{df_new} should be removed.
 #' @return Returns \code{df_new} with either removed value and variable label attributes
 #'           (if \code{df_origin} was \code{NULL}) or with added value and variable label
-#'           attributes (if \code{df_origin} was the original subsetted data.frame).
+#'           attributes (if \code{df_origin} was the original subsetted data frame).
 #'
 #' @note In case \code{df_origin} is \code{NULL}, all possible label attributes
 #'         from \code{df_new} are removed.

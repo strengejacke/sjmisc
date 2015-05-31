@@ -60,26 +60,19 @@ age.grp <- group_var(age, 10)
 hist(age)
 hist(age.grp)
 
+
 # histogram with EUROFAMCARE sample dataset
 # variable not grouped
 data(efc)
-\dontrun{
-library(sjPlot)
-sjp.frq(efc$e17age,
-        title = get_var_labels(efc$e17age),
-        type = "h",
-        showValueLabels = FALSE)}
+hist(efc$e17age, main = get_var_labels(efc$e17age))
 
 # bar plot with EUROFAMCARE sample dataset
 # grouped variable
-data(efc)
 ageGrp <- group_var(efc$e17age)
 ageGrpLab <- group_labels(efc$e17age)
-\dontrun{
-library(sjPlot)
-sjp.frq(ageGrp,
-        title = get_var_labels(efc$e17age),
-        axisLabels.x = ageGrpLab)}
+barplot(table(ageGrp),
+        main = get_var_labels(efc$e17age),
+        names.arg = ageGrpLab)
 }
 \seealso{
 \itemize{

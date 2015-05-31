@@ -7,7 +7,7 @@
 recode_to(x, lowest = 0, highest = -1)
 }
 \arguments{
-\item{x}{variable (vector), data frame or \code{list} of variables that should be recoded.}
+\item{x}{variable (vector), \code{data.frame} or \code{list} of variables that should be recoded.}
 
 \item{lowest}{indicating the lowest category value for recoding. Default is 0, so the new
 variable starts with value 0.}
@@ -18,7 +18,7 @@ and no NA's will be produced.}
 }
 \value{
 A new variable with recoded category values, where \code{lowest} indicates the lowest
-          value; or a data frame or \code{list} of variables where variables have
+          value; or a data frame or list of variables where variables have
           been recoded as described.
 }
 \description{

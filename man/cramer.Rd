@@ -7,7 +7,7 @@
 cramer(tab)
 }
 \arguments{
-\item{tab}{A simple \code{\link{table}} or \code{\link{ftable}}. Tables of class
+\item{tab}{a \code{\link{table}} or \code{\link{ftable}}. Tables of class
 \code{\link{xtabs}} and other will be coerced to \code{\link{ftable}} objects.}
 }
 \value{

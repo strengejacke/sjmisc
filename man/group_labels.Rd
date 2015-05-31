@@ -50,6 +50,7 @@ age.grpvar <- group_labels(age, 10)
 table(age.grp)
 print(age.grpvar)
 
+
 # create vector with values from 50 to 80
 dummy <- round(runif(200, 50, 80))
 # labels with grouping starting at lower bound
@@ -61,23 +62,15 @@ group_labels(dummy, rightInterval = TRUE)
 # histogram with EUROFAMCARE sample dataset
 # variable not grouped
 data(efc)
-\dontrun{
-library(sjPlot)
-sjp.frq(efc$e17age,
-        title = get_var_labels(efc$e17age),
-        type = "h",
-        showValueLabels = FALSE)}
+hist(efc$e17age, main = get_var_labels(efc$e17age))
 
 # bar plot with EUROFAMCARE sample dataset
 # grouped variable
-data(efc)
 ageGrp <- group_var(efc$e17age)
 ageGrpLab <- group_labels(efc$e17age)
-\dontrun{
-library(sjPlot)
-sjp.frq(ageGrp,
-        title = get_var_labels(efc$e17age),
-        axisLabels.x = ageGrpLab)}
+barplot(table(ageGrp),
+        main = get_var_labels(efc$e17age),
+        names.arg = ageGrpLab)
 }
 \seealso{
 \itemize{

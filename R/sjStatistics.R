@@ -6,7 +6,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
 #' @name eta_sq
 #' @description Returns the eta-squared value for one-way-anovas.
 #'
-#' @param ... A fitted one-way-anova model or a dependent and grouping variable (see examples).
+#' @param ... A fitted one-way-anova model or a dependent and grouping variable (see 'Examples').
 #' @return The eta-squared value.
 #'
 #' @note Interpret eta-squared like r-squared or R-squared; a rule of thumb (Cohen):
@@ -412,18 +412,17 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 #' @name hoslem_gof
 #'
 #' @description This method performs a Hosmer-Lemeshow goodness-of-fit-test
-#'                for \code{\link{glm}}s or \code{\link[lme4]{glmer}}s for
-#'                binary data.
+#'                for generalized linear (mixed) models for binary data.
 #'
-#' @param x a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}}.
-#' @param g number of bins to divide the data Default is 10.
+#' @param x a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.
+#' @param g number of bins to divide the data. Default is 10.
 #'
 #' @return An object of class \code{hoslem_test} with
 #'           following values:
 #'           \itemize{
 #'            \item \code{chisq} the Hosmer-Lemeshow chi-squared statistic
 #'            \item \code{df} degrees of freedom
-#'            \item \code{p.value}	the p-value for the goodness-of-fit test
+#'            \item \code{p.value} the p-value for the goodness-of-fit test
 #'           }
 #'
 #' @note A well-fitting model shows no significant difference between
@@ -485,10 +484,10 @@ hoslem_gof <- function(x, g = 10) {
 #' @name pseudo_r2
 #'
 #' @description This method calculates Nagelkerke's and Cox-Snell's
-#'                pseudo-r-squared-values of \code{\link{glm}}s for
-#'                binary data.
+#'                pseudo-r-squared-values of generalized linear models
+#'                for binary data.
 #'
-#' @param x a fitted \code{\link{glm}}.
+#' @param x a fitted \code{\link{glm}} model.
 #'
 #' @return An object of class \code{pseudo_r2} with
 #'           following values:
@@ -524,11 +523,11 @@ pseudo_r2 <- function(x) {
 #' @name cod
 #'
 #' @description This method calculates the Coefficient of Discrimination \code{D}
-#'                for \code{\link{glm}}s or \code{\link[lme4]{glmer}}s for
-#'                binary data. It is an alternative to other Pseudo-R-squared values
+#'                for generalized linear (mixed) models for binary data. It is
+#'                an alternative to other Pseudo-R-squared values
 #'                like Nakelkerke's R2 or Cox-Snell R2.
 #'
-#' @param x a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}}.
+#' @param x a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.
 #'
 #' @return The \code{D} Coefficient of Discrimination, also known as
 #'           Tjur's R-squared value.
@@ -588,10 +587,10 @@ cod <- function(x) {
 #'
 #' @seealso \code{\link{reliab_test}}
 #'
-#' @param df A data frame or matrix with more than 2 columns.
+#' @param df a data frame or matrix with more than 2 columns.
 #' @return The Cronbach's alpha value for \code{df}.
 #'
-#' @note See examples from \code{\link[sjPlot]{sjp.pca}} and \code{\link[sjPlot]{sjt.pca}}.
+#' @note See 'Examples' from \code{\link[sjPlot]{sjp.pca}} and \code{\link[sjPlot]{sjt.pca}}.
 #'
 #' @export
 cronb <- function(df) {
@@ -627,9 +626,7 @@ cronb <- function(df) {
 #'         of the remaining items (which are thus treated as one item).
 #'
 #' @examples
-#' # -------------------------------
 #' # Data from the EUROFAMCARE sample dataset
-#' # -------------------------------
 #' data(efc)
 #'
 #' # retrieve variable and value labels
@@ -864,7 +861,7 @@ table_values <- function(tab, digits=2) {
 #'
 #' @seealso \code{\link{cramer}}
 
-#' @param tab A simple \code{\link{table}} or \code{\link{ftable}}. Tables of class
+#' @param tab a \code{\link{table}} or \code{\link{ftable}}. Tables of class
 #'          \code{\link{xtabs}} and other will be coerced to \code{\link{ftable}} objects.
 #' @return The table's Phi value.
 #'
@@ -889,7 +886,7 @@ phi <- function(tab) {
 #'
 #' @seealso \code{\link{phi}}
 #'
-#' @param tab A simple \code{\link{table}} or \code{\link{ftable}}. Tables of class
+#' @param tab a \code{\link{table}} or \code{\link{ftable}}. Tables of class
 #'          \code{\link{xtabs}} and other will be coerced to \code{\link{ftable}} objects.
 #' @return The table's Cramer's V.
 #'

@@ -18,7 +18,7 @@ A factor variable, including variable and value labels, respectively
 \description{
 This function converts a variable into a factor, but keeps
                variable and value labels, if these are attached as attributes
-               to the variale. See examples.
+               to the variale. See 'Examples'.
 }
 \note{
 This function is intended for use with vectors that have value and variable

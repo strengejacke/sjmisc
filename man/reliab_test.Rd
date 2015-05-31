@@ -32,9 +32,7 @@ This function is similar to a basic reliability test in SPSS. The correlations i
         of the remaining items (which are thus treated as one item).
 }
 \examples{
-# -------------------------------
 # Data from the EUROFAMCARE sample dataset
-# -------------------------------
 data(efc)
 
 # retrieve variable and value labels

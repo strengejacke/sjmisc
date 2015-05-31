@@ -7,9 +7,9 @@
 hoslem_gof(x, g = 10)
 }
 \arguments{
-\item{x}{a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}}.}
+\item{x}{a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.}
 
-\item{g}{number of bins to divide the data Default is 10.}
+\item{g}{number of bins to divide the data. Default is 10.}
 }
 \value{
 An object of class \code{hoslem_test} with
@@ -17,13 +17,12 @@ An object of class \code{hoslem_test} with
           \itemize{
            \item \code{chisq} the Hosmer-Lemeshow chi-squared statistic
            \item \code{df} degrees of freedom
-           \item \code{p.value}	the p-value for the goodness-of-fit test
+           \item \code{p.value} the p-value for the goodness-of-fit test
           }
 }
 \description{
 This method performs a Hosmer-Lemeshow goodness-of-fit-test
-               for \code{\link{glm}}s or \code{\link[lme4]{glmer}}s for
-               binary data.
+               for generalized linear (mixed) models for binary data.
 }
 \note{
 A well-fitting model shows no significant difference between

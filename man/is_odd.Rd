@@ -2,7 +2,7 @@
 % Please edit documentation in R/sjRecode.R
 \name{is_odd}
 \alias{is_odd}
-\title{Check whether value is odd or not}
+\title{Check whether value is odd}
 \usage{
 is_odd(x)
 }
@@ -14,7 +14,7 @@ is_odd(x)
           even values.
 }
 \description{
-Check whether value is odd or not
+Check whether value is odd
 }
 \examples{
 is_odd(4)
