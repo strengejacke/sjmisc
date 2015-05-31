@@ -1477,3 +1477,42 @@ mean_n <- function(dat, n, digits = 2) {
   }
   round(apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA)), digits)
 }
+
+
+#' @title Check whether value is even or not
+#' @name is_even
+#'
+#' @param x numeric vector or single numeric value
+#'
+#' @return \code{TRUE} for each even value of \code{x}, \code{FALSE} for
+#'           odd values.
+#'
+#' @seealso \code{\link{is_odd}}
+#'
+#' @examples
+#' is_even(4)
+#' is_even(5)
+#' is_even(1:4)
+#'
+#' @export
+is_even <- function(x) (x %% 2) == 0
+
+
+#' @title Check whether value is odd or not
+#' @name is_odd
+#'
+#' @param x numeric vector or single numeric value
+#'
+#' @return \code{TRUE} for each odd value of \code{x}, \code{FALSE} for
+#'           even values.
+#'
+#' @seealso \code{\link{is_even}}
+#'
+#' @examples
+#' is_odd(4)
+#' is_odd(5)
+#' is_odd(1:4)
+#'
+#' @export
+is_odd <- function(x) (x %% 2) == 1
+
