@@ -75,12 +75,13 @@ head(rec(efc[, 6:9], "1=10;2=20;3=30;4=40"))
 # variables with same value-range
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # show original distribution
-lapply(dummy, table)
+lapply(dummy, table, exclude = NULL)
 # show recodes
-lapply(rec(dummy, "1,2=1; else = keep"), table, exclude = NULL)
+lapply(rec(dummy, "1,2=1; NA=9; else=keep"), table, exclude = NULL)
 }
 \seealso{
-\code{\link{set_na}} for setting \code{NA} values and \code{\link{recode_to}}
+\code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_NA}}
+           to replace \code{\link{NA}}'s with specific value and \code{\link{recode_to}}
            for re-shifting value ranges.
 }
 

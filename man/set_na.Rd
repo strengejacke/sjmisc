@@ -55,7 +55,8 @@ lapply(dummy, table, exclude = NULL)
 lapply(set_na(dummy, 3), table, exclude = NULL)
 }
 \seealso{
-\code{\link{rec}} for general recoding of variables and \code{\link{recode_to}}
-           for re-shifting value ranges.
+\code{\link{replace_NA}} to replace \code{\link{NA}}'s with specific
+           value, \code{\link{rec}} for general recoding of variables and
+           \code{\link{recode_to}} for re-shifting value ranges.
 }
 
