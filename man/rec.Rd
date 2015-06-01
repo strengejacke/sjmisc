@@ -24,15 +24,15 @@ Recodes the categories of a (numeric) variable \code{x} into new
 }
 \details{
 The \code{recodes} string has following syntax:
-          \itemize{
-           \item each recode pair has to be separated by a \code{;}, e.g. \code{recodes = "1=1; 2=4; 3=2; 4=3"}
-           \item multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}
-           \item a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)
-           \item minimum and maximum values are indicates by \emph{min} and \emph{max}, e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)
-           \item all other values except specified are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)
-           \item the \code{"else"}-token can be combined with \emph{keep}, indicating that all remaining, not yet recoded values should stay the same, e.g. \code{"3=1; 1=2; else=keep"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')
-           \item \code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA from old value into 1, and all old values from 3 to 5 into NA in the new variable)
-           \item \code{"rev"} is a special token that reverses the value order (see 'Examples')
+          \describe{
+           \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{recodes = "1=1; 2=4; 3=2; 4=3"}}
+           \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
+           \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
+           \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} and \emph{max}, e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
+           \item{\code{"else"}}{all other values except specified are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
+           \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
+           \item{\code{NA}'s}{\code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA from old value into 1, and all old values from 3 to 5 into NA in the new variable)}
+           \item{\code{"rev"}}{\code{"rev"} is a special token that reverses the value order (see 'Examples')}
           }
 }
 \note{
@@ -65,7 +65,7 @@ table(rec(efc$e42dep, "rev"), exclude = NULL)
 
 # recode only selected values, copy remaining
 table(efc$e15relat)
-table(rec(efc$e15relat, "1,2,4=1; else=keep"))
+table(rec(efc$e15relat, "1,2,4=1; else=copy"))
 
 # recode variables with same categorie in a data frame
 head(efc[, 6:9])
@@ -77,7 +77,7 @@ dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # show original distribution
 lapply(dummy, table, exclude = NULL)
 # show recodes
-lapply(rec(dummy, "1,2=1; NA=9; else=keep"), table, exclude = NULL)
+lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, exclude = NULL)
 }
 \seealso{
 \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
