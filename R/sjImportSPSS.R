@@ -666,9 +666,16 @@ sji.setValueLabelNameParam <- function(x, labels) {
       nvars <- length(x)
     for (i in 1:nvars) {
       if (is.list(labels)) {
-        x[[i]] <- sji.setValueLabel.vector(x[[i]], labels[[i]], colnames(x)[i])
+        # check for valid length of supplied label-list
+        if (i <= length(labels)) {
+          x[[i]] <- sji.setValueLabel.vector(x[[i]],
+                                             labels[[i]],
+                                             colnames(x)[i])
+        }
       } else if (is.vector(labels)) {
-        x[[i]] <- sji.setValueLabel.vector(x[[i]], labels, colnames(x)[i])
+        x[[i]] <- sji.setValueLabel.vector(x[[i]],
+                                           labels,
+                                           colnames(x)[i])
       } else {
         warning("'labels' must be a list of same length as 'ncol(x)' or a vector.", call. = F)
       }
@@ -1365,6 +1372,12 @@ add_labels <- function(df_new, df_origin = NULL) {
     if (is.data.frame(df_new) && is.data.frame(df_origin)) {
       # retrieve variables of subsetted data frame
       cn <- colnames(df_new)
+      # check for valid colnames, i.e. if all column
+      # names really match the original column names.
+      if (sum(cn %in% colnames(df_origin) == F) > 0) {
+        # if not, return only matching colnames
+        cn <- cn[cn %in% colnames(df_origin)]
+      }
       # get var-labels of original data frame, and select only those
       # labels from variables that appear in the new (subsetted) data frame
       df_new <- set_var_labels(df_new, get_var_labels(df_origin[, cn]))
