@@ -52,7 +52,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### Changes to functions
 * `dicho` now also dichotomizes non-numeric values.
-* `rec` now can keep (copy) not yet recoded values with `else=keep`.
+* `rec` now can keep (copy) not yet recoded values with `else=copy`.
 * `get_val_labels` gains a `include.values` parameter to also return values associated with the value labels.
 * `get_val_labels`, `get_var_labels`, `set_val_labels` and `set_var_labels` now also accept `list`-objects with variables.
 * `dicho`, `rec`, `set_na` and `recode_to` now also accept `list`-objects with variables.
