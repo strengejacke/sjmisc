@@ -8,17 +8,6 @@
 A SPSS sample data set, read with the \code{\link[haven]{read_spss}}
                function and "converted" with \code{\link{to_sjPlot}}.
 }
-\note{
-There are two further datasets, \code{efc2} and \code{efc3}, which
-        slightly differ in their structure.
-        \describe{
-         \item{efc2}{was read with the \code{\link[foreign]{read.spss}} function
-                     and also has attached variable label attributes to each variable.}
-         \item{efc3}{categorical variables have been converted to labelled factors,
-                     i.e. value labels are set as factor levels. However, factors
-                     in \code{efc3} no longer have variable label attributes.}
-         }
-}
 \examples{
 # Attach EFC-data
 data(efc)
