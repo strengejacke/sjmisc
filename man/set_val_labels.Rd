@@ -4,7 +4,7 @@
 \alias{set_val_labels}
 \title{Attach value labels to variables}
 \usage{
-set_val_labels(x, labels)
+set_val_labels(x, labels, force.labels = FALSE)
 }
 \arguments{
 \item{x}{a variable (vector), \code{list} of variables or a \code{data.frame}
@@ -19,6 +19,10 @@ character vectors. If \code{labels} is a list, it must have the same length as
 number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 the \code{labels} will be applied to each column of \code{x}.
 Use \code{labels = ""} to remove labels-attribute from \code{x}.}
+
+\item{force.labels}{logical; if \code{TRUE}, all \code{labels} are added as value labels
+attribute, even if \code{x} has less unique values then length of \code{labels}
+or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.}
 }
 \value{
 \code{x} with attached value labels; or with removed label-attribute if
@@ -48,6 +52,17 @@ sjp.frq(dummy)
 dummy <- set_val_labels(dummy, c("very low", "low", "mid", "hi"))
 sjp.frq(dummy)}
 
+# force using all labels, even if not all labels
+# have associated values in vector
+x <- c(2, 2, 3, 3, 2)
+# only two value labels
+x <- set_val_labels(x, c("1", "2", "3"))
+x
+\dontrun{sjp.frq(x)}
+# all three value labels
+x <- set_val_labels(x, c("1", "2", "3"), force.labels = TRUE)
+x
+\dontrun{sjp.frq(x)}
 
 # setting same value labels to multiple vectors
 

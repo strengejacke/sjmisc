@@ -45,6 +45,11 @@ table(to_value(test, 5))
 dummy <- factor(c("3", "4", "6"))
 table(to_value(dummy))
 
+# do not drop unused factor levels
+dummy <- ordered(c(rep("No", 5), rep("Maybe", 3)),
+                 levels = c("Yes", "No", "Maybe"))
+to_value(dummy)
+
 # non-numeric factor is converted to numeric
 # starting at 1
 dummy <- factor(c("D", "F", "H"))

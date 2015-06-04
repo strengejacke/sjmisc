@@ -616,6 +616,9 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #'          number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 #'          the \code{labels} will be applied to each column of \code{x}.
 #'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
+#' @param force.labels logical; if \code{TRUE}, all \code{labels} are added as value labels
+#'          attribute, even if \code{x} has less unique values then length of \code{labels}
+#'          or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
 #' @return \code{x} with attached value labels; or with removed label-attribute if
 #'            \code{labels = ""}.
 #'
@@ -632,6 +635,17 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #' dummy <- set_val_labels(dummy, c("very low", "low", "mid", "hi"))
 #' sjp.frq(dummy)}
 #'
+#' # force using all labels, even if not all labels
+#' # have associated values in vector
+#' x <- c(2, 2, 3, 3, 2)
+#' # only two value labels
+#' x <- set_val_labels(x, c("1", "2", "3"))
+#' x
+#' \dontrun{sjp.frq(x)}
+#' # all three value labels
+#' x <- set_val_labels(x, c("1", "2", "3"), force.labels = TRUE)
+#' x
+#' \dontrun{sjp.frq(x)}
 #'
 #' # setting same value labels to multiple vectors
 #'
@@ -647,16 +661,19 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #' get_val_labels(dummies)
 #'
 #' @export
-set_val_labels <- function(x, labels) {
-  return(sji.setValueLabelNameParam(x, labels))
+set_val_labels <- function(x, labels, force.labels = FALSE) {
+  return(sji.setValueLabelNameParam(x, labels, force.labels))
 }
 
 
-sji.setValueLabelNameParam <- function(x, labels) {
+sji.setValueLabelNameParam <- function(x, labels, force.labels = FALSE) {
   # any valid labels? if not, return vector
   if (is.null(labels)) return(x)
   if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
-    return(sji.setValueLabel.vector(x, labels))
+    return(sji.setValueLabel.vector(x,
+                                    labels,
+                                    NULL,
+                                    force.labels))
   } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -670,12 +687,14 @@ sji.setValueLabelNameParam <- function(x, labels) {
         if (i <= length(labels)) {
           x[[i]] <- sji.setValueLabel.vector(x[[i]],
                                              labels[[i]],
-                                             colnames(x)[i])
+                                             colnames(x)[i],
+                                             force.labels)
         }
       } else if (is.vector(labels)) {
         x[[i]] <- sji.setValueLabel.vector(x[[i]],
                                            labels,
-                                           colnames(x)[i])
+                                           colnames(x)[i],
+                                           force.labels)
       } else {
         warning("'labels' must be a list of same length as 'ncol(x)' or a vector.", call. = F)
       }
@@ -685,7 +704,7 @@ sji.setValueLabelNameParam <- function(x, labels) {
 }
 
 
-sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
+sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels = FALSE) {
   # auto-detect variable label attribute
   attr.string <- getValLabelAttribute(var)
   # do we have any label attributes?
@@ -736,11 +755,18 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL) {
         warning("Can't set value labels. Infinite value range.", call. = F)
       # check for valid length of labels
       } else if (valrange < lablen) {
-        # we have more labels than values, so just take as many
-        # labes as values are present
-        message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
-        attr(var, attr.string) <- as.character(c(minval:maxval))
-        names(attr(var, attr.string)) <- labels[1:valrange]
+        # fo we want to force to set labels, even if we have more labels
+        # than values in variable?
+        if (force.labels) {
+          attr(var, attr.string) <- as.character(c(1:lablen))
+          names(attr(var, attr.string)) <- labels
+        } else {
+          # we have more labels than values, so just take as many
+          # labes as values are present
+          message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
+          attr(var, attr.string) <- as.character(c(minval:maxval))
+          names(attr(var, attr.string)) <- labels[1:valrange]
+        }
       # value range is larger than amount of labels. we may
       # have not continuous value range, e.g. "-2" as filter and
       # 1 to 4 as valid values, i.e. -1 and 0 are missing
@@ -1274,6 +1300,11 @@ to_fac_helper <- function(x) {
 #' dummy <- factor(c("3", "4", "6"))
 #' table(to_value(dummy))
 #'
+#' # do not drop unused factor levels
+#' dummy <- ordered(c(rep("No", 5), rep("Maybe", 3)),
+#'                  levels = c("Yes", "No", "Maybe"))
+#' to_value(dummy)
+#'
 #' # non-numeric factor is converted to numeric
 #' # starting at 1
 #' dummy <- factor(c("D", "F", "H"))
@@ -1318,7 +1349,7 @@ to_value_helper <- function(x, startAt, keep.labels) {
     new_value <- as.numeric(as.character(x))
   }
   # check if we should attach former labels as value labels
-  if (keep.labels) new_value <- set_val_labels(new_value, labels)
+  if (keep.labels) new_value <- set_val_labels(new_value, labels, T)
   return(new_value)
 }
 
