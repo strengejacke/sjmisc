@@ -54,6 +54,9 @@ If \code{groupsize} is set to a specific value, the variable is recoded
            a range from 46-50 as first group, even if values from 46 to 49
            are not present. See 'Examples' in \code{\link{group_labels}}.
 }
+\note{
+Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+}
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))
 age.grp <- group_var(age, 10)

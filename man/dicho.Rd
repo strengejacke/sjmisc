@@ -34,6 +34,9 @@ Dichotomizes variables into dummy variables (0/1). Dichotomization is
                Either single vectors, a complete data frame or a list of
                variables can be dichotomized.
 }
+\note{
+Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+}
 \examples{
 data(efc)
 summary(efc$c12hour)
