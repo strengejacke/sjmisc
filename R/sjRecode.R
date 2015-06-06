@@ -22,6 +22,8 @@
 #' @return a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
+#' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+#'
 #' @examples
 #' data(efc)
 #' summary(efc$c12hour)
@@ -65,6 +67,8 @@ dicho <- function(x, dichBy = "median", dichVal = -1, asNum = FALSE) {
 
 
 dicho_helper <- function(var, dichBy, dichVal, asNum) {
+  # do we have labels?
+  varlab <- get_var_labels(var)
   # check if factor
   if (is.factor(var)) {
     # non-numeric-factor cannot be converted
@@ -89,6 +93,8 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
     var <- ifelse(var <= dichVal, 0, 1)
   }
   if (!asNum) var <- as.factor(var)
+  # set back variable labels
+  if (!is.null(varlab)) var <- set_var_labels(var, varlab)
   return(var)
 }
 
@@ -120,6 +126,8 @@ dicho_helper <- function(var, dichBy, dichVal, asNum) {
 #'          this parameter will be ignored.
 #'
 #' @return A grouped variable, either as numeric or as factor (see paramter \code{asNumeric}).
+#'
+#' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
 #'
 #' @details If \code{groupsize} is set to a specific value, the variable is recoded
 #'            into several groups, where each group has a maximum range of \code{groupsize}.
@@ -166,12 +174,16 @@ group_var <- function(var,
                       asNumeric = TRUE,
                       rightInterval = FALSE,
                       autoGroupCount = 30) {
+  # do we have labels?
+  varlab <- get_var_labels(var)
   # group variable
   var <- group_helper(var, groupsize, rightInterval, autoGroupCount)
   # set new levels of grouped variable
   levels(var) <- c(1:length(levels(var)))
   # convert to numeric?
   if (asNumeric) var <- as.numeric(as.character(var))
+  # set back variable labels
+  if (!is.null(varlab)) var <- set_var_labels(var, varlab)
   return(var)
 }
 
@@ -208,6 +220,8 @@ group_var <- function(var,
 #'           See examples below.
 #'
 #' @details See 'Details' in \code{\link{group_var}}.
+#'
+#' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
@@ -246,6 +260,8 @@ group_labels <- function(var,
                          groupsize = 5,
                          rightInterval = FALSE,
                          autoGroupCount = 30) {
+  # do we have labels?
+  varlab <- get_var_labels(var)
   # group variable
   var <- group_helper(var, groupsize, rightInterval, autoGroupCount)
   # Gruppen holen
@@ -275,6 +291,8 @@ group_labels <- function(var,
     # Rückgabe des Strings
     retval[i] <- c(paste(lower, "-", upper, sep = ""))
   }
+  # set back variable labels
+  if (!is.null(varlab)) retval <- set_var_labels(retval, varlab)
   return(retval)
 }
 
@@ -477,15 +495,18 @@ rec_to_helper <- function(var, lowest, highest) {
 #'          variables.
 #' @param recodes a string with recode pairs of old and new values. See 'Details' for
 #'          examples.
-#' @return A numeric variable with recoded category values, or a data frame
-#'           or \code{list}-object with recoded categories for all variables.
+#' @param as_factor logical, if \code{TRUE}, recoded variable is returned as factor.
+#'          Default is \code{FALSE}, thus a numeric variable is returned.
+#' @return A numeric variable (or a factor, if \code{as_factor = TRUE}) with
+#'           recoded category values, or a data frame or \code{list}-object
+#'           with recoded categories for all variables.
 #'
 #' @details  The \code{recodes} string has following syntax:
 #'           \describe{
 #'            \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{recodes = "1=1; 2=4; 3=2; 4=3"}}
 #'            \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
 #'            \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
-#'            \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} and \emph{max}, e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
+#'            \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
 #'            \item{\code{"else"}}{all other values except specified are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
 #'            \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
 #'            \item{\code{NA}'s}{\code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA from old value into 1, and all old values from 3 to 5 into NA in the new variable)}
@@ -536,7 +557,7 @@ rec_to_helper <- function(var, lowest, highest) {
 #' lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, exclude = NULL)
 #'
 #' @export
-rec <- function(x, recodes) {
+rec <- function(x, recodes, as_factor = FALSE) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -545,15 +566,15 @@ rec <- function(x, recodes) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- rec_helper(x[[i]], recodes)
+    for (i in 1:nvars) x[[i]] <- rec_helper(x[[i]], recodes, as_factor)
     return(x)
   } else {
-    return(rec_helper(x, recodes))
+    return(rec_helper(x, recodes, as_factor))
   }
 }
 
 
-rec_helper <- function(x, recodes) {
+rec_helper <- function(x, recodes, as_factor = FALSE) {
   # retrieve variable label
   var_lab <- get_var_labels(x)
   val_lab <- NULL
@@ -597,7 +618,9 @@ rec_helper <- function(x, recodes) {
   rec_string <- gsub(" ", "", rec_string, fixed = TRUE)
   # replace min and max placeholders
   rec_string <- gsub("min", as.character(min_val), rec_string, fixed = TRUE)
+  rec_string <- gsub("lo", as.character(min_val), rec_string, fixed = TRUE)
   rec_string <- gsub("max", as.character(max_val), rec_string, fixed = TRUE)
+  rec_string <- gsub("hi", as.character(max_val), rec_string, fixed = TRUE)
   # retrieve all recode-pairs, i.e. all old-value = new-value assignments
   rec_pairs <- strsplit(rec_string, "=", fixed = TRUE)
   # -------------------------------
@@ -726,8 +749,10 @@ rec_helper <- function(x, recodes) {
   # replace remaining -Inf with NA
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
   # set back variable and value labels
-  new_var <- set_var_labels(new_var, var_lab)
-  new_var <- set_val_labels(new_var, val_lab)
+  new_var <- suppressWarnings(set_var_labels(new_var, var_lab))
+  new_var <- suppressWarnings(set_val_labels(new_var, val_lab))
+  # return result as factor?
+  if (as_factor) new_var <- to_fac(new_var)
   return(new_var)
 }
 
