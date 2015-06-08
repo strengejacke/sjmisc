@@ -4,7 +4,8 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE)
+dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE,
+  var_label = NULL, val_labels = NULL)
 }
 \arguments{
 \item{x}{variable (vector), \code{data.frame} or \code{list} of variables
@@ -23,6 +24,14 @@ into one group with values from lowest to 10 and another group with values great
 than 10.}
 
 \item{asNum}{logical, if \code{TRUE}, return value will be numeric, not a factor.}
+
+\item{var_label}{optional string, to set variable label attribute for the
+dichotomized variable (see \code{\link{set_var_labels}}). If \code{NULL}
+(default), variable label attribute of \code{x} will be used (if present).}
+
+\item{val_labels}{optional character vector (of length two), to set value label
+attributes of dichotomized variable (see \code{\link{set_val_labels}}).
+If \code{NULL} (default), no value labels will be set.}
 }
 \value{
 a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
@@ -35,7 +44,8 @@ Dichotomizes variables into dummy variables (0/1). Dichotomization is
                variables can be dichotomized.
 }
 \note{
-Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained
+        (unless changes via \code{var_label}-parameter).
 }
 \examples{
 data(efc)

@@ -1,4 +1,4 @@
-Version 1.0.2-10
+Version 1.0.2-11
 ------------------------------------------------------------------------------
 New function:
 * "add_labels" to set back labels from subsetted data frame, or remove any label attributes from data frames.
@@ -16,7 +16,7 @@ Changes to functions:
 * "set_val_labels" gets parameter "force.labels" to force using all labels, even if length of labels if longer than unique values of vector.
 * "rec" gets a "as_factor" parameter, to return recoded variable as factor.
 * "dicho", "group_var" and "group_labels" keep variable label attributes.
-
+* "rec" and "dicho" get "var_label" and "val_label" parameters, to optionally add value
 Bug fixes:
 * "get_var_labels" returned NULL if first variable in data.frame had no variable label (but other variables had) - fixed.
 * Fixed code with non-exact matching of "haven"-attributes "label" and "labels", which in certain situation may return wrong vector attributes.

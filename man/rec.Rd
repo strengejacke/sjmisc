@@ -4,7 +4,7 @@
 \alias{rec}
 \title{Recode numeric variables}
 \usage{
-rec(x, recodes, as_factor = FALSE)
+rec(x, recodes, as_factor = FALSE, var_label = NULL, val_labels = NULL)
 }
 \arguments{
 \item{x}{a numeric variable (vector) or a \code{\link{factor}} with numeric
@@ -16,6 +16,14 @@ examples.}
 
 \item{as_factor}{logical, if \code{TRUE}, recoded variable is returned as factor.
 Default is \code{FALSE}, thus a numeric variable is returned.}
+
+\item{var_label}{optional string, to set variable label attribute for the
+recoded variable (see \code{\link{set_var_labels}}). If \code{NULL}
+(default), variable label attribute of \code{x} will be used (if present).}
+
+\item{val_labels}{optional character vector, to set value label attributes
+of recoded variable (see \code{\link{set_val_labels}}).
+If \code{NULL} (default), no value labels will be set.}
 }
 \value{
 A numeric variable (or a factor, if \code{as_factor = TRUE}) with
@@ -44,7 +52,7 @@ Please note following behaviours of the function:
       \itemize{
         \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
         \item Non-matching values will be set to \code{\link{NA}}.
-        \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained, however, value label attributes are removed.
+        \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained (unless changes via \code{var_label}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val_labels}-parameter to add labels for recoded values.
         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
       }
 }
@@ -57,6 +65,11 @@ table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), exclude = NULL)
 
 # recode 1 to 2 into 1 and 3 to 4 into 2
 table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
+
+# keep value labels. variable label is automatically retained
+str(rec(efc$e42dep,
+        "1,2=1; 3,4=2",
+        val_labels = c("low dependency", "high dependency")))
 
 # recode 1 to 3 into 4 into 2
 table(rec(efc$e42dep, "min:3=1; 4=2"), exclude = NULL)

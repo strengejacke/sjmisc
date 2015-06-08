@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.2-10
+### Changelog of current development build 1.0.2-11
 
 #### New function
 * `add_labels` to set back labels from subsetted data frame, or remove any label attributes from data frames.
@@ -59,6 +59,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `set_val_labels` gets parameter `force.labels` to force using all labels, even if length of labels if longer than unique values of vector.
 * `rec` gets a `as_factor` parameter, to return recoded variable as factor.
 * `dicho`, `group_var` and `group_labels` keep variable label attributes.
+* `rec` and `dicho` get `var_label` and `val_label` parameters, to optionally add value and variable label attributes for recoded or dichotomized variables.
 
 #### Bug fixes
 * `get_var_labels` returned `NULL` if first variable in `data.frame` had no variable label (but other variables had) - fixed.
