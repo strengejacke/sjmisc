@@ -1089,13 +1089,26 @@ weight <- function(var, weights) {
 #'         removeStringVectors = FALSE,
 #'         autoGroupStrings = FALSE)
 #'
-#' newstring <- group_str(oldstring, strict = TRUE)
+#' # larger groups
+#' newstring <- group_str(oldstring, maxdist = 3)
+#' sjt.frq(data.frame(oldstring, newstring),
+#'         removeStringVectors = FALSE,
+#'         autoGroupStrings = FALSE)
+#'
+#' # be more strict with matching pairs
+#' newstring <- group_str(oldstring, maxdist = 3, strict = TRUE)
 #' sjt.frq(data.frame(oldstring, newstring),
 #'         removeStringVectors = FALSE,
 #'         autoGroupStrings = FALSE)}
 #'
 #' @export
-group_str <- function(strings, maxdist = 2, method = "lv", strict = FALSE, trim.whitespace = TRUE, remove.empty = TRUE, showProgressBar = FALSE) {
+group_str <- function(strings,
+                      maxdist = 2,
+                      method = "lv",
+                      strict = FALSE,
+                      trim.whitespace = TRUE,
+                      remove.empty = TRUE,
+                      showProgressBar = FALSE) {
   # -------------------------------------
   # check if required package is available
   # -------------------------------------
@@ -1313,7 +1326,7 @@ trim <- function(x) gsub("^\\s+|\\s+$", "", x)
 #'            \code{findTerm}, and results with a maximum distance of \code{maxdist}
 #'            are considered as "matching". If \code{part.dist.match = 2}, the range
 #'            of the extracted substring is increased by 2, i.e. the extracted substring
-#'            is two chars longer.
+#'            is two chars longer and so on.
 #'
 #' @examples
 #' \dontrun{
@@ -1366,10 +1379,6 @@ str_pos <- function(searchString,
   # string matching
   # -------------------------------------
   if (part.dist.match > 0) {
-    # -------------------------------------
-    # helper function to trim white spaces
-    # -------------------------------------
-    trim <- function(x) gsub("^\\s+|\\s+$", "", x)
     ftlength <- nchar(findTerm)
     # -------------------------------------
     # create progress bar

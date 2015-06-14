@@ -44,7 +44,7 @@ For \code{part.dist.match = 1}, a substring of \code{length(findTerm)} is extrac
            \code{findTerm}, and results with a maximum distance of \code{maxdist}
            are considered as "matching". If \code{part.dist.match = 2}, the range
            of the extracted substring is increased by 2, i.e. the extracted substring
-           is two chars longer.
+           is two chars longer and so on.
 }
 \note{
 This function does \emph{not} return the position of a matching string \emph{inside}
