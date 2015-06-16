@@ -5,7 +5,7 @@
 \title{Dichotomize variables}
 \usage{
 dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE,
-  var_label = NULL, val_labels = NULL)
+  varLabel = NULL, valLabels = NULL)
 }
 \arguments{
 \item{x}{variable (vector), \code{data.frame} or \code{list} of variables
@@ -13,7 +13,7 @@ that should be dichotomized}
 
 \item{dichBy}{indicates the split criterion where a variable is dichotomized
 \describe{
-  \item{\code{"median"}}{by default, \code{var} is split into two groups at the median (\code{dichBy = "median"} or \code{dichBy = "md"})}
+  \item{\code{dichBy = "median"}}{(or \code{dichBy = "md"}) by default, \code{var} is split into two groups at the median}
   \item{\code{dichBy = "mean"}}{(or \code{dichBy = "m"}) splits \code{var} into two groups at the mean of \code{var}}
   \item{\code{dichBy = "value"}}{(or \code{dichBy = "v"}) splits \code{var} into two groups at a specific value (see \code{dichVal})}
   }}
@@ -25,11 +25,11 @@ than 10.}
 
 \item{asNum}{logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
-\item{var_label}{optional string, to set variable label attribute for the
+\item{varLabel}{optional string, to set variable label attribute for the
 dichotomized variable (see \code{\link{set_var_labels}}). If \code{NULL}
 (default), variable label attribute of \code{x} will be used (if present).}
 
-\item{val_labels}{optional character vector (of length two), to set value label
+\item{valLabels}{optional character vector (of length two), to set value label
 attributes of dichotomized variable (see \code{\link{set_val_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 }
@@ -45,7 +45,7 @@ Dichotomizes variables into dummy variables (0/1). Dichotomization is
 }
 \note{
 Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained
-        (unless changes via \code{var_label}-parameter).
+        (unless changes via \code{varLabel}-parameter).
 }
 \examples{
 data(efc)

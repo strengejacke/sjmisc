@@ -10,7 +10,7 @@
 #'          that should be dichotomized
 #' @param dichBy indicates the split criterion where a variable is dichotomized
 #'          \describe{
-#'            \item{\code{"median"}}{by default, \code{var} is split into two groups at the median (\code{dichBy = "median"} or \code{dichBy = "md"})}
+#'            \item{\code{dichBy = "median"}}{(or \code{dichBy = "md"}) by default, \code{var} is split into two groups at the median}
 #'            \item{\code{dichBy = "mean"}}{(or \code{dichBy = "m"}) splits \code{var} into two groups at the mean of \code{var}}
 #'            \item{\code{dichBy = "value"}}{(or \code{dichBy = "v"}) splits \code{var} into two groups at a specific value (see \code{dichVal})}
 #'            }
@@ -19,17 +19,17 @@
 #'          into one group with values from lowest to 10 and another group with values greater
 #'          than 10.
 #' @param asNum logical, if \code{TRUE}, return value will be numeric, not a factor.
-#' @param var_label optional string, to set variable label attribute for the
+#' @param varLabel optional string, to set variable label attribute for the
 #'          dichotomized variable (see \code{\link{set_var_labels}}). If \code{NULL}
 #'          (default), variable label attribute of \code{x} will be used (if present).
-#' @param val_labels optional character vector (of length two), to set value label
+#' @param valLabels optional character vector (of length two), to set value label
 #'          attributes of dichotomized variable (see \code{\link{set_val_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
 #' @return a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
 #' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained
-#'         (unless changes via \code{var_label}-parameter).
+#'         (unless changes via \code{varLabel}-parameter).
 #'
 #' @examples
 #' data(efc)
@@ -52,8 +52,8 @@ dicho <- function(x,
                   dichBy = "median",
                   dichVal = -1,
                   asNum = FALSE,
-                  var_label = NULL,
-                  val_labels = NULL) {
+                  varLabel = NULL,
+                  valLabels = NULL) {
   # check abbreviations
   if (dichBy == "md") dichBy <- "median"
   if (dichBy == "m") dichBy <- "mean"
@@ -70,20 +70,20 @@ dicho <- function(x,
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- dicho_helper(x[[i]], dichBy, dichVal, asNum, var_label, val_labels)
+    for (i in 1:nvars) x[[i]] <- dicho_helper(x[[i]], dichBy, dichVal, asNum, varLabel, valLabels)
     return(x)
   } else {
-    return(dicho_helper(x, dichBy, dichVal, asNum, var_label, val_labels))
+    return(dicho_helper(x, dichBy, dichVal, asNum, varLabel, valLabels))
   }
 }
 
 
-dicho_helper <- function(var, dichBy, dichVal, asNum, var_label, val_labels) {
+dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
   # do we have labels?
-  if (is.null(var_label))
+  if (is.null(varLabel))
     varlab <- get_var_labels(var)
   else
-    varlab <- var_label
+    varlab <- varLabel
   # check if factor
   if (is.factor(var)) {
     # non-numeric-factor cannot be converted
@@ -111,7 +111,7 @@ dicho_helper <- function(var, dichBy, dichVal, asNum, var_label, val_labels) {
   # set back variable labels
   if (!is.null(varlab)) var <- set_var_labels(var, varlab)
   # set value labels
-  if (!is.null(val_labels)) var <- set_val_labels(var, val_labels)
+  if (!is.null(valLabels)) var <- set_val_labels(var, valLabels)
   return(var)
 }
 
@@ -512,15 +512,15 @@ rec_to_helper <- function(var, lowest, highest) {
 #'          variables.
 #' @param recodes a string with recode pairs of old and new values. See 'Details' for
 #'          examples.
-#' @param as_factor logical, if \code{TRUE}, recoded variable is returned as factor.
+#' @param asFac logical, if \code{TRUE}, recoded variable is returned as factor.
 #'          Default is \code{FALSE}, thus a numeric variable is returned.
-#' @param var_label optional string, to set variable label attribute for the
+#' @param varLabel optional string, to set variable label attribute for the
 #'          recoded variable (see \code{\link{set_var_labels}}). If \code{NULL}
 #'          (default), variable label attribute of \code{x} will be used (if present).
-#' @param val_labels optional character vector, to set value label attributes
+#' @param valLabels optional character vector, to set value label attributes
 #'          of recoded variable (see \code{\link{set_val_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
-#' @return A numeric variable (or a factor, if \code{as_factor = TRUE}) with
+#' @return A numeric variable (or a factor, if \code{asFac = TRUE}) with
 #'           recoded category values, or a data frame or \code{list}-object
 #'           with recoded categories for all variables.
 #'
@@ -540,7 +540,7 @@ rec_to_helper <- function(var, lowest, highest) {
 #'       \itemize{
 #'         \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
 #'         \item Non-matching values will be set to \code{\link{NA}}.
-#'         \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained (unless changes via \code{var_label}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val_labels}-parameter to add labels for recoded values.
+#'         \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained (unless changes via \code{varLabel}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{valLabels}-parameter to add labels for recoded values.
 #'         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
 #'       }
 #'
@@ -557,7 +557,7 @@ rec_to_helper <- function(var, lowest, highest) {
 #' # keep value labels. variable label is automatically retained
 #' str(rec(efc$e42dep,
 #'         "1,2=1; 3,4=2",
-#'         val_labels = c("low dependency", "high dependency")))
+#'         valLabels = c("low dependency", "high dependency")))
 #'
 #' # recode 1 to 3 into 4 into 2
 #' table(rec(efc$e42dep, "min:3=1; 4=2"), exclude = NULL)
@@ -587,9 +587,9 @@ rec_to_helper <- function(var, lowest, highest) {
 #' @export
 rec <- function(x,
                 recodes,
-                as_factor = FALSE,
-                var_label = NULL,
-                val_labels = NULL) {
+                asFac = FALSE,
+                varLabel = NULL,
+                valLabels = NULL) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -598,22 +598,22 @@ rec <- function(x,
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- rec_helper(x[[i]], recodes, as_factor, var_label, val_labels)
+    for (i in 1:nvars) x[[i]] <- rec_helper(x[[i]], recodes, asFac, varLabel, valLabels)
     return(x)
   } else {
-    return(rec_helper(x, recodes, as_factor, var_label, val_labels))
+    return(rec_helper(x, recodes, asFac, varLabel, valLabels))
   }
 }
 
 
-rec_helper <- function(x, recodes, as_factor = FALSE, var_label, val_labels) {
+rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
   # retrieve variable label
-  if (is.null(var_label))
+  if (is.null(varLabel))
     var_lab <- get_var_labels(x)
   else
-    var_lab <- var_label
+    var_lab <- varLabel
   # do we have any value labels?
-  val_lab <- val_labels
+  val_lab <- valLabels
   # remember if NA's have been recoded...
   na_recoded <- FALSE
   # -------------------------------
@@ -788,7 +788,7 @@ rec_helper <- function(x, recodes, as_factor = FALSE, var_label, val_labels) {
   new_var <- suppressWarnings(set_var_labels(new_var, var_lab))
   new_var <- suppressWarnings(set_val_labels(new_var, val_lab))
   # return result as factor?
-  if (as_factor) new_var <- to_fac(new_var)
+  if (asFac) new_var <- to_fac(new_var)
   return(new_var)
 }
 
