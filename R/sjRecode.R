@@ -9,10 +9,10 @@
 #' @param x variable (vector), \code{data.frame} or \code{list} of variables
 #'          that should be dichotomized
 #' @param dichBy indicates the split criterion where a variable is dichotomized
-#'          \describe{
-#'            \item{\code{dichBy = "median"}}{(or \code{dichBy = "md"}) by default, \code{var} is split into two groups at the median}
-#'            \item{\code{dichBy = "mean"}}{(or \code{dichBy = "m"}) splits \code{var} into two groups at the mean of \code{var}}
-#'            \item{\code{dichBy = "value"}}{(or \code{dichBy = "v"}) splits \code{var} into two groups at a specific value (see \code{dichVal})}
+#'          \itemize{
+#'            \item \code{dichBy = "median"} (or \code{"md"}): by default, \code{var} is split into two groups at the median
+#'            \item \code{dichBy = "mean"} (or \code{"m"}): splits \code{var} into two groups at the mean of \code{var}
+#'            \item \code{dichBy = "value"} (or \code{"v"}): splits \code{var} into two groups at a specific value (see \code{dichVal})
 #'            }
 #' @param dichVal numeric, indicates a value where \code{var} is dichotomized when \code{dichBy = "value"}.
 #'          \strong{Note that \code{dichVal} is inclusive}, i.e. \code{dichVal = 10} will split \code{var}

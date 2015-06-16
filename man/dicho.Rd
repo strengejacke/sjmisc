@@ -12,10 +12,10 @@ dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE,
 that should be dichotomized}
 
 \item{dichBy}{indicates the split criterion where a variable is dichotomized
-\describe{
-  \item{\code{dichBy = "median"}}{(or \code{dichBy = "md"}) by default, \code{var} is split into two groups at the median}
-  \item{\code{dichBy = "mean"}}{(or \code{dichBy = "m"}) splits \code{var} into two groups at the mean of \code{var}}
-  \item{\code{dichBy = "value"}}{(or \code{dichBy = "v"}) splits \code{var} into two groups at a specific value (see \code{dichVal})}
+\itemize{
+  \item \code{dichBy = "median"} (or \code{"md"}): by default, \code{var} is split into two groups at the median
+  \item \code{dichBy = "mean"} (or \code{"m"}): splits \code{var} into two groups at the mean of \code{var}
+  \item \code{dichBy = "value"} (or \code{"v"}): splits \code{var} into two groups at a specific value (see \code{dichVal})
   }}
 
 \item{dichVal}{numeric, indicates a value where \code{var} is dichotomized when \code{dichBy = "value"}.
