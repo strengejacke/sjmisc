@@ -19,8 +19,8 @@ Basically, this package covers four domains of functionality:
 \tabular{rl}{
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
-Version: \tab 1.0.2-12\cr
-Date: \tab 2015-06-16\cr
+Version: \tab 1.0.3\cr
+Date: \tab 2015-06-18\cr
 License: \tab GPL-3\cr
 }
 }
