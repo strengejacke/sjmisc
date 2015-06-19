@@ -49,6 +49,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `get_values` to return values associated with value labels from labelled vectors.
 * `replace_na` to replace `NA`'s with specific value (counterpart to `set_na`).
 * `is_even` and `is_odd` to check whether values are odd or even.
+* `is_empty` to check whether a string is empty or not.
 
 #### Changes to functions
 * `dicho` now also dichotomizes non-numeric values.
