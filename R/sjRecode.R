@@ -367,7 +367,7 @@ group_helper <- function(var, groupsize, rightInterval, autoGroupCount) {
 #' message(word_wrap("Much too long string for just one line!", 15))
 #'
 #' @export
-word_wrap <- function(labels, wrap, linesep=NULL) {
+word_wrap <- function(labels, wrap, linesep = NULL) {
   # check for valid value
   if (is.null(labels) || length(labels) == 0) return(NULL)
   # default line separator is \n
@@ -461,7 +461,7 @@ word_wrap <- function(labels, wrap, linesep=NULL) {
 #' lapply(recode_to(dummy), table)
 #'
 #' @export
-recode_to <- function(x, lowest=0, highest=-1) {
+recode_to <- function(x, lowest = 0, highest = -1) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables

@@ -179,7 +179,7 @@ sjs.stdmm <- function(fit) {
 #' mwu(efc$e17age, efc$e42dep)
 #'
 #' @export
-mwu <- function(var, grp, distribution="asymptotic", weights=NULL) {
+mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
   # ------------------------
   # check if suggested package is available
   # ------------------------
@@ -674,7 +674,7 @@ cronb <- function(df) {
 #'  }}
 #'
 #' @export
-reliab_test <- function(x, scaleItems=FALSE, digits=3) {
+reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
   # -----------------------------------
   # remove missings, so correlation works
   # -----------------------------------
@@ -779,7 +779,7 @@ reliab_test <- function(x, scaleItems=FALSE, digits=3) {
 #' mic(df)
 #'
 #' @export
-mic <- function(data, corMethod="pearson") {
+mic <- function(data, corMethod = "pearson") {
   # -----------------------------------
   # Check parameter
   # -----------------------------------
@@ -840,7 +840,7 @@ mic <- function(data, corMethod="pearson") {
 #' table_values(tab)$cell
 #'
 #' @export
-table_values <- function(tab, digits=2) {
+table_values <- function(tab, digits = 2) {
   # convert to ftable object
   if (all(class(tab) != "ftable")) tab <- ftable(tab)
   tab.cell <- round(100 * prop.table(tab), digits)
@@ -998,14 +998,14 @@ cv <- function(x) {
         stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
       }
       # dependent variable in lmerMod
-      dv <- lme4::getME(fit, "y")
+      dv <- lme4::getME(x, "y")
     } else if (any(class(x) == "lme")) {
       # check for package availability
       if (!requireNamespace("nlme", quietly = TRUE)) {
         stop("Package 'nlme' needed for this function to work. Please install it.", call. = FALSE)
       }
       # dependent variable in lme
-      dv <- unname(nlme::getResponse(fit))
+      dv <- unname(nlme::getResponse(x))
     }
     # compute mean of dependent variable
     mw <- mean(dv, na.rm = TRUE)
