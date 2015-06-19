@@ -14,6 +14,7 @@ Basically, this package covers four domains of functionality:
   \item frequently used statistical tests and computation of statistical coefficients, or at least convenient wrappers for such test functions
   \item frequently applied recoding and variable transformation tasks
 }
+Dedicated online manuals at \url{http://www.strengejacke.de/sjPlot/}.
 }
 \details{
 \tabular{rl}{

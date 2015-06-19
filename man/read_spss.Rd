@@ -48,7 +48,7 @@ This is a wrapper function for \code{\link[haven]{read_spss}} of the
         \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
         for more details.
         \cr \cr
-        When working with other packages, you can, e.g., use
+        When working with labelled data, you can, e.g., use
         \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
         to get a vector of value and variable labels, which can then be
         used with other functions like \code{\link{barplot}} etc.
@@ -77,6 +77,7 @@ mydat.val <- get_val_labels(mydat)}
 \seealso{
 \itemize{
            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
+           \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
            \item \code{\link{write_spss}}
            }

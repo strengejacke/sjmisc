@@ -38,4 +38,8 @@ Tjur T (2009) Coefficients of determination in logistic regression models -
               a new proposal: The coefficient of discrimination. The American Statistician,
               63(4): 366-372
 }
+\seealso{
+\code{\link{pseudo_r2}} for Nagelkerke's and Cox and Snell's pseudo
+           r-squared coefficients.
+}
 

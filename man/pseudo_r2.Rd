@@ -33,6 +33,6 @@ fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
 pseudo_r2(fit)
 }
 \seealso{
-\code{\link{cod}}
+\code{\link{cod}} for Tjur's Coefficient of Discrimination.
 }
 

@@ -21,7 +21,7 @@ devtools::install_github("sjPlot/sjmisc")
 ```
 
 #### Officiale, stable release
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sjmisc)](http://cran.r-project.org/web/packages/sjmisc)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sjmisc)](http://cran.r-project.org/package=sjmisc)
 &#160;&#160;
 [![downloads](http://cranlogs.r-pkg.org/badges/sjmisc)](http://cranlogs.r-pkg.org/)
 

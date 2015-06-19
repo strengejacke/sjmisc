@@ -29,7 +29,9 @@ Subsetting-functions usually drop value and variable labels from
 }
 \note{
 In case \code{df_origin} is \code{NULL}, all possible label attributes
-        from \code{df_new} are removed.
+        from \code{df_new} are removed. \cr \cr
+        dplyr >= 0.4.2 no longer drops vector attributes; you'll only need
+        to set back labels when using dplyr up to 0.4.1.
 }
 \examples{
 data(efc)
@@ -43,6 +45,8 @@ efc.sub <- add_labels(efc.sub)
 str(efc.sub)
 }
 \seealso{
-\code{\link{remove_labels}}
+\href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
+           on working with labelled data, and \code{\link{remove_labels}} for
+           removing label attributes from data frames.
 }
 

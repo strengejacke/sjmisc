@@ -12,10 +12,10 @@ dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE,
 that should be dichotomized}
 
 \item{dichBy}{indicates the split criterion where a variable is dichotomized
-\itemize{
-  \item \code{dichBy = "median"} (or \code{"md"}): by default, \code{var} is split into two groups at the median
-  \item \code{dichBy = "mean"} (or \code{"m"}): splits \code{var} into two groups at the mean of \code{var}
-  \item \code{dichBy = "value"} (or \code{"v"}): splits \code{var} into two groups at a specific value (see \code{dichVal})
+\describe{
+  \item{\code{"median"}}{by default, \code{var} is split into two groups at the median. May be abbreviated as \code{"md"}.}
+  \item{\code{"mean"}}{splits \code{var} into two groups at the mean of \code{var}. May be abbreviated as \code{"m"}.}
+  \item{\code{"value"}}{splits \code{var} into two groups at a specific value (see \code{dichVal}). May be abbreviated as \code{"v"}.}
   }}
 
 \item{dichVal}{numeric, indicates a value where \code{var} is dichotomized when \code{dichBy = "value"}.
@@ -62,5 +62,13 @@ head(dicho(efc[, 6:10], "v", 2))
 # dichtomize several variables in a list
 dummy <- list(efc$c12hour, efc$e17age, efc$c160age)
 dicho(dummy)
+
+# dichotomize and set labels. requires package
+# sjPlot to test
+\dontrun{
+library(sjPlot)
+sjp.frq(dicho(efc$e42dep,
+              varLabel = "Dependency (dichotomized)",
+              valLabels = c("lower", "higher")))}
 }
 

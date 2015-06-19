@@ -496,7 +496,7 @@ hoslem_gof <- function(x, g = 10) {
 #'            \item \code{Nagelkerke} Nagelkerke's pseudo-r-squared-value
 #'           }
 #'
-#' @seealso \code{\link{cod}}
+#' @seealso \code{\link{cod}} for Tjur's Coefficient of Discrimination.
 #'
 #' @examples
 #' data(efc)
@@ -538,6 +538,9 @@ pseudo_r2 <- function(x) {
 #' @references Tjur T (2009) Coefficients of determination in logistic regression models -
 #'               a new proposal: The coefficient of discrimination. The American Statistician,
 #'               63(4): 366-372
+#'
+#' @seealso \code{\link{pseudo_r2}} for Nagelkerke's and Cox and Snell's pseudo
+#'            r-squared coefficients.
 #'
 #' @examples
 #' data(efc)

@@ -5,6 +5,7 @@
 #'
 #' @seealso \itemize{
 #'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
+#'            \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
 #'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
 #'            \item \code{\link{write_spss}}
 #'            }
@@ -39,7 +40,7 @@
 #'         \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
 #'         for more details.
 #'         \cr \cr
-#'         When working with other packages, you can, e.g., use
+#'         When working with labelled data, you can, e.g., use
 #'         \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
 #'         to get a vector of value and variable labels, which can then be
 #'         used with other functions like \code{\link{barplot}} etc.
@@ -421,7 +422,8 @@ to_sjPlot <- function(x) {
 #'                  \item or, if \code{x} is a vector, returns the label as string.
 #'                  }
 #'
-#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
+#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization},
+#'            \href{http://www.strengejacke.de/sjPlot/labelleddata/}{working with labelled data} or
 #'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
 #'            more details; \code{\link{set_val_labels}} to manually set value labels, \code{\link{get_var_labels}}
 #'            to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
@@ -444,11 +446,11 @@ to_sjPlot <- function(x) {
 #'            or in \code{haven} package style (attributes are named \emph{labels} and
 #'            \emph{label}). By default, the \code{haven} package style is used.
 #'            \cr \cr
-#'            The \code{sjPlot} package accesses
-#'            these attributes to automatically read label attributes for labelling
-#'            axes categories and titles or table rows and columns.
+#'            Working with labelled data is a key element of the \code{sjPlot} package,
+#'            which accesses these attributes to automatically read label attributes
+#'            for labelling axis categories and titles or table rows and columns.
 #'            \cr \cr
-#'            When working with other packages, you can, e.g., use
+#'            When working with labelled data, you can, e.g., use
 #'            \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
 #'            to get a vector of value and variable labels, which can then be
 #'            used with other functions like \code{\link{barplot}} etc.
@@ -472,8 +474,9 @@ to_sjPlot <- function(x) {
 #'        automatically detect labels and uses them as axis, legend or title labels
 #'        in plots (\code{sjp.}-functions) respectively as column or row headers
 #'        in table outputs (\code{sjt.}-functions).  See
-#'        \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
-#'        for more details.
+#'        \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
+#'        \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
+#'        online manuals for more details.
 #'        \cr \cr
 #'        Use \code{options(autoSetValueLabels = FALSE)}
 #'        and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
@@ -1160,7 +1163,9 @@ to_label_helper <- function(x) {
 #'                \code{\link{read_spss}}) or manually adding label attributes
 #'                with \code{\link{set_val_labels}}.
 #'
-#' @seealso \code{\link{add_labels}}
+#' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
+#'            on working with labelled data, and \code{\link{add_labels}} for
+#'            adding label attributes (subsetted) data frames.
 #'
 #' @param x vector or \code{data.frame} with variable and/or value label attributes
 #' @return \code{x} with removed value and variable label attributes.
@@ -1366,7 +1371,9 @@ to_value_helper <- function(x, startAt, keep.labels) {
 #'                In case \code{df_origin} is \code{NULL}, all possible label attributes
 #'                from \code{df_new} are removed.
 #'
-#' @seealso \code{\link{remove_labels}}
+#' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
+#'            on working with labelled data, and \code{\link{remove_labels}} for
+#'            removing label attributes from data frames.
 #'
 #' @param df_new the new, subsetted data frame.
 #' @param df_origin the original data frame where the subset (\code{df_new}) stems from;
@@ -1376,7 +1383,9 @@ to_value_helper <- function(x, startAt, keep.labels) {
 #'           attributes (if \code{df_origin} was the original subsetted data frame).
 #'
 #' @note In case \code{df_origin} is \code{NULL}, all possible label attributes
-#'         from \code{df_new} are removed.
+#'         from \code{df_new} are removed. \cr \cr
+#'         dplyr >= 0.4.2 no longer drops vector attributes; you'll only need
+#'         to set back labels when using dplyr up to 0.4.1.
 #'
 #' @examples
 #' data(efc)
