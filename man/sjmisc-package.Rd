@@ -21,7 +21,7 @@ Dedicated online manuals at \url{http://www.strengejacke.de/sjPlot/}.
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
 Version: \tab 1.0.3\cr
-Date: \tab 2015-06-18\cr
+Date: \tab 2015-06-20\cr
 License: \tab GPL-3\cr
 }
 }
