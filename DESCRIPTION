@@ -6,7 +6,17 @@ Version: 1.0.3
 Date: 2015-06-20
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
-Description: Collection of several utility functions for reading or writing data, recoding and labelling variables and some frequently used statistical tests.
+Description: Collection of several utility functions (especially intended for
+             people coming from other statistical software packages like 'SPSS',
+             and/or who are new to R), supporting following common tasks:
+             1) Reading and writing data between R and other statistical software packages
+             like 'SPSS', 'SAS' or 'Stata' and working with labelled data; this includes easy
+             ways to get and set label attributes, to convert labelled vectors into
+             factors (and vice versa) etc.
+             2) Data transformation tasks like recoding, dichotomizing or
+             grouping variables, setting and replacing missing values.
+             3) Convenient functions to perform frequently used statistical tests,
+             or to calculate various commonly used statistical coefficients.
 License: GPL-3
 Imports: MASS
 Suggests: coin, foreign, haven, lme4, nlme, stringdist
