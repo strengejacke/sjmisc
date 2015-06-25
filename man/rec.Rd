@@ -18,11 +18,11 @@ examples.}
 Default is \code{FALSE}, thus a numeric variable is returned.}
 
 \item{varLabel}{optional string, to set variable label attribute for the
-recoded variable (see \code{\link{set_var_labels}}). If \code{NULL}
+recoded variable (see \code{\link{set_label}}). If \code{NULL}
 (default), variable label attribute of \code{x} will be used (if present).}
 
 \item{valLabels}{optional character vector, to set value label attributes
-of recoded variable (see \code{\link{set_val_labels}}).
+of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 }
 \value{
@@ -52,7 +52,7 @@ Please note following behaviours of the function:
       \itemize{
         \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
         \item Non-matching values will be set to \code{\link{NA}}.
-        \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained (unless changes via \code{varLabel}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{valLabels}-parameter to add labels for recoded values.
+        \item Variable label attributes (see, for instance, \code{\link{get_label}}) are retained (unless changes via \code{varLabel}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{valLabels}-parameter to add labels for recoded values.
         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
       }
 }

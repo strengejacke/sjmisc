@@ -55,7 +55,7 @@ If \code{groupsize} is set to a specific value, the variable is recoded
            are not present. See 'Examples' in \code{\link{group_labels}}.
 }
 \note{
-Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
 }
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))
@@ -67,14 +67,14 @@ hist(age.grp)
 # histogram with EUROFAMCARE sample dataset
 # variable not grouped
 data(efc)
-hist(efc$e17age, main = get_var_labels(efc$e17age))
+hist(efc$e17age, main = get_label(efc$e17age))
 
 # bar plot with EUROFAMCARE sample dataset
 # grouped variable
 ageGrp <- group_var(efc$e17age)
 ageGrpLab <- group_labels(efc$e17age)
 barplot(table(ageGrp),
-        main = get_var_labels(efc$e17age),
+        main = get_label(efc$e17age),
         names.arg = ageGrpLab)
 }
 \seealso{

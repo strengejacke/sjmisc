@@ -16,8 +16,8 @@ SAS (which are imported as \code{\link{atomic}}) will be converted
 to \code{\link{factor}}s.}
 }
 \value{
-A data frame containing the SAS data. Retrieve value labels with \code{\link{get_val_labels}}
-  and variable labels with \code{\link{get_var_labels}}.
+A data frame containing the SAS data. Retrieve value labels with \code{\link{get_labels}}
+  and variable labels with \code{\link{get_label}}.
 }
 \description{
 Imports data from SAS (\code{.sas7bdat}), including NA's,

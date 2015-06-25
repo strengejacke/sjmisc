@@ -9,7 +9,7 @@ to_label(x)
 \arguments{
 \item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}},
 \code{\link{factor}} or \code{\link[haven]{labelled}} (see \code{haven} package)
-\emph{with associated value labels} (see \code{\link{set_val_labels}}),
+\emph{with associated value labels} (see \code{\link{set_labels}}),
 respectively a data frame with such variables.}
 }
 \value{
@@ -24,16 +24,16 @@ This function converts (replaces) variable values (also of factors)
                all 1 to female and returns the new variable as \code{\link{factor}}.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
-        or \code{\link{set_val_labels}}) will be removed  when converting variables to factors.
+Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+        or \code{\link{set_labels}}) will be removed  when converting variables to factors.
 }
 \examples{
 data(efc)
-print(get_val_labels(efc)['c161sex'])
+print(get_labels(efc)['c161sex'])
 head(efc$c161sex)
 head(to_label(efc$c161sex))
 
-print(get_val_labels(efc)['e42dep'])
+print(get_labels(efc)['e42dep'])
 table(efc$e42dep)
 table(to_label(efc$e42dep))
 

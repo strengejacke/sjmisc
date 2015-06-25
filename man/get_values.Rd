@@ -32,9 +32,9 @@ Labelled vectors are numeric by default (when imported with read-functions
 data(efc)
 str(efc$e42dep)
 get_values(efc$e42dep)
-get_val_labels(efc$e42dep)
+get_labels(efc$e42dep)
 }
 \seealso{
-\code{\link{get_val_labels}}
+\code{\link{get_labels}}
 }
 

@@ -28,8 +28,8 @@ Recodes (or "renumbers") the categories of \code{var} into new category values, 
                1-4 to 0-3 etc.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
-        or \code{\link{set_val_labels}}) are retained.
+Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+        or \code{\link{set_labels}}) are retained.
 }
 \examples{
 # recode 1-4 to 0-3

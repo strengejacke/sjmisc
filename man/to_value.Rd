@@ -16,7 +16,7 @@ level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 are not numeric).}
 
 \item{keep.labels}{logical, if \code{TRUE}, former factor levels will be attached as
-value labels. See \code{\link{set_val_labels}} for more details.}
+value labels. See \code{\link{set_labels}} for more details.}
 }
 \value{
 A numeric variable with values ranging either from \code{startAt} to

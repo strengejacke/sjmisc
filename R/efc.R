@@ -21,10 +21,10 @@
 #' # show variables
 #' \dontrun{
 #' library(sjPlot)
-#' view_spss(efc)
+#' view_df(efc)
 #'
 #' # show variable labels
-#' get_var_labels(efc)
+#' get_label(efc)
 #'
 #' # plot efc-data frame summary
 #' sjt.df(efc, alternateRowColor=TRUE)}

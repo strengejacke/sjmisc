@@ -26,11 +26,11 @@ than 10.}
 \item{asNum}{logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
 \item{varLabel}{optional string, to set variable label attribute for the
-dichotomized variable (see \code{\link{set_var_labels}}). If \code{NULL}
+dichotomized variable (see \code{\link{set_label}}). If \code{NULL}
 (default), variable label attribute of \code{x} will be used (if present).}
 
 \item{valLabels}{optional character vector (of length two), to set value label
-attributes of dichotomized variable (see \code{\link{set_val_labels}}).
+attributes of dichotomized variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 }
 \value{
@@ -44,7 +44,7 @@ Dichotomizes variables into dummy variables (0/1). Dichotomization is
                variables can be dichotomized.
 }
 \note{
-Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained
+Variable label attributes (see, for instance, \code{\link{set_label}}) are retained
         (unless changes via \code{varLabel}-parameter).
 }
 \examples{

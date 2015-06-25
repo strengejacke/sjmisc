@@ -28,7 +28,7 @@ This function is intended for use with vectors that have value and variable
        Attaching labels is automatically done by importing data sets
        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
        Else, value and variable labels can be manually added to vectors
-       with \code{\link{set_val_labels}} and \code{\link{set_var_labels}}.
+       with \code{\link{set_labels}} and \code{\link{set_label}}.
 }
 \examples{
 \dontrun{

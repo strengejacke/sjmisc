@@ -41,29 +41,10 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3
-
-#### New function
-* `add_labels` to set back labels from subsetted data frame, or remove any label attributes from data frames.
-* `remove_labels` to remove any label attributes from data frames or vectors.
-* `get_values` to return values associated with value labels from labelled vectors.
-* `replace_na` to replace `NA`'s with specific value (counterpart to `set_na`).
-* `is_even` and `is_odd` to check whether values are odd or even.
-* `is_empty` to check whether a string is empty or not.
+### Changelog of current development build 1.0.3-1
 
 #### Changes to functions
-* `dicho` now also dichotomizes non-numeric values.
-* `rec` now can keep (copy) not yet recoded values with `else=copy`.
-* `get_val_labels` gains a `include.values` parameter to also return values associated with the value labels.
-* `get_val_labels`, `get_var_labels`, `set_val_labels` and `set_var_labels` now also accept `list`-objects with variables.
-* `dicho`, `rec`, `set_na` and `recode_to` now also accept `list`-objects with variables.
-* `set_val_labels` gets parameter `force.labels` to force using all labels, even if length of labels if longer than unique values of vector.
-* `rec` gets a `asFac` parameter, to return recoded variable as factor.
-* `dicho`, `group_var` and `group_labels` keep variable label attributes.
-* `rec` and `dicho` get `varLabel` and `valLabels` parameters, to optionally add value and variable label attributes for recoded or dichotomized variables.
-
-#### Bug fixes
-* `get_var_labels` returned `NULL` if first variable in `data.frame` had no variable label (but other variables had) - fixed.
-* Fixed code with non-exact matching of `haven`-attributes `label` and `labels`, which in certain situation may return wrong vector attributes.
-* `rec` did not recode `NA`s into values, if followed by `else`-token.
-* `to_value` no longer drops unused factor levels.
+* `set_val_labels` is now deprecated and was renamed into `set_labels`.
+* `set_var_labels` is now deprecated and was renamed into `set_label`.
+* `get_val_labels` is now deprecated and was renamed into `get_labels`.
+* `get_var_labels` is now deprecated and was renamed into `get_label`.

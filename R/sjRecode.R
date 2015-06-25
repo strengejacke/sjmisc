@@ -20,15 +20,15 @@
 #'          than 10.
 #' @param asNum logical, if \code{TRUE}, return value will be numeric, not a factor.
 #' @param varLabel optional string, to set variable label attribute for the
-#'          dichotomized variable (see \code{\link{set_var_labels}}). If \code{NULL}
+#'          dichotomized variable (see \code{\link{set_label}}). If \code{NULL}
 #'          (default), variable label attribute of \code{x} will be used (if present).
 #' @param valLabels optional character vector (of length two), to set value label
-#'          attributes of dichotomized variable (see \code{\link{set_val_labels}}).
+#'          attributes of dichotomized variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
 #' @return a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained
+#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are retained
 #'         (unless changes via \code{varLabel}-parameter).
 #'
 #' @examples
@@ -89,7 +89,7 @@ dicho <- function(x,
 dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
   # do we have labels?
   if (is.null(varLabel))
-    varlab <- get_var_labels(var)
+    varlab <- get_label(var)
   else
     varlab <- varLabel
   # check if factor
@@ -117,9 +117,9 @@ dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
   }
   if (!asNum) var <- as.factor(var)
   # set back variable labels
-  if (!is.null(varlab)) var <- set_var_labels(var, varlab)
+  if (!is.null(varlab)) var <- set_label(var, varlab)
   # set value labels
-  if (!is.null(valLabels)) var <- set_val_labels(var, valLabels)
+  if (!is.null(valLabels)) var <- set_labels(var, valLabels)
   return(var)
 }
 
@@ -152,7 +152,7 @@ dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
 #'
 #' @return A grouped variable, either as numeric or as factor (see paramter \code{asNumeric}).
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
 #'
 #' @details If \code{groupsize} is set to a specific value, the variable is recoded
 #'            into several groups, where each group has a maximum range of \code{groupsize}.
@@ -183,14 +183,14 @@ dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
-#' hist(efc$e17age, main = get_var_labels(efc$e17age))
+#' hist(efc$e17age, main = get_label(efc$e17age))
 #'
 #' # bar plot with EUROFAMCARE sample dataset
 #' # grouped variable
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
 #' barplot(table(ageGrp),
-#'         main = get_var_labels(efc$e17age),
+#'         main = get_label(efc$e17age),
 #'         names.arg = ageGrpLab)
 #'
 #' @export
@@ -200,7 +200,7 @@ group_var <- function(var,
                       rightInterval = FALSE,
                       autoGroupCount = 30) {
   # do we have labels?
-  varlab <- get_var_labels(var)
+  varlab <- get_label(var)
   # group variable
   var <- group_helper(var, groupsize, rightInterval, autoGroupCount)
   # set new levels of grouped variable
@@ -208,7 +208,7 @@ group_var <- function(var,
   # convert to numeric?
   if (asNumeric) var <- as.numeric(as.character(var))
   # set back variable labels
-  if (!is.null(varlab)) var <- set_var_labels(var, varlab)
+  if (!is.null(varlab)) var <- set_label(var, varlab)
   return(var)
 }
 
@@ -246,7 +246,7 @@ group_var <- function(var,
 #'
 #' @details See 'Details' in \code{\link{group_var}}.
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_var_labels}}) are retained.
+#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
@@ -270,14 +270,14 @@ group_var <- function(var,
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
-#' hist(efc$e17age, main = get_var_labels(efc$e17age))
+#' hist(efc$e17age, main = get_label(efc$e17age))
 #'
 #' # bar plot with EUROFAMCARE sample dataset
 #' # grouped variable
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
 #' barplot(table(ageGrp),
-#'         main = get_var_labels(efc$e17age),
+#'         main = get_label(efc$e17age),
 #'         names.arg = ageGrpLab)
 #'
 #' @export
@@ -286,7 +286,7 @@ group_labels <- function(var,
                          rightInterval = FALSE,
                          autoGroupCount = 30) {
   # do we have labels?
-  varlab <- get_var_labels(var)
+  varlab <- get_label(var)
   # group variable
   var <- group_helper(var, groupsize, rightInterval, autoGroupCount)
   # Gruppen holen
@@ -317,7 +317,7 @@ group_labels <- function(var,
     retval[i] <- c(paste(lower, "-", upper, sep = ""))
   }
   # set back variable labels
-  if (!is.null(varlab)) retval <- set_var_labels(retval, varlab)
+  if (!is.null(varlab)) retval <- set_label(retval, varlab)
   return(retval)
 }
 
@@ -430,8 +430,8 @@ word_wrap <- function(labels, wrap, linesep = NULL) {
 #'           value; or a data frame or list of variables where variables have
 #'           been recoded as described.
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
-#'         or \code{\link{set_val_labels}}) are retained.
+#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+#'         or \code{\link{set_labels}}) are retained.
 #'
 #' @examples
 #' # recode 1-4 to 0-3
@@ -480,9 +480,9 @@ recode_to <- function(x, lowest = 0, highest = -1) {
 
 rec_to_helper <- function(var, lowest, highest) {
   # retrieve value labels
-  val_lab <- get_val_labels(var)
+  val_lab <- get_labels(var)
   # retrieve variable label
-  var_lab <- get_var_labels(var)
+  var_lab <- get_label(var)
   # check if factor
   if (is.factor(var)) {
     # try to convert to numeric
@@ -498,8 +498,8 @@ rec_to_helper <- function(var, lowest, highest) {
   # set NA to all values out of range
   if (highest > lowest) var[var > highest] <- NA
   # set back labels, if we have any
-  if (!is.null(val_lab)) var <- suppressWarnings(set_val_labels(var, val_lab))
-  if (!is.null(var_lab)) var <- suppressWarnings(set_var_labels(var, var_lab))
+  if (!is.null(val_lab)) var <- suppressWarnings(set_labels(var, val_lab))
+  if (!is.null(var_lab)) var <- suppressWarnings(set_label(var, var_lab))
   # return recoded var
   return(var)
 }
@@ -523,10 +523,10 @@ rec_to_helper <- function(var, lowest, highest) {
 #' @param asFac logical, if \code{TRUE}, recoded variable is returned as factor.
 #'          Default is \code{FALSE}, thus a numeric variable is returned.
 #' @param varLabel optional string, to set variable label attribute for the
-#'          recoded variable (see \code{\link{set_var_labels}}). If \code{NULL}
+#'          recoded variable (see \code{\link{set_label}}). If \code{NULL}
 #'          (default), variable label attribute of \code{x} will be used (if present).
 #' @param valLabels optional character vector, to set value label attributes
-#'          of recoded variable (see \code{\link{set_val_labels}}).
+#'          of recoded variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
 #' @return A numeric variable (or a factor, if \code{asFac = TRUE}) with
 #'           recoded category values, or a data frame or \code{list}-object
@@ -548,7 +548,7 @@ rec_to_helper <- function(var, lowest, highest) {
 #'       \itemize{
 #'         \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
 #'         \item Non-matching values will be set to \code{\link{NA}}.
-#'         \item Variable label attributes (see, for instance, \code{\link{get_var_labels}}) are retained (unless changes via \code{varLabel}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{valLabels}-parameter to add labels for recoded values.
+#'         \item Variable label attributes (see, for instance, \code{\link{get_label}}) are retained (unless changes via \code{varLabel}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{valLabels}-parameter to add labels for recoded values.
 #'         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
 #'       }
 #'
@@ -617,7 +617,7 @@ rec <- function(x,
 rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
   # retrieve variable label
   if (is.null(varLabel))
-    var_lab <- get_var_labels(x)
+    var_lab <- get_label(x)
   else
     var_lab <- varLabel
   # do we have any value labels?
@@ -651,7 +651,7 @@ rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
     # create recodes-string
     recodes <- paste(sprintf("%i=%i", ov, nv), collapse = ";")
     # when we simply reverse values, we can keep value labels
-    val_lab <- rev(get_val_labels(x))
+    val_lab <- rev(get_labels(x))
   }
   # -------------------------------
   # prepare and clean recode string
@@ -793,8 +793,8 @@ rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
   # replace remaining -Inf with NA
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
   # set back variable and value labels
-  new_var <- suppressWarnings(set_var_labels(new_var, var_lab))
-  new_var <- suppressWarnings(set_val_labels(new_var, val_lab))
+  new_var <- suppressWarnings(set_label(new_var, var_lab))
+  new_var <- suppressWarnings(set_labels(new_var, val_lab))
   # return result as factor?
   if (asFac) new_var <- to_fac(new_var)
   return(new_var)
@@ -819,8 +819,8 @@ rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
 #'
 #' @return \code{x}, where each value of \code{values} is replaced by an \code{NA}.
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
-#'         or \code{\link{set_val_labels}}) are retained.
+#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+#'         or \code{\link{set_labels}}) are retained.
 #'
 #' @examples
 #' # create random variable
@@ -941,8 +941,8 @@ set_na_helper <- function(var, values) {
 #'
 #' @return \code{x}, where \code{NA}'s are replaced with \code{value}.
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
-#'         or \code{\link{set_val_labels}}) are retained.
+#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+#'         or \code{\link{set_labels}}) are retained.
 #'
 #' @examples
 #' data(efc)

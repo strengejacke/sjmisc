@@ -14,8 +14,8 @@ STATA (which are imported as \code{\link{atomic}}) will be converted
 to \code{\link{factor}}s.}
 }
 \value{
-A data frame containing the STATA data. Retrieve value labels with \code{\link{get_val_labels}}
-  and variable labels with \code{\link{get_var_labels}}.
+A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}
+  and variable labels with \code{\link{get_label}}.
 }
 \description{
 Imports data from STATA dta-files, including NA's,

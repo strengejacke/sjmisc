@@ -29,8 +29,8 @@ use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_
 to make this function always use the foreign-package \code{\link[foreign]{read.spss}} function.}
 }
 \value{
-A data frame containing the SPSS data. Retrieve value labels with \code{\link{get_val_labels}}
-  and variable labels with \code{\link{get_var_labels}}.
+A data frame containing the SPSS data. Retrieve value labels with \code{\link{get_labels}}
+  and variable labels with \code{\link{get_label}}.
 }
 \description{
 Import data from SPSS, including NA's, value and variable labels.
@@ -49,10 +49,10 @@ This is a wrapper function for \code{\link[haven]{read_spss}} of the
         for more details.
         \cr \cr
         When working with labelled data, you can, e.g., use
-        \code{\link{get_var_labels}} or \code{\link{get_val_labels}}
+        \code{\link{get_label}} or \code{\link{get_labels}}
         to get a vector of value and variable labels, which can then be
         used with other functions like \code{\link{barplot}} etc.
-        See 'Examples' from \code{\link{get_val_labels}}.
+        See 'Examples' from \code{\link{get_labels}}.
 }
 \examples{
 \dontrun{
@@ -69,10 +69,10 @@ mydat <- read_spss("my_spss_data.sav",
 mydat <- read_spss("my_spss_data.sav", atomic.to.fac = TRUE)
 
 # retrieve variable labels
-mydat.var <- get_var_labels(mydat)
+mydat.var <- get_label(mydat)
 
 # retrieve value labels
-mydat.val <- get_val_labels(mydat)}
+mydat.val <- get_labels(mydat)}
 }
 \seealso{
 \itemize{

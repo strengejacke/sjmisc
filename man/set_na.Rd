@@ -22,8 +22,8 @@ This function sets specific values of a variable, data frame
                or list of variables as missings (\code{NA}).
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_val_labels}}
-        or \code{\link{set_val_labels}}) are retained.
+Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+        or \code{\link{set_labels}}) are retained.
 }
 \examples{
 # create random variable

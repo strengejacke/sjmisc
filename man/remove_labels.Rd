@@ -17,7 +17,7 @@ This function removes value and variable label attributes
                from a vector or data frame. These attributes are typically
                added to variables when importing foreign data (see
                \code{\link{read_spss}}) or manually adding label attributes
-               with \code{\link{set_val_labels}}.
+               with \code{\link{set_labels}}.
 }
 \examples{
 data(efc)
