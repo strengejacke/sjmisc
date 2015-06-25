@@ -19,6 +19,6 @@ Description: Collection of several utility functions (especially intended for
              or to calculate various commonly used statistical coefficients.
 License: GPL-3
 Imports: MASS
-Suggests: coin, foreign, haven, lme4, nlme, stringdist
+Suggests: coin, foreign, haven, lme4, nlme, stringdist (>= 0.9.1)
 URL: https://github.com/sjPlot/sjmisc
 BugReports: https://github.com/sjPlot/sjmisc/issues

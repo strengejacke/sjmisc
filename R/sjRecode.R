@@ -1085,14 +1085,25 @@ weight <- function(var, weights) {
 #' @param showProgressBar If \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 #'          Default in \code{FALSE}, hence the bar is hidden.
 #'
-#' @return A character vector where similar string elements (values) are recoded into a new, single value.
+#' @return A character vector where similar string elements (values) are recoded
+#'           into a new, single value. The return value is of same length as
+#'           \code{strings}, i.e. grouped elements appear multiple times, so
+#'           the count for each grouped string is still avaiable (see 'Examples').
 #'
 #' @examples
-#' \dontrun{
-#' library(sjPlot)
 #' oldstring <- c("Hello", "Helo", "Hole", "Apple",
 #'                "Ape", "New", "Old", "System", "Systemic")
 #' newstring <- group_str(oldstring)
+#'
+#' # see result
+#' newstring
+#'
+#' # count for each groups
+#' table(newstring)
+#'
+#' \dontrun{
+#' library(sjPlot)
+#' # print table to compare original and grouped string
 #' sjt.frq(data.frame(oldstring, newstring),
 #'         removeStringVectors = FALSE,
 #'         autoGroupStrings = FALSE)
@@ -1146,9 +1157,10 @@ group_str <- function(strings,
   # -------------------------------------
   # create matrix from string values of variable
   # -------------------------------------
-  m <- stringdist::stringdistmatrix(strings, strings, method = method)
-  colnames(m) <- strings
-  rownames(m) <- strings
+  m <- stringdist::stringdistmatrix(strings,
+                                    strings,
+                                    method = method,
+                                    useNames = strings)
   # -------------------------------------
   # init variable that contains "close" pairs
   # -------------------------------------

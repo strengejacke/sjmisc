@@ -28,7 +28,10 @@ character vector \code{strings}.}
          Default in \code{FALSE}, hence the bar is hidden.}
 }
 \value{
-A character vector where similar string elements (values) are recoded into a new, single value.
+A character vector where similar string elements (values) are recoded
+          into a new, single value. The return value is of same length as
+          \code{strings}, i.e. grouped elements appear multiple times, so
+          the count for each grouped string is still avaiable (see 'Examples').
 }
 \description{
 This function groups elements of a string vector (character or string
@@ -37,11 +40,19 @@ This function groups elements of a string vector (character or string
                chance to be combined into a group.
 }
 \examples{
-\dontrun{
-library(sjPlot)
 oldstring <- c("Hello", "Helo", "Hole", "Apple",
                "Ape", "New", "Old", "System", "Systemic")
 newstring <- group_str(oldstring)
+
+# see result
+newstring
+
+# count for each groups
+table(newstring)
+
+\dontrun{
+library(sjPlot)
+# print table to compare original and grouped string
 sjt.frq(data.frame(oldstring, newstring),
         removeStringVectors = FALSE,
         autoGroupStrings = FALSE)
