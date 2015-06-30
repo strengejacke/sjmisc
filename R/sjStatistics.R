@@ -121,6 +121,7 @@ std_beta <- function(fit, include.ci = FALSE) {
 }
 
 
+#' @importFrom stats sd coef
 sjs.stdmm <- function(fit) {
   # code from Ben Bolker, see
   # http://stackoverflow.com/a/26206119/2094622
@@ -130,10 +131,10 @@ sjs.stdmm <- function(fit) {
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
   }
-  sdy <- sd(lme4::getME(fit, "y"))
+  sdy <- stats::sd(lme4::getME(fit, "y"))
   sdx <- apply(lme4::getME(fit, "X"), 2, sd)
   sc <- lme4::fixef(fit) * sdx / sdy
-  se.fixef <- coef(summary(fit))[, "Std. Error"]
+  se.fixef <- stats::coef(summary(fit))[, "Std. Error"]
   se <- se.fixef * sdx / sdy
   mydf <- data.frame(stdcoef = sc, stdse = se)
   rownames(mydf) <- names(lme4::fixef(fit))
@@ -178,6 +179,7 @@ sjs.stdmm <- function(fit) {
 #' # Mann-Whitney-U-Tests for elder's age by elder's dependency.
 #' mwu(efc$e17age, efc$e42dep)
 #'
+#' @importFrom stats na.omit
 #' @export
 mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
   # ------------------------
@@ -191,7 +193,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
   # group "counter" (index) should start with 1, not 0
   if (min(grp, na.rm = TRUE) == 0) grp <- grp + 1
   # retrieve unique group values. need to iterate all values
-  grp_values <- sort(unique(na.omit(grp)))
+  grp_values <- sort(unique(stats::na.omit(grp)))
   # length of value range
   cnt <- length(grp_values)
   labels <- autoSetValueLabels(grp)
@@ -209,11 +211,11 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
         ysub <- ysub[which(!is.na(xsub))]
         # adjust weights, pick rows from subgroups (see above)
         if (!is.null(weights)) {
-          wsub <- as.integer(na.omit(weights[which(!is.na(xsub))]))
+          wsub <- as.integer(stats::na.omit(weights[which(!is.na(xsub))]))
         }
         # remove missings
-        xsub <- as.numeric(na.omit(xsub))
-        ysub.n <- na.omit(ysub)
+        xsub <- as.numeric(stats::na.omit(xsub))
+        ysub.n <- stats::na.omit(ysub)
         # grouping variable is a factor
         ysub <- as.factor(ysub.n)
         if (is.null(weights)) {
@@ -379,7 +381,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
     # because data may contain more variables
     # than needed, and due to missing may have
     # different row length
-    dat <- na.omit(x$model)
+    dat <- stats::na.omit(x$model)
     dat$cJ <- cJ
     dat$vJ <- vJ
     RSS <- sum(resid(lm(form, data = dat, weights = vJ)) ^ 2)
@@ -597,7 +599,7 @@ cod <- function(x) {
 #'
 #' @export
 cronb <- function(df) {
-  df <- na.omit(df)
+  df <- stats::na.omit(df)
   if (is.null(ncol(df)) || ncol(df) < 2) {
     warning("Too less columns in this factor to calculate alpha value!", call. = F)
     return(NULL)
@@ -678,7 +680,7 @@ reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
   # -----------------------------------
   # remove missings, so correlation works
   # -----------------------------------
-  x <- na.omit(x)
+  x <- stats::na.omit(x)
   # -----------------------------------
   # check param
   # -----------------------------------
@@ -792,7 +794,7 @@ mic <- function(data, corMethod = "pearson") {
   if (class(data) == "matrix") {
     corr <- data
   } else {
-    data <- na.omit(data)
+    data <- stats::na.omit(data)
     corr <- cor(data, method = corMethod)
   }
   # -----------------------------------
@@ -944,7 +946,7 @@ std_e <- function(x) {
   }
 }
 
-std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
+std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(stats::na.omit(x)))
 
 
 
@@ -985,6 +987,7 @@ std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(na.omit(x)))
 #' fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
 #' cv(fit)
 #'
+#' @importFrom stats sd
 #' @export
 cv <- function(x) {
   # check if we have a fitted linear model
@@ -1022,7 +1025,7 @@ cv <- function(x) {
     # check if mean is zero?
     if (mw != 0) {
       #  we assume a simple vector
-      sd(x, na.rm = TRUE) / mw
+      stats::sd(x, na.rm = TRUE) / mw
     } else {
       warning("Mean of 'x' is zero. Cannot compute coefficient of variation.", call. = F)
     }
@@ -1126,7 +1129,7 @@ levene_test <- function(depVar, grpVar) {
   # check if grpVar is factor
   if (!is.factor(grpVar)) grpVar <- factor(grpVar)
   # remove missings
-  df <- na.omit(data.frame(depVar, grpVar))
+  df <- stats::na.omit(data.frame(depVar, grpVar))
   # calculate means
   means <- tapply(df$depVar, df$grpVar, mean)
   depVarNew <- abs(df$depVar - means[df$grpVar])

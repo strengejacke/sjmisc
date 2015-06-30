@@ -742,7 +742,7 @@ sji.setValueLabelNameParam <- function(x, labels, force.labels = FALSE) {
   }
 }
 
-
+#' @importFrom stats na.omit
 sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels = FALSE) {
   # auto-detect variable label attribute
   attr.string <- getValLabelAttribute(var)
@@ -811,7 +811,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels 
       # 1 to 4 as valid values, i.e. -1 and 0 are missing
       } else if (valrange > lablen) {
         # value range is not continuous. get all unique values
-        values <- sort(unique(na.omit((var))))
+        values <- sort(unique(stats::na.omit((var))))
         # get amount of unique values
         valrange <- length(values)
         # still no match?

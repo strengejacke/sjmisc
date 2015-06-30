@@ -43,8 +43,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 ### Changelog of current development build 1.0.3-1
 
-#### Changes to functions
-* `set_val_labels` is now deprecated and was renamed into `set_labels`.
-* `set_var_labels` is now deprecated and was renamed into `set_label`.
-* `get_val_labels` is now deprecated and was renamed into `get_labels`.
-* `get_var_labels` is now deprecated and was renamed into `get_label`.
+#### General
+* `set_val_labels` gets alias name `set_labels`.
+* `set_var_labels` gets alias name `set_label`.
+* `get_val_labels` gets alias name `get_labels`.
+* `get_var_labels` gets alias name `get_label`.

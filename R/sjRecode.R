@@ -86,6 +86,7 @@ dicho <- function(x,
 }
 
 
+#' @importFrom stats median
 dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
   # do we have labels?
   if (is.null(varLabel))
@@ -107,7 +108,7 @@ dicho_helper <- function(var, dichBy, dichVal, asNum, varLabel, valLabels) {
   }
   # split at median
   if (dichBy == "median") {
-    var <- ifelse(var <= median(var, na.rm = T), 0, 1)
+    var <- ifelse(var <= stats::median(var, na.rm = T), 0, 1)
     # split at mean
   } else if (dichBy == "mean") {
     var <- ifelse(var <= mean(var, na.rm = T), 0, 1)
@@ -614,6 +615,7 @@ rec <- function(x,
 }
 
 
+#' @importFrom stats na.omit
 rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
   # retrieve variable label
   if (is.null(varLabel))
@@ -645,7 +647,7 @@ rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
   # -------------------------------
   if (recodes == "rev") {
     # retrieve unique valus, sorted
-    ov <- sort(unique(na.omit(x)))
+    ov <- sort(unique(stats::na.omit(x)))
     # new values should be reversed order
     nv <- rev(ov)
     # create recodes-string
@@ -868,7 +870,7 @@ set_na <- function(x, values) {
   }
 }
 
-
+#' @importFrom stats na.omit
 set_na_helper <- function(var, values) {
   # ----------------------------
   # auto-detect variable label attribute
@@ -883,7 +885,7 @@ set_na_helper <- function(var, values) {
   } else {
     # if var has no label attributes, use values
     # as labels
-    vl <- as.character(sort(unique(na.omit(var))))
+    vl <- as.character(sort(unique(stats::na.omit(var))))
     ln <- vl
   }
   # iterate all values that should be
