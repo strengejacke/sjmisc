@@ -133,15 +133,16 @@ read_spss <- function(path,
 
 # converts atomic numeric vectors into factors with
 # numerical factor levels
+#' @importFrom utils txtProgressBar setTxtProgressBar
 atomic_to_fac <- function(data.spss, attr.string) {
   # check for valid attr.string
   if (!is.null(attr.string)) {
     # -------------------------------------
     # create progress bar
     # -------------------------------------
-    pb <- txtProgressBar(min = 0,
-                         max = ncol(data.spss),
-                         style = 3)
+    pb <- utils::txtProgressBar(min = 0,
+                                max = ncol(data.spss),
+                                style = 3)
     # tell user...
     message("Converting atomic to factors. Please wait...\n")
     # iterate all columns
@@ -164,7 +165,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
         data.spss[[i]] <- x
       }
       # update progress bar
-      setTxtProgressBar(pb, i)
+      utils::setTxtProgressBar(pb, i)
     }
     close(pb)
   }
@@ -297,6 +298,7 @@ write_stata <- function(x, path) {
 }
 
 
+#' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type = "spss") {
   # ------------------------
   # check if suggested package is available
@@ -307,9 +309,9 @@ write_data <- function(x, path, type = "spss") {
   # -------------------------------------
   # create progress bar
   # -------------------------------------
-  pb <- txtProgressBar(min = 0,
-                       max = ncol(x),
-                       style = 3)
+  pb <- utils::txtProgressBar(min = 0,
+                              max = ncol(x),
+                              style = 3)
   # tell user...
   message(sprintf("Prepare writing %s file. Please wait...\n", type))
   # check if variables should be converted to factors
@@ -324,7 +326,7 @@ write_data <- function(x, path, type = "spss") {
       x[[i]] <- set_label(x[[i]], var.lab, "label")
     }
     # update progress bar
-    setTxtProgressBar(pb, i)
+    utils::setTxtProgressBar(pb, i)
   }
   # hide pb
   close(pb)
@@ -379,6 +381,7 @@ is_labelled <- function(x) {
 #'         like \code{data.frame[, colnr]} - only \code{data.frame[[colnr]]} seems
 #'         to be safe when accessing data frame columns from within function calls.
 #'
+#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 to_sjPlot <- function(x) {
   # -------------------------------------
@@ -389,16 +392,16 @@ to_sjPlot <- function(x) {
     # -------------------------------------
     # create progress bar
     # -------------------------------------
-    pb <- txtProgressBar(min = 0,
-                         max = ncol(x),
-                         style = 3)
+    pb <- utils::txtProgressBar(min = 0,
+                                max = ncol(x),
+                                style = 3)
     # tell user...
     message("Converting from haven to sjPlot. Please wait...\n")
     for (i in 1:ncol(x)) {
       # remove labelled class
       if (is_labelled(x[[i]])) x[[i]] <- unclass(x[[i]])
       # update progress bar
-      setTxtProgressBar(pb, i)
+      utils::setTxtProgressBar(pb, i)
     }
     close(pb)
     # remove redundant class attributes
@@ -432,13 +435,18 @@ to_sjPlot <- function(x) {
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with attached value labels; or a \code{list} of variables
-#'          with attached values labels. See 'Examples'.
+#'          with attached values labels. If \code{x} has no label \code{\link{attributes}},
+#'          factor \code{\link{levels}} are returned. See 'Examples'.
 #' @param include.values string, indicating whether the values associated with the
 #'          value labels are returned as well. If \code{include.values = "as.name"}
 #'          (or \code{include.values = "n"}), values are set as \code{\link{names}}
 #'          attribute of the returned object. If \code{include.values = "as.prefix"}
 #'          (or \code{include.values = "p"}), values are includes as prefix
 #'          to each label. See 'Examples'.
+#' @param attr.only logical, if \code{TRUE}, labels are only searched for
+#'          in the the vector's \code{\link{attributes}}; else, if \code{x} has no
+#'          label attributes, factor levels or string values are returned. See
+#'          'Examples'.
 #' @return Either a list with all value labels from all variables if \code{x}
 #'           is a \code{data.frame} or \code{list}; a string with the value
 #'           labels, if \code{x} is a variable;
@@ -487,7 +495,7 @@ to_sjPlot <- function(x) {
 #'
 #' @examples
 #' # import SPSS data set
-#' # mydat <- read_spss("my_spss_data.sav", enc="UTF-8")
+#' # mydat <- read_spss("my_spss_data.sav")
 #'
 #' # retrieve variable labels
 #' # mydat.var <- get_label(mydat)
@@ -506,23 +514,39 @@ to_sjPlot <- function(x) {
 #'         main = get_label(efc$e42dep))
 #'
 #' # include associated values
-#' get_labels(efc$e42dep, "as.name")
+#' get_labels(efc$e42dep, include.values = "as.name")
 #'
 #' # include associated values
-#' get_labels(efc$e42dep, "as.prefix")
+#' get_labels(efc$e42dep, include.values = "as.prefix")
 #'
 #' # get labels from multiple variables
 #' get_labels(list(efc$e42dep,
-#'                     efc$e16sex,
-#'                     efc$e15relat))
+#'                 efc$e16sex,
+#'                 efc$e15relat))
+#'
+#'
+#' # create a dummy factor
+#' f1 <- factor(c("hi", "low", "mid"))
+#' # search for label attributes only
+#' get_labels(f1, attr.only = TRUE)
+#' # search for factor levels as well
+#' get_labels(f1)
+#'
+#' # same for character vectors
+#' c1 <- c("higher", "lower", "mid")
+#' # search for label attributes only
+#' get_labels(c1, attr.only = TRUE)
+#' # search for string values as well
+#' get_labels(c1)
+#'
 #'
 #' @export
-get_val_labels <- function(x, include.values = NULL) {
+get_val_labels <- function(x, attr.only = FALSE, include.values = NULL) {
   # .Deprecated("get_labels")
   if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
-    a <- lapply(x, FUN = sji.getValueLabel, include.values)
+    a <- lapply(x, FUN = sji.getValueLabel, attr.only, include.values)
   } else {
-    a <- sji.getValueLabel(x, include.values)
+    a <- sji.getValueLabel(x, attr.only, include.values)
   }
   return(a)
 }
@@ -531,39 +555,54 @@ get_val_labels <- function(x, include.values = NULL) {
 #' @name get_labels
 #' @rdname get_val_labels
 #' @export
-get_labels <- function(x, include.values = NULL) {
-  return(get_val_labels(x, include.values))
+get_labels <- function(x, attr.only = FALSE, include.values = NULL) {
+  return(get_val_labels(x, attr.only, include.values))
 }
 
 
-sji.getValueLabel <- function(x, include.values = NULL) {
+sji.getValueLabel <- function(x, attr.only = TRUE, include.values = NULL) {
   labels <- NULL
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
-  # nothing found? then leave...
-  if (is.null(attr.string)) return(NULL)
-  # retrieve named labels
-  lab <- attr(x, attr.string, exact = T)
-  # check if we have anything
-  if (!is.null(lab)) {
-    # retrieve values associated with labels
-    values <- as.numeric(unname(attr(x, attr.string, exact = T)))
-    # retrieve order of value labels
-    reihenfolge <- order(values)
-    # retrieve label values in correct order
-    labels <- names(lab)[reihenfolge]
-    # include associated values?
-    if (!is.null(include.values)) {
-      # for backwards compatibility, we also accept "TRUE"
-      # here we set values as names-attribute
-      if ((is.logical(include.values) && include.values == TRUE) ||
-          include.values == "as.name" ||
-          include.values == "n") {
-        names(labels) <- values[reihenfolge]
+  # nothing found? then check for factor levels
+  if (is.null(attr.string)) {
+    # does user want to look everywhere?
+    if (!attr.only) {
+      # get levels of vector
+      lv <- levels(x)
+      # do we have any levels?
+      if (!is.null(lv)) {
+        labels <- lv
+      } else if (is.character(x)) {
+        # finally, if we even don't have values, check for
+        # character elements
+        labels <- unique(x)
       }
-      # here we include values as prefix of labels
-      if (include.values == "as.prefix" || include.values == "p") {
-        labels <- sprintf("[%i] %s", values[reihenfolge], labels)
+    }
+  } else {
+    # retrieve named labels
+    lab <- attr(x, attr.string, exact = T)
+    # check if we have anything
+    if (!is.null(lab)) {
+      # retrieve values associated with labels
+      values <- as.numeric(unname(attr(x, attr.string, exact = T)))
+      # retrieve order of value labels
+      reihenfolge <- order(values)
+      # retrieve label values in correct order
+      labels <- names(lab)[reihenfolge]
+      # include associated values?
+      if (!is.null(include.values)) {
+        # for backwards compatibility, we also accept "TRUE"
+        # here we set values as names-attribute
+        if ((is.logical(include.values) && include.values == TRUE) ||
+            include.values == "as.name" ||
+            include.values == "n") {
+          names(labels) <- values[reihenfolge]
+        }
+        # here we include values as prefix of labels
+        if (include.values == "as.prefix" || include.values == "p") {
+          labels <- sprintf("[%i] %s", values[reihenfolge], labels)
+        }
       }
     }
   }
@@ -1098,6 +1137,7 @@ get_label <- function(x) {
 #' # see result...
 #' get_label(dummies)
 #'
+#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 set_var_labels <- function(x, lab, attr.string = NULL) {
   # .Deprecated("set_label")
@@ -1125,9 +1165,9 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
         # -------------------------------------
         # create progress bar
         # -------------------------------------
-        pb <- txtProgressBar(min = 0,
-                             max = nvars,
-                             style = 3)
+        pb <- utils::txtProgressBar(min = 0,
+                                    max = nvars,
+                                    style = 3)
         for (i in 1:nvars) {
           if (nchar(lab[i]) == 0) {
             attr(x[[i]], attr.string) <- NULL
@@ -1138,7 +1178,7 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
             if (is.data.frame(x)) names(attr(x[[i]], attr.string)) <- colnames(x)[i]
           }
           # update progress bar
-          setTxtProgressBar(pb, i)
+          utils::setTxtProgressBar(pb, i)
         }
         close(pb)
       }
@@ -1183,6 +1223,9 @@ set_label <- function(x, lab, attr.string = NULL) {
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+#'         \cr \cr
+#'         Factors with non-numeric factor-levels won't be changed and returned "as is"
+#'         (see 'Examples').
 #'
 #' @examples
 #' data(efc)
@@ -1203,6 +1246,11 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' str(efc$e17age)
 #' str(to_label(efc$e17age))
 #'
+#' \dontrun{
+#' # factor with non-numeric levels won't be changed, either
+#' # however, a warning is produced
+#' to_label(factor(c("a", "b", "c")))}
+#'
 #' @export
 to_label <- function(x) {
   if (is.matrix(x) || is.data.frame(x)) {
@@ -1222,7 +1270,7 @@ to_label_helper <- function(x) {
     return(x)
   }
   # get value labels
-  vl <- get_labels(x)
+  vl <- get_labels(x, attr.only = TRUE, include.values = NULL)
   # check if we have any labels, else
   # return variable "as is"
   if (!is.null(vl)) {
@@ -1343,7 +1391,7 @@ to_fac <- function(x) {
 
 to_fac_helper <- function(x) {
   # retrieve value labels
-  lab <- get_labels(x)
+  lab <- get_labels(x, attr.only = TRUE, include.values = NULL)
   # retrieve variable labels
   varlab <- get_label(x)
   # convert variable to factor
@@ -1513,7 +1561,9 @@ add_labels <- function(df_new, df_origin = NULL) {
       # labels from variables that appear in the new (subsetted) data frame
       df_new <- set_label(df_new, get_label(df_origin[, cn]))
       # same for value labels
-      df_new <- set_labels(df_new, get_labels(df_origin[, cn]))
+      df_new <- set_labels(df_new, get_labels(df_origin[, cn],
+                                              attr.only = TRUE,
+                                              include.values = NULL))
     } else {
       warning("Both 'df_origin' and 'df_new' must be of class 'data.frame'.", call. = F)
     }

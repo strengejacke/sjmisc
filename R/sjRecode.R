@@ -479,30 +479,30 @@ recode_to <- function(x, lowest = 0, highest = -1) {
 }
 
 
-rec_to_helper <- function(var, lowest, highest) {
+rec_to_helper <- function(x, lowest, highest) {
   # retrieve value labels
-  val_lab <- get_labels(var)
+  val_lab <- get_labels(x, attr.only = TRUE, include.values = NULL)
   # retrieve variable label
-  var_lab <- get_label(var)
+  var_lab <- get_label(x)
   # check if factor
-  if (is.factor(var)) {
+  if (is.factor(x)) {
     # try to convert to numeric
-    var <- as.numeric(as.character(var))
+    x <- as.numeric(as.character(x))
   }
   # retrieve lowest category
-  minval <- min(var, na.rm = TRUE)
+  minval <- min(x, na.rm = TRUE)
   # check substraction difference between current lowest value
   # and requested lowest value
   downsize <- minval - lowest
-  var <- sapply(var, function(x) x - downsize)
+  x <- sapply(x, function(y) y - downsize)
   # check for highest range
   # set NA to all values out of range
-  if (highest > lowest) var[var > highest] <- NA
+  if (highest > lowest) x[x > highest] <- NA
   # set back labels, if we have any
-  if (!is.null(val_lab)) var <- suppressWarnings(set_labels(var, val_lab))
-  if (!is.null(var_lab)) var <- suppressWarnings(set_label(var, var_lab))
-  # return recoded var
-  return(var)
+  if (!is.null(val_lab)) x <- suppressWarnings(set_labels(x, val_lab))
+  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, var_lab))
+  # return recoded x
+  return(x)
 }
 
 
@@ -653,7 +653,7 @@ rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
     # create recodes-string
     recodes <- paste(sprintf("%i=%i", ov, nv), collapse = ";")
     # when we simply reverse values, we can keep value labels
-    val_lab <- rev(get_labels(x))
+    val_lab <- rev(get_labels(x, attr.only = TRUE, include.values = NULL))
   }
   # -------------------------------
   # prepare and clean recode string
@@ -1043,14 +1043,15 @@ weight2 <- function(var, weights) {
 #' w <- abs(rnorm(20))
 #' table(weight(v, w))
 #'
+#' @importFrom stats na.pass xtabs
 #' @export
 weight <- function(var, weights) {
   # init values
   weightedvar <- c()
-  wtab <- round(xtabs(weights ~ var,
-                      data = data.frame(weights = weights, var = var),
-                      na.action = na.pass,
-                      exclude = NULL))
+  wtab <- round(stats::xtabs(weights ~ var,
+                             data = data.frame(weights = weights, var = var),
+                             na.action = stats::na.pass,
+                             exclude = NULL))
   # iterate all table values
   for (w in 1:length(wtab)) {
     # retrieve count of each table cell
@@ -1122,6 +1123,7 @@ weight <- function(var, weights) {
 #'         removeStringVectors = FALSE,
 #'         autoGroupStrings = FALSE)}
 #'
+#' @importFrom utils txtProgressBar
 #' @export
 group_str <- function(strings,
                       maxdist = 2,
@@ -1162,7 +1164,7 @@ group_str <- function(strings,
   m <- stringdist::stringdistmatrix(strings,
                                     strings,
                                     method = method,
-                                    useNames = strings)
+                                    useNames = "strings")
   # -------------------------------------
   # init variable that contains "close" pairs
   # -------------------------------------
@@ -1184,15 +1186,15 @@ group_str <- function(strings,
   # -------------------------------------
   # create progress bar
   # -------------------------------------
-  if (showProgressBar) pb <- txtProgressBar(min = 0,
-                                            max = ncol(m),
-                                            style = 3)
+  if (showProgressBar) pb <- utils::txtProgressBar(min = 0,
+                                                   max = ncol(m),
+                                                   style = 3)
   # -------------------------------------
   # iterate matrix
   # -------------------------------------
   for (i in 1:nrow(m)) {
     # update progress bar
-    if (showProgressBar) setTxtProgressBar(pb, i)
+    if (showProgressBar) utils::setTxtProgressBar(pb, i)
     # -------------------------------------
     # check if current element is already grouped
     # -------------------------------------
@@ -1369,6 +1371,7 @@ trim <- function(x) gsub("^\\s+|\\s+$", "", x)
 #' # finds partial matching of similarity
 #' str_pos("We are Sex Pistols!", "postils", part.dist.match = 1)}
 #'
+#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 str_pos <- function(searchString,
                     findTerm,
@@ -1405,9 +1408,9 @@ str_pos <- function(searchString,
     # -------------------------------------
     # create progress bar
     # -------------------------------------
-    if (showProgressBar) pb <- txtProgressBar(min = 0,
-                                              max = length(searchString),
-                                              style = 3)
+    if (showProgressBar) pb <- utils::txtProgressBar(min = 0,
+                                                     max = length(searchString),
+                                                     style = 3)
     # -------------------------------------
     # iterate search string vector
     # -------------------------------------
@@ -1457,7 +1460,7 @@ str_pos <- function(searchString,
         }
       }
       # update progress bar
-      if (showProgressBar) setTxtProgressBar(pb, ssl)
+      if (showProgressBar) utils::setTxtProgressBar(pb, ssl)
     }
   }
   if (showProgressBar) close(pb)

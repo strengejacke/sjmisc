@@ -5,16 +5,22 @@
 \alias{get_val_labels}
 \title{Retrieve value labels of a data frame or variable}
 \usage{
-get_val_labels(x, include.values = NULL)
+get_val_labels(x, attr.only = FALSE, include.values = NULL)
 
-get_labels(x, include.values = NULL)
+get_labels(x, attr.only = FALSE, include.values = NULL)
 }
 \arguments{
 \item{x}{a \code{data.frame} with variables that have attached value labels (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 (vector) with attached value labels; or a \code{list} of variables
-with attached values labels. See 'Examples'.}
+with attached values labels. If \code{x} has no label \code{\link{attributes}},
+factor \code{\link{levels}} are returned. See 'Examples'.}
+
+\item{attr.only}{logical, if \code{TRUE}, labels are only searched for
+in the the vector's \code{\link{attributes}}; else, if \code{x} has no
+label attributes, factor levels or string values are returned. See
+'Examples'.}
 
 \item{include.values}{string, indicating whether the values associated with the
 value labels are returned as well. If \code{include.values = "as.name"}
@@ -83,7 +89,7 @@ This function only works with vectors that have value and variable
 }
 \examples{
 # import SPSS data set
-# mydat <- read_spss("my_spss_data.sav", enc="UTF-8")
+# mydat <- read_spss("my_spss_data.sav")
 
 # retrieve variable labels
 # mydat.var <- get_label(mydat)
@@ -102,15 +108,30 @@ barplot(table(efc$e42dep),
         main = get_label(efc$e42dep))
 
 # include associated values
-get_labels(efc$e42dep, "as.name")
+get_labels(efc$e42dep, include.values = "as.name")
 
 # include associated values
-get_labels(efc$e42dep, "as.prefix")
+get_labels(efc$e42dep, include.values = "as.prefix")
 
 # get labels from multiple variables
 get_labels(list(efc$e42dep,
-                    efc$e16sex,
-                    efc$e15relat))
+                efc$e16sex,
+                efc$e15relat))
+
+
+# create a dummy factor
+f1 <- factor(c("hi", "low", "mid"))
+# search for label attributes only
+get_labels(f1, attr.only = TRUE)
+# search for factor levels as well
+get_labels(f1)
+
+# same for character vectors
+c1 <- c("higher", "lower", "mid")
+# search for label attributes only
+get_labels(c1, attr.only = TRUE)
+# search for string values as well
+get_labels(c1)
 }
 \seealso{
 The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization},

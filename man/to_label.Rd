@@ -26,6 +26,9 @@ This function converts (replaces) variable values (also of factors)
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+        \cr \cr
+        Factors with non-numeric factor-levels won't be changed and returned "as is"
+        (see 'Examples').
 }
 \examples{
 data(efc)
@@ -45,6 +48,11 @@ head(to_label(efc$e42dep))
 # (typically categorical or factor variables)
 str(efc$e17age)
 str(to_label(efc$e17age))
+
+\dontrun{
+# factor with non-numeric levels won't be changed, either
+# however, a warning is produced
+to_label(factor(c("a", "b", "c")))}
 }
 \seealso{
 \code{\link{to_fac}} to convert a numeric variable into a factor (and

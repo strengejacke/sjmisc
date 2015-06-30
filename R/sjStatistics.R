@@ -1,5 +1,5 @@
 # bind global variables
-if (getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c("fit", "var"))
 
 
 #' @title Eta-squared of fitted anova
@@ -36,6 +36,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("fit"))
 #' # grouping variable will be converted to factor autoamtically
 #' eta_sq(efc$c12hour, efc$e42dep)
 #'
+#' @importFrom stats aov summary.lm
 #' @export
 eta_sq <- function(...) {
   # --------------------------------------------------------
@@ -55,10 +56,10 @@ eta_sq <- function(...) {
     # convert to factor
     if (!is.factor(grpVar)) grpVar <- as.factor(grpVar)
     # fit anova
-    fit <- aov(depVar ~ grpVar)
+    fit <- stats::aov(depVar ~ grpVar)
   }
   # return eta squared
-  return(summary.lm(fit)$r.squared)
+  return(stats::summary.lm(fit)$r.squared)
   # return (1 - var(fit$residuals, na.rm = T) / var(fit$model[,1], na.rm = T))
 }
 
@@ -179,7 +180,7 @@ sjs.stdmm <- function(fit) {
 #' # Mann-Whitney-U-Tests for elder's age by elder's dependency.
 #' mwu(efc$e17age, efc$e42dep)
 #'
-#' @importFrom stats na.omit
+#' @importFrom stats na.omit wilcox.test kruskal.test
 #' @export
 mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
   # ------------------------
@@ -230,7 +231,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
         z <- as.numeric(coin::statistic(wt, type = "standardized"))
         p <- coin::pvalue(wt)
         r <- abs(z / sqrt(length(var)))
-        w <- wilcox.test(xsub, ysub.n, paired = TRUE)$statistic
+        w <- stats::wilcox.test(xsub, ysub.n, paired = TRUE)$statistic
         rkm.i <- mean(rank(xsub)[which(ysub.n == grp_values[i])], na.rm = TRUE)
         rkm.j <- mean(rank(xsub)[which(ysub.n == grp_values[j])], na.rm = TRUE)
         # compute n for each group
@@ -280,7 +281,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
   if (cnt > 2) {
     message("Performing Kruskal-Wallis-Test...")
     message("---------------------------------")
-    kw <- kruskal.test(var, grp)
+    kw <- stats::kruskal.test(var, grp)
     cat(sprintf("chi-squared = %.3f\n", kw$statistic))
     cat(sprintf("df = %i\n", kw$parameter))
     if (kw$p.value < 0.001) {
@@ -361,6 +362,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
 #'            family = binomial(link = "logit"))
 #' chisq_gof(fit)
 #'
+#' @importFrom stats na.omit fitted resid formula as.formula lm pnorm chisq.test
 #' @export
 chisq_gof <- function(x, prob = NULL, weights = NULL) {
   if (any(class(x) == "glm")) {
@@ -370,12 +372,12 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
     # function did not work when model data frame
     # had missing values.
     # ------------------------------------
-    y_hat <- fitted(x)
+    y_hat <- stats::fitted(x)
     wt <- x$prior.weight
     vJ <- wt * y_hat * (1 - y_hat)
     cJ <- (1 - 2 * y_hat) / vJ
-    X2 <- sum(resid(x, type = "pearson") ^ 2)
-    form <- as.formula(x$formula)
+    X2 <- sum(stats::resid(x, type = "pearson") ^ 2)
+    form <- stats::as.formula(x$formula)
     form[[2]] <- as.name("cJ")
     # use model matrix instead of data values,
     # because data may contain more variables
@@ -384,10 +386,10 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
     dat <- stats::na.omit(x$model)
     dat$cJ <- cJ
     dat$vJ <- vJ
-    RSS <- sum(resid(lm(form, data = dat, weights = vJ)) ^ 2)
+    RSS <- sum(stats::resid(stats::lm(form, data = dat, weights = vJ)) ^ 2)
     A <- 2 * (length(y_hat) - sum(1 / wt))
     z <- (X2 - x$df.residual) / sqrt(A + RSS)
-    p.value <- 2 * pnorm(abs(z), lower.tail = FALSE)
+    p.value <- 2 * stats::pnorm(abs(z), lower.tail = FALSE)
     chi2gof <- list(p.value = p.value,
                     z.score = z,
                     RSS = RSS,
@@ -404,7 +406,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
     dummy <- as.vector(table(x))
     # goodness of fit-test. x is one-dimensional and
     # y not given
-    chi2gof <- chisq.test(dummy, p = prob)
+    chi2gof <- stats::chisq.test(dummy, p = prob)
   }
   return(chi2gof)
 }
@@ -443,6 +445,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 #'            family = binomial(link = "logit"))
 #' hoslem_gof(fit)
 #'
+#' @importFrom stats fitted pchisq quantile xtabs
 #' @export
 hoslem_gof <- function(x, g = 10) {
   # ---------------------------------------
@@ -462,18 +465,18 @@ hoslem_gof <- function(x, g = 10) {
       stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
     }
     y <- lme4::getME(x, "y")
-    yhat <- fitted(x)
+    yhat <- stats::fitted(x)
   } else {
     y <- x$y
-    yhat <- fitted(x)
+    yhat <- stats::fitted(x)
   }
   cutyhat <- cut(yhat,
-                 breaks = quantile(yhat, probs = seq(0, 1, 1 / g)),
+                 breaks = stats::quantile(yhat, probs = seq(0, 1, 1 / g)),
                  include.lowest = TRUE)
-  obs <- xtabs(cbind(1 - y, y) ~ cutyhat)
-  expect <- xtabs(cbind(1 - yhat, yhat) ~ cutyhat)
+  obs <- stats::xtabs(cbind(1 - y, y) ~ cutyhat)
+  expect <- stats::xtabs(cbind(1 - yhat, yhat) ~ cutyhat)
   chisq <- sum((obs - expect)^2 / expect)
-  p.value <- 1 - pchisq(chisq, g - 2)
+  p.value <- 1 - stats::pchisq(chisq, g - 2)
   hoslem <- list(chisq = chisq,
                  df = g - 2,
                  p.value = p.value)
@@ -554,6 +557,7 @@ pseudo_r2 <- function(x) {
 #'            family = binomial(link = "logit"))
 #' cod(fit)
 #'
+#' @importFrom stats predict predict.glm
 #' @export
 cod <- function(x) {
   # ---------------------------------------
@@ -573,10 +577,10 @@ cod <- function(x) {
       stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
     }
     y <- lme4::getME(x, "y")
-    pred <- predict(x, type = "response", re.form = NULL)
+    pred <- stats::predict(x, type = "response", re.form = NULL)
   } else {
     y <- x$y
-    pred <- predict.glm(x, type = "response")
+    pred <- stats::predict.glm(x, type = "response")
   }
   categories <- unique(y)
   m1 <- mean(pred[which(y == categories[1])], na.rm = T)
@@ -597,6 +601,7 @@ cod <- function(x) {
 #'
 #' @note See 'Examples' from \code{\link[sjPlot]{sjp.pca}} and \code{\link[sjPlot]{sjt.pca}}.
 #'
+#' @importFrom stats na.omit var
 #' @export
 cronb <- function(df) {
   df <- stats::na.omit(df)
@@ -604,7 +609,7 @@ cronb <- function(df) {
     warning("Too less columns in this factor to calculate alpha value!", call. = F)
     return(NULL)
   }
-  return(dim(df)[2] / (dim(df)[2] - 1) * (1 - sum(apply(df, 2, var)) / var(rowSums(df))))
+  return(dim(df)[2] / (dim(df)[2] - 1) * (1 - sum(apply(df, 2, var)) / stats::var(rowSums(df))))
 }
 
 
@@ -675,6 +680,7 @@ cronb <- function(df) {
 #'    }
 #'  }}
 #'
+#' @importFrom stats cor
 #' @export
 reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
   # -----------------------------------
@@ -727,9 +733,9 @@ reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
       # -----------------------------------
       # calculate corrected total-item correlation
       # -----------------------------------
-      totalCorr <- c(totalCorr, cor(x[, i],
-                                    apply(sub.df, 1, sum),
-                                    use = "pairwise.complete.obs"))
+      totalCorr <- c(totalCorr, stats::cor(x[, i],
+                                           apply(sub.df, 1, sum),
+                                           use = "pairwise.complete.obs"))
     }
     # -----------------------------------
     # create return value
@@ -780,6 +786,7 @@ reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
 #'
 #' mic(df)
 #'
+#' @importFrom stats cor na.omit
 #' @export
 mic <- function(data, corMethod = "pearson") {
   # -----------------------------------
@@ -795,7 +802,7 @@ mic <- function(data, corMethod = "pearson") {
     corr <- data
   } else {
     data <- stats::na.omit(data)
-    corr <- cor(data, method = corMethod)
+    corr <- stats::cor(data, method = corMethod)
   }
   # -----------------------------------
   # Sum up all correlation values
@@ -899,9 +906,10 @@ phi <- function(tab) {
 #' tab <- table(sample(1:2, 30, TRUE), sample(1:3, 30, TRUE))
 #' cramer(tab)
 #'
+#' @importFrom stats ftable
 #' @export
 cramer <- function(tab) {
-  if (all(class(tab) != "ftable")) tab <- ftable(tab)
+  if (all(class(tab) != "ftable")) tab <- stats::ftable(tab)
   phi_val <- phi(tab)
   cramer <- sqrt(phi_val^2 / min(dim(tab) - 1))
   return(cramer)
@@ -1079,12 +1087,13 @@ cv <- function(x) {
 #' fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
 #' rmse(fit, normalized = TRUE)
 #'
+#' @importFrom stats residuals
 #' @export
 rmse <- function(fit, normalized = FALSE) {
   # ------------------------------------------
   # compute rmse
   # ------------------------------------------
-  rmse_val <- sqrt(mean(residuals(fit)^2, na.rm = TRUE))
+  rmse_val <- sqrt(mean(stats::residuals(fit)^2, na.rm = TRUE))
   # ------------------------------------------
   # if normalized, divide by range of response
   # ------------------------------------------
@@ -1352,9 +1361,10 @@ lmer_var <- function(fit) {
 }
 
 
+#' @importFrom stats pf
 lm_pval_fstat <- function(x) {
   if (class(x) != "lm") stop("Not an object of class 'lm'.", call. = F)
   f <- summary(x)$fstatistic
-  p <- pf(f[1], f[2], f[3], lower.tail = F)
+  p <- stats::pf(f[1], f[2], f[3], lower.tail = F)
   return(as.vector(p))
 }
