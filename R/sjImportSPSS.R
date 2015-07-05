@@ -1502,13 +1502,16 @@ to_fac_helper <- function(x) {
   # is already factor?
   if (is.factor(x)) return(x)
   # retrieve value labels
-  lab <- get_labels(x, attr.only = TRUE, include.values = NULL)
+  lab <- get_labels(x,
+                    attr.only = TRUE,
+                    include.values = NULL,
+                    include.non.labelled = FALSE)
   # retrieve variable labels
   varlab <- get_label(x)
   # convert variable to factor
   x <- as.factor(x)
   # set back value labels
-  x <- set_labels(x, lab)
+  x <- set_labels(x, lab, force.labels = FALSE, force.values = TRUE)
   # set back variable labels
   x <- set_label(x, varlab)
   return(x)
