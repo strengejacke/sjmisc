@@ -20,6 +20,8 @@
 #' @param atomic.to.fac Logical, if \code{TRUE}, factor variables imported from
 #'          SPSS (which are imported as \code{\link{atomic}}) will be converted
 #'          to \code{\link{factor}}s.
+#' @param use.na logical, should information on user-defined missing values be
+#'          used to set the corresponding values to NA?
 #' @param option string, indicating which package will be used to read the SPSS data file.
 #'          By default, \code{option = "haven"}, which means, the \code{read_spss} function
 #'          from the \code{haven} package is used. Use \code{option = "foreign"} to
@@ -71,6 +73,7 @@ read_spss <- function(path,
                       enc = NA,
                       autoAttachVarLabels = FALSE,
                       atomic.to.fac = FALSE,
+                      use.na = TRUE,
                       option = "haven") {
   # --------------------------------------------------------
   # check read_spss option
@@ -104,6 +107,7 @@ read_spss <- function(path,
     data.spss <- suppressWarnings(foreign::read.spss(path,
                                                      to.data.frame = TRUE,
                                                      use.value.labels = FALSE,
+                                                     use.missings = use.na,
                                                      reencode = enc))
     # convert atomic values to factors
     if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
@@ -597,14 +601,14 @@ sji.getValueLabel <- function(x, attr.only = TRUE, include.values = NULL) {
       if (!is.null(include.values)) {
         # for backwards compatibility, we also accept "TRUE"
         # here we set values as names-attribute
-        if ((is.logical(include.values) && include.values == TRUE) ||
-            include.values == "as.name" ||
-            include.values == "n") {
+        if ((is.logical(include.values) &&
+             include.values == TRUE) ||
+            include.values == "as.name" || include.values == "n") {
           names(labels) <- values[reihenfolge]
         }
         # here we include values as prefix of labels
         if (include.values == "as.prefix" || include.values == "p") {
-          if (is.numeric(x))
+          if (is.numeric(values))
             labels <- sprintf("[%i] %s", values[reihenfolge], labels)
           else
             labels <- sprintf("[%s] %s", values[reihenfolge], labels)
@@ -661,9 +665,9 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
   else
     values <- as.numeric(unname(attr(x, attr.string, exact = T)))
   # sort values
-  if (sort.val) val.sort <- sort(val.sort)
+  if (sort.val) values <- sort(values)
   # return sorted
-  return(val.sort)
+  return(values)
 }
 
 

@@ -5,7 +5,7 @@
 \title{Import SPSS dataset as data frame into R}
 \usage{
 read_spss(path, enc = NA, autoAttachVarLabels = FALSE,
-  atomic.to.fac = FALSE, option = "haven")
+  atomic.to.fac = FALSE, use.na = TRUE, option = "haven")
 }
 \arguments{
 \item{path}{The file path to the SPSS dataset.}
@@ -21,6 +21,9 @@ as list-attribute to the imported data frame.
 \item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
 SPSS (which are imported as \code{\link{atomic}}) will be converted
 to \code{\link{factor}}s.}
+
+\item{use.na}{logical, should information on user-defined missing values be
+used to set the corresponding values to NA?}
 
 \item{option}{string, indicating which package will be used to read the SPSS data file.
 By default, \code{option = "haven"}, which means, the \code{read_spss} function
