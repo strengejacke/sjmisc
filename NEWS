@@ -13,7 +13,7 @@ Changes to functions:
 * Parameter "include.values" of "get_val_labels" (and "get_labels") has now two options for returning includes values.
 * "get_val_labels" now supports vectors with string label attributes.
 * "to_fac" and "to_value" better deal with vectors that don't need to be converted.
-
+* "set_val_labels" and "to_fac" now add additional values as labels, if variable has more valid values than labels that have been supplied as parameter.
 
 Version 1.0.3
 ------------------------------------------------------------------------------

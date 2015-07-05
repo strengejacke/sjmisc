@@ -2,9 +2,12 @@
 % Please edit documentation in R/sjImportSPSS.R
 \name{to_fac}
 \alias{to_fac}
+\alias{to_factor}
 \title{Convert variable into factor and keep value labels}
 \usage{
 to_fac(x)
+
+to_factor(x)
 }
 \arguments{
 \item{x}{A (numeric or atomic) variable or a data frame with

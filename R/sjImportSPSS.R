@@ -838,7 +838,7 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels 
       valrange <- maxval - minval + 1
       # set var name string
       if (is.null(var.name) || nchar(var.name) < 1) {
-        name.string <- "var"
+        name.string <- "x"
       } else {
         name.string <- var.name
       }
@@ -868,14 +868,18 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels 
         valrange <- length(values)
         # still no match?
         if (valrange != lablen) {
-          warning(sprintf("Can't set value labels. Value range of \"%s\" is longer than length of \"labels\".", name.string), call. = F)
-        } else {
-          # else, set attributes
-          attr(var, attr.string) <- as.character(c(1:valrange))
-          names(attr(var, attr.string)) <- labels
+          # check which one is longer, and get missing values
+          add_values <- ifelse(valrange > lablen, valrange[-lablen], lablen[-valrange])
+          # add missing values to labels
+          labels <- c(labels, as.character(add_values))
+          # tell user about modification
+          message(sprintf("Value range of \"%s\" is longer than length of \"labels\". Additional values were added to labels.", name.string))
         }
+        # set attributes
+        attr(var, attr.string) <- as.character(c(1:valrange))
+        names(attr(var, attr.string)) <- labels
       } else {
-        attr(var, attr.string) <- c(as.character(c(minval:maxval)))
+        attr(var, attr.string) <- as.character(c(minval:maxval))
         names(attr(var, attr.string)) <- labels
       }
     }
