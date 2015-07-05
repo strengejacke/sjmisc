@@ -451,6 +451,8 @@ to_sjPlot <- function(x) {
 #'          in the the vector's \code{\link{attributes}}; else, if \code{x} has no
 #'          label attributes, factor levels or string values are returned. See
 #'          'Examples'.
+#' @param include.non.labelled logical, if \code{TRUE}, values without labels will
+#'          also be included in the returned labels.
 #' @return Either a list with all value labels from all variables if \code{x}
 #'           is a \code{data.frame} or \code{list}; a string with the value
 #'           labels, if \code{x} is a variable;
@@ -544,13 +546,26 @@ to_sjPlot <- function(x) {
 #' get_labels(c1)
 #'
 #'
+#' # create vector
+#' x <- c(1, 2, 3, 2, 4, NA)
+#' # add less labels than values
+#' x <- set_labels(x, c("yes", "maybe", "no"), force.values = FALSE)
+#' # get labels for labelled values only
+#' get_labels(x)
+#' # get labels for all values
+#' get_labels(x, include.non.labelled = TRUE)
+#'
+#'
 #' @export
-get_val_labels <- function(x, attr.only = FALSE, include.values = NULL) {
+get_val_labels <- function(x,
+                           attr.only = FALSE,
+                           include.values = NULL,
+                           include.non.labelled = FALSE) {
   # .Deprecated("get_labels")
   if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
-    a <- lapply(x, FUN = sji.getValueLabel, attr.only, include.values)
+    a <- lapply(x, FUN = sji.getValueLabel, attr.only, include.values, include.non.labelled)
   } else {
-    a <- sji.getValueLabel(x, attr.only, include.values)
+    a <- sji.getValueLabel(x, attr.only, include.values, include.non.labelled)
   }
   return(a)
 }
@@ -559,12 +574,18 @@ get_val_labels <- function(x, attr.only = FALSE, include.values = NULL) {
 #' @name get_labels
 #' @rdname get_val_labels
 #' @export
-get_labels <- function(x, attr.only = FALSE, include.values = NULL) {
-  return(get_val_labels(x, attr.only, include.values))
+get_labels <- function(x,
+                       attr.only = FALSE,
+                       include.values = NULL,
+                       include.non.labelled = FALSE) {
+  return(get_val_labels(x, attr.only, include.values, include.non.labelled))
 }
 
 
-sji.getValueLabel <- function(x, attr.only = TRUE, include.values = NULL) {
+sji.getValueLabel <- function(x,
+                              attr.only = TRUE,
+                              include.values = NULL,
+                              include.non.labelled = FALSE) {
   labels <- NULL
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
@@ -597,6 +618,17 @@ sji.getValueLabel <- function(x, attr.only = TRUE, include.values = NULL) {
       reihenfolge <- order(values)
       # retrieve label values in correct order
       labels <- names(lab)[reihenfolge]
+      # do we want to include non-labelled values as well?
+      if (include.non.labelled) {
+        # check if we have more values than labels
+        vr <- get_value_range(x)
+        if (vr$valrange > length(labels)) {
+          # get missing values
+          add_vals <- seq_len(vr$valrange)[-seq_len(length(labels))]
+          # add to labels
+          labels <- c(labels, as.character(add_vals))
+        }
+      }
       # include associated values?
       if (!is.null(include.values)) {
         # for backwards compatibility, we also accept "TRUE"
@@ -697,10 +729,13 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #'          character vectors. If \code{labels} is a list, it must have the same length as
 #'          number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 #'          the \code{labels} will be applied to each column of \code{x}.
-#'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
+#'          Use \code{labels = ""} to remove labels-attribute from \code{x}.#'
 #' @param force.labels logical; if \code{TRUE}, all \code{labels} are added as value labels
 #'          attribute, even if \code{x} has less unique values then length of \code{labels}
 #'          or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
+#' @param force.values logical, if \code{TRUE} (default), and length of \code{labels}
+#'          is greater than unique values of \code{x}, additional values not covered
+#'          by \code{labels} will be added as label as well. See 'Examples'.
 #' @return \code{x} with attached value labels; or with removed label-attribute if
 #'            \code{labels = ""}.
 #'
@@ -729,6 +764,16 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #' x
 #' \dontrun{sjp.frq(x)}
 #'
+#' # create vector
+#' x <- c(1, 2, 3, 2, 4, NA)
+#' # add less labels than values
+#' x <- set_labels(x, c("yes", "maybe", "no"), force.values = FALSE)
+#' x
+#' # add all necessary labels
+#' x <- set_labels(x, c("yes", "maybe", "no"), force.values = TRUE)
+#' x
+#'
+#'
 #' # setting same value labels to multiple vectors
 #'
 #' # create a set of dummy variables
@@ -743,28 +788,29 @@ sji.getValueLabelValues <- function(x, sort.val = TRUE) {
 #' get_labels(dummies)
 #'
 #' @export
-set_val_labels <- function(x, labels, force.labels = FALSE) {
+set_val_labels <- function(x, labels, force.labels = FALSE, force.values = TRUE) {
   # .Deprecated("set_labels")
-  return(sji.setValueLabelNameParam(x, labels, force.labels))
+  return(sji.setValueLabelNameParam(x, labels, force.labels, force.values))
 }
 
 
 #' @name set_labels
 #' @rdname set_val_labels
 #' @export
-set_labels <- function(x, labels, force.labels = FALSE) {
-  return(set_val_labels(x, labels, force.labels))
+set_labels <- function(x, labels, force.labels = FALSE, force.values = TRUE) {
+  return(set_val_labels(x, labels, force.labels, force.values))
 }
 
 
-sji.setValueLabelNameParam <- function(x, labels, force.labels = FALSE) {
+sji.setValueLabelNameParam <- function(x, labels, force.labels = FALSE, force.values = TRUE) {
   # any valid labels? if not, return vector
   if (is.null(labels)) return(x)
   if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
     return(sji.setValueLabel.vector(x,
                                     labels,
                                     NULL,
-                                    force.labels))
+                                    force.labels,
+                                    force.values))
   } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -779,13 +825,15 @@ sji.setValueLabelNameParam <- function(x, labels, force.labels = FALSE) {
           x[[i]] <- sji.setValueLabel.vector(x[[i]],
                                              labels[[i]],
                                              colnames(x)[i],
-                                             force.labels)
+                                             force.labels,
+                                             force.values)
         }
       } else if (is.vector(labels)) {
         x[[i]] <- sji.setValueLabel.vector(x[[i]],
                                            labels,
                                            colnames(x)[i],
-                                           force.labels)
+                                           force.labels,
+                                           force.values)
       } else {
         warning("'labels' must be a list of same length as 'ncol(x)' or a vector.", call. = F)
       }
@@ -794,8 +842,43 @@ sji.setValueLabelNameParam <- function(x, labels, force.labels = FALSE) {
   }
 }
 
+
+get_value_range <- function(x) {
+  # check if var is a factor
+  if (is.factor(x)) {
+    # check if we have numeric levels
+    if (!is_num_fac(x)) {
+      # retrieve levels. since levels are numeric, we
+      # have minimum and maximum values
+      minval <- 1
+      maxval <- length(levels(x))
+    } else {
+      # levels are not numeric. we need to convert them
+      # first to retrieve minimum level, as numeric
+      minval <- min(as.numeric(levels(x)), na.rm = T)
+      # check range, add minimum, so we have max
+      maxval <- diff(range(as.numeric(levels(x)))) + minval
+    }
+  } else {
+    # retrieve values
+    minval <- min(x, na.rm = TRUE)
+    maxval <- max(x, na.rm = TRUE)
+  }
+  # determine value range
+  valrange <- maxval - minval + 1
+  # return all
+  return(list(minval = minval,
+              maxval = maxval,
+              valrange = valrange))
+}
+
+
 #' @importFrom stats na.omit
-sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels = FALSE) {
+sji.setValueLabel.vector <- function(var,
+                                     labels,
+                                     var.name = NULL,
+                                     force.labels = FALSE,
+                                     force.values = TRUE) {
   # auto-detect variable label attribute
   attr.string <- getValLabelAttribute(var)
   # do we have any label attributes?
@@ -810,32 +893,16 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels 
     # string varibles can't get value labels
       warning("Can't attach value labels to string or NULL vectors.", call. = F)
     } else {
-      # check if var is a factor
-      if (is.factor(var)) {
-        # check if we have numeric levels
-        if (!is_num_fac(var)) {
-          # retrieve levels. since levels are numeric, we
-          # have minimum and maximum values
-          minval <- 1
-          maxval <- length(levels(var))
-        } else {
-          # levels are not numeric. we need to convert them
-          # first to retrieve minimum level, as numeric
-          minval <- min(as.numeric(levels(var)), na.rm = T)
-          # check range, add minimum, so we have max
-          maxval <- diff(range(as.numeric(levels(var)))) + minval
-        }
-      } else {
-        # retrieve values
-        minval <- min(var, na.rm = TRUE)
-        maxval <- max(var, na.rm = TRUE)
-      }
+      # determine value range
+      vr <- get_value_range(var)
+      # copy values to variables
+      valrange <- vr$valrange
+      minval <- vr$minval
+      maxval <- vr$maxval
       # check for unlisting
       if (is.list(labels)) labels <- as.vector(unlist(labels))
       # determine amount of labels
       lablen <- length(labels)
-      # determine value range
-      valrange <- maxval - minval + 1
       # set var name string
       if (is.null(var.name) || nchar(var.name) < 1) {
         name.string <- "x"
@@ -862,22 +929,28 @@ sji.setValueLabel.vector <- function(var, labels, var.name = NULL, force.labels 
       # have not continuous value range, e.g. "-2" as filter and
       # 1 to 4 as valid values, i.e. -1 and 0 are missing
       } else if (valrange > lablen) {
-        # value range is not continuous. get all unique values
-        values <- sort(unique(stats::na.omit((var))))
-        # get amount of unique values
-        valrange <- length(values)
-        # still no match?
-        if (valrange != lablen) {
-          # check which one is longer, and get missing values
-          add_values <- ifelse(valrange > lablen, valrange[-lablen], lablen[-valrange])
-          # add missing values to labels
-          labels <- c(labels, as.character(add_values))
-          # tell user about modification
-          message(sprintf("Value range of \"%s\" is longer than length of \"labels\". Additional values were added to labels.", name.string))
+        # check if user wants to add missing values
+        if (force.values) {
+          # value range is not continuous. get all unique values
+          values <- sort(unique(stats::na.omit((var))))
+          # get amount of unique values
+          valrange <- length(values)
+          # still no match?
+          if (valrange != lablen) {
+            # check which one is longer, and get missing values
+            add_values <- ifelse(valrange > lablen, valrange[-lablen], lablen[-valrange])
+            # add missing values to labels
+            labels <- c(labels, as.character(add_values))
+            # tell user about modification
+            message(sprintf("Value range of \"%s\" is longer than length of \"labels\". Additional values were added to labels.", name.string))
+          }
+          # set attributes
+          attr(var, attr.string) <- as.character(c(1:valrange))
+          names(attr(var, attr.string)) <- labels
+        } else {
+          attr(var, attr.string) <- as.character(c(1:length(labels)))
+          names(attr(var, attr.string)) <- labels
         }
-        # set attributes
-        attr(var, attr.string) <- as.character(c(1:valrange))
-        names(attr(var, attr.string)) <- labels
       } else {
         attr(var, attr.string) <- as.character(c(minval:maxval))
         names(attr(var, attr.string)) <- labels
@@ -1235,6 +1308,8 @@ set_label <- function(x, lab, attr.string = NULL) {
 #'          \code{\link{factor}} or \code{\link[haven]{labelled}}
 #'          \emph{with associated value labels} (see \code{\link{set_labels}}),
 #'          respectively a data frame with such variables.
+#' @param add.non.labelled logical, if \code{TRUE}, values without associated
+#'          value label will also be converted to labels (as is). See 'Examples'.
 #' @return A factor variable with the associated value labels as factor levels, or a
 #'           data frame with such factor variables (if \code{x} was a data frame).
 #'
@@ -1264,22 +1339,31 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' str(to_label(efc$e17age))
 #'
 #' \dontrun{
-#' # factor with non-numeric levels won't be changed, either
+#' # factor with non-numeric levels won't be changed, either,
 #' # however, a warning is produced
 #' to_label(factor(c("a", "b", "c")))}
 #'
+#' # create vector
+#' x <- c(1, 2, 3, 2, 4, NA)
+#' # add less labels than values
+#' x <- set_labels(x, c("yes", "maybe", "no"), add.non.labelled = FALSE)
+#' # convert to label w/o non-labelled values
+#' to_label(x)
+#' # convert to label, including non-labelled values
+#' to_label(x, add.non.labelled = TRUE)
+#'
 #' @export
-to_label <- function(x) {
+to_label <- function(x, add.non.labelled = FALSE) {
   if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- to_label_helper(x[[i]])
+    for (i in 1:ncol(x)) x[[i]] <- to_label_helper(x[[i]], add.non.labelled)
     return(x)
   } else {
-    return(to_label_helper(x))
+    return(to_label_helper(x, add.non.labelled))
   }
 }
 
 
-to_label_helper <- function(x) {
+to_label_helper <- function(x, add.non.labelled = FALSE) {
   # check if factor has numeric factor levels
   if (is.factor(x) && !is_num_fac(x)) {
     # if not, stop here
@@ -1287,7 +1371,7 @@ to_label_helper <- function(x) {
     return(x)
   }
   # get value labels
-  vl <- get_labels(x, attr.only = TRUE, include.values = NULL)
+  vl <- get_labels(x, attr.only = TRUE, include.values = NULL, include.non.labelled = add.non.labelled)
   # check if we have any labels, else
   # return variable "as is"
   if (!is.null(vl)) {

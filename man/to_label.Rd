@@ -4,13 +4,16 @@
 \alias{to_label}
 \title{Convert variable into factor and replaces values with associated value labels}
 \usage{
-to_label(x)
+to_label(x, add.non.labelled = FALSE)
 }
 \arguments{
 \item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}},
 \code{\link{factor}} or \code{\link[haven]{labelled}}
 \emph{with associated value labels} (see \code{\link{set_labels}}),
 respectively a data frame with such variables.}
+
+\item{add.non.labelled}{logical, if \code{TRUE}, values without associated
+value label will also be converted to labels (as is). See 'Examples'.}
 }
 \value{
 A factor variable with the associated value labels as factor levels, or a
@@ -50,9 +53,18 @@ str(efc$e17age)
 str(to_label(efc$e17age))
 
 \dontrun{
-# factor with non-numeric levels won't be changed, either
+# factor with non-numeric levels won't be changed, either,
 # however, a warning is produced
 to_label(factor(c("a", "b", "c")))}
+
+# create vector
+x <- c(1, 2, 3, 2, 4, NA)
+# add less labels than values
+x <- set_labels(x, c("yes", "maybe", "no"), add.non.labelled = FALSE)
+# convert to label w/o non-labelled values
+to_label(x)
+# convert to label, including non-labelled values
+to_label(x, add.non.labelled = TRUE)
 }
 \seealso{
 \code{\link{to_fac}} to convert a numeric variable into a factor (and

@@ -5,9 +5,9 @@
 \alias{set_val_labels}
 \title{Attach value labels to variables}
 \usage{
-set_val_labels(x, labels, force.labels = FALSE)
+set_val_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 
-set_labels(x, labels, force.labels = FALSE)
+set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 }
 \arguments{
 \item{x}{a variable (vector), \code{list} of variables or a \code{data.frame}
@@ -21,11 +21,15 @@ If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
 character vectors. If \code{labels} is a list, it must have the same length as
 number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 the \code{labels} will be applied to each column of \code{x}.
-Use \code{labels = ""} to remove labels-attribute from \code{x}.}
+Use \code{labels = ""} to remove labels-attribute from \code{x}.#'}
 
 \item{force.labels}{logical; if \code{TRUE}, all \code{labels} are added as value labels
 attribute, even if \code{x} has less unique values then length of \code{labels}
 or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.}
+
+\item{force.values}{logical, if \code{TRUE} (default), and length of \code{labels}
+is greater than unique values of \code{x}, additional values not covered
+by \code{labels} will be added as label as well. See 'Examples'.}
 }
 \value{
 \code{x} with attached value labels; or with removed label-attribute if
@@ -66,6 +70,16 @@ x
 x <- set_labels(x, c("1", "2", "3"), force.labels = TRUE)
 x
 \dontrun{sjp.frq(x)}
+
+# create vector
+x <- c(1, 2, 3, 2, 4, NA)
+# add less labels than values
+x <- set_labels(x, c("yes", "maybe", "no"), force.values = FALSE)
+x
+# add all necessary labels
+x <- set_labels(x, c("yes", "maybe", "no"), force.values = TRUE)
+x
+
 
 # setting same value labels to multiple vectors
 

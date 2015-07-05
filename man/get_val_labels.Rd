@@ -5,9 +5,11 @@
 \alias{get_val_labels}
 \title{Retrieve value labels of a data frame or variable}
 \usage{
-get_val_labels(x, attr.only = FALSE, include.values = NULL)
+get_val_labels(x, attr.only = FALSE, include.values = NULL,
+  include.non.labelled = FALSE)
 
-get_labels(x, attr.only = FALSE, include.values = NULL)
+get_labels(x, attr.only = FALSE, include.values = NULL,
+  include.non.labelled = FALSE)
 }
 \arguments{
 \item{x}{a \code{data.frame} with variables that have attached value labels (e.g.
@@ -28,6 +30,9 @@ value labels are returned as well. If \code{include.values = "as.name"}
 attribute of the returned object. If \code{include.values = "as.prefix"}
 (or \code{include.values = "p"}), values are includes as prefix
 to each label. See 'Examples'.}
+
+\item{include.non.labelled}{logical, if \code{TRUE}, values without labels will
+also be included in the returned labels.}
 }
 \value{
 Either a list with all value labels from all variables if \code{x}
@@ -132,6 +137,16 @@ c1 <- c("higher", "lower", "mid")
 get_labels(c1, attr.only = TRUE)
 # search for string values as well
 get_labels(c1)
+
+
+# create vector
+x <- c(1, 2, 3, 2, 4, NA)
+# add less labels than values
+x <- set_labels(x, c("yes", "maybe", "no"), force.values = FALSE)
+# get labels for labelled values only
+get_labels(x)
+# get labels for all values
+get_labels(x, include.non.labelled = TRUE)
 }
 \seealso{
 The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization},
