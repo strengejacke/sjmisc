@@ -10,6 +10,7 @@ Changes to functions:
 * "get_var_labels" gets alias name "get_label".
 * Added parameter "attr.only" to "get_val_labels" (and "get_labels") to get value labels also of factor levels, if variable has no value label attributes.
 * Parameter "include.values" of "get_val_labels" (and "get_labels") has now two options for returning includes values.
+* "get_val_labels" now supports vectors with string label attributes.
 
 
 Version 1.0.3
