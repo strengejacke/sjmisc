@@ -1228,7 +1228,7 @@ set_label <- function(x, lab, attr.string = NULL) {
 #'            a numeric variable.
 #'
 #' @param x A variable of type \code{\link{numeric}}, \code{\link{atomic}},
-#'          \code{\link{factor}} or \code{\link[haven]{labelled}} (see \code{haven} package)
+#'          \code{\link{factor}} or \code{\link[haven]{labelled}}
 #'          \emph{with associated value labels} (see \code{\link{set_labels}}),
 #'          respectively a data frame with such variables.
 #' @return A factor variable with the associated value labels as factor levels, or a
@@ -1402,7 +1402,17 @@ to_fac <- function(x) {
 }
 
 
+#' @name to_factor
+#' @rdname to_fac
+#' @export
+to_factor <- function(x) {
+  return(to_fac(x))
+}
+
+
 to_fac_helper <- function(x) {
+  # is already factor?
+  if (is.factor(x)) return(x)
   # retrieve value labels
   lab <- get_labels(x, attr.only = TRUE, include.values = NULL)
   # retrieve variable labels
@@ -1479,6 +1489,8 @@ to_value <- function(x, startAt = NULL, keep.labels = TRUE) {
 
 
 to_value_helper <- function(x, startAt, keep.labels) {
+  # is already numeric?
+  if (is.numeric(x)) return(x)
   # retrieve "value labels"
   labels <- levels(x)
   # check if we have numeric factor levels

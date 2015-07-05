@@ -46,11 +46,13 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
 
-#### Chnages to functions
+#### Changes to functions
 * `set_val_labels` gets alias name `set_labels`.
 * `set_var_labels` gets alias name `set_label`.
 * `get_val_labels` gets alias name `get_labels`.
 * `get_var_labels` gets alias name `get_label`.
+* `to_fac` gets alias name `to_factor`.
 * Added parameter `attr.only` to `get_val_labels` (and `get_labels`) to get value labels also of factor levels, if variable has no value label attributes.
 * Parameter `include.values` of `get_val_labels` (and `get_labels`) has now two options for returning includes values.
 * `get_val_labels` now supports vectors with string label attributes.
+* `to_fac` and `to_value` better deal with vectors that don't need to be converted.
