@@ -176,11 +176,13 @@ get_label <- function(x) {
 #'            attributes, see above) via \code{options(value_labels = "haven")}
 #'            or \code{options(value_labels = "foreign")}.
 #'
-#' @note This function only works with vectors that have value and variable
+#' @note This function works with vectors that have value and variable
 #'        labels attached. This is automatically done by importing data sets
 #'        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
 #'        function. Labels can also manually be added using the \code{\link{set_labels}}
-#'        and \code{\link{set_label}} functions.
+#'        and \code{\link{set_label}} functions. If vectors \strong{do not} have
+#'        label attributes, either factor-\code{\link{levels}} or the numeric values
+#'        of the vector are returned as labels.
 #'        \cr \cr
 #'        With attached value and variable labels, most functions of the \code{sjPlot} package
 #'        automatically detect labels and uses them as axis, legend or title labels
@@ -441,7 +443,7 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #' @return The missing values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no missing value attribute.
 #'
-#' @details See 'Details' in \code{\link{get_values}}
+#' @details See 'Details' in \code{\link{get_values}}.
 #'
 #' @examples
 #' library(haven)

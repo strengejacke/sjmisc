@@ -21,7 +21,7 @@ This function retrieves the value codes associated with missing values
                values have not been replaced with \code{NA}s after import.
 }
 \details{
-See 'Details' in \code{\link{get_values}}
+See 'Details' in \code{\link{get_values}}.
 }
 \examples{
 library(haven)
