@@ -65,3 +65,4 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `to_label` gets a `add.non.labelled` parameter to also convert non-labelled values to labels.
 * `set_val_labels` gets a `force.values` parameter to add values without associated labels as labels, too.
 * `set_na` gets a `as.attr` parameter, so values are not converted to NA, but rather missing codes are added as `is_na` attribute.
+* `get_values` gets a `drop.na` parameter, to exclude values of missing codes from return value.

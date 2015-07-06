@@ -369,6 +369,8 @@ get_labels_helper <- function(x,
 #' @param x a variable (vector) with attached value labels.
 #' @param sort.val logical, if \code{TRUE} (default), values of associated value labels
 #'          are sorted.
+#' @param drop.na logical, if \code{TRUE}, missing code values are excluded from
+#'          the return value. See 'Examples' and \code{\link{get_na}}.
 #' @return The values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no label attributes.
 #'
@@ -385,8 +387,19 @@ get_labels_helper <- function(x,
 #' get_values(efc$e42dep)
 #' get_labels(efc$e42dep)
 #'
+#' library(haven)
+#' # create labelled integer, with missing flag
+#' x <- labelled(c(1, 2, 1, 3, 4, 1),
+#'              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+#'              c(FALSE, FALSE, TRUE, TRUE))
+#' # get all values
+#' get_values(x)
+#' # drop NA
+#' get_values(x, , TRUE)
+#'
+#'
 #' @export
-get_values <- function(x, sort.val = FALSE) {
+get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
   # nothing found? then leave...
@@ -398,6 +411,13 @@ get_values <- function(x, sort.val = FALSE) {
     values <- as.numeric(unname(attr(x, attr.string, exact = T)))
   # sort values
   if (sort.val) values <- sort(values)
+  # remove missing value codes?
+  if (drop.na) {
+    # get NA logicals
+    na.flag <- attr(x, getNaAttribute(), exact = T)
+    # do we have missing flag? if yes, remove missing code value
+    if (!is.null(na.flag)) values <- values[!na.flag]
+  }
   # return sorted
   return(values)
 }

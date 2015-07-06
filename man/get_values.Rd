@@ -4,13 +4,16 @@
 \alias{get_values}
 \title{Retrieve values of labelled variables}
 \usage{
-get_values(x, sort.val = FALSE)
+get_values(x, sort.val = FALSE, drop.na = FALSE)
 }
 \arguments{
 \item{x}{a variable (vector) with attached value labels.}
 
 \item{sort.val}{logical, if \code{TRUE} (default), values of associated value labels
 are sorted.}
+
+\item{drop.na}{logical, if \code{TRUE}, missing code values are excluded from
+the return value. See 'Examples' and \code{\link{get_na}}.}
 }
 \value{
 The values associated with value labels from \code{x},
@@ -34,6 +37,16 @@ data(efc)
 str(efc$e42dep)
 get_values(efc$e42dep)
 get_labels(efc$e42dep)
+
+library(haven)
+# create labelled integer, with missing flag
+x <- labelled(c(1, 2, 1, 3, 4, 1),
+             c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+             c(FALSE, FALSE, TRUE, TRUE))
+# get all values
+get_values(x)
+# drop NA
+get_values(x, , TRUE)
 }
 \seealso{
 \code{\link{get_labels}} for getting value labels and \code{\link{get_na}}
