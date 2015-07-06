@@ -41,10 +41,14 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-2
+### Changelog of current development build 1.0.3-3
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
+
+#### New functions
+* `get_na` to get value codes of missing values from labelled vectors (that have an `is_na` attribute).
+* `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
 
 #### Changes to functions
 * `set_val_labels` gets alias name `set_labels`.
@@ -60,3 +64,4 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `get_val_labels` gets a `include.non.labelled` parameter to also return non-labelled values as label.
 * `to_label` gets a `add.non.labelled` parameter to also convert non-labelled values to labels.
 * `set_val_labels` gets a `force.values` parameter to add values without associated labels as labels, too.
+* `set_na` gets a `as.attr` parameter, so values are not converted to NA, but rather missing codes are added as `is_na` attribute.

@@ -4,27 +4,29 @@
 \alias{weight2}
 \title{Weight a variable}
 \usage{
-weight2(var, weights)
+weight2(x, weights)
 }
 \arguments{
-\item{var}{The (unweighted) variable}
+\item{x}{(unweighted) variable}
 
-\item{weights}{A vector with same length as \code{var}, which
-         contains weight factors. Each value of \code{var} has a
+\item{weights}{vector with same length as \code{x}, which
+         contains weight factors. Each value of \code{x} has a
          specific assigned weight in \code{weights}.}
 }
 \value{
-The weighted \code{var}.
+The weighted \code{x}.
 }
 \description{
-This function weights the variable \code{var} by
+This function weights the variable \code{x} by
                a specific vector of \code{weights}. It's an
                alternative weight calculation to \code{\link{weight}},
                though \code{\link{weight}} usage is recommended.
-               This function sums up all \code{weights} values of the associated
-               categories of \code{var}, whereas the \code{\link{weight}} function
-               uses a \code{\link{xtabs}} formula to weight cases. Thus, this function
-               may return a vector of different length than \code{var}.
+}
+\details{
+This function sums up all \code{weights} values of the associated
+           categories of \code{x}, whereas the \code{\link{weight}} function
+           uses a \code{\link{xtabs}} formula to weight cases. Thus, this function
+           may return a vector of different length than \code{x}.
 }
 \note{
 See 'Note' in \code{\link{weight}}

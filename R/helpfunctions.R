@@ -8,7 +8,7 @@ autoSetValueLabels <- function(x) {
   opt <- getOption("autoSetValueLabels")
   if (is.null(opt) || opt == TRUE) {
     # check if we have value label attribut
-    vl <- sji.getValueLabel(x)
+    vl <- get_labels_helper(x)
     lv <- levels(x)
     label <- NULL
     # check  if we have value labels
@@ -104,6 +104,9 @@ getValLabelAttribute <- function(x) {
   }
   return(attr.string)
 }
+
+
+getNaAttribute <- function() return("is_na")
 
 
 # automatically set labels of variables,

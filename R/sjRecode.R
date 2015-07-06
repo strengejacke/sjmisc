@@ -803,130 +803,6 @@ rec_helper <- function(x, recodes, asFac = FALSE, varLabel, valLabels) {
 }
 
 
-#' @title Set NA for specific variable values
-#' @name set_na
-#'
-#' @description This function sets specific values of a variable, data frame
-#'                or list of variables as missings (\code{NA}).
-#'
-#' @seealso \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
-#'            value, \code{\link{rec}} for general recoding of variables and
-#'            \code{\link{recode_to}} for re-shifting value ranges.
-#'
-#' @param x a variable (vector), \code{data.frame} or \code{list} of variables where new
-#'          missing values should be defined. If \code{x} is a \code{data.frame}, each
-#'          column is assumed to be a new variable, where missings should be defined.
-#' @param values a numeric vector with values that should be replaced with \code{\link{NA}}'s.
-#'          Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.
-#'
-#' @return \code{x}, where each value of \code{values} is replaced by an \code{NA}.
-#'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are retained.
-#'
-#' @examples
-#' # create random variable
-#' dummy <- sample(1:8, 100, replace = TRUE)
-#' # show value distribution
-#' table(dummy)
-#' # set value 1 and 8 as missings
-#' dummy <- set_na(dummy, c(1, 8))
-#' # show value distribution, including missings
-#' table(dummy, exclude = NULL)
-#'
-#' # create sample data frame
-#' dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
-#'                     var2 = sample(1:10, 100, replace = TRUE),
-#'                     var3 = sample(1:6, 100, replace = TRUE))
-#' # show head of data frame
-#' head(dummy)
-#' # set value 2 and 4 as missings
-#' dummy <- set_na(dummy, c(2, 4))
-#' # show head of new data frame
-#' head(dummy)
-#'
-#' # create list of variables
-#' data(efc)
-#' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
-#' # check original distribution of categories
-#' lapply(dummy, table, exclude = NULL)
-#' # set 3 to NA
-#' lapply(set_na(dummy, 3), table, exclude = NULL)
-#'
-#' @export
-set_na <- function(x, values) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], values)
-    return(x)
-  } else {
-    return(set_na_helper(x, values))
-  }
-}
-
-#' @importFrom stats na.omit
-set_na_helper <- function(var, values) {
-  # ----------------------------
-  # auto-detect variable label attribute
-  # ----------------------------
-  attr.string <- getValLabelAttribute(var)
-  # check if var has label attributes
-  if (!is.null(attr.string)) {
-    # retrieve value labels
-    vl <- attr(var, attr.string, exact = T)
-    # retrieve label names
-    ln <- names(vl)
-  } else {
-    # if var has no label attributes, use values
-    # as labels
-    vl <- as.character(sort(unique(stats::na.omit(var))))
-    ln <- vl
-  }
-  # iterate all values that should be
-  # replaced by NA's
-  for (i in seq_along(values)) {
-    # find associated values in var
-    # and set them to NA
-    var[var == values[i]] <- NA
-    # check if value labels exist, and if yes, remove them
-    labelpos <- suppressWarnings(which(as.numeric(vl) == values[i]))
-    # remove NA label
-    if (length(labelpos > 0)) {
-      vl <- vl[-labelpos]
-      ln <- ln[-labelpos]
-    } else {
-      # if vl were not numeric convertable, try character conversion
-      # check if value labels exist, and if yes, remove them
-      labelpos <- suppressWarnings(which(as.character(vl) == values[i]))
-      # remove NA label
-      if (length(labelpos > 0)) {
-        vl <- vl[-labelpos]
-        ln <- ln[-labelpos]
-      }
-    }
-  }
-  # set back updated label attribute
-  if (!is.null(attr.string)) {
-    # do we have any labels left?
-    if (length(vl) > 0) {
-      # if yes, set back label attribute
-      attr(var, attr.string) <- vl
-      names(attr(var, attr.string)) <- ln
-    } else {
-      # else remove attribute
-      attr(var, attr.string) <- NULL
-    }
-  }
-  return(var)
-}
-
-
 #' @title Replace NA with specific values
 #' @name replace_na
 #'
@@ -979,23 +855,24 @@ replace_na <- function(x, value) {
 #' @title Weight a variable
 #' @name weight2
 #'
-#' @description This function weights the variable \code{var} by
+#' @description This function weights the variable \code{x} by
 #'                a specific vector of \code{weights}. It's an
 #'                alternative weight calculation to \code{\link{weight}},
 #'                though \code{\link{weight}} usage is recommended.
-#'                This function sums up all \code{weights} values of the associated
-#'                categories of \code{var}, whereas the \code{\link{weight}} function
-#'                uses a \code{\link{xtabs}} formula to weight cases. Thus, this function
-#'                may return a vector of different length than \code{var}.
 #'
 #' @seealso \code{\link{weight}}
 #'
-#' @param var The (unweighted) variable
-#' @param weights A vector with same length as \code{var}, which
-#'          contains weight factors. Each value of \code{var} has a
+#' @param x (unweighted) variable
+#' @param weights vector with same length as \code{x}, which
+#'          contains weight factors. Each value of \code{x} has a
 #'          specific assigned weight in \code{weights}.
 #'
-#' @return The weighted \code{var}.
+#' @return The weighted \code{x}.
+#'
+#' @details This function sums up all \code{weights} values of the associated
+#'            categories of \code{x}, whereas the \code{\link{weight}} function
+#'            uses a \code{\link{xtabs}} formula to weight cases. Thus, this function
+#'            may return a vector of different length than \code{x}.
 #'
 #' @note See 'Note' in \code{\link{weight}}
 #'
@@ -1006,11 +883,11 @@ replace_na <- function(x, value) {
 #' table(weight2(v, w))
 #'
 #' @export
-weight2 <- function(var, weights) {
-  items <- unique(var)
+weight2 <- function(x, weights) {
+  items <- unique(x)
   newvar <- c()
   for (i in 1:length(items)) {
-    newcount = round(sum(weights[which(var == items[i])]))
+    newcount = round(sum(weights[which(x == items[i])]))
     newvar <- c(newvar, rep(items[i], newcount))
   }
   return(newvar)
@@ -1019,20 +896,20 @@ weight2 <- function(var, weights) {
 
 #' @title Weight a variable
 #' @name weight
-#' @description This function weights the variable \code{var} by
+#' @description This function weights the variable \code{x} by
 #'                a specific vector of \code{weights}.
 #'
 #' @seealso \code{\link{weight2}}
 #'
-#' @param var The (unweighted) variable
-#' @param weights A vector with same length as \code{var}, which
-#'          contains weight factors. Each value of \code{var} has a
+#' @param x (unweighted) variable
+#' @param weights vector with same length as \code{x}, which
+#'          contains weight factors. Each value of \code{x} has a
 #'          specific assigned weight in \code{weights}.
 #'
-#' @return The weighted \code{var}.
+#' @return The weighted \code{x}.
 #'
 #' @note The values of the returned vector are in sorted order, whereas the values'
-#'        order of the original \code{var} may be spread randomly. Hence, \code{var} can't be
+#'        order of the original \code{x} may be spread randomly. Hence, \code{x} can't be
 #'        used, for instance, for further cross tabulation. In case you want to have
 #'        weighted contingency tables or (grouped) box plots etc., use the \code{weightBy}
 #'        parameter of most functions.
@@ -1045,11 +922,11 @@ weight2 <- function(var, weights) {
 #'
 #' @importFrom stats na.pass xtabs
 #' @export
-weight <- function(var, weights) {
+weight <- function(x, weights) {
   # init values
   weightedvar <- c()
-  wtab <- round(stats::xtabs(weights ~ var,
-                             data = data.frame(weights = weights, var = var),
+  wtab <- round(stats::xtabs(weights ~ x,
+                             data = data.frame(weights = weights, x = x),
                              na.action = stats::na.pass,
                              exclude = NULL))
   # iterate all table values
@@ -1557,42 +1434,3 @@ mean_n <- function(dat, n, digits = 2) {
   }
   round(apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA)), digits)
 }
-
-
-#' @title Check whether value is even
-#' @name is_even
-#'
-#' @param x numeric vector or single numeric value
-#'
-#' @return \code{TRUE} for each even value of \code{x}, \code{FALSE} for
-#'           odd values.
-#'
-#' @seealso \code{\link{is_odd}}
-#'
-#' @examples
-#' is_even(4)
-#' is_even(5)
-#' is_even(1:4)
-#'
-#' @export
-is_even <- function(x) (x %% 2) == 0
-
-
-#' @title Check whether value is odd
-#' @name is_odd
-#'
-#' @param x numeric vector or single numeric value
-#'
-#' @return \code{TRUE} for each odd value of \code{x}, \code{FALSE} for
-#'           even values.
-#'
-#' @seealso \code{\link{is_even}}
-#'
-#' @examples
-#' is_odd(4)
-#' is_odd(5)
-#' is_odd(1:4)
-#'
-#' @export
-is_odd <- function(x) (x %% 2) == 1
-

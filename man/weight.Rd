@@ -4,25 +4,25 @@
 \alias{weight}
 \title{Weight a variable}
 \usage{
-weight(var, weights)
+weight(x, weights)
 }
 \arguments{
-\item{var}{The (unweighted) variable}
+\item{x}{(unweighted) variable}
 
-\item{weights}{A vector with same length as \code{var}, which
-         contains weight factors. Each value of \code{var} has a
+\item{weights}{vector with same length as \code{x}, which
+         contains weight factors. Each value of \code{x} has a
          specific assigned weight in \code{weights}.}
 }
 \value{
-The weighted \code{var}.
+The weighted \code{x}.
 }
 \description{
-This function weights the variable \code{var} by
+This function weights the variable \code{x} by
                a specific vector of \code{weights}.
 }
 \note{
 The values of the returned vector are in sorted order, whereas the values'
-       order of the original \code{var} may be spread randomly. Hence, \code{var} can't be
+       order of the original \code{x} may be spread randomly. Hence, \code{x} can't be
        used, for instance, for further cross tabulation. In case you want to have
        weighted contingency tables or (grouped) box plots etc., use the \code{weightBy}
        parameter of most functions.
