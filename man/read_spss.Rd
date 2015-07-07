@@ -4,7 +4,7 @@
 \alias{read_spss}
 \title{Import SPSS dataset as data frame into R}
 \usage{
-read_spss(path, enc = NA, autoAttachVarLabels = FALSE,
+read_spss(path, enc = NA, attach.var.labels = FALSE,
   atomic.to.fac = FALSE, use.na = TRUE, option = "haven")
 }
 \arguments{
@@ -12,7 +12,7 @@ read_spss(path, enc = NA, autoAttachVarLabels = FALSE,
 
 \item{enc}{The file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
 
-\item{autoAttachVarLabels}{if \code{TRUE}, variable labels will automatically be
+\item{attach.var.labels}{if \code{TRUE}, variable labels will automatically be
 attached to each variable as \code{"variable.label"} attribute. Use this
 parameter, if \code{option = "foreign"}, where variable labels are attached
 as list-attribute to the imported data frame.

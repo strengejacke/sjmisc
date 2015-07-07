@@ -20,8 +20,8 @@ Dedicated online manuals at \url{http://www.strengejacke.de/sjPlot/}.
 \tabular{rl}{
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
-Version: \tab 1.0.3-3\cr
-Date: \tab 2015-07-06\cr
+Version: \tab 1.0.3-4\cr
+Date: \tab 2015-07-07\cr
 License: \tab GPL-3\cr
 }
 }

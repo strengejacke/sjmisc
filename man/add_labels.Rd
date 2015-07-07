@@ -7,30 +7,30 @@
 add_labels(df_new, df_origin = NULL)
 }
 \arguments{
-\item{df_new}{the new, subsetted data frame.}
+\item{df_new}{the new, subsetted data frame}
 
 \item{df_origin}{the original data frame where the subset (\code{df_new}) stems from;
 use \code{NULL}, if value and variable labels from \code{df_new} should be removed.}
 }
 \value{
 Returns \code{df_new} with either removed value and variable label attributes
-          (if \code{df_origin} was \code{NULL}) or with added value and variable label
+          (if \code{df_origin = NULL}) or with added value and variable label
           attributes (if \code{df_origin} was the original subsetted data frame).
 }
 \description{
 Subsetting-functions usually drop value and variable labels from
                subsetted data frames (if the original data frame has value and variable
                label attributes). This function adds back these value and variable
-               labels to subsetted data frames that have been subsetted with \code{\link{subset}},
-               \code{\link[dplyr]{select}} or \code{\link[dplyr]{filter}}.
+               labels to subsetted data frames that have been subsetted, for instance,
+                with \code{\link{subset}}.
                \cr \cr
-               In case \code{df_origin} is \code{NULL}, all possible label attributes
+               In case \code{df_origin = NULL}, all possible label attributes
                from \code{df_new} are removed.
 }
 \note{
-In case \code{df_origin} is \code{NULL}, all possible label attributes
-        from \code{df_new} are removed. \cr \cr
-        dplyr >= 0.4.2 no longer drops vector attributes; you'll only need
+In case \code{df_origin= NULL}, all possible label attributes
+        from \code{df_new} are removed. dplyr >= 0.4.2 no longer drops
+        vector attributes; you'll only need
         to set back labels when using dplyr up to 0.4.1.
 }
 \examples{

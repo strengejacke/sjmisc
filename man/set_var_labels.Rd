@@ -13,15 +13,15 @@ set_label(x, lab, attr.string = NULL)
 \item{x}{a variable (vector), \code{list} of variables or a \code{data.frame}
 where variables labels should be attached.}
 
-\item{lab}{If \code{x} is a vector (single variable), use a single character string with
+\item{lab}{if \code{x} is a vector (single variable), use a single character string with
 the variable label for \code{x}. If \code{x} is a data frame, use a
 vector with character labels of same length as \code{ncol(x)}.
 Use \code{lab = ""} to remove labels-attribute from \code{x}, resp.
 set any value of vector \code{lab} to \code{""} to remove specific variable
 label attributes from a data frame's variable.}
 
-\item{attr.string}{The attribute string for the variable label. \strong{Note:}
-Usually, this parameter should be ignored. It is only used internally
+\item{attr.string}{attribute string for the variable label. \strong{Note:}
+Usually, this argument should be ignored. It is only used internally
 for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.}
 }
 \value{
@@ -58,7 +58,7 @@ dummy <- sample(1:4, 40, replace=TRUE)
 dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
 dummy <- set_label(dummy, "Dummy-variable")
 # auto-detection of value labels by default, auto-detection of
-# variable labels if parameter "title" set to NULL.
+# variable labels if argument "title" set to NULL.
 \dontrun{
 library(sjPlot)
 sjp.frq(dummy, title = NULL)}

@@ -7,7 +7,7 @@
 cv(x)
 }
 \arguments{
-\item{x}{a (numeric) vector / variable or a fitted linear model of class
+\item{x}{(numeric) vector / variable or a fitted linear model of class
 \code{\link{lm}}, \code{\link[lme4]{merMod}} (lme4) or
 \code{\link[nlme]{lme}} (nlme).}
 }

@@ -7,9 +7,9 @@
 is_nested(f1, f2)
 }
 \arguments{
-\item{f1}{a numeric vector or \code{\link{factor}}.}
+\item{f1}{numeric vector or \code{\link{factor}}.}
 
-\item{f2}{a numeric vector or \code{\link{factor}}.}
+\item{f2}{numeric vector or \code{\link{factor}}.}
 }
 \value{
 Logical, \code{TRUE} if factors are nested, \code{FALSE} otherwise.

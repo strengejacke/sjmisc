@@ -25,7 +25,7 @@ bound of \code{groupsize}. See 'Details'.}
 
 \item{autoGroupCount}{Sets the maximum number of groups that are defined when auto-grouping is on
          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
-         this parameter will be ignored.}
+         this argument will be ignored.}
 }
 \value{
 A grouped variable, either as numeric or as factor (see paramter \code{asNumeric}).

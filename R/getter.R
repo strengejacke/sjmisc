@@ -287,10 +287,7 @@ get_labels <- function(x,
 
 # Retrieve value labels of a data frame or variable
 # See 'get_labels'
-get_labels_helper <- function(x,
-                              attr.only = TRUE,
-                              include.values = NULL,
-                              include.non.labelled = FALSE) {
+get_labels_helper <- function(x, attr.only, include.values, include.non.labelled) {
   labels <- NULL
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
@@ -316,22 +313,36 @@ get_labels_helper <- function(x,
     if (!is.null(lab)) {
       # retrieve values associated with labels
       if (is.character(x))
-        values <- unname(attr(x, attr.string, exact = T))
+        values <- unname(lab)
       else
-        values <- as.numeric(unname(attr(x, attr.string, exact = T)))
-      # retrieve order of value labels
-      reihenfolge <- order(values)
+        values <- as.numeric(unname(lab))
       # retrieve label values in correct order
-      labels <- names(lab)[reihenfolge]
+      labels <- names(lab)
       # do we want to include non-labelled values as well?
       if (include.non.labelled) {
+        # get values of variable
+        valid.vals <- unique(stats::na.omit((x)))
         # check if we have more values than labels
-        vr <- get_value_range(x)
-        if (vr$valrange > length(labels)) {
-          # get missing values
-          add_vals <- seq_len(vr$valrange)[-seq_len(length(labels))]
+        if (length(valid.vals) > length(labels)) {
+          # We now need to know, which values of "x" don't
+          # have labels. In case "x" is a character, we simply
+          # subtract amount of labelled value codes from the
+          # total value range of "x".
+          # If "x" is numeric, we remove all valid values - as returned
+          # by "get_values()" - from the value range.
+          if (is.character(x))
+            add_vals <- seq_len(length(valid.vals))[-seq_len(length(labels))]
+          else
+            add_vals <- valid.vals[-values]
           # add to labels
           labels <- c(labels, as.character(add_vals))
+          # fix value prefix
+          new_vals <- c(as.character(values),as.character(add_vals))
+          # sort values and labels
+          labels <- labels[order(c(as.numeric(values), add_vals))]
+          new_vals <- new_vals[order(c(as.numeric(values), add_vals))]
+          # set back new values
+          values <- new_vals
         }
       }
       # include associated values?
@@ -341,14 +352,14 @@ get_labels_helper <- function(x,
         if ((is.logical(include.values) &&
              include.values == TRUE) ||
             include.values == "as.name" || include.values == "n") {
-          names(labels) <- values[reihenfolge]
+          names(labels) <- values
         }
         # here we include values as prefix of labels
         if (include.values == "as.prefix" || include.values == "p") {
           if (is.numeric(values))
-            labels <- sprintf("[%i] %s", values[reihenfolge], labels)
+            labels <- sprintf("[%i] %s", values, labels)
           else
-            labels <- sprintf("[%s] %s", values[reihenfolge], labels)
+            labels <- sprintf("[%s] %s", values, labels)
         }
       }
     }
@@ -416,7 +427,7 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
   # remove missing value codes?
   if (drop.na) {
     # get NA logicals
-    na.flag <- attr(x, getNaAttribute(), exact = T)
+    na.flag <- getNaFromAttribute(x)
     # do we have missing flag? if yes, remove missing code value
     if (!is.null(na.flag)) values <- values[!na.flag]
   }
@@ -443,7 +454,22 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #' @return The missing values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no missing value attribute.
 #'
-#' @details See 'Details' in \code{\link{get_values}}.
+#' @details Other statistical software packages (like 'SPSS') allow to define
+#'            multiple missing values, e.g. \emph{not applicable}, \emph{refused answer}
+#'            or "real" missing. These missing types may be assigned with
+#'            different values, so it is possible to distinguish between these
+#'            missing types. In R, multiple declared missings cannot be represented
+#'            in a similar way. However, \code{\link[haven]{labelled}} vectors
+#'            allow to indicate different missings through the
+#'            \code{is_na}-\code{\link{attr}}. Technically, these "missings" are
+#'            stored as normal values. Thus, the \code{\link{table}} command,
+#'            for instance, would include these values by default. The
+#'            \strong{sjmisc-package} offers capabilities to deal with multiple
+#'            declared missings and enhances the possibilities to work with
+#'            labelled data, allowing for easy access of multiple declared
+#'            missings or conversion into \code{NA} etc.
+#'            \cr \cr
+#'            Furthermore, see 'Details' in \code{\link{get_values}}.
 #'
 #' @examples
 #' library(haven)
@@ -464,14 +490,18 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #' @export
 get_na <- function(x) {
   # get values
-  values <- get_values(x, sort.val = FALSE)
+  values <- get_values(x, sort.val = FALSE, drop.na = FALSE)
   # get NA logicals
-  na.flag <- attr(x, getNaAttribute(), exact = T)
+  na.flag <- getNaFromAttribute(x)
   # do we have missing flag?
   if (is.null(na.flag)) {
     message("Variable has no assigned missing value codes.")
     return(NULL)
   }
+  # copy NA-codes to new vector, so we can check length
+  nas <- values[na.flag]
+  # set return value to NULL, if no missing values
+  if (length(nas) == 0) nas <- NULL
   # return missing values
-  return(values[na.flag])
+  return(nas)
 }

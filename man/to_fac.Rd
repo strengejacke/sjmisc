@@ -5,13 +5,18 @@
 \alias{to_factor}
 \title{Convert variable into factor and keep value labels}
 \usage{
-to_fac(x)
+to_fac(x, drop.na = FALSE)
 
-to_factor(x)
+to_factor(x, drop.na = FALSE)
 }
 \arguments{
 \item{x}{A (numeric or atomic) variable or a data frame with
 (numeric or atomic) variables.}
+
+\item{drop.na}{logical, if \code{TRUE}, all types of missing value codes are
+converted into NA before \code{x} is converted as factor. If
+\code{FALSE}, missing values will be left as their original codes.
+See 'Examples' and \code{\link{get_na}}.}
 }
 \value{
 A factor variable, including variable and value labels, respectively
@@ -23,9 +28,12 @@ This function converts a variable into a factor, but keeps
                variable and value labels, if these are attached as attributes
                to the variale. See 'Examples'.
 }
+\details{
+See 'Details' in \code{\link{get_na}}.
+}
 \note{
 This function is intended for use with vectors that have value and variable
-       labels attached. Unlike \code{\link{as.factor}}, \code{to_fac} converts
+       labels attached. Unlike \code{\link{as.factor}}, \code{to_factor} converts
        a variable into a factor and retains the value and variable label attributes.
        \cr \cr
        Attaching labels is automatically done by importing data sets
@@ -43,8 +51,18 @@ sjt.frq(efc$e42dep)
 
 data(efc)
 # factor conversion, which keeps value attributes
-efc$e42dep <- to_fac(efc$e42dep)
+efc$e42dep <- to_factor(efc$e42dep)
 sjt.frq(efc$e42dep)}
+
+library(haven)
+# create labelled integer, with missing flag
+x <- labelled(c(1, 2, 1, 3, 4, 1),
+              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+              c(FALSE, FALSE, TRUE, TRUE))
+# to factor, with missing labels
+to_factor(x)
+# to factor, missings removed
+to_factor(x, drop.na = TRUE)
 }
 \seealso{
 \code{\link{to_value}} to convert a factor into a numeric value and

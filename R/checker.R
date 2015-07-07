@@ -45,8 +45,8 @@ is_crossed <- function(f1, f2) {
 #'                i.e. if each category of the first factor co-occurs
 #'                with only one category of the other.
 #'
-#' @param f1 a numeric vector or \code{\link{factor}}.
-#' @param f2 a numeric vector or \code{\link{factor}}.
+#' @param f1 numeric vector or \code{\link{factor}}.
+#' @param f2 numeric vector or \code{\link{factor}}.
 #' @return Logical, \code{TRUE} if factors are nested, \code{FALSE} otherwise.
 #'
 #' @note If factors are nested, a message is displayed to tell whether \code{f1}
@@ -167,7 +167,7 @@ is_num_fac <- function(x) {
 #' @description This function checks whether a string or character vector (of
 #'                length 1) is empty or not.
 #'
-#' @param x a string or character vector of length 1.
+#' @param x string or character vector of length 1.
 #' @return Logical, \code{TRUE} if \code{x} is empty, \code{FALSE} otherwise.
 #'
 #' @note \code{NULL}- or \code{NA}-values are also considered as "empty" (see
@@ -199,8 +199,15 @@ is_empty <- function(x) {
 }
 
 
-# this function returns TRUE, if a vector is
-# of class "labelled" (haven package)
+#' @title Check whether object is of class "labelled"
+#' @name is_labelled
+#' @description This function checks whether \code{x} is of class \code{labelled}.
+#'
+#' @param x an object
+#' @return Logical, \code{TRUE} if \code{any(class(x))} is \code{labelled},
+#'           \code{FALSE} otherwise.
+#'
+#' @export
 is_labelled <- function(x) {
   # check if object has multiple class attributes
   if (length(class(x)) > 1) return(any(class(x) == "labelled"))

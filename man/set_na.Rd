@@ -11,7 +11,7 @@ set_na(x, values, as.attr = FALSE)
 missing values should be defined. If \code{x} is a \code{data.frame}, each
 column is assumed to be a new variable, where missings should be defined.}
 
-\item{values}{a numeric vector with values that should be replaced with \code{\link{NA}}'s.
+\item{values}{numeric vector with values that should be replaced with \code{\link{NA}}'s.
 Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.
 Or: a logical vector describing which values should be translated
 to missing values. See 'Details' and 'Examples'.}
@@ -30,19 +30,21 @@ This function sets specific values of a variable, data frame
 }
 \details{
 \code{set_na} converts those values to \code{NA} that are
-           specified in the function's \code{values} parameter; hence,
-           \code{set_na} ignores any missing code attributes like \code{is_na}.
-           \code{\link{to_na}}, by contrast, converts values to \code{NA},
-           which are defined as missing through the \code{is_na}-attribute
-           of a vector (see \code{\link[haven]{labelled}}).
+           specified in the function's \code{values} argument; hence,
+           by default, \code{set_na} ignores any missing code attributes
+           like \code{is_na}. \code{\link{to_na}}, by contrast, converts
+           values to \code{NA}, which are defined as missing through the
+           \code{is_na}-attribute of a vector (see \code{\link[haven]{labelled}}).
            \cr \cr
-           If \code{as.attr = TRUE}, \code{values} in \code{x} will not be converted
-           to \code{NA}. Instead, the attribute \code{is_na} will be added
-           to \code{x}, indicating which values should be coded as missing.
-           \code{values} may either be numeric, with each number indicating a
-           value that should be defined as missing; or a vector of logicals,
-           describing which values should be translated to missing values
-           (see 'Examples').
+           If \code{as.attr = TRUE}, \code{values} in \code{x} will \strong{not}
+           be converted to \code{NA}. Instead, the attribute \code{is_na}
+           will be added to \code{x}, indicating which values should be coded
+           as missing. \code{values} may either be numeric, with each number
+           indicating a value that should be defined as missing; or a vector
+           of logicals, describing which values should be translated to
+           missing values (see 'Examples').
+           \cr \cr
+           Furthermore, see 'Details' in \code{\link{get_na}}.
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}

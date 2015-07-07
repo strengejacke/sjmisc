@@ -4,13 +4,13 @@
 \alias{mic}
 \title{Mean Inter-Item-Correlation}
 \usage{
-mic(data, corMethod = "pearson")
+mic(data, cor.method = "pearson")
 }
 \arguments{
 \item{data}{A \code{matrix} as returned by the \code{\link{cor}}-function, or
 a data frame which correlations should be calculated.}
 
-\item{corMethod}{Indicates the correlation computation method. May be one of
+\item{cor.method}{Indicates the correlation computation method. May be one of
 \code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
 You may use initial letter only.}
 }

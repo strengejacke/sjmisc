@@ -10,10 +10,10 @@ set_val_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 }
 \arguments{
-\item{x}{a variable (vector), \code{list} of variables or a \code{data.frame}
+\item{x}{variable (vector), \code{list} of variables or a \code{data.frame}
 where value labels should be attached. Replaces former value labels.}
 
-\item{labels}{a character vector of labels that will be attached to \code{x} by setting
+\item{labels}{character vector of labels that will be attached to \code{x} by setting
 the \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
 the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
 \code{labels} should have a length of 3.
@@ -21,7 +21,7 @@ If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
 character vectors. If \code{labels} is a list, it must have the same length as
 number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 the \code{labels} will be applied to each column of \code{x}.
-Use \code{labels = ""} to remove labels-attribute from \code{x}.#'}
+Use \code{labels = ""} to remove labels-attribute from \code{x}.}
 
 \item{force.labels}{logical; if \code{TRUE}, all \code{labels} are added as value labels
 attribute, even if \code{x} has less unique values then length of \code{labels}
@@ -84,9 +84,9 @@ x
 # setting same value labels to multiple vectors
 
 # create a set of dummy variables
-dummy1 <- sample(1:4, 40, replace=TRUE)
-dummy2 <- sample(1:4, 40, replace=TRUE)
-dummy3 <- sample(1:4, 40, replace=TRUE)
+dummy1 <- sample(1:4, 40, replace = TRUE)
+dummy2 <- sample(1:4, 40, replace = TRUE)
+dummy3 <- sample(1:4, 40, replace = TRUE)
 # put them in list-object
 dummies <- list(dummy1, dummy2, dummy3)
 # and set same value labels for all three dummies

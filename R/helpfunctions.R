@@ -8,7 +8,10 @@ autoSetValueLabels <- function(x) {
   opt <- getOption("autoSetValueLabels")
   if (is.null(opt) || opt == TRUE) {
     # check if we have value label attribut
-    vl <- get_labels_helper(x)
+    vl <- get_labels_helper(x,
+                            attr.only = TRUE,
+                            include.values = NULL,
+                            include.non.labelled = TRUE)
     lv <- levels(x)
     label <- NULL
     # check  if we have value labels
@@ -105,8 +108,8 @@ getValLabelAttribute <- function(x) {
   return(attr.string)
 }
 
-
 getNaAttribute <- function() return("is_na")
+getNaFromAttribute <- function(x) return(attr(x, getNaAttribute(), exact = T))
 
 
 # automatically set labels of variables,

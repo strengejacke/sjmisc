@@ -7,7 +7,7 @@
 std_e(x)
 }
 \arguments{
-\item{x}{a (numeric) vector / variable or a data frame.}
+\item{x}{(numeric) vector / variable or a data frame.}
 }
 \value{
 The standard error of variable \code{x}, or for each variable

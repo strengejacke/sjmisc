@@ -4,13 +4,13 @@
 \alias{to_value}
 \title{Convert factors to numeric variables}
 \usage{
-to_value(x, startAt = NULL, keep.labels = TRUE)
+to_value(x, start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
 \item{x}{A (factor) variable or a data frame with (factor) variables.}
 
-\item{startAt}{the starting index, i.e. the lowest numeric value of the variable's
-value range. By default, this parameter is \code{NULL}, hence the lowest
+\item{start.at}{the starting index, i.e. the lowest numeric value of the variable's
+value range. By default, this argument is \code{NULL}, hence the lowest
 value of the returned numeric variable corresponds to the lowest factor
 level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 are not numeric).}
@@ -19,8 +19,8 @@ are not numeric).}
 value labels. See \code{\link{set_labels}} for more details.}
 }
 \value{
-A numeric variable with values ranging either from \code{startAt} to
-          \code{startAt} + length of factor levels, or to the corresponding
+A numeric variable with values ranging either from \code{start.at} to
+          \code{start.at} + length of factor levels, or to the corresponding
           factor levels (if these were numeric). Or a data frame with numeric
           variables, if \code{x} was a data frame.
 }
@@ -57,7 +57,7 @@ table(to_value(dummy))
 }
 \seealso{
 \code{\link{to_label}} to convert a value into a factor with labelled
-           factor levels and \code{\link{to_fac}} to convert a numeric variable
+           factor levels and \code{\link{to_factor}} to convert a numeric variable
            into a factor (and retain labels)
 }
 

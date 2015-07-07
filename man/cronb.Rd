@@ -7,7 +7,7 @@
 cronb(df)
 }
 \arguments{
-\item{df}{a data frame or matrix with more than 2 columns.}
+\item{df}{data frame or matrix with more than 2 columns.}
 }
 \value{
 The Cronbach's alpha value for \code{df}.

@@ -6,7 +6,7 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c("fit", "var"))
 #' @name eta_sq
 #' @description Returns the eta-squared value for one-way-anovas.
 #'
-#' @param ... A fitted one-way-anova model or a dependent and grouping variable (see 'Examples').
+#' @param ... fitted one-way-anova model or a dependent and grouping variable (see 'Examples').
 #' @return The eta-squared value.
 #'
 #' @note Interpret eta-squared like r-squared or R-squared; a rule of thumb (Cohen):
@@ -70,12 +70,12 @@ eta_sq <- function(...) {
 #'                of a fitted linear (mixed) models, i.e. \code{fit} must either
 #'                be of class \code{lm} or \code{\link[lme4]{merMod}}.
 #'
-#' @param fit A fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).
+#' @param fit fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).
 #' @param include.ci logical, if \code{TRUE}, a data frame with confidence intervals will be returned,
 #'          when \code{fit} is of class \code{lm}. If \code{fit} is a \code{lmerMod} object (lme4-package),
 #'          always returns standard error instead of confidence intervals (hence, this paramezer will
 #'          be ignored when \code{fit} is a \code{lmerMod} object).
-#' @return A vector with standardiized beta coefficients of the fitted linear model, or a data frame
+#' @return A vector with standardized beta coefficients of the fitted linear model, or a data frame
 #'           with standardized confidence intervals, if \code{include.ci = TRUE}.
 #'
 #' @note "Standardized coefficients refer to how many standard deviations a dependent variable will change,
@@ -147,18 +147,17 @@ sjs.stdmm <- function(fit) {
 #' @name mwu
 #' @description This function performs a Mann-Whitney-U-Test (or \code{Wilcoxon rank sum test},
 #'                see \code{\link{wilcox.test}} and \code{\link[coin]{wilcox_test}})
-#'                for the variable \code{var}, which is
-#'                divided into groups indicated by \code{grp} (so the formula \code{var ~ grp}
-#'                is used). If \code{grp} has more than two categories, a comparison between each
+#'                for \code{x}, for each group indicated by \code{grp}. If \code{grp}
+#'                has more than two categories, a comparison between each combination of
 #'                two groups is performed. \cr \cr
 #'                The function reports U, p and Z-values as well as effect size r
 #'                and group-rank-means.
 #'
-#' @param var A numeric vector / variable, where the Mann-Whitney-U-Test should be applied to.
-#' @param grp The grouping variable indicating the groups that should be used for comparison.
-#' @param distribution indicates how the null distribution of the test statistic should be computed. Mey be one of
-#'          \code{exact}, \code{approximate} or \code{asymptotic} (default).
-#'          See \code{\link[coin]{wilcox_test}} for details.
+#' @param x numeric vector / variable, where the Mann-Whitney-U-Test should be applied to
+#' @param grp grouping variable indicating the groups that should be used for comparison
+#' @param distribution indicates how the null distribution of the test statistic should be computed.
+#'          May be one of \code{"exact"}, \code{"approximate"} or \code{"asymptotic"}
+#'          (default). See \code{\link[coin]{wilcox_test}} for details.
 #' @param weights defining integer valued weights for the observations. By default,
 #'          this is \code{NULL}.
 #' @return (Invisibly) returns a data frame with U, p and Z-values for each group-comparison
@@ -182,7 +181,7 @@ sjs.stdmm <- function(fit) {
 #'
 #' @importFrom stats na.omit wilcox.test kruskal.test
 #' @export
-mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
+mwu <- function(x, grp, distribution = "asymptotic", weights = NULL) {
   # ------------------------
   # check if suggested package is available
   # ------------------------
@@ -206,7 +205,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
     for (j in i:cnt) {
       if (i != j) {
         # retrieve cases (rows) of subgroups
-        xsub <- var[which(grp == grp_values[i] | grp == grp_values[j])]
+        xsub <- x[which(grp == grp_values[i] | grp == grp_values[j])]
         ysub <- grp[which(grp == grp_values[i] | grp == grp_values[j])]
         # only use rows with non-missings
         ysub <- ysub[which(!is.na(xsub))]
@@ -230,7 +229,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
         u <- as.numeric(coin::statistic(wt, type = "linear"))
         z <- as.numeric(coin::statistic(wt, type = "standardized"))
         p <- coin::pvalue(wt)
-        r <- abs(z / sqrt(length(var)))
+        r <- abs(z / sqrt(length(x)))
         w <- stats::wilcox.test(xsub, ysub.n, paired = TRUE)$statistic
         rkm.i <- mean(rank(xsub)[which(ysub.n == grp_values[i])], na.rm = TRUE)
         rkm.j <- mean(rank(xsub)[which(ysub.n == grp_values[j])], na.rm = TRUE)
@@ -281,7 +280,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
   if (cnt > 2) {
     message("Performing Kruskal-Wallis-Test...")
     message("---------------------------------")
-    kw <- stats::kruskal.test(var, grp)
+    kw <- stats::kruskal.test(x, grp)
     cat(sprintf("chi-squared = %.3f\n", kw$statistic))
     cat(sprintf("df = %i\n", kw$parameter))
     if (kw$p.value < 0.001) {
@@ -320,15 +319,15 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
 #'
 #' @description This method performs a Chi-square goodness-of-fit-test (GOF)
 #'                either on a numeric vector against probabilities, or
-#'                a Goodness-of-fit tests for \code{\link{glm}}s for binary data.
+#'                a Goodness-of-fit test for \code{\link{glm}}s for binary data.
 #'
-#' @param x a numeric vector / variable, or a \code{\link{glm}}-object.
-#' @param prob a vector of probabilities (indicating the population probabilities) of the same length
+#' @param x numeric vector / variable, or a \code{\link{glm}}-object.
+#' @param prob vector of probabilities (indicating the population probabilities) of the same length
 #'          as \code{x}'s amount of categories / factor levels. Use \code{nrow(table(x))} to
 #'          determine the amount of necessary values for \code{prob}. Only used,
 #'          when \code{x} is a vector, and not a \code{glm}-object.
-#' @param weights a vector with weights, used to weight \code{x}.
-#' @return For vectors, (insisibly) returns the object of the computed \code{\link{chisq.test}}.
+#' @param weights vector with weights, used to weight \code{x}.
+#' @return For vectors, returns the object of the computed \code{\link{chisq.test}}.
 #'           \cr \cr
 #'           For \code{glm}-objects, an object of class \code{chisq_gof} with
 #'           following values:
@@ -356,7 +355,7 @@ mwu <- function(var, grp, distribution = "asymptotic", weights = NULL) {
 #' chisq_gof(efc$e42dep, prop.table(table(efc$e42dep)))
 #'
 #' # goodness-of-fit test for logistic regression
-#' efc$services <- dicho(efc$tot_sc_e, "v", 0, asNum = TRUE)
+#' efc$services <- dicho(efc$tot_sc_e, "v", 0, as.num = TRUE)
 #' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
 #'            data = efc,
 #'            family = binomial(link = "logit"))
@@ -418,7 +417,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 #' @description This method performs a Hosmer-Lemeshow goodness-of-fit-test
 #'                for generalized linear (mixed) models for binary data.
 #'
-#' @param x a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.
+#' @param x fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.
 #' @param g number of bins to divide the data. Default is 10.
 #'
 #' @return An object of class \code{hoslem_test} with
@@ -589,6 +588,7 @@ cod <- function(x) {
   return(abs(m2 - m1))
 }
 
+
 #' @title Cronbach's Alpha for a matrix or data frame
 #' @name cronb
 #' @description This function calculates the Cronbach's alpha value for each column
@@ -596,7 +596,7 @@ cod <- function(x) {
 #'
 #' @seealso \code{\link{reliab_test}}
 #'
-#' @param df a data frame or matrix with more than 2 columns.
+#' @param df data frame or matrix with more than 2 columns.
 #' @return The Cronbach's alpha value for \code{df}.
 #'
 #' @note See 'Examples' from \code{\link[sjPlot]{sjp.pca}} and \code{\link[sjPlot]{sjt.pca}}.
@@ -622,11 +622,12 @@ cronb <- function(df) {
 #'
 #' @seealso \code{\link{cronb}}
 #'
-#' @param x A data frame with items (from a scale)
-#' @param scaleItems If \code{TRUE}, the data frame's vectors will be scaled. Recommended,
+#' @param x data frame with items (from a scale)
+#' @param scale.items logical, if \code{TRUE}, the data frame's vectors will be scaled. Recommended,
 #'          when the variables have different measures / scales.
-#' @param digits Amount of digits for Cronbach's Alpha and correlation values in
+#' @param digits amount of digits for Cronbach's Alpha and correlation values in
 #'          returned data frame.
+#' @param scaleItems deprecated; use \code{scale.items} instead.
 #' @return A data frame with the corrected item-total correlations (item discrimination)
 #'           and Cronbach's alpha (if item deleted) for each item of the scale, or
 #'           \code{NULL} if data frame had too less columns.
@@ -682,7 +683,17 @@ cronb <- function(df) {
 #'
 #' @importFrom stats cor
 #' @export
-reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
+reliab_test <- function(x,
+                        scale.items = FALSE,
+                        digits = 3,
+                        scaleItems) {
+  # -----------------------------------
+  # warn, if deprecated param is used
+  # -----------------------------------
+  if (!missing(scaleItems)) {
+    warning("argument 'scaleItems' is deprecated; please use 'scale.items' instead.")
+    scale.items <- scaleItems
+  }
   # -----------------------------------
   # remove missings, so correlation works
   # -----------------------------------
@@ -711,7 +722,7 @@ reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
     # Check whether items should be scaled. Needed,
     # when items have different measures / scales
     # -----------------------------------
-    if (scaleItems) x <- data.frame(scale(x, center = TRUE, scale = TRUE))
+    if (scale.items) x <- data.frame(scale(x, center = TRUE, scale = TRUE))
     # -----------------------------------
     # init vars
     # -----------------------------------
@@ -767,7 +778,7 @@ reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
 #'
 #' @param data A \code{matrix} as returned by the \code{\link{cor}}-function, or
 #'          a data frame which correlations should be calculated.
-#' @param corMethod Indicates the correlation computation method. May be one of
+#' @param cor.method Indicates the correlation computation method. May be one of
 #'          \code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
 #'          You may use initial letter only.
 #' @return The value of the computed mean inter-item-correlation.
@@ -788,13 +799,13 @@ reliab_test <- function(x, scaleItems = FALSE, digits = 3) {
 #'
 #' @importFrom stats cor na.omit
 #' @export
-mic <- function(data, corMethod = "pearson") {
+mic <- function(data, cor.method = "pearson") {
   # -----------------------------------
   # Check parameter
   # -----------------------------------
-  if (corMethod == "s") corMethod <- "spearman"
-  if (corMethod == "p") corMethod <- "pearson"
-  if (corMethod == "k") corMethod <- "kendall"
+  if (cor.method == "s") cor.method <- "spearman"
+  if (cor.method == "p") cor.method <- "pearson"
+  if (cor.method == "k") cor.method <- "kendall"
   # -----------------------------------
   # Mean-interitem-corelation
   # -----------------------------------
@@ -802,7 +813,7 @@ mic <- function(data, corMethod = "pearson") {
     corr <- data
   } else {
     data <- stats::na.omit(data)
-    corr <- stats::cor(data, method = corMethod)
+    corr <- stats::cor(data, method = cor.method)
   }
   # -----------------------------------
   # Sum up all correlation values
@@ -829,10 +840,10 @@ mic <- function(data, corMethod = "pearson") {
 #' @description This function calculates a table's cell, row and column percentages as
 #'                well as expected values and returns all results as lists of tables.
 #'
-#' @param tab A simple \code{\link{table}} or \code{\link{ftable}} of which cell, row and column percentages
+#' @param tab simple \code{\link{table}} or \code{\link{ftable}} of which cell, row and column percentages
 #'          as well as expected values are calculated. Tables of class \code{\link{xtabs}} and other will
 #'          be coerced to \code{\link{ftable}} objects.
-#' @param digits The amount of digits for the table percentage values.
+#' @param digits amount of digits for the table percentage values.
 #' @return (invisibly) returns a list with four tables:
 #'         \enumerate{
 #'          \item \code{cell} a table with cell percentages of \code{tab}
@@ -921,7 +932,7 @@ cramer <- function(tab) {
 #' @description Compute standard error for variable or for all variables
 #'                of a data frame.
 #'
-#' @param x a (numeric) vector / variable or a data frame.
+#' @param x (numeric) vector / variable or a data frame.
 #' @return The standard error of variable \code{x}, or for each variable
 #'           if \code{x} is a data frame.
 #'
@@ -965,7 +976,7 @@ std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(stats::na.omit(x)
 #'                linear (mixed effects) models (root mean squared error
 #'                (RMSE) divided by mean of dependent variable).
 #'
-#' @param x a (numeric) vector / variable or a fitted linear model of class
+#' @param x (numeric) vector / variable or a fitted linear model of class
 #'          \code{\link{lm}}, \code{\link[lme4]{merMod}} (lme4) or
 #'          \code{\link[nlme]{lme}} (nlme).
 #' @return The coefficient of variation of \code{x}.
@@ -1124,10 +1135,8 @@ rmse <- function(fit, normalized = FALSE) {
 #'
 #' @description Plot results of Levene's Test for Equality of Variances for One-Way-Anova.
 #'
-#' @param depVar The dependent variable. Will be used with following formular:
-#'          \code{aov(depVar ~ grpVar)}
-#' @param grpVar The grouping variable, as unordered factor. Will be used with following formular:
-#'          \code{aov(depVar ~ grpVar)}
+#' @param depVar dependent variable
+#' @param grpVar grouping (independent) variable, as unordered factor
 #'
 #' @examples
 #' data(efc)

@@ -4,7 +4,7 @@
 \alias{to_label}
 \title{Convert variable into factor and replaces values with associated value labels}
 \usage{
-to_label(x, add.non.labelled = FALSE)
+to_label(x, add.non.labelled = FALSE, drop.na = FALSE)
 }
 \arguments{
 \item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}},
@@ -14,6 +14,11 @@ respectively a data frame with such variables.}
 
 \item{add.non.labelled}{logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}
+
+\item{drop.na}{logical, if \code{TRUE}, all types of missing value codes are
+converted into NA before \code{x} is converted as factor. If
+\code{FALSE}, missing values will be left as their original codes.
+See 'Examples' and \code{\link{get_na}}.}
 }
 \value{
 A factor variable with the associated value labels as factor levels, or a
@@ -25,6 +30,9 @@ This function converts (replaces) variable values (also of factors)
                For instance, if you have a Gender variable with 0/1 value, and associated
                labels are male/female, this function would convert all 0 to male and
                all 1 to female and returns the new variable as \code{\link{factor}}.
+}
+\details{
+See 'Details' in \code{\link{get_na}}.
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
@@ -65,9 +73,20 @@ x <- set_labels(x, c("yes", "maybe", "no"), add.non.labelled = FALSE)
 to_label(x)
 # convert to label, including non-labelled values
 to_label(x, add.non.labelled = TRUE)
+
+
+library(haven)
+# create labelled integer, with missing flag
+x <- labelled(c(1, 2, 1, 3, 4, 1),
+              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+              c(FALSE, FALSE, TRUE, TRUE))
+# to labelled factor, with missing labels
+to_label(x)
+# to labelled factor, missings removed
+to_label(x, drop.na = TRUE)
 }
 \seealso{
-\code{\link{to_fac}} to convert a numeric variable into a factor (and
+\code{\link{to_factor}} to convert a numeric variable into a factor (and
            retain labels) and \code{\link{to_value}} to convert a factor into
            a numeric variable.
 }

@@ -12,7 +12,7 @@
 #'
 #' @param path The file path to the SPSS dataset.
 #' @param enc The file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
-#' @param autoAttachVarLabels if \code{TRUE}, variable labels will automatically be
+#' @param attach.var.labels if \code{TRUE}, variable labels will automatically be
 #'          attached to each variable as \code{"variable.label"} attribute. Use this
 #'          parameter, if \code{option = "foreign"}, where variable labels are attached
 #'          as list-attribute to the imported data frame.
@@ -71,7 +71,7 @@
 #' @export
 read_spss <- function(path,
                       enc = NA,
-                      autoAttachVarLabels = FALSE,
+                      attach.var.labels = FALSE,
                       atomic.to.fac = FALSE,
                       use.na = TRUE,
                       option = "haven") {
@@ -112,7 +112,7 @@ read_spss <- function(path,
     # convert atomic values to factors
     if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
     # auto attach labels
-    if (autoAttachVarLabels) {
+    if (attach.var.labels) {
       message("Attaching variable labels. Please wait...\n")
       data.spss <- set_label(data.spss, get_label(data.spss))
     }

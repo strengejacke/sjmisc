@@ -4,48 +4,54 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(x, dichBy = "median", dichVal = -1, asNum = FALSE,
-  varLabel = NULL, valLabels = NULL)
+dicho(x, dich.by = "median", dich.val = -1, as.num = FALSE,
+  var.label = NULL, val.labels = NULL, dichBy, dichVal, asNum)
 }
 \arguments{
 \item{x}{variable (vector), \code{data.frame} or \code{list} of variables
 that should be dichotomized}
 
-\item{dichBy}{indicates the split criterion where a variable is dichotomized
+\item{dich.by}{indicates the split criterion where a variable is dichotomized
 \describe{
-  \item{\code{"median"}}{by default, \code{var} is split into two groups at the median. May be abbreviated as \code{"md"}.}
-  \item{\code{"mean"}}{splits \code{var} into two groups at the mean of \code{var}. May be abbreviated as \code{"m"}.}
-  \item{\code{"value"}}{splits \code{var} into two groups at a specific value (see \code{dichVal}). May be abbreviated as \code{"v"}.}
+  \item{\code{"median"}}{by default, \code{x} is split into two groups at the median. May be abbreviated as \code{"md"}.}
+  \item{\code{"mean"}}{splits \code{x} into two groups at the mean of \code{x}. May be abbreviated as \code{"m"}.}
+  \item{\code{"value"}}{splits \code{x} into two groups at a specific value (see \code{dich.val}). May be abbreviated as \code{"v"}.}
   }}
 
-\item{dichVal}{numeric, indicates a value where \code{var} is dichotomized when \code{dichBy = "value"}.
-\strong{Note that \code{dichVal} is inclusive}, i.e. \code{dichVal = 10} will split \code{var}
+\item{dich.val}{numeric, indicates a value where \code{x} is dichotomized when \code{dich.by = "value"}.
+\strong{Note that \code{dich.val} is inclusive}, i.e. \code{dich.val = 10} will split \code{x}
 into one group with values from lowest to 10 and another group with values greater
 than 10.}
 
-\item{asNum}{logical, if \code{TRUE}, return value will be numeric, not a factor.}
+\item{as.num}{logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
-\item{varLabel}{optional string, to set variable label attribute for the
+\item{var.label}{optional string, to set variable label attribute for the
 dichotomized variable (see \code{\link{set_label}}). If \code{NULL}
 (default), variable label attribute of \code{x} will be used (if present).}
 
-\item{valLabels}{optional character vector (of length two), to set value label
+\item{val.labels}{optional character vector (of length two), to set value label
 attributes of dichotomized variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
+
+\item{dichBy}{deprecated; use \code{dich.by} instead}
+
+\item{dichVal}{deprecated; use \code{dich.val} instead}
+
+\item{asNum}{deprecated; use \code{as.num} instead}
 }
 \value{
-a dichotomized factor (or numeric, if \code{asNum = TRUE}) variable (0/1-coded),
+a dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
           respectively a data frame or list of dichotomized factor (or numeric) variables.
 }
 \description{
 Dichotomizes variables into dummy variables (0/1). Dichotomization is
-               either done by median, mean or a specific value (see \code{dichBy}).
+               either done by median, mean or a specific value (see \code{dich.by}).
                Either single vectors, a complete data frame or a list of
                variables can be dichotomized.
 }
 \note{
 Variable label attributes (see, for instance, \code{\link{set_label}}) are retained
-        (unless changes via \code{varLabel}-parameter).
+        (unless changes via \code{var.label}-argument).
 }
 \examples{
 data(efc)
@@ -68,7 +74,7 @@ dicho(dummy)
 \dontrun{
 library(sjPlot)
 sjp.frq(dicho(efc$e42dep,
-              varLabel = "Dependency (dichotomized)",
-              valLabels = c("lower", "higher")))}
+              var.label = "Dependency (dichotomized)",
+              val.labels = c("lower", "higher")))}
 }
 

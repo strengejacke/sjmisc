@@ -21,7 +21,22 @@ This function retrieves the value codes associated with missing values
                values have not been replaced with \code{NA}s after import.
 }
 \details{
-See 'Details' in \code{\link{get_values}}.
+Other statistical software packages (like 'SPSS') allow to define
+           multiple missing values, e.g. \emph{not applicable}, \emph{refused answer}
+           or "real" missing. These missing types may be assigned with
+           different values, so it is possible to distinguish between these
+           missing types. In R, multiple declared missings cannot be represented
+           in a similar way. However, \code{\link[haven]{labelled}} vectors
+           allow to indicate different missings through the
+           \code{is_na}-\code{\link{attr}}. Technically, these "missings" are
+           stored as normal values. Thus, the \code{\link{table}} command,
+           for instance, would include these values by default. The
+           \strong{sjmisc-package} offers capabilities to deal with multiple
+           declared missings and enhances the possibilities to work with
+           labelled data, allowing for easy access of multiple declared
+           missings or conversion into \code{NA} etc.
+           \cr \cr
+           Furthermore, see 'Details' in \code{\link{get_values}}.
 }
 \examples{
 library(haven)

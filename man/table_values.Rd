@@ -7,11 +7,11 @@
 table_values(tab, digits = 2)
 }
 \arguments{
-\item{tab}{A simple \code{\link{table}} or \code{\link{ftable}} of which cell, row and column percentages
+\item{tab}{simple \code{\link{table}} or \code{\link{ftable}} of which cell, row and column percentages
 as well as expected values are calculated. Tables of class \code{\link{xtabs}} and other will
 be coerced to \code{\link{ftable}} objects.}
 
-\item{digits}{The amount of digits for the table percentage values.}
+\item{digits}{amount of digits for the table percentage values.}
 }
 \value{
 (invisibly) returns a list with four tables:

@@ -1,4 +1,4 @@
-Version 1.0.3-3
+Version 1.0.3-4
 ------------------------------------------------------------------------------
 General:
 * Updated namespaces to meet new CRAN namespace requirements.
@@ -13,16 +13,18 @@ Changes to functions:
 * "get_val_labels" gets alias name "get_labels".
 * "get_var_labels" gets alias name "get_label".
 * "to_fac" gets alias name "to_factor".
-* Added parameter "attr.only" to "get_val_labels" (and "get_labels") to get value labels also of factor levels, if variable has no value label attributes.
-* Parameter "include.values" of "get_val_labels" (and "get_labels") has now two options for returning includes values.
+* Added argument "attr.only" to "get_val_labels" (and "get_labels") to get value labels also of factor levels, if variable has no value label attributes.
+* Argument "include.values" of "get_val_labels" (and "get_labels") has now two options for returning includes values.
 * "get_val_labels" now supports vectors with string label attributes.
 * "to_fac" and "to_value" better deal with vectors that don't need to be converted.
-* "set_val_labels" and "to_fac" now add additional values as labels, if variable has more valid values than labels that have been supplied as parameter.
-* "get_val_labels" gets a "include.non.labelled" parameter to also return non-labelled values as label.
-* "to_label" gets a "add.non.labelled" parameter to also convert non-labelled values to labels.
-* "set_val_labels" gets a "force.values" parameter to add values without associated labels as labels, too.
-* "set_na" gets a "as.attr" parameter, so values are not converted to NA, but rather missing codes are added as "is_na" attribute.
-* "get_values" gets a "drop.na" parameter, to exclude values of missing codes from return value.
+* "set_val_labels" and "to_fac" now add additional values as labels, if variable has more valid values than labels that have been supplied as argument.
+* "get_val_labels" gets a "include.non.labelled" argument to also return non-labelled values as label.
+* "to_label" gets a "add.non.labelled" argument to also convert non-labelled values to labels.
+* "set_val_labels" gets a "force.values" argument to add values without associated labels as labels, too.
+* "set_na" gets a "as.attr" argument, so values are not converted to NA, but rather missing codes are added as "is_na" attribute.
+* "get_values", "to_label" and "to_factor" get a "drop.na" argument, to exclude values of missing codes from return value.
+* Renamed argument "autoAttachVarLabels" of "read_spss" into "attach.var.labels".
+* Functions now better deal with mix of labelled and non-labelled values.
 
 
 Version 1.0.3
@@ -38,13 +40,13 @@ New function:
 Changes to functions:
 * "dicho" now also dichotomizes non-numeric values.
 * "rec" now can keep (copy) not yet recoded values with "else=copy".
-* "get_val_labels" gains a "include.values" parameter to also return values associated with the value labels.
+* "get_val_labels" gains a "include.values" argument to also return values associated with the value labels.
 * "get_val_labels", "get_var_labels", "set_val_labels" and "set_var_labels" now also accept "list"-objects with variables.
 * "dicho", "rec", "set_na" and "recode_to" now also accept "list"-objects with variables.
-* "set_val_labels" gets parameter "force.labels" to force using all labels, even if length of labels if longer than unique values of vector.
-* "rec" gets a "asFac" parameter, to return recoded variable as factor.
+* "set_val_labels" gets argument "force.labels" to force using all labels, even if length of labels if longer than unique values of vector.
+* "rec" gets a "asFac" argument, to return recoded variable as factor.
 * "dicho", "group_var" and "group_labels" keep variable label attributes.
-* "rec" and "dicho" get "varLabel" and "valLabels" parameters, to optionally add value and variable label attributes for recoded or dichotomized variables.
+* "rec" and "dicho" get "varLabel" and "valLabels" arguments, to optionally add value and variable label attributes for recoded or dichotomized variables.
 
 Bug fixes:
 * "get_var_labels" returned NULL if first variable in data.frame had no variable label (but other variables had) - fixed.
@@ -62,8 +64,8 @@ New functions:
 
 Changes to functions:
 * Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by "lmerTest" package).
-* "mean_n" has a "digit" parameter to round returned mean values.
-* "rec", "recode_to" and "std_e" now also accept data frames as parameter.
+* "mean_n" has a "digit" argument to round returned mean values.
+* "rec", "recode_to" and "std_e" now also accept data frames as argument.
 * "chisq_gof" now accepts "glm"-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.
 * "set_val_labels" and "set_var_labels" can now remove label-attributes.
 * "set_na" removes label-attribute, if removed "NA" values were the last labelled values.
@@ -82,7 +84,7 @@ New functions:
 Changes to functions:
 * "std_beta" now accepts plm-objects.
 * "to_value" now auto-detects lowest minimum value of numeric factors, instead of always setting minimum value to 1.
-* "set_na", "dicho", "to_fac", "to_value" and "to_label" now also accept data frames as parameter.
+* "set_na", "dicho", "to_fac", "to_value" and "to_label" now also accept data frames as argument.
 
 Bug fixes:
 * "std_beta" did not work in some cases - fixed.

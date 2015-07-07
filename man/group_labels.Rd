@@ -13,15 +13,15 @@ group_labels(var, groupsize = 5, rightInterval = FALSE,
 \item{groupsize}{group-size, i.e. the range for grouping. By default, for each 5 categories
 new group is built, i.e. \code{groupsize = 5}. Use \code{groupsize = "auto"} to automatically
 resize a variable into a maximum of 30 groups (which is the ggplot-default grouping when
-plotting histograms). Use parameter \code{autoGroupCount} to define the amount of groups.}
+plotting histograms). Use \code{autoGroupCount} to define the amount of groups.}
 
 \item{rightInterval}{logical; if \code{TRUE}, grouping starts with the lower bound of \code{groupsize}.
 If \code{FALSE} (default), grouping starts with the upper bound of \code{groupsize}. See 'Examples'
 and 'Details'.}
 
-\item{autoGroupCount}{Sets the maximum number of groups that are built when auto-grouping is on
+\item{autoGroupCount}{maximum number of groups that are built when auto-grouping is on
          (\code{groupsize = "auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
-         this parameter will be ignored.}
+         this argument will be ignored.}
 }
 \value{
 A string vector containing labels based on the grouped categories of \code{var},

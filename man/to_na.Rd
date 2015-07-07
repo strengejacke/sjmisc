@@ -20,14 +20,15 @@ This function converts missing values that are still stored as
                original value code into \code{NA}.
 }
 \details{
-See 'Details' in \code{\link{get_values}}.
-           \cr \cr
-           \code{to_na} converts values to \code{NA}, which are defined
+\code{to_na} converts values to \code{NA}, which are defined
            as missing through the \code{is_na}-attribute of a vector
            (see \code{\link[haven]{labelled}}). \code{\link{set_na}},
            by contrast, converts those values to \code{NA} that are
-           specified in the function's \code{values} parameter; hence,
+           specified in the function's \code{values} argument; hence,
            \code{\link{set_na}} ignores the \code{is_na}-attribute.
+           \cr \cr
+           Furthermore, see 'Details' in \code{\link{get_values}},
+           \code{\link{get_na}} and \code{\link{to_na}}.
 }
 \note{
 This is a convenient function for \code{set_na(x, get_na(x))}.

@@ -7,7 +7,7 @@
 hoslem_gof(x, g = 10)
 }
 \arguments{
-\item{x}{a fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.}
+\item{x}{fitted \code{\link{glm}} or \code{\link[lme4]{glmer}} model.}
 
 \item{g}{number of bins to divide the data. Default is 10.}
 }

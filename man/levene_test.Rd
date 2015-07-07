@@ -7,11 +7,9 @@
 levene_test(depVar, grpVar)
 }
 \arguments{
-\item{depVar}{The dependent variable. Will be used with following formular:
-\code{aov(depVar ~ grpVar)}}
+\item{depVar}{dependent variable}
 
-\item{grpVar}{The grouping variable, as unordered factor. Will be used with following formular:
-         \code{aov(depVar ~ grpVar)}}
+\item{grpVar}{grouping (independent) variable, as unordered factor}
 }
 \description{
 Plot results of Levene's Test for Equality of Variances for One-Way-Anova.

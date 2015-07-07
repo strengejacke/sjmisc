@@ -4,7 +4,7 @@
 \alias{rec}
 \title{Recode numeric variables}
 \usage{
-rec(x, recodes, asFac = FALSE, varLabel = NULL, valLabels = NULL)
+rec(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL)
 }
 \arguments{
 \item{x}{a numeric variable (vector) or a \code{\link{factor}} with numeric
@@ -14,19 +14,19 @@ variables.}
 \item{recodes}{a string with recode pairs of old and new values. See 'Details' for
 examples.}
 
-\item{asFac}{logical, if \code{TRUE}, recoded variable is returned as factor.
+\item{as.fac}{logical, if \code{TRUE}, recoded variable is returned as factor.
 Default is \code{FALSE}, thus a numeric variable is returned.}
 
-\item{varLabel}{optional string, to set variable label attribute for the
+\item{var.label}{optional string, to set variable label attribute for the
 recoded variable (see \code{\link{set_label}}). If \code{NULL}
 (default), variable label attribute of \code{x} will be used (if present).}
 
-\item{valLabels}{optional character vector, to set value label attributes
+\item{val.labels}{optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 }
 \value{
-A numeric variable (or a factor, if \code{asFac = TRUE}) with
+A numeric variable (or a factor, if \code{as.fac = TRUE}) with
           recoded category values, or a data frame or \code{list}-object
           with recoded categories for all variables.
 }
@@ -50,9 +50,9 @@ The \code{recodes} string has following syntax:
 \note{
 Please note following behaviours of the function:
       \itemize{
-        \item the \code{"else"}-token should always be the last parameter in the \code{recodes}-string.
+        \item the \code{"else"}-token should always be the last argument in the \code{recodes}-string.
         \item Non-matching values will be set to \code{\link{NA}}.
-        \item Variable label attributes (see, for instance, \code{\link{get_label}}) are retained (unless changes via \code{varLabel}-parameter), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{valLabels}-parameter to add labels for recoded values.
+        \item Variable label attributes (see, for instance, \code{\link{get_label}}) are retained (unless changes via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
       }
 }
@@ -69,7 +69,7 @@ table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
 # keep value labels. variable label is automatically retained
 str(rec(efc$e42dep,
         "1,2=1; 3,4=2",
-        valLabels = c("low dependency", "high dependency")))
+        val.labels = c("low dependency", "high dependency")))
 
 # recode 1 to 3 into 4 into 2
 table(rec(efc$e42dep, "min:3=1; 4=2"), exclude = NULL)

@@ -7,7 +7,7 @@
 is_empty(x)
 }
 \arguments{
-\item{x}{a string or character vector of length 1.}
+\item{x}{string or character vector of length 1.}
 }
 \value{
 Logical, \code{TRUE} if \code{x} is empty, \code{FALSE} otherwise.

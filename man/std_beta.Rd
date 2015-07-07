@@ -7,7 +7,7 @@
 std_beta(fit, include.ci = FALSE)
 }
 \arguments{
-\item{fit}{A fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).}
+\item{fit}{fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).}
 
 \item{include.ci}{logical, if \code{TRUE}, a data frame with confidence intervals will be returned,
 when \code{fit} is of class \code{lm}. If \code{fit} is a \code{lmerMod} object (lme4-package),
@@ -15,7 +15,7 @@ always returns standard error instead of confidence intervals (hence, this param
 be ignored when \code{fit} is a \code{lmerMod} object).}
 }
 \value{
-A vector with standardiized beta coefficients of the fitted linear model, or a data frame
+A vector with standardized beta coefficients of the fitted linear model, or a data frame
           with standardized confidence intervals, if \code{include.ci = TRUE}.
 }
 \description{

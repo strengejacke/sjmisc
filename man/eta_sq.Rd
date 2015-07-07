@@ -7,7 +7,7 @@
 eta_sq(...)
 }
 \arguments{
-\item{...}{A fitted one-way-anova model or a dependent and grouping variable (see 'Examples').}
+\item{...}{fitted one-way-anova model or a dependent and grouping variable (see 'Examples').}
 }
 \value{
 The eta-squared value.
