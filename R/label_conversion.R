@@ -637,11 +637,41 @@ fill_labels_helper <- function(x) {
     # create new missing vector
     all.missings <- rep(FALSE, length(all.values))
     # "insert" former missings into new missing vector
-    all.missings[match(current.values, all.values)] <- missings
+    if (!is.null(missings)) all.missings[match(current.values, all.values)] <- missings
     # set back all labels
     x <- set_labels(x, all.values, force.labels = T)
     # set back missing information
     x <- set_na(x, all.missings, as.attr = T)
   }
   return(x)
+}
+
+
+#' @export
+summary.labelled <- function(x, ...) {
+  # add non-labelled value labels
+  x <- fill_labels(x)
+  # prepare summary
+  cat("\nSummary:\n")
+  labels <- attr(x, "labels")
+  # frequencies, including real missings
+  frq <- as.vector(table(x, exclude = NULL))
+  # raw percentage, including real missings
+  raw.prc <- as.vector(prop.table(table(x, exclude = NULL)))
+  # valid percentage, excluding real and
+  # labelled missings
+  valid.prc <- rep(NA, length(raw.prc))
+  vp <- as.vector(prop.table(table(na.omit(as.vector(to_na(x))))))
+  valid.prc[1:length(vp)] <- vp
+  # create df
+  lab_df <- data.frame(value = c(unname(labels), NA),
+                       label = c(names(labels), "NA"),
+                       count = frq,
+                       raw.percent = round(100 * raw.prc, 2),
+                       valid.percent = round(100 * valid.prc, 2),
+                       is_na = c(attr(x, "is_na"), NA))
+
+  print(lab_df, row.names = FALSE)
+
+  invisible()
 }
