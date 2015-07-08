@@ -673,5 +673,5 @@ summary.labelled <- function(x, ...) {
 
   print(lab_df, row.names = FALSE)
 
-  invisible()
+  invisible(lab_df)
 }
