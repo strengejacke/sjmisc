@@ -45,7 +45,6 @@ x
 get_na(x)
 to_na(x)
 
-
 # create labelled integer, with missing flag
 x <- labelled(c(1, 2, 1, 3, 4, 1),
              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
@@ -53,6 +52,12 @@ x <- labelled(c(1, 2, 1, 3, 4, 1),
 x
 get_na(x)
 to_na(x)
+
+# get summary
+x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
+              c(Male = 1, Female = 2, Refused = 5),
+              c(FALSE, FALSE, TRUE))
+summary(x)
 }
 \seealso{
 \code{\link{get_na}} to get value codes of missing values.

@@ -548,7 +548,6 @@ add_labels <- function(df_new, df_origin = NULL) {
 #' get_na(x)
 #' to_na(x)
 #'
-#'
 #' # create labelled integer, with missing flag
 #' x <- labelled(c(1, 2, 1, 3, 4, 1),
 #'              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
@@ -556,6 +555,12 @@ add_labels <- function(df_new, df_origin = NULL) {
 #' x
 #' get_na(x)
 #' to_na(x)
+#'
+#' # get summary
+#' x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
+#'               c(Male = 1, Female = 2, Refused = 5),
+#'               c(FALSE, FALSE, TRUE))
+#' summary(x)
 #'
 #' @export
 to_na <- function(x) {
@@ -607,6 +612,12 @@ to_na_helper <- function(x) set_na(x, suppressMessages(get_na(x)), as.attr = FAL
 #' x
 #' fill_labels(x)
 #' get_labels(fill_labels(x))
+#'
+#' # get summary
+#' x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
+#'               c(Male = 1, Female = 2, Refused = 5),
+#'               c(FALSE, FALSE, TRUE))
+#' summary(x)
 #'
 #' @export
 fill_labels <- function(x) {
@@ -667,8 +678,9 @@ summary.labelled <- function(x, ...) {
   lab_df <- data.frame(value = c(unname(labels), NA),
                        label = c(names(labels), "NA"),
                        count = frq,
-                       raw.percent = round(100 * raw.prc, 2),
-                       valid.percent = round(100 * valid.prc, 2),
+                       raw.prc = round(100 * raw.prc, 2),
+                       valid.prc = round(100 * valid.prc, 2),
+                       cum.prc = round(100 * cumsum(valid.prc), 2),
                        is_na = c(attr(x, "is_na"), NA))
 
   print(lab_df, row.names = FALSE)
