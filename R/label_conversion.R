@@ -40,7 +40,7 @@ to_sjPlot <- function(x) {
                                 max = ncol(x),
                                 style = 3)
     # tell user...
-    message("Converting from haven to sjPlot. Please wait...\n")
+    message("Converting labelled-classes. Please wait...\n")
     for (i in 1:ncol(x)) {
       # remove labelled class
       if (is_labelled(x[[i]])) x[[i]] <- unclass(x[[i]])
@@ -132,12 +132,12 @@ to_sjPlot <- function(x) {
 #'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
 #'               c(FALSE, FALSE, TRUE, TRUE))
 #' # to labelled factor, with missing labels
-#' to_label(x)
+#' to_label(x, drop.na = FALSE)
 #' # to labelled factor, missings removed
 #' to_label(x, drop.na = TRUE)
 #'
 #' @export
-to_label <- function(x, add.non.labelled = FALSE, drop.na = FALSE) {
+to_label <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
   if (is.matrix(x) || is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- to_label_helper(x[[i]],
                                                    add.non.labelled,
@@ -290,12 +290,12 @@ remove_labels_helper <- function(x) {
 #'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
 #'               c(FALSE, FALSE, TRUE, TRUE))
 #' # to factor, with missing labels
-#' to_factor(x)
+#' to_factor(x, drop.na = FALSE)
 #' # to factor, missings removed
 #' to_factor(x, drop.na = TRUE)
 #'
 #' @export
-to_fac <- function(x, drop.na = FALSE) {
+to_fac <- function(x, drop.na = TRUE) {
   if (is.matrix(x) || is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]], drop.na)
     return(x)
@@ -308,7 +308,7 @@ to_fac <- function(x, drop.na = FALSE) {
 #' @name to_factor
 #' @rdname to_fac
 #' @export
-to_factor <- function(x, drop.na = FALSE) {
+to_factor <- function(x, drop.na = TRUE) {
   return(to_fac(x, drop.na))
 }
 
@@ -326,7 +326,7 @@ to_fac_helper <- function(x, drop.na) {
   # retrieve variable labels
   varlab <- get_label(x)
   # retrieve missing codes
-  nas <- get_na(x)
+  nas <- suppressMessages(get_na(x))
   # convert variable to factor
   x <- as.factor(x)
   # set back value labels
@@ -572,7 +572,76 @@ to_na <- function(x) {
   } else {
     return(to_na_helper(x))
   }
-
 }
 
-to_na_helper <- function(x) set_na(x, get_na(x))
+to_na_helper <- function(x) set_na(x, suppressMessages(get_na(x)), as.attr = FALSE)
+
+
+#' @title Add missing value labels to partially labelled vector
+#' @name fill_labels
+#'
+#' @description This function adds value labels to a partially labelled vector,
+#'                i.e. if not all values are labelled, non-labelled values
+#'                get labels.
+#'
+#' @param x a variable (vector), \code{data.frame} or \code{list} of variables
+#'          with partially added value labels (see \code{\link[haven]{labelled}}).
+#' @return \code{x}, where labels for non-labelled values are added
+#'
+#' @examples
+#' library(haven)
+#'
+#' # create labelled integer, with missing flag
+#' x <- labelled(c(1, 2, 1, 3, 4, 1, 5),
+#'               c(Good = 1, Bad = 5))
+#' get_labels(x)
+#' get_labels(x, include.non.labelled = TRUE)
+#'
+#' fill_labels(x)
+#' get_labels(fill_labels(x))
+#'
+#' # create partially labelled vector with missings
+#' x <- labelled(c(1, 2, 1, 3, 4, 1, 5),
+#'               c(Male = 1, Female = 2, Refused = 5),
+#'               c(FALSE, FALSE, TRUE))
+#' x
+#' fill_labels(x)
+#' get_labels(fill_labels(x))
+#'
+#' @export
+fill_labels <- function(x) {
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # na all
+    for (i in 1:nvars) x[[i]] <- fill_labels_helper(x[[i]])
+    return(x)
+  } else {
+    return(fill_labels_helper(x))
+  }
+}
+
+fill_labels_helper <- function(x) {
+  # get current labels
+  current.values <- get_labels(x, attr.only = T, include.non.labelled = F)
+  # get all labels, including non-labelled values
+  all.values <- get_labels(x, attr.only = T, include.non.labelled = T)
+  # have any values?
+  if (!is.null(all.values)) {
+    # get missing values
+    missings <- getNaFromAttribute(x)
+    # create new missing vector
+    all.missings <- rep(FALSE, length(all.values))
+    # "insert" former missings into new missing vector
+    all.missings[match(current.values, all.values)] <- missings
+    # set back all labels
+    x <- set_labels(x, all.values, force.labels = T)
+    # set back missing information
+    x <- set_na(x, all.missings, as.attr = T)
+  }
+  return(x)
+}

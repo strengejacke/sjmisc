@@ -4,12 +4,15 @@
 \alias{write_spss}
 \title{Write content of data frame to SPSS sav-file}
 \usage{
-write_spss(x, path)
+write_spss(x, path, enc.to.utf8 = TRUE)
 }
 \arguments{
 \item{x}{data frame that should be saved as SPSS sav-file.}
 
 \item{path}{file path to the SPSS dataset.}
+
+\item{enc.to.utf8}{logical, if \code{TRUE}, character encoding of variable and
+         value labels will be converted to UTF-8.}
 }
 \description{
 This function saves the content of a data frame to an SPSS sav-file.

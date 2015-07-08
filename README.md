@@ -49,6 +49,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 #### New functions
 * `get_na` to get value codes of missing values from labelled vectors (that have an `is_na` attribute).
 * `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
+* `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
 
 #### Changes to functions
 * `set_val_labels` gets alias name `set_labels`.

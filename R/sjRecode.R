@@ -1079,7 +1079,7 @@ group_str <- function(strings,
   if (remove.empty) {
     removers <- c()
     for (i in 1:length(strings)) {
-      if (0 == nchar(strings[i])) removers <- c(removers, i)
+      if (is_empty(strings[i])) removers <- c(removers, i)
     }
     if (length(removers) > 0) strings <- strings[-removers]
   }

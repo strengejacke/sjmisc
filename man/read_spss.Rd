@@ -5,25 +5,26 @@
 \title{Import SPSS dataset as data frame into R}
 \usage{
 read_spss(path, enc = NA, attach.var.labels = FALSE,
-  atomic.to.fac = FALSE, use.na = TRUE, option = "haven")
+  atomic.to.fac = FALSE, keep.na = FALSE, option = "haven")
 }
 \arguments{
 \item{path}{The file path to the SPSS dataset.}
 
-\item{enc}{The file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
+\item{enc}{file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
 
-\item{attach.var.labels}{if \code{TRUE}, variable labels will automatically be
+\item{attach.var.labels}{logical, if \code{TRUE}, variable labels will automatically be
 attached to each variable as \code{"variable.label"} attribute. Use this
-parameter, if \code{option = "foreign"}, where variable labels are attached
+parameter, if \code{option = "foreign"}, where variable labels are added
 as list-attribute to the imported data frame.
 \emph{Not needed if \code{option = "haven"} (default).}}
 
-\item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
+\item{atomic.to.fac}{logical, if \code{TRUE}, factor variables imported from
 SPSS (which are imported as \code{\link{atomic}}) will be converted
 to \code{\link{factor}}s.}
 
-\item{use.na}{logical, should information on user-defined missing values be
-used to set the corresponding values to NA?}
+\item{keep.na}{logical, if \code{TRUE}, user-defined missing values will be
+left as their original codes. If \code{FALSE} (default), corresponding
+values are converted to \code{NA}.}
 
 \item{option}{string, indicating which package will be used to read the SPSS data file.
 By default, \code{option = "haven"}, which means, the \code{read_spss} function

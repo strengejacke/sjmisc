@@ -4,7 +4,7 @@
 \alias{to_label}
 \title{Convert variable into factor and replaces values with associated value labels}
 \usage{
-to_label(x, add.non.labelled = FALSE, drop.na = FALSE)
+to_label(x, add.non.labelled = FALSE, drop.na = TRUE)
 }
 \arguments{
 \item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}},
@@ -81,7 +81,7 @@ x <- labelled(c(1, 2, 1, 3, 4, 1),
               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
               c(FALSE, FALSE, TRUE, TRUE))
 # to labelled factor, with missing labels
-to_label(x)
+to_label(x, drop.na = FALSE)
 # to labelled factor, missings removed
 to_label(x, drop.na = TRUE)
 }

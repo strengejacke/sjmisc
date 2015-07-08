@@ -7,11 +7,11 @@
 read_sas(path, path.cat = NULL, atomic.to.fac = FALSE)
 }
 \arguments{
-\item{path}{The file path to the SAS data file.}
+\item{path}{file path to the SAS data file.}
 
 \item{path.cat}{optional, the file path to the SAS catalog file.}
 
-\item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
+\item{atomic.to.fac}{logical, if \code{TRUE}, factor variables imported from
 SAS (which are imported as \code{\link{atomic}}) will be converted
 to \code{\link{factor}}s.}
 }

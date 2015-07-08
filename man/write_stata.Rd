@@ -4,12 +4,15 @@
 \alias{write_stata}
 \title{Write content of data frame to STATA dta-file}
 \usage{
-write_stata(x, path)
+write_stata(x, path, enc.to.utf8 = TRUE)
 }
 \arguments{
 \item{x}{data frame that should be saved as STATA-file.}
 
 \item{path}{file path to the STATA dataset.}
+
+\item{enc.to.utf8}{logical, if \code{TRUE}, character encoding of variable and
+         value labels will be converted to UTF-8.}
 }
 \description{
 This function saves the content of a data frame to an STATA dta-file.

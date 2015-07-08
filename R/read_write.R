@@ -11,17 +11,18 @@
 #'            }
 #'
 #' @param path The file path to the SPSS dataset.
-#' @param enc The file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
-#' @param attach.var.labels if \code{TRUE}, variable labels will automatically be
+#' @param enc file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
+#' @param attach.var.labels logical, if \code{TRUE}, variable labels will automatically be
 #'          attached to each variable as \code{"variable.label"} attribute. Use this
-#'          parameter, if \code{option = "foreign"}, where variable labels are attached
+#'          parameter, if \code{option = "foreign"}, where variable labels are added
 #'          as list-attribute to the imported data frame.
 #'          \emph{Not needed if \code{option = "haven"} (default).}
-#' @param atomic.to.fac Logical, if \code{TRUE}, factor variables imported from
+#' @param atomic.to.fac logical, if \code{TRUE}, factor variables imported from
 #'          SPSS (which are imported as \code{\link{atomic}}) will be converted
 #'          to \code{\link{factor}}s.
-#' @param use.na logical, should information on user-defined missing values be
-#'          used to set the corresponding values to NA?
+#' @param keep.na logical, if \code{TRUE}, user-defined missing values will be
+#'          left as their original codes. If \code{FALSE} (default), corresponding
+#'          values are converted to \code{NA}.
 #' @param option string, indicating which package will be used to read the SPSS data file.
 #'          By default, \code{option = "haven"}, which means, the \code{read_spss} function
 #'          from the \code{haven} package is used. Use \code{option = "foreign"} to
@@ -73,7 +74,7 @@ read_spss <- function(path,
                       enc = NA,
                       attach.var.labels = FALSE,
                       atomic.to.fac = FALSE,
-                      use.na = TRUE,
+                      keep.na = FALSE,
                       option = "haven") {
   # --------------------------------------------------------
   # check read_spss option
@@ -107,7 +108,7 @@ read_spss <- function(path,
     data.spss <- suppressWarnings(foreign::read.spss(path,
                                                      to.data.frame = TRUE,
                                                      use.value.labels = FALSE,
-                                                     use.missings = use.na,
+                                                     use.missings = !keep.na,
                                                      reencode = enc))
     # convert atomic values to factors
     if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
@@ -125,6 +126,8 @@ read_spss <- function(path,
     }
     # read data file
     data.spss <- haven::read_spss(path)
+    # convert NA
+    if (!keep.na) data.spss <- to_na(data.spss)
     # convert to sjPlot
     data.spss <- to_sjPlot(data.spss)
     # convert atomic values to factors
@@ -153,15 +156,15 @@ atomic_to_fac <- function(data.spss, attr.string) {
     for (i in 1:ncol(data.spss)) {
       # copy column to vector
       x <- data.spss[[i]]
+      # capture labels attribute first
+      labs <- attr(x, attr.string, exact = T)
       # is atomic, which was factor in SPSS?
-      if (is.atomic(x) && !is.null(attr(x, attr.string, exact = T))) {
+      if (is.atomic(x) && !is.null(lab)) {
         # so we have value labels (only typical for factors, not
         # continuous variables) and a variable of type "atomic" (SPSS
         # continuous variables would be imported as numeric) - this
         # indicates we have a factor variable. now we convert to
-        # factor, but need to capture labels attribute first
-        labs <- attr(x, attr.string, exact = T)
-        # to factor
+        # factor
         x <- as.factor(x)
         # set back labels attribute
         attr(x, attr.string) <- labs
@@ -185,9 +188,9 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #'
 #' @seealso \code{\link{read_spss}}
 #'
-#' @param path The file path to the SAS data file.
+#' @param path file path to the SAS data file.
 #' @param path.cat optional, the file path to the SAS catalog file.
-#' @param atomic.to.fac Logical, if \code{TRUE}, factor variables imported from
+#' @param atomic.to.fac logical, if \code{TRUE}, factor variables imported from
 #'          SAS (which are imported as \code{\link{atomic}}) will be converted
 #'          to \code{\link{factor}}s.
 #' @return A data frame containing the SAS data. Retrieve value labels with \code{\link{get_labels}}
@@ -224,10 +227,10 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #'
 #' @seealso \code{\link{read_spss}}
 #'
-#' @param path The file path to the STATA data file.
-#' @param atomic.to.fac Logical, if \code{TRUE}, factor variables imported from
+#' @param path file path to the STATA data file
+#' @param atomic.to.fac logical, if \code{TRUE}, factor variables imported from
 #'          STATA (which are imported as \code{\link{atomic}}) will be converted
-#'          to \code{\link{factor}}s.
+#'          to \code{\link{factor}}s
 #' @return A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}
 #'   and variable labels with \code{\link{get_label}}.
 #'
@@ -273,10 +276,12 @@ read_stata <- function(path, atomic.to.fac = FALSE) {
 #'
 #' @param x data frame that should be saved as SPSS sav-file.
 #' @param path file path to the SPSS dataset.
+#' @param enc.to.utf8 logical, if \code{TRUE}, character encoding of variable and
+#'          value labels will be converted to UTF-8.
 #'
 #' @export
-write_spss <- function(x, path) {
-  write_data(x, path, "spss")
+write_spss <- function(x, path, enc.to.utf8 = TRUE) {
+  write_data(x = x, path = path, type = "spss", enc.to.utf8 = enc.to.utf8)
 }
 
 
@@ -295,15 +300,17 @@ write_spss <- function(x, path) {
 #'
 #' @param x data frame that should be saved as STATA-file.
 #' @param path file path to the STATA dataset.
+#' @param enc.to.utf8 logical, if \code{TRUE}, character encoding of variable and
+#'          value labels will be converted to UTF-8.
 #'
 #' @export
-write_stata <- function(x, path) {
-  write_data(x, path, "stata")
+write_stata <- function(x, path, enc.to.utf8 = TRUE) {
+  write_data(x = x, path = path, type = "stata", enc.to.utf8 = enc.to.utf8)
 }
 
 
 #' @importFrom utils txtProgressBar setTxtProgressBar
-write_data <- function(x, path, type = "spss") {
+write_data <- function(x, path, type, enc.to.utf8) {
   # ------------------------
   # check if suggested package is available
   # ------------------------
@@ -320,10 +327,16 @@ write_data <- function(x, path, type = "spss") {
   message(sprintf("Prepare writing %s file. Please wait...\n", type))
   # check if variables should be converted to factors
   for (i in 1:ncol(x)) {
+    # get value and variable labels
+    val.lab <- get_labels(x[[i]])
+    var.lab <- get_label(x[[i]])
+    # Encode to UTF-8
+    if (enc.to.utf8) {
+      if (!is.null(val.lab)) x[[i]] <- set_labels(x[[i]], enc2utf8(val.lab))
+      if (!is.null(var.lab)) x[[i]] <- set_label(x[[i]], enc2utf8(var.lab))
+    }
     # haven labelled objects don't need conversion
     if (!is_labelled(x[[i]])) {
-      # get variable value
-      var.lab <- get_label(x[[i]])
       # convert variable to labelled factor, so it can be saved
       x[[i]] <- suppressWarnings(to_label(x[[i]]))
       # set back variable label

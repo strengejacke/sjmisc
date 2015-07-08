@@ -7,11 +7,11 @@
 read_stata(path, atomic.to.fac = FALSE)
 }
 \arguments{
-\item{path}{The file path to the STATA data file.}
+\item{path}{file path to the STATA data file}
 
-\item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
+\item{atomic.to.fac}{logical, if \code{TRUE}, factor variables imported from
 STATA (which are imported as \code{\link{atomic}}) will be converted
-to \code{\link{factor}}s.}
+to \code{\link{factor}}s}
 }
 \value{
 A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}

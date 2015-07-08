@@ -5,9 +5,9 @@
 \alias{to_factor}
 \title{Convert variable into factor and keep value labels}
 \usage{
-to_fac(x, drop.na = FALSE)
+to_fac(x, drop.na = TRUE)
 
-to_factor(x, drop.na = FALSE)
+to_factor(x, drop.na = TRUE)
 }
 \arguments{
 \item{x}{A (numeric or atomic) variable or a data frame with
@@ -60,7 +60,7 @@ x <- labelled(c(1, 2, 1, 3, 4, 1),
               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
               c(FALSE, FALSE, TRUE, TRUE))
 # to factor, with missing labels
-to_factor(x)
+to_factor(x, drop.na = FALSE)
 # to factor, missings removed
 to_factor(x, drop.na = TRUE)
 }
