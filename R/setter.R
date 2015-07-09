@@ -201,9 +201,9 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' @return \code{x} with value label attributes; or with removed label-attributes if
 #'            \code{labels = ""}.
 #'
-#' @details See 'Details' in \code{\link{get_labels}}
+#' @details See 'Details' in \code{\link{get_labels}}.
 #'
-#' @note See 'Note' in \code{\link{get_labels}}
+#' @note See 'Note' in \code{\link{get_labels}}.
 #'
 #' @examples
 #' \dontrun{
@@ -410,11 +410,12 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       # check for unlisting
       if (is.list(labels)) labels <- as.vector(unlist(labels))
       # ---------------------------------------
-      # determine amount of labels
+      # determine amount of labels and unique values
       # ---------------------------------------
       lablen <- length(labels)
+      values <- sort(unique(stats::na.omit(as.vector(x))))
       # ---------------------------------------
-      # set x name string
+      # set var name string
       # ---------------------------------------
       if (is.null(var.name) || nchar(var.name) < 1) {
         name.string <- "x"
@@ -423,7 +424,22 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       }
       if (is.infinite(valrange)) {
         warning("Can't set value labels. Infinite value range.", call. = F)
-        # check for valid length of labels
+      # ---------------------------------------
+      # check for valid length of labels
+      # if amount of labels and values are equal,
+      # we assume matching labels
+      # ---------------------------------------
+      } else if (length(values) == lablen) {
+        # ---------------------------------------
+        # set attributes
+        # ---------------------------------------
+        attr(x, attr.string) <- as.character(values)
+        names(attr(x, attr.string)) <- labels
+      # ---------------------------------------
+      # check for valid length of labels
+      # here, we have a smaller value range (i.e. less values)
+      # than amount of labels
+      # ---------------------------------------
       } else if (valrange < lablen) {
         # ---------------------------------------
         # do we want to force to set labels, even if we have more labels
@@ -441,18 +457,16 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
           attr(x, attr.string) <- as.character(c(minval:maxval))
           names(attr(x, attr.string)) <- labels[1:valrange]
         }
-        # ---------------------------------------
-        # value range is larger than amount of labels. we may
-        # have not continuous value range, e.g. "-2" as filter and
-        # 1 to 4 as valid values, i.e. -1 and 0 are missing
-        # ---------------------------------------
+      # ---------------------------------------
+      # value range is larger than amount of labels. we may
+      # have not continuous value range, e.g. "-2" as filter and
+      # 1 to 4 as valid values, i.e. -1 and 0 are missing
+      # ---------------------------------------
       } else if (valrange > lablen) {
         # ---------------------------------------
         # check if user wants to add missing values
         # ---------------------------------------
         if (force.values) {
-          # value range is not continuous. get all unique values
-          values <- sort(unique(stats::na.omit((as.vector(x)))))
           # get amount of unique values
           valrange <- length(values)
           # ---------------------------------------

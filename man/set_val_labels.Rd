@@ -45,10 +45,10 @@ This function adds character labels as attribute to a variable
                or legend labels.
 }
 \details{
-See 'Details' in \code{\link{get_labels}}
+See 'Details' in \code{\link{get_labels}}.
 }
 \note{
-See 'Note' in \code{\link{get_labels}}
+See 'Note' in \code{\link{get_labels}}.
 }
 \examples{
 \dontrun{
