@@ -235,6 +235,14 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' x <- set_labels(x, c("yes", "maybe", "no"), force.values = TRUE)
 #' x
 #'
+#' # set labels and missings
+#' x <- c(1, 1, 1, 2, 2, -2, 3, 3, 3, 3, 3, 9)
+#' x <- set_labels(x, c("Refused", "One", "Two", "Three", "Missing"))
+#' x
+#'
+#' x <- set_na(x, c(-2, 9), as.attr = T)
+#' x
+#' summary(as_labelled(x))
 #'
 #' # setting same value labels to multiple vectors
 #'
