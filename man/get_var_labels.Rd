@@ -10,11 +10,11 @@ get_var_labels(x)
 get_label(x)
 }
 \arguments{
-\item{x}{a \code{data.frame} with variables that have attached variable labels (e.g.
+\item{x}{a \code{data.frame} with variables that have label attributes (e.g.
          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-         (vector) with attached variable label; or a \code{list} of variables
-         with attached variable labels. See 'Examples'.}
+         (vector) with variable label attribute; or a \code{list} of variables
+         with variable label attributes. See 'Examples'.}
 }
 \value{
 A named char vector with all variable labels from the data frame or list;

@@ -15,7 +15,7 @@ value of the returned numeric variable corresponds to the lowest factor
 level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 are not numeric).}
 
-\item{keep.labels}{logical, if \code{TRUE}, former factor levels will be attached as
+\item{keep.labels}{logical, if \code{TRUE}, former factor levels will be added as
 value labels. See \code{\link{set_labels}} for more details.}
 }
 \value{

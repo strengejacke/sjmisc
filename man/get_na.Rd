@@ -7,8 +7,8 @@
 get_na(x)
 }
 \arguments{
-\item{x}{a variable (vector) with attached value labels and missing values
-(see \code{\link[haven]{labelled}}).}
+\item{x}{a variable (vector) with value label attributes, including
+missing value codes (see \code{\link[haven]{labelled}})}
 }
 \value{
 The missing values associated with value labels from \code{x},
@@ -18,7 +18,8 @@ The missing values associated with value labels from \code{x},
 This function retrieves the value codes associated with missing values
                of variables of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}), where missing
-               values have not been replaced with \code{NA}s after import.
+               values have not been replaced with \code{NA}s after import,
+               or of \code{\link[haven]{labelled}} vectors.
 }
 \details{
 Other statistical software packages (like 'SPSS') allow to define
@@ -58,6 +59,7 @@ get_na(x)
 \code{\link{get_labels}} to get value labels, or \code{\link{get_values}}
            to get values associated with labels; see \code{\link{set_na}} to
            replace specific values with \code{NA} and \code{\link{to_na}} to
-           convert missing value codes into \code{NA}.
+           convert missing value codes into \code{NA}; see \code{\link{get_na_flags}}
+           to get a logical vector of missing flags.
 }
 

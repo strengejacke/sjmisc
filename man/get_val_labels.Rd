@@ -12,11 +12,11 @@ get_labels(x, attr.only = FALSE, include.values = NULL,
   include.non.labelled = FALSE)
 }
 \arguments{
-\item{x}{a \code{data.frame} with variables that have attached value labels (e.g.
+\item{x}{a \code{data.frame} with variables that have value label attributes (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-(vector) with attached value labels; or a \code{list} of variables
-with attached values labels. If \code{x} has no label \code{\link{attributes}},
+(vector) with value label attributes; or a \code{list} of variables
+with values label attributes. If \code{x} has no label \code{\link{attributes}},
 factor \code{\link{levels}} are returned. See 'Examples'.}
 
 \item{attr.only}{logical, if \code{TRUE}, labels are only searched for
@@ -75,17 +75,18 @@ This package can add (and read) value and variable labels either in \code{foreig
 }
 \note{
 This function works with vectors that have value and variable
-       labels attached. This is automatically done by importing data sets
+       label attributes (as provided, for instance, by \code{\link[haven]{labelled}}
+       objects). Adding label attributes is automatically done when importing data sets
        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
        function. Labels can also manually be added using the \code{\link{set_labels}}
        and \code{\link{set_label}} functions. If vectors \strong{do not} have
        label attributes, either factor-\code{\link{levels}} or the numeric values
        of the vector are returned as labels.
        \cr \cr
-       With attached value and variable labels, most functions of the \code{sjPlot} package
-       automatically detect labels and uses them as axis, legend or title labels
-       in plots (\code{sjp.}-functions) respectively as column or row headers
-       in table outputs (\code{sjt.}-functions).  See
+       Most functions of the \code{sjPlot}-package access value and variable label
+       attributes to automatically detect labels in order to set them as axis,
+       legend or title labels in plots (\code{sjp.}-functions) respectively as
+       column or row headers in table outputs (\code{sjt.}-functions).  See
        \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
        \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
        online manuals for more details.

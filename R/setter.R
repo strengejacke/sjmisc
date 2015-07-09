@@ -172,7 +172,7 @@ set_label <- function(x, lab, attr.string = NULL) {
 #'                or vector \code{x}, resp. to a set of variables in a
 #'                \code{data.frame} or \code{list}-object. To each variable,
 #'                the attribute \code{"labels"} or \code{"value.labels"}
-#'                with the related \code{labels} is attached. These value labels will be accessed
+#'                with the related \code{labels} is added. These value labels will be accessed
 #'                by functions of the \emph{sjPlot} package, in order to automatically set values
 #'                or legend labels.
 #'
@@ -182,9 +182,9 @@ set_label <- function(x, lab, attr.string = NULL) {
 #'            \code{\link{get_label}} to get variable labels.
 #'
 #' @param x variable (vector), \code{list} of variables or a \code{data.frame}
-#'          where value labels should be attached. Replaces former value labels.
-#' @param labels character vector of labels that will be attached to \code{x} by setting
-#'          the \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
+#'          where value label attributes should be added. Replaces former value labels.
+#' @param labels character vector of labels that will be added to \code{x} as
+#'          \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
 #'          the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
 #'          \code{labels} should have a length of 3.
 #'          If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
@@ -198,7 +198,7 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' @param force.values logical, if \code{TRUE} (default) and \code{labels} has less
 #'          elements than unique values of \code{x}, additional values not covered
 #'          by \code{labels} will be added as label as well. See 'Examples'.
-#' @return \code{x} with attached value labels; or with removed label-attribute if
+#' @return \code{x} with value label attributes; or with removed label-attributes if
 #'            \code{labels = ""}.
 #'
 #' @details See 'Details' in \code{\link{get_labels}}
@@ -378,11 +378,11 @@ get_value_range <- function(x) {
 
 
 #' @importFrom stats na.omit
-set_values_vector <- function(var, labels, var.name, force.labels, force.values) {
+set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
   # ---------------------------------------
   # auto-detect variable label attribute
   # ---------------------------------------
-  attr.string <- getValLabelAttribute(var)
+  attr.string <- getValLabelAttribute(x)
   # do we have any label attributes?
   if (is.null(attr.string)) attr.string <- "labels"
   # check for null
@@ -392,8 +392,8 @@ set_values_vector <- function(var, labels, var.name, force.labels, force.values)
     # attribute
     # ---------------------------------------
     if (length(labels) == 1 && nchar(labels) == 0) {
-      attr(var, attr.string) <- NULL
-    } else if (is.null(var) || is.character(var)) {
+      attr(x, attr.string) <- NULL
+    } else if (is.null(x) || is.character(x)) {
       # ---------------------------------------
       # string variables can't get value labels
       # ---------------------------------------
@@ -402,7 +402,7 @@ set_values_vector <- function(var, labels, var.name, force.labels, force.values)
       # ---------------------------------------
       # determine value range
       # ---------------------------------------
-      vr <- get_value_range(var)
+      vr <- get_value_range(x)
       # copy values to variables
       valrange <- vr$valrange
       minval <- vr$minval
@@ -414,7 +414,7 @@ set_values_vector <- function(var, labels, var.name, force.labels, force.values)
       # ---------------------------------------
       lablen <- length(labels)
       # ---------------------------------------
-      # set var name string
+      # set x name string
       # ---------------------------------------
       if (is.null(var.name) || nchar(var.name) < 1) {
         name.string <- "x"
@@ -430,16 +430,16 @@ set_values_vector <- function(var, labels, var.name, force.labels, force.values)
         # than values in variable?
         # ---------------------------------------
         if (force.labels) {
-          attr(var, attr.string) <- as.character(c(1:lablen))
-          names(attr(var, attr.string)) <- labels
+          attr(x, attr.string) <- as.character(c(1:lablen))
+          names(attr(x, attr.string)) <- labels
         } else {
           # ---------------------------------------
           # we have more labels than values, so just take as many
           # labes as values are present
           # ---------------------------------------
           message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
-          attr(var, attr.string) <- as.character(c(minval:maxval))
-          names(attr(var, attr.string)) <- labels[1:valrange]
+          attr(x, attr.string) <- as.character(c(minval:maxval))
+          names(attr(x, attr.string)) <- labels[1:valrange]
         }
         # ---------------------------------------
         # value range is larger than amount of labels. we may
@@ -452,7 +452,7 @@ set_values_vector <- function(var, labels, var.name, force.labels, force.values)
         # ---------------------------------------
         if (force.values) {
           # value range is not continuous. get all unique values
-          values <- sort(unique(stats::na.omit((var))))
+          values <- sort(unique(stats::na.omit((as.vector(x)))))
           # get amount of unique values
           valrange <- length(values)
           # ---------------------------------------
@@ -471,24 +471,24 @@ set_values_vector <- function(var, labels, var.name, force.labels, force.values)
           # ---------------------------------------
           # set attributes
           # ---------------------------------------
-          attr(var, attr.string) <- as.character(c(1:valrange))
-          names(attr(var, attr.string)) <- labels
+          attr(x, attr.string) <- as.character(c(1:valrange))
+          names(attr(x, attr.string)) <- labels
         } else {
           # ---------------------------------------
           # tell user about modification
           # ---------------------------------------
           message(sprintf("\"%s\" has more values than elements of \"labels\", hence not all values are labelled.", name.string))
           # drop values with no associated labels
-          attr(var, attr.string) <- as.character(c(1:length(labels)))
-          names(attr(var, attr.string)) <- labels
+          attr(x, attr.string) <- as.character(c(1:length(labels)))
+          names(attr(x, attr.string)) <- labels
         }
       } else {
-        attr(var, attr.string) <- as.character(c(minval:maxval))
-        names(attr(var, attr.string)) <- labels
+        attr(x, attr.string) <- as.character(c(minval:maxval))
+        names(attr(x, attr.string)) <- labels
       }
     }
   }
-  return(var)
+  return(x)
 }
 
 
@@ -617,6 +617,10 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
     x <- set_na_attr(x, values)
   } else {
     # ----------------------------
+    # check if we have any values at all?
+    # ----------------------------
+    if (is.null(values)) return(x)
+    # ----------------------------
     # auto-detect variable label attribute
     # ----------------------------
     attr.string <- getValLabelAttribute(x)
@@ -681,7 +685,7 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
         # ---------------------------------------
         # shorten is_na attribute
         # ---------------------------------------
-        na.flag <- getNaFromAttribute(x)
+        na.flag <- get_na_flags(x)
         if (!is.null(na.flag)) {
           # ---------------------------------------
           # do we have is_na attribute? if yes,

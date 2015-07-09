@@ -7,7 +7,7 @@
 get_values(x, sort.val = FALSE, drop.na = FALSE)
 }
 \arguments{
-\item{x}{a variable (vector) with attached value labels.}
+\item{x}{a variable (vector) with value label attributes.}
 
 \item{sort.val}{logical, if \code{TRUE} (default), values of associated value labels
 are sorted.}
@@ -22,11 +22,12 @@ The values associated with value labels from \code{x},
 \description{
 This function retrieves the values associated with value labels
                of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
-               \code{\link{read_sas}} or \code{\link{read_stata}}).
+               \code{\link{read_sas}} or \code{\link{read_stata}}),
+               or of a \code{\link[haven]{labelled}} vector.
 }
 \details{
-Labelled vectors are numeric by default (when imported with read-functions
-           like \code{\link{read_spss}}) and have variable and value labels attached.
+\code{\link[haven]{labelled}} vectors are numeric by default (when imported with read-functions
+           like \code{\link{read_spss}}) and have variable and value labels attributes.
            The value labels are associated with those values from the labelled vector.
            This function returns the values associated with the vector's value labels,
            which may differ from actual values in the vector (e.g. due to missings)

@@ -13,7 +13,7 @@
 #' @param path The file path to the SPSS dataset.
 #' @param enc file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
 #' @param attach.var.labels logical, if \code{TRUE}, variable labels will automatically be
-#'          attached to each variable as \code{"variable.label"} attribute. Use this
+#'          added to each variable as \code{"variable.label"} attribute. Use this
 #'          parameter, if \code{option = "foreign"}, where variable labels are added
 #'          as list-attribute to the imported data frame.
 #'          \emph{Not needed if \code{option = "haven"} (default).}
@@ -36,10 +36,10 @@
 #'         \code{foreign} package. This function adds value and variable
 #'         labels as attributes to the imported variables of the data frame.
 #'         \cr \cr
-#'         With attached value and variable labels, most functions of the
-#'         \code{sjPlot} package automatically detect labels and uses them as axis,
-#'         legend or title labels in plots (\code{sjp.}-functions) respectively
-#'         as column or row headers in table outputs (\code{sjt.}-functions). See
+#'         Most functions of the \code{sjPlot}-package access value and variable label
+#'         attributes to automatically detect labels in order to set them as axis,
+#'         legend or title labels in plots (\code{sjp.}-functions) respectively as
+#'         column or row headers in table outputs (\code{sjt.}-functions).  See
 #'         \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
 #'         for more details.
 #'         \cr \cr
@@ -159,7 +159,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
       # capture labels attribute first
       labs <- attr(x, attr.string, exact = T)
       # is atomic, which was factor in SPSS?
-      if (is.atomic(x) && !is.null(lab)) {
+      if (is.atomic(x) && !is.null(labs)) {
         # so we have value labels (only typical for factors, not
         # continuous variables) and a variable of type "atomic" (SPSS
         # continuous variables would be imported as numeric) - this

@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-4
+### Changelog of current development build 1.0.3-5
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
@@ -50,7 +50,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `get_na` to get value codes of missing values from labelled vectors (that have an `is_na` attribute).
 * `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
 * `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
-* S3-`summary` method to print summaries of labelled-objects.
+* `as_labelled` to convert vectors to labelled.
+* Added S3-methods `summary` and `mean` for labelled-class objects.
 
 #### Changes to functions
 * `set_val_labels` gets alias name `set_labels`.
@@ -62,7 +63,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * Argument `include.values` of `get_val_labels` (and `get_labels`) has now two options for returning includes values.
 * `get_val_labels` now supports vectors with string label attributes.
 * `to_fac` and `to_value` better deal with vectors that don't need to be converted.
-* `set_val_labels` and `to_fac` now add additional values as labels, if variable has more valid values than labels that have been supplied as argument.
+* `to_fac` now adds additional values as labels, if variable has more valid values than labels.
 * `get_val_labels` gets a `include.non.labelled` argument to also return non-labelled values as label.
 * `to_label` gets a `add.non.labelled` argument to also convert non-labelled values to labels.
 * `set_val_labels` gets a `force.values` argument to add values without associated labels as labels, too.

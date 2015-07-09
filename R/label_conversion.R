@@ -119,7 +119,9 @@ to_sjPlot <- function(x) {
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
 #' # add less labels than values
-#' x <- set_labels(x, c("yes", "maybe", "no"), add.non.labelled = FALSE)
+#' x <- set_labels(x, c("yes", "maybe", "no"),
+#'                 force.labels = FALSE,
+#'                 force.values = FALSE)
 #' # convert to label w/o non-labelled values
 #' to_label(x)
 #' # convert to label, including non-labelled values
@@ -229,8 +231,8 @@ remove_labels_helper <- function(x) {
   # remove attributes
   if (!is.null(attr.string)) attr(x, attr.string) <- NULL
   # remove is_na attribute
-  na.attr <- getNaFromAttribute(x)
-  if (!is.null(na.attr)) attr(x, getNaAttribute()) <- NULL
+  na.flags <- get_na_flags(x)
+  if (!is.null(na.flags)) attr(x, getNaAttribute()) <- NULL
   # unclass, if labelled. labelled class may throw
   # errors / warnings, when not havin label attributes
   if (is_labelled(x)) x <- unclass(x)
@@ -242,9 +244,8 @@ remove_labels_helper <- function(x) {
 #' @title Convert variable into factor and keep value labels
 #' @name to_fac
 #'
-#' @description This function converts a variable into a factor, but keeps
-#'                variable and value labels, if these are attached as attributes
-#'                to the variale. See 'Examples'.
+#' @description This function converts a variable into a factor, but preserves
+#'                variable and value label attributes. See 'Examples'.
 #'
 #' @seealso \code{\link{to_value}} to convert a factor into a numeric value and
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
@@ -261,10 +262,10 @@ remove_labels_helper <- function(x) {
 #'           if \code{x} was a data frame.
 #'
 #' @note This function is intended for use with vectors that have value and variable
-#'        labels attached. Unlike \code{\link{as.factor}}, \code{to_factor} converts
+#'        label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts
 #'        a variable into a factor and retains the value and variable label attributes.
 #'        \cr \cr
-#'        Attaching labels is automatically done by importing data sets
+#'        Adding label attributes is automatically done by importing data sets
 #'        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
 #'        Else, value and variable labels can be manually added to vectors
 #'        with \code{\link{set_labels}} and \code{\link{set_label}}.
@@ -356,7 +357,7 @@ to_fac_helper <- function(x, drop.na) {
 #'          value of the returned numeric variable corresponds to the lowest factor
 #'          level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 #'          are not numeric).
-#' @param keep.labels logical, if \code{TRUE}, former factor levels will be attached as
+#' @param keep.labels logical, if \code{TRUE}, former factor levels will be added as
 #'          value labels. See \code{\link{set_labels}} for more details.
 #' @return A numeric variable with values ranging either from \code{start.at} to
 #'           \code{start.at} + length of factor levels, or to the corresponding
@@ -644,15 +645,94 @@ fill_labels_helper <- function(x) {
   # have any values?
   if (!is.null(all.values)) {
     # get missing values
-    missings <- getNaFromAttribute(x)
+    missings <- get_na_flags(x)
     # create new missing vector
     all.missings <- rep(FALSE, length(all.values))
     # "insert" former missings into new missing vector
     if (!is.null(missings)) all.missings[match(current.values, all.values)] <- missings
-    # set back all labels
-    x <- set_labels(x, all.values, force.labels = T)
+    # set back all labels, if amount of labels differ
+    if (length(all.values) > length(current.values))
+      x <- set_labels(x, all.values, force.labels = T, force.values = T)
     # set back missing information
     x <- set_na(x, all.missings, as.attr = T)
   }
+  return(x)
+}
+
+
+#' @title Convert vector to labelled class
+#' @name as_labelled
+#'
+#' @param x a variable (vector), \code{data.frame} or \code{list} of variables
+#'          that should be converted to \code{\link[haven]{labelled}}-class
+#'          objects.
+#' @param add.class logical, if \code{TRUE}, \code{x} preserves its former
+#'          \code{class}-attribute and \code{labelled} is added as additional
+#'          attribute. If \code{FALSE} (default), all former \code{class}-attributes
+#'          will be removed and the class-attribute  of \code{x} will only
+#'          be \code{labelled}.
+#' @return \code{x}, as \code{\link[haven]{labelled}}-class object.
+#'
+#' @examples
+#'
+#' data(efc)
+#' str(efc$e42dep)
+#'
+#' x <- as_labelled(efc$e42dep)
+#' str(x)
+#' summary(x)
+#'
+#' x <- as_labelled(efc$e42dep, add.class = TRUE)
+#' str(x)
+#' summary(x)
+#'
+#' a <- c(1, 2, 4)
+#' x <- as_labelled(a, add.class = TRUE)
+#' str(x)
+#' summary(x)
+#'
+#' @importFrom stats na.omit
+#' @export
+as_labelled <- function(x, add.class = FALSE) {
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # dichotomize all
+    for (i in 1:nvars) x[[i]] <- as_labelled_helper(x[[i]], add.class)
+    return(x)
+  } else {
+    return(as_labelled_helper(x, add.class))
+  }
+}
+
+
+as_labelled_helper <- function(x, add.class) {
+  # check if we have any value label attributes
+  vallabel <- get_labels(x, attr.only = T)
+  # nothing?
+  if (is.null(vallabel)) {
+    # factor levels as labels?
+    vallabel <- get_labels(x, attr.only = F)
+    # still nothing?
+    if (is.null(vallabel)) {
+      # get unique values
+      vallabel <- as.character(unique(stats::na.omit(x)))
+    }
+    # set value labels
+    x <- set_labels(x, vallabel, force.labels = T, force.values = T)
+  }
+  # fill up missing attributes
+  x <- fill_labels(x)
+  # get former class attributes
+  xc <- class(x)
+  if (add.class)
+    class(x) <- c(xc, "labelled")
+  else
+    class(x) <- "labelled"
+
   return(x)
 }

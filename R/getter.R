@@ -14,11 +14,11 @@
 #'            more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}
 #'            to get value labels.
 
-#' @param x a \code{data.frame} with variables that have attached variable labels (e.g.
+#' @param x a \code{data.frame} with variables that have label attributes (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-#'          (vector) with attached variable label; or a \code{list} of variables
-#'          with attached variable labels. See 'Examples'.
+#'          (vector) with variable label attribute; or a \code{list} of variables
+#'          with variable label attributes. See 'Examples'.
 #'
 #' @return A named char vector with all variable labels from the data frame or list;
 #'           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
@@ -130,11 +130,11 @@ get_label <- function(x) {
 #'            more details; \code{\link{set_labels}} to manually set value labels, \code{\link{get_label}}
 #'            to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
 #'
-#' @param x a \code{data.frame} with variables that have attached value labels (e.g.
+#' @param x a \code{data.frame} with variables that have value label attributes (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
-#'          (vector) with attached value labels; or a \code{list} of variables
-#'          with attached values labels. If \code{x} has no label \code{\link{attributes}},
+#'          (vector) with value label attributes; or a \code{list} of variables
+#'          with values label attributes. If \code{x} has no label \code{\link{attributes}},
 #'          factor \code{\link{levels}} are returned. See 'Examples'.
 #' @param include.values string, indicating whether the values associated with the
 #'          value labels are returned as well. If \code{include.values = "as.name"}
@@ -177,17 +177,18 @@ get_label <- function(x) {
 #'            or \code{options(value_labels = "foreign")}.
 #'
 #' @note This function works with vectors that have value and variable
-#'        labels attached. This is automatically done by importing data sets
+#'        label attributes (as provided, for instance, by \code{\link[haven]{labelled}}
+#'        objects). Adding label attributes is automatically done when importing data sets
 #'        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
 #'        function. Labels can also manually be added using the \code{\link{set_labels}}
 #'        and \code{\link{set_label}} functions. If vectors \strong{do not} have
 #'        label attributes, either factor-\code{\link{levels}} or the numeric values
 #'        of the vector are returned as labels.
 #'        \cr \cr
-#'        With attached value and variable labels, most functions of the \code{sjPlot} package
-#'        automatically detect labels and uses them as axis, legend or title labels
-#'        in plots (\code{sjp.}-functions) respectively as column or row headers
-#'        in table outputs (\code{sjt.}-functions).  See
+#'        Most functions of the \code{sjPlot}-package access value and variable label
+#'        attributes to automatically detect labels in order to set them as axis,
+#'        legend or title labels in plots (\code{sjp.}-functions) respectively as
+#'        column or row headers in table outputs (\code{sjt.}-functions).  See
 #'        \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
 #'        \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
 #'        online manuals for more details.
@@ -321,7 +322,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       # do we want to include non-labelled values as well?
       if (include.non.labelled) {
         # get values of variable
-        valid.vals <- unique(stats::na.omit((x)))
+        valid.vals <- unique(stats::na.omit((as.vector(x))))
         # check if we have more values than labels
         if (length(valid.vals) > length(labels)) {
           # We now need to know, which values of "x" don't
@@ -374,12 +375,13 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
 #'
 #' @description This function retrieves the values associated with value labels
 #'                of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
-#'                \code{\link{read_sas}} or \code{\link{read_stata}}).
+#'                \code{\link{read_sas}} or \code{\link{read_stata}}),
+#'                or of a \code{\link[haven]{labelled}} vector.
 #'
 #' @seealso \code{\link{get_labels}} for getting value labels and \code{\link{get_na}}
 #'            to get values for missing values.
 #'
-#' @param x a variable (vector) with attached value labels.
+#' @param x a variable (vector) with value label attributes.
 #' @param sort.val logical, if \code{TRUE} (default), values of associated value labels
 #'          are sorted.
 #' @param drop.na logical, if \code{TRUE}, missing code values are excluded from
@@ -387,8 +389,8 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
 #' @return The values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no label attributes.
 #'
-#' @details Labelled vectors are numeric by default (when imported with read-functions
-#'            like \code{\link{read_spss}}) and have variable and value labels attached.
+#' @details \code{\link[haven]{labelled}} vectors are numeric by default (when imported with read-functions
+#'            like \code{\link{read_spss}}) and have variable and value labels attributes.
 #'            The value labels are associated with those values from the labelled vector.
 #'            This function returns the values associated with the vector's value labels,
 #'            which may differ from actual values in the vector (e.g. due to missings)
@@ -427,7 +429,7 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
   # remove missing value codes?
   if (drop.na) {
     # get NA logicals
-    na.flag <- getNaFromAttribute(x)
+    na.flag <- get_na_flags(x)
     # do we have missing flag? if yes, remove missing code value
     if (!is.null(na.flag)) values <- values[!na.flag]
   }
@@ -442,15 +444,17 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #' @description This function retrieves the value codes associated with missing values
 #'                of variables of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}), where missing
-#'                values have not been replaced with \code{NA}s after import.
+#'                values have not been replaced with \code{NA}s after import,
+#'                or of \code{\link[haven]{labelled}} vectors.
 #'
 #' @seealso \code{\link{get_labels}} to get value labels, or \code{\link{get_values}}
 #'            to get values associated with labels; see \code{\link{set_na}} to
 #'            replace specific values with \code{NA} and \code{\link{to_na}} to
-#'            convert missing value codes into \code{NA}.
+#'            convert missing value codes into \code{NA}; see \code{\link{get_na_flags}}
+#'            to get a logical vector of missing flags.
 #'
-#' @param x a variable (vector) with attached value labels and missing values
-#'          (see \code{\link[haven]{labelled}}).
+#' @param x a variable (vector) with value label attributes, including
+#'          missing value codes (see \code{\link[haven]{labelled}})
 #' @return The missing values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no missing value attribute.
 #'
@@ -492,7 +496,7 @@ get_na <- function(x) {
   # get values
   values <- get_values(x, sort.val = FALSE, drop.na = FALSE)
   # get NA logicals
-  na.flag <- getNaFromAttribute(x)
+  na.flag <- get_na_flags(x)
   # do we have missing flag?
   if (is.null(na.flag)) {
     message("Variable has no assigned missing value codes.")
@@ -505,3 +509,37 @@ get_na <- function(x) {
   # return missing values
   return(nas)
 }
+
+
+getNaAttribute <- function() return("is_na")
+
+
+#' @title Retrieve missing value flags of labelled variables
+#' @name get_na_flags
+#'
+#' @description This function retrieves the logical missing flags for a
+#'                \code{\link[haven]{labelled}} variable.
+#'
+#' @seealso \code{\link{get_na}} to get value codes of labelled missing values;
+#'            \code{\link{get_values}} to get values associated with labels;
+#'            see \code{\link{set_na}} to replace specific values with \code{NA}
+#'            and \code{\link{to_na}} to convert missing value codes into \code{NA}.
+#'
+#' @param x a variable (vector) with value label attributes, including
+#'          missing value codes (see \code{\link[haven]{labelled}})
+#' @return A logical vector with missing flags that indicate which labelled value
+#'           is considered as missing.
+#'
+#' @details See 'Details' in \code{\link{get_na}}.
+#'
+#' @examples
+#' library(haven)
+#'
+#' # create labelled integer, with missing flag
+#' x <- labelled(c(1, 2, 1, 3, 4, 1),
+#'              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+#'              c(FALSE, FALSE, TRUE, TRUE))
+#' get_na_flags(x)
+#'
+#' @export
+get_na_flags <- function(x) return(attr(x, getNaAttribute(), exact = T))

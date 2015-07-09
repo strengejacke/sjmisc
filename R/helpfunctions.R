@@ -108,9 +108,6 @@ getValLabelAttribute <- function(x) {
   return(attr.string)
 }
 
-getNaAttribute <- function() return("is_na")
-getNaFromAttribute <- function(x) return(attr(x, getNaAttribute(), exact = T))
-
 
 # automatically set labels of variables,
 # if attributes are present

@@ -692,7 +692,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   # -------------------------------
   if (recodes == "rev") {
     # retrieve unique valus, sorted
-    ov <- sort(unique(stats::na.omit(x)))
+    ov <- sort(unique(stats::na.omit(as.vector(x))))
     # new values should be reversed order
     nv <- rev(ov)
     # create recodes-string

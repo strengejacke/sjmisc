@@ -11,10 +11,10 @@ set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 }
 \arguments{
 \item{x}{variable (vector), \code{list} of variables or a \code{data.frame}
-where value labels should be attached. Replaces former value labels.}
+where value label attributes should be added. Replaces former value labels.}
 
-\item{labels}{character vector of labels that will be attached to \code{x} by setting
-the \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
+\item{labels}{character vector of labels that will be added to \code{x} as
+\code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
 the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
 \code{labels} should have a length of 3.
 If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
@@ -32,7 +32,7 @@ elements than unique values of \code{x}, additional values not covered
 by \code{labels} will be added as label as well. See 'Examples'.}
 }
 \value{
-\code{x} with attached value labels; or with removed label-attribute if
+\code{x} with value label attributes; or with removed label-attributes if
            \code{labels = ""}.
 }
 \description{
@@ -40,7 +40,7 @@ This function adds character labels as attribute to a variable
                or vector \code{x}, resp. to a set of variables in a
                \code{data.frame} or \code{list}-object. To each variable,
                the attribute \code{"labels"} or \code{"value.labels"}
-               with the related \code{labels} is attached. These value labels will be accessed
+               with the related \code{labels} is added. These value labels will be accessed
                by functions of the \emph{sjPlot} package, in order to automatically set values
                or legend labels.
 }

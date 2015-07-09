@@ -24,19 +24,18 @@ A factor variable, including variable and value labels, respectively
           if \code{x} was a data frame.
 }
 \description{
-This function converts a variable into a factor, but keeps
-               variable and value labels, if these are attached as attributes
-               to the variale. See 'Examples'.
+This function converts a variable into a factor, but preserves
+               variable and value label attributes. See 'Examples'.
 }
 \details{
 See 'Details' in \code{\link{get_na}}.
 }
 \note{
 This function is intended for use with vectors that have value and variable
-       labels attached. Unlike \code{\link{as.factor}}, \code{to_factor} converts
+       label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts
        a variable into a factor and retains the value and variable label attributes.
        \cr \cr
-       Attaching labels is automatically done by importing data sets
+       Adding label attributes is automatically done by importing data sets
        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
        Else, value and variable labels can be manually added to vectors
        with \code{\link{set_labels}} and \code{\link{set_label}}.

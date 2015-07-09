@@ -68,7 +68,9 @@ to_label(factor(c("a", "b", "c")))}
 # create vector
 x <- c(1, 2, 3, 2, 4, NA)
 # add less labels than values
-x <- set_labels(x, c("yes", "maybe", "no"), add.non.labelled = FALSE)
+x <- set_labels(x, c("yes", "maybe", "no"),
+                force.labels = FALSE,
+                force.values = FALSE)
 # convert to label w/o non-labelled values
 to_label(x)
 # convert to label, including non-labelled values
