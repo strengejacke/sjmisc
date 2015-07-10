@@ -4,7 +4,7 @@
 #' @keywords data
 #'
 #' @description A SPSS sample data set, read with the \code{\link[haven]{read_spss}}
-#'                function and "converted" with \code{\link{to_sjPlot}}.
+#'                function and "converted" with \code{\link{unlabel}}.
 #'
 #' @references \url{http://www.uke.de/eurofamcare/}
 #'

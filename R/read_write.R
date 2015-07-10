@@ -129,7 +129,7 @@ read_spss <- function(path,
     # convert NA
     if (!keep.na) data.spss <- to_na(data.spss)
     # convert to sjPlot
-    data.spss <- to_sjPlot(data.spss)
+    data.spss <- unlabel(data.spss)
     # convert atomic values to factors
     if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
   }
@@ -198,7 +198,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_sas}} function of the
 #'         \code{haven} package. This function converts the imported data
-#'         into a sjPlot friendly format (see \code{\link{to_sjPlot}}).
+#'         into a common class format (see \code{\link{unlabel}}).
 #'
 #' @export
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
@@ -211,7 +211,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
   # read data file
   data <- haven::read_sas(path, path.cat)
   # convert to sjPlot
-  data <- to_sjPlot(data)
+  data <- unlabel(data)
   # convert atomic values to factors
   if (atomic.to.fac) data <- atomic_to_fac(data, getValLabelAttribute(data))
   # return data frame
@@ -236,7 +236,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_dta}} function of the
 #'         \code{haven} package. This function converts the imported data
-#'         into a sjPlot friendly format (see \code{\link{to_sjPlot}}).
+#'         into a common class format (see \code{\link{unlabel}}).
 #'
 #' @export
 read_stata <- function(path, atomic.to.fac = FALSE) {
@@ -249,7 +249,7 @@ read_stata <- function(path, atomic.to.fac = FALSE) {
   # read data file
   data <- haven::read_dta(path)
   # convert to sjPlot
-  data <- to_sjPlot(data)
+  data <- unlabel(data)
   # convert atomic values to factors
   if (atomic.to.fac) data <- atomic_to_fac(data, getValLabelAttribute(data))
   # return data frame

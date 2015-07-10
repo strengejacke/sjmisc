@@ -2,22 +2,24 @@
 % Please edit documentation in R/label_conversion.R
 \name{to_sjPlot}
 \alias{to_sjPlot}
-\title{Convert a haven-imported data frame to sjPlot format}
+\alias{unlabel}
+\title{Convert labelled data (frames) into normal classes}
 \usage{
 to_sjPlot(x)
+
+unlabel(x)
 }
 \arguments{
 \item{x}{a data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
 of class \code{labelled}.}
 }
 \value{
-a data frame or single vector (depending on \code{x}) with 'sjPlot' friendly
-          object classes.
+a data frame or single vector (depending on \code{x}) with common object classes.
 }
 \description{
-This function converts a data frame, which was imported with any of
+This function converts a vector or data frame, which was imported with any of
                \code{haven}'s read functions and contains \code{\link[haven]{labelled}} class vectors or
-               a single vector of type \code{labelled} into an sjPlot friendly data
+               a single vector of type \code{labelled} into an generic data
                frame format, which means that simply all \code{\link[haven]{labelled}} class
                attributes will be removed, so all vectors / variables will most
                likely become \code{\link{atomic}}. Additionally, \code{tbl_df} and

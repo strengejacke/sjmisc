@@ -51,7 +51,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
 * `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
 * `as_labelled` to convert vectors to labelled.
-* Added S3-methods `summary` and `mean` for labelled-class objects. Note that the mean-function defaults `na.rm` to `TRUE` and replaces all missing code values with `NA` prior to calculating the mean.
+* Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects. Note that the mean-function defaults `na.rm` to `TRUE` and replaces all missing code values with `NA` prior to calculating the mean.
 
 #### Changes to functions
 * `set_val_labels` gets alias name `set_labels`.

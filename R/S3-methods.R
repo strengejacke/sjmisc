@@ -74,8 +74,17 @@ mean.labelled <- function(x, trim = 0, na.rm = TRUE, ...) {
   # mean
   mean(to_na(x), trim = trim, na.rm = na.rm)
 }
-#
-#
+
+
+#' @export
+is.na.labelled <- function(x) {
+  # unclass vector for mean-call
+  x <- unclass(x)
+  # return missings
+  is.na(to_na(x))
+}
+
+
 # #' @importFrom stats sd
 # #' @export
 # sd.labelled <- function(x, na.rm = TRUE) {
