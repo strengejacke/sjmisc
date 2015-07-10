@@ -24,7 +24,7 @@ Imports data from STATA dta-files, including NA's,
 \note{
 This is a wrapper function for \code{\link[haven]{read_dta}} function of the
         \code{haven} package. This function converts the imported data
-        into a sjPlot friendly format (see \code{\link{to_sjPlot}}).
+        into a common class format (see \code{\link{unlabel}}).
 }
 \seealso{
 \code{\link{read_spss}}

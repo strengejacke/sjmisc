@@ -6,7 +6,7 @@
 \title{Sample dataset from the EUROFAMCARE project}
 \description{
 A SPSS sample data set, read with the \code{\link[haven]{read_spss}}
-               function and "converted" with \code{\link{to_sjPlot}}.
+               function and "converted" with \code{\link{unlabel}}.
 }
 \examples{
 # Attach EFC-data
