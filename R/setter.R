@@ -244,8 +244,8 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' x
 #' summary(as_labelled(x))
 #'
-#' # setting same value labels to multiple vectors
 #'
+#' # setting same value labels to multiple vectors
 #' # create a set of dummy variables
 #' dummy1 <- sample(1:4, 40, replace = TRUE)
 #' dummy2 <- sample(1:4, 40, replace = TRUE)
