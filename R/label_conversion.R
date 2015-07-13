@@ -11,7 +11,7 @@
 #'
 #' @seealso \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
 #'
-#' @param x a data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
+#' @param x data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
 #'          of class \code{labelled}.
 #' @return a data frame or single vector (depending on \code{x}) with common object classes.
 #'
@@ -76,10 +76,10 @@ unlabel <- function(x) {
 #'                all 1 to female and returns the new variable as \code{\link{factor}}.
 #'
 #' @seealso \code{\link{to_factor}} to convert a numeric variable into a factor (and
-#'            retain labels) and \code{\link{to_value}} to convert a factor into
+#'            preserve labels) and \code{\link{to_value}} to convert a factor into
 #'            a numeric variable.
 #'
-#' @param x A variable of type \code{\link{numeric}}, \code{\link{atomic}},
+#' @param x variable of type \code{\link{numeric}}, \code{\link{atomic}},
 #'          \code{\link{factor}} or \code{\link[haven]{labelled}}
 #'          \emph{with associated value labels} (see \code{\link{set_labels}}),
 #'          respectively a data frame with such variables.
@@ -207,7 +207,7 @@ to_label_helper <- function(x, add.non.labelled, drop.na) {
 #'                with \code{\link{set_labels}}.
 #'
 #' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-#'            on working with labelled data, and \code{\link{add_labels}} for
+#'            on working with labelled data, and \code{\link{copy_labels}} for
 #'            adding label attributes (subsetted) data frames.
 #'
 #' @param x vector or \code{data.frame} with variable and/or value label attributes
@@ -259,8 +259,8 @@ remove_labels_helper <- function(x) {
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
 #'            factor levels.
 #'
-#' @param x A (numeric or atomic) variable or a data frame with
-#'          (numeric or atomic) variables.
+#' @param x numeric or atomic variable or a data frame with
+#'          numeric or atomic variables.
 #' @param drop.na logical, if \code{TRUE}, all types of missing value codes are
 #'          converted into NA before \code{x} is converted as factor. If
 #'          \code{FALSE}, missing values will be left as their original codes.
@@ -271,7 +271,7 @@ remove_labels_helper <- function(x) {
 #'
 #' @note This function is intended for use with vectors that have value and variable
 #'        label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts
-#'        a variable into a factor and retains the value and variable label attributes.
+#'        a variable into a factor and preserves the value and variable label attributes.
 #'        \cr \cr
 #'        Adding label attributes is automatically done by importing data sets
 #'        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
@@ -355,12 +355,12 @@ to_fac_helper <- function(x, drop.na) {
 #' related factor level index number, thus the factor is converted to
 #' a numeric variable.
 #'
-#' @seealso \code{\link{to_label}} to convert a value into a factor with labelled
+#' @seealso \code{\link{to_label}} to convert a labelled vector into a factor with labelled
 #'            factor levels and \code{\link{to_factor}} to convert a numeric variable
-#'            into a factor (and retain labels)
+#'            into a factor (and preserve labels)
 #'
-#' @param x A (factor) variable or a data frame with (factor) variables.
-#' @param start.at the starting index, i.e. the lowest numeric value of the variable's
+#' @param x \code{\link{factor}} or a data frame with \code{factor}s
+#' @param start.at starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
 #'          value of the returned numeric variable corresponds to the lowest factor
 #'          level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
@@ -444,14 +444,14 @@ to_value_helper <- function(x, start.at, keep.labels) {
 }
 
 
-#' @title Set back value and variable labels to subsetted data frames
-#' @name add_labels
+#' @title Copy value and variable labels to (subsetted) data frames
+#' @name copy_labels
 #'
 #' @description Subsetting-functions usually drop value and variable labels from
 #'                subsetted data frames (if the original data frame has value and variable
-#'                label attributes). This function adds back these value and variable
-#'                labels to subsetted data frames that have been subsetted, for instance,
-#'                 with \code{\link{subset}}.
+#'                label attributes). This function copies these value and variable
+#'                labels back to subsetted data frames that have been subsetted, for instance,
+#'                with \code{\link{subset}}.
 #'                \cr \cr
 #'                In case \code{df_origin = NULL}, all possible label attributes
 #'                from \code{df_new} are removed.
@@ -464,27 +464,27 @@ to_value_helper <- function(x, start.at, keep.labels) {
 #' @param df_origin the original data frame where the subset (\code{df_new}) stems from;
 #'          use \code{NULL}, if value and variable labels from \code{df_new} should be removed.
 #' @return Returns \code{df_new} with either removed value and variable label attributes
-#'           (if \code{df_origin = NULL}) or with added value and variable label
+#'           (if \code{df_origin = NULL}) or with copied value and variable label
 #'           attributes (if \code{df_origin} was the original subsetted data frame).
 #'
-#' @note In case \code{df_origin= NULL}, all possible label attributes
+#' @note In case \code{df_origin = NULL}, all possible label attributes
 #'         from \code{df_new} are removed. dplyr >= 0.4.2 no longer drops
-#'         vector attributes; you'll only need
-#'         to set back labels when using dplyr up to 0.4.1.
+#'         vector attributes; you'll only need to copy labels when using
+#'         dplyr up to 0.4.1.
 #'
 #' @examples
 #' data(efc)
 #' efc.sub <- subset(efc, subset = e16sex == 1, select = c(4:8))
 #' str(efc.sub)
 #'
-#' efc.sub <- add_labels(efc.sub, efc)
+#' efc.sub <- copy_labels(efc.sub, efc)
 #' str(efc.sub)
 #'
-#' efc.sub <- add_labels(efc.sub)
+#' efc.sub <- copy_labels(efc.sub)
 #' str(efc.sub)
 #'
 #' @export
-add_labels <- function(df_new, df_origin = NULL) {
+copy_labels <- function(df_new, df_origin = NULL) {
   # check if old df is NULL. if so, we remove all labels
   # from the data frame.
   if (is.null(df_origin)) {
@@ -512,7 +512,7 @@ add_labels <- function(df_new, df_origin = NULL) {
                                               include.values = NULL,
                                               include.non.labelled = FALSE))
     } else {
-      warning("Both 'df_origin' and 'df_new' must be of class 'data.frame'.", call. = F)
+      warning("both 'df_origin' and 'df_new' must be of class 'data.frame'.", call. = F)
     }
   }
   return(df_new)
@@ -522,15 +522,15 @@ add_labels <- function(df_new, df_origin = NULL) {
 #' @title Convert missing values of labelled variables into NA
 #' @name to_na
 #'
-#' @description This function converts missing values that are still stored as
+#' @description This function converts defined missing values that are stored as
 #'                original value code into \code{NA}.
 #'
 #' @seealso \code{\link{get_na}} to get value codes of missing values.
 #'
-#' @param x a variable (vector), \code{data.frame} or \code{list} of variables
-#'          with attached value labels and missing value codes
+#' @param x variable (vector), \code{data.frame} or \code{list} of variables
+#'          with attached value labels and defined missing value codes
 #'          (see \code{\link[haven]{labelled}}).
-#' @return \code{x}, where each value code of missing values is comverted
+#' @return \code{x}, where each value code of missing values is converted
 #'            to \code{NA}.
 #'
 #' @details \code{to_na} converts values to \code{NA}, which are defined
@@ -540,8 +540,8 @@ add_labels <- function(df_new, df_origin = NULL) {
 #'            specified in the function's \code{values} argument; hence,
 #'            \code{\link{set_na}} ignores the \code{is_na}-attribute.
 #'            \cr \cr
-#'            Furthermore, see 'Details' in \code{\link{get_values}},
-#'            \code{\link{get_na}} and \code{\link{to_na}}.
+#'            Furthermore, see 'Details' in \code{\link{get_values}}
+#'            and \code{\link{get_na}}.
 #'
 #' @note This is a convenient function for \code{set_na(x, get_na(x))}.
 #'
@@ -598,7 +598,7 @@ to_na_helper <- function(x) set_na(x, suppressMessages(get_na(x)), as.attr = FAL
 #'                i.e. if not all values are labelled, non-labelled values
 #'                get labels.
 #'
-#' @param x a variable (vector), \code{data.frame} or \code{list} of variables
+#' @param x variable (vector), \code{data.frame} or \code{list} of variables
 #'          with partially added value labels (see \code{\link[haven]{labelled}}).
 #' @return \code{x}, where labels for non-labelled values are added
 #'
@@ -649,7 +649,10 @@ fill_labels_helper <- function(x) {
   # get current labels
   current.values <- get_labels(x, attr.only = T, include.non.labelled = F)
   # get all labels, including non-labelled values
-  all.values <- get_labels(x, attr.only = T, include.non.labelled = T)
+  all.values <- get_labels(x,
+                           attr.only = T,
+                           include.values = "n",
+                           include.non.labelled = T)
   # have any values?
   if (!is.null(all.values)) {
     # get missing values
@@ -673,15 +676,18 @@ fill_labels_helper <- function(x) {
 #' @title Convert vector to labelled class
 #' @name as_labelled
 #'
-#' @param x a variable (vector), \code{data.frame} or \code{list} of variables
+#' @param x variable (vector), \code{data.frame} or \code{list} of variables
 #'          that should be converted to \code{\link[haven]{labelled}}-class
 #'          objects.
+#' @param add.labels logical, if \code{TRUE}, non-labelled values will be
+#'          labelled with the corresponding value.
 #' @param add.class logical, if \code{TRUE}, \code{x} preserves its former
 #'          \code{class}-attribute and \code{labelled} is added as additional
 #'          attribute. If \code{FALSE} (default), all former \code{class}-attributes
 #'          will be removed and the class-attribute  of \code{x} will only
 #'          be \code{labelled}.
-#' @return \code{x}, as \code{\link[haven]{labelled}}-class object.
+#' @return \code{x}, as \code{\link[haven]{labelled}}-class object, including
+#'           missing-flags (\code{is_na}-attribute).
 #'
 #' @examples
 #'
@@ -701,9 +707,21 @@ fill_labels_helper <- function(x) {
 #' str(x)
 #' summary(x)
 #'
+#' data(efc)
+#' x <- set_labels(efc$e42dep, c(`1` = "independent",
+#'                               `4` = "severe dependency"))
+#' x1 <- as_labelled(x, add.labels = FALSE)
+#' x2 <- as_labelled(x, add.labels = TRUE)
+#'
+#' str(x1)
+#' str(x2)
+#'
+#' get_values(x1)
+#' get_values(x2)
+#'
 #' @importFrom stats na.omit
 #' @export
-as_labelled <- function(x, add.class = FALSE) {
+as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -712,15 +730,19 @@ as_labelled <- function(x, add.class = FALSE) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- as_labelled_helper(x[[i]], add.class)
+    for (i in 1:nvars) x[[i]] <- as_labelled_helper(x[[i]],
+                                                    add.labels,
+                                                    add.class)
     return(x)
   } else {
-    return(as_labelled_helper(x, add.class))
+    return(as_labelled_helper(x,
+                              add.labels,
+                              add.class))
   }
 }
 
 
-as_labelled_helper <- function(x, add.class) {
+as_labelled_helper <- function(x, add.labels, add.class) {
   # check if we have any value label attributes
   vallabel <- get_labels(x, attr.only = T)
   # nothing?
@@ -736,7 +758,9 @@ as_labelled_helper <- function(x, add.class) {
     x <- set_labels(x, vallabel, force.labels = T, force.values = T)
   }
   # fill up missing attributes
-  x <- fill_labels(x)
+  if (add.labels) x <- fill_labels(x)
+  # reset missings
+  x <- set_na(x, suppressMessages(get_na(x)), as.attr = T)
   # get former class attributes
   xc <- class(x)
   if (add.class)
@@ -744,5 +768,58 @@ as_labelled_helper <- function(x, add.class) {
   else
     class(x) <- "labelled"
 
+  return(x)
+}
+
+
+
+#' @title Convert labelled values into NA
+#' @name zap_labels
+#'
+#' @param x (partially) \code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
+#'            of (partially) labelled vectors
+#' @return \code{x}, where all labelled values are converted to \code{NA}.
+#'
+#' @seealso \code{\link{get_values}}
+#'
+#' @examples
+#'
+#' data(efc)
+#' str(efc$e42dep)
+#'
+#' x <- set_labels(efc$e42dep, c(`1` = "independent",
+#'                               `4` = "severe dependency"))
+#' table(x)
+#' get_values(x)
+#' str(x)
+#'
+#' x <- set_labels(efc$e42dep, c(`1` = "independent",
+#'                               `4` = "severe dependency"))
+#' table(zap_labels(x))
+#' get_values(zap_labels(x))
+#' str(zap_labels(x))
+#'
+#' @importFrom stats na.omit
+#' @export
+zap_labels <- function(x) {
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # na all
+    for (i in 1:nvars) x[[i]] <- zap_labels_helper(x[[i]])
+    return(x)
+  } else {
+    return(zap_labels_helper(x))
+  }
+}
+
+
+zap_labels_helper <- function(x) {
+  x <- set_na(x, get_values(x), as.attr = F)
+  if (is_labelled(x)) class(x) <- NULL
   return(x)
 }

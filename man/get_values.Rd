@@ -7,7 +7,7 @@
 get_values(x, sort.val = FALSE, drop.na = FALSE)
 }
 \arguments{
-\item{x}{a variable (vector) with value label attributes.}
+\item{x}{variable (vector) with value label attributes.}
 
 \item{sort.val}{logical, if \code{TRUE} (default), values of associated value labels
 are sorted.}

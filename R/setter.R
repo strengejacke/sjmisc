@@ -12,7 +12,7 @@
 #'            more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
 #'            to get variable labels.
 #'
-#' @param x a variable (vector), \code{list} of variables or a \code{data.frame}
+#' @param x variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where variables labels should be attached.
 #' @param lab if \code{x} is a vector (single variable), use a single character string with
 #'          the variable label for \code{x}. If \code{x} is a data frame, use a
@@ -179,31 +179,38 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
 #'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
 #'            more details; \code{\link{set_label}} to manually set variable labels or
-#'            \code{\link{get_label}} to get variable labels.
+#'            \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
+#'            add additional value labels without replacing the existing ones.
 #'
 #' @param x variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where value label attributes should be added. Replaces former value labels.
-#' @param labels character vector of labels that will be added to \code{x} as
-#'          \code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
-#'          the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
-#'          \code{labels} should have a length of 3.
+#' @param labels (named) character vector of labels that will be added to \code{x} as
+#'          \code{"labels"} or \code{"value.labels"} attribute. If \code{labels} is
+#'          \strong{not} a named vector, its length must equal the value range of
+#'          \code{x}, i.e. if \code{x} has values from 1 to 3, \code{labels} should have a length of 3.
+#'          If \code{labels} is a named vector, value labels will be set accordingly, even
+#'          if \code{x} has a different length of unique values. See also 'Note'.
 #'          If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
-#'          character vectors. If \code{labels} is a list, it must have the same length as
+#'          (named) character vectors. If \code{labels} is a list, it must have the same length as
 #'          number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 #'          the \code{labels} will be applied to each column of \code{x}.
 #'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
-#' @param force.labels logical; if \code{TRUE}, all \code{labels} are added as value labels
+#' @param force.labels logical; if \code{TRUE}, all \code{labels} are added as value label
 #'          attribute, even if \code{x} has less unique values then length of \code{labels}
 #'          or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
+#'          This parameter will be ignored, if \code{labels} is a named vector.
 #' @param force.values logical, if \code{TRUE} (default) and \code{labels} has less
 #'          elements than unique values of \code{x}, additional values not covered
 #'          by \code{labels} will be added as label as well. See 'Examples'.
+#'          This parameter will be ignored, if \code{labels} is a named vector.
 #' @return \code{x} with value label attributes; or with removed label-attributes if
 #'            \code{labels = ""}.
 #'
 #' @details See 'Details' in \code{\link{get_labels}}.
 #'
-#' @note See 'Note' in \code{\link{get_labels}}.
+#' @note If \code{labels} is a named vector, \code{force.labels} and
+#'         \code{force.values} will be ignored. Furthermore,. see 'Note'
+#'         in \code{\link{get_labels}}.
 #'
 #' @examples
 #' \dontrun{
@@ -220,11 +227,13 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' # only two value labels
 #' x <- set_labels(x, c("1", "2", "3"))
 #' x
-#' \dontrun{sjp.frq(x)}
+#' \dontrun{
+#' sjp.frq(x)}
 #' # all three value labels
 #' x <- set_labels(x, c("1", "2", "3"), force.labels = TRUE)
 #' x
-#' \dontrun{sjp.frq(x)}
+#' \dontrun{
+#' sjp.frq(x)}
 #'
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
@@ -240,9 +249,20 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' x <- set_labels(x, c("Refused", "One", "Two", "Three", "Missing"))
 #' x
 #'
-#' x <- set_na(x, c(-2, 9), as.attr = T)
+#' x <- set_na(x, c(-2, 9), as.attr = TRUE)
 #' x
 #' summary(as_labelled(x))
+#'
+#'
+#' # set labels via named vector,
+#' # not using all possible values
+#' data(efc)
+#' get_labels(efc$e42dep)
+#'
+#' x <- set_labels(efc$e42dep, c(`1` = "independent",
+#'                               `4` = "severe dependency",
+#'                               `9` = "missing value"))
+#' get_labels(x, attr.only = TRUE, include.values = "p")
 #'
 #'
 #' # setting same value labels to multiple vectors
@@ -416,7 +436,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       minval <- vr$minval
       maxval <- vr$maxval
       # check for unlisting
-      if (is.list(labels)) labels <- as.vector(unlist(labels))
+      if (is.list(labels)) labels <- unlist(labels)
       # ---------------------------------------
       # determine amount of labels and unique values
       # ---------------------------------------
@@ -432,6 +452,16 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       }
       if (is.infinite(valrange)) {
         warning("Can't set value labels. Infinite value range.", call. = F)
+      # ---------------------------------------
+      # check if we have named vector. in this
+      # case, just add these values
+      # ---------------------------------------
+      } else if (!is.null(names(labels))) {
+        # ---------------------------------------
+        # set attributes
+        # ---------------------------------------
+        attr(x, attr.string) <- names(labels)
+        names(attr(x, attr.string)) <- labels
       # ---------------------------------------
       # check for valid length of labels
       # if amount of labels and values are equal,
@@ -514,6 +544,107 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
 }
 
 
+#' @title Add value labels to variables
+#' @name add_labels
+#'
+#' @description This function adds additional labels as attribute to a variable
+#'                or vector \code{x}, resp. to a set of variables in a
+#'                \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
+#'                \code{add_labels} does not replace existing value labels, but add
+#'                \code{labels} to the existing value labels of \code{x}.
+#'
+#' @seealso \code{\link{set_label}} to manually set variable labels or
+#'            \code{\link{get_label}} to get variable labels; \code{\link{set_labels}} to
+#'            add value labels, replacing the existing ones.
+#'
+#' @param x variable (vector), \code{list} of variables or a \code{data.frame}
+#'          where value label attributes should be added. Does not replaces former
+#'          value labels.
+#' @param labels named character vector of labels that will be added to \code{x} as
+#'          \code{"labels"} or \code{"value.labels"} attribute. If \code{x} is
+#'          a data frame, \code{labels} may also be a \code{\link{list}} of
+#'          named character vectors. If \code{labels} is a list, it must have
+#'          the same length as number of columns of \code{x}. If \code{labels}
+#'          is a vector and \code{x} is a data frame, \code{labels} will be applied
+#'          to each column of \code{x}.
+#'
+#' @return \code{x} with additional value labels.
+#'
+#' @note Existing labelled values will be replaced by new labelled values
+#'         in \code{labels}. See 'Examples'.
+#'
+#' @examples
+#' data(efc)
+#' get_labels(efc$e42dep)
+#'
+#' x <- add_labels(efc$e42dep, c(`5` = "nothing"))
+#' get_labels(x)
+#'
+#' x <- add_labels(efc$e42dep, c(`5` = "nothing", `0` = "zero value"))
+#' get_labels(x, include.values = "p")
+#'
+#' # replace old values
+#' x <- add_labels(efc$e42dep, c(`4` = "not so dependent", `5` = "lorem ipsum"))
+#' get_labels(x, include.values = "p")
+#'
+#'
+#' @export
+add_labels <- function(x, labels) {
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # dichotomize all
+    for (i in 1:nvars) x[[i]] <- add_labels_helper(x[[i]], labels)
+    return(x)
+  } else {
+    return(add_labels_helper(x, labels))
+  }
+}
+
+
+add_labels_helper <- function(x, labels) {
+  # ----------------------------------------
+  # get current labels of `x`
+  # ----------------------------------------
+  current.labels <- get_labels(x,
+                               attr.only = T,
+                               include.values = "n",
+                               include.non.labelled = F)
+  # ----------------------------------------
+  # if we had already labels, append new ones
+  # ----------------------------------------
+  if (!is.null(current.labels)) {
+    # -------------------------
+    # remove double values labels
+    # -------------------------
+    doubles <- names(current.labels) %in% names(labels)
+    # -------------------------
+    # update all labels
+    # -------------------------
+    all.labels <- c(current.labels[!doubles], labels)
+    # -------------------------
+    # tell user
+    # -------------------------
+    warning(sprintf("label '%s' was replaced with new value label.", current.labels[doubles]), call. = F)
+  } else {
+    all.labels <- labels
+  }
+  # ----------------------------------------
+  # sort labels by values
+  # ----------------------------------------
+  all.labels <- all.labels[order(names(all.labels))]
+  # ----------------------------------------
+  # set back labels
+  # ----------------------------------------
+  x <- set_labels(x, labels = all.labels)
+  return(x)
+}
+
+
 #' @title Set NA for specific variable values
 #' @name set_na
 #'
@@ -527,7 +658,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
 #'            labelled vectors and \code{\link{to_na}} to convert missing value
 #'            codes into \code{NA}.
 #'
-#' @param x a variable (vector), \code{data.frame} or \code{list} of variables where new
+#' @param x variable (vector), \code{data.frame} or \code{list} of variables where new
 #'          missing values should be defined. If \code{x} is a \code{data.frame}, each
 #'          column is assumed to be a new variable, where missings should be defined.
 #' @param values numeric vector with values that should be replaced with \code{\link{NA}}'s.
@@ -542,7 +673,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
 #' @return \code{x}, where each value of \code{values} is replaced by an \code{NA}.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are retained.
+#'         or \code{\link{set_labels}}) are preserved.
 #'
 #' @details \code{set_na} converts those values to \code{NA} that are
 #'            specified in the function's \code{values} argument; hence,

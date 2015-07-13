@@ -7,9 +7,9 @@
 to_value(x, start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
-\item{x}{A (factor) variable or a data frame with (factor) variables.}
+\item{x}{\code{\link{factor}} or a data frame with \code{factor}s}
 
-\item{start.at}{the starting index, i.e. the lowest numeric value of the variable's
+\item{start.at}{starting index, i.e. the lowest numeric value of the variable's
 value range. By default, this argument is \code{NULL}, hence the lowest
 value of the returned numeric variable corresponds to the lowest factor
 level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
@@ -56,8 +56,8 @@ dummy <- factor(c("D", "F", "H"))
 table(to_value(dummy))
 }
 \seealso{
-\code{\link{to_label}} to convert a value into a factor with labelled
+\code{\link{to_label}} to convert a labelled vector into a factor with labelled
            factor levels and \code{\link{to_factor}} to convert a numeric variable
-           into a factor (and retain labels)
+           into a factor (and preserve labels)
 }
 

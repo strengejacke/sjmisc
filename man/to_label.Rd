@@ -7,7 +7,7 @@
 to_label(x, add.non.labelled = FALSE, drop.na = TRUE)
 }
 \arguments{
-\item{x}{A variable of type \code{\link{numeric}}, \code{\link{atomic}},
+\item{x}{variable of type \code{\link{numeric}}, \code{\link{atomic}},
 \code{\link{factor}} or \code{\link[haven]{labelled}}
 \emph{with associated value labels} (see \code{\link{set_labels}}),
 respectively a data frame with such variables.}
@@ -89,7 +89,7 @@ to_label(x, drop.na = TRUE)
 }
 \seealso{
 \code{\link{to_factor}} to convert a numeric variable into a factor (and
-           retain labels) and \code{\link{to_value}} to convert a factor into
+           preserve labels) and \code{\link{to_value}} to convert a factor into
            a numeric variable.
 }
 

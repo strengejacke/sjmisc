@@ -10,8 +10,8 @@ to_fac(x, drop.na = TRUE)
 to_factor(x, drop.na = TRUE)
 }
 \arguments{
-\item{x}{A (numeric or atomic) variable or a data frame with
-(numeric or atomic) variables.}
+\item{x}{numeric or atomic variable or a data frame with
+numeric or atomic variables.}
 
 \item{drop.na}{logical, if \code{TRUE}, all types of missing value codes are
 converted into NA before \code{x} is converted as factor. If
@@ -33,7 +33,7 @@ See 'Details' in \code{\link{get_na}}.
 \note{
 This function is intended for use with vectors that have value and variable
        label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts
-       a variable into a factor and retains the value and variable label attributes.
+       a variable into a factor and preserves the value and variable label attributes.
        \cr \cr
        Adding label attributes is automatically done by importing data sets
        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.

@@ -51,9 +51,9 @@ The \code{recodes} string has following syntax:
 Please note following behaviours of the function:
       \itemize{
         \item the \code{"else"}-token should always be the last argument in the \code{recodes}-string.
-        \item Non-matching values will be set to \code{\link{NA}}.
-        \item Variable label attributes (see, for instance, \code{\link{get_label}}) are retained (unless changes via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
-        \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
+        \item Non-matching values will be set to \code{\link{NA}}, unless captured by the \code{"else"}-token.
+        \item Variable label attributes (see, for instance, \code{\link{get_label}}) are preserved (unless changes via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
+        \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see second bullet, \code{NA}s are produced).
       }
 }
 \examples{
@@ -66,7 +66,7 @@ table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), exclude = NULL)
 # recode 1 to 2 into 1 and 3 to 4 into 2
 table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
 
-# keep value labels. variable label is automatically retained
+# keep value labels. variable label is automatically preserved
 str(rec(efc$e42dep,
         "1,2=1; 3,4=2",
         val.labels = c("low dependency", "high dependency")))

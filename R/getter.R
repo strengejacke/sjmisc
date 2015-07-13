@@ -14,7 +14,7 @@
 #'            more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}
 #'            to get value labels.
 
-#' @param x a \code{data.frame} with variables that have label attributes (e.g.
+#' @param x \code{data.frame} with variables that have label attributes (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with variable label attribute; or a \code{list} of variables
@@ -130,7 +130,7 @@ get_label <- function(x) {
 #'            more details; \code{\link{set_labels}} to manually set value labels, \code{\link{get_label}}
 #'            to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
 #'
-#' @param x a \code{data.frame} with variables that have value label attributes (e.g.
+#' @param x \code{data.frame} with variables that have value label attributes (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with value label attributes; or a \code{list} of variables
@@ -140,7 +140,7 @@ get_label <- function(x) {
 #'          value labels are returned as well. If \code{include.values = "as.name"}
 #'          (or \code{include.values = "n"}), values are set as \code{\link{names}}
 #'          attribute of the returned object. If \code{include.values = "as.prefix"}
-#'          (or \code{include.values = "p"}), values are includes as prefix
+#'          (or \code{include.values = "p"}), values are included as prefix
 #'          to each label. See 'Examples'.
 #' @param attr.only logical, if \code{TRUE}, labels are only searched for
 #'          in the the vector's \code{\link{attributes}}; else, if \code{x} has no
@@ -322,7 +322,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       # do we want to include non-labelled values as well?
       if (include.non.labelled) {
         # get values of variable
-        valid.vals <- unique(stats::na.omit((as.vector(x))))
+        valid.vals <- sort(unique(stats::na.omit((as.vector(x)))))
         # check if we have more values than labels
         if (length(valid.vals) > length(labels)) {
           # We now need to know, which values of "x" don't
@@ -338,7 +338,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
           # add to labels
           labels <- c(labels, as.character(add_vals))
           # fix value prefix
-          new_vals <- c(as.character(values),as.character(add_vals))
+          new_vals <- c(as.character(values), as.character(add_vals))
           # sort values and labels
           labels <- labels[order(c(as.numeric(values), add_vals))]
           new_vals <- new_vals[order(c(as.numeric(values), add_vals))]
@@ -381,7 +381,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
 #' @seealso \code{\link{get_labels}} for getting value labels and \code{\link{get_na}}
 #'            to get values for missing values.
 #'
-#' @param x a variable (vector) with value label attributes.
+#' @param x variable (vector) with value label attributes.
 #' @param sort.val logical, if \code{TRUE} (default), values of associated value labels
 #'          are sorted.
 #' @param drop.na logical, if \code{TRUE}, missing code values are excluded from
@@ -453,7 +453,7 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #'            convert missing value codes into \code{NA}; see \code{\link{get_na_flags}}
 #'            to get a logical vector of missing flags.
 #'
-#' @param x a variable (vector) with value label attributes, including
+#' @param x variable (vector) with value label attributes, including
 #'          missing value codes (see \code{\link[haven]{labelled}})
 #' @return The missing values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no missing value attribute.
@@ -525,7 +525,7 @@ getNaAttribute <- function() return("is_na")
 #'            see \code{\link{set_na}} to replace specific values with \code{NA}
 #'            and \code{\link{to_na}} to convert missing value codes into \code{NA}.
 #'
-#' @param x a variable (vector) with value label attributes, including
+#' @param x variable (vector) with value label attributes, including
 #'          missing value codes (see \code{\link[haven]{labelled}})
 #' @return A logical vector with missing flags that indicate which labelled value
 #'           is considered as missing.

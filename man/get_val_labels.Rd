@@ -12,7 +12,7 @@ get_labels(x, attr.only = FALSE, include.values = NULL,
   include.non.labelled = FALSE)
 }
 \arguments{
-\item{x}{a \code{data.frame} with variables that have value label attributes (e.g.
+\item{x}{\code{data.frame} with variables that have value label attributes (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 (vector) with value label attributes; or a \code{list} of variables
@@ -28,7 +28,7 @@ label attributes, factor levels or string values are returned. See
 value labels are returned as well. If \code{include.values = "as.name"}
 (or \code{include.values = "n"}), values are set as \code{\link{names}}
 attribute of the returned object. If \code{include.values = "as.prefix"}
-(or \code{include.values = "p"}), values are includes as prefix
+(or \code{include.values = "p"}), values are included as prefix
 to each label. See 'Examples'.}
 
 \item{include.non.labelled}{logical, if \code{TRUE}, values without labels will

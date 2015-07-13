@@ -13,23 +13,27 @@ set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 \item{x}{variable (vector), \code{list} of variables or a \code{data.frame}
 where value label attributes should be added. Replaces former value labels.}
 
-\item{labels}{character vector of labels that will be added to \code{x} as
-\code{"labels"} or \code{"value.labels"} attribute. The length of this character vector must equal
-the value range of \code{x}, i.e. if \code{x} has values from 1 to 3,
-\code{labels} should have a length of 3.
+\item{labels}{(named) character vector of labels that will be added to \code{x} as
+\code{"labels"} or \code{"value.labels"} attribute. If \code{labels} is
+\strong{not} a named vector, its length must equal the value range of
+\code{x}, i.e. if \code{x} has values from 1 to 3, \code{labels} should have a length of 3.
+If \code{labels} is a named vector, value labels will be set accordingly, even
+if \code{x} has a different length of unique values. See also 'Note'.
 If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
-character vectors. If \code{labels} is a list, it must have the same length as
+(named) character vectors. If \code{labels} is a list, it must have the same length as
 number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
 the \code{labels} will be applied to each column of \code{x}.
 Use \code{labels = ""} to remove labels-attribute from \code{x}.}
 
-\item{force.labels}{logical; if \code{TRUE}, all \code{labels} are added as value labels
+\item{force.labels}{logical; if \code{TRUE}, all \code{labels} are added as value label
 attribute, even if \code{x} has less unique values then length of \code{labels}
-or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.}
+or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
+This parameter will be ignored, if \code{labels} is a named vector.}
 
 \item{force.values}{logical, if \code{TRUE} (default) and \code{labels} has less
 elements than unique values of \code{x}, additional values not covered
-by \code{labels} will be added as label as well. See 'Examples'.}
+by \code{labels} will be added as label as well. See 'Examples'.
+This parameter will be ignored, if \code{labels} is a named vector.}
 }
 \value{
 \code{x} with value label attributes; or with removed label-attributes if
@@ -48,7 +52,9 @@ This function adds character labels as attribute to a variable
 See 'Details' in \code{\link{get_labels}}.
 }
 \note{
-See 'Note' in \code{\link{get_labels}}.
+If \code{labels} is a named vector, \code{force.labels} and
+        \code{force.values} will be ignored. Furthermore,. see 'Note'
+        in \code{\link{get_labels}}.
 }
 \examples{
 \dontrun{
@@ -65,11 +71,13 @@ x <- c(2, 2, 3, 3, 2)
 # only two value labels
 x <- set_labels(x, c("1", "2", "3"))
 x
-\dontrun{sjp.frq(x)}
+\dontrun{
+sjp.frq(x)}
 # all three value labels
 x <- set_labels(x, c("1", "2", "3"), force.labels = TRUE)
 x
-\dontrun{sjp.frq(x)}
+\dontrun{
+sjp.frq(x)}
 
 # create vector
 x <- c(1, 2, 3, 2, 4, NA)
@@ -85,9 +93,20 @@ x <- c(1, 1, 1, 2, 2, -2, 3, 3, 3, 3, 3, 9)
 x <- set_labels(x, c("Refused", "One", "Two", "Three", "Missing"))
 x
 
-x <- set_na(x, c(-2, 9), as.attr = T)
+x <- set_na(x, c(-2, 9), as.attr = TRUE)
 x
 summary(as_labelled(x))
+
+
+# set labels via named vector,
+# not using all possible values
+data(efc)
+get_labels(efc$e42dep)
+
+x <- set_labels(efc$e42dep, c(`1` = "independent",
+                              `4` = "severe dependency",
+                              `9` = "missing value"))
+get_labels(x, attr.only = TRUE, include.values = "p")
 
 
 # setting same value labels to multiple vectors
@@ -106,6 +125,7 @@ get_labels(dummies)
 The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
            more details; \code{\link{set_label}} to manually set variable labels or
-           \code{\link{get_label}} to get variable labels.
+           \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
+           add additional value labels without replacing the existing ones.
 }
 

@@ -7,7 +7,7 @@
 set_na(x, values, as.attr = FALSE)
 }
 \arguments{
-\item{x}{a variable (vector), \code{data.frame} or \code{list} of variables where new
+\item{x}{variable (vector), \code{data.frame} or \code{list} of variables where new
 missing values should be defined. If \code{x} is a \code{data.frame}, each
 column is assumed to be a new variable, where missings should be defined.}
 
@@ -48,7 +48,7 @@ This function sets specific values of a variable, data frame
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) are retained.
+        or \code{\link{set_labels}}) are preserved.
 }
 \examples{
 # create random variable

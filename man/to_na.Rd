@@ -7,16 +7,16 @@
 to_na(x)
 }
 \arguments{
-\item{x}{a variable (vector), \code{data.frame} or \code{list} of variables
-with attached value labels and missing value codes
+\item{x}{variable (vector), \code{data.frame} or \code{list} of variables
+with attached value labels and defined missing value codes
 (see \code{\link[haven]{labelled}}).}
 }
 \value{
-\code{x}, where each value code of missing values is comverted
+\code{x}, where each value code of missing values is converted
            to \code{NA}.
 }
 \description{
-This function converts missing values that are still stored as
+This function converts defined missing values that are stored as
                original value code into \code{NA}.
 }
 \details{
@@ -27,8 +27,8 @@ This function converts missing values that are still stored as
            specified in the function's \code{values} argument; hence,
            \code{\link{set_na}} ignores the \code{is_na}-attribute.
            \cr \cr
-           Furthermore, see 'Details' in \code{\link{get_values}},
-           \code{\link{get_na}} and \code{\link{to_na}}.
+           Furthermore, see 'Details' in \code{\link{get_values}}
+           and \code{\link{get_na}}.
 }
 \note{
 This is a convenient function for \code{set_na(x, get_na(x))}.

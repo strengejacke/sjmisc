@@ -28,10 +28,10 @@
 #' @param dichBy deprecated; use \code{dich.by} instead
 #' @param dichVal deprecated; use \code{dich.val} instead
 #' @param asNum deprecated; use \code{as.num} instead
-#' @return a dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
+#' @return A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are retained
+#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved
 #'         (unless changes via \code{var.label}-argument).
 #'
 #' @examples
@@ -195,7 +195,7 @@ dicho_helper <- function(x, dich.by, dich.val, as.num, var.label, val.labels) {
 #'
 #' @return A grouped variable, either as numeric or as factor (see paramter \code{asNumeric}).
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
+#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
 #'
 #' @details If \code{groupsize} is set to a specific value, the variable is recoded
 #'            into several groups, where each group has a maximum range of \code{groupsize}.
@@ -289,7 +289,7 @@ group_var <- function(var,
 #'
 #' @details See 'Details' in \code{\link{group_var}}.
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
+#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
@@ -474,7 +474,7 @@ word_wrap <- function(labels, wrap, linesep = NULL) {
 #'           been recoded as described.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are retained.
+#'         or \code{\link{set_labels}}) are preserved.
 #'
 #' @examples
 #' # recode 1-4 to 0-3
@@ -593,9 +593,9 @@ rec_to_helper <- function(x, lowest, highest) {
 #' @note Please note following behaviours of the function:
 #'       \itemize{
 #'         \item the \code{"else"}-token should always be the last argument in the \code{recodes}-string.
-#'         \item Non-matching values will be set to \code{\link{NA}}.
-#'         \item Variable label attributes (see, for instance, \code{\link{get_label}}) are retained (unless changes via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
-#'         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see first bullet, \code{NA}s are produced).
+#'         \item Non-matching values will be set to \code{\link{NA}}, unless captured by the \code{"else"}-token.
+#'         \item Variable label attributes (see, for instance, \code{\link{get_label}}) are preserved (unless changes via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
+#'         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see second bullet, \code{NA}s are produced).
 #'       }
 #'
 #' @examples
@@ -608,7 +608,7 @@ rec_to_helper <- function(x, lowest, highest) {
 #' # recode 1 to 2 into 1 and 3 to 4 into 2
 #' table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
 #'
-#' # keep value labels. variable label is automatically retained
+#' # keep value labels. variable label is automatically preserved
 #' str(rec(efc$e42dep,
 #'         "1,2=1; 3,4=2",
 #'         val.labels = c("low dependency", "high dependency")))
@@ -808,7 +808,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
     for (k in 1:length(old_val)) {
       # check for "else" token
       if (is.infinite(old_val[k])) {
-        # else-token found. we first need to retain NA, but only,
+        # else-token found. we first need to preserve NA, but only,
         # if these haven't been copied before
         if (!na_recoded) new_var[which(is.na(x))] <- NA
         # find replace-indices. since "else"-token has to be
@@ -868,7 +868,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
 #' @return \code{x}, where \code{NA}'s are replaced with \code{value}.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are retained.
+#'         or \code{\link{set_labels}}) are preserved.
 #'
 #' @examples
 #' data(efc)

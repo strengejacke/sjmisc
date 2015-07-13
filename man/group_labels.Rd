@@ -40,7 +40,7 @@ Usually you should use the same values for \code{groupsize} and
         \code{rightInterval} as used in the \code{\link{group_var}} function
         if you want to create labels for the related recoded variable.
 
-Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
+Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
 }
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))

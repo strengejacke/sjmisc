@@ -44,30 +44,27 @@ summary.labelled <- function(object, ...) {
       # vector with all values, and "match" the actual values
       len <- length(labels) + 1
       f.ind <- as.numeric(names(table(x, exclude = NULL)))
-      f.ind <- replace_na(f.ind, max(f.ind, na.rm = T) + 1)
-      # valid length? In some cases, when some values are not
-      # present in the data (and not missing), label length
-      # differs from maximum value index. in this case,
-      # correct values
-      if (length(f.ind) > len || max(f.ind) > len) f.ind <- seq_len(len)
+      f.ind <- replace_na(f.ind, len)
       # frequencies, including real missings
-      frq <- rep(0, len)
-      frq[f.ind] <- as.vector(table(x, exclude = NULL))
+      fdat <- data.frame(index = c(as.numeric(unname(labels)), len),
+                         frq = 0,
+                         raw = 0,
+                         valid = 0)
+      fdat$frq[match(f.ind, fdat$index)] <- as.vector(table(x, exclude = NULL))
       # raw percentage, including real missings
-      raw.prc <- rep(0, len)
-      raw.prc[f.ind] <- as.vector(prop.table(table(x, exclude = NULL)))
+      fdat$raw[match(f.ind, fdat$index)] <- as.vector(prop.table(table(x, exclude = NULL)))
       # valid percentage, excluding real and
       # labelled missings
-      valid.prc <- c(rep(0, len - 1), NA)
       vp <- as.vector(prop.table(table(na.omit(as.vector(to_na(x))))))
-      valid.prc[f.ind[1:length(vp)]] <- vp
+      fdat$valid[match(f.ind[1:length(vp)], fdat$index)] <- as.vector(prop.table(table(na.omit(as.vector(to_na(x))))))
+      fdat$valid[length(fdat$valid)] <- NA
       # create df
       lab_df <- data.frame(value = c(unname(labels), NA),
                            label = c(names(labels), "NA"),
-                           count = frq,
-                           raw.prc = round(100 * raw.prc, 2),
-                           valid.prc = round(100 * valid.prc, 2),
-                           cum.prc = round(100 * cumsum(valid.prc), 2),
+                           count = fdat$frq,
+                           raw.prc = round(100 * fdat$raw, 2),
+                           valid.prc = round(100 * fdat$valid, 2),
+                           cum.prc = round(100 * cumsum(fdat$valid), 2),
                            is_na = c(attr(x, "is_na"), NA))
       print(lab_df, row.names = FALSE)
       invisible(lab_df)

@@ -4,12 +4,15 @@
 \alias{as_labelled}
 \title{Convert vector to labelled class}
 \usage{
-as_labelled(x, add.class = FALSE)
+as_labelled(x, add.labels = FALSE, add.class = FALSE)
 }
 \arguments{
-\item{x}{a variable (vector), \code{data.frame} or \code{list} of variables
+\item{x}{variable (vector), \code{data.frame} or \code{list} of variables
 that should be converted to \code{\link[haven]{labelled}}-class
 objects.}
+
+\item{add.labels}{logical, if \code{TRUE}, non-labelled values will be
+labelled with the corresponding value.}
 
 \item{add.class}{logical, if \code{TRUE}, \code{x} preserves its former
 \code{class}-attribute and \code{labelled} is added as additional
@@ -18,7 +21,8 @@ will be removed and the class-attribute  of \code{x} will only
 be \code{labelled}.}
 }
 \value{
-\code{x}, as \code{\link[haven]{labelled}}-class object.
+\code{x}, as \code{\link[haven]{labelled}}-class object, including
+          missing-flags (\code{is_na}-attribute).
 }
 \description{
 Convert vector to labelled class
@@ -39,5 +43,17 @@ a <- c(1, 2, 4)
 x <- as_labelled(a, add.class = TRUE)
 str(x)
 summary(x)
+
+data(efc)
+x <- set_labels(efc$e42dep, c(`1` = "independent",
+                              `4` = "severe dependency"))
+x1 <- as_labelled(x, add.labels = FALSE)
+x2 <- as_labelled(x, add.labels = TRUE)
+
+str(x1)
+str(x2)
+
+get_values(x1)
+get_values(x2)
 }
 

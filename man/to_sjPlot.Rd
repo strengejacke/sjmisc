@@ -10,7 +10,7 @@ to_sjPlot(x)
 unlabel(x)
 }
 \arguments{
-\item{x}{a data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
+\item{x}{data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
 of class \code{labelled}.}
 }
 \value{

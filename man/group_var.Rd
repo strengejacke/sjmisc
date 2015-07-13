@@ -55,7 +55,7 @@ If \code{groupsize} is set to a specific value, the variable is recoded
            are not present. See 'Examples' in \code{\link{group_labels}}.
 }
 \note{
-Variable label attributes (see, for instance, \code{\link{set_label}}) are retained.
+Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
 }
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))

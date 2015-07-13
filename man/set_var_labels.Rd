@@ -10,7 +10,7 @@ set_var_labels(x, lab, attr.string = NULL)
 set_label(x, lab, attr.string = NULL)
 }
 \arguments{
-\item{x}{a variable (vector), \code{list} of variables or a \code{data.frame}
+\item{x}{variable (vector), \code{list} of variables or a \code{data.frame}
 where variables labels should be attached.}
 
 \item{lab}{if \code{x} is a vector (single variable), use a single character string with

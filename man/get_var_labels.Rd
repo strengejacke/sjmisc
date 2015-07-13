@@ -10,7 +10,7 @@ get_var_labels(x)
 get_label(x)
 }
 \arguments{
-\item{x}{a \code{data.frame} with variables that have label attributes (e.g.
+\item{x}{\code{data.frame} with variables that have label attributes (e.g.
          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
          (vector) with variable label attribute; or a \code{list} of variables

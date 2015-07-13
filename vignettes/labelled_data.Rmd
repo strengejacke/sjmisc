@@ -1,0 +1,21 @@
+---
+title: "Working with Labelled Data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Working with Labelled Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Introduction into Labelled Data
+
+# Reading Labelled Data Sets
+
+# Value Labels
+
+# Variable Labels
+
+# Missing Values
+
+# Converting Vectors

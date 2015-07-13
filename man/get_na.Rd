@@ -7,7 +7,7 @@
 get_na(x)
 }
 \arguments{
-\item{x}{a variable (vector) with value label attributes, including
+\item{x}{variable (vector) with value label attributes, including
 missing value codes (see \code{\link[haven]{labelled}})}
 }
 \value{

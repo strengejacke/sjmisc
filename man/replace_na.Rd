@@ -21,7 +21,7 @@ This function replaces NA's of a variable, data frame
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) are retained.
+        or \code{\link{set_labels}}) are preserved.
 }
 \examples{
 data(efc)

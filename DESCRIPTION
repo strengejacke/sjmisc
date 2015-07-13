@@ -13,6 +13,7 @@ Description: Collection of several utility functions (especially intended for pe
 License: GPL-3
 Depends: stats, utils
 Imports: MASS
-Suggests: coin, foreign, haven, lme4, nlme, stringdist (>= 0.9.1)
+Suggests: coin, foreign, haven, lme4, nlme, stringdist (>= 0.9.1), knitr
 URL: https://github.com/sjPlot/sjmisc
 BugReports: https://github.com/sjPlot/sjmisc/issues
+VignetteBuilder: knitr

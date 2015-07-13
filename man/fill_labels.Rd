@@ -7,7 +7,7 @@
 fill_labels(x)
 }
 \arguments{
-\item{x}{a variable (vector), \code{data.frame} or \code{list} of variables
+\item{x}{variable (vector), \code{data.frame} or \code{list} of variables
 with partially added value labels (see \code{\link[haven]{labelled}}).}
 }
 \value{
