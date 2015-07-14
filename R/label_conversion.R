@@ -250,7 +250,7 @@ remove_labels_helper <- function(x) {
 
 
 #' @title Convert variable into factor and keep value labels
-#' @name to_fac
+#' @name to_factor
 #'
 #' @description This function converts a variable into a factor, but preserves
 #'                variable and value label attributes. See 'Examples'.
@@ -261,6 +261,8 @@ remove_labels_helper <- function(x) {
 #'
 #' @param x numeric or atomic variable or a data frame with
 #'          numeric or atomic variables.
+#' @param add.non.labelled logical, if \code{TRUE}, non-labelled values also
+#'          get value labels.
 #' @param drop.na logical, if \code{TRUE}, all types of missing value codes are
 #'          converted into NA before \code{x} is converted as factor. If
 #'          \code{FALSE}, missing values will be left as their original codes.
@@ -293,6 +295,21 @@ remove_labels_helper <- function(x) {
 #' efc$e42dep <- to_factor(efc$e42dep)
 #' sjt.frq(efc$e42dep)}
 #'
+#' # create parially labelled vector
+#' x <- set_labels(efc$e42dep,
+#'                 c(`1` = "independent",
+#'                   `4` = "severe dependency",
+#'                   `9` = "missing value"))
+#'
+#' # only copy existing value labels
+#' to_factor(x)
+#' get_labels(to_factor(x), include.values = "p")
+#'
+#' # also add labels to non-labelled values
+#' to_factor(x, add.non.labelled = TRUE)
+#' get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
+#'
+#'
 #' library(haven)
 #' # create labelled integer, with missing flag
 #' x <- labelled(c(1, 2, 1, 3, 4, 1),
@@ -304,25 +321,30 @@ remove_labels_helper <- function(x) {
 #' to_factor(x, drop.na = TRUE)
 #'
 #' @export
-to_fac <- function(x, drop.na = TRUE) {
+to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
   if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]], drop.na)
+    for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]],
+                                                 add.non.labelled,
+                                                 drop.na)
     return(x)
   } else {
-    return(to_fac_helper(x, drop.na))
+    return(to_fac_helper(x,
+                         add.non.labelled,
+                         drop.na))
   }
 }
 
 
-#' @name to_factor
-#' @rdname to_fac
+#' @name to_fac
+#' @rdname to_factor
 #' @export
-to_factor <- function(x, drop.na = TRUE) {
-  return(to_fac(x, drop.na))
+to_fac <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
+  .Deprecated("to_factor")
+  return(to_factor(x, add.non.labelled, drop.na))
 }
 
 
-to_fac_helper <- function(x, drop.na) {
+to_fac_helper <- function(x, add.non.labelled, drop.na) {
   # is already factor?
   if (is.factor(x)) return(x)
   # remove missings?
@@ -330,8 +352,8 @@ to_fac_helper <- function(x, drop.na) {
   # retrieve value labels
   lab <- get_labels(x,
                     attr.only = TRUE,
-                    include.values = NULL,
-                    include.non.labelled = TRUE)
+                    include.values = "n",
+                    include.non.labelled = add.non.labelled)
   # retrieve variable labels
   varlab <- get_label(x)
   # retrieve missing codes
@@ -339,7 +361,10 @@ to_fac_helper <- function(x, drop.na) {
   # convert variable to factor
   x <- as.factor(x)
   # set back value labels
-  x <- set_labels(x, lab, force.labels = FALSE, force.values = TRUE)
+  x <- suppressMessages(set_labels(x,
+                                   lab,
+                                   force.labels = TRUE,
+                                   force.values = FALSE))
   # set back variable labels
   x <- set_label(x, varlab)
   # set back missing codes
@@ -787,14 +812,16 @@ as_labelled_helper <- function(x, add.labels, add.class) {
 #' data(efc)
 #' str(efc$e42dep)
 #'
-#' x <- set_labels(efc$e42dep, c(`1` = "independent",
-#'                               `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep,
+#'                 c(`1` = "independent",
+#'                   `4` = "severe dependency"))
 #' table(x)
 #' get_values(x)
 #' str(x)
 #'
-#' x <- set_labels(efc$e42dep, c(`1` = "independent",
-#'                               `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep,
+#'                 c(`1` = "independent",
+#'                   `4` = "severe dependency"))
 #' table(zap_labels(x))
 #' get_values(zap_labels(x))
 #' str(zap_labels(x))

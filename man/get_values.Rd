@@ -42,8 +42,8 @@ get_labels(efc$e42dep)
 library(haven)
 # create labelled integer, with missing flag
 x <- labelled(c(1, 2, 1, 3, 4, 1),
-             c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
-             c(FALSE, FALSE, TRUE, TRUE))
+              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+              c(FALSE, FALSE, TRUE, TRUE))
 # get all values
 get_values(x)
 # drop NA

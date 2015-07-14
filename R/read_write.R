@@ -328,7 +328,7 @@ write_data <- function(x, path, type, enc.to.utf8) {
   # check if variables should be converted to factors
   for (i in 1:ncol(x)) {
     # get value and variable labels
-    val.lab <- get_labels(x[[i]])
+    val.lab <- get_labels(x[[i]], include.values = "n")
     var.lab <- get_label(x[[i]])
     # Encode to UTF-8
     if (enc.to.utf8) {

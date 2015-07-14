@@ -1,5 +1,5 @@
 #' @title Retrieve variable label(s) of a data frame or variable
-#' @name get_var_labels
+#' @name get_label
 #'
 #' @description This function retrieves the variable labels of an imported
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
@@ -58,8 +58,7 @@
 #'                efc$e15relat))
 #'
 #' @export
-get_var_labels <- function(x) {
-  # .Deprecated("get_label")
+get_label <- function(x) {
   # ----------------------------
   # auto-detect variable label attribute
   # ----------------------------
@@ -105,16 +104,17 @@ get_var_labels <- function(x) {
 }
 
 
-#' @name get_label
-#' @rdname get_var_labels
+#' @name get_var_labels
+#' @rdname get_label
 #' @export
-get_label <- function(x) {
-  return(get_var_labels(x))
+get_var_labels <- function(x) {
+  .Deprecated("get_label")
+  return(get_label(x))
 }
 
 
 #' @title Retrieve value labels of a data frame or variable
-#' @name get_val_labels
+#' @name get_labels
 #'
 #' @description This function retrieves the value labels of an imported
 #'                SPSS, SAS or STATA data set (via \code{\link{read_spss}},
@@ -255,11 +255,10 @@ get_label <- function(x) {
 #'
 #'
 #' @export
-get_val_labels <- function(x,
+get_labels <- function(x,
                            attr.only = FALSE,
                            include.values = NULL,
                            include.non.labelled = FALSE) {
-  # .Deprecated("get_labels")
   if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     a <- lapply(x, FUN = get_labels_helper,
                 attr.only,
@@ -275,14 +274,15 @@ get_val_labels <- function(x,
 }
 
 
-#' @name get_labels
-#' @rdname get_val_labels
+#' @name get_val_labels
+#' @rdname get_labels
 #' @export
-get_labels <- function(x,
+get_val_labels <- function(x,
                        attr.only = FALSE,
                        include.values = NULL,
                        include.non.labelled = FALSE) {
-  return(get_val_labels(x, attr.only, include.values, include.non.labelled))
+  .Deprecated("get_labels")
+  return(get_labels(x, attr.only, include.values, include.non.labelled))
 }
 
 
@@ -405,8 +405,8 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
 #' library(haven)
 #' # create labelled integer, with missing flag
 #' x <- labelled(c(1, 2, 1, 3, 4, 1),
-#'              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
-#'              c(FALSE, FALSE, TRUE, TRUE))
+#'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+#'               c(FALSE, FALSE, TRUE, TRUE))
 #' # get all values
 #' get_values(x)
 #' # drop NA
@@ -487,8 +487,8 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #'
 #' # create labelled integer, with missing flag
 #' x <- labelled(c(1, 2, 1, 3, 4, 1),
-#'              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
-#'              c(FALSE, FALSE, TRUE, TRUE))
+#'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+#'               c(FALSE, FALSE, TRUE, TRUE))
 #' get_na(x)
 #'
 #' @export
@@ -537,8 +537,8 @@ getNaAttribute <- function() return("is_na")
 #'
 #' # create labelled integer, with missing flag
 #' x <- labelled(c(1, 2, 1, 3, 4, 1),
-#'              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
-#'              c(FALSE, FALSE, TRUE, TRUE))
+#'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+#'               c(FALSE, FALSE, TRUE, TRUE))
 #' get_na_flags(x)
 #'
 #' @export

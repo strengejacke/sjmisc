@@ -846,7 +846,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   new_var <- suppressWarnings(set_label(new_var, var_lab))
   new_var <- suppressWarnings(set_labels(new_var, val_lab))
   # return result as factor?
-  if (as.fac) new_var <- to_fac(new_var)
+  if (as.fac) new_var <- to_factor(new_var)
   return(new_var)
 }
 

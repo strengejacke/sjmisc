@@ -1,5 +1,5 @@
 #' @title Attach variable label(s) to variables
-#' @name set_var_labels
+#' @name set_label
 #' @description This function sets variable labels to a single variable or to
 #'                a set of variables in a \code{data.frame} or \code{list}-object.
 #'                To each variable, the attribute \code{"label"} or \code{"variable.label"}
@@ -85,8 +85,7 @@
 #'
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
-set_var_labels <- function(x, lab, attr.string = NULL) {
-  # .Deprecated("set_label")
+set_label <- function(x, lab, attr.string = NULL) {
   # ----------------------------
   # auto-detect variable label attribute
   # ----------------------------
@@ -157,16 +156,17 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 }
 
 
-#' @name set_label
-#' @rdname set_var_labels
+#' @name set_var_labels
+#' @rdname set_label
 #' @export
-set_label <- function(x, lab, attr.string = NULL) {
-  return(set_var_labels(x, lab, attr.string))
+set_var_labels <- function(x, lab, attr.string = NULL) {
+  .Deprecated("set_label")
+  return(set_label(x, lab, attr.string))
 }
 
 
 #' @title Attach value labels to variables
-#' @name set_val_labels
+#' @name set_labels
 #'
 #' @description This function adds character labels as attribute to a variable
 #'                or vector \code{x}, resp. to a set of variables in a
@@ -278,23 +278,23 @@ set_label <- function(x, lab, attr.string = NULL) {
 #' get_labels(dummies)
 #'
 #' @export
-set_val_labels <- function(x,
+set_labels <- function(x,
                            labels,
                            force.labels = FALSE,
                            force.values = TRUE) {
-  # .Deprecated("set_labels")
   return(set_labels_helper(x, labels, force.labels, force.values))
 }
 
 
-#' @name set_labels
-#' @rdname set_val_labels
+#' @name set_val_labels
+#' @rdname set_labels
 #' @export
-set_labels <- function(x,
+set_val_labels <- function(x,
                        labels,
                        force.labels = FALSE,
                        force.values = TRUE) {
-  return(set_val_labels(x, labels, force.labels, force.values))
+  .Deprecated("set_labels")
+  return(set_labels(x, labels, force.labels, force.values))
 }
 
 
@@ -425,7 +425,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       # ---------------------------------------
       # string variables can't get value labels
       # ---------------------------------------
-      warning("Can't attach value labels to string or NULL vectors.", call. = F)
+      warning("can't attach value labels to string or NULL vectors.", call. = F)
     } else {
       # ---------------------------------------
       # determine value range
@@ -451,7 +451,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
         name.string <- var.name
       }
       if (is.infinite(valrange)) {
-        warning("Can't set value labels. Infinite value range.", call. = F)
+        warning("can't set value labels. Infinite value range.", call. = F)
       # ---------------------------------------
       # check if we have named vector. in this
       # case, just add these values
@@ -529,7 +529,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
           # ---------------------------------------
           # tell user about modification
           # ---------------------------------------
-          message(sprintf("\"%s\" has more values than elements of \"labels\", hence not all values are labelled.", name.string))
+          message(sprintf("\"%s\" has more values than \"labels\", hence not all values are labelled.", name.string))
           # drop values with no associated labels
           attr(x, attr.string) <- as.character(c(1:length(labels)))
           names(attr(x, attr.string)) <- labels

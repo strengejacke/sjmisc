@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-5
+### Changelog of current development build 1.0.3-6
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
@@ -56,20 +56,21 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects. Note that the mean-function defaults `na.rm` to `TRUE` and replaces all missing code values with `NA` prior to calculating the mean.
 
 #### Changes to functions
-* `set_val_labels` gets alias name `set_labels`.
-* `set_var_labels` gets alias name `set_label`.
-* `get_val_labels` gets alias name `get_labels`.
-* `get_var_labels` gets alias name `get_label`.
-* `to_fac` gets alias name `to_factor`.
 * Added argument `attr.only` to `get_val_labels` (and `get_labels`) to get value labels also of factor levels, if variable has no value label attributes.
 * Argument `include.values` of `get_val_labels` (and `get_labels`) has now two options for returning includes values.
 * `get_val_labels` now supports vectors with string label attributes.
-* `to_fac` and `to_value` better deal with vectors that don't need to be converted.
-* `to_fac` now adds additional values as labels, if variable has more valid values than labels.
+* `to_factor` and `to_value` better deal with vectors that don't need to be converted.
 * `get_val_labels` gets a `include.non.labelled` argument to also return non-labelled values as label.
-* `to_label` gets a `add.non.labelled` argument to also convert non-labelled values to labels.
+* `to_label` and `to_factor` get a `add.non.labelled` argument to also convert non-labelled values to labels.
 * `set_val_labels` gets a `force.values` argument to add values without associated labels as labels, too.
 * `set_na` gets a `as.attr` argument, so values are not converted to NA, but rather missing codes are added as `is_na` attribute.
 * `get_values`, `to_label` and `to_factor` get a `drop.na` argument, to exclude values of missing codes from return value.
 * Renamed argument `autoAttachVarLabels` of `read_spss` into `attach.var.labels`.
 * Functions now better deal with mix of labelled and non-labelled values.
+
+#### Deprecated
+* `set_val_labels` is deprecated, use `set_labels`.
+* `set_var_labels` is deprecated, use `set_label`.
+* `get_val_labels` is deprecated, use `get_labels`.
+* `get_var_labels` is deprecated, use `get_label`.
+* `to_fac` is deprecated, use `to_factor`.
