@@ -792,36 +792,30 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
       ln <- vl
     }
     # ---------------------------------------
-    # iterate all values that should be
-    # replaced by NA's
+    # find associated values in x
+    # and set them to NA
     # ---------------------------------------
-    for (i in seq_along(values)) {
+    x[x %in% values] <- NA
+    # ---------------------------------------
+    # check if value labels exist, and if yes, remove them
+    # ---------------------------------------
+    labelpos <- suppressWarnings(which(as.numeric(vl) %in% values))
+    # ---------------------------------------
+    # remove NA label
+    # ---------------------------------------
+    if (length(labelpos > 0)) {
+      vl <- vl[-labelpos]
+      ln <- ln[-labelpos]
+    } else {
       # ---------------------------------------
-      # find associated values in x
-      # and set them to NA
-      # ---------------------------------------
-      x[x == values[i]] <- NA
-      # ---------------------------------------
+      # if vl were not numeric convertable, try character conversion
       # check if value labels exist, and if yes, remove them
       # ---------------------------------------
-      labelpos <- suppressWarnings(which(as.numeric(vl) == values[i]))
-      # ---------------------------------------
+      labelpos <- suppressWarnings(which(as.character(vl) %in% values))
       # remove NA label
-      # ---------------------------------------
       if (length(labelpos > 0)) {
         vl <- vl[-labelpos]
         ln <- ln[-labelpos]
-      } else {
-        # ---------------------------------------
-        # if vl were not numeric convertable, try character conversion
-        # check if value labels exist, and if yes, remove them
-        # ---------------------------------------
-        labelpos <- suppressWarnings(which(as.character(vl) == values[i]))
-        # remove NA label
-        if (length(labelpos > 0)) {
-          vl <- vl[-labelpos]
-          ln <- ln[-labelpos]
-        }
       }
     }
     # ---------------------------------------

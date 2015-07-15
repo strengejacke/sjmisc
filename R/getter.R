@@ -334,7 +334,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
           if (is.character(x))
             add_vals <- seq_len(length(valid.vals))[-seq_len(length(labels))]
           else
-            add_vals <- valid.vals[-values]
+            add_vals <- valid.vals[!valid.vals %in% values]
           # add to labels
           labels <- c(labels, as.character(add_vals))
           # fix value prefix
