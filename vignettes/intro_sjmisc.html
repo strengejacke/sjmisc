@@ -203,7 +203,7 @@ efc &lt;-<span class="st"> </span><span class="kw">read.spss</span>(<span class=
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="kw">c</span>(<span class="st">&quot;very low&quot;</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;hi&quot;</span>))
 x
-##  [1] 3 3 4 1 2 4 4 1 2 1 1 4 2 1 4 1 1 3 4 2
+##  [1] 3 2 4 2 4 3 4 1 4 1 3 2 4 2 1 4 4 1 1 3
 ## attr(,&quot;labels&quot;)
 ## very low      low      mid       hi 
 ##      &quot;1&quot;      &quot;2&quot;      &quot;3&quot;      &quot;4&quot;</code></pre></div>
@@ -259,12 +259,196 @@ x
 </div>
 <div id="variable-labels" class="section level1">
 <h1>Variable Labels</h1>
+<div id="getting-variable-labels" class="section level2">
+<h2>Getting variable labels</h2>
+<p>The <code>get_label()</code>-method returns the variable label of a vector or all variable labels from a data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_label</span>(efc$e42dep)
+## [1] &quot;how dependent is the elder? - subjective perception of carer&quot;</code></pre></div>
+<p>Beside a single vector or a data frame, <code>get_label</code> also returns all variable labels of a list of vectors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_label</span>(<span class="kw">list</span>(efc$e42dep,
+               efc$e16sex,
+               efc$e15relat))
+## [1] &quot;how dependent is the elder? - subjective perception of carer&quot;
+## [2] &quot;elder's gender&quot;                                              
+## [3] &quot;relationship to elder&quot;</code></pre></div>
+</div>
+<div id="setting-variable-labels" class="section level2">
+<h2>Setting variable labels</h2>
+<p>The <code>set_label</code> function adds the variable label attribute to a vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x, <span class="st">&quot;Dummy-variable&quot;</span>)
+<span class="kw">str</span>(x)
+##  atomic [1:10] 3 3 3 3 1 3 3 2 1 2
+##  - attr(*, &quot;label&quot;)= chr &quot;Dummy-variable&quot;</code></pre></div>
+<p><code>set_label</code> can also set variable labels for a data frame. In this case, the variable attributes get an additional <code>name</code> attribute with the vector’s name. This makes it easier to see which label belongs to which vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+                <span class="dt">b =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+                <span class="dt">c =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>))
+x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x,
+               <span class="kw">c</span>(<span class="st">&quot;Variable A&quot;</span>,
+                 <span class="st">&quot;Variable B&quot;</span>,
+                 <span class="st">&quot;Variable C&quot;</span>))
+
+<span class="kw">str</span>(x)
+## 'data.frame':    10 obs. of  3 variables:
+##  $ a: atomic  3 3 1 3 3 2 4 3 1 4
+##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable A&quot;
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;a&quot;
+##  $ b: atomic  3 1 3 3 1 4 3 1 3 1
+##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable B&quot;
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;b&quot;
+##  $ c: atomic  3 2 2 2 1 2 4 4 1 4
+##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable C&quot;
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c&quot;
+
+<span class="kw">get_label</span>(x)
+##            a            b            c 
+## &quot;Variable A&quot; &quot;Variable B&quot; &quot;Variable C&quot;</code></pre></div>
+</div>
 </div>
 <div id="missing-values" class="section level1">
 <h1>Missing Values</h1>
+<div id="defining-missing-values" class="section level2">
+<h2>Defining missing values</h2>
+<p><code>set_na</code> converts values of a vector or of multiple vectors in a data frame into <code>NA</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">8</span>, <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+<span class="co"># show value distribution</span>
+<span class="kw">table</span>(x)
+## x
+##  1  2  3  4  5  6  7  8 
+## 12 16  9 10 14 14 10 15
+
+<span class="co"># set value 1 and 8 as missings</span>
+x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">8</span>))
+<span class="co"># show value distribution, including missings</span>
+<span class="kw">table</span>(x, <span class="dt">exclude =</span> <span class="ot">NULL</span>)
+## x
+##    2    3    4    5    6    7 &lt;NA&gt; 
+##   16    9   10   14   14   10   27
+
+x &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))
+x
+## [1] a b c
+## Levels: a b c
+
+<span class="kw">set_na</span>(x, <span class="st">&quot;b&quot;</span>)
+## [1] a    &lt;NA&gt; c   
+## Levels: a b c</code></pre></div>
+<p>Supporting the new <code>is_na</code> attribute of labelled data, <code>set_na</code> also allows defining multiple missing value codes via the <code>as.attr</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>), <span class="dt">as.attr =</span> <span class="ot">TRUE</span>)
+x
+##  [1] 4 1 1 1 4 4 2 2 4 1 4 1 2 3 3 4 4 1 4 1
+## attr(,&quot;labels&quot;)
+##   1   2   3   4 
+## &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; 
+## attr(,&quot;is_na&quot;)
+## [1] FALSE FALSE  TRUE FALSE</code></pre></div>
+<p><code>set_na</code> automatically removes value label attributes of those values that have been set to <code>NA</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(efc$c87cop6)
+##  atomic [1:908] 1 1 1 1 2 2 2 1 1 1 ...
+##  - attr(*, &quot;label&quot;)= chr &quot;does caregiving cause financial difficulties?&quot;
+##  - attr(*, &quot;labels&quot;)= Named num [1:4] 1 2 3 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:4] &quot;Never&quot; &quot;Sometimes&quot; &quot;Often&quot; &quot;Always&quot;
+
+efc$c87cop6 &lt;-<span class="st"> </span><span class="kw">set_na</span>(efc$c87cop6, <span class="dv">3</span>)
+<span class="kw">str</span>(efc$c87cop6)
+##  atomic [1:908] 1 1 1 1 2 2 2 1 1 1 ...
+##  - attr(*, &quot;label&quot;)= chr &quot;does caregiving cause financial difficulties?&quot;
+##  - attr(*, &quot;labels&quot;)= Named num [1:3] 1 2 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;Never&quot; &quot;Sometimes&quot; &quot;Always&quot;
+
+<span class="kw">get_labels</span>(efc$c87cop6)
+## [1] &quot;Never&quot;     &quot;Sometimes&quot; &quot;Always&quot;</code></pre></div>
 </div>
-<div id="converting-vectors" class="section level1">
-<h1>Converting Vectors</h1>
+<div id="getting-missing-values" class="section level2">
+<h2>Getting missing values</h2>
+<p>The <code>get_na</code> function returns those values which are “flagged” as missing by the <code>is_na</code> attribute.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_na</span>(x)
+## [1] 3</code></pre></div>
+<p><code>get_na_flags</code> returns a logical vector of which values are coded as missing or not. It simply returns the <code>is_na</code> attribute of labelled data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>), <span class="dt">as.attr =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">get_na_flags</span>(x)
+## [1] FALSE FALSE  TRUE FALSE  TRUE</code></pre></div>
+</div>
+<div id="converting-missing-values-into-na" class="section level2">
+<h2>Converting missing values into NA</h2>
+<p><code>to_na</code> converts all values flagged as missing by <code>is_na</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_na</span>(x)
+## [1] 3 5
+
+<span class="kw">to_na</span>(x)
+##  [1] NA  4  4 NA  2  2  4  1  2 NA  1  1  2  2 NA NA  1 NA  1  1
+## attr(,&quot;labels&quot;)
+##   1   2   4 
+## &quot;1&quot; &quot;2&quot; &quot;4&quot; 
+## attr(,&quot;is_na&quot;)
+## [1] FALSE FALSE  TRUE</code></pre></div>
+</div>
+</div>
+<div id="converting-labelled-vectors" class="section level1">
+<h1>Converting Labelled Vectors</h1>
+<div id="converting-labelled-numeric-into-factor" class="section level2">
+<h2>Converting labelled numeric into factor</h2>
+<p><code>to_label</code> converts numeric labelled vectors into a factor and set the former labels as factor levels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">to_label</span>(efc$c87cop6))
+## [1] Never     Never     Never     Never     Sometimes Sometimes
+## Levels: Never Sometimes Always</code></pre></div>
+<p>By default, <code>to_label</code> converts all values into <code>NA</code> that are defined as missing via the <code>is_na</code> attribute. Use <code>drop.na</code> to change this behaviour.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc$c82cop1 &lt;-<span class="st"> </span><span class="kw">set_na</span>(efc$c82cop1, <span class="dv">3</span>, <span class="dt">as.attr =</span> <span class="ot">TRUE</span>)
+
+<span class="kw">str</span>(efc$c82cop1)
+##  atomic [1:908] 3 3 2 4 3 2 4 3 3 3 ...
+##  - attr(*, &quot;label&quot;)= chr &quot;do you feel you cope well as caregiver?&quot;
+##  - attr(*, &quot;labels&quot;)= Named num [1:4] 1 2 3 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:4] &quot;never&quot; &quot;sometimes&quot; &quot;often&quot; &quot;always&quot;
+##  - attr(*, &quot;is_na&quot;)= logi [1:4] FALSE FALSE TRUE FALSE
+
+<span class="kw">table</span>(efc$c82cop1)
+## 
+##   1   2   3   4 
+##   3  97 591 210
+
+<span class="kw">head</span>(<span class="kw">to_label</span>(efc$c82cop1))
+## [1] &lt;NA&gt;      &lt;NA&gt;      sometimes always    &lt;NA&gt;      sometimes
+## Levels: never sometimes always
+
+<span class="kw">table</span>(<span class="kw">to_label</span>(efc$c82cop1))
+## 
+##     never sometimes    always 
+##         3        97       210
+
+<span class="kw">head</span>(<span class="kw">to_label</span>(efc$c82cop1, <span class="dt">drop.na =</span> <span class="ot">FALSE</span>))
+## [1] often     often     sometimes always    often     sometimes
+## Levels: never sometimes often always
+
+<span class="kw">table</span>(<span class="kw">to_label</span>(efc$c82cop1, <span class="dt">drop.na =</span> <span class="ot">FALSE</span>))
+## 
+##     never sometimes     often    always 
+##         3        97       591       210</code></pre></div>
+<p><code>to_label</code> only converts those values into factor levels, which have associated value labels. All other values are converted to <code>NA</code>. However, with the <code>add.non.labelled</code> argument additional factor levels for non-labelled values are created.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="ot">NA</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="kw">c</span>(<span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> &quot;always&quot;</span>,
+                     <span class="st">`</span><span class="dt">4</span><span class="st">`</span> =<span class="st"> &quot;never&quot;</span>))
+<span class="kw">str</span>(x)
+##  atomic [1:6] 1 2 3 2 4 NA
+##  - attr(*, &quot;labels&quot;)= Named chr [1:2] &quot;1&quot; &quot;4&quot;
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;always&quot; &quot;never&quot;
+
+<span class="kw">to_label</span>(x)
+## [1] always &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   never  &lt;NA&gt;  
+## Levels: always never
+
+<span class="kw">to_label</span>(x, <span class="dt">add.non.labelled =</span> T)
+## [1] always 2      3      2      2      &lt;NA&gt;  
+## Levels: always 2 3 never</code></pre></div>
+</div>
+<div id="converting-labelled-numeric-into-numeric-factor" class="section level2">
+<h2>Converting labelled numeric into numeric factor</h2>
+<p><code>to_factor</code> converts any numeric labelled vector into a factor with numeric levels, however, value and variable lables are preserved as attribute.</p>
+</div>
 </div>
 
 

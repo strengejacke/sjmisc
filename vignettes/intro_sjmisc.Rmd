@@ -183,6 +183,146 @@ x
 
 # Variable Labels
 
+## Getting variable labels
+
+The `get_label()`-method returns the variable label of a vector or all variable labels from a data frame.
+```{r collapse=TRUE}
+get_label(efc$e42dep)
+```
+
+Beside a single vector or a data frame, `get_label` also returns all variable labels of a list of vectors.
+
+```{r collapse=TRUE}
+get_label(list(efc$e42dep,
+               efc$e16sex,
+               efc$e15relat))
+```
+
+## Setting variable labels
+
+The `set_label` function adds the variable label attribute to a vector.
+```{r collapse=TRUE}
+x <- sample(1:4, 10, replace = TRUE)
+x <- set_label(x, "Dummy-variable")
+str(x)
+```
+
+`set_label` can also set variable labels for a data frame. In this case, the variable attributes get an additional `name` attribute with the vector's name. This makes it easier to see which label belongs to which vector.
+```{r collapse=TRUE}
+x <- data.frame(a = sample(1:4, 10, replace = TRUE),
+                b = sample(1:4, 10, replace = TRUE),
+                c = sample(1:4, 10, replace = TRUE))
+x <- set_label(x,
+               c("Variable A",
+                 "Variable B",
+                 "Variable C"))
+
+str(x)
+
+get_label(x)
+```                     
+                     
 # Missing Values
 
-# Converting Vectors
+## Defining missing values
+
+`set_na` converts values of a vector or of multiple vectors in a data frame into `NA`.
+```{r collapse=TRUE}
+x <- sample(1:8, 100, replace = TRUE)
+# show value distribution
+table(x)
+
+# set value 1 and 8 as missings
+x <- set_na(x, c(1, 8))
+# show value distribution, including missings
+table(x, exclude = NULL)
+
+x <- factor(c("a", "b", "c"))
+x
+
+set_na(x, "b")
+```
+
+Supporting the new `is_na` attribute of labelled data, `set_na` also allows defining multiple missing value codes via the `as.attr` argument.
+```{r collapse=TRUE}
+x <- sample(1:5, 20, replace = TRUE)
+x <- set_na(x, c(3, 5), as.attr = TRUE)
+x
+```
+
+`set_na` automatically removes value label attributes of those values that have been set to `NA`.
+```{r collapse=TRUE}
+str(efc$c87cop6)
+
+efc$c87cop6 <- set_na(efc$c87cop6, 3)
+str(efc$c87cop6)
+
+get_labels(efc$c87cop6)
+```
+
+
+## Getting missing values
+
+The `get_na` function returns those values which are "flagged" as missing by the `is_na` attribute.
+```{r collapse=TRUE}
+get_na(x)
+```
+
+`get_na_flags` returns a logical vector of which values are coded as missing or not. It simply returns the `is_na` attribute of labelled data.
+```{r collapse=TRUE}
+x <- sample(1:5, 20, replace = TRUE)
+x <- set_na(x, c(3, 5), as.attr = TRUE)
+
+get_na_flags(x)
+```
+
+## Converting missing values into NA
+
+`to_na` converts all values flagged as missing by `is_na`
+```{r collapse=TRUE}
+get_na(x)
+
+to_na(x)
+```
+
+# Converting Labelled Vectors
+
+## Converting labelled numeric into factor
+
+`to_label` converts numeric labelled vectors into a factor and set the former labels as factor levels.
+```{r collapse=TRUE}
+head(to_label(efc$c87cop6))
+```
+
+By default, `to_label` converts all values into `NA` that are defined as missing via the `is_na` attribute. Use `drop.na` to change this behaviour.
+```{r collapse=TRUE}
+efc$c82cop1 <- set_na(efc$c82cop1, 3, as.attr = TRUE)
+
+str(efc$c82cop1)
+
+table(efc$c82cop1)
+
+head(to_label(efc$c82cop1))
+
+table(to_label(efc$c82cop1))
+
+head(to_label(efc$c82cop1, drop.na = FALSE))
+
+table(to_label(efc$c82cop1, drop.na = FALSE))
+```
+
+`to_label` only converts those values into factor levels, which have associated value labels. All other values are converted to `NA`. However, with the `add.non.labelled` argument additional factor levels for non-labelled values are created.
+```{r collapse=TRUE}
+x <- c(1, 2, 3, 2, 4, NA)
+x <- set_labels(x, c(`1` = "always",
+                     `4` = "never"))
+str(x)
+
+to_label(x)
+
+to_label(x, add.non.labelled = T)
+```
+
+## Converting labelled numeric into numeric factor
+
+`to_factor` converts any numeric labelled vector into a factor with numeric levels, however, value and variable lables are preserved as attribute.

@@ -770,6 +770,11 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
     # check if we have any values at all?
     # ----------------------------
     if (is.null(values)) return(x)
+    # ---------------------------------------
+    # find associated values in x
+    # and set them to NA
+    # ---------------------------------------
+    x[x %in% values] <- NA
     # ----------------------------
     # auto-detect variable label attribute
     # ----------------------------
@@ -780,45 +785,28 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
       vl <- attr(x, attr.string, exact = T)
       # retrieve label names
       ln <- names(vl)
-    } else {
       # ---------------------------------------
-      # if x has no label attributes, use values
-      # as labels
-      # ---------------------------------------
-      vl <- as.character(sort(unique(stats::na.omit(x))))
-      ln <- vl
-    }
-    # ---------------------------------------
-    # find associated values in x
-    # and set them to NA
-    # ---------------------------------------
-    x[x %in% values] <- NA
-    # ---------------------------------------
-    # check if value labels exist, and if yes, remove them
-    # ---------------------------------------
-    labelpos <- suppressWarnings(which(as.numeric(vl) %in% values))
-    # ---------------------------------------
-    # remove NA label
-    # ---------------------------------------
-    if (length(labelpos > 0)) {
-      vl <- vl[-labelpos]
-      ln <- ln[-labelpos]
-    } else {
-      # ---------------------------------------
-      # if vl were not numeric convertable, try character conversion
       # check if value labels exist, and if yes, remove them
       # ---------------------------------------
-      labelpos <- suppressWarnings(which(as.character(vl) %in% values))
+      labelpos <- suppressWarnings(which(as.numeric(vl) %in% values))
+      # ---------------------------------------
       # remove NA label
+      # ---------------------------------------
       if (length(labelpos > 0)) {
         vl <- vl[-labelpos]
         ln <- ln[-labelpos]
+      } else {
+        # ---------------------------------------
+        # if vl were not numeric convertable, try character conversion
+        # check if value labels exist, and if yes, remove them
+        # ---------------------------------------
+        labelpos <- suppressWarnings(which(as.character(vl) %in% values))
+        # remove NA label
+        if (length(labelpos > 0)) {
+          vl <- vl[-labelpos]
+          ln <- ln[-labelpos]
+        }
       }
-    }
-    # ---------------------------------------
-    # set back updated label attribute
-    # ---------------------------------------
-    if (!is.null(attr.string)) {
       # ---------------------------------------
       # do we have any labels left?
       # ---------------------------------------

@@ -1,4 +1,4 @@
-sjmisc - Miscellaneous Data Management Tools
+sjmisc - Data Transformation and Labelled Data Utility Functions
 ------------------------------------------------------------------------------
 This package contains utility functions that are useful when carrying out data analysis or basic statistical tests, performing common recode and data transformation tasks or working with labelled data (especially intended for people coming from 'SPSS' and/or who are new to R).
 

@@ -3,18 +3,15 @@
 \alias{sjmisc-package}
 \alias{sjmisc}
 \docType{package}
-\title{Miscellaneous Data Management Tools}
+\title{Data Transformation and Labelled Data Utility Functions}
 \description{
-This package contains utility functions that are useful when carrying out data analysis or basic statistical tests, performing common recode and data transformation tasks or working with labelled data (especially intended for people coming from 'SPSS' and/or who are new to R).
-\cr \cr
-Basically, this package covers four domains of functionality:
+Collection of miscellaneous utility functions (especially intended for people coming from other statistical software packages like 'SPSS', and/or who are new to R), supporting following common tasks:
 \itemize{
-  \item reading and writing data between other statistical packages (like 'SPSS') and R, based on the haven and foreign packages
-  \item hence, this package also includes functions to make working with labelled data easier
-  \item frequently used statistical tests and computation of statistical coefficients, or at least convenient wrappers for such test functions
-  \item frequently applied recoding and variable transformation tasks
+  \item Reading and writing data between R and other statistical software packages like 'SPSS', 'SAS' or 'Stata' and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
+  \item Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values.
+  \item Convenient functions to perform frequently used statistical tests, or to calculate various commonly used statistical coefficients.
 }
-Dedicated online manuals at \url{http://www.strengejacke.de/sjPlot/}.
+See also package-vignettes.
 }
 \details{
 \tabular{rl}{
