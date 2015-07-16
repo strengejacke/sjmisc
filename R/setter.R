@@ -83,7 +83,6 @@
 #' # see result...
 #' get_label(dummies)
 #'
-#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 set_label <- function(x, lab, attr.string = NULL) {
   # ----------------------------
@@ -115,12 +114,13 @@ set_label <- function(x, lab, attr.string = NULL) {
       if (nvars != length(lab)) {
         message("argument \"lab\" must be of same length as numbers of columns in \"x\".")
       } else {
-        # -------------------------------------
-        # create progress bar
-        # -------------------------------------
-        pb <- utils::txtProgressBar(min = 0,
-                                    max = nvars,
-                                    style = 3)
+        # ----------------------------
+        # do we have a data frame? If yes, save column names
+        # ----------------------------
+        if (is.data.frame(x)) cnames <- colnames(x)
+        # ----------------------------
+        # iterate all columns / list elements
+        # ----------------------------
         for (i in 1:nvars) {
           if (is_empty(lab[i])) {
             # ----------------------------
@@ -136,12 +136,9 @@ set_label <- function(x, lab, attr.string = NULL) {
             # ----------------------------
             # set names attribute. equals variable name
             # ----------------------------
-            if (is.data.frame(x)) names(attr(x[[i]], attr.string)) <- colnames(x)[i]
+            if (is.data.frame(x)) names(attr(x[[i]], attr.string)) <- cnames[i]
           }
-          # update progress bar
-          utils::setTxtProgressBar(pb, i)
         }
-        close(pb)
       }
     } else {
       if (is_empty(lab))
