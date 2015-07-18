@@ -74,11 +74,18 @@ summary.labelled <- function(object, ...) {
 
 
 #' @export
-mean.labelled <- function(x, trim = 0, na.rm = TRUE, ...) {
+mean.labelled <- function(x, trim = 0, na.rm = FALSE, missing_to_na = FALSE, ...) {
   # unclass vector for mean-call
   x <- unclass(x)
+  if (!missing_to_na) {
+    if (!is.null(suppressMessages(get_na(x)))) {
+      warning("`x` has self-defined missing values, which are not converted to NA. Use argument `missing_to_na = TRUE` to convert self-defined missings to NA when computing the mean.", call. = F)
+    }
+  } else {
+    x <- to_na(x)
+  }
   # mean
-  mean(to_na(x), trim = trim, na.rm = na.rm)
+  mean(x, trim = trim, na.rm = na.rm)
 }
 
 
