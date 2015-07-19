@@ -106,7 +106,7 @@ x <- factor(c("low", "mid", "low", "hi", "mid", "low"))
 get_labels(x, attr.only = TRUE)
 ```
 
-If a vector has a label attribute, only these labels are returned...
+If a vector has a label attribute, only these labels are returned. Non-labelled values are excluded from the output by default...
 ```{r collapse=TRUE}
 x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
               c(Male = 1, Female = 2, Refused = 5),
@@ -124,6 +124,7 @@ get_labels(x, include.non.labelled = TRUE)
 The `get_values()` method returns the values for labelled values (i.e. values that have an associated label). We still use the vector `x` from the above examples.
 ```{r collapse=TRUE}
 print(x)
+
 get_values(x)
 ```
 
@@ -278,7 +279,7 @@ get_na_flags(x)
 
 ## Converting missing values into NA
 
-`to_na` converts all values flagged as missing by `is_na`
+`to_na` converts all values flagged as missing by `is_na` to `NA`.
 ```{r collapse=TRUE}
 get_na(x)
 
