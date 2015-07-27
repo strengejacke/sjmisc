@@ -41,13 +41,14 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-6
+### Changelog of current development build 1.0.3-7
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
 * Renamed `add_labels` to `copy_labels`.
 
 #### New functions
+* `se` now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
 * `get_na` to get value codes of missing values from labelled vectors (that have an `is_na` attribute).
 * `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
 * `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
@@ -74,3 +75,4 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `get_val_labels` is deprecated, use `get_labels`.
 * `get_var_labels` is deprecated, use `get_label`.
 * `to_fac` is deprecated, use `to_factor`.
+* `std_e` is deprecated, use `se`.

@@ -107,7 +107,7 @@ std_beta <- function(fit, include.ci = FALSE) {
     sx <- sapply(as.data.frame(fit$model)[-1], sd, na.rm = T)
     sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
     beta <- b * sx / sy
-    se <- summary(fit)$coefficients[-1, 2]
+    se <- summary(fit)$coef[-1, 2]
     beta.se <- se * sx / sy
     # check if confidence intervals should also be returned
     # if yes, create data frame with sb and ci
@@ -928,23 +928,41 @@ cramer <- function(tab) {
 
 
 #' @title Standard Error for variables
-#' @name std_e
-#' @description Compute standard error for variable or for all variables
-#'                of a data frame.
+#' @name se
+#' @description Compute standard error for a variable, for all variables
+#'                of a data frame or for joint random and fixed effects
+#'                coefficients of mixed models.
 #'
-#' @param x (numeric) vector / variable or a data frame.
-#' @return The standard error of variable \code{x}, or for each variable
-#'           if \code{x} is a data frame.
+#' @param x (numeric) vector / variable, a data frame or a \code{merMod}-object
+#'          as returned by the \code{\link[lme4]{lmer}}-method.
+#' @return The standard error of \code{x}, or for each variable
+#'           if \code{x} is a data frame, or for the coefficients
+#'           of a mixed model (see \code{\link[lme4]{coef.merMod}}).
+#'
+#' @note Computation of standard errors for coefficients of mixed models
+#'         is based \href{http://stackoverflow.com/questions/26198958/extracting-coefficients-and-their-standard-error-from-lme}{on this code}.
+#'
+#' @details Unlike \code{\link[arm]{se.coef}}, which returns the standard error
+#'            for fixed and random effects separately, this function computes
+#'            the standard errors for joint (sums of) random and fixed
+#'            effects coefficients. Hence, \code{se} returns the appropriate
+#'            standard errors for \code{\link[lme4]{coef.merMod}}.
 #'
 #' @examples
-#' std_e(rnorm(n = 100, mean = 3))
+#' se(rnorm(n = 100, mean = 3))
 #'
 #' data(efc)
-#' std_e(efc[, 1:3])
+#' se(efc[, 1:3])
+#'
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' se(fit)
 #'
 #' @export
-std_e <- function(x) {
-  if (is.matrix(x) || is.data.frame(x)) {
+se <- function(x) {
+  if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
+    return(std_merMod(x))
+  } else if (is.matrix(x) || is.data.frame(x)) {
     # init return variables
     stde <- c()
     stde_names <- c()
@@ -967,6 +985,43 @@ std_e <- function(x) {
 
 std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(stats::na.omit(x)))
 
+#' @importFrom stats coef
+std_merMod <- function(fit) {
+  # ---------------------------------------
+  # check for package availability
+  # ---------------------------------------
+  if (!requireNamespace("lme4", quietly = TRUE)) {
+    stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+  }
+  se.merMod <- list()
+  # get coefficients
+  cc <- stats::coef(fit)
+  # get names of intercepts
+  inames <- names(cc)
+  # variances of fixed effects
+  fixed.vars <- diag(as.matrix(lme4::vcov.merMod(fit)))
+  # extract variances of conditional modes
+  r1 <- lme4::ranef(fit, condVar = TRUE)
+  # we may have multiple random intercepts, iterate all
+  for (i in 1:length(cc)) {
+    cmode.vars <- t(apply(attr(r1[[i]], "postVar"), 3, diag))
+    seVals <- sqrt(sweep(cmode.vars, 2, fixed.vars, "+"))
+    # add results to return list
+    se.merMod[[length(se.merMod) + 1]] <- setNames(as.vector(seVals[1, ]),
+                                                   c("intercept_se", "slope_se"))
+  }
+  # set names of list
+  names(se.merMod) <- inames
+  return(se.merMod)
+}
+
+#' @name std_e
+#' @rdname se
+#' @export
+std_e <- function(x) {
+  .Deprecated("se")
+  return(se(x))
+}
 
 
 #' @title Coefficient of Variation

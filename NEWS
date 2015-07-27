@@ -1,4 +1,4 @@
-Version 1.0.3-6
+Version 1.0.3-7
 ------------------------------------------------------------------------------
 General:
 * Updated namespaces to meet new CRAN namespace requirements.
@@ -13,6 +13,7 @@ New functions:
 * Added S3-methods "summary", "is.na" and "mean" for labelled-class objects. Note that the mean-function defaults "na.rm" to "TRUE" and replaces all missing code values with NA prior to calculating the mean.
 
 Changes to functions:
+* "se" now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
 * Added argument "attr.only" to "get_val_labels" (and "get_labels") to get value labels also of factor levels, if variable has no value label attributes.
 * Argument "include.values" of "get_val_labels" (and "get_labels") has now two options for returning includes values.
 * "get_val_labels" now supports vectors with string label attributes.
@@ -31,6 +32,7 @@ Deprecated:
 * "get_val_labels" is deprecated, use "get_labels".
 * "get_var_labels" is deprecated, use "get_label".
 * "to_fac" is deprecated, use "to_factor".
+* "std_e" is deprecated, use "se".
 
 
 Version 1.0.3
