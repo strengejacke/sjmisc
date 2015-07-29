@@ -960,7 +960,7 @@ cramer <- function(tab) {
 #'
 #' @export
 se <- function(x) {
-  if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
+  if (any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
     return(std_merMod(x))
   } else if (is.matrix(x) || is.data.frame(x)) {
     # init return variables

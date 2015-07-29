@@ -54,7 +54,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
 * `as_labelled` to convert vectors to labelled.
 * `add_labels` to add additional value labels to a labelled vector.
-* Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects. Note that the mean-function defaults `na.rm` to `TRUE` and replaces all missing code values with `NA` prior to calculating the mean.
+* Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects.
 
 #### Changes to functions
 * Added argument `attr.only` to `get_val_labels` (and `get_labels`) to get value labels also of factor levels, if variable has no value label attributes.

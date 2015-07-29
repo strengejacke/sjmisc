@@ -10,7 +10,7 @@ New functions:
 * "fill_labels" to add missing labels to non-labelled values of partially labelled vectors.
 * "as_labelled" to convert vectors to labelled.
 * "add_labels" to add additional value labels to a labelled vector.
-* Added S3-methods "summary", "is.na" and "mean" for labelled-class objects. Note that the mean-function defaults "na.rm" to "TRUE" and replaces all missing code values with NA prior to calculating the mean.
+* Added S3-methods "summary", "is.na" and "mean" for labelled-class objects.
 
 Changes to functions:
 * "se" now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
