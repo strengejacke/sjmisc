@@ -392,6 +392,7 @@ to_fac_helper <- function(x, add.non.labelled, drop.na) {
 #'          are not numeric).
 #' @param keep.labels logical, if \code{TRUE}, former factor levels will be added as
 #'          value labels. See \code{\link{set_labels}} for more details.
+#' @param startAt deprecated; use \code{start.at} instead
 #' @return A numeric variable with values ranging either from \code{start.at} to
 #'           \code{start.at} + length of factor levels, or to the corresponding
 #'           factor levels (if these were numeric). Or a data frame with numeric
@@ -424,7 +425,14 @@ to_fac_helper <- function(x, add.non.labelled, drop.na) {
 #' table(to_value(dummy))
 #'
 #' @export
-to_value <- function(x, start.at = NULL, keep.labels = TRUE) {
+to_value <- function(x,
+                     start.at = NULL,
+                     keep.labels = TRUE,
+                     startAt) {
+  if (!missing(startAt)) {
+    warning("argument 'startAt' is deprecated; please use 'start.at' instead.")
+    start.at <- startAt
+  }
   if (is.matrix(x) || is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- to_value_helper(x[[i]], start.at, keep.labels)
     return(x)

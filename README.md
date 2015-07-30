@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-7
+### Changelog of current development build 1.0.3-8
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
