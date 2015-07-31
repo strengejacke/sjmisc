@@ -4,7 +4,7 @@
 \alias{std_beta}
 \title{Standardized Beta coefficients and CI of lm and mixed models}
 \usage{
-std_beta(fit, include.ci = FALSE)
+std_beta(fit, include.ci = FALSE, type = "std")
 }
 \arguments{
 \item{fit}{fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).}
@@ -13,10 +13,18 @@ std_beta(fit, include.ci = FALSE)
 when \code{fit} is of class \code{lm}. If \code{fit} is a \code{lmerMod} object (lme4-package),
 always returns standard error instead of confidence intervals (hence, this paramezer will
 be ignored when \code{fit} is a \code{lmerMod} object).}
+
+\item{type}{if \code{fit} is of class \code{lm}, normal standardized coefficients
+are computed by default. Use \code{type = "std2"} to follow
+\href{http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf}{Gelman's (2008)}
+suggestion, rescaling the estimates by deviding them by two standard
+deviations, so resulting coefficients are directly comparable for
+untransformed binary predictors.}
 }
 \value{
 A vector with standardized beta coefficients of the fitted linear model, or a data frame
-          with standardized confidence intervals, if \code{include.ci = TRUE}.
+          with standardized beta coefficients and confidence intervals, if
+          \code{include.ci = TRUE}.
 }
 \description{
 Returns the standardized beta coefficients and confidence intervals
@@ -39,8 +47,15 @@ std_beta(fit)
 
 # print std. beta coefficients and ci
 std_beta(fit, include.ci = TRUE)
+
+# print std. beta coefficients and ci, using
+# 2 sd and center binary predictors
+std_beta(fit, include.ci = TRUE, type = "std2")
 }
 \references{
-\href{http://en.wikipedia.org/wiki/Standardized_coefficient}{Wikipedia: Standardized coefficient}
+\itemize{
+             \item \href{http://en.wikipedia.org/wiki/Standardized_coefficient}{Wikipedia: Standardized coefficient}
+             \item Gelman A (2008) "Scaling regression inputs by dividing by two standard deviations." \emph{Statistics in Medicine 27: 2865–2873.} \url{http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf}
+             }
 }
 

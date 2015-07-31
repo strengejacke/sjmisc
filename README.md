@@ -41,14 +41,13 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-8
+### Changelog of current development build 1.0.3-9
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
 * Renamed `add_labels` to `copy_labels`.
 
 #### New functions
-* `se` now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
 * `get_na` to get value codes of missing values from labelled vectors (that have an `is_na` attribute).
 * `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
 * `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
@@ -57,6 +56,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects.
 
 #### Changes to functions
+* `std_beta` gets a `type` argument to compute standardized estimates following Gelman's approach by dividing estimates by two standard deviations.
+* `se` now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
 * Added argument `attr.only` to `get_val_labels` (and `get_labels`) to get value labels also of factor levels, if variable has no value label attributes.
 * Argument `include.values` of `get_val_labels` (and `get_labels`) has now two options for returning includes values.
 * `get_val_labels` now supports vectors with string label attributes.
