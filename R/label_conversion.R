@@ -290,11 +290,11 @@ remove_labels_helper <- function(x) {
 #' efc$e42dep <- as.factor(efc$e42dep)
 #' sjt.frq(efc$e42dep)
 #'
-#' data(efc)
 #' # factor conversion, which keeps value attributes
 #' efc$e42dep <- to_factor(efc$e42dep)
 #' sjt.frq(efc$e42dep)}
 #'
+#' data(efc)
 #' # create parially labelled vector
 #' x <- set_labels(efc$e42dep,
 #'                 c(`1` = "independent",

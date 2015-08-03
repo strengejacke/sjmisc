@@ -25,18 +25,18 @@
 #'          values are converted to \code{NA}.
 #' @param option string, indicating which package will be used to read the SPSS data file.
 #'          By default, \code{option = "haven"}, which means, the \code{read_spss} function
-#'          from the \code{haven} package is used. Use \code{option = "foreign"} to
+#'          from the \pkg{haven} package is used. Use \code{option = "foreign"} to
 #'          use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}
-#'          to make this function always use the foreign-package \code{\link[foreign]{read.spss}} function.
+#'          to make this function always use the \pkg{foreign} package \code{\link[foreign]{read.spss}} function.
 #' @return A data frame containing the SPSS data. Retrieve value labels with \code{\link{get_labels}}
 #'   and variable labels with \code{\link{get_label}}.
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_spss}} of the
-#'         \code{haven} package and \code{\link[foreign]{read.spss}} of the
-#'         \code{foreign} package. This function adds value and variable
+#'         \pkg{haven} package and \code{\link[foreign]{read.spss}} of the
+#'         \pkg{foreign} package. This function adds value and variable
 #'         labels as attributes to the imported variables of the data frame.
 #'         \cr \cr
-#'         Most functions of the \code{sjPlot}-package access value and variable label
+#'         Most functions of the \pkg{sjPlot} package access value and variable label
 #'         attributes to automatically detect labels in order to set them as axis,
 #'         legend or title labels in plots (\code{sjp.}-functions) respectively as
 #'         column or row headers in table outputs (\code{sjt.}-functions).  See
@@ -197,7 +197,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #'   and variable labels with \code{\link{get_label}}.
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_sas}} function of the
-#'         \code{haven} package. This function converts the imported data
+#'         \pkg{haven} package. This function converts the imported data
 #'         into a common class format (see \code{\link{unlabel}}).
 #'
 #' @export
@@ -235,7 +235,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #'   and variable labels with \code{\link{get_label}}.
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_dta}} function of the
-#'         \code{haven} package. This function converts the imported data
+#'         \pkg{haven} package. This function converts the imported data
 #'         into a common class format (see \code{\link{unlabel}}).
 #'
 #' @export
@@ -269,8 +269,8 @@ read_stata <- function(path, atomic.to.fac = FALSE) {
 #'            }
 #'
 #' @note You don't need to take care whether variables have been imported with
-#'         the \code{\link{read_spss}} function from this package or from \code{haven}
-#'         or even the \code{foreign} package, or if you have imported SPSS data and
+#'         the \code{\link{read_spss}} function from this package or from \pkg{haven}
+#'         or even the \pkg{foreign} package, or if you have imported SPSS data and
 #'         created new variables. This function does all necessary data preparation
 #'         to write a properly labelled SPSS sav file.
 #'
@@ -293,7 +293,7 @@ write_spss <- function(x, path, enc.to.utf8 = TRUE) {
 #' @seealso \code{\link{write_spss}}
 #'
 #' @note You don't need to take care whether variables have been imported with
-#'         the \code{\link{read_stata}} function from this package or from \code{haven},
+#'         the \code{\link{read_stata}} function from this package or from \pkg{haven},
 #'         or if you have imported STATA data and
 #'         created new variables. This function does all necessary data preparation
 #'         to write a properly labelled STATA file.

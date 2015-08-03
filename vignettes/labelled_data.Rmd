@@ -23,7 +23,7 @@ data(efc)
 str(efc$e42dep)
 ```
 
-While all plotting and table functions of the [sjPlot-package](http://cran.r-project.org/web/packages/sjPlot/index.html) make use of labelled data, many packages and/or functions do not consider these attributes, e.g. R base graphics:
+While all plotting and table functions of the [sjPlot-package](http://cran.r-project.org/package=sjPlot) make use of labelled data, many packages and/or functions do not consider these attributes, e.g. R base graphics:
 
 ```{r fig.width=6, fig.height=4, dpi=72, dev="png", warning=FALSE}
 library(sjmisc)

@@ -32,7 +32,7 @@ Other statistical software packages (like 'SPSS') allow to define
            \code{is_na}-\code{\link{attr}}. Technically, these "missings" are
            stored as normal values. Thus, the \code{\link{table}} command,
            for instance, would include these values by default. The
-           \strong{sjmisc-package} offers capabilities to deal with multiple
+           \pkg{sjmisc} package offers capabilities to deal with multiple
            declared missings and enhances the possibilities to work with
            labelled data, allowing for easy access of multiple declared
            missings or conversion into \code{NA} etc.

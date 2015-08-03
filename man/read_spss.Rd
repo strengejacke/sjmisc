@@ -28,9 +28,9 @@ values are converted to \code{NA}.}
 
 \item{option}{string, indicating which package will be used to read the SPSS data file.
 By default, \code{option = "haven"}, which means, the \code{read_spss} function
-from the \code{haven} package is used. Use \code{option = "foreign"} to
+from the \pkg{haven} package is used. Use \code{option = "foreign"} to
 use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}
-to make this function always use the foreign-package \code{\link[foreign]{read.spss}} function.}
+to make this function always use the \pkg{foreign} package \code{\link[foreign]{read.spss}} function.}
 }
 \value{
 A data frame containing the SPSS data. Retrieve value labels with \code{\link{get_labels}}
@@ -41,11 +41,11 @@ Import data from SPSS, including NA's, value and variable labels.
 }
 \note{
 This is a wrapper function for \code{\link[haven]{read_spss}} of the
-        \code{haven} package and \code{\link[foreign]{read.spss}} of the
-        \code{foreign} package. This function adds value and variable
+        \pkg{haven} package and \code{\link[foreign]{read.spss}} of the
+        \pkg{foreign} package. This function adds value and variable
         labels as attributes to the imported variables of the data frame.
         \cr \cr
-        Most functions of the \code{sjPlot}-package access value and variable label
+        Most functions of the \pkg{sjPlot} package access value and variable label
         attributes to automatically detect labels in order to set them as axis,
         legend or title labels in plots (\code{sjp.}-functions) respectively as
         column or row headers in table outputs (\code{sjt.}-functions).  See

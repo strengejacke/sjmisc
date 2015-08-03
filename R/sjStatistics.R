@@ -70,11 +70,14 @@ eta_sq <- function(...) {
 #'                of a fitted linear (mixed) models, i.e. \code{fit} must either
 #'                be of class \code{lm} or \code{\link[lme4]{merMod}}.
 #'
-#' @param fit fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).
-#' @param include.ci logical, if \code{TRUE}, a data frame with confidence intervals will be returned,
-#'          when \code{fit} is of class \code{lm}. If \code{fit} is a \code{lmerMod} object (lme4-package),
-#'          always returns standard error instead of confidence intervals (hence, this paramezer will
-#'          be ignored when \code{fit} is a \code{lmerMod} object).
+#' @param fit fitted linear (mixed) model of class \code{\link{lm}} or
+#'          \code{\link[lme4]{merMod}} (\pkg{lme4} package).
+#' @param include.ci logical, if \code{TRUE}, a data frame with confidence
+#'          intervals will be returned, when \code{fit} is of class \code{lm}.
+#'          If \code{fit} is a \code{lmerMod} object (\pkg{lme4} package),
+#'          always returns standard error instead of confidence intervals
+#'          (hence, this parameter will be ignored when \code{fit} is a
+#'          \code{lmerMod} object).
 #' @param type if \code{fit} is of class \code{lm}, normal standardized coefficients
 #'          are computed by default. Use \code{type = "std2"} to follow
 #'          \href{http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf}{Gelman's (2008)}
@@ -99,7 +102,7 @@ eta_sq <- function(...) {
 #'
 #' @examples
 #' # fit linear model
-#' fit <- lm(airquality$Ozone ~ airquality$Wind + airquality$Temp + airquality$Solar.R)
+#' fit <- lm(Ozone ~ Wind + Temp + Solar.R, data = airquality)
 #' # print std. beta coefficients
 #' std_beta(fit)
 #'
@@ -1021,7 +1024,7 @@ se <- function(x) {
 
 std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(stats::na.omit(x)))
 
-#' @importFrom stats coef
+#' @importFrom stats coef setNames
 std_merMod <- function(fit) {
   # ---------------------------------------
   # check for package availability
@@ -1043,7 +1046,7 @@ std_merMod <- function(fit) {
     cmode.vars <- t(apply(attr(r1[[i]], "postVar"), 3, diag))
     seVals <- sqrt(sweep(cmode.vars, 2, fixed.vars, "+"))
     # add results to return list
-    se.merMod[[length(se.merMod) + 1]] <- setNames(as.vector(seVals[1, ]),
+    se.merMod[[length(se.merMod) + 1]] <- stats::setNames(as.vector(seVals[1, ]),
                                                    c("intercept_se", "slope_se"))
   }
   # set names of list

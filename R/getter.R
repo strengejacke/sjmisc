@@ -153,12 +153,12 @@ get_var_labels <- function(x) {
 #'           labels, if \code{x} is a variable;
 #'           or \code{NULL} if no value label attribute was found.
 #'
-#' @details This package can add (and read) value and variable labels either in \code{foreign}
+#' @details This package can add (and read) value and variable labels either in \pkg{foreign}
 #'            package style (attributes are named \emph{value.labels} and \emph{variable.label})
-#'            or in \code{haven} package style (attributes are named \emph{labels} and
-#'            \emph{label}). By default, the \code{haven} package style is used.
+#'            or in \pkg{haven} package style (attributes are named \emph{labels} and
+#'            \emph{label}). By default, the \pkg{haven} package style is used.
 #'            \cr \cr
-#'            Working with labelled data is a key element of the \code{sjPlot} package,
+#'            Working with labelled data is a key element of the \pkg{sjPlot} package,
 #'            which accesses these attributes to automatically read label attributes
 #'            for labelling axis categories and titles or table rows and columns.
 #'            \cr \cr
@@ -185,7 +185,7 @@ get_var_labels <- function(x) {
 #'        label attributes, either factor-\code{\link{levels}} or the numeric values
 #'        of the vector are returned as labels.
 #'        \cr \cr
-#'        Most functions of the \code{sjPlot}-package access value and variable label
+#'        Most functions of the \pkg{sjPlot} package access value and variable label
 #'        attributes to automatically detect labels in order to set them as axis,
 #'        legend or title labels in plots (\code{sjp.}-functions) respectively as
 #'        column or row headers in table outputs (\code{sjt.}-functions).  See
@@ -468,7 +468,7 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
 #'            \code{is_na}-\code{\link{attr}}. Technically, these "missings" are
 #'            stored as normal values. Thus, the \code{\link{table}} command,
 #'            for instance, would include these values by default. The
-#'            \strong{sjmisc-package} offers capabilities to deal with multiple
+#'            \pkg{sjmisc} package offers capabilities to deal with multiple
 #'            declared missings and enhances the possibilities to work with
 #'            labelled data, allowing for easy access of multiple declared
 #'            missings or conversion into \code{NA} etc.

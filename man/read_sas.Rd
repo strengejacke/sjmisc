@@ -25,7 +25,7 @@ Imports data from SAS (\code{.sas7bdat}), including NA's,
 }
 \note{
 This is a wrapper function for \code{\link[haven]{read_sas}} function of the
-        \code{haven} package. This function converts the imported data
+        \pkg{haven} package. This function converts the imported data
         into a common class format (see \code{\link{unlabel}}).
 }
 \seealso{

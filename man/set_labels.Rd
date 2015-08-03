@@ -45,7 +45,7 @@ This function adds character labels as attribute to a variable
                \code{data.frame} or \code{list}-object. To each variable,
                the attribute \code{"labels"} or \code{"value.labels"}
                with the related \code{labels} is added. These value labels will be accessed
-               by functions of the \emph{sjPlot} package, in order to automatically set values
+               by functions of the \pkg{sjPlot} package, in order to automatically set values
                or legend labels.
 }
 \details{

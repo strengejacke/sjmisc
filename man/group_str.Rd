@@ -14,7 +14,7 @@ group_str(strings, maxdist = 2, method = "lv", strict = FALSE,
 elements as similar or equal.}
 
 \item{method}{Method for distance calculation. The default is \code{"lv"}. See
-\code{\link[stringdist]{stringdist}} package for details.}
+\code{\link[stringdist]{stringdist}} for details.}
 
 \item{strict}{if \code{TRUE}, value matching is more strictly. See 'Examples'.}
 

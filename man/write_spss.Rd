@@ -19,8 +19,8 @@ This function saves the content of a data frame to an SPSS sav-file.
 }
 \note{
 You don't need to take care whether variables have been imported with
-        the \code{\link{read_spss}} function from this package or from \code{haven}
-        or even the \code{foreign} package, or if you have imported SPSS data and
+        the \code{\link{read_spss}} function from this package or from \pkg{haven}
+        or even the \pkg{foreign} package, or if you have imported SPSS data and
         created new variables. This function does all necessary data preparation
         to write a properly labelled SPSS sav file.
 }

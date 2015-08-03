@@ -62,6 +62,7 @@ get_labels(x, include.non.labelled = TRUE)
 
 ## ----collapse=TRUE-------------------------------------------------------
 print(x)
+
 get_values(x)
 
 ## ----collapse=TRUE-------------------------------------------------------

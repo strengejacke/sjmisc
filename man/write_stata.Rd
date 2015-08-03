@@ -19,7 +19,7 @@ This function saves the content of a data frame to an STATA dta-file.
 }
 \note{
 You don't need to take care whether variables have been imported with
-        the \code{\link{read_stata}} function from this package or from \code{haven},
+        the \code{\link{read_stata}} function from this package or from \pkg{haven},
         or if you have imported STATA data and
         created new variables. This function does all necessary data preparation
         to write a properly labelled STATA file.

@@ -50,12 +50,12 @@ This function retrieves the value labels of an imported
                  }
 }
 \details{
-This package can add (and read) value and variable labels either in \code{foreign}
+This package can add (and read) value and variable labels either in \pkg{foreign}
            package style (attributes are named \emph{value.labels} and \emph{variable.label})
-           or in \code{haven} package style (attributes are named \emph{labels} and
-           \emph{label}). By default, the \code{haven} package style is used.
+           or in \pkg{haven} package style (attributes are named \emph{labels} and
+           \emph{label}). By default, the \pkg{haven} package style is used.
            \cr \cr
-           Working with labelled data is a key element of the \code{sjPlot} package,
+           Working with labelled data is a key element of the \pkg{sjPlot} package,
            which accesses these attributes to automatically read label attributes
            for labelling axis categories and titles or table rows and columns.
            \cr \cr
@@ -83,7 +83,7 @@ This function works with vectors that have value and variable
        label attributes, either factor-\code{\link{levels}} or the numeric values
        of the vector are returned as labels.
        \cr \cr
-       Most functions of the \code{sjPlot}-package access value and variable label
+       Most functions of the \pkg{sjPlot} package access value and variable label
        attributes to automatically detect labels in order to set them as axis,
        legend or title labels in plots (\code{sjp.}-functions) respectively as
        column or row headers in table outputs (\code{sjt.}-functions).  See

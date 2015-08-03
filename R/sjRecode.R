@@ -1004,7 +1004,7 @@ weight <- function(x, weights) {
 #' @param maxdist the maximum distance between two string elements, which is allowed to treat two
 #'          elements as similar or equal.
 #' @param method Method for distance calculation. The default is \code{"lv"}. See
-#'          \code{\link[stringdist]{stringdist}} package for details.
+#'          \code{\link[stringdist]{stringdist}} for details.
 #' @param strict if \code{TRUE}, value matching is more strictly. See 'Examples'.
 #' @param trim.whitespace if \code{TRUE} (default), leading and trailing white spaces will
 #'          be removed from string values.

@@ -186,7 +186,7 @@ efc &lt;-<span class="st"> </span><span class="kw">read.spss</span>(<span class=
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="kw">c</span>(<span class="st">&quot;very low&quot;</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;hi&quot;</span>))
 x
-##  [1] 2 3 1 1 1 3 1 2 3 3 3 3 3 2 1 3 3 2 1 4
+##  [1] 3 2 4 3 4 1 1 1 3 1 3 3 4 3 3 1 3 1 3 1
 ## attr(,&quot;labels&quot;)
 ## very low      low      mid       hi 
 ##      &quot;1&quot;      &quot;2&quot;      &quot;3&quot;      &quot;4&quot;</code></pre>
@@ -261,7 +261,7 @@ x
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x, <span class="st">&quot;Dummy-variable&quot;</span>)
 <span class="kw">str</span>(x)
-##  atomic [1:10] 2 3 3 4 3 2 3 4 1 4
+##  atomic [1:10] 1 4 2 1 4 2 2 3 1 1
 ##  - attr(*, &quot;label&quot;)= chr &quot;Dummy-variable&quot;</code></pre>
 <p><code>set_label</code> can also set variable labels for a data frame. In this case, the variable attributes get an additional <code>name</code> attribute with the vector’s name. This makes it easier to see which label belongs to which vector.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">a =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
@@ -274,13 +274,13 @@ x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x,
 
 <span class="kw">str</span>(x)
 ## 'data.frame':    10 obs. of  3 variables:
-##  $ a: atomic  3 3 2 4 2 2 2 3 1 3
+##  $ a: atomic  2 2 4 3 4 4 4 2 1 2
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable A&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;a&quot;
-##  $ b: atomic  4 4 2 2 1 1 1 1 2 1
+##  $ b: atomic  4 4 1 2 1 2 1 3 2 3
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable B&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;b&quot;
-##  $ c: atomic  2 4 4 2 4 4 1 3 4 3
+##  $ c: atomic  3 2 3 3 1 2 1 1 1 3
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable C&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c&quot;
 
@@ -299,7 +299,7 @@ x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x,
 <span class="kw">table</span>(x)
 ## x
 ##  1  2  3  4  5  6  7  8 
-## 12  8 15 10 11 14 19 11
+## 13 17 13  9 11 17  7 13
 
 <span class="co"># set value 1 and 8 as missings</span>
 x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">8</span>))
@@ -307,7 +307,7 @@ x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="k
 <span class="kw">table</span>(x, <span class="dt">exclude =</span> <span class="ot">NULL</span>)
 ## x
 ##    2    3    4    5    6    7 &lt;NA&gt; 
-##    8   15   10   11   14   19   23
+##   17   13    9   11   17    7   26
 
 x &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))
 x
@@ -321,7 +321,7 @@ x
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>), <span class="dt">as.attr =</span> <span class="ot">TRUE</span>)
 x
-##  [1] 2 4 4 4 4 5 5 1 4 1 5 2 2 4 3 5 1 1 2 1
+##  [1] 4 5 1 4 5 4 5 2 3 3 2 3 4 5 3 3 2 4 1 2
 ## attr(,&quot;labels&quot;)
 ##   1   2   3   4   5 
 ## &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; 
@@ -363,7 +363,7 @@ x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="k
 ## [1] 3 5
 
 <span class="kw">to_na</span>(x)
-##  [1] NA NA  1  1 NA  1  2 NA  4 NA  4  4 NA NA  1  4 NA  1 NA  4
+##  [1]  1  1  4 NA NA NA  2  4  2  4 NA NA NA  4 NA  2  2  1 NA  2
 ## attr(,&quot;labels&quot;)
 ##   1   2   4 
 ## &quot;1&quot; &quot;2&quot; &quot;4&quot; 

@@ -34,7 +34,7 @@ This function sets variable labels to a single variable or to
                a set of variables in a \code{data.frame} or \code{list}-object.
                To each variable, the attribute \code{"label"} or \code{"variable.label"}
                with the related variable name is attached. Most functions of the
-               \emph{sjPlot} package can automatically retrieve the variable
+               \pkg{sjPlot} package can automatically retrieve the variable
                name to use it as axis labels or plot title (see 'Details').
 }
 \details{
@@ -57,6 +57,8 @@ sjt.frq(data.frame(efc$e42dep, efc$e16sex))}
 dummy <- sample(1:4, 40, replace=TRUE)
 dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
 dummy <- set_label(dummy, "Dummy-variable")
+
+
 # auto-detection of value labels by default, auto-detection of
 # variable labels if argument "title" set to NULL.
 \dontrun{

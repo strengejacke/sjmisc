@@ -90,15 +90,11 @@ mean.labelled <- function(x, trim = 0, na.rm = FALSE, missing_to_na = FALSE, ...
 
 
 #' @export
-is.na.labelled <- function(x, missing_to_na = FALSE) {
+is.na.labelled <- function(x) {
   # unclass vector for is.na-call
   x <- unclass(x)
-  if (!missing_to_na) {
-    if (!is.null(suppressMessages(get_na(x)))) {
-      warning("`x` has self-defined missing values, which are not counted as NA. Use argument `missing_to_na = TRUE` to convert self-defined missings to NA when checking for NA values.", call. = F)
-    }
-  } else {
-    x <- to_na(x)
+  if (!is.null(suppressMessages(get_na(x)))) {
+    warning("`x` has self-defined missing values, which not counted as NA. Use `to_na` to convert self-defined missing values to NA.", call. = F)
   }
   # return missings
   is.na(x)

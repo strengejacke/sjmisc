@@ -4,7 +4,7 @@
 #'                a set of variables in a \code{data.frame} or \code{list}-object.
 #'                To each variable, the attribute \code{"label"} or \code{"variable.label"}
 #'                with the related variable name is attached. Most functions of the
-#'                \emph{sjPlot} package can automatically retrieve the variable
+#'                \pkg{sjPlot} package can automatically retrieve the variable
 #'                name to use it as axis labels or plot title (see 'Details').
 #'
 #' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
@@ -45,6 +45,8 @@
 #' dummy <- sample(1:4, 40, replace=TRUE)
 #' dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
 #' dummy <- set_label(dummy, "Dummy-variable")
+#'
+#'
 #' # auto-detection of value labels by default, auto-detection of
 #' # variable labels if argument "title" set to NULL.
 #' \dontrun{
@@ -170,7 +172,7 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #'                \code{data.frame} or \code{list}-object. To each variable,
 #'                the attribute \code{"labels"} or \code{"value.labels"}
 #'                with the related \code{labels} is added. These value labels will be accessed
-#'                by functions of the \emph{sjPlot} package, in order to automatically set values
+#'                by functions of the \pkg{sjPlot} package, in order to automatically set values
 #'                or legend labels.
 #'
 #' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or

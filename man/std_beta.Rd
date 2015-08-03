@@ -7,12 +7,15 @@
 std_beta(fit, include.ci = FALSE, type = "std")
 }
 \arguments{
-\item{fit}{fitted linear (mixed) model of class \code{\link{lm}} or \code{\link[lme4]{merMod}} (lme4-package).}
+\item{fit}{fitted linear (mixed) model of class \code{\link{lm}} or
+\code{\link[lme4]{merMod}} (\pkg{lme4} package).}
 
-\item{include.ci}{logical, if \code{TRUE}, a data frame with confidence intervals will be returned,
-when \code{fit} is of class \code{lm}. If \code{fit} is a \code{lmerMod} object (lme4-package),
-always returns standard error instead of confidence intervals (hence, this paramezer will
-be ignored when \code{fit} is a \code{lmerMod} object).}
+\item{include.ci}{logical, if \code{TRUE}, a data frame with confidence
+intervals will be returned, when \code{fit} is of class \code{lm}.
+If \code{fit} is a \code{lmerMod} object (\pkg{lme4} package),
+always returns standard error instead of confidence intervals
+(hence, this parameter will be ignored when \code{fit} is a
+\code{lmerMod} object).}
 
 \item{type}{if \code{fit} is of class \code{lm}, normal standardized coefficients
 are computed by default. Use \code{type = "std2"} to follow
@@ -41,7 +44,7 @@ Returns the standardized beta coefficients and confidence intervals
 }
 \examples{
 # fit linear model
-fit <- lm(airquality$Ozone ~ airquality$Wind + airquality$Temp + airquality$Solar.R)
+fit <- lm(Ozone ~ Wind + Temp + Solar.R, data = airquality)
 # print std. beta coefficients
 std_beta(fit)
 
