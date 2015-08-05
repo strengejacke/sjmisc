@@ -17,8 +17,8 @@ See also package-vignettes.
 \tabular{rl}{
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
-Version: \tab 1.0.3-9\cr
-Date: \tab 2015-07-31\cr
+Version: \tab 1.0.3-10\cr
+Date: \tab 2015-08-05\cr
 License: \tab GPL-3\cr
 }
 }

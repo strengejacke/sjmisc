@@ -1,118 +1,119 @@
-Version 1.0.3-9
+Version 1.0.3-10
 ------------------------------------------------------------------------------
 General:
 * Updated namespaces to meet new CRAN namespace requirements.
-* Renamed "add_labels" to "copy_labels".
+* Renamed `add_labels` to `copy_labels`.
 
 New functions:
-* "get_na" to get value codes of missing values from labelled vectors (that have an "is_na" attribute).
-* "to_na" to convert value codes of missing values from labelled vectors (that have an "is_na" attribute) into NA.
-* "fill_labels" to add missing labels to non-labelled values of partially labelled vectors.
-* "as_labelled" to convert vectors to labelled.
-* "add_labels" to add additional value labels to a labelled vector.
-* Added S3-methods "summary", "is.na" and "mean" for labelled-class objects.
+* `get_na` to get value codes of missing values from labelled vectors (that have an `is_na` attribute).
+* `to_na` to convert value codes of missing values from labelled vectors (that have an `is_na` attribute) into NA.
+* `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
+* `as_labelled` to convert vectors to labelled.
+* `add_labels` to add additional value labels to a labelled vector.
+* `zap_labels` and `zap_unlabelled` to convert (non-)labelled values into `NA`.
+* Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects.
 
 Changes to functions:
-* "std_beta" gets a "type" argument to compute standardized estimates following Gelman's approach by dividing estimates by two standard deviations.
-* "se" now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
-* Added argument "attr.only" to "get_val_labels" (and "get_labels") to get value labels also of factor levels, if variable has no value label attributes.
-* Argument "include.values" of "get_val_labels" (and "get_labels") has now two options for returning includes values.
-* "get_val_labels" now supports vectors with string label attributes.
-* "to_factor" and "to_value" better deal with vectors that don't need to be converted.
-* "get_val_labels" gets a "include.non.labelled" argument to also return non-labelled values as label.
-* "to_label" and "to_factor" get a "add.non.labelled" argument to also convert non-labelled values to labels.
-* "set_val_labels" gets a "force.values" argument to add values without associated labels as labels, too.
-* "set_na" gets a "as.attr" argument, so values are not converted to NA, but rather missing codes are added as "is_na" attribute.
-* "get_values", "to_label" and "to_factor" get a "drop.na" argument, to exclude values of missing codes from return value.
-* Renamed argument "autoAttachVarLabels" of "read_spss" into "attach.var.labels".
+* `std_beta` gets a `type` argument to compute standardized estimates following Gelman's approach by dividing estimates by two standard deviations.
+* `se` now accepts fitted linear mixed model (from lme4) to compute standard errors for joint random and fixed effects.
+* Added argument `attr.only` to `get_val_labels` (and `get_labels`) to get value labels also of factor levels, if variable has no value label attributes.
+* Argument `include.values` of `get_val_labels` (and `get_labels`) has now two options for returning includes values.
+* `get_val_labels` now supports vectors with string label attributes.
+* `to_factor` and `to_value` better deal with vectors that don't need to be converted.
+* `get_val_labels` gets a `include.non.labelled` argument to also return non-labelled values as label.
+* `to_label` and `to_factor` get a `add.non.labelled` argument to also convert non-labelled values to labels.
+* `set_val_labels` gets a `force.values` argument to add values without associated labels as labels, too.
+* `set_na` gets a `as.attr` argument, so values are not converted to NA, but rather missing codes are added as `is_na` attribute.
+* `get_values`, `to_label` and `to_factor` get a `drop.na` argument, to exclude values of missing codes from return value.
+* Renamed argument `autoAttachVarLabels` of `read_spss` into `attach.var.labels`.
 * Functions now better deal with mix of labelled and non-labelled values.
 
 Deprecated:
-* "set_val_labels" is deprecated, use "set_labels".
-* "set_var_labels" is deprecated, use "set_label".
-* "get_val_labels" is deprecated, use "get_labels".
-* "get_var_labels" is deprecated, use "get_label".
-* "to_fac" is deprecated, use "to_factor".
-* "std_e" is deprecated, use "se".
+* `set_val_labels` is deprecated, use `set_labels`.
+* `set_var_labels` is deprecated, use `set_label`.
+* `get_val_labels` is deprecated, use `get_labels`.
+* `get_var_labels` is deprecated, use `get_label`.
+* `to_fac` is deprecated, use `to_factor`.
+* `std_e` is deprecated, use `se`.
 
 
 Version 1.0.3
 ------------------------------------------------------------------------------
 New function:
-* "add_labels" to set back labels from subsetted data frame, or remove any label attributes from data frames.
-* "remove_labels" to remove any label attributes from data frames or vectors.
-* "get_values" to return values associated with value labels from labelled vectors.
-* "replace_na" to replace "NA"'s with specific value (counterpart to "set_na").
-* "is_even" and "is_odd" to check whether values are odd or even.
-* "is_empty" to check whether a string is empty or not.
+* `add_labels` to set back labels from subsetted data frame, or remove any label attributes from data frames.
+* `remove_labels` to remove any label attributes from data frames or vectors.
+* `get_values` to return values associated with value labels from labelled vectors.
+* `replace_na` to replace `NA`'s with specific value (counterpart to `set_na`).
+* `is_even` and `is_odd` to check whether values are odd or even.
+* `is_empty` to check whether a string is empty or not.
 
 Changes to functions:
-* "dicho" now also dichotomizes non-numeric values.
-* "rec" now can keep (copy) not yet recoded values with "else=copy".
-* "get_val_labels" gains a "include.values" argument to also return values associated with the value labels.
-* "get_val_labels", "get_var_labels", "set_val_labels" and "set_var_labels" now also accept "list"-objects with variables.
-* "dicho", "rec", "set_na" and "recode_to" now also accept "list"-objects with variables.
-* "set_val_labels" gets argument "force.labels" to force using all labels, even if length of labels if longer than unique values of vector.
-* "rec" gets a "asFac" argument, to return recoded variable as factor.
-* "dicho", "group_var" and "group_labels" keep variable label attributes.
-* "rec" and "dicho" get "varLabel" and "valLabels" arguments, to optionally add value and variable label attributes for recoded or dichotomized variables.
+* `dicho` now also dichotomizes non-numeric values.
+* `rec` now can keep (copy) not yet recoded values with `else=copy`.
+* `get_val_labels` gains a `include.values` argument to also return values associated with the value labels.
+* `get_val_labels`, `get_var_labels`, `set_val_labels` and `set_var_labels` now also accept `list`-objects with variables.
+* `dicho`, `rec`, `set_na` and `recode_to` now also accept `list`-objects with variables.
+* `set_val_labels` gets argument `force.labels` to force using all labels, even if length of labels if longer than unique values of vector.
+* `rec` gets a `asFac` argument, to return recoded variable as factor.
+* `dicho`, `group_var` and `group_labels` keep variable label attributes.
+* `rec` and `dicho` get `varLabel` and `valLabels` arguments, to optionally add value and variable label attributes for recoded or dichotomized variables.
 
 Bug fixes:
-* "get_var_labels" returned NULL if first variable in data.frame had no variable label (but other variables had) - fixed.
-* Fixed code with non-exact matching of "haven"-attributes "label" and "labels", which in certain situation may return wrong vector attributes.
-* "rec" did not recode "NA"s into values, if followed by "else"-token.
-* "to_value" no longer drops unused factor levels.
+* `get_var_labels` returned NULL if first variable in data.frame had no variable label (but other variables had) - fixed.
+* Fixed code with non-exact matching of `haven`-attributes `label` and `labels`, which in certain situation may return wrong vector attributes.
+* `rec` did not recode `NA`s into values, if followed by `else`-token.
+* `to_value` no longer drops unused factor levels.
 
 Version 1.0.2
 ------------------------------------------------------------------------------
 New functions:
-* "icc" to compute intraclass-correlations for random-intercepts of mixed models.
-* "hoslem_gof" to perform a Hosmer-Lemeshow-Goodness-of-Fit-test for logistic regression models.
-* "cod" to compute the Coefficient of Discrimination, aka Tjur's Pseudo-R2, for logistic regression models.
-* "pseudo_r2" to compute the Nagelkerke's and Cox-Snell's Pseudo-R2 for logistic regression models.
+* `icc` to compute intraclass-correlations for random-intercepts of mixed models.
+* `hoslem_gof` to perform a Hosmer-Lemeshow-Goodness-of-Fit-test for logistic regression models.
+* `cod` to compute the Coefficient of Discrimination, aka Tjur's Pseudo-R2, for logistic regression models.
+* `pseudo_r2` to compute the Nagelkerke's and Cox-Snell's Pseudo-R2 for logistic regression models.
 
 Changes to functions:
-* Functions "std_beta" and "cv" now support "merModLmerTest" objects (fitted by "lmerTest" package).
-* "mean_n" has a "digit" argument to round returned mean values.
-* "rec", "recode_to" and "std_e" now also accept data frames as argument.
-* "chisq_gof" now accepts "glm"-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.
-* "set_val_labels" and "set_var_labels" can now remove label-attributes.
-* "set_na" removes label-attribute, if removed "NA" values were the last labelled values.
+* Functions `std_beta` and `cv` now support `merModLmerTest` objects (fitted by `lmerTest` package).
+* `mean_n` has a `digit` argument to round returned mean values.
+* `rec`, `recode_to` and `std_e` now also accept data frames as argument.
+* `chisq_gof` now accepts `glm`-objects, however, computing the Chi-squared-Goodness-of-Fit-test for logistic regression models sometime may fail.
+* `set_val_labels` and `set_var_labels` can now remove label-attributes.
+* `set_na` removes label-attribute, if removed `NA` values were the last labelled values.
 
 Bug fixes:
-* "set_na" did not work with logical vectors - fixed.
-* "recode_to" did not work when "var" had value-label-attributes - fixed.
+* `set_na` did not work with logical vectors - fixed.
+* `recode_to` did not work when `var` had value-label-attributes - fixed.
 
 Version 1.0.1
 ------------------------------------------------------------------------------
 New functions:
-* "is_crossed" to check whether two factors are crossed.
-* "is_nested" to check whether two factors are nested.
-* "is_num_fac" to check whether a factor has only numeric levels.
+* `is_crossed` to check whether two factors are crossed.
+* `is_nested` to check whether two factors are nested.
+* `is_num_fac` to check whether a factor has only numeric levels.
 
 Changes to functions:
-* "std_beta" now accepts plm-objects.
-* "to_value" now auto-detects lowest minimum value of numeric factors, instead of always setting minimum value to 1.
-* "set_na", "dicho", "to_fac", "to_value" and "to_label" now also accept data frames as argument.
+* `std_beta` now accepts plm-objects.
+* `to_value` now auto-detects lowest minimum value of numeric factors, instead of always setting minimum value to 1.
+* `set_na`, `dicho`, `to_fac`, `to_value` and `to_label` now also accept data frames as argument.
 
 Bug fixes:
-* "std_beta" did not work in some cases - fixed.
-* "mwu" did not accept factors as grouping levels - fixed.
-* "mwu" did not work when value range of "grp" vector was not continuously - fixed.
-* "cv" did not work with lme-objects (from nlme-package) - fixed.
-* "cramer", "phi" and "table_values" did not work with tables of class "xtabs" - fixed.
-* "to_value" (resp. "set_val_labels") did not work in certain situations when factor had not continuously numeric levels - fixed.
+* `std_beta` did not work in some cases - fixed.
+* `mwu` did not accept factors as grouping levels - fixed.
+* `mwu` did not work when value range of `grp` vector was not continuously - fixed.
+* `cv` did not work with lme-objects (from nlme-package) - fixed.
+* `cramer`, `phi` and `table_values` did not work with tables of class `xtabs` - fixed.
+* `to_value` (resp. `set_val_labels`) did not work in certain situations when factor had not continuously numeric levels - fixed.
 
 
 Version 1.0.0
 ------------------------------------------------------------------------------
 General:
-* First release of this package - it contains all utility, recode and statistical test functions from the "sjPlot" package.
+* First release of this package - it contains all utility, recode and statistical test functions from the `sjPlot` package.
 
 New functions:
-* "rec" to recode variables.
-* "cv" to compute coefficient of variance.
-* "rmse" to compute root-mean-square error.
+* `rec` to recode variables.
+* `cv` to compute coefficient of variance.
+* `rmse` to compute root-mean-square error.
 
 Changes to former sjPlot-functions:
-* Improved internal management of imported data via "haven" and "foreign" packages, so users don't need to care of structure and classed of data read with either haven, foreign or sjPlot's read-functions.
+* Improved internal management of imported data via `haven` and `foreign` packages, so users don't need to care of structure and classed of data read with either haven, foreign or sjPlot's read-functions.

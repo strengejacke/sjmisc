@@ -184,15 +184,15 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #' @param x variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where value label attributes should be added. Replaces former value labels.
 #' @param labels (named) character vector of labels that will be added to \code{x} as
-#'          \code{"labels"} or \code{"value.labels"} attribute. If \code{labels} is
-#'          \strong{not} a named vector, its length must equal the value range of
-#'          \code{x}, i.e. if \code{x} has values from 1 to 3, \code{labels} should have a length of 3.
-#'          If \code{labels} is a named vector, value labels will be set accordingly, even
-#'          if \code{x} has a different length of unique values. See also 'Note'.
-#'          If \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of
-#'          (named) character vectors. If \code{labels} is a list, it must have the same length as
-#'          number of columns of \code{x}. If \code{labels} is a vector and \code{x} is a data frame,
-#'          the \code{labels} will be applied to each column of \code{x}.
+#'          \code{"labels"} or \code{"value.labels"} attribute.
+#'          \itemize{
+#'            \item if \code{labels} is \strong{not} a \emph{named vector}, its length must equal the value range of \code{x}, i.e. if \code{x} has values from 1 to 3, \code{labels} should have a length of 3;
+#'            \item if length of \code{labels} is intended to differ from length of unique values of \code{x}, a warning is given. You can still add missing labels with the \code{force.labels} or \code{force.values} arguments;
+#'            \item if \code{labels} \strong{is} a \emph{named vector}, value labels will be set accordingly, even if \code{x} has a different length of unique values. See 'Note' and 'Examples'.
+#'            \item if \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of (named) character vectors;
+#'            \item if \code{labels} is a \code{list}, it must have the same length as number of columns of \code{x};
+#'            \item if \code{labels} is a vector and \code{x} is a data frame, \code{labels} will be applied to each column of \code{x}.
+#'            }
 #'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
 #' @param force.labels logical; if \code{TRUE}, all \code{labels} are added as value label
 #'          attribute, even if \code{x} has less unique values then length of \code{labels}
@@ -208,7 +208,7 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 #' @details See 'Details' in \code{\link{get_labels}}.
 #'
 #' @note If \code{labels} is a named vector, \code{force.labels} and
-#'         \code{force.values} will be ignored. Furthermore,. see 'Note'
+#'         \code{force.values} will be ignored. Furthermore, see 'Note'
 #'         in \code{\link{get_labels}}.
 #'
 #' @examples

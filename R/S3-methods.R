@@ -1,4 +1,4 @@
-#' @importFrom stats quantile median
+#' @importFrom stats quantile median na.omit
 #' @export
 summary.labelled <- function(object, ...) {
   x <- object
@@ -20,7 +20,7 @@ summary.labelled <- function(object, ...) {
     # prepare summary
     cat("\nSummary:\n")
     # get value without missings
-    no_mis <- unclass(na.omit(as.vector(to_na(x))))
+    no_mis <- unclass(stats::na.omit(as.vector(to_na(x))))
     # create named vector with all necessray summary
     # information, equal to base summary function
     summary_line <- data.frame(round(min(no_mis), 3),
@@ -55,8 +55,8 @@ summary.labelled <- function(object, ...) {
       fdat$raw[match(f.ind, fdat$index)] <- as.vector(prop.table(table(x, exclude = NULL)))
       # valid percentage, excluding real and
       # labelled missings
-      vp <- as.vector(prop.table(table(na.omit(as.vector(to_na(x))))))
-      fdat$valid[match(f.ind[1:length(vp)], fdat$index)] <- as.vector(prop.table(table(na.omit(as.vector(to_na(x))))))
+      vp <- as.vector(prop.table(table(stats::na.omit(as.vector(to_na(x))))))
+      fdat$valid[match(f.ind[1:length(vp)], fdat$index)] <- as.vector(prop.table(table(stats::na.omit(as.vector(to_na(x))))))
       fdat$valid[length(fdat$valid)] <- NA
       # create df
       lab_df <- data.frame(value = c(unname(labels), NA),

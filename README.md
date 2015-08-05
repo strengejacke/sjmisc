@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-9
+### Changelog of current development build 1.0.3-10
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
@@ -53,6 +53,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `fill_labels` to add missing labels to non-labelled values of partially labelled vectors.
 * `as_labelled` to convert vectors to labelled.
 * `add_labels` to add additional value labels to a labelled vector.
+* `zap_labels` and `zap_unlabelled` to convert (non-)labelled values into `NA`.
 * Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects.
 
 #### Changes to functions
