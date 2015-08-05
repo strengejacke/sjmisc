@@ -8,7 +8,7 @@ to_na(x)
 }
 \arguments{
 \item{x}{variable (vector), \code{data.frame} or \code{list} of variables
-with attached value labels and defined missing value codes
+with value label attributes and defined missing value codes
 (see \code{\link[haven]{labelled}}).}
 }
 \value{

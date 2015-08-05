@@ -1,11 +1,12 @@
-#' @title Attach variable label(s) to variables
+#' @title Add variable label(s) to variables
 #' @name set_label
-#' @description This function sets variable labels to a single variable or to
-#'                a set of variables in a \code{data.frame} or \code{list}-object.
-#'                To each variable, the attribute \code{"label"} or \code{"variable.label"}
-#'                with the related variable name is attached. Most functions of the
+#'
+#' @description This function adds variable labels as attribute
+#'                (named \code{"label"} or \code{"variable.label"}) to a variable
+#'                or vector \code{x}, resp. to a set of variables in a
+#'                \code{data.frame} or a \code{list}-object. Most functions of the
 #'                \pkg{sjPlot} package can automatically retrieve the variable
-#'                name to use it as axis labels or plot title (see 'Details').
+#'                labels to use it as axis labels or plot title (see 'Details').
 #'
 #' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
 #'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
@@ -13,7 +14,7 @@
 #'            to get variable labels.
 #'
 #' @param x variable (vector), \code{list} of variables or a \code{data.frame}
-#'          where variables labels should be attached.
+#'          where variables labels should be added as attribute
 #' @param lab if \code{x} is a vector (single variable), use a single character string with
 #'          the variable label for \code{x}. If \code{x} is a data frame, use a
 #'          vector with character labels of same length as \code{ncol(x)}.
@@ -23,7 +24,7 @@
 #' @param attr.string attribute string for the variable label. \strong{Note:}
 #'          Usually, this argument should be ignored. It is only used internally
 #'          for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.
-#' @return \code{x}, with attached variable label attribute(s), which contains the
+#' @return \code{x}, with variable label attribute(s), which contains the
 #'           variable name(s); or with removed label-attribute if
 #'            \code{lab = ""}.
 #'
@@ -164,20 +165,19 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
 }
 
 
-#' @title Attach value labels to variables
+#' @title Add value labels to variables
 #' @name set_labels
 #'
-#' @description This function adds character labels as attribute to a variable
+#' @description This function adds character \code{labels} as attribute
+#'                (named \code{"labels"} or \code{"value.labels"}) to a variable
 #'                or vector \code{x}, resp. to a set of variables in a
-#'                \code{data.frame} or \code{list}-object. To each variable,
-#'                the attribute \code{"labels"} or \code{"value.labels"}
-#'                with the related \code{labels} is added. These value labels will be accessed
+#'                \code{data.frame} or a \code{list}-object. These value labels will be accessed
 #'                by functions of the \pkg{sjPlot} package, in order to automatically set values
-#'                or legend labels.
+#'                or legend labels, however, \pkg{sjmisc} provides functions to
+#'                quickly access these attributes for other purposes.
 #'
-#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
-#'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
-#'            more details; \code{\link{set_label}} to manually set variable labels or
+#' @seealso See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+#'            for more details; \code{\link{set_label}} to manually set variable labels or
 #'            \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
 #'            add additional value labels without replacing the existing ones.
 #'
@@ -424,7 +424,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       # ---------------------------------------
       # string variables can't get value labels
       # ---------------------------------------
-      warning("can't attach value labels to string or NULL vectors.", call. = F)
+      warning("can't add value labels to string or NULL vectors.", call. = F)
     } else {
       # ---------------------------------------
       # determine value range

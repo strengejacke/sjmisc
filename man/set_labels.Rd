@@ -3,7 +3,7 @@
 \name{set_labels}
 \alias{set_labels}
 \alias{set_val_labels}
-\title{Attach value labels to variables}
+\title{Add value labels to variables}
 \usage{
 set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 
@@ -40,13 +40,13 @@ This parameter will be ignored, if \code{labels} is a named vector.}
            \code{labels = ""}.
 }
 \description{
-This function adds character labels as attribute to a variable
+This function adds character \code{labels} as attribute
+               (named \code{"labels"} or \code{"value.labels"}) to a variable
                or vector \code{x}, resp. to a set of variables in a
-               \code{data.frame} or \code{list}-object. To each variable,
-               the attribute \code{"labels"} or \code{"value.labels"}
-               with the related \code{labels} is added. These value labels will be accessed
+               \code{data.frame} or a \code{list}-object. These value labels will be accessed
                by functions of the \pkg{sjPlot} package, in order to automatically set values
-               or legend labels.
+               or legend labels, however, \pkg{sjmisc} provides functions to
+               quickly access these attributes for other purposes.
 }
 \details{
 See 'Details' in \code{\link{get_labels}}.
@@ -122,9 +122,8 @@ dummies <- set_labels(dummies, c("very low", "low", "mid", "hi"))
 get_labels(dummies)
 }
 \seealso{
-The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
-           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
-           more details; \code{\link{set_label}} to manually set variable labels or
+See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+           for more details; \code{\link{set_label}} to manually set variable labels or
            \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
            add additional value labels without replacing the existing ones.
 }

@@ -3,7 +3,7 @@
 \name{set_label}
 \alias{set_label}
 \alias{set_var_labels}
-\title{Attach variable label(s) to variables}
+\title{Add variable label(s) to variables}
 \usage{
 set_label(x, lab, attr.string = NULL)
 
@@ -11,7 +11,7 @@ set_var_labels(x, lab, attr.string = NULL)
 }
 \arguments{
 \item{x}{variable (vector), \code{list} of variables or a \code{data.frame}
-where variables labels should be attached.}
+where variables labels should be added as attribute}
 
 \item{lab}{if \code{x} is a vector (single variable), use a single character string with
 the variable label for \code{x}. If \code{x} is a data frame, use a
@@ -25,17 +25,17 @@ Usually, this argument should be ignored. It is only used internally
 for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.}
 }
 \value{
-\code{x}, with attached variable label attribute(s), which contains the
+\code{x}, with variable label attribute(s), which contains the
           variable name(s); or with removed label-attribute if
            \code{lab = ""}.
 }
 \description{
-This function sets variable labels to a single variable or to
-               a set of variables in a \code{data.frame} or \code{list}-object.
-               To each variable, the attribute \code{"label"} or \code{"variable.label"}
-               with the related variable name is attached. Most functions of the
+This function adds variable labels as attribute
+               (named \code{"label"} or \code{"variable.label"}) to a variable
+               or vector \code{x}, resp. to a set of variables in a
+               \code{data.frame} or a \code{list}-object. Most functions of the
                \pkg{sjPlot} package can automatically retrieve the variable
-               name to use it as axis labels or plot title (see 'Details').
+               labels to use it as axis labels or plot title (see 'Details').
 }
 \details{
 See 'Details' in \code{\link{get_labels}}

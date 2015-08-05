@@ -3,7 +3,7 @@
 \name{get_label}
 \alias{get_label}
 \alias{get_var_labels}
-\title{Retrieve variable label(s) of a data frame or variable}
+\title{Retrieve variable label(s) of labelled data}
 \usage{
 get_label(x)
 
@@ -21,8 +21,9 @@ A named char vector with all variable labels from the data frame or list;
           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
 }
 \description{
-This function retrieves the variable labels of an imported
-               SPSS, SAS or STATA data set (via \code{\link{read_spss}},
+This function retrieves the value labels of labelled data, which
+               was created with the \pkg{labelled} or \pkg{haven} package, or
+               imported from SPSS, SAS or STATA files (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
                  \item if \code{x} is a data frame or a list of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
@@ -66,9 +67,8 @@ get_label(list(efc$e42dep,
                efc$e15relat))
 }
 \seealso{
-The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
-           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
-           more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}
+See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+           for more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}
            to get value labels.
 }
 

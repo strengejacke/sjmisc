@@ -3,7 +3,7 @@
 \name{get_labels}
 \alias{get_labels}
 \alias{get_val_labels}
-\title{Retrieve value labels of a data frame or variable}
+\title{Retrieve value labels of labelled data}
 \usage{
 get_labels(x, attr.only = FALSE, include.values = NULL,
   include.non.labelled = FALSE)
@@ -41,12 +41,13 @@ Either a list with all value labels from all variables if \code{x}
           or \code{NULL} if no value label attribute was found.
 }
 \description{
-This function retrieves the value labels of an imported
-               SPSS, SAS or STATA data set (via \code{\link{read_spss}},
+This function retrieves the value labels of labelled data, which
+               was created with the \pkg{labelled} or \pkg{haven} package, or
+               imported from SPSS, SAS or STATA files (via \code{\link{read_spss}},
                \code{\link{read_sas}} or \code{\link{read_stata}}) and
                \itemize{
-                 \item if \code{x} is a data frame or list of variables, returns the all variable's value labels as \code{\link{list}}
-                 \item or, if \code{x} is a vector, returns the label as string.
+                 \item if \code{x} is a data frame or list of variables, returns all variables' value labels as \code{\link{list}}
+                 \item or, if \code{x} is a vector, returns the value labels as string.
                  }
 }
 \details{
@@ -78,7 +79,7 @@ This function works with vectors that have value and variable
        label attributes (as provided, for instance, by \code{\link[haven]{labelled}}
        objects). Adding label attributes is automatically done when importing data sets
        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
-       function. Labels can also manually be added using the \code{\link{set_labels}}
+       functions. Labels can also manually be added using the \code{\link{set_labels}}
        and \code{\link{set_label}} functions. If vectors \strong{do not} have
        label attributes, either factor-\code{\link{levels}} or the numeric values
        of the vector are returned as labels.
@@ -86,7 +87,7 @@ This function works with vectors that have value and variable
        Most functions of the \pkg{sjPlot} package access value and variable label
        attributes to automatically detect labels in order to set them as axis,
        legend or title labels in plots (\code{sjp.}-functions) respectively as
-       column or row headers in table outputs (\code{sjt.}-functions).  See
+       column or row headers in table outputs (\code{sjt.}-functions). See
        \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
        \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
        online manuals for more details.
@@ -152,10 +153,8 @@ get_labels(x)
 get_labels(x, include.non.labelled = TRUE)
 }
 \seealso{
-The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization},
-           \href{http://www.strengejacke.de/sjPlot/labelleddata/}{working with labelled data} or
-           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
-           more details; \code{\link{set_labels}} to manually set value labels, \code{\link{get_label}}
+See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+           for more details; \code{\link{set_labels}} to manually set value labels, \code{\link{get_label}}
            to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
 }
 

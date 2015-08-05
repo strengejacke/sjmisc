@@ -561,7 +561,7 @@ copy_labels <- function(df_new, df_origin = NULL) {
 #' @seealso \code{\link{get_na}} to get value codes of missing values.
 #'
 #' @param x variable (vector), \code{data.frame} or \code{list} of variables
-#'          with attached value labels and defined missing value codes
+#'          with value label attributes and defined missing value codes
 #'          (see \code{\link[haven]{labelled}}).
 #' @return \code{x}, where each value code of missing values is converted
 #'            to \code{NA}.
