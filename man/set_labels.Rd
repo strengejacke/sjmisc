@@ -17,7 +17,7 @@ where value label attributes should be added. Replaces former value labels.}
 \code{"labels"} or \code{"value.labels"} attribute.
 \itemize{
   \item if \code{labels} is \strong{not} a \emph{named vector}, its length must equal the value range of \code{x}, i.e. if \code{x} has values from 1 to 3, \code{labels} should have a length of 3;
-  \item if length of \code{labels} is intended to differ from length of unique values of \code{x}, a warning is given. You can still add missing labels with the \code{force.labels} or \code{force.values} arguments;
+  \item if length of \code{labels} is intended to differ from length of unique values of \code{x}, a warning is given. You can still add missing labels with the \code{force.labels} or \code{force.values} arguments; see 'Note'.
   \item if \code{labels} \strong{is} a \emph{named vector}, value labels will be set accordingly, even if \code{x} has a different length of unique values. See 'Note' and 'Examples'.
   \item if \code{x} is a data frame, \code{labels} may also be a \code{\link{list}} of (named) character vectors;
   \item if \code{labels} is a \code{list}, it must have the same length as number of columns of \code{x};
@@ -52,9 +52,13 @@ This function adds character \code{labels} as attribute
 See 'Details' in \code{\link{get_labels}}.
 }
 \note{
-If \code{labels} is a named vector, \code{force.labels} and
-        \code{force.values} will be ignored. Furthermore, see 'Note'
-        in \code{\link{get_labels}}.
+\itemize{
+        \item if \code{labels} is a named vector, \code{force.labels} and \code{force.values} will be ignored, and only values defined in \code{labels} will be labelled;
+        \item if \code{x} has less unique values than \code{labels}, redundant labels will be dropped, see \code{force.labels};
+        \item if \code{x} has more unique values than \code{labels}, only matching values will be labelled, other values remain unlabelled, see \code{force.values};
+        }
+        If you only want to change partial value labels, use \code{\link{add_labels}} instead.
+        Furthermore, see 'Note' in \code{\link{get_labels}}.
 }
 \examples{
 \dontrun{
