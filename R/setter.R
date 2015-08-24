@@ -43,7 +43,7 @@
 #'
 #'
 #' # manually set value and variable labels
-#' dummy <- sample(1:4, 40, replace=TRUE)
+#' dummy <- sample(1:4, 40, replace = TRUE)
 #' dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
 #' dummy <- set_label(dummy, "Dummy-variable")
 #'
@@ -76,9 +76,9 @@
 #' # setting same variable labels to multiple vectors
 #'
 #' # create a set of dummy variables
-#' dummy1 <- sample(1:4, 40, replace=TRUE)
-#' dummy2 <- sample(1:4, 40, replace=TRUE)
-#' dummy3 <- sample(1:4, 40, replace=TRUE)
+#' dummy1 <- sample(1:4, 40, replace = TRUE)
+#' dummy2 <- sample(1:4, 40, replace = TRUE)
+#' dummy3 <- sample(1:4, 40, replace = TRUE)
 #' # put them in list-object
 #' dummies <- list(dummy1, dummy2, dummy3)
 #' # and set variable labels for all three dummies
