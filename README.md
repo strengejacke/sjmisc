@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of current development build 1.0.3-10
+### Changelog of current development build 1.0.3-11
 
 #### General
 * Updated namespaces to meet new CRAN namespace requirements.
@@ -54,7 +54,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 * `as_labelled` to convert vectors to labelled.
 * `add_labels` to add additional value labels to a labelled vector.
 * `zap_labels` and `zap_unlabelled` to convert (non-)labelled values into `NA`.
-* Added S3-methods `summary`, `is.na` and `mean` for labelled-class objects.
+* `frq` to print summary and frequency tables for labelled-class objects.
+* Added S3-methods `is.na` and `mean` for labelled-class objects.
 
 #### Changes to functions
 * `std_beta` gets a `type` argument to compute standardized estimates following Gelman's approach by dividing estimates by two standard deviations.
