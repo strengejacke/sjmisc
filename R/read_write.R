@@ -10,20 +10,20 @@
 #'            \item \code{\link{write_spss}}
 #'            }
 #'
-#' @param path The file path to the SPSS dataset.
-#' @param enc file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
-#' @param attach.var.labels logical, if \code{TRUE}, variable labels will automatically be
+#' @param path File path to the data file.
+#' @param enc File encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
+#' @param attach.var.labels Logical, if \code{TRUE}, variable labels will automatically be
 #'          added to each variable as \code{"variable.label"} attribute. Use this
 #'          parameter, if \code{option = "foreign"}, where variable labels are added
 #'          as list-attribute to the imported data frame.
 #'          \emph{Not needed if \code{option = "haven"} (default).}
-#' @param atomic.to.fac logical, if \code{TRUE}, factor variables imported from
-#'          SPSS (which are imported as \code{\link{atomic}}) will be converted
+#' @param atomic.to.fac Logical, if \code{TRUE}, factor variables imported from
+#'          the dataset (which are imported as \code{\link{atomic}}) will be converted
 #'          to \code{\link{factor}}s.
-#' @param keep.na logical, if \code{TRUE}, user-defined missing values will be
+#' @param keep.na Logical, if \code{TRUE}, user-defined missing values will be
 #'          left as their original codes. If \code{FALSE} (default), corresponding
 #'          values are converted to \code{NA}.
-#' @param option string, indicating which package will be used to read the SPSS data file.
+#' @param option String, indicating which package will be used to read the SPSS data file.
 #'          By default, \code{option = "haven"}, which means, the \code{read_spss} function
 #'          from the \pkg{haven} package is used. Use \code{option = "foreign"} to
 #'          use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}
@@ -188,13 +188,11 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #'
 #' @seealso \code{\link{read_spss}}
 #'
-#' @param path file path to the SAS data file.
-#' @param path.cat optional, the file path to the SAS catalog file.
-#' @param atomic.to.fac logical, if \code{TRUE}, factor variables imported from
-#'          SAS (which are imported as \code{\link{atomic}}) will be converted
-#'          to \code{\link{factor}}s.
+#' @param path.cat Optional, the file path to the SAS catalog file.
 #' @return A data frame containing the SAS data. Retrieve value labels with \code{\link{get_labels}}
 #'   and variable labels with \code{\link{get_label}}.
+#'
+#' @inheritParams read_spss
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_sas}} function of the
 #'         \pkg{haven} package. This function converts the imported data
@@ -227,10 +225,8 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #'
 #' @seealso \code{\link{read_spss}}
 #'
-#' @param path file path to the STATA data file
-#' @param atomic.to.fac logical, if \code{TRUE}, factor variables imported from
-#'          STATA (which are imported as \code{\link{atomic}}) will be converted
-#'          to \code{\link{factor}}s
+#' @inheritParams read_spss
+#'
 #' @return A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}
 #'   and variable labels with \code{\link{get_label}}.
 #'
@@ -274,9 +270,9 @@ read_stata <- function(path, atomic.to.fac = FALSE) {
 #'         created new variables. This function does all necessary data preparation
 #'         to write a properly labelled SPSS sav file.
 #'
-#' @param x data frame that should be saved as SPSS sav-file.
-#' @param path file path to the SPSS dataset.
-#' @param enc.to.utf8 logical, if \code{TRUE}, character encoding of variable and
+#' @param x \code{data.frame} that should be saved as file.
+#' @param path File path of the output file.
+#' @param enc.to.utf8 Logical, if \code{TRUE}, character encoding of variable and
 #'          value labels will be converted to UTF-8.
 #'
 #' @export
@@ -298,10 +294,7 @@ write_spss <- function(x, path, enc.to.utf8 = TRUE) {
 #'         created new variables. This function does all necessary data preparation
 #'         to write a properly labelled STATA file.
 #'
-#' @param x data frame that should be saved as STATA-file.
-#' @param path file path to the STATA dataset.
-#' @param enc.to.utf8 logical, if \code{TRUE}, character encoding of variable and
-#'          value labels will be converted to UTF-8.
+#' @inheritParams write_spss
 #'
 #' @export
 write_stata <- function(x, path, enc.to.utf8 = TRUE) {

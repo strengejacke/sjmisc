@@ -1,0 +1,81 @@
+#' @title Coefficient of Variation
+#' @name cv
+#' @description Compute coefficient of variation for single variables
+#'                (standard deviation divided by mean) or for fitted
+#'                linear (mixed effects) models (root mean squared error
+#'                (RMSE) divided by mean of dependent variable).
+#'
+#' @param x (Numeric) vector or a fitted linear model of class
+#'          \code{\link{lm}}, \code{\link[lme4]{merMod}} (\pkg{lme4}) or
+#'          \code{\link[nlme]{lme}} (\pkg{nlme}).
+#' @return The coefficient of variation of \code{x}.
+#'
+#' @details The advantage of the cv is that it is unitless. This allows
+#'            coefficient of variation to be compared to each other in ways
+#'            that other measures, like standard deviations or root mean
+#'            squared residuals, cannot be
+#'            (\href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{source: UCLA-FAQ}).
+#'
+#' @seealso \code{\link{rmse}}
+#'
+#' @references \href{http://www.ats.ucla.edu/stat/mult_pkg/faq/general/coefficient_of_variation.htm}{UCLA-FAQ: What is the coefficient of variation?}
+#'
+#' @examples
+#' data(efc)
+#' cv(efc$e17age)
+#'
+#' fit <- lm(neg_c_7 ~ e42dep, data = efc)
+#' cv(fit)
+#'
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' cv(fit)
+#'
+#' library(nlme)
+#' fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+#' cv(fit)
+#'
+#' @importFrom stats sd
+#' @export
+cv <- function(x) {
+  # check if we have a fitted linear model
+  if (class(x) == "lm" || any(class(x) == "lmerMod") || any(class(x) == "lme") || any(class(x) == "merModLmerTest")) {
+    if (class(x) == "lm") {
+      # dependent variable in lm
+      dv <- x$model[[1]]
+    } else if (any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
+      # check for package availability
+      if (!requireNamespace("lme4", quietly = TRUE)) {
+        stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+      }
+      # dependent variable in lmerMod
+      dv <- lme4::getME(x, "y")
+    } else if (any(class(x) == "lme")) {
+      # check for package availability
+      if (!requireNamespace("nlme", quietly = TRUE)) {
+        stop("Package 'nlme' needed for this function to work. Please install it.", call. = FALSE)
+      }
+      # dependent variable in lme
+      dv <- unname(nlme::getResponse(x))
+    }
+    # compute mean of dependent variable
+    mw <- mean(dv, na.rm = TRUE)
+    # check if mean is zero?
+    if (mw != 0) {
+      # cv = root mean squared error (RMSE) divided by mean of dep. var.
+      rmse(x) / mw
+    } else {
+      warning("Mean of dependent variable is zero. Cannot compute model's coefficient of variation.", call. = F)
+    }
+  } else {
+    # compute mean of variable
+    mw <- mean(x, na.rm = TRUE)
+    # check if mean is zero?
+    if (mw != 0) {
+      #  we assume a simple vector
+      stats::sd(x, na.rm = TRUE) / mw
+    } else {
+      warning("Mean of 'x' is zero. Cannot compute coefficient of variation.", call. = F)
+    }
+  }
+}

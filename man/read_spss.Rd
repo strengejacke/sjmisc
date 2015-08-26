@@ -8,25 +8,25 @@ read_spss(path, enc = NA, attach.var.labels = FALSE,
   atomic.to.fac = FALSE, keep.na = FALSE, option = "haven")
 }
 \arguments{
-\item{path}{The file path to the SPSS dataset.}
+\item{path}{File path to the data file.}
 
-\item{enc}{file encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
+\item{enc}{File encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
 
-\item{attach.var.labels}{logical, if \code{TRUE}, variable labels will automatically be
+\item{attach.var.labels}{Logical, if \code{TRUE}, variable labels will automatically be
 added to each variable as \code{"variable.label"} attribute. Use this
 parameter, if \code{option = "foreign"}, where variable labels are added
 as list-attribute to the imported data frame.
 \emph{Not needed if \code{option = "haven"} (default).}}
 
-\item{atomic.to.fac}{logical, if \code{TRUE}, factor variables imported from
-SPSS (which are imported as \code{\link{atomic}}) will be converted
+\item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
+the dataset (which are imported as \code{\link{atomic}}) will be converted
 to \code{\link{factor}}s.}
 
-\item{keep.na}{logical, if \code{TRUE}, user-defined missing values will be
+\item{keep.na}{Logical, if \code{TRUE}, user-defined missing values will be
 left as their original codes. If \code{FALSE} (default), corresponding
 values are converted to \code{NA}.}
 
-\item{option}{string, indicating which package will be used to read the SPSS data file.
+\item{option}{String, indicating which package will be used to read the SPSS data file.
 By default, \code{option = "haven"}, which means, the \code{read_spss} function
 from the \pkg{haven} package is used. Use \code{option = "foreign"} to
 use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}

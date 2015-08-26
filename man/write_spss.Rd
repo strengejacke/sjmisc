@@ -7,11 +7,11 @@
 write_spss(x, path, enc.to.utf8 = TRUE)
 }
 \arguments{
-\item{x}{data frame that should be saved as SPSS sav-file.}
+\item{x}{\code{data.frame} that should be saved as file.}
 
-\item{path}{file path to the SPSS dataset.}
+\item{path}{File path of the output file.}
 
-\item{enc.to.utf8}{logical, if \code{TRUE}, character encoding of variable and
+\item{enc.to.utf8}{Logical, if \code{TRUE}, character encoding of variable and
          value labels will be converted to UTF-8.}
 }
 \description{

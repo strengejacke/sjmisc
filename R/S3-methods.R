@@ -19,7 +19,7 @@ is.na.labelled <- function(x) {
   # unclass vector for is.na-call
   x <- unclass(x)
   if (!is.null(suppressMessages(get_na(x)))) {
-    warning("`x` has self-defined missing values, which not counted as NA. Use `to_na` to convert self-defined missing values to NA.", call. = F)
+    warning("`x` has self-defined missing values, which are not counted as NA. Use `to_na` to convert self-defined missing values to NA.", call. = F)
   }
   # return missings
   is.na(x)

@@ -7,9 +7,9 @@
 levene_test(depVar, grpVar)
 }
 \arguments{
-\item{depVar}{dependent variable}
+\item{depVar}{Dependent variable.}
 
-\item{grpVar}{grouping (independent) variable, as unordered factor}
+\item{grpVar}{Grouping (independent) variable, as unordered factor.}
 }
 \description{
 Plot results of Levene's Test for Equality of Variances for One-Way-Anova.
