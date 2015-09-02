@@ -1,3 +1,8 @@
+Version 1.1-1
+------------------------------------------------------------------------------
+Bug fixes:
+* Fixed bug in `to_na`, where in some cases `is_na` attribute was not properly set.
+
 Version 1.1
 ------------------------------------------------------------------------------
 General:

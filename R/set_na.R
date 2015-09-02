@@ -177,10 +177,9 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
         if (!is.null(na.flag)) {
           # ---------------------------------------
           # do we have is_na attribute? if yes,
-          # shorten it to length of labels
+          # remove missing flags of values set to NA
           # ---------------------------------------
-          na.flag <- na.flag[1:length(vl)]
-          attr(x, getNaAttribute()) <- na.flag
+          attr(x, getNaAttribute()) <- na.flag[-values]
         }
       } else {
         # ---------------------------------------

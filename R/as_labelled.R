@@ -9,7 +9,7 @@
 #' @param add.class Logical, if \code{TRUE}, \code{x} preserves its former
 #'          \code{class}-attribute and \code{labelled} is added as additional
 #'          attribute. If \code{FALSE} (default), all former \code{class}-attributes
-#'          will be removed and the class-attribute  of \code{x} will only
+#'          will be removed and the class-attribute of \code{x} will only
 #'          be \code{labelled}.
 #' @return \code{x}, as \code{\link[haven]{labelled}}-class object, including
 #'           missing-flags (\code{is_na}-attribute).
