@@ -48,6 +48,9 @@ weight2 <- function(x, weights) {
 #' @param weights Vector with same length as \code{x}, which
 #'          contains weight factors. Each value of \code{x} has a
 #'          specific assigned weight in \code{weights}.
+#' @param digits Numeric value indicating the number of decimal places to be
+#'          used for rounding the weighted values. By default, this value is
+#'          \code{0}, i.e. the returned values are integer values.
 #'
 #' @return The weighted \code{x}.
 #'
@@ -65,13 +68,14 @@ weight2 <- function(x, weights) {
 #'
 #' @importFrom stats na.pass xtabs
 #' @export
-weight <- function(x, weights) {
+weight <- function(x, weights, digits = 0) {
   # init values
   weightedvar <- c()
   wtab <- round(stats::xtabs(weights ~ x,
                              data = data.frame(weights = weights, x = x),
                              na.action = stats::na.pass,
-                             exclude = NULL))
+                             exclude = NULL),
+                digits = digits)
   # iterate all table values
   for (w in 1:length(wtab)) {
     # retrieve count of each table cell

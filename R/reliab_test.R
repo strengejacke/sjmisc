@@ -80,16 +80,16 @@ reliab_test <- function(x,
     scale.items <- scaleItems
   }
   # -----------------------------------
-  # remove missings, so correlation works
-  # -----------------------------------
-  x <- stats::na.omit(x)
-  # -----------------------------------
   # check param
   # -----------------------------------
   if (!is.matrix(x) && !is.data.frame(x)) {
     warning("'x' needs to be a data frame or matrix.", call. = F)
     return(NULL)
   }
+  # -----------------------------------
+  # remove missings, so correlation works
+  # -----------------------------------
+  x <- stats::na.omit(x)
   # -----------------------------------
   # remember item (column) names for return value
   # return value gets column names of initial data frame

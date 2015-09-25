@@ -43,5 +43,8 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 ### Changelog of dev build 1.1-1
 
+#### Changes to functions
+* `weight` gets a `digits` argument.
+
 #### Bug fixes
 * Fixed bug in `to_na`, where in some cases `is_na` attribute was not properly set.
