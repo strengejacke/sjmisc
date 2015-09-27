@@ -4,14 +4,18 @@
 \alias{weight}
 \title{Weight a variable}
 \usage{
-weight(x, weights)
+weight(x, weights, digits = 0)
 }
 \arguments{
 \item{x}{(Unweighted) variable}
 
 \item{weights}{Vector with same length as \code{x}, which
-         contains weight factors. Each value of \code{x} has a
-         specific assigned weight in \code{weights}.}
+contains weight factors. Each value of \code{x} has a
+specific assigned weight in \code{weights}.}
+
+\item{digits}{Numeric value indicating the number of decimal places to be
+         used for rounding the weighted values. By default, this value is
+         \code{0}, i.e. the returned values are integer values.}
 }
 \value{
 The weighted \code{x}.
