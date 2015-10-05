@@ -41,10 +41,11 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of dev build 1.1-1
+### Changelog of dev build 1.1-2
 
 #### Changes to functions
 * `weight` gets a `digits` argument.
 
 #### Bug fixes
 * Fixed bug in `to_na`, where in some cases `is_na` attribute was not properly set.
+* Fixed bug in `set_na`, where in some cases `is_na` attribute was not properly removed for character vectors.

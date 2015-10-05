@@ -179,7 +179,7 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
           # do we have is_na attribute? if yes,
           # remove missing flags of values set to NA
           # ---------------------------------------
-          attr(x, getNaAttribute()) <- na.flag[-values]
+          attr(x, getNaAttribute()) <- na.flag[-labelpos]
         }
       } else {
         # ---------------------------------------
