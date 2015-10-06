@@ -41,7 +41,10 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of dev build 1.1-2
+### Changelog of dev build 1.1-3
+
+#### New functions
+* `converge_ok` to test convergence for merMod-objects (mixed effects models).
 
 #### Changes to functions
 * `weight` gets a `digits` argument.
