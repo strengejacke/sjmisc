@@ -1,4 +1,9 @@
-Version 1.1-3
+Version 1.2-1
+------------------------------------------------------------------------------
+New functions:
+* `split_var` to split a vector into equal sized groups.
+
+Version 1.2
 ------------------------------------------------------------------------------
 New functions:
 * `converge_ok` to test convergence for merMod-objects (mixed effects models).

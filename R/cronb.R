@@ -1,6 +1,6 @@
 #' @title Cronbach's Alpha for a matrix or data frame
 #' @name cronb
-#' @description This function calculates the Cronbach's alpha value for each column
+#' @description This function calculates the Cronbach's alpha value
 #'                of a data frame or matrix.
 #'
 #' @seealso \code{\link{reliab_test}}

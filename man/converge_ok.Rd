@@ -6,6 +6,13 @@
 \usage{
 converge_ok(x, tolerance = 0.001)
 }
+\arguments{
+\item{x}{A \code{\link[lme4]{merMod}}-object.}
+
+\item{tolerance}{Indicates up to which value the convergence result is
+         accepted. The smaller \code{tolerance} is, the stricter the test
+         will be.}
+}
 \value{
 Logical vector, \code{TRUE} if convergence is fine, \code{FALSE}
           if convergence is suspicious. Additionally, the convergence

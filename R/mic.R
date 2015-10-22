@@ -14,6 +14,18 @@
 #'          You may use initial letter only.
 #' @return The value of the computed mean inter-item-correlation.
 #'
+#' @note \dQuote{Ideally, the average inter-item correlation for a set of
+#'          items should be between .20 and .40, suggesting that while the
+#'          items are reasonably homogenous, they do contain sufficiently
+#'          unique variance so as to not be isomorphic with each other.
+#'
+#'          When values are lower than .20, then the items may not be
+#'          representative of the same content domain. If values are higher than
+#'          .40, the items may be only capturing a small bandwidth of the construct.}
+#'          \emph{(Piedmont 2014)}
+#'
+#' @references Piedmont RL (2014) Inter-item Correlations. \href{http://link.springer.com/referenceworkentry/10.1007\%2F978-94-007-0753-5_1493}{DOI 10.1007/978-94-007-0753-5_1493}
+#'
 #' @examples
 #' # -------------------------------
 #' # Data from the EUROFAMCARE sample dataset

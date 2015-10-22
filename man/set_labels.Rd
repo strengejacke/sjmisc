@@ -2,12 +2,19 @@
 % Please edit documentation in R/set_labels.R
 \name{set_labels}
 \alias{set_labels}
+\alias{set_labels<-}
+\alias{set_labels<-.default}
 \alias{set_val_labels}
 \title{Add value labels to variables}
 \usage{
 set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 
 set_val_labels(x, labels, force.labels = FALSE, force.values = TRUE)
+
+set_labels(x, force.labels = FALSE, force.values = TRUE) <- value
+
+\method{set_labels}{default}(x, force.labels = FALSE, force.values = TRUE)
+  <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
@@ -34,6 +41,8 @@ This parameter will be ignored, if \code{labels} is a named vector.}
 elements than unique values of \code{x}, additional values not covered
 by \code{labels} will be added as label as well. See 'Examples'.
 This parameter will be ignored, if \code{labels} is a named vector.}
+
+\item{value}{See \code{labels},}
 }
 \value{
 \code{x} with value label attributes; or with removed label-attributes if
@@ -75,6 +84,10 @@ x <- c(2, 2, 3, 3, 2)
 # only two value labels
 x <- set_labels(x, c("1", "2", "3"))
 x
+
+# or use:
+# set_labels(x) <- c("1", "2", "3")
+
 \dontrun{
 sjp.frq(x)}
 # all three value labels

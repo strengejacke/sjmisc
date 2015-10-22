@@ -2,12 +2,18 @@
 % Please edit documentation in R/set_label.R
 \name{set_label}
 \alias{set_label}
+\alias{set_label<-}
+\alias{set_label<-.default}
 \alias{set_var_labels}
 \title{Add variable label(s) to variables}
 \usage{
 set_label(x, lab, attr.string = NULL)
 
 set_var_labels(x, lab, attr.string = NULL)
+
+set_label(x, attr.string = NULL) <- value
+
+\method{set_label}{default}(x, attr.string = NULL) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
@@ -23,6 +29,8 @@ label attributes from a data frame's variable.}
 \item{attr.string}{Attribute string for the variable label. \strong{Note:}
 Usually, this argument should be ignored. It is only used internally
 for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.}
+
+\item{value}{See \code{lab}.}
 }
 \value{
 \code{x}, with variable label attribute(s), which contains the
@@ -58,6 +66,8 @@ dummy <- sample(1:4, 40, replace = TRUE)
 dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
 dummy <- set_label(dummy, "Dummy-variable")
 
+# or use:
+# set_label(dummy) <- "Dummy-variable"
 
 # auto-detection of value labels by default, auto-detection of
 # variable labels if argument "title" set to NULL.

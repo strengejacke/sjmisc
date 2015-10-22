@@ -2,7 +2,7 @@
 % Please edit documentation in R/group_var.R
 \name{group_var}
 \alias{group_var}
-\title{Recode count variables into grouped factors}
+\title{Recode numeric variables into equal-ranged groups}
 \usage{
 group_var(var, groupsize = 5, as.num = TRUE, right.interval = FALSE,
   groupcount = 30, asNumeric, rightInterval, autoGroupCount)
@@ -17,7 +17,7 @@ a maximum of 30 groups (which is the ggplot-default grouping when
 plotting histograms). Use \code{groupcount} to determine the amount
 of groups.}
 
-\item{as.num}{Logical; if \code{TRUE} (default), the recoded variable will
+\item{as.num}{Logical; if \code{TRUE}, the recoded variable will
 be returned as numeric vector. If \code{FALSE}, a factor is returned.}
 
 \item{right.interval}{Logical; if \code{TRUE}, grouping starts with the lower
@@ -37,8 +37,9 @@ this argument will be ignored.}
 A grouped variable, either as numeric or as factor (see paramter \code{as.num}).
 }
 \description{
-Recode count variables into grouped factors, i.e. a variable is
-               cut into a smaller number of groups.
+Recode numeric variables into \emph{equal spaced} grouped factors,
+               i.e. a variable is cut into a smaller number of groups,
+               where each group has values of equal range.
 }
 \details{
 If \code{groupsize} is set to a specific value, the variable is recoded
@@ -59,6 +60,10 @@ If \code{groupsize} is set to a specific value, the variable is recoded
            46-50, 51-55, 56-60, 61-65 etc. \strong{Note:} This will cover
            a range from 46-50 as first group, even if values from 46 to 49
            are not present. See 'Examples' in \code{\link{group_labels}}.
+           \cr \cr
+           \emph{If you want to split a variable into a certain amount of equal
+           sized groups (instead of having groups where values have all the same
+           range), use the \code{\link{split_var}} function!}
 }
 \note{
 Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
@@ -85,6 +90,7 @@ barplot(table(ageGrp),
 }
 \seealso{
 \itemize{
+           \item \code{\link{split_var}}
            \item \code{\link{group_labels}}
            \item \code{\link{group_str}}
          }

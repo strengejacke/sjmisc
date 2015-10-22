@@ -4,6 +4,11 @@
 #' @description This function provides an alternative convergence test for
 #'                \code{\link[lme4]{merMod}}-objects.
 #'
+#' @param x A \code{\link[lme4]{merMod}}-object.
+#' @param tolerance Indicates up to which value the convergence result is
+#'          accepted. The smaller \code{tolerance} is, the stricter the test
+#'          will be.
+#'
 #' @return Logical vector, \code{TRUE} if convergence is fine, \code{FALSE}
 #'           if convergence is suspicious. Additionally, the convergence
 #'           value is returned as return value's name.

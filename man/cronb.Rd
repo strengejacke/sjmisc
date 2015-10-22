@@ -13,7 +13,7 @@ cronb(df)
 The Cronbach's alpha value for \code{df}.
 }
 \description{
-This function calculates the Cronbach's alpha value for each column
+This function calculates the Cronbach's alpha value
                of a data frame or matrix.
 }
 \note{

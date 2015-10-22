@@ -27,6 +27,7 @@
 #'            \item if \code{labels} is a vector and \code{x} is a data frame, \code{labels} will be applied to each column of \code{x}.
 #'            }
 #'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
+#' @param value See \code{labels},
 #' @param force.labels Logical; if \code{TRUE}, all \code{labels} are added as value label
 #'          attribute, even if \code{x} has less unique values then length of \code{labels}
 #'          or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
@@ -63,6 +64,10 @@
 #' # only two value labels
 #' x <- set_labels(x, c("1", "2", "3"))
 #' x
+#'
+#' # or use:
+#' # set_labels(x) <- c("1", "2", "3")
+#'
 #' \dontrun{
 #' sjp.frq(x)}
 #' # all three value labels
@@ -377,4 +382,18 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
     }
   }
   return(x)
+}
+
+
+#' @rdname set_labels
+#' @export
+`set_labels<-` <- function(x, force.labels = FALSE, force.values = TRUE, value) {
+  UseMethod("set_labels<-")
+}
+
+#' @rdname set_labels
+#' @export
+`set_labels<-.default` <- function(x, force.labels = FALSE, force.values = TRUE, value) {
+  x <- set_labels(x, values, force.labels, force.values)
+  x
 }
