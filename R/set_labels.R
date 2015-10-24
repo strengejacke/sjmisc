@@ -384,16 +384,14 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
   return(x)
 }
 
-
 #' @rdname set_labels
 #' @export
 `set_labels<-` <- function(x, force.labels = FALSE, force.values = TRUE, value) {
   UseMethod("set_labels<-")
 }
 
-#' @rdname set_labels
 #' @export
 `set_labels<-.default` <- function(x, force.labels = FALSE, force.values = TRUE, value) {
-  x <- set_labels(x, values, force.labels, force.values)
+  x <- set_labels(x, value, force.labels, force.values)
   x
 }

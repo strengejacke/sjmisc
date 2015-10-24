@@ -2,9 +2,12 @@
 % Please edit documentation in R/set_na.R
 \name{set_na}
 \alias{set_na}
+\alias{set_na<-}
 \title{Set NA for specific variable values}
 \usage{
 set_na(x, values, as.attr = FALSE)
+
+set_na(x, as.attr = FALSE) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where new

@@ -228,3 +228,15 @@ set_na_attr <- function(x, na.values) {
   attr(x, getNaAttribute()) <- na.values
   return(x)
 }
+
+#' @rdname set_na
+#' @export
+`set_na<-` <- function(x, as.attr = FALSE, value) {
+  UseMethod("set_na<-")
+}
+
+#' @export
+`set_na<-.default` <- function(x, as.attr = FALSE, value) {
+  x <- set_na(x, value, as.attr)
+  x
+}

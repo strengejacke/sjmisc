@@ -3,7 +3,6 @@
 \name{set_label}
 \alias{set_label}
 \alias{set_label<-}
-\alias{set_label<-.default}
 \alias{set_var_labels}
 \title{Add variable label(s) to variables}
 \usage{
@@ -12,8 +11,6 @@ set_label(x, lab, attr.string = NULL)
 set_var_labels(x, lab, attr.string = NULL)
 
 set_label(x, attr.string = NULL) <- value
-
-\method{set_label}{default}(x, attr.string = NULL) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}

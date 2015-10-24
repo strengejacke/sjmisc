@@ -2,10 +2,12 @@
 
 S3method("set_label<-",default)
 S3method("set_labels<-",default)
+S3method("set_na<-",default)
 S3method(is.na,labelled)
 S3method(mean,labelled)
 export("set_label<-")
 export("set_labels<-")
+export("set_na<-")
 export(add_labels)
 export(as_labelled)
 export(chisq_gof)

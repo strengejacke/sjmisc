@@ -173,7 +173,6 @@ set_var_labels <- function(x, lab, attr.string = NULL) {
   UseMethod("set_label<-")
 }
 
-#' @rdname set_label
 #' @export
 `set_label<-.default` <- function(x, attr.string = NULL, value) {
   x <- set_label(x, value, attr.string)
