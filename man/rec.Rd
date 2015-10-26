@@ -2,9 +2,12 @@
 % Please edit documentation in R/rec.R
 \name{rec}
 \alias{rec}
+\alias{rec<-}
 \title{Recode numeric variables}
 \usage{
 rec(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL)
+
+rec(x, as.fac = FALSE, var.label = NULL, val.labels = NULL) <- value
 }
 \arguments{
 \item{x}{Numeric variable (vector) or a \code{\link{factor}} with numeric
@@ -24,6 +27,8 @@ recoded variable (see \code{\link{set_label}}). If \code{NULL}
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
+
+\item{value}{See \code{recodes}.}
 }
 \value{
 A numeric variable (or a factor, if \code{as.fac = TRUE}) with
@@ -65,6 +70,10 @@ table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), exclude = NULL)
 
 # recode 1 to 2 into 1 and 3 to 4 into 2
 table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
+
+# or:
+# rec(efc$e42dep) <- "1,2=1; 3,4=2"
+# table(efc$e42dep, exclude = NULL)
 
 # keep value labels. variable label is automatically preserved
 str(rec(efc$e42dep,

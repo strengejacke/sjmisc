@@ -45,3 +45,15 @@ replace_na <- function(x, value) {
     return(x)
   }
 }
+
+#' @rdname replace_na
+#' @export
+`replace_na<-` <- function(x, value) {
+  UseMethod("replace_na<-")
+}
+
+#' @export
+`replace_na<-.default` <- function(x, value) {
+  x <- replace_na(x, value)
+  x
+}

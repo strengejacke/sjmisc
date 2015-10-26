@@ -14,31 +14,31 @@
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables where new
 #'          missing values should be defined. If \code{x} is a \code{data.frame}, each
 #'          column is assumed to be a new variable, where missings should be defined.
-#' @param values Numeric vector with values that should be replaced with \code{\link{NA}}'s.
-#'          Thus, for each variable in \code{x}, \code{values} are replaced by \code{NA}'s.
+#' @param value Numeric vector with values that should be replaced with \code{\link{NA}}'s.
+#'          Thus, for each variable in \code{x}, \code{value} are replaced by \code{NA}'s.
 #'          Or: a logical vector describing which values should be translated
 #'          to missing values. See 'Details' and 'Examples'.
-#' @param as.attr Logical, if \code{TRUE}, \code{values} of \code{x} will \strong{not}
-#'          be converted to \code{NA}. Rather, the missing code values of \code{values}
+#' @param as.attr Logical, if \code{TRUE}, \code{value} of \code{x} will \strong{not}
+#'          be converted to \code{NA}. Rather, the missing code values of \code{value}
 #'          will be added as missing-attribute \code{is_na} to the vector. See
 #'          \code{\link{labelled}} for more details, and 'Examples'.
 #'
-#' @return \code{x}, where each value of \code{values} is replaced by an \code{NA}.
+#' @return \code{x}, where each value of \code{value} is replaced by an \code{NA}.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) are preserved.
 #'
 #' @details \code{set_na} converts those values to \code{NA} that are
-#'            specified in the function's \code{values} argument; hence,
+#'            specified in the function's \code{value} argument; hence,
 #'            by default, \code{set_na} ignores any missing code attributes
 #'            like \code{is_na}. \code{\link{to_na}}, by contrast, converts
 #'            values to \code{NA}, which are defined as missing through the
 #'            \code{is_na}-attribute of a vector (see \code{\link{labelled}}).
 #'            \cr \cr
-#'            If \code{as.attr = TRUE}, \code{values} in \code{x} will \strong{not}
+#'            If \code{as.attr = TRUE}, \code{value} in \code{x} will \strong{not}
 #'            be converted to \code{NA}. Instead, the attribute \code{is_na}
 #'            will be added to \code{x}, indicating which values should be coded
-#'            as missing. \code{values} may either be numeric, with each number
+#'            as missing. \code{value} may either be numeric, with each number
 #'            indicating a value that should be defined as missing; or a vector
 #'            of logicals, describing which values should be translated to
 #'            missing values (see 'Examples').
@@ -96,7 +96,7 @@
 #' get_na(dummy)
 #'
 #' @export
-set_na <- function(x, values, as.attr = FALSE) {
+set_na <- function(x, value, as.attr = FALSE) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -105,32 +105,32 @@ set_na <- function(x, values, as.attr = FALSE) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], values, as.attr)
+    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], value, as.attr)
     return(x)
   } else {
-    return(set_na_helper(x, values, as.attr))
+    return(set_na_helper(x, value, as.attr))
   }
 }
 
 
 #' @importFrom stats na.omit
-set_na_helper <- function(x, values, as.attr = FALSE) {
+set_na_helper <- function(x, value, as.attr = FALSE) {
   # ----------------------------
   # does user want to add missing codes as is_na attribute?
   # if yes, do so here...
   # ----------------------------
   if (as.attr) {
-    x <- set_na_attr(x, values)
+    x <- set_na_attr(x, value)
   } else {
     # ----------------------------
     # check if we have any values at all?
     # ----------------------------
-    if (is.null(values)) return(x)
+    if (is.null(value)) return(x)
     # ---------------------------------------
     # find associated values in x
     # and set them to NA
     # ---------------------------------------
-    x[x %in% values] <- NA
+    x[x %in% value] <- NA
     # ----------------------------
     # auto-detect variable label attribute
     # ----------------------------
@@ -144,7 +144,7 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
       # ---------------------------------------
       # check if value labels exist, and if yes, remove them
       # ---------------------------------------
-      labelpos <- suppressWarnings(which(as.numeric(vl) %in% values))
+      labelpos <- suppressWarnings(which(as.numeric(vl) %in% value))
       # ---------------------------------------
       # remove NA label
       # ---------------------------------------
@@ -156,7 +156,7 @@ set_na_helper <- function(x, values, as.attr = FALSE) {
         # if vl were not numeric convertable, try character conversion
         # check if value labels exist, and if yes, remove them
         # ---------------------------------------
-        labelpos <- suppressWarnings(which(as.character(vl) %in% values))
+        labelpos <- suppressWarnings(which(as.character(vl) %in% value))
         # remove NA label
         if (length(labelpos > 0)) {
           vl <- vl[-labelpos]

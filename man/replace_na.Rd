@@ -2,9 +2,12 @@
 % Please edit documentation in R/replace_na.R
 \name{replace_na}
 \alias{replace_na}
+\alias{replace_na<-}
 \title{Replace NA with specific values}
 \usage{
 replace_na(x, value)
+
+replace_na(x) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where

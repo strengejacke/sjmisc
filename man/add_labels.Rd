@@ -2,21 +2,24 @@
 % Please edit documentation in R/add_labels.R
 \name{add_labels}
 \alias{add_labels}
+\alias{add_labels<-}
 \title{Add value labels to variables}
 \usage{
-add_labels(x, labels)
+add_labels(x, value)
+
+add_labels(x) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
 where value label attributes should be added. Does not replaces former
 value labels.}
 
-\item{labels}{Named character vector of labels that will be added to \code{x} as
+\item{value}{Named character vector of labels that will be added to \code{x} as
          \code{"labels"} or \code{"value.labels"} attribute. If \code{x} is
-         a data frame, \code{labels} may also be a \code{\link{list}} of
-         named character vectors. If \code{labels} is a list, it must have
-         the same length as number of columns of \code{x}. If \code{labels}
-         is a vector and \code{x} is a data frame, \code{labels} will be applied
+         a data frame, \code{value} may also be a \code{\link{list}} of
+         named character vectors. If \code{value} is a list, it must have
+         the same length as number of columns of \code{x}. If \code{value}
+         is a vector and \code{x} is a data frame, \code{value} will be applied
          to each column of \code{x}.}
 }
 \value{
@@ -26,12 +29,12 @@ value labels.}
 This function adds additional labels as attribute to a variable
                or vector \code{x}, resp. to a set of variables in a
                \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
-               \code{add_labels} does not replace existing value labels, but add
-               \code{labels} to the existing value labels of \code{x}.
+               \code{add_labels} does not replace existing value labels, but adds
+               \code{value} to the existing value labels of \code{x}.
 }
 \note{
 Existing labelled values will be replaced by new labelled values
-        in \code{labels}. See 'Examples'.
+        in \code{value}. See 'Examples'.
 }
 \examples{
 data(efc)
@@ -46,6 +49,9 @@ get_labels(x, include.values = "p")
 # replace old values
 x <- add_labels(efc$e42dep, c(`4` = "not so dependent", `5` = "lorem ipsum"))
 get_labels(x, include.values = "p")
+
+# replace values, alternative function call
+add_labels(x) <- c(`2` = "new second")
 }
 \seealso{
 \code{\link{set_label}} to manually set variable labels or

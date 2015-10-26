@@ -112,6 +112,7 @@ rec_to_helper <- function(x, lowest, highest) {
 #'          variables.
 #' @param recodes String with recode pairs of old and new values. See 'Details' for
 #'          examples.
+#' @param value See \code{recodes}.
 #' @param as.fac Logical, if \code{TRUE}, recoded variable is returned as factor.
 #'          Default is \code{FALSE}, thus a numeric variable is returned.
 #' @param var.label Optional string, to set variable label attribute for the
@@ -153,6 +154,10 @@ rec_to_helper <- function(x, lowest, highest) {
 #'
 #' # recode 1 to 2 into 1 and 3 to 4 into 2
 #' table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
+#'
+#' # or:
+#' # rec(efc$e42dep) <- "1,2=1; 3,4=2"
+#' # table(efc$e42dep, exclude = NULL)
 #'
 #' # keep value labels. variable label is automatically preserved
 #' str(rec(efc$e42dep,
@@ -394,4 +399,16 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   # return result as factor?
   if (as.fac) new_var <- to_factor(new_var)
   return(new_var)
+}
+
+#' @rdname rec
+#' @export
+`rec<-` <- function(x, as.fac = FALSE, var.label = NULL, val.labels = NULL, value) {
+  UseMethod("rec<-")
+}
+
+#' @export
+`rec<-.default` <- function(x, as.fac = FALSE, var.label = NULL, val.labels = NULL, value) {
+  x <- rec(x = x, recodes = value, as.fac = as.fac, var.label = var.label, val.labels = val.labels)
+  x
 }
