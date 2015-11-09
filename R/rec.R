@@ -104,8 +104,9 @@ rec_to_helper <- function(x, lowest, highest) {
 #'                category values.
 #'
 #' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
-#'            to replace \code{\link{NA}}'s with specific value and \code{\link{recode_to}}
-#'            for re-shifting value ranges.
+#'            to replace \code{\link{NA}}'s with specific value, \code{\link{recode_to}}
+#'            for re-shifting value ranges and \code{\link{ref_lvl}} to change the
+#'            reference level of (numeric) factors.
 #'
 #' @param x Numeric variable (vector) or a \code{\link{factor}} with numeric
 #'          levels that should be recoded; or a \code{data.frame} or \code{list} of

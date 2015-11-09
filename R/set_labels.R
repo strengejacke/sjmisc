@@ -301,7 +301,15 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
         # ---------------------------------------
         # set attributes
         # ---------------------------------------
-        attr(x, attr.string) <- names(labels)
+        if (anyNA(suppressWarnings(as.numeric(names(labels))))) {
+          # here we have also non-numeric labels, so we set
+          # names as character string
+          attr(x, attr.string) <- names(labels)
+        } else {
+          # we have only numeric labels, so we set them
+          # as numeric values
+          attr(x, attr.string) <- as.numeric(names(labels))
+        }
         names(attr(x, attr.string)) <- labels
         # ---------------------------------------
         # check for valid length of labels

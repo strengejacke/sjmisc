@@ -41,8 +41,12 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of dev build 1.2-1
+### Changelog of dev build 1.2-2
 
 #### New functions
 * `split_var` to split a vector into equal sized groups.
+* `ref_lvl` to change the reference level of (numeric) factors.
 
+#### Changes to functions
+* `to_factor` gets a `ref.lvl` argument, to automatically change the reference level when converting numeric vectors into factors.
+* `replace_na` gets a `na.label` argument to optionally set a value label for the NA value.

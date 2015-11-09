@@ -16,6 +16,11 @@
 #'          converted into NA before \code{x} is converted as factor. If
 #'          \code{FALSE}, missing values will be left as their original codes.
 #'          See 'Examples' and \code{\link{get_na}}.
+#' @param ref.lvl Numeric, specifies the reference level for the new factor. Use
+#'          this parameter if a different factor level than the lowest value
+#'          should be used as reference level. If \code{NULL}, lowest value
+#'          will become the reference level. See \code{\link{ref_lvl}} for
+#'          details.
 #' @return A factor variable, including variable and value labels, respectively
 #'           a data frame with factor variables (including variable and value labels)
 #'           if \code{x} was a data frame.
@@ -67,17 +72,29 @@
 #' # to factor, missings removed
 #' to_factor(x, drop.na = TRUE)
 #'
+#'
+#' # Convert to factor, using different reference level
+#' x <- to_factor(efc$e42dep)
+#' str(x)
+#' table(x)
+#'
+#' x <- to_factor(efc$e42dep, ref.lvl = 3)
+#' str(x)
+#' table(x)
+#'
 #' @export
-to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
+to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NULL) {
   if (is.matrix(x) || is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]],
                                                  add.non.labelled,
-                                                 drop.na)
+                                                 drop.na,
+                                                 ref.lvl)
     return(x)
   } else {
     return(to_fac_helper(x,
                          add.non.labelled,
-                         drop.na))
+                         drop.na,
+                         ref.lvl))
   }
 }
 
@@ -85,15 +102,18 @@ to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
 #' @name to_fac
 #' @rdname to_factor
 #' @export
-to_fac <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
+to_fac <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NULL) {
   .Deprecated("to_factor")
-  return(to_factor(x, add.non.labelled, drop.na))
+  return(to_factor(x, add.non.labelled, drop.na, ref.lvl))
 }
 
 
-to_fac_helper <- function(x, add.non.labelled, drop.na) {
+to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   # is already factor?
-  if (is.factor(x)) return(x)
+  if (is.factor(x)) {
+    message("`x` is already a factor.")
+    return(x)
+  }
   # remove missings?
   if (drop.na) x <- to_na(x)
   # retrieve value labels
@@ -116,5 +136,7 @@ to_fac_helper <- function(x, add.non.labelled, drop.na) {
   x <- set_label(x, varlab)
   # set back missing codes
   x <- set_na(x, nas, as.attr = TRUE)
+  # change reference level?
+  if (!is.null(ref.lvl)) ref_lvl(x) <- ref.lvl
   return(x)
 }
