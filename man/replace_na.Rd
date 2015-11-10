@@ -7,7 +7,7 @@
 \usage{
 replace_na(x, value, na.label = NULL)
 
-replace_na(x, na.label = "<NA>") <- value
+replace_na(x, na.label = NULL) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where

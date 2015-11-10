@@ -34,8 +34,8 @@
 replace_na <- function(x, value, na.label = NULL) {
   # create named vector, for labelleing
   if (!is.null(na.label)) {
-    na.vec <- na.label
-    names(na.vec) <- as.character(value)
+    na.vec <- value
+    names(na.vec) <- as.character(na.label)
   }
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
@@ -62,12 +62,12 @@ replace_na <- function(x, value, na.label = NULL) {
 
 #' @rdname replace_na
 #' @export
-`replace_na<-` <- function(x, na.label = "<NA>", value) {
+`replace_na<-` <- function(x, na.label = NULL, value) {
   UseMethod("replace_na<-")
 }
 
 #' @export
-`replace_na<-.default` <- function(x, na.label = "<NA>", value) {
+`replace_na<-.default` <- function(x, na.label = NULL, value) {
   x <- replace_na(x = x, value = value, na.label = na.label)
   x
 }
