@@ -13,6 +13,10 @@ of (partially) labelled vectors}
 \value{
 \code{x}, where all labelled values are converted to \code{NA}.
 }
+\description{
+For (partially) labelled vectors, all values that have
+               a value label attribute will be replaced by \code{NA}.
+}
 \examples{
 
 data(efc)

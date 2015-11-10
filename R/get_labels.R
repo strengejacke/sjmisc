@@ -207,8 +207,10 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       if (include.non.labelled) {
         # get values of variable
         valid.vals <- sort(unique(stats::na.omit((as.vector(x)))))
-        # check if we have more values than labels
-        if (length(valid.vals) > length(labels)) {
+        # check if we have different amount values than labels
+        # or, if we have same amount of values and labels, whether
+        # values and labels match or not
+        if (length(valid.vals) != length(labels) || anyNA(match(values, valid.vals))) {
           # We now need to know, which values of "x" don't
           # have labels. In case "x" is a character, we simply
           # subtract amount of labelled value codes from the

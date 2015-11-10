@@ -24,6 +24,10 @@ be \code{labelled}.}
 \code{x}, as \code{\link[haven]{labelled}}-class object, including
           missing-flags (\code{is_na}-attribute).
 }
+\description{
+Converts a (labelled) vector of any class into a \code{labelled}
+               class vector, resp. adds a \code{labelled} class-attribute.
+}
 \examples{
 
 data(efc)

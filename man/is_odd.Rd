@@ -13,6 +13,10 @@ is_odd(x)
 \code{TRUE} for each odd value of \code{x}, \code{FALSE} for
           even values.
 }
+\description{
+Checks whether \code{x} is an odd number or not. Only
+               accepts numeric vectors.
+}
 \examples{
 is_odd(4)
 is_odd(5)

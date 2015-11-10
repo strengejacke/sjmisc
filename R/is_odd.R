@@ -1,6 +1,9 @@
 #' @title Check whether value is odd
 #' @name is_odd
 #'
+#' @description Checks whether \code{x} is an odd number or not. Only
+#'                accepts numeric vectors.
+#'
 #' @param x Numeric vector or single numeric value.
 #'
 #' @return \code{TRUE} for each odd value of \code{x}, \code{FALSE} for

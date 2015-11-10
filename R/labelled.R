@@ -12,7 +12,7 @@
 #'   be translated to missing values
 #'
 #' @note This method is derived from the \code{\link[haven]{labelled}} method
-#'         of the \pkg{haven} package. \pkg{haven} up to versoin 0.2 \emph{does not}
+#'         of the \pkg{haven} package. \pkg{haven} up to version 0.2 \emph{does not}
 #'         support the \code{is_na} attribute, however, the current
 #'         \href{github.com/hadley/haven}{dev-version} does. Some of the
 #'         \pkg{sjmisc} functions make use of this feature in advance, assuming
@@ -25,6 +25,10 @@
 #' # labelled vector with multiple types of missing values
 #' x <- labelled(c("M", "M", "F", "X", "N/A"),
 #'               c(Male = "M", Female = "F", Refused = "X", "Not applicable" = "N/A"),
+#'               c(FALSE, FALSE, TRUE, TRUE))
+#'
+#' x <- labelled(c(1, 2, 1, 5, 1, 5, 9),
+#'               c(Male = 1, Female = 2, Refused = 5, Missing = 9),
 #'               c(FALSE, FALSE, TRUE, TRUE))
 #'
 #' @export

@@ -13,6 +13,10 @@ is_even(x)
 \code{TRUE} for each even value of \code{x}, \code{FALSE} for
           odd values.
 }
+\description{
+Checks whether \code{x} is an even number or not. Only
+               accepts numeric vectors.
+}
 \examples{
 is_even(4)
 is_even(5)

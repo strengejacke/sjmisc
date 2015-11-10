@@ -1,6 +1,9 @@
 #' @title Convert labelled values into NA
 #' @name zap_labels
 #'
+#' @description For (partially) labelled vectors, all values that have
+#'                a value label attribute will be replaced by \code{NA}.
+#'
 #' @param x (partially) \code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
 #'            of (partially) labelled vectors
 #' @return \code{x}, where all labelled values are converted to \code{NA}.
@@ -56,6 +59,9 @@ zap_labels <- function(x) {
 
 #' @title Convert non-labelled values into NA
 #' @name zap_unlabelled
+#'
+#' @description For (partially) labelled vectors, all values that don't have
+#'                a value label attribute will be replaced by \code{NA}.
 #'
 #' @inheritParams zap_labels
 #' @return \code{x}, where all non-labelled values are converted to \code{NA}.

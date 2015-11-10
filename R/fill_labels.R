@@ -31,7 +31,7 @@
 #' x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
 #'               c(Male = 1, Female = 2, Refused = 5),
 #'               c(FALSE, FALSE, TRUE))
-#' summary(x)
+#' frq(x)
 #'
 #' @export
 fill_labels <- function(x) {
@@ -69,8 +69,13 @@ fill_labels_helper <- function(x) {
     if (!is.null(missings)) all.missings[match(current.values, all.values)] <- missings
     # set back all labels, if amount of all labels differ
     # from the "current" values
-    if (length(all.values) > length(current.values))
-      x <- set_labels(x, all.values, force.labels = T, force.values = T)
+    if (length(all.values) > length(current.values)) {
+      # first, we need to switch name attribute and values
+      all.val.switch <- as.numeric(names(all.values))
+      names(all.val.switch) <- as.character(all.values)
+      # then set labels
+      x <- set_labels(x, all.val.switch, force.labels = T, force.values = T)
+    }
     # set back missing information
     x <- set_na(x, all.missings, as.attr = T)
   }

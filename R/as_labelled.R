@@ -1,6 +1,9 @@
 #' @title Convert vector to labelled class
 #' @name as_labelled
 #'
+#' @description Converts a (labelled) vector of any class into a \code{labelled}
+#'                class vector, resp. adds a \code{labelled} class-attribute.
+#'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables
 #'          that should be converted to \code{\link[haven]{labelled}}-class
 #'          objects.

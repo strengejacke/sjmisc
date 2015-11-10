@@ -1,6 +1,9 @@
 #' @title Trim leading and trailing whitespaces from strings
 #' @name trim
 #'
+#' @description Trims leading and trailing whitespaces from strings or
+#'                character vectors.
+#'
 #' @param x Character vector or string. Function is vectorized, i.e. vector
 #'          may have a length greater than 1. See 'Examples'.
 #'

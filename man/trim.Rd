@@ -13,6 +13,10 @@ may have a length greater than 1. See 'Examples'.}
 \value{
 Trimmed \code{x}, i.e. with leading and trailing spaces removed.
 }
+\description{
+Trims leading and trailing whitespaces from strings or
+               character vectors.
+}
 \examples{
 trim("white space at end ")
 trim(" white space at start and end ")

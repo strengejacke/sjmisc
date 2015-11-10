@@ -108,7 +108,7 @@ x
 
 x <- set_na(x, c(-2, 9), as.attr = TRUE)
 x
-summary(as_labelled(x))
+frq(as_labelled(x))
 
 
 # set labels via named vector,
@@ -116,10 +116,12 @@ summary(as_labelled(x))
 data(efc)
 get_labels(efc$e42dep)
 
-x <- set_labels(efc$e42dep, c(`1` = "independent",
-                              `4` = "severe dependency",
-                              `9` = "missing value"))
-get_labels(x, attr.only = TRUE, include.values = "p")
+x <- set_labels(efc$e42dep, c(`independent` = 1,
+                             `severe dependency` = 2,
+                             `missing value` = 9))
+get_labels(x, include.values = "p")
+
+get_labels(x, include.values = "p", include.non.labelled = TRUE)
 
 
 # setting same value labels to multiple vectors

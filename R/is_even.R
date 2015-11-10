@@ -1,6 +1,9 @@
 #' @title Check whether value is even
 #' @name is_even
 #'
+#' @description Checks whether \code{x} is an even number or not. Only
+#'                accepts numeric vectors.
+#'
 #' @param x Numeric vector or single numeric value.
 #'
 #' @return \code{TRUE} for each even value of \code{x}, \code{FALSE} for

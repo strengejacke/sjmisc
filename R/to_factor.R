@@ -127,9 +127,18 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   nas <- suppressMessages(get_na(x))
   # convert variable to factor
   x <- as.factor(x)
+  # -------------------------
+  # switch value and names attribute, since get_labels
+  # returns the values as names, and the value labels
+  # as "vector content"
+  # -------------------------
+  lab.switch <- as.numeric(names(lab))
+  names(lab.switch) <- as.character(lab)
+  # -------------------------
   # set back value labels
+  # -------------------------
   x <- suppressMessages(set_labels(x,
-                                   lab,
+                                   lab.switch,
                                    force.labels = TRUE,
                                    force.values = FALSE))
   # set back variable labels

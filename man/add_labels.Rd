@@ -40,18 +40,18 @@ Existing labelled values will be replaced by new labelled values
 data(efc)
 get_labels(efc$e42dep)
 
-x <- add_labels(efc$e42dep, c(`5` = "nothing"))
+x <- add_labels(efc$e42dep, c(`nothing` = 5))
 get_labels(x)
 
-x <- add_labels(efc$e42dep, c(`5` = "nothing", `0` = "zero value"))
+x <- add_labels(efc$e42dep, c(`nothing` = 5, `zero value` = 0))
 get_labels(x, include.values = "p")
 
 # replace old values
-x <- add_labels(efc$e42dep, c(`4` = "not so dependent", `5` = "lorem ipsum"))
+x <- add_labels(efc$e42dep, c(`not so dependent` = 4, `lorem ipsum` = 5))
 get_labels(x, include.values = "p")
 
 # replace values, alternative function call
-add_labels(x) <- c(`2` = "new second")
+add_labels(x) <- c(`new second` = 2)
 
 
 }

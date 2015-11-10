@@ -40,7 +40,7 @@ get_labels(fill_labels(x))
 x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
               c(Male = 1, Female = 2, Refused = 5),
               c(FALSE, FALSE, TRUE))
-summary(x)
+frq(x)
 
 }
 

@@ -31,18 +31,18 @@
 #' data(efc)
 #' get_labels(efc$e42dep)
 #'
-#' x <- add_labels(efc$e42dep, c(`5` = "nothing"))
+#' x <- add_labels(efc$e42dep, c(`nothing` = 5))
 #' get_labels(x)
 #'
-#' x <- add_labels(efc$e42dep, c(`5` = "nothing", `0` = "zero value"))
+#' x <- add_labels(efc$e42dep, c(`nothing` = 5, `zero value` = 0))
 #' get_labels(x, include.values = "p")
 #'
 #' # replace old values
-#' x <- add_labels(efc$e42dep, c(`4` = "not so dependent", `5` = "lorem ipsum"))
+#' x <- add_labels(efc$e42dep, c(`not so dependent` = 4, `lorem ipsum` = 5))
 #' get_labels(x, include.values = "p")
 #'
 #' # replace values, alternative function call
-#' add_labels(x) <- c(`2` = "new second")
+#' add_labels(x) <- c(`new second` = 2)
 #'
 #'
 #' @export
@@ -78,11 +78,18 @@ add_labels_helper <- function(x, value) {
     # -------------------------
     # remove double values labels
     # -------------------------
-    doubles <- names(current.labels) %in% names(value)
+    doubles <- names(current.labels) %in% as.character(value)
+    # -------------------------
+    # switch value and names attribute, since get_labels
+    # returns the values as names, and the value labels
+    # as "vector content"
+    # -------------------------
+    val.switch <- as.numeric(names(current.labels))
+    names(val.switch) <- as.character(current.labels)
     # -------------------------
     # update all labels
     # -------------------------
-    all.labels <- c(current.labels[!doubles], value)
+    all.labels <- c(val.switch[!doubles], value)
     # -------------------------
     # tell user
     # -------------------------
@@ -93,7 +100,7 @@ add_labels_helper <- function(x, value) {
   # ----------------------------------------
   # sort labels by values
   # ----------------------------------------
-  all.labels <- all.labels[order(names(all.labels))]
+  all.labels <- all.labels[order(as.numeric(all.labels))]
   # ----------------------------------------
   # set back labels
   # ----------------------------------------
