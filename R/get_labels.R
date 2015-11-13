@@ -158,18 +158,6 @@ get_labels <- function(x,
 }
 
 
-#' @name get_val_labels
-#' @rdname get_labels
-#' @export
-get_val_labels <- function(x,
-                           attr.only = FALSE,
-                           include.values = NULL,
-                           include.non.labelled = FALSE) {
-  .Deprecated("get_labels")
-  return(get_labels(x, attr.only, include.values, include.non.labelled))
-}
-
-
 # Retrieve value labels of a data frame or variable
 # See 'get_labels'
 get_labels_helper <- function(x, attr.only, include.values, include.non.labelled) {
@@ -252,6 +240,8 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       }
     }
   }
+  # foreign? then reverse order
+  if (is_foreign(attr.string)) labels <- rev(labels)
   # return them
   return(labels)
 }

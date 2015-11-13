@@ -159,14 +159,6 @@ set_label <- function(x, lab, attr.string = NULL) {
 }
 
 
-#' @name set_var_labels
-#' @rdname set_label
-#' @export
-set_var_labels <- function(x, lab, attr.string = NULL) {
-  .Deprecated("set_label")
-  return(set_label(x, lab, attr.string))
-}
-
 #' @rdname set_label
 #' @export
 `set_label<-` <- function(x, attr.string = NULL, value) {

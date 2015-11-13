@@ -1,6 +1,9 @@
 # Help-functions
 
 
+is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
+
+
 # automatically set labels of values,
 # if attributes are present
 autoSetValueLabels <- function(x) {

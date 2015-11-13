@@ -85,11 +85,3 @@ std_merMod <- function(fit) {
   names(se.merMod) <- inames
   return(se.merMod)
 }
-
-#' @name std_e
-#' @rdname se
-#' @export
-std_e <- function(x) {
-  .Deprecated("se")
-  return(se(x))
-}

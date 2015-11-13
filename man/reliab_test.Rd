@@ -4,7 +4,7 @@
 \alias{reliab_test}
 \title{Performs a reliability test on an item scale}
 \usage{
-reliab_test(x, scale.items = FALSE, digits = 3, scaleItems)
+reliab_test(x, scale.items = FALSE, digits = 3)
 }
 \arguments{
 \item{x}{\code{data.frame} with items (from a scale).}
@@ -14,8 +14,6 @@ when the variables have different measures / scales.}
 
 \item{digits}{Amount of digits for Cronbach's Alpha and correlation values in
 returned data frame.}
-
-\item{scaleItems}{deprecated; use \code{scale.items} instead.}
 }
 \value{
 A data frame with the corrected item-total correlations (item discrimination)

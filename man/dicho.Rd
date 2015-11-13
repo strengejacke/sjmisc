@@ -5,7 +5,7 @@
 \title{Dichotomize variables}
 \usage{
 dicho(x, dich.by = "median", dich.val = -1, as.num = FALSE,
-  var.label = NULL, val.labels = NULL, dichBy, dichVal, asNum)
+  var.label = NULL, val.labels = NULL)
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables
@@ -32,12 +32,6 @@ dichotomized variable (see \code{\link{set_label}}). If \code{NULL}
 \item{val.labels}{Optional character vector (of length two), to set value label
 attributes of dichotomized variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
-
-\item{dichBy}{deprecated; use \code{dich.by} instead}
-
-\item{dichVal}{deprecated; use \code{dich.val} instead}
-
-\item{asNum}{deprecated; use \code{as.num} instead}
 }
 \value{
 A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),

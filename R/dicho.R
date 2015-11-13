@@ -25,9 +25,6 @@
 #' @param val.labels Optional character vector (of length two), to set value label
 #'          attributes of dichotomized variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
-#' @param dichBy deprecated; use \code{dich.by} instead
-#' @param dichVal deprecated; use \code{dich.val} instead
-#' @param asNum deprecated; use \code{as.num} instead
 #' @return A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
@@ -64,25 +61,7 @@ dicho <- function(x,
                   dich.val = -1,
                   as.num = FALSE,
                   var.label = NULL,
-                  val.labels = NULL,
-                  dichBy,
-                  dichVal,
-                  asNum) {
-  # -----------------------------------
-  # warn, if deprecated param is used
-  # -----------------------------------
-  if (!missing(dichBy)) {
-    warning("argument 'dichBy' is deprecated; please use 'dich.by' instead.")
-    dich.by <- dichBy
-  }
-  if (!missing(dichVal)) {
-    warning("argument 'dichVal' is deprecated; please use 'dich.val' instead.")
-    dich.val <- dichVal
-  }
-  if (!missing(asNum)) {
-    warning("argument 'asNum' is deprecated; please use 'as.num' instead.")
-    as.num <- asNum
-  }
+                  val.labels = NULL) {
   # --------------------------------
   # check abbreviations
   # --------------------------------

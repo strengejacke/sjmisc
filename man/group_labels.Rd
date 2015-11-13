@@ -4,8 +4,7 @@
 \alias{group_labels}
 \title{Create labels for recoded groups}
 \usage{
-group_labels(var, groupsize = 5, right.interval = FALSE, groupcount = 30,
-  rightInterval, autoGroupCount)
+group_labels(var, groupsize = 5, right.interval = FALSE, groupcount = 30)
 }
 \arguments{
 \item{var}{Numeric; variable, which should recoded into groups.}
@@ -23,10 +22,6 @@ bound of \code{groupsize}. See 'Details'.}
 \item{groupcount}{Sets the maximum number of groups that are defined when auto-grouping is on
 (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 this argument will be ignored.}
-
-\item{rightInterval}{deprecated; use \code{right.interval} instead}
-
-\item{autoGroupCount}{deprecated; use \code{groupcount} instead}
 }
 \value{
 A string vector containing labels based on the grouped categories of \code{var},

@@ -2,12 +2,9 @@
 % Please edit documentation in R/se.R
 \name{se}
 \alias{se}
-\alias{std_e}
 \title{Standard Error for variables}
 \usage{
 se(x)
-
-std_e(x)
 }
 \arguments{
 \item{x}{(Numeric) vector, a data frame or a \code{merMod}-object

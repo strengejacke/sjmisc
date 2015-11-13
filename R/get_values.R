@@ -60,6 +60,8 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
     # do we have missing flag? if yes, remove missing code value
     if (!is.null(na.flag)) values <- values[!na.flag]
   }
+  # foreign? then reverse order
+  if (is_foreign(attr.string)) values <- rev(values)
   # return sorted
   return(values)
 }

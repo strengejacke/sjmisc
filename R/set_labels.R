@@ -129,18 +129,6 @@ set_labels <- function(x,
 }
 
 
-#' @name set_val_labels
-#' @rdname set_labels
-#' @export
-set_val_labels <- function(x,
-                           labels,
-                           force.labels = FALSE,
-                           force.values = TRUE) {
-  .Deprecated("set_labels")
-  return(set_labels(x, labels, force.labels, force.values))
-}
-
-
 set_labels_helper <- function(x, labels, force.labels, force.values) {
   # ---------------------------------------
   # any valid labels? if not, return vector

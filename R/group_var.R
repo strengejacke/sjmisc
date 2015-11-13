@@ -25,9 +25,6 @@
 #' @param groupcount Sets the maximum number of groups that are defined when auto-grouping is on
 #'          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 #'          this argument will be ignored.
-#' @param asNumeric deprecated; use \code{as.num} instead
-#' @param rightInterval deprecated; use \code{right.interval} instead
-#' @param autoGroupCount deprecated; use \code{groupcount} instead
 #'
 #' @return A grouped variable, either as numeric or as factor (see paramter \code{as.num}).
 #'
@@ -81,25 +78,7 @@ group_var <- function(var,
                       groupsize = 5,
                       as.num = TRUE,
                       right.interval = FALSE,
-                      groupcount = 30,
-                      asNumeric,
-                      rightInterval,
-                      autoGroupCount) {
-  # -----------------------------------
-  # warn, if deprecated param is used
-  # -----------------------------------
-  if (!missing(asNumeric)) {
-    warning("argument 'asNumeric' is deprecated; please use 'as.num' instead.")
-    as.num <- asNumeric
-  }
-  if (!missing(rightInterval)) {
-    warning("argument 'rightInterval' is deprecated; please use 'right.interval' instead.")
-    right.interval <- rightInterval
-  }
-  if (!missing(autoGroupCount)) {
-    warning("argument 'autoGroupCount' is deprecated; please use 'groupcount' instead.")
-    groupcount <- autoGroupCount
-  }
+                      groupcount = 30) {
   # do we have labels?
   varlab <- get_label(var)
   # group variable
@@ -175,20 +154,7 @@ group_var <- function(var,
 group_labels <- function(var,
                          groupsize = 5,
                          right.interval = FALSE,
-                         groupcount = 30,
-                         rightInterval,
-                         autoGroupCount) {
-  # -----------------------------------
-  # warn, if deprecated param is used
-  # -----------------------------------
-  if (!missing(rightInterval)) {
-    warning("argument 'rightInterval' is deprecated; please use 'right.interval' instead.")
-    right.interval <- rightInterval
-  }
-  if (!missing(autoGroupCount)) {
-    warning("argument 'autoGroupCount' is deprecated; please use 'groupcount' instead.")
-    groupcount <- autoGroupCount
-  }
+                         groupcount = 30) {
   # do we have labels?
   varlab <- get_label(var)
   # group variable

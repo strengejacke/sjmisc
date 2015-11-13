@@ -5,7 +5,7 @@
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
 group_var(var, groupsize = 5, as.num = TRUE, right.interval = FALSE,
-  groupcount = 30, asNumeric, rightInterval, autoGroupCount)
+  groupcount = 30)
 }
 \arguments{
 \item{var}{Numeric; variable, which should recoded into groups.}
@@ -26,12 +26,6 @@ bound of \code{groupsize}. See 'Details'.}
 \item{groupcount}{Sets the maximum number of groups that are defined when auto-grouping is on
 (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 this argument will be ignored.}
-
-\item{asNumeric}{deprecated; use \code{as.num} instead}
-
-\item{rightInterval}{deprecated; use \code{right.interval} instead}
-
-\item{autoGroupCount}{deprecated; use \code{groupcount} instead}
 }
 \value{
 A grouped variable, either as numeric or as factor (see paramter \code{as.num}).

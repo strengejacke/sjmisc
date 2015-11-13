@@ -1,5 +1,5 @@
 #' @title Convert labelled data (frames) into normal classes
-#' @name to_sjPlot
+#' @name unlabel
 #'
 #' @description This function converts a vector or data frame, which was imported with any of
 #'                \code{haven}'s read functions and contains \code{\link[haven]{labelled}} class vectors or
@@ -24,15 +24,6 @@
 #'         like \code{data.frame[, colnr]} - only \code{data.frame[[colnr]]} seems
 #'         to be safe when accessing data frame columns from within function calls.
 #'
-#' @export
-to_sjPlot <- function(x) {
-  .Deprecated("unlabel")
-  return(unlabel(x))
-}
-
-
-#' @name unlabel
-#' @rdname to_sjPlot
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 unlabel <- function(x) {

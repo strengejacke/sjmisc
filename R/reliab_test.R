@@ -12,7 +12,6 @@
 #'          when the variables have different measures / scales.
 #' @param digits Amount of digits for Cronbach's Alpha and correlation values in
 #'          returned data frame.
-#' @param scaleItems deprecated; use \code{scale.items} instead.
 #' @return A data frame with the corrected item-total correlations (item discrimination)
 #'           and Cronbach's alpha (if item deleted) for each item of the scale, or
 #'           \code{NULL} if data frame had too less columns.
@@ -70,15 +69,7 @@
 #' @export
 reliab_test <- function(x,
                         scale.items = FALSE,
-                        digits = 3,
-                        scaleItems) {
-  # -----------------------------------
-  # warn, if deprecated param is used
-  # -----------------------------------
-  if (!missing(scaleItems)) {
-    warning("argument 'scaleItems' is deprecated; please use 'scale.items' instead.")
-    scale.items <- scaleItems
-  }
+                        digits = 3) {
   # -----------------------------------
   # check param
   # -----------------------------------

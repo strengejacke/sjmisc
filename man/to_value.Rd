@@ -4,7 +4,7 @@
 \alias{to_value}
 \title{Convert factors to numeric variables}
 \usage{
-to_value(x, start.at = NULL, keep.labels = TRUE, startAt)
+to_value(x, start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
 \item{x}{\code{\link{factor}} or a data frame with \code{factor}s}
@@ -17,8 +17,6 @@ are not numeric).}
 
 \item{keep.labels}{logical, if \code{TRUE}, former factor levels will be added as
 value labels. See \code{\link{set_labels}} for more details.}
-
-\item{startAt}{deprecated; use \code{start.at} instead}
 }
 \value{
 A numeric variable with values ranging either from \code{start.at} to

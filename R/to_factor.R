@@ -99,15 +99,6 @@ to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NUL
 }
 
 
-#' @name to_fac
-#' @rdname to_factor
-#' @export
-to_fac <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NULL) {
-  .Deprecated("to_factor")
-  return(to_factor(x, add.non.labelled, drop.na, ref.lvl))
-}
-
-
 to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   # is already factor?
   if (is.factor(x)) {

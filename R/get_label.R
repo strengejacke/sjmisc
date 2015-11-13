@@ -102,12 +102,3 @@ get_label <- function(x) {
     return(attr(x, attr.string, exact = T))
   }
 }
-
-
-#' @name get_var_labels
-#' @rdname get_label
-#' @export
-get_var_labels <- function(x) {
-  .Deprecated("get_label")
-  return(get_label(x))
-}
