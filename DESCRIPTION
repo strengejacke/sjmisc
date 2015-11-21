@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 1.2-3
-Date: 2015-11-10
+Version: 1.2-99
+Date: 2015-11-21
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
@@ -30,6 +30,6 @@ Suggests:
     lme4,
     Matrix,
     nlme,
-    stringdist (>= 0.9.1)
+    stringdist (>= 0.9.2)
 URL: https://github.com/sjPlot/sjmisc
-RoxygenNote: 5.0.0
+RoxygenNote: 5.0.1

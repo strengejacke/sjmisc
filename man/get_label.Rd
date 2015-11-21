@@ -4,7 +4,7 @@
 \alias{get_label}
 \title{Retrieve variable label(s) of labelled data}
 \usage{
-get_label(x)
+get_label(x, def.value = NULL)
 }
 \arguments{
 \item{x}{\code{data.frame} with variables that have label attributes (e.g.
@@ -12,10 +12,15 @@ from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 (vector) with variable label attribute; or a \code{list} of variables
 with variable label attributes. See 'Examples'.}
+
+\item{def.value}{Optional, a character string which will be returned as label
+if \code{x} has no label attribute. By default, \code{NULL} is returned.}
 }
 \value{
 A named char vector with all variable labels from the data frame or list;
           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
+          If \code{x} is a single vector and has no label attribute, the value
+          of \code{def.value} will be returned (which is by default \code{NULL}).
 }
 \description{
 This function retrieves the value labels of labelled data, which

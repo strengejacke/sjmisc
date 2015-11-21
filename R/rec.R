@@ -250,10 +250,14 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
     # create recodes-string
     recodes <- paste(sprintf("%i=%i", ov, nv), collapse = ";")
     # when we simply reverse values, we can keep value labels
-    val_lab <- rev(get_labels(x,
-                              attr.only = TRUE,
-                              include.values = NULL,
-                              include.non.labelled = TRUE))
+    if (is.null(val_lab)) {
+      val_lab <- rev(get_labels(
+        x,
+        attr.only = TRUE,
+        include.values = NULL,
+        include.non.labelled = TRUE
+      ))
+    }
   }
   # -------------------------------
   # prepare and clean recode string
@@ -395,8 +399,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   # replace remaining -Inf with NA
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
   # set back variable and value labels
-  new_var <- suppressWarnings(set_label(new_var, var_lab))
-  new_var <- suppressWarnings(set_labels(new_var, val_lab))
+  new_var <- suppressWarnings(set_label(x = new_var, lab = var_lab))
+  new_var <- suppressWarnings(set_labels(x = new_var, labels = val_lab))
   # return result as factor?
   if (as.fac) new_var <- to_factor(new_var)
   return(new_var)

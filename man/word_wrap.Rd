@@ -10,7 +10,8 @@ word_wrap(labels, wrap, linesep = NULL)
 \item{labels}{Label(s) as character string, where a line break should be
 inserted. Several strings may be passed as vector  (see 'Examples').}
 
-\item{wrap}{Maximum amount of chars per line (i.e. line length)}
+\item{wrap}{Maximum amount of chars per line (i.e. line length). If code{wrap = Inf},
+no word wrap will be performed (i.e. \code{labels} will be returned as is).}
 
 \item{linesep}{By default, this argument is \code{NULL} and a regular new line
 string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}

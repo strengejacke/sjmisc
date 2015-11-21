@@ -32,11 +32,8 @@
 #'
 #' @export
 replace_na <- function(x, value, na.label = NULL) {
-  # create named vector, for labelleing
-  if (!is.null(na.label)) {
-    na.vec <- value
-    names(na.vec) <- as.character(na.label)
-  }
+  # check for valid value
+  if (is.null(value) || is.na(value)) return(x)
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -44,21 +41,40 @@ replace_na <- function(x, value, na.label = NULL) {
       nvars <- ncol(x)
     else
       nvars <- length(x)
-    # iterate all data frame's variables
-    for (i in 1:nvars) {
-      # replace NA with value
-      x[[i]][is.na(x[[i]])] <- value
-      # add NA label
-      if (!is.null(na.label)) add_labels(x[[i]]) <- na.vec
-    }
+    # replace NA
+    for (i in 1:nvars) x[[i]] <- replace_na_helper(x[[i]], value, na.label)
     return(x)
   } else {
+    return(replace_na_helper(x, value, na.label))
+  }
+  return(x)
+}
+
+
+replace_na_helper <- function(x, value, na.label) {
+  # create named vector, for labelleing
+  if (!is.null(na.label)) {
+    na.vec <- value
+    names(na.vec) <- as.character(na.label)
+  }
+  if (anyNA(x)) {
+    # do we have a factor? then check for levels
+    if (is.factor(x)) {
+      # is value in levels?
+      if (!any(levels(x) %in% as.character(value))) {
+        # if not, add value to levels
+        levels(x) <- c(levels(x), as.character(value))
+      }
+    }
     x[is.na(x)] <- value
     # add NA label
     if (!is.null(na.label)) add_labels(x) <- na.vec
-    return(x)
+  } else {
+    message("`x` has no missings.")
   }
+  return(x)
 }
+
 
 #' @rdname replace_na
 #' @export

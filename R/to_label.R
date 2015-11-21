@@ -116,7 +116,7 @@ to_label_helper <- function(x, add.non.labelled, drop.na) {
       # set new levels
       levels(x) <- vl
       # remove attributes
-      x <- remove_labels(x)
+      x <- remove_all_labels(x)
     } else {
       for (i in 1:length(vl)) x[x == vn[i]] <- vl[i]
       # to factor

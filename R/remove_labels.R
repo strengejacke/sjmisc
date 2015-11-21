@@ -1,50 +1,106 @@
-#' @title Remove value and variable labels from vector or data frame
+#' @title Remove value labels from variables
 #' @name remove_labels
 #'
-#' @description This function removes value and variable label attributes
-#'                from a vector or data frame. These attributes are typically
-#'                added to variables when importing foreign data (see
-#'                \code{\link{read_spss}}) or manually adding label attributes
-#'                with \code{\link{set_labels}}.
+#' @description This function removes labels from a label attribute of a
+#'                vector \code{x}, resp. from a set of vectors in a
+#'                \code{data.frame} or \code{list}-object. The counterpart
+#'                to this function is \code{\link{add_labels}}.
 #'
-#' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-#'            on working with labelled data, and \code{\link{copy_labels}} for
-#'            adding label attributes (subsetted) data frames.
+#' @seealso \code{\link{set_labels}} to add value labels, replacing the existing ones;
+#'            \code{\link{add_labels}} to add new labels to a vector.
 #'
-#' @param x Vector or \code{data.frame} with variable and/or value label attributes
-#' @return \code{x} with removed value and variable label attributes.
+#' @param x Variable (vector), \code{list} of variables or a \code{data.frame}
+#'          where value label attributes should be removed.
+#' @param value Either a numeric vector, indicating one or more label attributes that
+#'          should be removed (see \code{\link{get_labels}} to retrieve a vector's
+#'          label attributes), or a character vector with names of label attributes
+#'          that should be removed.
+#'
+#' @return \code{x} with removed value labels.
 #'
 #' @examples
 #' data(efc)
-#' str(efc)
-#' str(remove_labels(efc))
+#' get_labels(efc$e42dep)
+#'
+#' x <- remove_labels(efc$e42dep, 2)
+#' get_labels(x, include.values = "p")
+#'
+#' x <- remove_labels(efc$e42dep, "independent")
+#' get_labels(x, include.values = "p")
+#'
 #'
 #' @export
-remove_labels <- function(x) {
-  if (is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- remove_labels_helper(x[[i]])
+remove_labels <- function(x, value) {
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # dichotomize all
+    for (i in 1:nvars) x[[i]] <- remove_labels_helper(x[[i]], value)
+    return(x)
   } else {
-    x <- remove_labels_helper(x)
+    return(remove_labels_helper(x, value))
   }
-  return(x)
 }
 
 
-remove_labels_helper <- function(x) {
-  # find label-attribute string
-  attr.string <- getValLabelAttribute(x)
-  # remove attributes
-  if (!is.null(attr.string)) attr(x, attr.string) <- NULL
-  # find label-attribute string
-  attr.string <- getVarLabelAttribute(x)
-  # remove attributes
-  if (!is.null(attr.string)) attr(x, attr.string) <- NULL
-  # remove is_na attribute
-  na.flags <- get_na_flags(x)
-  if (!is.null(na.flags)) attr(x, getNaAttribute()) <- NULL
-  # unclass, if labelled. labelled class may throw
-  # errors / warnings, when not havin label attributes
-  if (is_labelled(x)) x <- unclass(x)
-  # return var
+remove_labels_helper <- function(x, value) {
+  # ----------------------------------------
+  # get current labels of `x`
+  # ----------------------------------------
+  current.labels <- get_labels(x,
+                               attr.only = T,
+                               include.values = "n",
+                               include.non.labelled = F)
+  # ----------------------------------------
+  # if we have no labels, return
+  # ----------------------------------------
+  if (is.null(current.labels)) {
+    message("`x` has no value label attributes.")
+    return(x)
+  }
+  # -------------------------
+  # remove by index?
+  # -------------------------
+  if (is.numeric(value)) {
+    current.labels <- current.labels[-value]
+  } else if (is.character(value)) {
+    # -------------------------
+    # find value labels that should be removes
+    # -------------------------
+    removers <- as.vector(current.labels) %in% value
+    # remove them
+    current.labels <- current.labels[!removers]
+  }
+  # -------------------------
+  # switch value and names attribute, since get_labels
+  # returns the values as names, and the value labels
+  # as "vector content"
+  # -------------------------
+  all.labels <- as.numeric(names(current.labels))
+  names(all.labels) <- as.character(current.labels)
+  # ----------------------------------------
+  # sort labels by values
+  # ----------------------------------------
+  all.labels <- all.labels[order(as.numeric(all.labels))]
+  # ----------------------------------------
+  # set back labels
+  # ----------------------------------------
+  x <- set_labels(x, labels = all.labels)
   return(x)
+}
+
+#' @rdname remove_labels
+#' @export
+`remove_labels<-` <- function(x, value) {
+  UseMethod("remove_labels<-")
+}
+
+#' @export
+`remove_labels<-.default` <- function(x, value) {
+  x <- remove_labels(x, value)
+  x
 }

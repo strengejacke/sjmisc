@@ -19,9 +19,13 @@
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with variable label attribute; or a \code{list} of variables
 #'          with variable label attributes. See 'Examples'.
+#' @param def.value Optional, a character string which will be returned as label
+#'          if \code{x} has no label attribute. By default, \code{NULL} is returned.
 #'
 #' @return A named char vector with all variable labels from the data frame or list;
 #'           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
+#'           If \code{x} is a single vector and has no label attribute, the value
+#'           of \code{def.value} will be returned (which is by default \code{NULL}).
 #'
 #' @details See 'Details' in \code{\link{get_labels}}.
 #'
@@ -58,7 +62,7 @@
 #'                efc$e15relat))
 #'
 #' @export
-get_label <- function(x) {
+get_label <- function(x, def.value = NULL) {
   # ----------------------------
   # auto-detect variable label attribute
   # ----------------------------
@@ -97,8 +101,11 @@ get_label <- function(x) {
     return(unlist(lapply(x, attr, attr.string, exact = T)))
   } else {
     # nothing found? then leave...
-    if (is.null(attr.string)) return(NULL)
+    if (is.null(attr.string)) return(def.value)
     # else return attribute
-    return(attr(x, attr.string, exact = T))
+    retat <- attr(x, attr.string, exact = T)
+    # still NULL? than use default return value
+    if (is.null(retat)) retat <- def.value
+    return(retat)
   }
 }

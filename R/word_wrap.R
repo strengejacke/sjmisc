@@ -6,7 +6,8 @@
 #'
 #' @param labels Label(s) as character string, where a line break should be
 #'          inserted. Several strings may be passed as vector  (see 'Examples').
-#' @param wrap Maximum amount of chars per line (i.e. line length)
+#' @param wrap Maximum amount of chars per line (i.e. line length). If code{wrap = Inf},
+#'          no word wrap will be performed (i.e. \code{labels} will be returned as is).
 #' @param linesep By default, this argument is \code{NULL} and a regular new line
 #'          string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}
 #'          could be \code{"<br>"}.
@@ -21,6 +22,8 @@
 word_wrap <- function(labels, wrap, linesep = NULL) {
   # check for valid value
   if (is.null(labels) || length(labels) == 0) return(NULL)
+  # infinite wrap? then return labels
+  if (is.infinite(wrap)) return(labels)
   # default line separator is \n
   if (is.null(linesep)) {
     linesep <- '\\1\n'

@@ -2,32 +2,45 @@
 % Please edit documentation in R/remove_labels.R
 \name{remove_labels}
 \alias{remove_labels}
-\title{Remove value and variable labels from vector or data frame}
+\alias{remove_labels<-}
+\title{Remove value labels from variables}
 \usage{
-remove_labels(x)
+remove_labels(x, value)
+
+remove_labels(x) <- value
 }
 \arguments{
-\item{x}{Vector or \code{data.frame} with variable and/or value label attributes}
+\item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
+where value label attributes should be removed.}
+
+\item{value}{Either a numeric vector, indicating one or more label attributes that
+should be removed (see \code{\link{get_labels}} to retrieve a vector's
+label attributes), or a character vector with names of label attributes
+that should be removed.}
 }
 \value{
-\code{x} with removed value and variable label attributes.
+\code{x} with removed value labels.
 }
 \description{
-This function removes value and variable label attributes
-               from a vector or data frame. These attributes are typically
-               added to variables when importing foreign data (see
-               \code{\link{read_spss}}) or manually adding label attributes
-               with \code{\link{set_labels}}.
+This function removes labels from a label attribute of a
+               vector \code{x}, resp. from a set of vectors in a
+               \code{data.frame} or \code{list}-object. The counterpart
+               to this function is \code{\link{add_labels}}.
 }
 \examples{
 data(efc)
-str(efc)
-str(remove_labels(efc))
+get_labels(efc$e42dep)
+
+x <- remove_labels(efc$e42dep, 2)
+get_labels(x, include.values = "p")
+
+x <- remove_labels(efc$e42dep, "independent")
+get_labels(x, include.values = "p")
+
 
 }
 \seealso{
-\href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-           on working with labelled data, and \code{\link{copy_labels}} for
-           adding label attributes (subsetted) data frames.
+\code{\link{set_labels}} to add value labels, replacing the existing ones;
+           \code{\link{add_labels}} to add new labels to a vector.
 }
 

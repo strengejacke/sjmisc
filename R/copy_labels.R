@@ -11,7 +11,7 @@
 #'                from \code{df_new} are removed.
 #'
 #' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-#'            on working with labelled data, and \code{\link{remove_labels}} for
+#'            on working with labelled data, and \code{\link{remove_all_labels}} for
 #'            removing label attributes from data frames.
 #'
 #' @param df_new The new, subsetted data frame.
@@ -45,7 +45,7 @@ copy_labels <- function(df_new, df_origin = NULL) {
     # tell user
     message("Removing all variable and value labels from data frame.")
     # remove all labels
-    df_new <- remove_labels(df_new)
+    df_new <- remove_all_labels(df_new)
   } else {
     # check params
     if (is.data.frame(df_new) && is.data.frame(df_origin)) {
