@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of stable release 1.2-99
+### Changelog of stable release 1.3
 
 #### General
 * `set_labels` and `add_labels` now make consistent use of values as `labels` attributes and value labels as `names` attribute of `labels` attribute (being in line with `labelled` class now).

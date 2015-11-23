@@ -64,6 +64,8 @@ to_value <- function(x,
 to_value_helper <- function(x, start.at, keep.labels) {
   # is already numeric?
   if (is.numeric(x)) return(x)
+  # is character?
+  if (is.character(x)) return(as.numeric(as.factor(x)))
   # retrieve "value labels"
   labels <- levels(x)
   # check if we have numeric factor levels

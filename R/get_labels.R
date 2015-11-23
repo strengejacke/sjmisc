@@ -245,3 +245,19 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
   # return them
   return(labels)
 }
+
+
+
+#' @name get_val_labels
+#' @rdname get_labels
+#' @export
+get_val_labels <- function(x,
+                           attr.only = FALSE,
+                           include.values = NULL,
+                           include.non.labelled = FALSE) {
+  .Deprecated("get_labels")
+  return(get_labels(x,
+                    attr.only,
+                    include.values,
+                    include.non.labelled))
+}
