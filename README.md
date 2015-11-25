@@ -41,19 +41,9 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of stable release 1.3
-
-#### General
-* `set_labels` and `add_labels` now make consistent use of values as `labels` attributes and value labels as `names` attribute of `labels` attribute (being in line with `labelled` class now).
-* `remove_labels` was renamed into `remove_all_labels`.
-* Removed deprecated functions and arguments.
+### Changelog of dev build 1.3-1
 
 #### New functions
-* `split_var` to split a vector into equal sized groups.
-* `ref_lvl` to change the reference level of (numeric) factors.
-* `remove_labels` to remove selected label attributes from a vector.
 
 #### Changes to functions
-* `to_factor` gets a `ref.lvl` argument, to automatically change the reference level when converting numeric vectors into factors.
-* `replace_na` gets a `na.label` argument to optionally set a value label for the NA value.
-* `get_label` gets a `def.value` argument, which will be returned when vectors have no label attribute.
+* `to_value` can now also deal with character vectors.
