@@ -7,7 +7,8 @@
 to_value(x, start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
-\item{x}{\code{\link{factor}} or a data frame with \code{factor}s}
+\item{x}{\code{\link{factor}} or a data frame with \code{factor}s. May also be
+a character vector.}
 
 \item{start.at}{starting index, i.e. the lowest numeric value of the variable's
 value range. By default, this argument is \code{NULL}, hence the lowest

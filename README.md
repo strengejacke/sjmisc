@@ -44,6 +44,10 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 ### Changelog of dev build 1.3-1
 
 #### New functions
+* `to_dummy` to split vectors with more than two categories into 0/1-coded dummy variables.
 
 #### Changes to functions
 * `to_value` can now also deal with character vectors.
+
+#### Bug fixes
+* Fixed bug with `std_beta`, which computed wrong standardized beta coefficients for factor variables in `lm`.

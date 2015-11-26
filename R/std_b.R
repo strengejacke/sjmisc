@@ -77,7 +77,7 @@ std_beta <- function(fit,
     }
   } else {
     b <- summary(fit)$coef[-1, 1]
-    sx <- sapply(as.data.frame(fit$model)[-1], sd, na.rm = T)
+    sx <- sapply(as.data.frame(model.matrix(fit))[-1], sd, na.rm = T)
     sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
     beta <- b * sx / sy
     se <- summary(fit)$coef[-1, 2]
