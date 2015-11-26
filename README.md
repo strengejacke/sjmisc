@@ -48,6 +48,7 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 #### Changes to functions
 * `to_value` can now also deal with character vectors.
+* `is_empty` now also checks non-character vectors for zero-length.
 
 #### Bug fixes
 * Fixed bug with `std_beta`, which computed wrong standardized beta coefficients for factor variables in `lm`.
