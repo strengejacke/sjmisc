@@ -41,10 +41,11 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of dev build 1.3-1
+### Changelog of dev build 1.3-2
 
 #### New functions
 * `to_dummy` to split vectors with more than two categories into 0/1-coded dummy variables.
+* `overdisp` (based on [DRAFT r-sig-mixed-models FAQ](http://glmm.wikidot.com/faq)) to compute approximate overdispersion parameters for `glmer` models.
 
 #### Changes to functions
 * `to_value` can now also deal with character vectors.
