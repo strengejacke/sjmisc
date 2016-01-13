@@ -1,4 +1,4 @@
-Version 1.3-1
+Version 1.4
 ------------------------------------------------------------------------------
 New functions:
 * `to_dummy` to split vectors with more than two categories into 0/1-coded dummy variables.

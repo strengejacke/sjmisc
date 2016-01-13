@@ -27,11 +27,8 @@ view_df(efc)
 get_label(efc)
 
 # plot efc-data frame summary
-sjt.df(efc, alternateRowColor=TRUE)}
+sjt.df(efc, alternateRowColor = TRUE)}
 
-}
-\references{
-\url{http://www.uke.de/eurofamcare/}
 }
 \keyword{data}
 

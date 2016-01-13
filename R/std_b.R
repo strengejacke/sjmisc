@@ -47,6 +47,7 @@
 #' # 2 sd and center binary predictors
 #' std_beta(fit, include.ci = TRUE, type = "std2")
 #'
+#' @importFrom stats model.matrix
 #' @export
 std_beta <- function(fit,
                      include.ci = FALSE,
@@ -77,7 +78,7 @@ std_beta <- function(fit,
     }
   } else {
     b <- summary(fit)$coef[-1, 1]
-    sx <- sapply(as.data.frame(model.matrix(fit))[-1], sd, na.rm = T)
+    sx <- sapply(as.data.frame(stats::model.matrix(fit))[-1], sd, na.rm = T)
     sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
     beta <- b * sx / sy
     se <- summary(fit)$coef[-1, 2]

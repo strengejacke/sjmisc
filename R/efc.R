@@ -6,8 +6,6 @@
 #' @description A SPSS sample data set, read with the \code{\link[haven]{read_spss}}
 #'                function and "converted" with \code{\link{unlabel}}.
 #'
-#' @references \url{http://www.uke.de/eurofamcare/}
-#'
 #' @examples
 #' # Attach EFC-data
 #' data(efc)
@@ -27,7 +25,7 @@
 #' get_label(efc)
 #'
 #' # plot efc-data frame summary
-#' sjt.df(efc, alternateRowColor=TRUE)}
+#' sjt.df(efc, alternateRowColor = TRUE)}
 #'
 NULL
 
