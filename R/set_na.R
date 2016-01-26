@@ -196,6 +196,10 @@ set_na_helper <- function(x, value, as.attr = FALSE) {
         if (is_labelled(x)) x <- unclass(x)
       }
     }
+    # --------------------------------
+    # if we have a factor, remove unused levels
+    # --------------------------------
+    if (is.factor(x)) x <- droplevels(x)
   }
   return(x)
 }

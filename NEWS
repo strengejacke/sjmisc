@@ -1,3 +1,10 @@
+Changelog of version 1.4.0-1
+------------------------------------------------------------------------------
+Bug fixes:
+* `word_wrap` now removes `NA` values from `labels` before wrapping strings.
+* `set_na` now drops unused factor levels that have been replaced with `NA` values ([#15](https://github.com/sjPlot/sjmisc/issues/15)).
+
+
 Version 1.4
 ------------------------------------------------------------------------------
 New functions:

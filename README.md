@@ -41,15 +41,8 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of version 1.4
-
-#### New functions
-* `to_dummy` to split vectors with more than two categories into 0/1-coded dummy variables.
-* `overdisp` (based on [DRAFT r-sig-mixed-models FAQ](http://glmm.wikidot.com/faq)) to compute approximate overdispersion parameters for `glmer` models.
-
-#### Changes to functions
-* `to_value` can now also deal with character vectors.
-* `is_empty` now also checks non-character vectors for zero-length.
+### Changelog of version 1.4.0-1
 
 #### Bug fixes
-* Fixed bug with `std_beta`, which computed wrong standardized beta coefficients for factor variables in `lm`.
+* `word_wrap` now removes `NA` values from `labels` before wrapping strings.
+* `set_na` now drops unused factor levels that have been replaced with `NA` values ([#15](https://github.com/sjPlot/sjmisc/issues/15)).
