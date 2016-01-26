@@ -4,35 +4,6 @@
 is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
 
 
-# automatically set labels of values,
-# if attributes are present
-autoSetValueLabels <- function(x) {
-  # do we have global options?
-  opt <- getOption("autoSetValueLabels")
-  if (is.null(opt) || opt == TRUE) {
-    # check if we have value label attribut
-    vl <- get_labels_helper(x,
-                            attr.only = TRUE,
-                            include.values = NULL,
-                            include.non.labelled = TRUE)
-    lv <- levels(x)
-    label <- NULL
-    # check  if we have value labels
-    if (!is.null(vl) && length(vl) > 0) {
-      label <- vl
-    # check  if we have factor levels
-    } else if (!is.null(lv)) {
-      label <- lv
-    # if we have string values, copy them as labels
-    } else if (is.character(x)) {
-      label <- unique(x)
-    }
-    return(label)
-  }
-  return(NULL)
-}
-
-
 # auto-detect attribute style for variable labels.
 # either haven style ("label") or foreign style
 # ("variable.label")
@@ -109,25 +80,4 @@ getValLabelAttribute <- function(x) {
     if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }
   return(attr.string)
-}
-
-
-# automatically set labels of variables,
-# if attributes are present
-autoSetVariableLabels <- function(x) {
-  # do we have global options?
-  opt <- getOption("autoSetVariableLabels")
-  if (is.null(opt) || opt == TRUE) {
-    # auto-detect variable label attribute
-    attr.string <- getVarLabelAttribute(x)
-    # nothing found? then leave...
-    if (is.null(attr.string)) return(NULL)
-    # check if we have variable label attribute
-    vl <- as.vector(attr(x, attr.string, exact = T))
-    label <- NULL
-    # check if we have variable labels
-    if (!is.null(vl) && length(vl) > 0) label <- vl
-    return(label)
-  }
-  return(NULL)
 }

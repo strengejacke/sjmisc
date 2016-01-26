@@ -91,10 +91,6 @@ This function works with vectors that have value and variable
        \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
        \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
        online manuals for more details.
-       \cr \cr
-       Use \code{options(autoSetValueLabels = FALSE)}
-       and \code{options(autoSetVariableLabels = FALSE)} to turn off automatic
-       label detection.
 }
 \examples{
 # import SPSS data set
