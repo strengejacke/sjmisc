@@ -34,13 +34,25 @@ Returns the standardized beta coefficients and confidence intervals
                of a fitted linear (mixed) models, i.e. \code{fit} must either
                be of class \code{lm} or \code{\link[lme4]{merMod}}.
 }
-\note{
+\details{
 "Standardized coefficients refer to how many standard deviations a dependent variable will change,
         per standard deviation increase in the predictor variable. Standardization of the coefficient is
         usually done to answer the question of which of the independent variables have a greater effect
         on the dependent variable in a multiple regression analysis, when the variables are measured
         in different units of measurement (for example, income measured in dollars and family size
         measured in number of individuals)." (Source: Wikipedia)
+}
+\note{
+For \code{\link[nlme]{gls}}-objects, standardized beta coefficients may be wrong
+        for categorical variables (\code{factors}), because the \code{model.matrix} for
+        \code{gls} objects returns the original data of the categorical vector,
+        and not the 'dummy' coded vectors as for other classes. See, as example: \cr \cr
+        \code{head(model.matrix(lm(neg_c_7 ~ as.factor(e42dep), data = efc, na.action = na.omit)))}
+        \cr \cr and \cr \cr
+        \code{head(model.matrix(nlme::gls(neg_c_7 ~ as.factor(e42dep), data = efc, na.action = na.omit)))}.
+        \cr \cr
+        In such cases, use \code{\link{to_dummy}} to create dummies from
+        factors.
 }
 \examples{
 # fit linear model

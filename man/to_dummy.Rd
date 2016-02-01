@@ -7,7 +7,7 @@
 to_dummy(x, var.name = "name", suffix = "numeric", data = NULL)
 }
 \arguments{
-\item{x}{a \code{\link{factor}}.}
+\item{x}{a \code{\link{vector}} (variable).}
 
 \item{var.name}{indicates how the new dummy variables are named. Use
 \code{"name"} to use the variable name or any other string that will

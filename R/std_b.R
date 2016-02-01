@@ -22,12 +22,23 @@
 #'           with standardized beta coefficients and confidence intervals, if
 #'           \code{include.ci = TRUE}.
 #'
-#' @note "Standardized coefficients refer to how many standard deviations a dependent variable will change,
+#' @details  "Standardized coefficients refer to how many standard deviations a dependent variable will change,
 #'         per standard deviation increase in the predictor variable. Standardization of the coefficient is
 #'         usually done to answer the question of which of the independent variables have a greater effect
 #'         on the dependent variable in a multiple regression analysis, when the variables are measured
 #'         in different units of measurement (for example, income measured in dollars and family size
 #'         measured in number of individuals)." (Source: Wikipedia)
+#'
+#' @note For \code{\link[nlme]{gls}}-objects, standardized beta coefficients may be wrong
+#'         for categorical variables (\code{factors}), because the \code{model.matrix} for
+#'         \code{gls} objects returns the original data of the categorical vector,
+#'         and not the 'dummy' coded vectors as for other classes. See, as example: \cr \cr
+#'         \code{head(model.matrix(lm(neg_c_7 ~ as.factor(e42dep), data = efc, na.action = na.omit)))}
+#'         \cr \cr and \cr \cr
+#'         \code{head(model.matrix(nlme::gls(neg_c_7 ~ as.factor(e42dep), data = efc, na.action = na.omit)))}.
+#'         \cr \cr
+#'         In such cases, use \code{\link{to_dummy}} to create dummies from
+#'         factors.
 #'
 #' @references \itemize{
 #'              \item \href{http://en.wikipedia.org/wiki/Standardized_coefficient}{Wikipedia: Standardized coefficient}
@@ -47,7 +58,8 @@
 #' # 2 sd and center binary predictors
 #' std_beta(fit, include.ci = TRUE, type = "std2")
 #'
-#' @importFrom stats model.matrix
+#' @importFrom stats model.matrix coef
+#' @importFrom nlme getResponse
 #' @export
 std_beta <- function(fit,
                      include.ci = FALSE,
@@ -77,11 +89,17 @@ std_beta <- function(fit,
       return(beta)
     }
   } else {
-    b <- summary(fit)$coef[-1, 1]
+    b <- stats::coef(fit)[-1]
     sx <- sapply(as.data.frame(stats::model.matrix(fit))[-1], sd, na.rm = T)
-    sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
+    if (any(class(fit) == "gls"))
+      sy <- sapply(as.data.frame(as.vector(nlme::getResponse(fit))), sd, na.rm = T)
+    else
+      sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
     beta <- b * sx / sy
-    se <- summary(fit)$coef[-1, 2]
+    if (any(class(fit) == "gls"))
+      se <- summary(fit)$tTable[-1, 2]
+    else
+      se <- summary(fit)$coef[-1, 2]
     beta.se <- se * sx / sy
     # check if confidence intervals should also be returned
     # if yes, create data frame with sb and ci

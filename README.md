@@ -43,6 +43,12 @@ In case you want / have to cite my package, please use `citation('sjmisc')` for 
 
 ### Changelog of version 1.4.0-1
 
+#### New functions
+* S3-method `model.matrix` for `nlme::gls` class.
+
+#### Changes to functions
+* `std_beta` now supports `nlme::gls` models.
+
 #### Bug fixes
 * `word_wrap` now removes `NA` values from `labels` before wrapping strings.
 * `set_na` now drops unused factor levels that have been replaced with `NA` values ([#15](https://github.com/sjPlot/sjmisc/issues/15)).
