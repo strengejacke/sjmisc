@@ -70,7 +70,7 @@ pseudo_r2 <- function(x) {
 #'            family = binomial(link = "logit"))
 #' cod(fit)
 #'
-#' @importFrom stats predict predict.glm
+#' @importFrom stats predict predict.glm residuals
 #' @export
 cod <- function(x) {
   # ---------------------------------------
@@ -95,6 +95,9 @@ cod <- function(x) {
     y <- x$y
     pred <- stats::predict.glm(x, type = "response")
   }
+  # delete pred for cases with missing residuals
+  if (anyNA(stats::residuals(x))) pred <- pred[!is.na(stats::residuals(x))]
+
   categories <- unique(y)
   m1 <- mean(pred[which(y == categories[1])], na.rm = T)
   m2 <- mean(pred[which(y == categories[2])], na.rm = T)

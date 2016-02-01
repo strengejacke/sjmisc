@@ -44,3 +44,12 @@ is.na.labelled <- function(x) {
 #   # median
 #   stats::median(to_na(x), na.rm = na.rm)
 # }
+
+
+#' @importFrom nlme getData getCovariateFormula
+#' @export
+model.matrix.gls <- function(object, ...) {
+  mm <- cbind(`(Intercept)` = 1,
+              nlme::getData(object)[, all.vars(nlme::getCovariateFormula(object))])
+  return(mm)
+}
