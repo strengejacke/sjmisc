@@ -39,11 +39,12 @@
 #'
 #' converge_ok(fit)
 #'
+#' @importFrom Matrix solve
 #' @export
 converge_ok <- function(x, tolerance = 0.001) {
   # check for package availability
   if (!requireNamespace("Matrix", quietly = TRUE)) {
-    stop("Package 'Matrix' needed for this function to work. Please install it.", call. = FALSE)
+    stop("Package `Matrix` needed for this function to work. Please install it.", call. = FALSE)
   }
   # is 'x' an lmer object?
   if (any(class(x) == "glmerMod") || any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {

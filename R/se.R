@@ -57,6 +57,7 @@ se <- function(x) {
 std_e_helper <- function(x) sqrt(var(x, na.rm = TRUE) / length(stats::na.omit(x)))
 
 #' @importFrom stats coef setNames
+#' @importFrom lme4 ranef
 std_merMod <- function(fit) {
   # ---------------------------------------
   # check for package availability

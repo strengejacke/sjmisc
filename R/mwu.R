@@ -35,6 +35,7 @@
 #' mwu(efc$e17age, efc$e42dep)
 #'
 #' @importFrom stats na.omit wilcox.test kruskal.test
+#' @importFrom coin wilcox_test pvalue statistic
 #' @export
 mwu <- function(x, grp, distribution = "asymptotic", weights = NULL) {
   # ------------------------

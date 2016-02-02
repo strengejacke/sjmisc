@@ -41,7 +41,7 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of version 1.4.0-1
+### Changelog of version 1.4.0-2
 
 #### New functions
 * S3-method `model.matrix` for `nlme::gls` class.

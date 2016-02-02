@@ -57,6 +57,7 @@
 #'         autoGroupStrings = FALSE)}
 #'
 #' @importFrom utils txtProgressBar
+#' @importFrom stringdist stringdistmatrix
 #' @export
 group_str <- function(strings,
                       maxdist = 2,
@@ -69,7 +70,7 @@ group_str <- function(strings,
   # check if required package is available
   # -------------------------------------
   if (!requireNamespace("stringdist", quietly = TRUE)) {
-    stop("Package 'stringdist' needed for this function to work. Please install it.", call. = FALSE)
+    stop("Package `stringdist` needed for this function to work. Please install it.", call. = FALSE)
   }
   # -------------------------------------
   # coerce to character, if necessary

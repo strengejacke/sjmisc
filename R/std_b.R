@@ -71,7 +71,7 @@ std_beta <- function(fit,
   } else if (type == "std2") {
     # is package available?
     if (!requireNamespace("arm", quietly = TRUE)) {
-      stop("Package 'arm' needed for computing this type of standardized estimates. Please install it.", call. = FALSE)
+      stop("Package `arm` needed for computing this type of standardized estimates. Please install it.", call. = FALSE)
     }
     # get standardized model parameter
     stdbv2_all <- arm::standardize(fit)
@@ -90,7 +90,17 @@ std_beta <- function(fit,
     }
   } else {
     b <- stats::coef(fit)[-1]
-    sx <- sapply(as.data.frame(stats::model.matrix(fit))[-1], sd, na.rm = T)
+    # get data as data frame
+    fit.data <- as.data.frame(stats::model.matrix(fit))[-1]
+    # convert factor to numeric, else sd throws a warning
+    fit.data <- as.data.frame(sapply(fit.data,
+                                     function(x)
+                                       if (is.factor(x))
+                                         to_value(x, keep.labels = F)
+                                       else
+                                         x))
+    # get standard deviations for predictors
+    sx <- sapply(fit.data, sd, na.rm = T)
     if (any(class(fit) == "gls"))
       sy <- sapply(as.data.frame(as.vector(nlme::getResponse(fit))), sd, na.rm = T)
     else
@@ -115,6 +125,7 @@ std_beta <- function(fit,
 
 
 #' @importFrom stats sd coef
+#' @importFrom lme4 fixef getME
 sjs.stdmm <- function(fit) {
   # code from Ben Bolker, see
   # http://stackoverflow.com/a/26206119/2094622

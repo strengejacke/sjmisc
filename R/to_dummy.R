@@ -38,7 +38,7 @@ to_dummy <- function(x, var.name = "name", suffix = "numeric", data = NULL) {
   if (suffix == "label") suffix <- "l"
   # correct abbr?
   if (suffix != "n" && suffix != "l") {
-    warning("argument `suffix` must be either \"numeric\" (or \"n\") or \"label\" (or \"l\"). Defaulting to \"numeric\" now.", call. = F)
+    warning("Argument `suffix` must be either `numeric` (or `n`) or `label` (or `l`). Defaulting to `numeric` now.", call. = F)
     suffix <- "n"
   }
   # save variable name
@@ -58,7 +58,7 @@ to_dummy <- function(x, var.name = "name", suffix = "numeric", data = NULL) {
     )
   # get resp. set variable label for new dummy variables
   # get variable label
-  label <- get_label(x, varname)
+  label <- get_label(x, def.value = varname)
   if (var.name != "name") varname <- var.name
   # get unique values
   values <- sort(unique(x))

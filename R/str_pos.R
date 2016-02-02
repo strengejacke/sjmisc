@@ -58,6 +58,7 @@
 #' # finds partial matching of similarity
 #' str_pos("We are Sex Pistols!", "postils", part.dist.match = 1)}
 #'
+#' @importFrom stringdist stringdist
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 str_pos <- function(searchString,

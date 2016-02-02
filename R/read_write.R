@@ -69,6 +69,7 @@
 #' # retrieve value labels
 #' mydat.val <- get_labels(mydat)}
 #'
+#' @importFrom haven read_spss
 #' @export
 read_spss <- function(path,
                       enc = NA,
@@ -198,6 +199,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #'         \pkg{haven} package. This function converts the imported data
 #'         into a common class format (see \code{\link{unlabel}}).
 #'
+#' @importFrom haven read_sas
 #' @export
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
   # ------------------------
@@ -234,6 +236,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #'         \pkg{haven} package. This function converts the imported data
 #'         into a common class format (see \code{\link{unlabel}}).
 #'
+#' @importFrom haven read_dta
 #' @export
 read_stata <- function(path, atomic.to.fac = FALSE) {
   # ------------------------
@@ -302,6 +305,7 @@ write_stata <- function(x, path, enc.to.utf8 = TRUE) {
 }
 
 
+#' @importFrom haven write_sav write_dta
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, enc.to.utf8) {
   # ------------------------
