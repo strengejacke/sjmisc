@@ -4,7 +4,7 @@
 \alias{to_long}
 \title{Convert wide data to long format}
 \usage{
-to_long(data, keys, values, ..., recode.key = FALSE)
+to_long(data, keys, values, ..., labels = NULL, recode.key = FALSE)
 }
 \arguments{
 \item{data}{A \code{data.frame} that should be tansformed from wide to
@@ -15,12 +15,16 @@ Either one key value per column group that should be gathered, or
 a single string. In the latter case, this name will be used as
 key column, and only one key column is created. See 'Examples'.}
 
-\item{values}{Character vector with names of value columns to create in output.
-Must be of same length as number of column groups that should be
-gathered. See 'Examples'.}
+\item{values}{Character vector with names of value columns (variable names)
+to create in output. Must be of same length as number of column
+groups that should be gathered. See 'Examples'.}
 
-\item{...}{Specification of columns that should be gathers. Must be one
-character vector with variable names per columns group.}
+\item{...}{Specification of columns that should be gathered. Must be one
+character vector with variable names per column group.}
+
+\item{labels}{Character vector of same length as \code{values} with variable
+labels for the new variables created from gathered columns.
+See 'Examples' and 'Details'.}
 
 \item{recode.key}{Logical, if \code{TRUE}, the values of the \code{key}
 column will be recoded to numeric values, in sequential ascending
@@ -34,7 +38,12 @@ This function converts wide data into long format. It allows
 \details{
 This function enhances \code{tidyr}'s \code{\link[tidyr]{gather}}
            function that you can gather multiple column groups at once.
-           Value and variable labels are preserved.
+           Value and variable labels for non-gathered variables are preserved.
+           However, gathered variables may have different variable label
+           attributes. In this case, \code{\link[tidyr]{gather}} will drop
+           these attributes. Hence, the new created variables from gathered
+           columns don't have any variable label attributes. In such cases,
+           use \code{labels} argument to set variable label attributes.
 }
 \examples{
 # create sample
@@ -60,6 +69,15 @@ to_long(mydat, "time", c("score", "speed"),
         c("score_t1", "score_t2", "score_t3"),
         c("speed_t1", "speed_t2", "speed_t3"),
         recode.key = TRUE)
+
+# gather multiple columns, use numeric key-value
+mydat <- to_long(mydat, "time", c("score", "speed"),
+                 c("score_t1", "score_t2", "score_t3"),
+                 c("speed_t1", "speed_t2", "speed_t3"),
+                 labels = c("Test Score", "Time needed to finish"))
+
+str(mydat$score)
+get_label(mydat$speed)
 
 }
 
