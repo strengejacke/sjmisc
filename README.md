@@ -41,9 +41,10 @@ install.packages("sjmisc")
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
 
 
-### Changelog of version 1.4.0-2
+### Changelog of version 1.4.0-3
 
 #### New functions
+* `to_long` to gather (transform from wide to long format) multiple columns groups at once.
 * S3-method `model.matrix` for `nlme::gls` class.
 
 #### Changes to functions
