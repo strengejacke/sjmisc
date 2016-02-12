@@ -65,9 +65,6 @@ mean_n(dat, .75) # 2 valid return values
 
 }
 \references{
-\itemize{
-             \item \href{http://candrea.ch/blog/compute-spss-like-mean-index-variables/}{candrea's blog}
-             \item \href{http://r4stats.com/2014/09/03/adding-the-spss-mean-n-function-to-r/}{r4stats.com}
-             }
+\href{http://r4stats.com/2014/09/03/adding-the-spss-mean-n-function-to-r/}{r4stats.com}
 }
 

@@ -13,7 +13,6 @@ mean.labelled <- function(x, trim = 0, na.rm = FALSE, missing_to_na = FALSE, ...
   mean(x, trim = trim, na.rm = na.rm)
 }
 
-
 #' @export
 is.na.labelled <- function(x) {
   # unclass vector for is.na-call
@@ -24,27 +23,6 @@ is.na.labelled <- function(x) {
   # return missings
   is.na(x)
 }
-
-
-# #' @importFrom stats sd
-# #' @export
-# sd.labelled <- function(x, na.rm = TRUE) {
-#   # unclass vector for mean-call
-#   x <- unclass(x)
-#   # sd
-#   stats::sd(to_na(x), na.rm = na.rm)
-# }
-#
-#
-# #' @importFrom stats median
-# #' @export
-# median.labelled <- function(x, na.rm = TRUE) {
-#   # unclass vector for mean-call
-#   x <- unclass(x)
-#   # median
-#   stats::median(to_na(x), na.rm = na.rm)
-# }
-
 
 #' @importFrom nlme getData getCovariateFormula
 #' @export
