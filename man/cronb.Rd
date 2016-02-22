@@ -4,13 +4,13 @@
 \alias{cronb}
 \title{Cronbach's Alpha for a matrix or data frame}
 \usage{
-cronb(df)
+cronb(data)
 }
 \arguments{
-\item{df}{\code{data.frame} or matrix with more than 2 columns.}
+\item{data}{\code{data.frame} or matrix with more than 2 columns.}
 }
 \value{
-The Cronbach's alpha value for \code{df}.
+The Cronbach's alpha value for \code{data}.
 }
 \description{
 This function calculates the Cronbach's alpha value

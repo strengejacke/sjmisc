@@ -8,7 +8,7 @@ mic(data, cor.method = "pearson")
 }
 \arguments{
 \item{data}{A \code{matrix} as returned by the \code{\link{cor}}-function, or
-a data frame which correlations should be calculated.}
+a \code{data.frame}, where correlations will be calculated.}
 
 \item{cor.method}{Indicates the correlation computation method. May be one of
 \code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
@@ -46,9 +46,9 @@ start <- which(colnames(efc) == "c82cop1")
 # recveive last item of COPE-index scale
 end <- which(colnames(efc) == "c90cop9")
 # create data frame with COPE-index scale
-df <- data.frame(efc[, c(start:end)])
+mydat <- data.frame(efc[, c(start:end)])
 
-mic(df)
+mic(mydat)
 
 }
 \references{

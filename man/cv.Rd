@@ -4,12 +4,15 @@
 \alias{cv}
 \title{Coefficient of Variation}
 \usage{
-cv(x)
+cv(x, ...)
 }
 \arguments{
 \item{x}{(Numeric) vector or a fitted linear model of class
 \code{\link{lm}}, \code{\link[lme4]{merMod}} (\pkg{lme4}) or
 \code{\link[nlme]{lme}} (\pkg{nlme}).}
+
+\item{...}{More fitted model objects, to compute multiple coefficients of
+variation at once.}
 }
 \value{
 The coefficient of variation of \code{x}.

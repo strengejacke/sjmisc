@@ -8,7 +8,7 @@
 #'                Requires either a data frame or a computed \code{\link{cor}}-object.
 #'
 #' @param data A \code{matrix} as returned by the \code{\link{cor}}-function, or
-#'          a data frame which correlations should be calculated.
+#'          a \code{data.frame}, where correlations will be calculated.
 #' @param cor.method Indicates the correlation computation method. May be one of
 #'          \code{"spearman"} (default), \code{"pearson"} or \code{"kendall"}.
 #'          You may use initial letter only.
@@ -36,9 +36,9 @@
 #' # recveive last item of COPE-index scale
 #' end <- which(colnames(efc) == "c90cop9")
 #' # create data frame with COPE-index scale
-#' df <- data.frame(efc[, c(start:end)])
+#' mydat <- data.frame(efc[, c(start:end)])
 #'
-#' mic(df)
+#' mic(mydat)
 #'
 #' @importFrom stats cor na.omit
 #' @export
