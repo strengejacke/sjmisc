@@ -2,15 +2,20 @@
 % Please edit documentation in R/icc.R
 \name{icc}
 \alias{icc}
-\title{Intra-Class-Correlation Coefficient}
+\title{Intraclass-Correlation Coefficient}
 \usage{
-icc(x)
+icc(x, ...)
 }
 \arguments{
 \item{x}{Fitted mixed effects model (\code{\link[lme4]{merMod}}-class).}
+
+\item{...}{More fitted model objects, to compute multiple intraclass-correlation
+coefficients at once.}
 }
 \value{
-A numeric vector with all random intercept intraclass-correlation-coefficients.
+A numeric vector with all random intercept intraclass-correlation-coefficients,
+          or a \code{list} of numeric vectors, when more than one model were used
+          as arguments.
 }
 \description{
 This function calculates the intraclass-correlation
@@ -33,12 +38,15 @@ This function calculates the intraclass-correlation
 \examples{
 \dontrun{
 library(lme4)
-fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
-icc(fit)
+fit1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+icc(fit1)
 
 sleepstudy$mygrp <- sample(1:45, size = 180, replace = T)
-fit <- lmer(Reaction ~ Days + (1|mygrp) + (Days | Subject), sleepstudy)
-icc(fit)}
+fit2 <- lmer(Reaction ~ Days + (1|mygrp) + (Days | Subject), sleepstudy)
+icc(fit2)
+
+# return icc for all models at once
+icc(fit1, fit2)}
 
 }
 \references{

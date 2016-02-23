@@ -2,6 +2,7 @@ Changelog of version 1.5.1
 ------------------------------------------------------------------------------
 Changes to functions:
 * `cv` now accepts multiple arguments.
+* `icc` now accepts multiple arguments.
 
 
 Changelog of version 1.5

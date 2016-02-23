@@ -1,4 +1,4 @@
-#' @title Intra-Class-Correlation Coefficient
+#' @title Intraclass-Correlation Coefficient
 #' @name icc
 #' @description This function calculates the intraclass-correlation
 #'                (icc) for random intercepts of mixed effects models.
@@ -6,8 +6,12 @@
 #'                are supported.
 #'
 #' @param x Fitted mixed effects model (\code{\link[lme4]{merMod}}-class).
+#' @param ... More fitted model objects, to compute multiple intraclass-correlation
+#'              coefficients at once.
 #'
-#' @return A numeric vector with all random intercept intraclass-correlation-coefficients.
+#' @return A numeric vector with all random intercept intraclass-correlation-coefficients,
+#'           or a \code{list} of numeric vectors, when more than one model were used
+#'           as arguments.
 #'
 #' @references \itemize{
 #'               \item Wu S, Crespi CM, Wong WK (2012) Comparison of methods for estimating the intraclass correlation coefficient for binary responses in cancer prevention cluster randomized trials. Contempory Clinical Trials 33: 869-880 (\href{http://dx.doi.org/10.1016/j.cct.2012.05.004}{doi:10.1016/j.cct.2012.05.004})
@@ -30,16 +34,31 @@
 #' @examples
 #' \dontrun{
 #' library(lme4)
-#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
-#' icc(fit)
+#' fit1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' icc(fit1)
 #'
 #' sleepstudy$mygrp <- sample(1:45, size = 180, replace = T)
-#' fit <- lmer(Reaction ~ Days + (1|mygrp) + (Days | Subject), sleepstudy)
-#' icc(fit)}
+#' fit2 <- lmer(Reaction ~ Days + (1|mygrp) + (Days | Subject), sleepstudy)
+#' icc(fit2)
+#'
+#' # return icc for all models at once
+#' icc(fit1, fit2)}
 #'
 #' @export
-icc <- function(x) {
-  return(icc.lme4(x))
+icc <- function(x, ...) {
+  # return value
+  icc_ <- icc.lme4(x)
+  # check if we have multiple parameters
+  if (nargs() > 1) {
+    # get input list
+    params_ <- list(...)
+    icc_ <- list(icc_)
+    for (p_ in params_) {
+      icc_[[length(icc_) + 1]] <- icc.lme4(p_)
+    }
+    names(icc_) <- NULL
+  }
+  return(icc_)
 }
 
 

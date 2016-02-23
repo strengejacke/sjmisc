@@ -3,3 +3,4 @@
 ## Changes to functions
 
 * `cv` now accepts multiple arguments.
+* `icc` now accepts multiple arguments.
