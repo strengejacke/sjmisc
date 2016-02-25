@@ -3,14 +3,11 @@
 \name{set_labels}
 \alias{set_labels}
 \alias{set_labels<-}
-\alias{set_val_labels}
 \title{Add value labels to variables}
 \usage{
 set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 
 set_labels(x, force.labels = FALSE, force.values = TRUE) <- value
-
-set_val_labels(x, labels, force.labels = FALSE, force.values = TRUE)
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}

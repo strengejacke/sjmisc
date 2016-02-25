@@ -109,12 +109,3 @@ get_label <- function(x, def.value = NULL) {
     return(retat)
   }
 }
-
-
-#' @name get_var_labels
-#' @rdname get_label
-#' @export
-get_var_labels <- function(x, def.value = NULL) {
-  .Deprecated("get_label")
-  return(get_label(x, def.value))
-}

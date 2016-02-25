@@ -2,12 +2,9 @@
 % Please edit documentation in R/get_label.R
 \name{get_label}
 \alias{get_label}
-\alias{get_var_labels}
 \title{Retrieve variable label(s) of labelled data}
 \usage{
 get_label(x, def.value = NULL)
-
-get_var_labels(x, def.value = NULL)
 }
 \arguments{
 \item{x}{\code{data.frame} with variables that have label attributes (e.g.

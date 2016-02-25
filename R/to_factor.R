@@ -140,12 +140,3 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   if (!is.null(ref.lvl)) ref_lvl(x) <- ref.lvl
   return(x)
 }
-
-
-#' @name to_fac
-#' @rdname to_factor
-#' @export
-to_fac <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NULL) {
-  .Deprecated("to_factor")
-  return(to_factor(x, add.non.labelled, drop.na, ref.lvl))
-}

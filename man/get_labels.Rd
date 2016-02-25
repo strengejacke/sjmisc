@@ -2,13 +2,9 @@
 % Please edit documentation in R/get_labels.R
 \name{get_labels}
 \alias{get_labels}
-\alias{get_val_labels}
 \title{Retrieve value labels of labelled data}
 \usage{
 get_labels(x, attr.only = FALSE, include.values = NULL,
-  include.non.labelled = FALSE)
-
-get_val_labels(x, attr.only = FALSE, include.values = NULL,
   include.non.labelled = FALSE)
 }
 \arguments{
