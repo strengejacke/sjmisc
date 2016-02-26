@@ -37,6 +37,7 @@ table(v)
 w <- abs(rnorm(20))
 table(weight2(v, w))
 
+
 }
 \seealso{
 \code{\link{weight}}

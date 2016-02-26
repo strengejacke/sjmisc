@@ -25,6 +25,7 @@
 #' w <- abs(rnorm(20))
 #' table(weight2(v, w))
 #'
+#'
 #' @export
 weight2 <- function(x, weights) {
   items <- unique(x)
@@ -66,6 +67,15 @@ weight2 <- function(x, weights) {
 #' w <- abs(rnorm(20))
 #' table(weight(v, w))
 #'
+#'
+#' set.seed(1)
+#' x <- sample(letters[1:5], size = 20, replace = TRUE)
+#' w <- runif(n = 20)
+#'
+#' table(x)
+#' table(weight(x, w))
+#'
+#'
 #' @importFrom stats na.pass xtabs
 #' @export
 weight <- function(x, weights, digits = 0) {
@@ -81,7 +91,14 @@ weight <- function(x, weights, digits = 0) {
     # retrieve count of each table cell
     w_count <- wtab[[w]]
     # retrieve "cell name" which is identical to the variable value
-    w_value <- as.numeric(names(wtab[w]))
+    # first check whether values are numeric or not
+    nval_ <- suppressWarnings(as.numeric(names(wtab[w])))
+    # if value is not numeric, use as is
+    if (is.na(nval_))
+      w_value <- names(wtab[w])
+    else
+      # else, use numeric value
+      w_value <- nval_
     # append variable value, repeating it "w_count" times.
     weightedvar <- c(weightedvar, rep(w_value, w_count))
   }
