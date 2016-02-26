@@ -37,14 +37,12 @@ table(v)
 w <- abs(rnorm(20))
 table(weight(v, w))
 
-
 set.seed(1)
 x <- sample(letters[1:5], size = 20, replace = TRUE)
 w <- runif(n = 20)
 
 table(x)
 table(weight(x, w))
-
 
 }
 \seealso{

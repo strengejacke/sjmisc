@@ -10,7 +10,7 @@
 #'              coefficients at once.
 #'
 #' @return A numeric vector with all random intercept intraclass-correlation-coefficients,
-#'           or a \code{list} of numeric vectors, when more than one model were used
+#'           or a list of numeric vectors, when more than one model were used
 #'           as arguments.
 #'
 #' @references \itemize{
@@ -37,12 +37,13 @@
 #' fit1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 #' icc(fit1)
 #'
-#' sleepstudy$mygrp <- sample(1:45, size = 180, replace = T)
-#' fit2 <- lmer(Reaction ~ Days + (1|mygrp) + (Days | Subject), sleepstudy)
+#' sleepstudy$mygrp <- sample(1:45, size = 180, replace = TRUE)
+#' fit2 <- lmer(Reaction ~ Days + (1 | mygrp) + (Days | Subject), sleepstudy)
 #' icc(fit2)
 #'
 #' # return icc for all models at once
 #' icc(fit1, fit2)}
+#'
 #'
 #' @export
 icc <- function(x, ...) {
