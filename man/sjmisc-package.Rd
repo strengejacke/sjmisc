@@ -18,7 +18,7 @@ See also package-vignettes.
 Package: \tab sjmisc\cr
 Type: \tab Package\cr
 Version: \tab 1.5.1\cr
-Date: \tab 2016-02-22\cr
+Date: \tab 2016-02-29\cr
 License: \tab GPL-3\cr
 }
 }
