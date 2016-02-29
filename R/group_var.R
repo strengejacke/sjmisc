@@ -49,9 +49,9 @@
 #'            a range from 46-50 as first group, even if values from 46 to 49
 #'            are not present. See 'Examples' in \code{\link{group_labels}}.
 #'            \cr \cr
-#'            \emph{If you want to split a variable into a certain amount of equal
+#'            If you want to split a variable into a certain amount of equal
 #'            sized groups (instead of having groups where values have all the same
-#'            range), use the \code{\link{split_var}} function!}
+#'            range), use the \code{\link{split_var}} function!
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
