@@ -45,6 +45,7 @@
 #' icc(fit1, fit2)}
 #'
 #'
+#' @importFrom stats family
 #' @export
 icc <- function(x, ...) {
   # return value
@@ -62,7 +63,7 @@ icc <- function(x, ...) {
   return(icc_)
 }
 
-
+#' @importFrom lme4 VarCorr fixef getME
 icc.lme4 <- function(fit) {
   # ------------------------
   # check if suggested package is available
@@ -75,15 +76,26 @@ icc.lme4 <- function(fit) {
   # ------------------------
   if (any(class(fit) == "glmerMod") || any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
     # ------------------------
+    # get family
+    # ------------------------
+    fitfam <- stats::family(fit)$family
+    # is neg. binomoal?
+    is_negbin <- str_contains(fitfam, "Negative Binomial", ignore.case = TRUE)
+    # ------------------------
     # random effects variances
     # ------------------------
     reva <- summary(fit)$varcor
     # retrieve only intercepts
     vars <- lapply(reva, function(x) x[[1]])
+    # intercept-variance
+    sigma_a2 <- sapply(vars, function(x) x[1])
     # residual variances
-    if (any(class(fit) == "glmerMod")) {
+    if (any(class(fit) == "glmerMod") && fitfam == "binomial") {
       # for logistic models, we use pi / 3
       resid_var <- (pi^2) / 3
+    } else if (any(class(fit) == "glmerMod") && is_negbin) {
+      # for negative binomial models, we use 0
+      resid_var <- 0
     } else {
       # for linear models, we have a clear
       # residual variance
@@ -91,14 +103,23 @@ icc.lme4 <- function(fit) {
     }
     # total variance
     total_var <- sum(sapply(vars, sum), resid_var)
-    # random intercept icc
-    ri.icc <- sapply(vars, function(x) x[1]) / total_var
-    # name values
-    names(ri.icc) <- names(reva)
-    # icc standard errors
-    # ri.icc.se <- unlist(lapply(reva, function(x) attr(x, "stddev")[1]))
-    # names(ri.icc.se) <- paste0(names(reva), " (S.E.)")
-    # return(list(icc = ri.icc, se = ri.icc.se))
+    # check whether we have negative binomial
+    if (is_negbin) {
+      beta <- as.numeric(lme4::fixef(fit)["(Intercept)"])
+      r <- lme4::getME(fit, "glmer.nb.theta")
+      ri.icc <- (exp(sigma_a2) - 1) / ((exp(total_var) - 1) + (exp(total_var) / r) + (exp(-beta) - (total_var / 2)))
+    } else if (fitfam == "poisson") {
+      ri.icc <- sigma_a2 / (1 + total_var)
+    } else {
+      # random intercept icc
+      ri.icc <- sigma_a2 / total_var
+      # name values
+      names(ri.icc) <- names(reva)
+      # icc standard errors
+      # ri.icc.se <- unlist(lapply(reva, function(x) attr(x, "stddev")[1]))
+      # names(ri.icc.se) <- paste0(names(reva), " (S.E.)")
+      # return(list(icc = ri.icc, se = ri.icc.se))
+    }
     return(ri.icc)
   } else {
     warning("Function 'icc' currently only supports 'merMod' objects (package 'lme4').", call. = F)
