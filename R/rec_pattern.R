@@ -17,6 +17,9 @@
 #'            \item{labels} the associated values labels that can be used with \code{\link{set_labels}}.
 #'           }
 #'
+#' @seealso \code{\link{group_var}} for recoding variables into smaller groups, and
+#'           \code{\link{group_labels}} to create the asssociated value labels.
+#'
 #' @examples
 #' rp <- rec_pattern(1, 100)
 #' rp

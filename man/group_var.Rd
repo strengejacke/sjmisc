@@ -84,10 +84,10 @@ barplot(table(ageGrp),
 
 }
 \seealso{
-\itemize{
-           \item \code{\link{split_var}}
-           \item \code{\link{group_labels}}
-           \item \code{\link{group_str}}
-         }
+\code{\link{group_labels}} to create the associated value labels for
+         grouped variables, \code{\link{split_var}} to split variables into
+         equal sized groups, \code{\link{group_str}} for grouping string vectors
+         or \code{\link{rec_pattern}} and \code{\link{rec}} for another
+         convenbient way of recoding variables into smaller groups.
 }
 

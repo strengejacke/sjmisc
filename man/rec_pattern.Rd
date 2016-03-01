@@ -33,13 +33,21 @@ Convenient function to create a recode pattern for the
 rp <- rec_pattern(1, 100)
 rp
 
+# sample data, inspect age of carers
 data(efc)
 table(efc$c160age, exclude = NULL)
 table(rec(efc$c160age, rp$pattern), exclude = NULL)
 
+# recode carers age into groups of width 5
 x <- rec(efc$c160age, rp$pattern)
+# add value labels to new vector
 set_labels(x) <- rp$labels
+# watch result
 frq(as_labelled(x))
 
+}
+\seealso{
+\code{\link{group_var}} for recoding variables into smaller groups, and
+          \code{\link{group_labels}} to create the asssociated value labels.
 }
 
