@@ -8,7 +8,8 @@
 #'            of (partially) labelled vectors
 #' @return \code{x}, where all labelled values are converted to \code{NA}.
 #'
-#' @seealso \code{\link{get_values}} and \code{\link{zap_unlabelled}}
+#' @seealso \code{\link{get_values}} and \code{\link{zap_unlabelled}};
+#'          \code{\link{drop_labels}} to drop labels from zero-count values.
 #'
 #' @examples
 #'
@@ -66,7 +67,8 @@ zap_labels <- function(x) {
 #' @inheritParams zap_labels
 #' @return \code{x}, where all non-labelled values are converted to \code{NA}.
 #'
-#' @seealso \code{\link{get_values}} and \code{\link{zap_labels}}
+#' @seealso \code{\link{get_values}} and \code{\link{zap_labels}};
+#'          \code{\link{drop_labels}} to drop labels from zero-count values.
 #'
 #' @examples
 #'

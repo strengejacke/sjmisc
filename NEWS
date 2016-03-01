@@ -1,7 +1,8 @@
-Changelog of version 1.5.1
+Version 1.5.1
 ------------------------------------------------------------------------------
 New functions:
 * `rec_pattern` to generate recode patterns for the `rec` function.
+* `drop_labels` to drop labels from values with zero-counts.
 
 Changes to functions:
 * `cv` now accepts multiple arguments.
@@ -10,7 +11,7 @@ Changes to functions:
 * Removed deprecated functions.
 
 
-Changelog of version 1.5
+Version 1.5
 ------------------------------------------------------------------------------
 New functions:
 * `to_long` to gather (transform from wide to long format) multiple column groups at once.

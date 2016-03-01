@@ -47,6 +47,7 @@ str(zap_unlabelled(x))
 
 }
 \seealso{
-\code{\link{get_values}} and \code{\link{zap_unlabelled}}
+\code{\link{get_values}} and \code{\link{zap_unlabelled}};
+         \code{\link{drop_labels}} to drop labels from zero-count values.
 }
 

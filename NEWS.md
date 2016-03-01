@@ -3,6 +3,7 @@
 ## New functions
 
 * `rec_pattern` to generate recode patterns for the `rec` function.
+* `drop_labels` to drop labels from values with zero-counts.
 
 ## Changes to functions
 

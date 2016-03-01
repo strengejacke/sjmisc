@@ -43,4 +43,7 @@ x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
 frq(x)
 
 }
+\seealso{
+\code{\link{drop_labels}} to drop labels from zero-count values.
+}
 
