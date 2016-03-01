@@ -1,5 +1,9 @@
 # sjmisc 1.5.1
 
+## New functions
+
+* `rec_pattern` to generate recode patterns for the `rec` function.
+
 ## Changes to functions
 
 * `cv` now accepts multiple arguments.
