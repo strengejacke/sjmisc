@@ -2,29 +2,60 @@
 % Please edit documentation in R/overdisp.R
 \name{overdisp}
 \alias{overdisp}
-\title{Check overdispersion of GLMM's}
+\title{Check overdispersion of GL(M)M's}
 \usage{
-overdisp(x)
+overdisp(x, trafo = NULL)
 }
 \arguments{
-\item{x}{Fitted mixed effects model (\code{\link[lme4]{merMod}}-class).}
+\item{x}{Fitted GLMM (\code{\link[lme4]{merMod}}-class) or \code{glm} model.}
+
+\item{trafo}{A specification of the alternative, can be numeric or a
+(positive) function or \code{NULL} (the default). See 'Details'
+in \code{\link[AER]{dispersiontest}} in package \pkg{AER}. Does not
+apply to \code{merMod} objects.}
 }
 \value{
-Information on the overdispersion test. If the p-value is larger than
-          0.05, no overdispersion is present. A p-value lower than 0.005
-          suggests overdispersion.
+Information on the overdispersion test.
 }
 \description{
-This function checks generalized linear mixed models for
-               overdispersion. Currently, only \code{\link[lme4]{merMod}} objects
-               are supported.
+This function checks generalized linear (mixed) models for
+               overdispersion.
 }
 \details{
-This function is based on the code in the
+For \code{merMod}-objects, this function is based on the code in the
            \href{http://glmm.wikidot.com/faq}{DRAFT r-sig-mixed-models FAQ},
            section \emph{How can I deal with overdispersion in GLMMs?}.
            Note that this function only returns an \emph{approximate} estimate
            of an overdispersion parameter.
+           \cr \cr
+           For \code{glm}'s, this function simply wraps the \code{dispersiontest}
+           from the \pkg{AER}-package.
+}
+\note{
+The interpretation of the returned p-value differs between GLM and
+        GLMM. For GLMs, a p-value < .05 indicates overdispersion, while
+        for GLMMs, a p-value > .05 indicates overdispersion.
+}
+\examples{
+data(efc)
+
+# response has many zero-counts, poisson models
+# might be overdispersed
+barplot(table(efc$tot_sc_e))
+
+fit <- glm(tot_sc_e ~ neg_c_7 + e42dep + c160age,
+           data = efc,
+           family = poisson)
+overdisp(fit)
+
+
+library(lme4)
+efc$e15relat <- to_factor(efc$e15relat)
+fit <- glmer(tot_sc_e ~ neg_c_7 + e42dep + c160age + (1 | e15relat),
+             data = efc, family = poisson)
+overdisp(fit)
+
+
 }
 \references{
 \href{http://glmm.wikidot.com/faq}{DRAFT r-sig-mixed-models FAQ}

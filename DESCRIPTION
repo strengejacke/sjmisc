@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 1.5.1
-Date: 2016-02-29
+Version: 1.5.1-2
+Date: 2016-03-03
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
@@ -31,6 +31,7 @@ Imports:
     stringdist (>= 0.9.2),
     tidyr
 Suggests:
+    AER,
     arm,
     foreign,
 URL: https://github.com/sjPlot/sjmisc

@@ -1,4 +1,4 @@
-Version 1.5.1
+Version 1.5.1-2
 ------------------------------------------------------------------------------
 New functions:
 * `rec_pattern` to generate recode patterns for the `rec` function.
@@ -9,6 +9,7 @@ Changes to functions:
 * `cv` now accepts multiple arguments.
 * `icc` now accepts multiple arguments.
 * `weight` now also weights character vectors.
+* `overdisp` now wraps `AER::dispersiontest` to also support simple glm's.
 * Removed deprecated functions.
 
 

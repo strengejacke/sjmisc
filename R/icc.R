@@ -92,14 +92,14 @@ icc.lme4 <- function(fit) {
     # residual variances
     if (any(class(fit) == "glmerMod") && fitfam == "binomial") {
       # for logistic models, we use pi / 3
-      resid_var <- (pi^2) / 3
+      resid_var <- (pi ^ 2) / 3
     } else if (any(class(fit) == "glmerMod") && is_negbin) {
       # for negative binomial models, we use 0
       resid_var <- 0
     } else {
       # for linear models, we have a clear
       # residual variance
-      resid_var <- attr(reva, "sc")^2
+      resid_var <- attr(reva, "sc") ^ 2
     }
     # total variance
     total_var <- sum(sapply(vars, sum), resid_var)
@@ -113,13 +113,14 @@ icc.lme4 <- function(fit) {
     } else {
       # random intercept icc
       ri.icc <- sigma_a2 / total_var
-      # name values
-      names(ri.icc) <- names(reva)
       # icc standard errors
       # ri.icc.se <- unlist(lapply(reva, function(x) attr(x, "stddev")[1]))
       # names(ri.icc.se) <- paste0(names(reva), " (S.E.)")
       # return(list(icc = ri.icc, se = ri.icc.se))
     }
+    # name values
+    names(ri.icc) <- names(reva)
+    # return results
     return(ri.icc)
   } else {
     warning("Function 'icc' currently only supports 'merMod' objects (package 'lme4').", call. = F)

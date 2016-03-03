@@ -1,4 +1,4 @@
-# sjmisc 1.5.1
+# sjmisc 1.5.1-2
 
 ## New functions
 
@@ -11,4 +11,5 @@
 * `cv` now accepts multiple arguments.
 * `icc` now accepts multiple arguments.
 * `weight` now also weights character vectors.
+* `overdisp` now wraps `AER::dispersiontest` to also support simple glm's.
 * Removed deprecated functions.
