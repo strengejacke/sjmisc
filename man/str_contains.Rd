@@ -4,14 +4,24 @@
 \alias{str_contains}
 \title{Check if string contains pattern}
 \usage{
-str_contains(x, pattern, ignore.case = FALSE)
+str_contains(x, pattern, ignore.case = FALSE, logic = NULL)
 }
 \arguments{
 \item{x}{Character string where matches are sought.}
 
-\item{pattern}{Character string to be matched in \code{x}.}
+\item{pattern}{Character string to be matched in \code{x}. May also be a
+character vector of length > 1 (see 'Examples').}
 
 \item{ignore.case}{Logical, whether matching should be case sensitive or not.}
+
+\item{logic}{Indicates whether a logical combination of multiple search pattern
+should be made.
+\itemize{
+  \item Use \code{"or"}, \code{"OR"} or \code{"|"} for a logical or-combination, i.e. at least one element of \code{pattern} is in \code{x}.
+  \item Use \code{"and"}, \code{"AND"} or \code{"&"} for a logical AND-combination, i.e. all elements of \code{pattern} are in \code{x}.
+  \item Use \code{"not"}, \code{"NOT"} or \code{"!"} for a logical NOT-combination, i.e. no element of \code{pattern} is in \code{x}.
+  \item By default, \code{logic = NULL}, which means that \code{TRUE} or \code{FALSE} is returned for each element of \code{pattern} separately.
+}}
 }
 \value{
 \code{TRUE} if \code{x} contains \code{pattern}.
@@ -28,6 +38,19 @@ str_contains("hello", "hal")
 str_contains("hello", "Hel")
 str_contains("hello", "Hel", ignore.case = TRUE)
 
+# which patterns are in "abc"?
+str_contains("abc", c("a", "b", "e"))
+
+# any pattern in "abc"?
+str_contains("abc", c("a", "b", "e"), logic = "or")
+
+# all patterns in "abc"?
+str_contains("abc", c("a", "b", "e"), logic = "and")
+str_contains("abc", c("a", "b"), logic = "and")
+
+# no patterns in "abc"?
+str_contains("abc", c("a", "b", "e"), logic = "not")
+str_contains("abc", c("d", "e", "f"), logic = "not")
 
 }
 
