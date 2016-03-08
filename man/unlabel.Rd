@@ -2,7 +2,7 @@
 % Please edit documentation in R/unlabel.R
 \name{unlabel}
 \alias{unlabel}
-\title{Convert labelled data (frames) into normal classes}
+\title{Convert labelled vectors into normal classes}
 \usage{
 unlabel(x)
 }
@@ -14,13 +14,12 @@ of class \code{labelled}.}
 a data frame or single vector (depending on \code{x}) with common object classes.
 }
 \description{
-This function converts a vector or data frame, which was imported with any of
-               \code{haven}'s read functions and contains \code{\link[haven]{labelled}} class vectors or
-               a single vector of type \code{labelled} into an generic data
-               frame format, which means that simply all \code{\link[haven]{labelled}} class
-               attributes will be removed, so all vectors / variables will most
+This function converts \code{\link[haven]{labelled}} class vectors
+               into a generic data format, which means that simply all \code{\link[haven]{labelled}}
+               class attributes will be removed, so all vectors / variables will most
                likely become \code{\link{atomic}}. Additionally, \code{tbl_df} and
-               \code{tbl} class attributes will be removed from data frames. See 'Note'.
+               \code{tbl} class attributes will be removed from data frames, and
+               a \code{\link{lbl_df}} class attribute will be added. See 'Note'.
 }
 \note{
 This function is currently only used to avoid possible compatibility issues
@@ -31,6 +30,8 @@ This function is currently only used to avoid possible compatibility issues
         \code{tbl} class attributes may cause difficulties when indexing columns
         like \code{data.frame[, colnr]} - only \code{data.frame[[colnr]]} seems
         to be safe when accessing data frame columns from within function calls.
+        \cr \cr
+        Data frames will be converted into labelled data frames (see \code{\link{lbl_df}}).
 }
 \seealso{
 \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}

@@ -7,10 +7,10 @@
 lbl_df(x)
 }
 \arguments{
-\item{data}{A data frame.}
+\item{x}{A data frame.}
 }
 \value{
-\code{data}, with \code{lbl_df} class-attribute.
+\code{x}, with \code{lbl_df} class-attribute.
 }
 \description{
 This method wraps a local data frame and adds a \code{lbl_df} class
@@ -35,14 +35,10 @@ mydf <- efc \%>\%
 lbl_df(mydf)
 
 
-library(dplyr)
-library(sjmisc)
-data(diamonds)
-
-mydf <- lbl_df(tbl_df(diamonds) \%>\%
-  select(cut, carat, price) \%>\%
-  set_label(c("", "Kt", "EUR")) \%>\%
-  slice(1:3))
+mydf <- lbl_df(efc \%>\%
+  select(e15relat, e16sex, e17age) \%>\%
+  to_label() \%>\%
+  set_label(c("Relationship", "Elder's gender", "Elder's age")))
 
 mydf
 

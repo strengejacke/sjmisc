@@ -109,9 +109,9 @@ as_labelled_helper <- function(x, add.labels, add.class) {
 #'                to printing \code{\link[dplyr]{tbl_df}} objects, but the class
 #'                information in the output is replaced by the variable label.
 #'
-#' @param data A data frame.
+#' @param x A data frame.
 #'
-#' @return \code{data}, with \code{lbl_df} class-attribute.
+#' @return \code{x}, with \code{lbl_df} class-attribute.
 #'
 #' @examples
 #' data(efc)
@@ -130,14 +130,10 @@ as_labelled_helper <- function(x, add.labels, add.class) {
 #' lbl_df(mydf)
 #'
 #'
-#' library(dplyr)
-#' library(sjmisc)
-#' data(diamonds)
-#'
-#' mydf <- lbl_df(tbl_df(diamonds) %>%
-#'   select(cut, carat, price) %>%
-#'   set_label(c("", "Kt", "EUR")) %>%
-#'   slice(1:3))
+#' mydf <- lbl_df(efc %>%
+#'   select(e15relat, e16sex, e17age) %>%
+#'   to_label() %>%
+#'   set_label(c("Relationship", "Elder's gender", "Elder's age")))
 #'
 #' mydf
 #'

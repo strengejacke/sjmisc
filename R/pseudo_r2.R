@@ -31,9 +31,9 @@ pseudo_r2 <- function(x) {
   n <- nrow(x$model)
   CoxSnell <- 1 - exp((x$deviance - x$null) / n)
   Nagelkerke <- CoxSnell / (1 - exp(-x$null / n))
-  pseudor2 <- list(CoxSnell, Nagelkerke)
-  names(pseudor2) <- c("CoxSnell", "Nagelkerke")
-  return(pseudor2)
+  names(CoxSnell) <- "CoxSnell"
+  names(Nagelkerke) <- "Nagelkerke"
+  return(structure(class = "sjmisc_r2", list(coxsnell = CoxSnell, nagelkerke = Nagelkerke)))
 }
 
 
@@ -103,4 +103,87 @@ cod <- function(x) {
   m2 <- mean(pred[which(y == categories[2])], na.rm = T)
 
   return(abs(m2 - m1))
+}
+
+
+
+#' @title Compute R-squared of linear (mixed) models
+#' @name r2
+#'
+#' @description Compute R-squared values of linear (mixed) models, or pseudo-R-squared
+#'                values for glm-objects.
+#'
+#' @param x Fitted linear (mixed) model, or a \code{glm} object.
+#'
+#' @return For linear models, the r-squared and adjusted r-squared value. For
+#'           linear mixed models, the r-squared and Omega-squared value.
+#'           For \code{glm} objects, the \code{\link{pseudo_r2}} is returned.
+#'
+#' @note For linear models, the r-squared and adjusted r-squared value is returned.
+#'         For linear mixed models, an r-squared approximation by computing the
+#'         correlation between the fitted and observed values, as suggested by
+#'         Byrnes (2008), is returned as well as the Omega-squared value as
+#'         suggested by Xu (2003).
+#'
+#' @references \itemize{
+#'               \item \href{http://glmm.wikidot.com/faq}{DRAFT r-sig-mixed-models FAQ}
+#'               \item Byrnes, J. 2008. Re: Coefficient of determination (R^2) when using lme(). \href{http://thread.gmane.org/gmane.comp.lang.r.lme4.devel/684}{gmane.comp.lang.r.lme4.devel}
+#'               \item Xu, R. 2003. Measuring explained variation in linear mixed effects models. Statist. Med. 22:3527-3541. \url{doi:10.1002/sim.1572}
+#'             }
+#'
+#' @examples
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' r2(fit)
+#'
+#' data(efc)
+#' fit <- lm(barthtot ~ c160age + c12hour, data = efc)
+#' r2(fit)
+#'
+#' # Pseudo-R-squared values
+#' efc$services <- dicho(efc$tot_sc_e, "v", 0, as.num = TRUE)
+#' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
+#'            data = efc,
+#'            family = binomial(link = "logit"))
+#' r2(fit)
+#'
+#'
+#' @importFrom stats model.response model.frame fitted var residuals
+#' @export
+r2 <- function(x) {
+  rsq <- NULL
+  osq <- NULL
+  adjr2 <- NULL
+  # do we have a glm? if so, report pseudo_r2
+  if (any(class(x) == "glm")) {
+    return(pseudo_r2(x))
+    # do we have a simple linear model?
+  } else if (identical(class(x), "lm")) {
+    rsq <- summary(x)$r.squared
+    adjr2 <- summary(x)$adj.r.squared
+    # name vectors
+    names(rsq) <- "R2"
+    names(adjr2) <- "adj.R2"
+    # return results
+    return(structure(class = "sjmisc_r2", list(r2 = rsq, adjr2 = adjr2)))
+    # else do we have a mixed model?
+  } else if (str_contains(class(x),
+                          pattern = c("lmerMod", "lme"),
+                          ignore.case = T,
+                          logic = "OR")) {
+    # compute "correlation"
+    lmfit <-  lm(stats::model.response(stats::model.frame(x)) ~ stats::fitted(x))
+    # get r-squared
+    rsq <- summary(lmfit)$r.squared
+    # get omega squared
+    osq <- 1 - stats::var(stats::residuals(x)) / stats::var(stats::model.response(stats::model.frame(x)))
+    # name vectors
+    names(rsq) <- "R2"
+    names(osq) <- "O2"
+    # return results
+    return(structure(class = "sjmisc_r2", list(r2 = rsq, o2 = osq)))
+  } else {
+    stop("`r2` only works on linear (mixed) models of class \"lm\", \"lme\" or \"lmerMod\".", call. = F)
+    return(NULL)
+  }
 }
