@@ -70,7 +70,13 @@ to_long(mydat, "time", c("score", "speed"),
         c("speed_t1", "speed_t2", "speed_t3"),
         recode.key = TRUE)
 
-# gather multiple columns, use numeric key-value
+# gather multiple columns, use separate key-column for each value-vector
+to_long(mydat, c("time_score", "time_speed"), c("score", "speed"),
+        c("score_t1", "score_t2", "score_t3"),
+        c("speed_t1", "speed_t2", "speed_t3"),
+        recode.key = TRUE)
+
+# gather multiple columns, label columns
 mydat <- to_long(mydat, "time", c("score", "speed"),
                  c("score_t1", "score_t2", "score_t3"),
                  c("speed_t1", "speed_t2", "speed_t3"),
