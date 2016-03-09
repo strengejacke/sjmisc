@@ -30,7 +30,7 @@ Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intracla
        \item It can be theoretically meaningful to understand how much of the overall variation in the response is explained simply by clustering.  For example, in a repeated measures psychological study you can tell to what extent mood is a trait (varies among people, but not within a person on different occasions) or state (varies little on average among people, but varies a lot across occasions).
        \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
       }
-      \cr \cr
+      \cr
       The calculation of the ICC for generalized linear mixed models with binomial outcome is based on
       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
       describes computation of ICC for negative binomial models.

@@ -28,7 +28,7 @@
 #'        \item It can be theoretically meaningful to understand how much of the overall variation in the response is explained simply by clustering.  For example, in a repeated measures psychological study you can tell to what extent mood is a trait (varies among people, but not within a person on different occasions) or state (varies little on average among people, but varies a lot across occasions).
 #'        \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
 #'       }
-#'       \cr \cr
+#'       \cr
 #'       The calculation of the ICC for generalized linear mixed models with binomial outcome is based on
 #'       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
 #'       describes computation of ICC for negative binomial models.
@@ -99,7 +99,7 @@ icc.lme4 <- function(fit) {
       # for negative binomial models, we use 0
       resid_var <- 0
     } else {
-      # for linear models, we have a clear
+      # for linear and poisson models, we have a clear
       # residual variance
       resid_var <- attr(reva, "sc") ^ 2
     }
@@ -110,15 +110,9 @@ icc.lme4 <- function(fit) {
       beta <- as.numeric(lme4::fixef(fit)["(Intercept)"])
       r <- lme4::getME(fit, "glmer.nb.theta")
       ri.icc <- (exp(sigma_a2) - 1) / ((exp(total_var) - 1) + (exp(total_var) / r) + exp(-beta - (total_var / 2)))
-    } else if (fitfam == "poisson") {
-      ri.icc <- sigma_a2 / (resid_var + sigma_a2)
     } else {
       # random intercept icc
       ri.icc <- sigma_a2 / total_var
-      # icc standard errors
-      # ri.icc.se <- unlist(lapply(reva, function(x) attr(x, "stddev")[1]))
-      # names(ri.icc.se) <- paste0(names(reva), " (S.E.)")
-      # return(list(icc = ri.icc, se = ri.icc.se))
     }
     # name values
     names(ri.icc) <- names(reva)
