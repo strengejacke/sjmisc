@@ -14,6 +14,10 @@ For linear models, the r-squared and adjusted r-squared value. For
           linear mixed models, the r-squared and Omega-squared value.
           For \code{glm} objects, the \code{\link{pseudo_r2}} is returned.
 }
+\description{
+Compute R-squared values of linear (mixed) models, or pseudo-R-squared
+               values for glm-objects.
+}
 \note{
 For linear models, the r-squared and adjusted r-squared value is returned.
         For linear mixed models, an r-squared approximation by computing the
