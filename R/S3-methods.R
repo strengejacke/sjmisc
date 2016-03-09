@@ -58,17 +58,26 @@ print.lbl_df <- function(x, ..., n = NULL, width = NULL) {
 
 #' @export
 print.sjmisc_r2 <- function(x, ...) {
-  if (identical(names(x[[2]]), "Nagelkerke")) {
-    s1 <- "Cox & Snell's R-squared"
-    s2 <- "Nagelkerke's R-squared"
-  } else if (identical(names(x[[2]]), "adj.R2 ")) {
-    s1 <- "R-squared"
-    s2 <- "adjusted R-squared"
-  } else if (identical(names(x[[2]]), "O2")) {
-    s1 <- "R-squared"
-    s2 <- "Omega-squared"
+  if (length(x) > 1) {
+    if (identical(names(x[[2]]), "Nagelkerke")) {
+      s1 <- "Cox & Snell's R-squared"
+      s2 <- "Nagelkerke's R-squared"
+    } else if (identical(names(x[[2]]), "adj.R2 ")) {
+      s1 <- "R-squared"
+      s2 <- "adjusted R-squared"
+    } else if (identical(names(x[[2]]), "O2")) {
+      s1 <- "R-squared"
+      s2 <- "Omega-squared"
+    } else {
+      return(NULL)
+    }
+    cat(sprintf("%s: %.4f; %s: %.4f\n", s1, x[[1]], s2, x[[2]]))
   } else {
-    return(NULL)
+    if (identical(names(x[[1]]), "D")) {
+      s1 <- "Tjur's D"
+    } else {
+      return(NULL)
+    }
+    cat(sprintf("%s: %.4f\n", s1, x[[1]]))
   }
-  cat(sprintf("%s: %.4f; %s: %.4f\n", s1, x[[1]], s2, x[[2]]))
 }

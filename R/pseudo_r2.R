@@ -28,12 +28,13 @@
 #'
 #' @export
 pseudo_r2 <- function(x) {
+  .Deprecated("r2", package = "sjmisc", msg = "`pseudo_r2` will be deprecated in future versions of `sjmisc`. Please use `r2` instead.")
   n <- nrow(x$model)
   CoxSnell <- 1 - exp((x$deviance - x$null) / n)
   Nagelkerke <- CoxSnell / (1 - exp(-x$null / n))
   names(CoxSnell) <- "CoxSnell"
   names(Nagelkerke) <- "Nagelkerke"
-  return(structure(class = "sjmisc_r2", list(coxsnell = CoxSnell, nagelkerke = Nagelkerke)))
+  return(structure(class = "sjmisc_r2", list(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke)))
 }
 
 
@@ -102,33 +103,49 @@ cod <- function(x) {
   m1 <- mean(pred[which(y == categories[1])], na.rm = T)
   m2 <- mean(pred[which(y == categories[2])], na.rm = T)
 
-  return(abs(m2 - m1))
+  cod = abs(m2 - m1)
+  names(cod) <- "D"
+
+  return(structure(class = "sjmisc_r2", list(cod = cod)))
 }
 
 
 
-#' @title Compute R-squared of linear (mixed) models
+#' @title Compute R-squared of (generalized) linear (mixed) models
 #' @name r2
 #'
-#' @description Compute R-squared values of linear (mixed) models, or pseudo-R-squared
-#'                values for glm-objects.
+#' @description Compute R-squared values of linear (mixed) models, or
+#'                pseudo-R-squared values for generalized linear (mixed) models.
 #'
-#' @param x Fitted linear (mixed) model, or a \code{glm} object.
+#' @param x Fitted model of class \code{lm}, \code{glm}, \code{lmerMod}/\code{lme}
+#'            or \code{glmerMod}.
 #'
-#' @return For linear models, the r-squared and adjusted r-squared value. For
-#'           linear mixed models, the r-squared and Omega-squared value.
-#'           For \code{glm} objects, the \code{\link{pseudo_r2}} is returned.
+#' @return \itemize{
+#'           \item For linear models, the r-squared and adjusted r-squared values.
+#'           \item For linear mixed models, the r-squared and Omega-squared values.
+#'           \item For \code{glm} objects, Cox & Snell's and Nagelkerke's pseudo r-squared values.
+#'           \item For \code{glmerMod} objects, Tjur's coefficient of determination.
+#'         }
 #'
-#' @note For linear models, the r-squared and adjusted r-squared value is returned.
+#' @note For linear models, the r-squared and adjusted r-squared value is returned,
+#'         as provided by the \code{summary}-function.
+#'         \cr \cr
 #'         For linear mixed models, an r-squared approximation by computing the
 #'         correlation between the fitted and observed values, as suggested by
 #'         Byrnes (2008), is returned as well as the Omega-squared value as
 #'         suggested by Xu (2003).
+#'         \cr \cr
+#'         For generalized linear models, Cox & Snell's and Nagelkerke's
+#'         pseudo r-squared values are returned.
+#'         \cr \cr
+#'         For generalized linear mixed models, the coefficient of determination
+#'         as suggested by Tjur (2009) (see also \code{\link{cod}}).
 #'
 #' @references \itemize{
 #'               \item \href{http://glmm.wikidot.com/faq}{DRAFT r-sig-mixed-models FAQ}
 #'               \item Byrnes, J. 2008. Re: Coefficient of determination (R^2) when using lme(). \href{http://thread.gmane.org/gmane.comp.lang.r.lme4.devel/684}{gmane.comp.lang.r.lme4.devel}
 #'               \item Xu, R. 2003. Measuring explained variation in linear mixed effects models. Statist. Med. 22:3527-3541. \url{doi:10.1002/sim.1572}
+#'               \item Tjur T. 2009. Coefficients of determination in logistic regression models - a new proposal: The coefficient of discrimination. The American Statistician, 63(4): 366-372
 #'             }
 #'
 #' @examples
@@ -157,6 +174,9 @@ r2 <- function(x) {
   # do we have a glm? if so, report pseudo_r2
   if (any(class(x) == "glm")) {
     return(pseudo_r2(x))
+    # do we have a glmer?
+  } else if (any(class(x) == "glmerMod")) {
+    return(cod(x))
     # do we have a simple linear model?
   } else if (identical(class(x), "lm")) {
     rsq <- summary(x)$r.squared

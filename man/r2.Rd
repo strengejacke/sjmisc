@@ -2,28 +2,40 @@
 % Please edit documentation in R/pseudo_r2.R
 \name{r2}
 \alias{r2}
-\title{Compute R-squared of linear (mixed) models}
+\title{Compute R-squared of (generalized) linear (mixed) models}
 \usage{
 r2(x)
 }
 \arguments{
-\item{x}{Fitted linear (mixed) model, or a \code{glm} object.}
+\item{x}{Fitted model of class \code{lm}, \code{glm}, \code{lmerMod}/\code{lme}
+or \code{glmerMod}.}
 }
 \value{
-For linear models, the r-squared and adjusted r-squared value. For
-          linear mixed models, the r-squared and Omega-squared value.
-          For \code{glm} objects, the \code{\link{pseudo_r2}} is returned.
+\itemize{
+          \item For linear models, the r-squared and adjusted r-squared values.
+          \item For linear mixed models, the r-squared and Omega-squared values.
+          \item For \code{glm} objects, Cox & Snell's and Nagelkerke's pseudo r-squared values.
+          \item For \code{glmerMod} objects, Tjur's coefficient of determination.
+        }
 }
 \description{
-Compute R-squared values of linear (mixed) models, or pseudo-R-squared
-               values for glm-objects.
+Compute R-squared values of linear (mixed) models, or
+               pseudo-R-squared values for generalized linear (mixed) models.
 }
 \note{
-For linear models, the r-squared and adjusted r-squared value is returned.
+For linear models, the r-squared and adjusted r-squared value is returned,
+        as provided by the \code{summary}-function.
+        \cr \cr
         For linear mixed models, an r-squared approximation by computing the
         correlation between the fitted and observed values, as suggested by
         Byrnes (2008), is returned as well as the Omega-squared value as
         suggested by Xu (2003).
+        \cr \cr
+        For generalized linear models, Cox & Snell's and Nagelkerke's
+        pseudo r-squared values are returned.
+        \cr \cr
+        For generalized linear mixed models, the coefficient of determination
+        as suggested by Tjur (2009) (see also \code{\link{cod}}).
 }
 \examples{
 library(lme4)
@@ -48,6 +60,7 @@ r2(fit)
               \item \href{http://glmm.wikidot.com/faq}{DRAFT r-sig-mixed-models FAQ}
               \item Byrnes, J. 2008. Re: Coefficient of determination (R^2) when using lme(). \href{http://thread.gmane.org/gmane.comp.lang.r.lme4.devel/684}{gmane.comp.lang.r.lme4.devel}
               \item Xu, R. 2003. Measuring explained variation in linear mixed effects models. Statist. Med. 22:3527-3541. \url{doi:10.1002/sim.1572}
+              \item Tjur T. 2009. Coefficients of determination in logistic regression models - a new proposal: The coefficient of discrimination. The American Statistician, 63(4): 366-372
             }
 }
 
