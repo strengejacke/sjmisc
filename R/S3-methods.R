@@ -81,3 +81,27 @@ print.sjmisc_r2 <- function(x, ...) {
     cat(sprintf("%s: %.4f\n", s1, x[[1]]))
   }
 }
+
+
+#' @export
+print.icc.lme4 <- function(x, ...) {
+  # print model information
+  cat(sprintf("%s\n Family: %s (%s)\nFormula: %s\n\n",
+              attr(x, "model", exact = T),
+              attr(x, "family", exact = T),
+              attr(x, "link", exact = T),
+              paste(as.character(attr(x, "formula"))[c(2, 1, 3)], collapse = " ")))
+  # get longest rand. effect name
+  len <- max(nchar(names(x)))
+  # print icc
+  for (i in 1:length(x)) {
+    # create info string
+    infs <- sprintf("ICC (%s)", names(x[i]))
+    # print info line, formatting all ICC values so they're
+    # aligned properly
+    cat(sprintf("%*s: %f\n",
+        len + 8,
+        infs,
+        as.vector(x[i])))
+  }
+}

@@ -29,9 +29,9 @@
 #'        \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
 #'       }
 #'       \cr
-#'       The calculation of the ICC for generalized linear mixed models with binomial outcome is based on
+#'       The calculation of the ICC for generalized linear mixed models with binary outcome is based on
 #'       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
-#'       describes computation of ICC for negative binomial models.
+#'       describe computation of ICC for negative binomial models.
 #'
 #' @examples
 #' \dontrun{
@@ -66,6 +66,7 @@ icc <- function(x, ...) {
 }
 
 #' @importFrom lme4 VarCorr fixef getME
+#' @importFrom stats family formula
 icc.lme4 <- function(fit) {
   # ------------------------
   # check if suggested package is available
@@ -89,7 +90,7 @@ icc.lme4 <- function(fit) {
     reva <- summary(fit)$varcor
     # retrieve only intercepts
     vars <- lapply(reva, function(x) x[[1]])
-    # intercept-variance
+    # random intercept-variances
     sigma_a2 <- sapply(vars, function(x) x[1])
     # residual variances
     if (any(class(fit) == "glmerMod") && fitfam == "binomial") {
@@ -103,23 +104,33 @@ icc.lme4 <- function(fit) {
       # residual variance
       resid_var <- attr(reva, "sc") ^ 2
     }
-    # total variance
+    # total variance, sum of random intercept and residual variances
     total_var <- sum(sapply(vars, sum), resid_var)
     # check whether we have negative binomial
     if (is_negbin) {
+      # for negative binomial models, we also need the intercept...
       beta <- as.numeric(lme4::fixef(fit)["(Intercept)"])
+      # ... and the theta value to compute the ICC
       r <- lme4::getME(fit, "glmer.nb.theta")
-      ri.icc <- (exp(sigma_a2) - 1) / ((exp(total_var) - 1) + (exp(total_var) / r) + exp(-beta - (total_var / 2)))
+      ri.icc <-
+        (exp(sigma_a2) - 1) /
+        ((exp(total_var) - 1) + (exp(total_var) / r) + exp(-beta - (total_var / 2)))
     } else {
       # random intercept icc
       ri.icc <- sigma_a2 / total_var
     }
     # name values
     names(ri.icc) <- names(reva)
+    # add attributes, for print method
+    class(ri.icc) <- c("icc.lme4", class(ri.icc))
+    attr(ri.icc, "family") <- stats::family(fit)$family
+    attr(ri.icc, "link") <- stats::family(fit)$link
+    attr(ri.icc, "formula") <- stats::formula(fit)
+    attr(ri.icc, "model") <- ifelse(isTRUE(any(class(fit) == "glmerMod")), "Generalized inear mixed model", "Linear mixed model")
     # return results
     return(ri.icc)
   } else {
-    warning("Function 'icc' currently only supports 'merMod' objects (package 'lme4').", call. = F)
+    warning("Function `icc` currently only supports `merMod` objects (package `lme4`).", call. = F)
   }
 }
 

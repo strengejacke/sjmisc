@@ -31,9 +31,9 @@ Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intracla
        \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
       }
       \cr
-      The calculation of the ICC for generalized linear mixed models with binomial outcome is based on
+      The calculation of the ICC for generalized linear mixed models with binary outcome is based on
       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
-      describes computation of ICC for negative binomial models.
+      describe computation of ICC for negative binomial models.
 }
 \examples{
 \dontrun{
