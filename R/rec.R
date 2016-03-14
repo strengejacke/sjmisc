@@ -229,8 +229,18 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   if (is.factor(x)) {
     # factor may only have numeric levels!
     if (!is_num_fac(x)) {
-      stop("'x' may only have numeric factor levels!", call. = F)
+      stop("`x` may only have numeric factor levels.", call. = F)
     } else {
+      # save variable labels before in case we just want
+      # to reverse the order
+      if (is.null(val_lab) && recodes == "rev") {
+        val_lab <- rev(get_labels(
+          x,
+          attr.only = TRUE,
+          include.values = NULL,
+          include.non.labelled = TRUE
+        ))
+      }
       x <- as.numeric(as.character(x))
     }
   }

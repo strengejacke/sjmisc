@@ -1,4 +1,4 @@
-# sjmisc 1.5.1-3
+# sjmisc 1.6
 
 ## New functions
 
@@ -15,3 +15,8 @@
 * `weight` now also weights character vectors.
 * `overdisp` now wraps `AER::dispersiontest` to also support simple glm's.
 * Removed deprecated functions.
+
+## Bug fixes
+
+* Fixed bug in `ref_lvl`, where value labels were not correctly re-ordered for factors that had a `0` as level.
+* Fixed bug in `rec`, where value labels were not automatically re-ordered when `x` was a numeric factor.

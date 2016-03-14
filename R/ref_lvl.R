@@ -70,7 +70,12 @@ ref_lvl <- function(x, value = NULL) {
     set_label(x) <- var.lab
   }
   if (!is.null(val.labs)) {
-    set_labels(x) <- val.labs[neword]
+    # we need "order" twice here, because "neword" refers to the actual
+    # values of "x", so "neword" might have negative values, or zero.
+    # so we first need the "order" function to have numeric values from
+    # 1 to length(x) - and a second "order" call to get the correct order
+    # of these values.
+    set_labels(x) <- val.labs[order(order(neword))]
   }
   return(x)
 }

@@ -15,13 +15,13 @@ rec_pattern(from, to, width = 5, other = NULL)
 
 \item{other}{String token, indicating how to deal with all other values
 that have not been captured by the recode pattern. See 'Details'
-on the \code{emph}-token in \code{\link{rec}}.}
+on the \code{else}-token in \code{\link{rec}}.}
 }
 \value{
 A list with two values:
-          \itemize{
-           \item{pattern} string pattern that can be used as \code{recodes} argument for the \code{\link{rec}}-function.
-           \item{labels} the associated values labels that can be used with \code{\link{set_labels}}.
+          \describe{
+           \item{\code{pattern}}{string pattern that can be used as \code{recodes} argument for the \code{\link{rec}}-function.}
+           \item{\code{labels}}{the associated values labels that can be used with \code{\link{set_labels}}.}
           }
 }
 \description{
