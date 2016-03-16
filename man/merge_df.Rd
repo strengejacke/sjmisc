@@ -22,13 +22,13 @@ Merges (full join) two data frames and preserve value and variable labels.
 }
 \details{
 This function merges two data frames, where equal named columns
-           will be joined together. Rows of merged data from unique columns
-           in \code{x1} will be filled with \code{NA} (and vice versa for
-           \code{x2}). This function is a convenient wrapper for
-           \code{merge(x1, x2, all = TRUE}, however, unlike base
+           will be joined together. This function is a convenient wrapper for
+           \code{merge(x1, x2, all = TRUE)}, however, unlike base
            \code{\link{merge}}, this function preserves value and
-           variable labels. For more details on this function, see
-           also 'Details' in \code{\link{merge}} about \code{all}-argument.
+           variable labels. If matching columns have different value
+           label attributes, attributes from first data frame will be
+           used. For more details on the join operation, see
+           'Details' in \code{\link{merge}} on \code{all}-argument.
 }
 \examples{
 library(dplyr)
