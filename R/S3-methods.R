@@ -62,7 +62,7 @@ print.sjmisc_r2 <- function(x, ...) {
     if (identical(names(x[[2]]), "Nagelkerke")) {
       s1 <- "Cox & Snell's R-squared"
       s2 <- "Nagelkerke's R-squared"
-    } else if (identical(names(x[[2]]), "adj.R2 ")) {
+    } else if (identical(names(x[[2]]), "adj.R2")) {
       s1 <- "R-squared"
       s2 <- "adjusted R-squared"
     } else if (identical(names(x[[2]]), "O2")) {
