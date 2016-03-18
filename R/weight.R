@@ -102,3 +102,99 @@ weight <- function(x, weights, digits = 0) {
   }
   return(weightedvar)
 }
+
+
+#' @title Weighted standard deviation for variables
+#' @name wtd_sd
+#' @description Compute weighted standard deviation for a variable or for all variables
+#'                of a data frame.
+#'
+#' @param x (Numeric) vector or a data frame.
+#' @param weights Numeric vector of weights.
+#' @return The weighted standard deviation of \code{x}, or for each variable
+#'           if \code{x} is a data frame.
+#'
+#' @examples
+#' wtd_sd(rnorm(n = 100, mean = 3),
+#'        runif(n = 100))
+#'
+#' data(efc)
+#' wtd_sd(efc[, 1:3], runif(n = nrow(efc)))
+#'
+#' @export
+wtd_sd <- function(x, weights = NULL) {
+  # ------------------------
+  # check if suggested packages are available
+  # ------------------------
+  if (!requireNamespace("Hmisc", quietly = TRUE)) {
+    stop("Package `Hmisc` needed for this function to work. Please install it.", call. = FALSE)
+  }
+  if (is.matrix(x) || is.data.frame(x)) {
+    # init return variables
+    stdd <- c()
+    stdd_names <- c()
+    # iterate all columns
+    for (i in 1:ncol(x)) {
+      # get and save standard error for each variable
+      # of the data frame
+      stdd <- c(stdd,
+                sqrt(Hmisc::wtd.var(x[[i]], weights = weights, na.rm = TRUE)))
+      # save column name as variable name
+      stdd_names <- c(stdd_names, colnames(x)[i])
+    }
+    # set names to return vector
+    names(stdd) <- stdd_names
+    # return results
+    return(stdd)
+  } else {
+    return(sqrt(Hmisc::wtd.var(x, weights = weights, na.rm = TRUE)))
+  }
+}
+
+
+#' @title Weighted standard error for variables
+#' @name wtd_se
+#' @description Compute weighted standard error for a variable or for all variables
+#'                of a data frame.
+#'
+#' @param x (Numeric) vector or a data frame.
+#' @param weights Numeric vector of weights.
+#' @return The weighted standard error of \code{x}, or for each variable
+#'           if \code{x} is a data frame.
+#'
+#' @examples
+#' wtd_se(rnorm(n = 100, mean = 3),
+#'        runif(n = 100))
+#'
+#' data(efc)
+#' wtd_se(efc[, 1:3], runif(n = nrow(efc)))
+#'
+#' @export
+wtd_se <- function(x, weights = NULL) {
+  # ------------------------
+  # check if suggested packages are available
+  # ------------------------
+  if (!requireNamespace("Hmisc", quietly = TRUE)) {
+    stop("Package `Hmisc` needed for this function to work. Please install it.", call. = FALSE)
+  }
+  if (is.matrix(x) || is.data.frame(x)) {
+    # init return variables
+    stde <- c()
+    stde_names <- c()
+    # iterate all columns
+    for (i in 1:ncol(x)) {
+      # get and save standard error for each variable
+      # of the data frame
+      stde <- c(stde,
+                sqrt(Hmisc::wtd.var(x[[i]], weights = weights, na.rm = TRUE) / length(stats::na.omit(x[[i]]))))
+      # save column name as variable name
+      stde_names <- c(stde_names, colnames(x)[i])
+    }
+    # set names to return vector
+    names(stde) <- stde_names
+    # return results
+    return(stde)
+  } else {
+    return(sqrt(Hmisc::wtd.var(x, weights = weights, na.rm = TRUE) / length(stats::na.omit(x))))
+  }
+}

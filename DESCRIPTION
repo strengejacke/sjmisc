@@ -34,5 +34,6 @@ Suggests:
     AER,
     arm,
     foreign,
+    Hmisc
 URL: https://github.com/sjPlot/sjmisc
 RoxygenNote: 5.0.1
