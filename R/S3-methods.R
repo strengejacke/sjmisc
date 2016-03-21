@@ -105,3 +105,33 @@ print.icc.lme4 <- function(x, ...) {
         as.vector(x[i])))
   }
 }
+
+
+#'@export
+print.labelled <- function(x, ...) {
+  # code partially taken from haven:::print.labelled
+  cat("<Labelled>\n")
+  xx <- unclass(x)
+  attr(xx, "label") <- NULL
+  attr(xx, "labels") <- NULL
+  attr(xx, "is_na") <- NULL
+  attr(xx, "note") <- NULL
+  # print values
+  print(xx)
+  # print variable label
+  cat("\nVariable label:\n")
+  cat("  ", attr(x, "label", exact = TRUE), "\n")
+  # print value  labels
+  cat("\nValue labels:\n")
+  print(attr(x, "labels", exact = TRUE))
+  # print missing
+  cat("\nMissing values:\n")
+  cat("  ", format(get_na(x)), "\n")
+  # do we have a note?
+  note <- attr(x, "note", exact = TRUE)
+  if (!is.null(note) && !is_empty(note)) {
+    cat("\nNote:\n")
+    cat("  ", note, "\n")
+  }
+  invisible()
+}
