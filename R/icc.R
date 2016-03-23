@@ -112,7 +112,7 @@ icc.lme4 <- function(fit) {
     # ------------------------
     # random slope-variances (tau 11)
     # ------------------------
-    tau.11 <- lapply(reva, function(x) diag(x)[-1])
+    tau.11 <- unlist(lapply(reva, function(x) diag(x)[-1]))
     # ------------------------
     # residual variances, i.e.
     # within-cluster-variance (sigma^2)
@@ -143,6 +143,24 @@ icc.lme4 <- function(fit) {
       # random intercept icc
       ri.icc <- tau.00 / total_var
     }
+    # ----------------------------------
+    # get random slope random intercep correlations
+    # ----------------------------------
+    cor_dims <- lapply(reva, function(x) dim(attr(x, "correlation"))[1])
+    # do we have any rnd slopes?
+    has_rnd_slope <- unlist(lapply(reva, function(x) dim(attr(x, "correlation"))[1] > 1))
+    tau.01 <- rho.01 <- NULL
+    # get rnd slopes
+    if (any(has_rnd_slope)) {
+      rnd_slope <- reva[has_rnd_slope]
+      # get slope-intercept-correlations
+      cor_ <- lapply(rnd_slope, function(x) attr(x, "correlation")[1, 2])
+      # get standard deviations, multiplied
+      std_ <- lapply(rnd_slope, function(x) prod(attr(x, "stddev")))
+      # bind to matrix
+      tau.01 <- apply(as.matrix(cbind(unlist(cor_), unlist(std_))), MARGIN = 1, FUN = prod)
+      rho.01 <- cor_
+    }
     # name values
     names(ri.icc) <- names(reva)
     # add attributes, for print method
@@ -152,6 +170,8 @@ icc.lme4 <- function(fit) {
     attr(ri.icc, "formula") <- stats::formula(fit)
     attr(ri.icc, "model") <- ifelse(isTRUE(any(class(fit) == "glmerMod")), "Generalized inear mixed model", "Linear mixed model")
     attr(ri.icc, "tau.00") <- tau.00
+    attr(ri.icc, "tau.01") <- tau.01
+    attr(ri.icc, "rho.01") <- rho.01
     attr(ri.icc, "tau.11") <- tau.11
     attr(ri.icc, "sigma_2") <- resid_var
     # return results

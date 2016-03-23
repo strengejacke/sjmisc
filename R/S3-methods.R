@@ -68,6 +68,9 @@ print.sjmisc_r2 <- function(x, ...) {
     } else if (identical(names(x[[2]]), "O2")) {
       s1 <- "R-squared"
       s2 <- "Omega-squared"
+    } else if (identical(names(x[[2]]), "R2(tau-11)")) {
+      s1 <- "R-squared (tau-00)"
+      s2 <- "R-squared (tau-11)"
     } else {
       return(NULL)
     }
@@ -94,22 +97,37 @@ print.icc.lme4 <- function(x, comp, ...) {
   if (!missing(comp) && !is.null(comp) && comp == "var") {
     # get parameters
     tau.00 <- attr(x, "tau.00", exact = TRUE)
+    tau.01 <- attr(x, "tau.01", exact = TRUE)
     tau.11 <- attr(x, "tau.11", exact = TRUE)
     # print within-group-variance sigma^2
-    cat(sprintf(" Within-group-variance: %.3f\n", attr(x, "sigma_2", exact = TRUE)))
+    tmp <- sprintf("%.3f", attr(x, "sigma_2", exact = TRUE))
+    cat(sprintf("     Within-group-variance: %8s\n", tmp))
     # print between-group-variance tau0
     for (i in 1:(length(tau.00))) {
-      cat(sprintf("Between-group-variance: %.3f (%s)\n",
-                  tau.00[i],
+      tmp <- sprintf("%.3f", tau.00[i])
+      cat(sprintf("    Between-group-variance: %8s (%s)\n",
+                  tmp,
                   names(tau.00)[i]))
     }
     # print random-slop-variance tau1
     for (i in 1:length(tau.11)) {
-      tau.rs <- tau.11[[i]]
+      tau.rs <- tau.11[i]
       # any random slope?
       if (!is_empty(tau.rs)) {
-        cat(sprintf(" Random-slope-variance: %.3f (%s)\n",
-                    tau.rs,
+        tmp <- sprintf("%.3f", tau.rs)
+        cat(sprintf("     Random-slope-variance: %8s (%s)\n",
+                    tmp,
+                    names(tau.rs)))
+      }
+    }
+    # print random-slope-covariance tau01
+    for (i in 1:length(tau.01)) {
+      tau.rs <- tau.01[i]
+      # any random slope?
+      if (!is_empty(tau.rs)) {
+        tmp <- sprintf("%.3f", tau.rs)
+        cat(sprintf("Slope-Intercept-covariance: %8s (%s)\n",
+                    tmp,
                     names(tau.rs)))
       }
     }

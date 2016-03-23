@@ -4,11 +4,16 @@
 \alias{r2}
 \title{Compute R-squared of (generalized) linear (mixed) models}
 \usage{
-r2(x)
+r2(x, n = NULL)
 }
 \arguments{
 \item{x}{Fitted model of class \code{lm}, \code{glm}, \code{lmerMod}/\code{lme}
 or \code{glmerMod}.}
+
+\item{n}{Optional, a \code{lmerMod} object, representing the fitted null-model
+to \code{x}. If \code{n} is given, the pseudo-r-squared for random
+intercept and random slope variances are computed (see Kwok et al. 2008;
+see 'Examples' and 'Details').}
 }
 \value{
 \itemize{
@@ -21,6 +26,13 @@ or \code{glmerMod}.}
 \description{
 Compute R-squared values of linear (mixed) models, or
                pseudo-R-squared values for generalized linear (mixed) models.
+}
+\details{
+If \code{n} is given, the Pseudo-R2 statistic is the proportion of
+         explained variance in the random effect after adding co-variates or
+         predictors to the model, or in short: the proportion of the explained
+         variance in the random effect of the full model \code{x} compared
+         to the null model \code{n}.
 }
 \note{
 For linear models, the r-squared and adjusted r-squared value is returned,
@@ -53,12 +65,18 @@ fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
            family = binomial(link = "logit"))
 r2(fit)
 
+# Pseudo-R-squared values for random effect variances
+fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+fit.null <- lmer(Reaction ~ 1 + (Days | Subject), sleepstudy)
+r2(fit, fit.null)
+
 
 }
 \references{
 \itemize{
               \item \href{http://glmm.wikidot.com/faq}{DRAFT r-sig-mixed-models FAQ}
               \item Byrnes, J. 2008. Re: Coefficient of determination (R^2) when using lme(). \href{http://thread.gmane.org/gmane.comp.lang.r.lme4.devel/684}{gmane.comp.lang.r.lme4.devel}
+              \item Kwok OM, Underhill AT, Berry JW, Luo W, Elliott TR, Yoon M. 2008. Analyzing Longitudinal Data with Multilevel Models: An Example with Individuals Living with Lower Extremity Intra-Articular Fractures. Rehabilitation Psychology 53(3): 370–86 (\doi{10.1037/a0012765})
               \item Xu, R. 2003. Measuring explained variation in linear mixed effects models. Statist. Med. 22:3527-3541. \doi{10.1002/sim.1572}
               \item Tjur T. 2009. Coefficients of determination in logistic regression models - a new proposal: The coefficient of discrimination. The American Statistician, 63(4): 366-372
             }
