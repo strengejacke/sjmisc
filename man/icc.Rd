@@ -15,7 +15,8 @@ coefficients at once.}
 \value{
 A numeric vector with all random intercept intraclass-correlation-coefficients,
           or a list of numeric vectors, when more than one model were used
-          as arguments.
+          as arguments. Furthermore, between- and within-group variances as well
+          as random-slope variance are returned as attributes.
 }
 \description{
 This function calculates the intraclass-correlation
@@ -35,6 +36,10 @@ Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intracla
 The calculation of the ICC for generalized linear mixed models with binary outcome is based on
       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
       describe computation of ICC for negative binomial models.
+      \cr \cr
+      There is a \code{print}-method that prints the variance parameters using
+      the \code{comp}-argument set to \code{"var"}: \code{print(x, comp = "var")}
+      (see 'Examples').
 }
 \examples{
 \dontrun{
@@ -47,15 +52,22 @@ fit2 <- lmer(Reaction ~ Days + (1 | mygrp) + (Days | Subject), sleepstudy)
 icc(fit2)
 
 # return icc for all models at once
-icc(fit1, fit2)}
+icc(fit1, fit2)
+
+icc1 <- icc(fit1)
+icc2 <- icc(fit2)
+
+print(icc1, comp = "var")
+print(icc2, comp = "var")}
 
 
 }
 \references{
 \itemize{
-              \item Wu S, Crespi CM, Wong WK. 2012. Comparison of methods for estimating the intraclass correlation coefficient for binary responses in cancer prevention cluster randomized trials. Contempory Clinical Trials 33: 869-880 (\doi{10.1016/j.cct.2012.05.004})
+              \item Aguinis H, Gottfredson RK, Culpepper SA. 2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528 (\doi{10.1177/0149206313478188})
               \item Aly SS, Zhao J, Li B, Jiang J. 2014. Reliability of environmental sampling culture results using the negative binomial intraclass correlation coefficient. Springerplus [Internet] 3. Available from: \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3916583/}
               \item Stryhn H, Sanchez J, Morley P, Booker C, Dohoo IR. 2006. Interpretation of variance parameters in multilevel Poisson regression models. Proceedings of the 11th International Symposium on Veterinary Epidemiology and Economics, 2006 Available at \url{http://www.sciquest.org.nz/node/64294}
+              \item Wu S, Crespi CM, Wong WK. 2012. Comparison of methods for estimating the intraclass correlation coefficient for binary responses in cancer prevention cluster randomized trials. Contempory Clinical Trials 33: 869-880 (\doi{10.1016/j.cct.2012.05.004})
               \item \href{http://stats.stackexchange.com/questions/18088/intraclass-correlation-icc-for-an-interaction/28100#28100}{CrossValidated (2012) \emph{Intraclass correlation (ICC) for an interaction?}}
               \item \href{http://stats.stackexchange.com/questions/113577/interpreting-the-random-effect-in-a-mixed-effect-model/113825#113825}{CrossValidated (2014) \emph{Interpreting the random effect in a mixed-effect model}}
               \item \href{http://stats.stackexchange.com/questions/67247/how-to-partition-the-variance-explained-at-group-level-and-individual-level/67356#67356}{CrossValidated (2014) \emph{how to partition the variance explained at group level and individual level}}

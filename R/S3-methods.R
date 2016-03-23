@@ -84,25 +84,49 @@ print.sjmisc_r2 <- function(x, ...) {
 
 
 #' @export
-print.icc.lme4 <- function(x, ...) {
+print.icc.lme4 <- function(x, comp, ...) {
   # print model information
   cat(sprintf("%s\n Family: %s (%s)\nFormula: %s\n\n",
               attr(x, "model", exact = T),
               attr(x, "family", exact = T),
               attr(x, "link", exact = T),
               paste(as.character(attr(x, "formula"))[c(2, 1, 3)], collapse = " ")))
-  # get longest rand. effect name
-  len <- max(nchar(names(x)))
-  # print icc
-  for (i in 1:length(x)) {
-    # create info string
-    infs <- sprintf("ICC (%s)", names(x[i]))
-    # print info line, formatting all ICC values so they're
-    # aligned properly
-    cat(sprintf("%*s: %f\n",
-        len + 8,
-        infs,
-        as.vector(x[i])))
+  if (!missing(comp) && !is.null(comp) && comp == "var") {
+    # get parameters
+    tau.00 <- attr(x, "tau.00", exact = TRUE)
+    tau.11 <- attr(x, "tau.11", exact = TRUE)
+    # print within-group-variance sigma^2
+    cat(sprintf(" Within-group-variance: %.3f\n", attr(x, "sigma_2", exact = TRUE)))
+    # print between-group-variance tau0
+    for (i in 1:(length(tau.00))) {
+      cat(sprintf("Between-group-variance: %.3f (%s)\n",
+                  tau.00[i],
+                  names(tau.00)[i]))
+    }
+    # print random-slop-variance tau1
+    for (i in 1:length(tau.11)) {
+      tau.rs <- tau.11[[i]]
+      # any random slope?
+      if (!is_empty(tau.rs)) {
+        cat(sprintf(" Random-slope-variance: %.3f (%s)\n",
+                    tau.rs,
+                    names(tau.rs)))
+      }
+    }
+  } else {
+    # get longest rand. effect name
+    len <- max(nchar(names(x)))
+    # print icc
+    for (i in 1:length(x)) {
+      # create info string
+      infs <- sprintf("ICC (%s)", names(x[i]))
+      # print info line, formatting all ICC values so they're
+      # aligned properly
+      cat(sprintf("%*s: %f\n",
+                  len + 8,
+                  infs,
+                  as.vector(x[i])))
+    }
   }
 }
 

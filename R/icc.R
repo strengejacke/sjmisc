@@ -11,12 +11,14 @@
 #'
 #' @return A numeric vector with all random intercept intraclass-correlation-coefficients,
 #'           or a list of numeric vectors, when more than one model were used
-#'           as arguments.
+#'           as arguments. Furthermore, between- and within-group variances as well
+#'           as random-slope variance are returned as attributes.
 #'
 #' @references \itemize{
-#'               \item Wu S, Crespi CM, Wong WK. 2012. Comparison of methods for estimating the intraclass correlation coefficient for binary responses in cancer prevention cluster randomized trials. Contempory Clinical Trials 33: 869-880 (\doi{10.1016/j.cct.2012.05.004})
+#'               \item Aguinis H, Gottfredson RK, Culpepper SA. 2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528 (\doi{10.1177/0149206313478188})
 #'               \item Aly SS, Zhao J, Li B, Jiang J. 2014. Reliability of environmental sampling culture results using the negative binomial intraclass correlation coefficient. Springerplus [Internet] 3. Available from: \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3916583/}
 #'               \item Stryhn H, Sanchez J, Morley P, Booker C, Dohoo IR. 2006. Interpretation of variance parameters in multilevel Poisson regression models. Proceedings of the 11th International Symposium on Veterinary Epidemiology and Economics, 2006 Available at \url{http://www.sciquest.org.nz/node/64294}
+#'               \item Wu S, Crespi CM, Wong WK. 2012. Comparison of methods for estimating the intraclass correlation coefficient for binary responses in cancer prevention cluster randomized trials. Contempory Clinical Trials 33: 869-880 (\doi{10.1016/j.cct.2012.05.004})
 #'               \item \href{http://stats.stackexchange.com/questions/18088/intraclass-correlation-icc-for-an-interaction/28100#28100}{CrossValidated (2012) \emph{Intraclass correlation (ICC) for an interaction?}}
 #'               \item \href{http://stats.stackexchange.com/questions/113577/interpreting-the-random-effect-in-a-mixed-effect-model/113825#113825}{CrossValidated (2014) \emph{Interpreting the random effect in a mixed-effect model}}
 #'               \item \href{http://stats.stackexchange.com/questions/67247/how-to-partition-the-variance-explained-at-group-level-and-individual-level/67356#67356}{CrossValidated (2014) \emph{how to partition the variance explained at group level and individual level}}
@@ -32,6 +34,10 @@
 #' @note The calculation of the ICC for generalized linear mixed models with binary outcome is based on
 #'       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
 #'       describe computation of ICC for negative binomial models.
+#'       \cr \cr
+#'       There is a \code{print}-method that prints the variance parameters using
+#'       the \code{comp}-argument set to \code{"var"}: \code{print(x, comp = "var")}
+#'       (see 'Examples').
 #'
 #' @examples
 #' \dontrun{
@@ -44,7 +50,13 @@
 #' icc(fit2)
 #'
 #' # return icc for all models at once
-#' icc(fit1, fit2)}
+#' icc(fit1, fit2)
+#'
+#' icc1 <- icc(fit1)
+#' icc2 <- icc(fit2)
+#'
+#' print(icc1, comp = "var")
+#' print(icc2, comp = "var")}
 #'
 #'
 #' @importFrom stats family
@@ -86,13 +98,25 @@ icc.lme4 <- function(fit) {
     is_negbin <- str_contains(fitfam, "Negative Binomial", ignore.case = TRUE)
     # ------------------------
     # random effects variances
+    # for details on tau and sigma, see
+    # Aguinis H, Gottfredson RK, Culpepper SA2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528. doi:10.1177/0149206313478188.
     # ------------------------
-    reva <- summary(fit)$varcor
+    reva <- lme4::VarCorr(fit)
     # retrieve only intercepts
     vars <- lapply(reva, function(x) x[[1]])
-    # random intercept-variances
-    sigma_a2 <- sapply(vars, function(x) x[1])
-    # residual variances
+    # ------------------------
+    # random intercept-variances, i.e.
+    # between-subject-variance (tau 00)
+    # ------------------------
+    tau.00 <- sapply(vars, function(x) x[1])
+    # ------------------------
+    # random slope-variances (tau 11)
+    # ------------------------
+    tau.11 <- lapply(reva, function(x) diag(x)[-1])
+    # ------------------------
+    # residual variances, i.e.
+    # within-cluster-variance (sigma^2)
+    # ------------------------
     if (any(class(fit) == "glmerMod") && fitfam == "binomial") {
       # for logistic models, we use pi / 3
       resid_var <- (pi ^ 2) / 3
@@ -113,11 +137,11 @@ icc.lme4 <- function(fit) {
       # ... and the theta value to compute the ICC
       r <- lme4::getME(fit, "glmer.nb.theta")
       ri.icc <-
-        (exp(sigma_a2) - 1) /
+        (exp(tau.00) - 1) /
         ((exp(total_var) - 1) + (exp(total_var) / r) + exp(-beta - (total_var / 2)))
     } else {
       # random intercept icc
-      ri.icc <- sigma_a2 / total_var
+      ri.icc <- tau.00 / total_var
     }
     # name values
     names(ri.icc) <- names(reva)
@@ -127,6 +151,9 @@ icc.lme4 <- function(fit) {
     attr(ri.icc, "link") <- stats::family(fit)$link
     attr(ri.icc, "formula") <- stats::formula(fit)
     attr(ri.icc, "model") <- ifelse(isTRUE(any(class(fit) == "glmerMod")), "Generalized inear mixed model", "Linear mixed model")
+    attr(ri.icc, "tau.00") <- tau.00
+    attr(ri.icc, "tau.11") <- tau.11
+    attr(ri.icc, "sigma_2") <- resid_var
     # return results
     return(ri.icc)
   } else {
