@@ -11,8 +11,8 @@ r2(x, n = NULL)
 or \code{glmerMod}.}
 
 \item{n}{Optional, a \code{lmerMod} object, representing the fitted null-model
-to \code{x}. If \code{n} is given, the pseudo-r-squared for random
-intercept and random slope variances are computed (see Kwok et al. 2008;
+to \code{x} (unconditional model). If \code{n} is given, the pseudo-r-squared
+for random intercept and random slope variances are computed (see Kwok et al. 2008;
 see 'Examples' and 'Details').}
 }
 \value{
@@ -31,8 +31,8 @@ Compute R-squared values of linear (mixed) models, or
 If \code{n} is given, the Pseudo-R2 statistic is the proportion of
          explained variance in the random effect after adding co-variates or
          predictors to the model, or in short: the proportion of the explained
-         variance in the random effect of the full model \code{x} compared
-         to the null model \code{n}.
+         variance in the random effect of the full (conditional) model \code{x}
+         compared to the null (unconditional) model \code{n}.
 }
 \note{
 For linear models, the r-squared and adjusted r-squared value is returned,
@@ -41,7 +41,9 @@ For linear models, the r-squared and adjusted r-squared value is returned,
         For linear mixed models, an r-squared approximation by computing the
         correlation between the fitted and observed values, as suggested by
         Byrnes (2008), is returned as well as the Omega-squared value as
-        suggested by Xu (2003).
+        suggested by Xu (2003), unless \code{n} is specified. If \code{n}
+        is given, pseudo r-squared measures based on the random intercept (tau 00)
+        and random intercept (tau 11) variances are returned.
         \cr \cr
         For generalized linear models, Cox & Snell's and Nagelkerke's
         pseudo r-squared values are returned.

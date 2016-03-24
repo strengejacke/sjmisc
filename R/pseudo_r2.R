@@ -124,8 +124,8 @@ cod <- function(x) {
 #' @param x Fitted model of class \code{lm}, \code{glm}, \code{lmerMod}/\code{lme}
 #'            or \code{glmerMod}.
 #' @param n Optional, a \code{lmerMod} object, representing the fitted null-model
-#'          to \code{x}. If \code{n} is given, the pseudo-r-squared for random
-#'          intercept and random slope variances are computed (see Kwok et al. 2008;
+#'          to \code{x} (unconditional model). If \code{n} is given, the pseudo-r-squared
+#'          for random intercept and random slope variances are computed (see Kwok et al. 2008;
 #'          see 'Examples' and 'Details').
 #'
 #' @return \itemize{
@@ -138,8 +138,8 @@ cod <- function(x) {
 #' @details If \code{n} is given, the Pseudo-R2 statistic is the proportion of
 #'          explained variance in the random effect after adding co-variates or
 #'          predictors to the model, or in short: the proportion of the explained
-#'          variance in the random effect of the full model \code{x} compared
-#'          to the null model \code{n}.
+#'          variance in the random effect of the full (conditional) model \code{x}
+#'          compared to the null (unconditional) model \code{n}.
 #'
 #' @note For linear models, the r-squared and adjusted r-squared value is returned,
 #'         as provided by the \code{summary}-function.
@@ -147,7 +147,9 @@ cod <- function(x) {
 #'         For linear mixed models, an r-squared approximation by computing the
 #'         correlation between the fitted and observed values, as suggested by
 #'         Byrnes (2008), is returned as well as the Omega-squared value as
-#'         suggested by Xu (2003).
+#'         suggested by Xu (2003), unless \code{n} is specified. If \code{n}
+#'         is given, pseudo r-squared measures based on the random intercept (tau 00)
+#'         and random intercept (tau 11) variances are returned.
 #'         \cr \cr
 #'         For generalized linear models, Cox & Snell's and Nagelkerke's
 #'         pseudo r-squared values are returned.
@@ -216,9 +218,13 @@ r2 <- function(x, n = NULL) {
       # compute tau for both models
       tau_full <- icc(x)
       tau_null <- icc(n)
-      # get taus
+      # get taus. tau.00 is the random intercept variance, i.e. for growth models,
+      # the difference in the outcome's mean at first time point
       rsq0 <- (attr(tau_null, "tau.00") - attr(tau_full, "tau.00")) / attr(tau_null, "tau.00")
+      # tau.11 is the variance of the random slopes, i.e. how model predictors
+      # affect the trajectory of subjects over time (for growth models)
       rsq1 <- (attr(tau_null, "tau.11") - attr(tau_full, "tau.11")) / attr(tau_null, "tau.11")
+      # if model has no random slope, we need to set this value to NA
       if (is.null(rsq1) || is_empty(rsq1)) rsq1 <- NA
       # name vectors
       names(rsq0) <- "R2(tau-00)"
