@@ -38,6 +38,18 @@
 #'       There is a \code{print}-method that prints the variance parameters using
 #'       the \code{comp}-argument set to \code{"var"}: \code{print(x, comp = "var")}
 #'       (see 'Examples').
+#'       \cr \cr
+#'       The random effect variances indicate the between- and within-group
+#'         variances as well as random-slope variance and random-slope-intercept
+#'         correlation are returned. The components are denoted as following:
+#'         \itemize{
+#'          \item Within-group variance: sigma_2
+#'          \item Between-group-variance: tau.00
+#'          \item Random-slope-variance: tau.11
+#'          \item Random-Intercept-Slope-covariance: tau.01
+#'          \item Random-Intercept-Slope-correlation: rho.01
+#'         }
+#'
 #'
 #' @examples
 #' \dontrun{
@@ -146,7 +158,6 @@ icc.lme4 <- function(fit) {
     # ----------------------------------
     # get random slope random intercep correlations
     # ----------------------------------
-    cor_dims <- lapply(reva, function(x) dim(attr(x, "correlation"))[1])
     # do we have any rnd slopes?
     has_rnd_slope <- unlist(lapply(reva, function(x) dim(attr(x, "correlation"))[1] > 1))
     tau.01 <- rho.01 <- NULL
@@ -181,3 +192,36 @@ icc.lme4 <- function(fit) {
   }
 }
 
+
+#' @title Random effect variances
+#' @name re_var
+#' @description This function extracts the random effect variances as well as
+#'                the random-intercept-slope-correlation of mixed effects models.
+#'                Currently, only \code{\link[lme4]{merMod}} objects
+#'                are supported.
+#'
+#' @param x Fitted mixed effects model (\code{\link[lme4]{merMod}}-class).
+#'
+#' @return \code{NULL}, as this is just a convenient \code{print}-wrapper for
+#'           the variance components returned by the \code{\link{icc}} function.
+#'
+#' @references Aguinis H, Gottfredson RK, Culpepper SA. 2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528 (\doi{10.1177/0149206313478188})
+#'
+#' @seealso \code{\link{icc}}
+#'
+#' @examples
+#' library(lme4)
+#' fit1 <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' re_var(fit1)
+#'
+#' sleepstudy$mygrp <- sample(1:45, size = 180, replace = TRUE)
+#' fit2 <- lmer(Reaction ~ Days + (1 | mygrp) + (Days | Subject), sleepstudy)
+#' re_var(fit2)
+#'
+#' @importFrom stats family
+#' @export
+re_var <- function(x) {
+  # return value
+  revar_ <- icc(x)
+  print(revar_, comp = "var")
+}

@@ -40,6 +40,17 @@ The calculation of the ICC for generalized linear mixed models with binary outco
       There is a \code{print}-method that prints the variance parameters using
       the \code{comp}-argument set to \code{"var"}: \code{print(x, comp = "var")}
       (see 'Examples').
+      \cr \cr
+      The random effect variances indicate the between- and within-group
+        variances as well as random-slope variance and random-slope-intercept
+        correlation are returned. The components are denoted as following:
+        \itemize{
+         \item Within-group variance: sigma_2
+         \item Between-group-variance: tau.00
+         \item Random-slope-variance: tau.11
+         \item Random-Intercept-Slope-covariance: tau.01
+         \item Random-Intercept-Slope-correlation: rho.01
+        }
 }
 \examples{
 \dontrun{
