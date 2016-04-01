@@ -62,7 +62,7 @@ pseudo_ralt <- function(x) {
 #'               a new proposal: The coefficient of discrimination. The American Statistician,
 #'               63(4): 366-372
 #'
-#' @seealso \code{\link{pseudo_r2}} for Nagelkerke's and Cox and Snell's pseudo
+#' @seealso \code{\link{r2}} for Nagelkerke's and Cox and Snell's pseudo
 #'            r-squared coefficients.
 #'
 #' @examples

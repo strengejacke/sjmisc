@@ -1,4 +1,4 @@
-# sjmisc 1.6-3
+# sjmisc 1.6-4
 
 ## New functions
 
@@ -13,3 +13,4 @@
 * `icc` now also returns variance parameters of random effects as attributes.
 * `print.icc.lme4` gets a `comp`-argument to also print variance parameters (see `?icc` for details).
 * `r2` also computes pseudo-R2 based on random effect variances.
+* S3-method `mean.labelled` only prints a message instead of warning, when `x` has labelled missing values.

@@ -41,6 +41,6 @@ hoslem_gof(fit)
 
 }
 \seealso{
-\code{\link{pseudo_r2}}
+\code{\link{r2}}
 }
 

@@ -4,7 +4,7 @@ mean.labelled <- function(x, trim = 0, na.rm = FALSE, missing_to_na = FALSE, ...
   x <- unclass(x)
   if (!missing_to_na) {
     if (!is.null(suppressMessages(get_na(x)))) {
-      warning("`x` has self-defined missing values, which are not converted to NA. Use argument `missing_to_na = TRUE` to convert self-defined missings to NA before computing the mean.", call. = F)
+      message("`x` has valus with missing attribute, which are not converted to NA. Use argument `missing_to_na = TRUE` to convert labelled missings to NA before computing the mean.", call. = F)
     }
   } else {
     x <- to_na(x)

@@ -26,7 +26,12 @@ x <- labelled(c("M", "M", "F", "X", "N/A"),
               c(Male = "M", Female = "F",
                 Refused = "X", "Not applicable" = "N/A"),
               c(FALSE, FALSE, TRUE, TRUE))
+frq(x)
 
+# create labelled numeric vector, with missing flag
+x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
+              c(Male = 1, Female = 2, Refused = 5),
+              c(FALSE, FALSE, TRUE))
 frq(x)
 
 }

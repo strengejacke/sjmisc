@@ -116,7 +116,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 #'         the model and the observed data, i.e. the reported p-value should be
 #'         greater than 0.05.
 #'
-#' @seealso \code{\link{pseudo_r2}}
+#' @seealso \code{\link{r2}}
 #'
 #' @examples
 #' data(efc)

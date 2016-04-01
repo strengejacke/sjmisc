@@ -40,7 +40,7 @@ Tjur T (2009) Coefficients of determination in logistic regression models -
               63(4): 366-372
 }
 \seealso{
-\code{\link{pseudo_r2}} for Nagelkerke's and Cox and Snell's pseudo
+\code{\link{r2}} for Nagelkerke's and Cox and Snell's pseudo
            r-squared coefficients.
 }
 
