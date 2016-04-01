@@ -2,8 +2,11 @@
 mean.labelled <- function(x, trim = 0, na.rm = FALSE, missing_to_na = FALSE, ...) {
   # unclass vector for mean-call
   x <- unclass(x)
+  # has any missing attributes?
+  has_na <- !is.null(suppressMessages(get_na(x)))
+  # warn user
   if (!missing_to_na) {
-    if (!is.null(suppressMessages(get_na(x)))) {
+    if (has_na) {
       message("`x` has valus with missing attribute, which are not converted to NA. Use argument `missing_to_na = TRUE` to convert labelled missings to NA before computing the mean.", call. = F)
     }
   } else {
