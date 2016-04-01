@@ -42,9 +42,9 @@ model.frame.gls <- function(formula, ...) {
     stop("`formula` needs to be an object of class `gls`.", call. = F)
     return(NULL)
   } else {
-    mf <- cbind(nlme::getResponse(formula),
-                nlme::getData(formula)[, all.vars(nlme::getCovariateFormula(formula))])
-    colnames(mf)[1] <- get_label(formula)
+    y <- nlme::getResponse(formula)
+    mf <- cbind(y, nlme::getData(formula)[, all.vars(nlme::getCovariateFormula(formula))])
+    colnames(mf)[1] <- get_label(y, def.value = "Response")
     return(mf)
   }
 }
