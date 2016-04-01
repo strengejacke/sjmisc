@@ -1,4 +1,4 @@
-# sjmisc 1.6-4
+# sjmisc 1.6-5
 
 ## New functions
 
@@ -7,6 +7,7 @@
 * `wtd_se` to compute weighted standard errors.
 * `get_note` and `set_note` to annotate vectors.
 * `print.labelled` generic method for printing labelled class vectors. Unlike 'haven's print-method, this method also prints variable labels and, if available, vector annotations and missing value attributes.
+* S3-method `model.frame.gls`.
 
 ## Changes to functions
 

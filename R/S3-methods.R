@@ -32,6 +32,20 @@ model.matrix.gls <- function(object, ...) {
   return(mm)
 }
 
+#' @importFrom nlme getResponse getData getCovariateFormula
+#' @export
+model.frame.gls <- function(formula, ...) {
+  if (all(class(formula) != "gls")) {
+    stop("`formula` needs to be an object of class `gls`.", call. = F)
+    return(NULL)
+  } else {
+    mf <- cbind(nlme::getResponse(formula),
+                nlme::getData(formula)[, all.vars(nlme::getCovariateFormula(formula))])
+    colnames(mf)[1] <- get_label(formula)
+    return(mf)
+  }
+}
+
 #' @importFrom dplyr tbl_df trunc_mat
 #' @export
 print.lbl_df <- function(x, ..., n = NULL, width = NULL) {

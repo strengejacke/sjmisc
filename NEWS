@@ -1,4 +1,4 @@
-Version 1.6-4
+Version 1.6-5
 ------------------------------------------------------------------------------
 New functions:
 * `merge_df` to fully join labelled data frame and preserve value and variable labels.
@@ -6,6 +6,7 @@ New functions:
 * `wtd_se` to compute weighted standard errors.
 * `get_note` and `set_note` to annotate vectors.
 * `print.labelled` generic method for printing labelled class vectors. Unlike 'haven's print-method, this method also prints variable labels and, if available, vector annotations and missing value attributes.
+* S3-method `model.frame.gls`.
 
 Changes to functions:
 * `icc` now also returns variance parameters of random effects as attributes.
