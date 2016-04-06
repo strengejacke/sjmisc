@@ -18,6 +18,7 @@ Description: Collection of miscellaneous utility functions (especially intended
     tests, or to calculate various commonly used statistical coefficients.
 License: GPL-3
 Depends:
+    R (>= 3.2),
     stats,
     utils
 Imports:
