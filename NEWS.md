@@ -1,4 +1,8 @@
-# sjmisc 1.6-5
+# sjmisc 1.7
+
+# General
+
+* Package is now depending on R >= 3.2, because some macros for RD-files did not work on older R-releases.
 
 ## New functions
 

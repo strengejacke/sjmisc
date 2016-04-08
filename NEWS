@@ -1,5 +1,8 @@
-Version 1.6-5
+Version 1.7
 ------------------------------------------------------------------------------
+General:
+* Package is now depending on R >= 3.2, because some macros for RD-files did not work on older R-releases.
+
 New functions:
 * `merge_df` to fully join labelled data frame and preserve value and variable labels.
 * `wtd_sd` to compute weighted standard deviations.
