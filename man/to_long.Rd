@@ -20,7 +20,9 @@ to create in output. Must be of same length as number of column
 groups that should be gathered. See 'Examples'.}
 
 \item{...}{Specification of columns that should be gathered. Must be one
-character vector with variable names per column group.}
+character vector with variable names per column group, or a numeric
+vector with column indices indicating those columns that should be
+gathered. See 'Examples'.}
 
 \item{labels}{Character vector of same length as \code{values} with variable
 labels for the new variables created from gathered columns.
@@ -68,6 +70,12 @@ to_long(mydat, "time", c("score", "speed"),
 to_long(mydat, "time", c("score", "speed"),
         c("score_t1", "score_t2", "score_t3"),
         c("speed_t1", "speed_t2", "speed_t3"),
+        recode.key = TRUE)
+
+# gather multiple columns by colum names and colum indices
+to_long(mydat, "time", c("score", "speed"),
+        c("score_t1", "score_t2", "score_t3"),
+        c(6:8),
         recode.key = TRUE)
 
 # gather multiple columns, use separate key-column for each value-vector

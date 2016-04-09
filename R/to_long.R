@@ -14,7 +14,9 @@
 #'          to create in output. Must be of same length as number of column
 #'          groups that should be gathered. See 'Examples'.
 #' @param ... Specification of columns that should be gathered. Must be one
-#'          character vector with variable names per column group.
+#'          character vector with variable names per column group, or a numeric
+#'          vector with column indices indicating those columns that should be
+#'          gathered. See 'Examples'.
 #' @param labels Character vector of same length as \code{values} with variable
 #'          labels for the new variables created from gathered columns.
 #'          See 'Examples' and 'Details'.
@@ -56,6 +58,12 @@
 #'         c("speed_t1", "speed_t2", "speed_t3"),
 #'         recode.key = TRUE)
 #'
+#' # gather multiple columns by colum names and colum indices
+#' to_long(mydat, "time", c("score", "speed"),
+#'         c("score_t1", "score_t2", "score_t3"),
+#'         c(6:8),
+#'         recode.key = TRUE)
+#'
 #' # gather multiple columns, use separate key-column for each value-vector
 #' to_long(mydat, c("time_score", "time_speed"), c("score", "speed"),
 #'         c("score_t1", "score_t2", "score_t3"),
@@ -90,6 +98,14 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
   if (!is.null(labels) && length(labels) < length(data_cols)) {
     warning("`labels` must be of same length as `values`. Dropping variable labels for gathered columns.")
     labels <- NULL
+  }
+  # check for numeric indices, and get column names then
+  for (i in length(data_cols)) {
+    # check if all values are numeric
+    if (all(is.numeric(data_cols[[i]]))) {
+      # get column names instead
+      data_cols[[i]] <- colnames(data)[data_cols[[i]]]
+    }
   }
   # get all columns that should be gathered
   all_data_cols <- unlist(data_cols)

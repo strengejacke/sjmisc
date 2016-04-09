@@ -58,6 +58,10 @@ merge_df <- function(x1, x2, id = NULL) {
   # append rows of x2. now we have a data frame of same length as merged
   # x1 and x2
   tmp <- rbind(tmp, x2[, x2_remain])
+  # copy attributes
+  for (i in 1:length(x2_remain)) {
+    attributes(tmp[[i]]) <- attributes(x2[, x2_remain[i]])
+  }
   # final merge
   x_final <- cbind(x1_new, tmp)
   # create ID column?
