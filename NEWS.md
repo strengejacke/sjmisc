@@ -7,3 +7,4 @@
 ## Bug fixes
 
 * `merge_df` did not copy all variable and value labels from second data frame.
+* `std_beta` did not work when fitted model had no intercept.

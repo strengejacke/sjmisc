@@ -73,12 +73,19 @@ std_beta <- function(fit,
     if (!requireNamespace("arm", quietly = TRUE)) {
       stop("Package `arm` needed for computing this type of standardized estimates. Please install it.", call. = FALSE)
     }
+    # has model intercept?
+    tmp_i <- attr(terms(fit), "intercept")
+    has_intercept <- !is.null(tmp_i) & tmp_i == 1
     # get standardized model parameter
     stdbv2_all <- arm::standardize(fit)
     # get standardized estimates
-    beta <- stats::coef(stdbv2_all)[-1]
+    beta <- stats::coef(stdbv2_all)
+    # remove intercept?
+    if (has_intercept) beta <- beta[-1]
     # get standardized se
-    std2se <- summary(stdbv2_all)$coefficients[-1, 2]
+    std2se <- summary(stdbv2_all)$coefficients[, 2]
+    # remove intercept?
+    if (has_intercept) std2se <- std2se[-1]
     # check if confidence intervals should also be returned
     # if yes, create data frame with sb and ci
     if (include.ci) {
@@ -89,9 +96,17 @@ std_beta <- function(fit,
       return(beta)
     }
   } else {
-    b <- stats::coef(fit)[-1]
+    # has model intercept?
+    tmp_i <- attr(terms(fit), "intercept")
+    has_intercept <- !is.null(tmp_i) & tmp_i == 1
+    # get coefficients
+    b <- stats::coef(fit)
+    # remove intercept?
+    if (has_intercept) b <- b[-1]
     # get data as data frame
-    fit.data <- as.data.frame(stats::model.matrix(fit))[-1]
+    fit.data <- as.data.frame(stats::model.matrix(fit))
+    # remove intercept?
+    if (has_intercept) fit.data <- fit.data[, -1]
     # convert factor to numeric, else sd throws a warning
     fit.data <- as.data.frame(sapply(fit.data,
                                      function(x)
@@ -107,9 +122,12 @@ std_beta <- function(fit,
       sy <- sapply(as.data.frame(fit$model)[1], sd, na.rm = T)
     beta <- b * sx / sy
     if (any(class(fit) == "gls"))
-      se <- summary(fit)$tTable[-1, 2]
+      se <- summary(fit)$tTable[, 2]
     else
-      se <- summary(fit)$coef[-1, 2]
+      se <- summary(fit)$coef[, 2]
+    # remove intercept?
+    if (has_intercept) se <- se[-1]
+    # compute standard error
     beta.se <- se * sx / sy
     # check if confidence intervals should also be returned
     # if yes, create data frame with sb and ci
