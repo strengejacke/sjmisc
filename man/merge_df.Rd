@@ -4,12 +4,14 @@
 \alias{merge_df}
 \title{Merge labelled data frames}
 \usage{
-merge_df(x1, x2, id = NULL)
+merge_df(x1, x2, ..., id = NULL)
 }
 \arguments{
 \item{x1}{First data frame to be merged.}
 
 \item{x2}{Second data frame to be merged.}
+
+\item{...}{More data frames to be merged.}
 
 \item{id}{Optional name for ID column that will be created to indicate the
 source data frames for appended rows.}
@@ -18,7 +20,7 @@ source data frames for appended rows.}
 A full joined data frame.
 }
 \description{
-Merges (full join) two data frames and preserve value and variable labels.
+Merges (full join) two (or more) data frames and preserve value and variable labels.
 }
 \details{
 This function merges two data frames, where equal named columns
@@ -43,6 +45,13 @@ str(mydf)
 \dontrun{
 library(sjPlot)
 view_df(mydf)}
+
+x3 <- efc \%>\% select(5:9) \%>\% slice(1:10)
+x4 <- efc \%>\% select(11:14) \%>\% slice(1:10)
+
+mydf <- merge_df(x1, x2, x3, x4, id = "subsets")
+mydf
+str(mydf)
 
 }
 
