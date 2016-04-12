@@ -252,11 +252,25 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
     # ---------------------------------------
     if (length(labels) == 1 && nchar(labels) == 0) {
       attr(x, attr.string) <- NULL
-    } else if (is.null(x) || is.character(x)) {
+    } else if (is.null(x)) {
+      warning("can't add value labels to NULL vectors.", call. = F)
+    } else if (is.character(x)) {
       # ---------------------------------------
-      # string variables can't get value labels
+      # string vectors can only get labels of type string
       # ---------------------------------------
-      warning("can't add value labels to string or NULL vectors.", call. = F)
+      if (typeof(labels) == typeof(x)) {
+        # reverse names and labels
+        dummy.labels <- names(labels)
+        # but first check if we have named vector or not...
+        if (is.null(dummy.labels)) {
+          warning("`labels` must be a named vector.", call. = F)
+        } else {
+          names(dummy.labels) <- unname(labels)
+          attr(x, attr.string) <- dummy.labels
+        }
+      } else {
+        warning("Character vectors can only get labels of same type.", call. = F)
+      }
     } else {
       # ---------------------------------------
       # determine value range

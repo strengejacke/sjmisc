@@ -42,9 +42,25 @@ frq <- function(x, print.frq = TRUE) {
   labels <- attr(x, "labels", exact = T)
   # when we have character vectors, simply do table
   if (is.character(object)) {
+    # do we have a labelled vector?
+    if (is.null(labels)) {
+      warning("could not print frequencies. `x` has no `labels` attribute.", call. = F)
+      return(NULL)
+    }
+    # get values
+    values <- unname(labels)
+    # prepare freq vector for values
+    frq <- rep(0, length(values))
+    # get freq of character vector
+    ft <- table(object)
+    # valid values, i.e. values with counts
+    vv <- match(names(ft), values)
+    # copy valid values
+    frq[vv] <- as.vector(ft)
     # create data frame as return value
-    lab_df <- data.frame(value = unname(labels),
+    lab_df <- data.frame(value = values,
                          label = names(labels),
+                         count = frq,
                          is_na = attr(x, "is_na"))
     # check if results should be printed
     if (print.frq) {

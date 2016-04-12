@@ -83,7 +83,7 @@ as_labelled_helper <- function(x, add.labels, add.class) {
       vallabel <- as.character(unique(stats::na.omit(x)))
     }
     # set value labels
-    x <- set_labels(x, vallabel, force.labels = T, force.values = T)
+    x <- suppressWarnings(set_labels(x, vallabel, force.labels = T, force.values = T))
   }
   # fill up missing attributes
   if (add.labels) x <- fill_labels(x)

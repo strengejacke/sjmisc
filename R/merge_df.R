@@ -43,18 +43,13 @@
 #'
 #' @export
 merge_df <- function(x1, x2, ..., id = NULL) {
-  # --------------------------------------------------------
   # retrieve list of parameters
-  # --------------------------------------------------------
   more_dfs <- list(...)
-  # --------------------------------------------------------
+
   # first step, initial merge
-  # --------------------------------------------------------
   x_final <- merge_df_helper(x1, x2)
-  # --------------------------------------------------------
-  # merge remaining df's
-  # --------------------------------------------------------
-  # do we have more data frames?
+
+  # merge remaining df's if we have more data frames
   if (!is.null(more_dfs) && length(more_dfs) > 0) {
     # iterate all remaining data frames
     for (i in 1:length(more_dfs)) {
@@ -62,6 +57,7 @@ merge_df <- function(x1, x2, ..., id = NULL) {
       x_final <- merge_df_helper(x_final, more_dfs[[i]])
     }
   }
+
   # create ID column?
   if (!is.null(id)) {
     # check whether column name already exists
@@ -91,11 +87,18 @@ merge_df <- function(x1, x2, ..., id = NULL) {
 }
 
 merge_df_helper <- function(x1, x2) {
+  # check if both data frames have same column names
+  # in case, someone forgets that rbind exists...
+  if (all.equal(sort(colnames(x1)), sort(colnames(x2)))) {
+    return(rbind(x1, x2))
+  }
+
   # find matching columns in both data frames
   x2_match <- match(colnames(x1), colnames(x2))
   x1_match <- which(!is.na(x2_match))
   # clean up NA
   x2_match <- x2_match[!is.na(x2_match)]
+
   # now we have the matching columns of x1 in x1_match
   # and of x2 in x2_match. Next, create empty data frame with
   # correct dimension to append rows of matching columns from x2
@@ -103,9 +106,11 @@ merge_df_helper <- function(x1, x2) {
   tmp <- as.data.frame(matrix(nrow = nrow(x2), ncol = ncol(x1)))
   colnames(tmp) <- colnames(x1)
   tmp[, x1_match] <- x2[, x2_match]
+
   # x1_new has now all variables from x1, plus all variables
   # of x2 that also appear in x1
   x1_new <- rbind(x1, tmp)
+
   # which columns are still in x2 and have not been merged yet?
   # in certain cases, e.g. when we have no matching columns at all,
   # x2_match is of length 0. in this case, all columns are still remaining,
@@ -114,9 +119,11 @@ merge_df_helper <- function(x1, x2) {
     x2_remain <- seq_len(ncol(x2))
   else
     x2_remain <- seq_len(ncol(x2))[-x2_match]
+
   # create dummy df for remaining data of x2
   tmp <- as.data.frame(matrix(nrow = nrow(x1), ncol = length(x2_remain)))
   colnames(tmp) <- colnames(x2)[x2_remain]
+
   # append rows of x2. now we have a data frame of same length as merged
   # x1 and x2
   tmp <- rbind(tmp, x2[, x2_remain])
@@ -124,6 +131,7 @@ merge_df_helper <- function(x1, x2) {
   for (i in 1:length(x2_remain)) {
     attributes(tmp[[i]]) <- attributes(x2[, x2_remain[i]])
   }
+
   # final merge
   x_final <- cbind(x1_new, tmp)
   # return merged df
