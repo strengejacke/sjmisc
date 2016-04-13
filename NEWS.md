@@ -7,6 +7,7 @@
 * `frq` and `get_frq` now also return frequencies (counts) of character vectors.
 * `set_labels` now also works for character vectors.
 * `drop_labels` now also works for character vectors.
+* `to_value` now keeps labels of character vectors.
 
 ## Bug fixes
 
