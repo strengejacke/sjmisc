@@ -8,6 +8,7 @@
 * `set_labels` now also works for character vectors.
 * `drop_labels` now also works for character vectors.
 * `to_value` now keeps labels of character vectors.
+* `mwu` now also works when `grp` is a character vector.
 
 ## Bug fixes
 

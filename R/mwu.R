@@ -44,8 +44,8 @@ mwu <- function(x, grp, distribution = "asymptotic", weights = NULL) {
   if (!requireNamespace("coin", quietly = TRUE)) {
     stop("Package 'coin' needed for this function to work. Please install it.", call. = FALSE)
   }
-  # do we have a factor? if yes, make numeric
-  if (is.factor(grp)) grp <- to_value(grp)
+  # coerce factor and character to numeric
+  if (is.factor(grp) || is.character(grp)) grp <- to_value(grp)
   # group "counter" (index) should start with 1, not 0
   if (min(grp, na.rm = TRUE) == 0) grp <- grp + 1
   # retrieve unique group values. need to iterate all values
