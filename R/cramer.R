@@ -17,6 +17,6 @@
 cramer <- function(tab) {
   if (all(class(tab) != "ftable")) tab <- stats::ftable(tab)
   phi_val <- phi(tab)
-  cramer <- sqrt(phi_val^2 / min(dim(tab) - 1))
+  cramer <- sqrt(phi_val ^ 2 / min(dim(tab) - 1))
   return(cramer)
 }

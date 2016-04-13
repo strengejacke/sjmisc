@@ -52,6 +52,9 @@ mic(mydat)
 
 }
 \references{
-Piedmont RL (2014) Inter-item Correlations. \href{http://link.springer.com/referenceworkentry/10.1007\%2F978-94-007-0753-5_1493}{DOI 10.1007/978-94-007-0753-5_1493}
+Piedmont RL (2014) Inter-item Correlations. In: Michalos AC (eds)
+            Encyclopedia of Quality of Life and Well-Being Research.
+            Dordrecht: Springer, 3303-3304
+            \doi{10.1007/978-94-007-0753-5_1493}
 }
 

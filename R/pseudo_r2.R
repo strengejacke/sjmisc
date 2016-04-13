@@ -1,47 +1,3 @@
-#' @title Nagelkerke's and Cox-Snell's Pseudo R-squared
-#' @name pseudo_r2
-#'
-#' @description This method calculates Nagelkerke's and Cox-Snell's
-#'                pseudo-r-squared-values of generalized linear models
-#'                for binary data.
-#'
-#' @param x Fitted \code{\link{glm}} model.
-#'
-#' @return An object of class \code{pseudo_r2} with
-#'           following values:
-#'           \itemize{
-#'            \item \code{CoxSnell} Cox-Snell's pseudo-r-squared-value
-#'            \item \code{Nagelkerke} Nagelkerke's pseudo-r-squared-value
-#'           }
-#'
-#' @seealso \code{\link{cod}} for Tjur's Coefficient of Discrimination.
-#'
-#' @examples
-#' data(efc)
-#'
-#' # Pseudo-R-squared values
-#' efc$services <- dicho(efc$tot_sc_e, "v", 0, as.num = TRUE)
-#' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
-#'            data = efc,
-#'            family = binomial(link = "logit"))
-#' pseudo_r2(fit)
-#'
-#' @export
-pseudo_r2 <- function(x) {
-  .Deprecated("r2", package = "sjmisc", msg = "`pseudo_r2` will be deprecated in future versions of `sjmisc`. Please use `r2` instead.")
-  pseudo_ralt(x)
-}
-
-
-pseudo_ralt <- function(x) {
-  n <- nrow(x$model)
-  CoxSnell <- 1 - exp((x$deviance - x$null) / n)
-  Nagelkerke <- CoxSnell / (1 - exp(-x$null / n))
-  names(CoxSnell) <- "CoxSnell"
-  names(Nagelkerke) <- "Nagelkerke"
-  return(structure(class = "sjmisc_r2", list(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke)))
-}
-
 #' @title Tjur's Coefficient of Discrimination
 #' @name cod
 #'
@@ -148,8 +104,9 @@ cod <- function(x) {
 #'         correlation between the fitted and observed values, as suggested by
 #'         Byrnes (2008), is returned as well as the Omega-squared value as
 #'         suggested by Xu (2003), unless \code{n} is specified. If \code{n}
-#'         is given, pseudo r-squared measures based on the random intercept (tau 00)
-#'         and random intercept (tau 11) variances are returned.
+#'         is given, pseudo r-squared measures based on the variances of random
+#'         intercept (tau 00, between-group-variance) and random slope (tau 11,
+#'         random-slope-variance) are returned.
 #'         \cr \cr
 #'         For generalized linear models, Cox & Snell's and Nagelkerke's
 #'         pseudo r-squared values are returned.
@@ -248,4 +205,13 @@ r2 <- function(x, n = NULL) {
     stop("`r2` only works on linear (mixed) models of class \"lm\", \"lme\" or \"lmerMod\".", call. = F)
     return(NULL)
   }
+}
+
+pseudo_ralt <- function(x) {
+  n <- nrow(x$model)
+  CoxSnell <- 1 - exp((x$deviance - x$null) / n)
+  Nagelkerke <- CoxSnell / (1 - exp(-x$null / n))
+  names(CoxSnell) <- "CoxSnell"
+  names(Nagelkerke) <- "Nagelkerke"
+  return(structure(class = "sjmisc_r2", list(CoxSnell = CoxSnell, Nagelkerke = Nagelkerke)))
 }

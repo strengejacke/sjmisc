@@ -17,6 +17,7 @@
 #' @references \itemize{
 #'               \item Aguinis H, Gottfredson RK, Culpepper SA. 2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528 (\doi{10.1177/0149206313478188})
 #'               \item Aly SS, Zhao J, Li B, Jiang J. 2014. Reliability of environmental sampling culture results using the negative binomial intraclass correlation coefficient. Springerplus [Internet] 3. Available from: \url{http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3916583/}
+#'               \item Hox J. 2002. Multilevel analysis: techniques and applications. Mahwah, NJ: Erlbaum
 #'               \item Stryhn H, Sanchez J, Morley P, Booker C, Dohoo IR. 2006. Interpretation of variance parameters in multilevel Poisson regression models. Proceedings of the 11th International Symposium on Veterinary Epidemiology and Economics, 2006 Available at \url{http://www.sciquest.org.nz/node/64294}
 #'               \item Wu S, Crespi CM, Wong WK. 2012. Comparison of methods for estimating the intraclass correlation coefficient for binary responses in cancer prevention cluster randomized trials. Contempory Clinical Trials 33: 869-880 (\doi{10.1016/j.cct.2012.05.004})
 #'               \item \href{http://stats.stackexchange.com/questions/18088/intraclass-correlation-icc-for-an-interaction/28100#28100}{CrossValidated (2012) \emph{Intraclass correlation (ICC) for an interaction?}}
@@ -24,12 +25,15 @@
 #'               \item \href{http://stats.stackexchange.com/questions/67247/how-to-partition-the-variance-explained-at-group-level-and-individual-level/67356#67356}{CrossValidated (2014) \emph{how to partition the variance explained at group level and individual level}}
 #'             }
 #'
+#'
 #' @details Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intraclass Correlation Coefficient in Mixed Models}, \href{http://www.theanalysisfactor.com/the-intraclass-correlation-coefficient-in-mixed-models/}{web}:
 #'       \itemize{
-#'        \item It can help you determine whether or not a linear mixed model is even necessary. If you find that the correlation is zero, that means the observations within clusters are no more similar than observations from different clusters.  Go ahead and use a simpler analysis technique.
-#'        \item It can be theoretically meaningful to understand how much of the overall variation in the response is explained simply by clustering.  For example, in a repeated measures psychological study you can tell to what extent mood is a trait (varies among people, but not within a person on different occasions) or state (varies little on average among people, but varies a lot across occasions).
+#'        \item It can help you determine whether or not a linear mixed model is even necessary. If you find that the correlation is zero, that means the observations within clusters are no more similar than observations from different clusters. Go ahead and use a simpler analysis technique.
+#'        \item It can be theoretically meaningful to understand how much of the overall variation in the response is explained simply by clustering. For example, in a repeated measures psychological study you can tell to what extent mood is a trait (varies among people, but not within a person on different occasions) or state (varies little on average among people, but varies a lot across occasions).
 #'        \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
 #'       }
+#'       In short, the ICC can be interpreted as "the proportion of the variance
+#'       explained by the grouping structure in the population" (Hox 2002: 15).
 #'
 #' @note The calculation of the ICC for generalized linear mixed models with binary outcome is based on
 #'       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
@@ -37,19 +41,20 @@
 #'       \cr \cr
 #'       There is a \code{print}-method that prints the variance parameters using
 #'       the \code{comp}-argument set to \code{"var"}: \code{print(x, comp = "var")}
-#'       (see 'Examples').
+#'       (see 'Examples'). The \code{\link{re_var}}-function is a convenient wrapper.
 #'       \cr \cr
 #'       The random effect variances indicate the between- and within-group
 #'         variances as well as random-slope variance and random-slope-intercept
 #'         correlation are returned. The components are denoted as following:
 #'         \itemize{
 #'          \item Within-group variance: sigma_2
-#'          \item Between-group-variance: tau.00
-#'          \item Random-slope-variance: tau.11
+#'          \item Between-group-variance: tau.00 (variation between individual intercepts and average intercept)
+#'          \item Random-slope-variance: tau.11 (variation between individual slopes and average slope)
 #'          \item Random-Intercept-Slope-covariance: tau.01
 #'          \item Random-Intercept-Slope-correlation: rho.01
 #'         }
 #'
+#' @seealso \code{\link{re_var}} to print random effect variances.
 #'
 #' @examples
 #' \dontrun{
