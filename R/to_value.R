@@ -63,12 +63,24 @@ to_value <- function(x,
 
 
 to_value_helper <- function(x, start.at, keep.labels) {
+  labels <- NULL
   # is already numeric?
   if (is.numeric(x)) return(x)
   # is character?
-  if (is.character(x)) return(as.numeric(as.factor(x)))
+  if (is.character(x)) {
+    # get labels
+    labels <- get_labels(x, attr.only = T, include.values = "n")
+    # has labels?
+    if (!is.null(labels)) {
+      # sort labels correctly
+      lvls <- levels(as.factor(x))
+      labels <- unname(labels[order(names(labels), lvls)])
+    }
+    # convert to factor
+    x <- as.factor(x)
+  }
   # retrieve "value labels"
-  labels <- levels(x)
+  if (is.null(labels)) labels <- levels(x)
   # check if we have numeric factor levels
   if (is_num_fac(x)) {
     # convert to numeric via as.vector
@@ -94,6 +106,6 @@ to_value_helper <- function(x, start.at, keep.labels) {
     new_value <- as.numeric(as.character(x))
   }
   # check if we should attach former labels as value labels
-  if (keep.labels) new_value <- set_labels(new_value, labels, T)
+  if (keep.labels) new_value <- set_labels(new_value, labels, force.labels = T)
   return(new_value)
 }
