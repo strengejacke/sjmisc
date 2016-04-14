@@ -1,8 +1,9 @@
 #' @title Convert variable into factor and replaces values with associated value labels
 #' @name to_label
 #'
-#' @description This function converts (replaces) variable values (also of factors)
-#'                with their associated value labels. Might be helpful for factor variables.
+#' @description This function converts (replaces) variable values (also of factors
+#'                or character vectors) with their associated value labels. Might
+#'                be helpful for factor variables.
 #'                For instance, if you have a Gender variable with 0/1 value, and associated
 #'                labels are male/female, this function would convert all 0 to male and
 #'                all 1 to female and returns the new variable as \code{\link{factor}}.
@@ -11,12 +12,12 @@
 #'            preserve labels) and \code{\link{to_value}} to convert a factor into
 #'            a numeric variable.
 #'
-#' @param x variable of type \code{\link{numeric}}, \code{\link{atomic}},
-#'          \code{\link{factor}} or \code{\link[haven]{labelled}}
-#'          \emph{with associated value labels} (see \code{\link{set_labels}}),
+#' @param x A labelled vector (see \code{\link{set_labels}}),
 #'          respectively a data frame with such variables.
 #' @param add.non.labelled logical, if \code{TRUE}, values without associated
 #'          value label will also be converted to labels (as is). See 'Examples'.
+#' @param prefix Logical, if \code{TRUE}, the value labels used as factor levels
+#'          will be prefixed with their associated values. See 'Examples'.
 #' @param drop.na logical, if \code{TRUE}, all types of missing value codes are
 #'          converted into NA before \code{x} is converted as factor. If
 #'          \code{FALSE}, missing values will be left as their original codes.
@@ -51,10 +52,15 @@
 #' str(efc$e17age)
 #' str(to_label(efc$e17age))
 #'
-#' \dontrun{
-#' # factor with non-numeric levels won't be changed, either,
-#' # however, a warning is produced
-#' to_label(factor(c("a", "b", "c")))}
+#'
+#' # factor with non-numeric levels
+#' to_label(factor(c("a", "b", "c")))
+#'
+#' # factor with non-numeric levels, prefixed
+#' x <- factor(c("a", "b", "c"))
+#' set_labels(x) <- c("ape", "bear", "cat")
+#' to_label(x, prefix = TRUE)
+#'
 #'
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
@@ -77,34 +83,38 @@
 #' # to labelled factor, missings removed
 #' to_label(x, drop.na = TRUE)
 #'
+#'
+#' # convert labelled character to factor
+#' dummy <- c("M", "F", "F", "X")
+#' set_labels(dummy) <- c(`M` = "Male", `F` = "Female", `X` = "Refused")
+#' get_labels(dummy,, "p")
+#' to_label(dummy)
+#'
 #' @export
-to_label <- function(x, add.non.labelled = FALSE, drop.na = TRUE) {
+to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
   if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- to_label_helper(x[[i]],
-                                                   add.non.labelled,
-                                                   drop.na)
+    for (i in 1:ncol(x)) {
+      x[[i]] <- to_label_helper(x[[i]], add.non.labelled, prefix, drop.na)
+    }
     return(x)
   } else {
-    return(to_label_helper(x,
-                           add.non.labelled,
-                           drop.na))
+    return(to_label_helper(x, add.non.labelled, prefix, drop.na))
   }
 }
 
 
-to_label_helper <- function(x, add.non.labelled, drop.na) {
-  # check if factor has numeric factor levels
-  if (is.factor(x) && !is_num_fac(x)) {
-    # if not, stop here - factor levels are already "labelled".
-    warning("'x' may have numeric factor levels only.", call. = F)
-    return(x)
-  }
+to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
+  # prefix labels?
+  if (prefix)
+    iv <- "p"
+  else
+    iv <- 0
   # remove missings?
   if (drop.na) x <- to_na(x)
   # get value labels
   vl <- get_labels(x,
                    attr.only = TRUE,
-                   include.values = NULL,
+                   include.values = iv,
                    include.non.labelled = add.non.labelled)
   # check if we have any labels, else
   # return variable "as is"

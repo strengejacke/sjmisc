@@ -8,11 +8,11 @@
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
 #'            factor levels.
 #'
-#' @param x numeric or atomic variable or a data frame with
-#'          numeric or atomic variables.
-#' @param add.non.labelled logical, if \code{TRUE}, non-labelled values also
+#' @param x Numeric, atomic or character vector or a data frame with
+#'          such vectors.
+#' @param add.non.labelled Logical, if \code{TRUE}, non-labelled values also
 #'          get value labels.
-#' @param drop.na logical, if \code{TRUE}, all types of missing value codes are
+#' @param drop.na Logical, if \code{TRUE}, all types of missing value codes are
 #'          converted into NA before \code{x} is converted as factor. If
 #'          \code{FALSE}, missing values will be left as their original codes.
 #'          See 'Examples' and \code{\link{get_na}}.
@@ -116,15 +116,23 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   varlab <- get_label(x)
   # retrieve missing codes
   nas <- suppressMessages(get_na(x))
-  # convert variable to factor
-  x <- as.factor(x)
   # -------------------------
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
   # as "vector content"
   # -------------------------
-  lab.switch <- as.numeric(names(lab))
-  names(lab.switch) <- as.character(lab)
+  if (!is.null(lab)) {
+    if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
+      lab.switch <- names(lab)
+    else
+      lab.switch <- as.numeric(names(lab))
+
+    names(lab.switch) <- as.character(lab)
+  } else {
+    lab.switch <- NULL
+  }
+  # convert variable to factor
+  x <- as.factor(x)
   # -------------------------
   # set back value labels
   # -------------------------

@@ -97,10 +97,10 @@ rec_to_helper <- function(x, lowest, highest) {
 }
 
 
-#' @title Recode numeric variables
+#' @title Recode variables
 #' @name rec
 #'
-#' @description Recodes the categories of a (numeric) variable \code{x} into new
+#' @description Recodes the categories / values of a variable \code{x} into new
 #'                category values.
 #'
 #' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
@@ -108,11 +108,10 @@ rec_to_helper <- function(x, lowest, highest) {
 #'            for re-shifting value ranges and \code{\link{ref_lvl}} to change the
 #'            reference level of (numeric) factors.
 #'
-#' @param x Numeric variable (vector) or a \code{\link{factor}} with numeric
-#'          levels that should be recoded; or a \code{data.frame} or \code{list} of
-#'          variables.
-#' @param recodes String with recode pairs of old and new values. See 'Details' for
-#'          examples.
+#' @param x Numeric, charactor or factor variable that should be recoded;
+#'          or a \code{data.frame} or \code{list} of variables.
+#' @param recodes String with recode pairs of old and new values. See
+#'          'Details' for examples.
 #' @param value See \code{recodes}.
 #' @param as.fac Logical, if \code{TRUE}, recoded variable is returned as factor.
 #'          Default is \code{FALSE}, thus a numeric variable is returned.
@@ -122,9 +121,9 @@ rec_to_helper <- function(x, lowest, highest) {
 #' @param val.labels Optional character vector, to set value label attributes
 #'          of recoded variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
-#' @return A numeric variable (or a factor, if \code{as.fac = TRUE}) with
-#'           recoded category values, or a data frame or \code{list}-object
-#'           with recoded categories for all variables.
+#' @return A numeric variable (or a factor, if \code{as.fac = TRUE} or if \code{x}
+#'           was a character vector) with recoded category values, or a data
+#'           frame or \code{list}-object with recoded categories for all variables.
 #'
 #' @details  The \code{recodes} string has following syntax:
 #'           \describe{
@@ -190,6 +189,11 @@ rec_to_helper <- function(x, lowest, highest) {
 #' # show recodes
 #' lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, exclude = NULL)
 #'
+#'
+#' # recode character vector
+#' dummy <- c("M", "F", "F", "X")
+#' rec(dummy, "M=Male; F=Female; X=Refused")
+#'
 #' @export
 rec <- function(x,
                 recodes,
@@ -227,21 +231,25 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   # do we have a factor with "x"?
   # -------------------------------
   if (is.factor(x)) {
-    # factor may only have numeric levels!
-    if (!is_num_fac(x)) {
-      stop("`x` may only have numeric factor levels.", call. = F)
-    } else {
-      # save variable labels before in case we just want
-      # to reverse the order
-      if (is.null(val_lab) && recodes == "rev") {
-        val_lab <- rev(get_labels(
-          x,
-          attr.only = TRUE,
-          include.values = NULL,
-          include.non.labelled = TRUE
-        ))
-      }
+    # save variable labels before in case we just want
+    # to reverse the order
+    if (is.null(val_lab) && recodes == "rev") {
+      val_lab <- rev(get_labels(
+        x,
+        attr.only = TRUE,
+        include.values = NULL,
+        include.non.labelled = TRUE
+      ))
+    }
+
+    if (is_num_fac(x)) {
+      # numeric factors coerced to numeric
       x <- as.numeric(as.character(x))
+    } else {
+      # non-numeric factors coerced to character
+      x <- as.character(x)
+      # non-numeric factors will always be factor again
+      as.fac = TRUE
     }
   }
   # -------------------------------
@@ -321,7 +329,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       new_val <- suppressWarnings(as.numeric(new_val_string))
       # if not, assignment is wrong
       if (is.na(new_val)) {
-        stop(sprintf("?Syntax error in argument \"%s\"", paste(rec_pairs[[i]], collapse = "=")), call. = F)
+        # stop(sprintf("?Syntax error in argument \"%s\"", paste(rec_pairs[[i]], collapse = "=")), call. = F)
+        new_val <- new_val_string
       }
     }
     # -------------------------------
@@ -361,7 +370,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
         ovn <- suppressWarnings(as.numeric(ovs))
         # if not, assignment is wrong
         if (is.na(ovn)) {
-          stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = F)
+          # stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = F)
+          ovn <- ovs
         }
         # add old recode values to final vector of values
         old_val <- c(old_val, ovn)

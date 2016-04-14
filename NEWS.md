@@ -2,13 +2,16 @@
 
 ## Changes to functions
 
-* `to_long` can now also gather columns according to their column indices.
+* `to_long` can now also gather columns according to their column numbers.
 * `merge_df` now optionally merges more than two data frames at once.
 * `frq` and `get_frq` now also return frequencies (counts) of character vectors.
+* `rec` now also works for character vectors and non-numeric factors.
 * `set_labels` now also works for character vectors.
 * `drop_labels` now also works for character vectors.
 * `to_value` now keeps labels of character vectors.
+* `to_label` now also works for character vectors and non-numeric factors.
 * `mwu` now also works when `grp` is a character vector.
+* Generally, a better support for character vectors in label functions.
 
 ## Bug fixes
 

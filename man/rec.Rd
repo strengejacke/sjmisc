@@ -3,19 +3,18 @@
 \name{rec}
 \alias{rec}
 \alias{rec<-}
-\title{Recode numeric variables}
+\title{Recode variables}
 \usage{
 rec(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL)
 
 rec(x, as.fac = FALSE, var.label = NULL, val.labels = NULL) <- value
 }
 \arguments{
-\item{x}{Numeric variable (vector) or a \code{\link{factor}} with numeric
-levels that should be recoded; or a \code{data.frame} or \code{list} of
-variables.}
+\item{x}{Numeric, charactor or factor variable that should be recoded;
+or a \code{data.frame} or \code{list} of variables.}
 
-\item{recodes}{String with recode pairs of old and new values. See 'Details' for
-examples.}
+\item{recodes}{String with recode pairs of old and new values. See
+'Details' for examples.}
 
 \item{as.fac}{Logical, if \code{TRUE}, recoded variable is returned as factor.
 Default is \code{FALSE}, thus a numeric variable is returned.}
@@ -31,12 +30,12 @@ If \code{NULL} (default), no value labels will be set.}
 \item{value}{See \code{recodes}.}
 }
 \value{
-A numeric variable (or a factor, if \code{as.fac = TRUE}) with
-          recoded category values, or a data frame or \code{list}-object
-          with recoded categories for all variables.
+A numeric variable (or a factor, if \code{as.fac = TRUE} or if \code{x}
+          was a character vector) with recoded category values, or a data
+          frame or \code{list}-object with recoded categories for all variables.
 }
 \description{
-Recodes the categories of a (numeric) variable \code{x} into new
+Recodes the categories / values of a variable \code{x} into new
                category values.
 }
 \details{
@@ -104,6 +103,11 @@ dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 lapply(dummy, table, exclude = NULL)
 # show recodes
 lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, exclude = NULL)
+
+
+# recode character vector
+dummy <- c("M", "F", "F", "X")
+rec(dummy, "M=Male; F=Female; X=Refused")
 
 }
 \seealso{

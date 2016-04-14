@@ -57,10 +57,10 @@ str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL) {
   if (is.null(logic))
     return(cnt)
   else if (logic %in% c("or", "OR", "|"))
-    return(isTRUE(any(cnt)))
+    return(any(cnt))
   else if (logic %in% c("and", "AND", "&"))
-    return(isTRUE(all(cnt)))
+    return(all(cnt))
   else if (logic %in% c("not", "NOT", "!"))
-    return(!isTRUE(any(cnt)))
+    return(!any(cnt))
   return(cnt)
 }

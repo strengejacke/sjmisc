@@ -47,7 +47,7 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
   # nothing found? then leave...
   if (is.null(attr.string)) return(NULL)
   # get values
-  if (is.character(x))
+  if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
     values <- unname(attr(x, attr.string, exact = T))
   else
     values <- as.numeric(unname(attr(x, attr.string, exact = T)))

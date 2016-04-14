@@ -181,7 +181,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
     # check if we have anything
     if (!is.null(lab)) {
       # retrieve values associated with labels
-      if (is.character(x))
+      if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
         values <- unname(lab)
       else
         values <- as.numeric(unname(lab))

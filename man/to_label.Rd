@@ -4,16 +4,17 @@
 \alias{to_label}
 \title{Convert variable into factor and replaces values with associated value labels}
 \usage{
-to_label(x, add.non.labelled = FALSE, drop.na = TRUE)
+to_label(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE)
 }
 \arguments{
-\item{x}{variable of type \code{\link{numeric}}, \code{\link{atomic}},
-\code{\link{factor}} or \code{\link[haven]{labelled}}
-\emph{with associated value labels} (see \code{\link{set_labels}}),
+\item{x}{A labelled vector (see \code{\link{set_labels}}),
 respectively a data frame with such variables.}
 
 \item{add.non.labelled}{logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}
+
+\item{prefix}{Logical, if \code{TRUE}, the value labels used as factor levels
+will be prefixed with their associated values. See 'Examples'.}
 
 \item{drop.na}{logical, if \code{TRUE}, all types of missing value codes are
 converted into NA before \code{x} is converted as factor. If
@@ -25,8 +26,9 @@ A factor variable with the associated value labels as factor levels, or a
           data frame with such factor variables (if \code{x} was a data frame).
 }
 \description{
-This function converts (replaces) variable values (also of factors)
-               with their associated value labels. Might be helpful for factor variables.
+This function converts (replaces) variable values (also of factors
+               or character vectors) with their associated value labels. Might
+               be helpful for factor variables.
                For instance, if you have a Gender variable with 0/1 value, and associated
                labels are male/female, this function would convert all 0 to male and
                all 1 to female and returns the new variable as \code{\link{factor}}.
@@ -60,10 +62,15 @@ head(to_label(efc$e42dep))
 str(efc$e17age)
 str(to_label(efc$e17age))
 
-\dontrun{
-# factor with non-numeric levels won't be changed, either,
-# however, a warning is produced
-to_label(factor(c("a", "b", "c")))}
+
+# factor with non-numeric levels
+to_label(factor(c("a", "b", "c")))
+
+# factor with non-numeric levels, prefixed
+x <- factor(c("a", "b", "c"))
+set_labels(x) <- c("ape", "bear", "cat")
+to_label(x, prefix = TRUE)
+
 
 # create vector
 x <- c(1, 2, 3, 2, 4, NA)
@@ -85,6 +92,13 @@ x <- labelled(c(1, 2, 1, 3, 4, 1),
 to_label(x, drop.na = FALSE)
 # to labelled factor, missings removed
 to_label(x, drop.na = TRUE)
+
+
+# convert labelled character to factor
+dummy <- c("M", "F", "F", "X")
+set_labels(dummy) <- c(`M` = "Male", `F` = "Female", `X` = "Refused")
+get_labels(dummy,, "p")
+to_label(dummy)
 
 }
 \seealso{

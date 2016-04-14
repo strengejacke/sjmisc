@@ -7,13 +7,13 @@
 to_factor(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NULL)
 }
 \arguments{
-\item{x}{numeric or atomic variable or a data frame with
-numeric or atomic variables.}
+\item{x}{Numeric, atomic or character vector or a data frame with
+such vectors.}
 
-\item{add.non.labelled}{logical, if \code{TRUE}, non-labelled values also
+\item{add.non.labelled}{Logical, if \code{TRUE}, non-labelled values also
 get value labels.}
 
-\item{drop.na}{logical, if \code{TRUE}, all types of missing value codes are
+\item{drop.na}{Logical, if \code{TRUE}, all types of missing value codes are
 converted into NA before \code{x} is converted as factor. If
 \code{FALSE}, missing values will be left as their original codes.
 See 'Examples' and \code{\link{get_na}}.}
