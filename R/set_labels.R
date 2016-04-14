@@ -287,6 +287,8 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       # ---------------------------------------
       lablen <- length(labels)
       values <- sort(unique(stats::na.omit(as.vector(x))))
+      # do we have an ordered factor?
+      if (is.ordered(x)) values <- values[order(levels(x))]
       # ---------------------------------------
       # set var name string
       # ---------------------------------------

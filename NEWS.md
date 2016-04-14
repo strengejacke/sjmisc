@@ -18,3 +18,4 @@
 * `merge_df` did not copy all variable and value labels from second data frame.
 * `merge_df` did not work when data frames had no matching columns.
 * `std_beta` did not work when fitted model had no intercept.
+* `set_labels` now also works correctly for ordered factors.
