@@ -71,6 +71,12 @@ frq <- function(x, print.frq = TRUE) {
   } else {
     # get value without missings
     no_mis <- unclass(stats::na.omit(as.vector(to_na(x))))
+
+    # do we have character vector? if yes, coerce to numeric
+    if (is.character(no_mis)) {
+      no_mis <- as.numeric(no_mis)
+    }
+
     # create named vector with all necessray summary
     # information, equal to base summary function
     summary_line <- data.frame(round(min(no_mis), 3),
@@ -81,17 +87,20 @@ frq <- function(x, print.frq = TRUE) {
                                round(max(no_mis), 3))
     # set column names
     colnames(summary_line) <- c("Min", "1st Qu.", "Median", "Mean", "3rd Qu.", "Max")
+
     # prepare and print summary
     if (print.frq) {
       cat("\nSummary:\n")
       # output
       print(summary_line, row.names = FALSE)
     }
+
     # do we have any labels? continuous variables
     # usually don't have label attributes after reading
     # from SPSS
     if (!is.null(labels)) {
       if (print.frq) cat("\n")
+
       # get all possible values as vector. We may have some labelled
       # values that have no counts in the data. in such cases, we get
       # less values from the table than excpected. Here we set up a
@@ -155,7 +164,7 @@ frq <- function(x, print.frq = TRUE) {
 #' @export
 get_frq <- function(x, coerce = TRUE) {
   if (!is_labelled(x) && TRUE == coerce)
-    x <- as_labelled(x)
+    x <- as_labelled(x, add.class = T)
   .dat <- frq(x, print.frq = FALSE)
   .dat
 }
