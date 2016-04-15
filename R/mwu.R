@@ -38,9 +38,7 @@
 #' @importFrom coin wilcox_test pvalue statistic
 #' @export
 mwu <- function(x, grp, distribution = "asymptotic", weights = NULL) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("coin", quietly = TRUE)) {
     stop("Package 'coin' needed for this function to work. Please install it.", call. = FALSE)
   }

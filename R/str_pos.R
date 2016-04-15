@@ -66,82 +66,63 @@ str_pos <- function(searchString,
                     maxdist = 2,
                     part.dist.match = 0,
                     showProgressBar = FALSE) {
-  # -------------------------------------
   # init return value
-  # -------------------------------------
   indices <- c()
-  # -------------------------------------
+
   # find element indices from partial matching of string and find term
-  # -------------------------------------
   pos <- as.numeric(grep(findTerm, searchString, ignore.case = T))
   if (length(pos) > 0) indices <- c(indices, pos)
-  # -------------------------------------
+
   # check if required package is available
-  # -------------------------------------
   if (!requireNamespace("stringdist", quietly = TRUE)) {
     warning("Package 'stringdist' needed for this function to fully work. Please install it. Only partial matching indices are returned.", call. = F)
     return(indices)
   }
-  # -------------------------------------
+
   # find element indices from similar strings
-  # -------------------------------------
   pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) <= maxdist)
   if (length(pos) > 0) indices <- c(indices, pos)
-  # -------------------------------------
+
   # find element indices from partial similar (distance)
   # string matching
-  # -------------------------------------
   if (part.dist.match > 0) {
     ftlength <- nchar(findTerm)
-    # -------------------------------------
     # create progress bar
-    # -------------------------------------
     if (showProgressBar) pb <- utils::txtProgressBar(min = 0,
                                                      max = length(searchString),
                                                      style = 3)
-    # -------------------------------------
+
     # iterate search string vector
-    # -------------------------------------
     for (ssl in 1:length(searchString)) {
-      # -------------------------------------
       # retrieve each element of search string vector
       # we do this step by step instead of vectorizing
       # due to the substring approach
-      # -------------------------------------
       sst <- searchString[ssl]
-      # -------------------------------------
+
       # we extract substrings of same length as findTerm
       # starting from first char of searchString until end
       # and try to find similar matches
-      # -------------------------------------
       steps <- nchar(sst) - ftlength + 1
       for (pi in 1:steps) {
-        # -------------------------------------
         # retrieve substring
-        # -------------------------------------
         sust <- trim(substr(sst, pi, pi + ftlength - 1))
-        # -------------------------------------
+
         # find element indices from similar substrings
-        # -------------------------------------
         pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) <= maxdist)
         if (length(pos) > 0) indices <- c(indices, ssl)
       }
       if (part.dist.match > 1) {
-        # -------------------------------------
+
         # 2nd loop picks longer substrings, because similarity
         # may also be present if length of strings differ
         # (e.g. "app" and "apple")
-        # -------------------------------------
         steps <- nchar(sst) - ftlength
         if (steps > 1) {
           for (pi in 2:steps) {
-            # -------------------------------------
             # retrieve substring
-            # -------------------------------------
             sust <- trim(substr(sst, pi - 1, pi + ftlength))
-            # -------------------------------------
+
             # find element indices from similar substrings
-            # -------------------------------------
             pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) <= maxdist)
             if (length(pos) > 0) indices <- c(indices, ssl)
           }
@@ -152,9 +133,8 @@ str_pos <- function(searchString,
     }
   }
   if (showProgressBar) close(pb)
-  # -------------------------------------
+
   # return result
-  # -------------------------------------
   if (length(indices) > 0) return(sort(unique(indices)))
   return(-1)
 }

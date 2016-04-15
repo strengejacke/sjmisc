@@ -48,47 +48,38 @@ remove_labels <- function(x, value) {
 
 
 remove_labels_helper <- function(x, value) {
-  # ----------------------------------------
   # get current labels of `x`
-  # ----------------------------------------
   current.labels <- get_labels(x,
                                attr.only = T,
                                include.values = "n",
                                include.non.labelled = F)
-  # ----------------------------------------
+
   # if we have no labels, return
-  # ----------------------------------------
   if (is.null(current.labels)) {
     message("`x` has no value label attributes.")
     return(x)
   }
-  # -------------------------
+
   # remove by index?
-  # -------------------------
   if (is.numeric(value)) {
     current.labels <- current.labels[-value]
   } else if (is.character(value)) {
-    # -------------------------
     # find value labels that should be removes
-    # -------------------------
     removers <- as.vector(current.labels) %in% value
     # remove them
     current.labels <- current.labels[!removers]
   }
-  # -------------------------
+
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
   # as "vector content"
-  # -------------------------
   all.labels <- as.numeric(names(current.labels))
   names(all.labels) <- as.character(current.labels)
-  # ----------------------------------------
+
   # sort labels by values
-  # ----------------------------------------
   all.labels <- all.labels[order(as.numeric(all.labels))]
-  # ----------------------------------------
+
   # set back labels
-  # ----------------------------------------
   x <- set_labels(x, labels = all.labels)
   return(x)
 }

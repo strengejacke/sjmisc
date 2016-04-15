@@ -31,9 +31,8 @@ table_values <- function(tab, digits = 2) {
   tab.row <- round(100 * prop.table(tab, 1), digits)
   tab.col <- round(100 * prop.table(tab, 2), digits)
   tab.expected <- as.table(round(as.array(margin.table(tab, 1)) %*% t(as.array(margin.table(tab, 2))) / margin.table(tab)))
-  # -------------------------------------
+
   # return results
-  # -------------------------------------
   invisible(structure(class = "sjutablevalues",
                       list(cell = tab.cell,
                            row = tab.row,

@@ -37,9 +37,7 @@ getVarLabelAttribute <- function(x) {
   if (!is.null(attr(x, "variable.label", exact = T))) attr.string <- "variable.label"
   # not found any label yet?
   if (is.null(attr.string)) {
-    # ----------------------------
     # check value_labels option
-    # ----------------------------
     opt <- getOption("value_labels")
     if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }
@@ -73,9 +71,7 @@ getValLabelAttribute <- function(x) {
   }
   # not found any label yet?
   if (is.null(attr.string)) {
-    # ----------------------------
     # check value_labels option
-    # ----------------------------
     opt <- getOption("value_labels")
     if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }

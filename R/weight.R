@@ -123,9 +123,7 @@ weight <- function(x, weights, digits = 0) {
 #'
 #' @export
 wtd_sd <- function(x, weights = NULL) {
-  # ------------------------
   # check if suggested packages are available
-  # ------------------------
   if (!requireNamespace("Hmisc", quietly = TRUE)) {
     stop("Package `Hmisc` needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -171,9 +169,7 @@ wtd_sd <- function(x, weights = NULL) {
 #'
 #' @export
 wtd_se <- function(x, weights = NULL) {
-  # ------------------------
   # check if suggested packages are available
-  # ------------------------
   if (!requireNamespace("Hmisc", quietly = TRUE)) {
     stop("Package `Hmisc` needed for this function to work. Please install it.", call. = FALSE)
   }

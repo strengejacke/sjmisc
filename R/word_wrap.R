@@ -47,11 +47,9 @@ word_wrap <- function(labels, wrap, linesep = NULL) {
     if (wrap > 0 && nchar(labels[n]) > wrap) {
       # insert line breaks
       labels[n] <- gsub(pattern, linesep, labels[n])
-      # -----------------------
+
       # in case label was short enough, we still have a line break
       # at the end of the label. here we remove any trailing line breaks
-      # -----------------------
-      # get length of label
       l <- nchar(labels[n])
       # get last char
       lc <- substr(labels[n], l - lsub, l)

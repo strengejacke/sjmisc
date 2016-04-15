@@ -44,10 +44,8 @@
 #'        commentString = sprintf("Cronbach's &alpha;=%.2f",
 #'                                cronb(x)))}
 #'
-#' # ---------------------------------------
 #' # Compute PCA on Cope-Index, and perform a
 #' # reliability check on each extracted factor.
-#' # ---------------------------------------
 #' \dontrun{
 #' factors <- sjt.pca(x)$factor.index
 #' findex <- sort(unique(factors))
@@ -70,74 +68,58 @@
 reliab_test <- function(x,
                         scale.items = FALSE,
                         digits = 3) {
-  # -----------------------------------
   # check param
-  # -----------------------------------
   if (!is.matrix(x) && !is.data.frame(x)) {
     warning("'x' needs to be a data frame or matrix.", call. = F)
     return(NULL)
   }
-  # -----------------------------------
+
   # remove missings, so correlation works
-  # -----------------------------------
   x <- stats::na.omit(x)
-  # -----------------------------------
+
   # remember item (column) names for return value
   # return value gets column names of initial data frame
-  # -----------------------------------
   df.names <- colnames(x)
-  # -----------------------------------
+
   # check for minimum amount of columns
   # can't be less than 3, because the reliability
   # test checks for Cronbach's alpha if a specific
   # item is deleted. If data frame has only two columns
   # and one is deleted, Cronbach's alpha cannot be calculated.
-  # -----------------------------------
   if (ncol(x) > 2) {
-    # -----------------------------------
     # Check whether items should be scaled. Needed,
     # when items have different measures / scales
-    # -----------------------------------
     if (scale.items) x <- data.frame(scale(x, center = TRUE, scale = TRUE))
-    # -----------------------------------
+
     # init vars
-    # -----------------------------------
     totalCorr <- c()
     cronbachDeleted <- c()
-    # -----------------------------------
+
     # iterate all items
-    # -----------------------------------
     for (i in 1:ncol(x)) {
-      # -----------------------------------
       # create subset with all items except current one
       # (current item "deleted")
-      # -----------------------------------
       sub.df <- subset(x, select = c(-i))
-      # -----------------------------------
+
       # calculate cronbach-if-deleted
-      # -----------------------------------
       cronbachDeleted <- c(cronbachDeleted, cronb(sub.df))
-      # -----------------------------------
+
       # calculate corrected total-item correlation
-      # -----------------------------------
       totalCorr <- c(totalCorr, stats::cor(x[, i],
                                            apply(sub.df, 1, sum),
                                            use = "pairwise.complete.obs"))
     }
-    # -----------------------------------
+
     # create return value
-    # -----------------------------------
     ret.df <- data.frame(cbind(round(cronbachDeleted, digits),
                                round(totalCorr, digits)))
-    # -----------------------------------
+
     # set names of data frame
-    # -----------------------------------
     colnames(ret.df) <- c("Cronbach's &alpha; if item deleted", "Item discrimination")
     rownames(ret.df) <- df.names
   } else {
     warning("Data frame needs at least three columns for reliability-test!", call. = F)
     ret.df <- NULL
   }
-  # -----------------------------------
   return(ret.df)
 }

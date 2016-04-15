@@ -56,9 +56,7 @@ overdisp <- function(x, trafo = NULL) {
 }
 
 overdisp.default <- function(x, trafo) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("AER", quietly = TRUE)) {
     stop("Package `AER` needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -73,15 +71,12 @@ overdisp.default <- function(x, trafo) {
 
 
 overdisp.lme4 <- function(x) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package `lme4` needed for this function to work. Please install it.", call. = FALSE)
   }
-  # ------------------------
+
   # check object class
-  # ------------------------
   if (any(class(x) == "glmerMod")) {
     rdf <- stats::df.residual(x)
     rp <- stats::residuals(x, type = "pearson")

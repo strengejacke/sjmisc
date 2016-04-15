@@ -77,9 +77,8 @@ read_spss <- function(path,
                       atomic.to.fac = FALSE,
                       keep.na = FALSE,
                       option = "haven") {
-  # --------------------------------------------------------
+
   # check read_spss option
-  # --------------------------------------------------------
   if (is.null(option)) {
     opt <- getOption("read_spss")
     if (is.null(opt) || opt == "foreign") {
@@ -88,20 +87,16 @@ read_spss <- function(path,
       option <- "haven"
     }
   }
-  # -------------------------------------
+
   # check parameter
-  # -------------------------------------
   if (!is.null(option) && option != "foreign" && option != "haven") {
     warning("'option' must be either 'foreign' or 'haven'. Defaulting to 'foreign'.", call. = F)
     option <- "foreign"
   }
-  # -------------------------------------
+
   # foreign import
-  # -------------------------------------
   if (option == "foreign") {
-    # ------------------------
     # check if suggested package is available
-    # ------------------------
     if (!requireNamespace("foreign", quietly = TRUE)) {
       stop("Package 'foreign' needed for this function to work. Please install it.", call. = FALSE)
     }
@@ -119,9 +114,7 @@ read_spss <- function(path,
       data.spss <- set_label(data.spss, get_label(data.spss))
     }
   } else {
-    # ------------------------
     # check if suggested package is available
-    # ------------------------
     if (!requireNamespace("haven", quietly = TRUE)) {
       stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
     }
@@ -145,9 +138,7 @@ read_spss <- function(path,
 atomic_to_fac <- function(data.spss, attr.string) {
   # check for valid attr.string
   if (!is.null(attr.string)) {
-    # -------------------------------------
     # create progress bar
-    # -------------------------------------
     pb <- utils::txtProgressBar(min = 0,
                                 max = ncol(data.spss),
                                 style = 3)
@@ -202,9 +193,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #' @importFrom haven read_sas
 #' @export
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -239,9 +228,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #' @importFrom haven read_dta
 #' @export
 read_stata <- function(path, atomic.to.fac = FALSE) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -308,15 +295,12 @@ write_stata <- function(x, path, enc.to.utf8 = TRUE) {
 #' @importFrom haven write_sav write_dta
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, enc.to.utf8) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
   }
-  # -------------------------------------
+
   # create progress bar
-  # -------------------------------------
   pb <- utils::txtProgressBar(min = 0,
                               max = ncol(x),
                               style = 3)

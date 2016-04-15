@@ -47,13 +47,10 @@
 #' @importFrom stats residuals
 #' @export
 rmse <- function(fit, normalized = FALSE) {
-  # ------------------------------------------
   # compute rmse
-  # ------------------------------------------
-  rmse_val <- sqrt(mean(stats::residuals(fit)^2, na.rm = TRUE))
-  # ------------------------------------------
+  rmse_val <- sqrt(mean(stats::residuals(fit) ^ 2, na.rm = TRUE))
+
   # if normalized, divide by range of response
-  # ------------------------------------------
   if (normalized) {
     if (any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
       # check for package availability

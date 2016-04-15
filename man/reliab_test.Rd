@@ -55,10 +55,8 @@ sjt.df(reliab_test(x),
        commentString = sprintf("Cronbach's &alpha;=\%.2f",
                                cronb(x)))}
 
-# ---------------------------------------
 # Compute PCA on Cope-Index, and perform a
 # reliability check on each extracted factor.
-# ---------------------------------------
 \dontrun{
 factors <- sjt.pca(x)$factor.index
 findex <- sort(unique(factors))

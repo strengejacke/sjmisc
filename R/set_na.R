@@ -115,25 +115,19 @@ set_na <- function(x, value, as.attr = FALSE) {
 
 #' @importFrom stats na.omit
 set_na_helper <- function(x, value, as.attr = FALSE) {
-  # ----------------------------
   # does user want to add missing codes as is_na attribute?
   # if yes, do so here...
-  # ----------------------------
   if (as.attr) {
     x <- set_na_attr(x, value)
   } else {
-    # ----------------------------
     # check if we have any values at all?
-    # ----------------------------
     if (is.null(value)) return(x)
-    # ---------------------------------------
+
     # find associated values in x
     # and set them to NA
-    # ---------------------------------------
     x[x %in% value] <- NA
-    # ----------------------------
+
     # auto-detect variable label attribute
-    # ----------------------------
     attr.string <- getValLabelAttribute(x)
     # check if x has label attributes
     if (!is.null(attr.string)) {
@@ -141,21 +135,17 @@ set_na_helper <- function(x, value, as.attr = FALSE) {
       vl <- attr(x, attr.string, exact = T)
       # retrieve label names
       ln <- names(vl)
-      # ---------------------------------------
+
       # check if value labels exist, and if yes, remove them
-      # ---------------------------------------
       labelpos <- suppressWarnings(which(as.numeric(vl) %in% value))
-      # ---------------------------------------
+
       # remove NA label
-      # ---------------------------------------
       if (length(labelpos > 0)) {
         vl <- vl[-labelpos]
         ln <- ln[-labelpos]
       } else {
-        # ---------------------------------------
         # if vl were not numeric convertable, try character conversion
         # check if value labels exist, and if yes, remove them
-        # ---------------------------------------
         labelpos <- suppressWarnings(which(as.character(vl) %in% value))
         # remove NA label
         if (length(labelpos > 0)) {
@@ -163,42 +153,34 @@ set_na_helper <- function(x, value, as.attr = FALSE) {
           ln <- ln[-labelpos]
         }
       }
-      # ---------------------------------------
+
       # do we have any labels left?
-      # ---------------------------------------
       if (length(vl) > 0) {
         # if yes, set back label attribute
         attr(x, attr.string) <- vl
         names(attr(x, attr.string)) <- ln
-        # ---------------------------------------
+
         # shorten is_na attribute
-        # ---------------------------------------
         na.flag <- get_na_flags(x)
         if (!is.null(na.flag)) {
-          # ---------------------------------------
           # do we have is_na attribute? if yes,
           # remove missing flags of values set to NA
-          # ---------------------------------------
           attr(x, getNaAttribute()) <- na.flag[-labelpos]
         }
       } else {
-        # ---------------------------------------
         # else remove attribute
-        # ---------------------------------------
         attr(x, attr.string) <- NULL
         # remove is_na attribute, no longer needed
         attr(x, getNaAttribute()) <- NULL
-        # ---------------------------------------
+
         # unclass labelled, because it may result
         # in errors when printing a labelled-class-vector
         # without labelled and is_na attribute
-        # ---------------------------------------
         if (is_labelled(x)) x <- unclass(x)
       }
     }
-    # --------------------------------
+
     # if we have a factor, remove unused levels
-    # --------------------------------
     if (is.factor(x)) x <- droplevels(x)
   }
   return(x)

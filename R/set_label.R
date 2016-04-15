@@ -91,57 +91,40 @@
 #'
 #' @export
 set_label <- function(x, lab, attr.string = NULL) {
-  # ----------------------------
   # auto-detect variable label attribute
-  # ----------------------------
   if (is.null(attr.string)) attr.string <- getVarLabelAttribute(x)
   # still nothing found? then leave...
   if (is.null(attr.string)) attr.string <- "label"
-  # ----------------------------
+
   # do we have all necessary arguments?
-  # ----------------------------
   if (!is.null(lab) && !is.null(x)) {
-    # ----------------------------
     # if we have a data frame, we need a variable label
     # for each column (variable) of the data frame
-    # ----------------------------
     if (is.data.frame(x) || is.list(x)) {
-      # ----------------------------
       # get length of data frame or list, i.e.
       # determine number of variables
-      # ----------------------------
       if (is.data.frame(x))
         nvars <- ncol(x)
       else
         nvars <- length(x)
-      # ----------------------------
+
       # check for matching length of supplied labels
-      # ----------------------------
       if (nvars != length(lab)) {
         message("Argument `lab` must be of same length as numbers of columns in `x`.")
       } else {
-        # ----------------------------
         # do we have a data frame? If yes, save column names
-        # ----------------------------
         if (is.data.frame(x)) cnames <- colnames(x)
-        # ----------------------------
+
         # iterate all columns / list elements
-        # ----------------------------
         for (i in 1:nvars) {
           if (is_empty(lab[i])) {
-            # ----------------------------
             # empty label value means, remove
             # the label attribute
-            # ----------------------------
             attr(x[[i]], attr.string) <- NULL
           } else {
-            # ----------------------------
             # set variable label
-            # ----------------------------
             attr(x[[i]], attr.string) <- lab[i]
-            # ----------------------------
             # set names attribute. equals variable name
-            # ----------------------------
             if (is.data.frame(x)) names(attr(x[[i]], attr.string)) <- cnames[i]
           }
         }

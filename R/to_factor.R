@@ -107,6 +107,7 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   }
   # remove missings?
   if (drop.na) x <- to_na(x)
+
   # retrieve value labels
   lab <- get_labels(x,
                     attr.only = TRUE,
@@ -116,11 +117,10 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   varlab <- get_label(x)
   # retrieve missing codes
   nas <- suppressMessages(get_na(x))
-  # -------------------------
+
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
   # as "vector content"
-  # -------------------------
   if (!is.null(lab)) {
     if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
       lab.switch <- names(lab)
@@ -131,11 +131,11 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   } else {
     lab.switch <- NULL
   }
+
   # convert variable to factor
   x <- as.factor(x)
-  # -------------------------
+
   # set back value labels
-  # -------------------------
   x <- suppressMessages(set_labels(x,
                                    lab.switch,
                                    force.labels = TRUE,
