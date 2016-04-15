@@ -64,46 +64,38 @@ add_labels <- function(x, value) {
 
 
 add_labels_helper <- function(x, value) {
-  # ----------------------------------------
   # get current labels of `x`
-  # ----------------------------------------
   current.labels <- get_labels(x,
                                attr.only = T,
                                include.values = "n",
                                include.non.labelled = F)
-  # ----------------------------------------
+
   # if we had already labels, append new ones
-  # ----------------------------------------
   if (!is.null(current.labels)) {
-    # -------------------------
     # remove double values labels
-    # -------------------------
     doubles <- names(current.labels) %in% as.character(value)
-    # -------------------------
+
     # switch value and names attribute, since get_labels
     # returns the values as names, and the value labels
     # as "vector content"
-    # -------------------------
     val.switch <- as.numeric(names(current.labels))
     names(val.switch) <- as.character(current.labels)
-    # -------------------------
+
     # update all labels
-    # -------------------------
     all.labels <- c(val.switch[!doubles], value)
-    # -------------------------
     # tell user
-    # -------------------------
-    if (any(doubles)) warning(sprintf("label '%s' was replaced with new value label.\n", current.labels[doubles]), call. = F)
+    if (any(doubles)) {
+      warning(sprintf("label '%s' was replaced with new value label.\n",
+                      current.labels[doubles]), call. = F)
+    }
   } else {
     all.labels <- value
   }
-  # ----------------------------------------
+
   # sort labels by values
-  # ----------------------------------------
   all.labels <- all.labels[order(as.numeric(all.labels))]
-  # ----------------------------------------
+
   # set back labels
-  # ----------------------------------------
   x <- set_labels(x, labels = all.labels)
   return(x)
 }

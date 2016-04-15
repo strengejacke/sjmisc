@@ -194,6 +194,11 @@ rec_to_helper <- function(x, lowest, highest) {
 #' dummy <- c("M", "F", "F", "X")
 #' rec(dummy, "M=Male; F=Female; X=Refused")
 #'
+#'
+#' # recode non-numeric factors
+#' data(iris)
+#' rec(iris$Species, "setosa=huhu; else=copy")
+#'
 #' @export
 rec <- function(x,
                 recodes,
@@ -227,9 +232,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   val_lab <- val.labels
   # remember if NA's have been recoded...
   na_recoded <- FALSE
-  # -------------------------------
+
   # do we have a factor with "x"?
-  # -------------------------------
   if (is.factor(x)) {
     # save variable labels before in case we just want
     # to reverse the order
@@ -252,14 +256,12 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       as.fac = TRUE
     }
   }
-  # -------------------------------
+
   # retrieve min and max values
-  # -------------------------------
   min_val <- min(x, na.rm = T)
   max_val <- max(x, na.rm = T)
-  # -------------------------------
+
   # do we have special recode-token?
-  # -------------------------------
   if (recodes == "rev") {
     # retrieve unique valus, sorted
     ov <- sort(unique(stats::na.omit(as.vector(x))))
@@ -277,9 +279,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       ))
     }
   }
-  # -------------------------------
+
   # prepare and clean recode string
-  # -------------------------------
   # retrieve each single recode command
   rec_string <- unlist(strsplit(recodes, ";", fixed = TRUE))
   # remove spaces
@@ -291,31 +292,27 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   rec_string <- gsub("hi", as.character(max_val), rec_string, fixed = TRUE)
   # retrieve all recode-pairs, i.e. all old-value = new-value assignments
   rec_pairs <- strsplit(rec_string, "=", fixed = TRUE)
-  # -------------------------------
+
   # check for correct syntax
-  # -------------------------------
   correct_syntax <- unlist(lapply(rec_pairs, function(r) if (length(r) != 2) r else NULL))
   # found any errors in syntax?
   if (!is.null(correct_syntax)) {
     stop(sprintf("?Syntax error in argument \"%s\"", paste(correct_syntax, collapse = "=")), call. = F)
   }
-  # -------------------------------
+
   # the new, recoded variable
-  # -------------------------------
   new_var <- rep(-Inf, length(x))
-  # -------------------------------
+
   # now iterate all recode pairs
   # and do each recoding step
-  # -------------------------------
   for (i in 1:length(rec_pairs)) {
     # retrieve recode pairs as string, and start with separaring old-values
     # at comma separator
     old_val_string <- unlist(strsplit(rec_pairs[[i]][1], ",", fixed = TRUE))
     new_val_string <- rec_pairs[[i]][2]
     new_val <- c()
-    # -------------------------------
+
     # check if new_val_string is correct syntax
-    # -------------------------------
     if (new_val_string == "NA") {
       # here we have a valid NA specification
       new_val <- NA
@@ -329,20 +326,17 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       new_val <- suppressWarnings(as.numeric(new_val_string))
       # if not, assignment is wrong
       if (is.na(new_val)) {
-        # stop(sprintf("?Syntax error in argument \"%s\"", paste(rec_pairs[[i]], collapse = "=")), call. = F)
         new_val <- new_val_string
       }
     }
-    # -------------------------------
+
     # retrieve and check old values
-    # -------------------------------
     old_val <- c()
     for (j in 1:length(old_val_string)) {
       # copy to shorten code
       ovs <- old_val_string[j]
-      # -------------------------------
+
       # check if old_val_string is correct syntax
-      # -------------------------------
       if (ovs == "NA") {
         # here we have a valid NA specification
         # add value to vector of old values that
@@ -377,10 +371,9 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
         old_val <- c(old_val, ovn)
       }
     }
-    # --------------------------------------
+
     # now we have all recode values and want
     # to replace old with new values...
-    # --------------------------------------
     for (k in 1:length(old_val)) {
       # check for "else" token
       if (is.infinite(old_val[k])) {

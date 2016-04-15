@@ -130,13 +130,10 @@ set_labels <- function(x,
 
 
 set_labels_helper <- function(x, labels, force.labels, force.values) {
-  # ---------------------------------------
   # any valid labels? if not, return vector
-  # ---------------------------------------
   if (is.null(labels)) return(x)
-  # ---------------------------------------
+
   # convert single vector
-  # ---------------------------------------
   if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
     return(set_values_vector(x,
                              labels,
@@ -144,23 +141,17 @@ set_labels_helper <- function(x, labels, force.labels, force.values) {
                              force.labels,
                              force.values))
   } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
-    # ---------------------------------------
     # get length of data frame or list, i.e.
     # determine number of variables
-    # ---------------------------------------
     if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
     for (i in 1:nvars) {
-      # ---------------------------------------
       # list of labels makes sense if multiple variable
       # should be labelled with different labels
-      # ---------------------------------------
       if (is.list(labels)) {
-        # ---------------------------------------
         # check for valid length of supplied label-list
-        # ---------------------------------------
         if (i <= length(labels)) {
           x[[i]] <- set_values_vector(x[[i]],
                                       labels[[i]],
@@ -169,10 +160,8 @@ set_labels_helper <- function(x, labels, force.labels, force.values) {
                                       force.values)
         }
       } else if (is.vector(labels)) {
-        # ---------------------------------------
         # user supplied only one vector of labels.
         # so each variable gets the same labels
-        # ---------------------------------------
         x[[i]] <- set_values_vector(x[[i]],
                                     labels,
                                     colnames(x)[i],
@@ -189,37 +178,26 @@ set_labels_helper <- function(x, labels, force.labels, force.values) {
 
 #' @importFrom stats na.omit
 get_value_range <- function(x) {
-  # ---------------------------------------
   # check if var is a factor
-  # ---------------------------------------
   if (is.factor(x)) {
-    # ---------------------------------------
     # check if we have numeric levels
-    # ---------------------------------------
     if (!is_num_fac(x)) {
-      # ---------------------------------------
       # retrieve levels. since levels are numeric, we
       # have minimum and maximum values
-      # ---------------------------------------
       minval <- 1
-      maxval <- length(levels(x))
+      maxval <- nlevels(x)
     } else {
-      # ---------------------------------------
       # levels are not numeric. we need to convert them
       # first to retrieve minimum level, as numeric
-      # ---------------------------------------
       minval <- min(as.numeric(levels(x)), na.rm = T)
-      # ---------------------------------------
+
       # check range, add minimum, so we have max
-      # ---------------------------------------
       maxval <- diff(range(as.numeric(levels(x)))) + minval
     }
   } else if (is.character(x)) {
-    # ---------------------------------------
     # if we have a character vector, we don't have
     # min and max values. instead, we count the
     # amount of unique string values
-    # ---------------------------------------
     minval <- 1
     maxval <- length(unique(stats::na.omit(x)))
   } else {
@@ -238,26 +216,24 @@ get_value_range <- function(x) {
 
 #' @importFrom stats na.omit
 set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
-  # ---------------------------------------
+  # valid vector?
+  if (is.null(x)) {
+    warning("can't add value labels to NULL vectors.", call. = F)
+    return(x)
+  }
   # auto-detect variable label attribute
-  # ---------------------------------------
   attr.string <- getValLabelAttribute(x)
   # do we have any label attributes?
   if (is.null(attr.string)) attr.string <- "labels"
   # check for null
   if (!is.null(labels)) {
-    # ---------------------------------------
-    # if labels is empty string, remove labels
-    # attribute
-    # ---------------------------------------
+    # if labels is empty string, remove labels attribute
     if (length(labels) == 1 && nchar(labels) == 0) {
       attr(x, attr.string) <- NULL
-    } else if (is.null(x)) {
-      warning("can't add value labels to NULL vectors.", call. = F)
+
+      # set labels for character vectors here!
     } else if (is.character(x)) {
-      # ---------------------------------------
       # string vectors can only get labels of type string
-      # ---------------------------------------
       if (typeof(labels) == typeof(x)) {
         # reverse names and labels
         dummy.labels <- names(labels)
@@ -271,10 +247,10 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       } else {
         warning("Character vectors can only get labels of same type.", call. = F)
       }
+
+      # set labels for numeric vectors or factors here
     } else {
-      # ---------------------------------------
       # determine value range
-      # ---------------------------------------
       vr <- get_value_range(x)
       # copy values to variables
       valrange <- vr$valrange
@@ -282,32 +258,30 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
       maxval <- vr$maxval
       # check for unlisting
       if (is.list(labels)) labels <- unlist(labels)
-      # ---------------------------------------
+
       # determine amount of labels and unique values
-      # ---------------------------------------
       lablen <- length(labels)
       values <- sort(unique(stats::na.omit(as.vector(x))))
+
       # do we have an ordered factor?
       if (is.ordered(x)) values <- values[order(levels(x))]
-      # ---------------------------------------
+
       # set var name string
-      # ---------------------------------------
       if (is.null(var.name) || nchar(var.name) < 1) {
         name.string <- "x"
       } else {
         name.string <- var.name
       }
+
+      # check for valid bounds of values
       if (is.infinite(valrange)) {
         warning("can't set value labels. Infinite value range.", call. = F)
-        # ---------------------------------------
+
         # check if we have named vector. in this
         # case, just add these values
-        # ---------------------------------------
       } else if (!is.null(names(labels))) {
-        # ---------------------------------------
         # check names and value attributes. value labels
         # and values might be reversed
-        # ---------------------------------------
         if (!anyNA(suppressWarnings(as.numeric(names(labels)))) &&
             anyNA(suppressWarnings(as.numeric(labels))) &&
             !anyNA(suppressWarnings(as.numeric(values)))) {
@@ -316,9 +290,8 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
           labels <- dummy.lab.values
           names(labels) <- dummy.lab.labels
         }
-        # ---------------------------------------
+
         # set attributes
-        # ---------------------------------------
         if (anyNA(suppressWarnings(as.numeric(labels)))) {
           # here we have also non-numeric labels, so we set
           # names as character string
@@ -329,79 +302,59 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
           attr(x, attr.string) <- as.numeric(labels)
         }
         names(attr(x, attr.string)) <- as.character(names(labels))
-        # ---------------------------------------
         # check for valid length of labels
         # if amount of labels and values are equal,
         # we assume matching labels
-        # ---------------------------------------
       } else if (length(values) == lablen) {
-        # ---------------------------------------
         # set attributes
         # check whether values is numeric, or - if character -
         # only has numeric character values. If yes, add values
         # as numeric labels-attribute
-        # ---------------------------------------
         if (is.numeric(values) || !anyNA(suppressWarnings(as.numeric(values))))
           attr(x, attr.string) <- as.numeric(values)
         else
           attr(x, attr.string) <- as.character(values)
         names(attr(x, attr.string)) <- labels
-        # ---------------------------------------
         # check for valid length of labels
         # here, we have a smaller value range (i.e. less values)
         # than amount of labels
-        # ---------------------------------------
       } else if (valrange < lablen) {
-        # ---------------------------------------
         # do we want to force to set labels, even if we have more labels
         # than values in variable?
-        # ---------------------------------------
         if (force.labels) {
           attr(x, attr.string) <- as.numeric(c(1:lablen))
           names(attr(x, attr.string)) <- labels
         } else {
-          # ---------------------------------------
           # we have more labels than values, so just take as many
           # labes as values are present
-          # ---------------------------------------
           message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
           attr(x, attr.string) <- as.numeric(c(minval:maxval))
           names(attr(x, attr.string)) <- labels[1:valrange]
         }
-        # ---------------------------------------
         # value range is larger than amount of labels. we may
         # have not continuous value range, e.g. "-2" as filter and
         # 1 to 4 as valid values, i.e. -1 and 0 are missing
-        # ---------------------------------------
       } else if (valrange > lablen) {
-        # ---------------------------------------
         # check if user wants to add missing values
-        # ---------------------------------------
         if (force.values) {
           # get amount of unique values
           valrange <- length(values)
-          # ---------------------------------------
+
           # still no match?
-          # ---------------------------------------
           if (valrange != lablen) {
-            # ---------------------------------------
             # check which one is longer, and get missing values
-            # ---------------------------------------
             add_values <- ifelse(valrange > lablen, valrange[-lablen], lablen[-valrange])
             # add missing values to labels
             labels <- c(labels, as.character(add_values))
             # tell user about modification
             message(sprintf("More values in \"%s\" than length of \"labels\". Additional values were added to labels.", name.string))
           }
-          # ---------------------------------------
+
           # set attributes
-          # ---------------------------------------
           attr(x, attr.string) <- as.numeric(c(1:valrange))
           names(attr(x, attr.string)) <- labels
         } else {
-          # ---------------------------------------
           # tell user about modification
-          # ---------------------------------------
           message(sprintf("\"%s\" has more values than \"labels\", hence not all values are labelled.", name.string))
           # drop values with no associated labels
           attr(x, attr.string) <- as.numeric(c(1:length(labels)))

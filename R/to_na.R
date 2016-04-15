@@ -6,7 +6,7 @@
 #'
 #' @seealso \code{\link{get_na}} to get value codes of missing values.
 #'
-#' @param x variable (vector), \code{data.frame} or \code{list} of variables
+#' @param x Variable (vector), \code{data.frame} or \code{list} of variables
 #'          with value label attributes and defined missing value codes
 #'          (see \code{\link[haven]{labelled}}).
 #' @return \code{x}, where each value code of missing values is converted
@@ -14,7 +14,7 @@
 #'
 #' @details \code{to_na} converts values to \code{NA}, which are defined
 #'            as missing through the \code{is_na}-attribute of a vector
-#'            (see \code{\link[haven]{labelled}}). \code{\link{set_na}},
+#'            (see \code{\link{labelled}}). \code{\link{set_na}},
 #'            by contrast, converts those values to \code{NA} that are
 #'            specified in the function's \code{values} argument; hence,
 #'            \code{\link{set_na}} ignores the \code{is_na}-attribute.

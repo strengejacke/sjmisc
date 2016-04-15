@@ -8,11 +8,12 @@
 #'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables
 #'          that should be dichotomized
-#' @param dich.by Indicates the split criterion where a variable is dichotomized
+#' @param dich.by Indicates the split criterion where a variable is dichotomized.
+#'          Must be one of the following values (may be abbreviated):
 #'          \describe{
-#'            \item{\code{"median"}}{by default, \code{x} is split into two groups at the median. May be abbreviated as \code{"md"}.}
-#'            \item{\code{"mean"}}{splits \code{x} into two groups at the mean of \code{x}. May be abbreviated as \code{"m"}.}
-#'            \item{\code{"value"}}{splits \code{x} into two groups at a specific value (see \code{dich.val}). May be abbreviated as \code{"v"}.}
+#'            \item{\code{"median"}}{by default, \code{x} is split into two groups at the median.}
+#'            \item{\code{"mean"}}{splits \code{x} into two groups at the mean of \code{x}.}
+#'            \item{\code{"value"}}{splits \code{x} into two groups at a specific value (see \code{dich.val}).}
 #'            }
 #' @param dich.val Numeric, indicates a value where \code{x} is dichotomized when \code{dich.by = "value"}.
 #'          \strong{Note that \code{dich.val} is inclusive}, i.e. \code{dich.val = 10} will split \code{x}
@@ -57,36 +58,30 @@
 #'
 #' @export
 dicho <- function(x,
-                  dich.by = "median",
+                  dich.by = c("median", "mean", "value"),
                   dich.val = -1,
                   as.num = FALSE,
                   var.label = NULL,
                   val.labels = NULL) {
-  # --------------------------------
   # check abbreviations
-  # --------------------------------
-  if (dich.by == "md") dich.by <- "median"
-  if (dich.by == "m") dich.by <- "mean"
-  if (dich.by == "v") dich.by <- "value"
-  # --------------------------------
+  dich.by <- match.arg(dich.by)
+
   # check for correct dichotome types
-  # --------------------------------
   if (dich.by != "median" && dich.by != "mean" && dich.by != "value") {
-    stop("argument \"dich.by\" must either be \"median\", \"mean\" or \"value\"." , call. = FALSE)
+    stop("argument `dich.by` must either be `median`, `mean` or `value`." , call. = FALSE)
   }
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
-    # --------------------------------
     # get length of data frame or list, i.e.
     # determine number of variables
-    # --------------------------------
     if (is.data.frame(x) || is.matrix(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
-    # --------------------------------
+
     # dichotomize all
-    # --------------------------------
-    for (i in 1:nvars) x[[i]] <- dicho_helper(x[[i]], dich.by, dich.val, as.num, var.label, val.labels)
+    for (i in 1:nvars) {
+      x[[i]] <- dicho_helper(x[[i]], dich.by, dich.val, as.num, var.label, val.labels)
+    }
     return(x)
   } else {
     return(dicho_helper(x, dich.by, dich.val, as.num, var.label, val.labels))
@@ -96,30 +91,23 @@ dicho <- function(x,
 
 #' @importFrom stats median
 dicho_helper <- function(x, dich.by, dich.val, as.num, var.label, val.labels) {
-  # --------------------------------
   # do we have labels? if not, try to
   # automatically get variable labels
-  # --------------------------------
   if (is.null(var.label))
     varlab <- get_label(x)
   else
     varlab <- var.label
-  # --------------------------------
+
   # check if factor. factors need conversion
   # to numeric before dichtomizing
-  # --------------------------------
   if (is.factor(x)) {
-    # --------------------------------
     # non-numeric-factor cannot be converted
-    # --------------------------------
     if (is_num_fac(x)) {
       # try to convert to numeric
       x <- as.numeric(as.character(x))
     } else {
-      # --------------------------------
       # convert non-numeric factor to numeric
       # factor levels are replaced by numeric values
-      # --------------------------------
       x <- to_value(x, keep.labels = FALSE)
       message("Trying to dichotomize non-numeric factor.")
     }
@@ -135,9 +123,6 @@ dicho_helper <- function(x, dich.by, dich.val, as.num, var.label, val.labels) {
     x <- ifelse(x <= dich.val, 0, 1)
   }
   if (!as.num) x <- as.factor(x)
-  # --------------------------------
-  # add back labels
-  # --------------------------------
   # set back variable labels
   if (!is.null(varlab)) x <- set_label(x, varlab)
   # set value labels

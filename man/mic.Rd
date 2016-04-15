@@ -4,7 +4,7 @@
 \alias{mic}
 \title{Mean Inter-Item-Correlation}
 \usage{
-mic(data, cor.method = "pearson")
+mic(data, cor.method = c("pearson", "spearman", "kendall"))
 }
 \arguments{
 \item{data}{A \code{matrix} as returned by the \code{\link{cor}}-function, or
@@ -37,9 +37,7 @@ This function calculates a mean inter-item-correlation, i.e.
          \emph{(Piedmont 2014)}
 }
 \examples{
-# -------------------------------
 # Data from the EUROFAMCARE sample dataset
-# -------------------------------
 data(efc)
 # recveive first item of COPE-index scale
 start <- which(colnames(efc) == "c82cop1")

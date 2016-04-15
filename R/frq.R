@@ -27,9 +27,7 @@
 #' @importFrom stats quantile median na.omit
 #' @export
 frq <- function(x, print.frq = TRUE) {
-  # --------------------------
   # check for labelled class
-  # --------------------------
   if (!is_labelled(x)) {
     stop("`x` must be of class `labelled`.", call. = F)
   }

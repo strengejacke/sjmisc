@@ -84,7 +84,7 @@ group_var <- function(var,
   # group variable
   var <- group_helper(var, groupsize, right.interval, groupcount)
   # set new levels of grouped variable
-  levels(var) <- c(1:length(levels(var)))
+  levels(var) <- c(1:nlevels(var))
   # convert to numeric?
   if (as.num) var <- as.numeric(as.character(var))
   # set back variable labels

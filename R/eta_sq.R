@@ -35,13 +35,10 @@
 #' @importFrom stats aov summary.lm
 #' @export
 eta_sq <- function(...) {
-  # --------------------------------------------------------
   # retrieve list of parameters
-  # --------------------------------------------------------
   input_list <- list(...)
-  # --------------------------------------------------------
+
   # check if fitted anova
-  # --------------------------------------------------------
   if (length(input_list) == 1 && any(class(input_list[[1]]) == "aov")) {
     # retrieve model
     fit <- input_list[[1]]

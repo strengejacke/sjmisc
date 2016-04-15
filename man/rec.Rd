@@ -109,6 +109,11 @@ lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, exclude = NULL)
 dummy <- c("M", "F", "F", "X")
 rec(dummy, "M=Male; F=Female; X=Refused")
 
+
+# recode non-numeric factors
+data(iris)
+rec(iris$Species, "setosa=huhu; else=copy")
+
 }
 \seealso{
 \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}

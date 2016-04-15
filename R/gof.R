@@ -49,12 +49,11 @@
 #' @export
 chisq_gof <- function(x, prob = NULL, weights = NULL) {
   if (any(class(x) == "glm")) {
-    # ------------------------------------
+
     # This is an adapted version from the
     # "binomTools" package. The "X2GOFtest()"
     # function did not work when model data frame
     # had missing values.
-    # ------------------------------------
     y_hat <- stats::fitted(x)
     wt <- x$prior.weight
     vJ <- wt * y_hat * (1 - y_hat)
@@ -62,6 +61,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
     X2 <- sum(stats::resid(x, type = "pearson") ^ 2)
     form <- stats::as.formula(x$formula)
     form[[2]] <- as.name("cJ")
+
     # use model matrix instead of data values,
     # because data may contain more variables
     # than needed, and due to missing may have
@@ -131,19 +131,14 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
 #' @importFrom stats fitted pchisq quantile xtabs
 #' @export
 hoslem_gof <- function(x, g = 10) {
-  # ---------------------------------------
   # check for valid object class
-  # ---------------------------------------
   if (!any(class(x) == "glmerMod") && !any(class(x) == "glm")) {
     stop("'x' must be an object of class 'glm' or 'glmerMod'.", call. = F)
   }
-  # ---------------------------------------
+
   # mixed models (lme4)
-  # ---------------------------------------
   if (any(class(x) == "glmerMod")) {
-    # ---------------------------------------
     # check for package availability
-    # ---------------------------------------
     if (!requireNamespace("lme4", quietly = TRUE)) {
       stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
     }

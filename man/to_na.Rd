@@ -7,7 +7,7 @@
 to_na(x)
 }
 \arguments{
-\item{x}{variable (vector), \code{data.frame} or \code{list} of variables
+\item{x}{Variable (vector), \code{data.frame} or \code{list} of variables
 with value label attributes and defined missing value codes
 (see \code{\link[haven]{labelled}}).}
 }
@@ -22,7 +22,7 @@ This function converts defined missing values that are stored as
 \details{
 \code{to_na} converts values to \code{NA}, which are defined
            as missing through the \code{is_na}-attribute of a vector
-           (see \code{\link[haven]{labelled}}). \code{\link{set_na}},
+           (see \code{\link{labelled}}). \code{\link{set_na}},
            by contrast, converts those values to \code{NA} that are
            specified in the function's \code{values} argument; hence,
            \code{\link{set_na}} ignores the \code{is_na}-attribute.

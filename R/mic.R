@@ -30,9 +30,7 @@
 #'             \doi{10.1007/978-94-007-0753-5_1493}
 #'
 #' @examples
-#' # -------------------------------
 #' # Data from the EUROFAMCARE sample dataset
-#' # -------------------------------
 #' data(efc)
 #' # recveive first item of COPE-index scale
 #' start <- which(colnames(efc) == "c82cop1")
@@ -45,25 +43,19 @@
 #'
 #' @importFrom stats cor na.omit
 #' @export
-mic <- function(data, cor.method = "pearson") {
-  # -----------------------------------
+mic <- function(data, cor.method = c("pearson", "spearman", "kendall")) {
   # Check parameter
-  # -----------------------------------
-  if (cor.method == "s") cor.method <- "spearman"
-  if (cor.method == "p") cor.method <- "pearson"
-  if (cor.method == "k") cor.method <- "kendall"
-  # -----------------------------------
+  cor.method <- match.arg(cor.method)
+
   # Mean-interitem-corelation
-  # -----------------------------------
   if (class(data) == "matrix") {
     corr <- data
   } else {
     data <- stats::na.omit(data)
     corr <- stats::cor(data, method = cor.method)
   }
-  # -----------------------------------
+
   # Sum up all correlation values
-  # -----------------------------------
   meanic <- c()
   for (j in 1:(ncol(corr) - 1)) {
     # first correlation is always "1" (self-correlation)

@@ -63,9 +63,7 @@
 #'
 #' @export
 get_label <- function(x, def.value = NULL) {
-  # ----------------------------
   # auto-detect variable label attribute
-  # ----------------------------
   attr.string <- getVarLabelAttribute(x)
   # do we have a df?
   if (is.data.frame(x) || is.matrix(x)) {

@@ -97,43 +97,34 @@ icc <- function(x, ...) {
 #' @importFrom lme4 VarCorr fixef getME
 #' @importFrom stats family formula
 icc.lme4 <- function(fit) {
-  # ------------------------
   # check if suggested package is available
-  # ------------------------
   if (!requireNamespace("lme4", quietly = TRUE)) {
     stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
   }
-  # ------------------------
+
   # check object class
-  # ------------------------
   if (any(class(fit) == "glmerMod") || any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
-    # ------------------------
     # get family
-    # ------------------------
     fitfam <- stats::family(fit)$family
     # is neg. binomoal?
     is_negbin <- str_contains(fitfam, "Negative Binomial", ignore.case = TRUE)
-    # ------------------------
+
     # random effects variances
     # for details on tau and sigma, see
     # Aguinis H, Gottfredson RK, Culpepper SA2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528. doi:10.1177/0149206313478188.
-    # ------------------------
     reva <- lme4::VarCorr(fit)
     # retrieve only intercepts
     vars <- lapply(reva, function(x) x[[1]])
-    # ------------------------
+
     # random intercept-variances, i.e.
     # between-subject-variance (tau 00)
-    # ------------------------
     tau.00 <- sapply(vars, function(x) x[1])
-    # ------------------------
+
     # random slope-variances (tau 11)
-    # ------------------------
     tau.11 <- unlist(lapply(reva, function(x) diag(x)[-1]))
-    # ------------------------
+
     # residual variances, i.e.
     # within-cluster-variance (sigma^2)
-    # ------------------------
     if (any(class(fit) == "glmerMod") && fitfam == "binomial") {
       # for logistic models, we use pi / 3
       resid_var <- (pi ^ 2) / 3
@@ -160,12 +151,12 @@ icc.lme4 <- function(fit) {
       # random intercept icc
       ri.icc <- tau.00 / total_var
     }
-    # ----------------------------------
+
     # get random slope random intercep correlations
-    # ----------------------------------
     # do we have any rnd slopes?
     has_rnd_slope <- unlist(lapply(reva, function(x) dim(attr(x, "correlation"))[1] > 1))
     tau.01 <- rho.01 <- NULL
+
     # get rnd slopes
     if (any(has_rnd_slope)) {
       rnd_slope <- reva[has_rnd_slope]
@@ -177,8 +168,10 @@ icc.lme4 <- function(fit) {
       tau.01 <- apply(as.matrix(cbind(unlist(cor_), unlist(std_))), MARGIN = 1, FUN = prod)
       rho.01 <- cor_
     }
+
     # name values
     names(ri.icc) <- names(reva)
+
     # add attributes, for print method
     class(ri.icc) <- c("icc.lme4", class(ri.icc))
     attr(ri.icc, "family") <- stats::family(fit)$family

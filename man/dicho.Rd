@@ -4,18 +4,19 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(x, dich.by = "median", dich.val = -1, as.num = FALSE,
-  var.label = NULL, val.labels = NULL)
+dicho(x, dich.by = c("median", "mean", "value"), dich.val = -1,
+  as.num = FALSE, var.label = NULL, val.labels = NULL)
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables
 that should be dichotomized}
 
-\item{dich.by}{Indicates the split criterion where a variable is dichotomized
+\item{dich.by}{Indicates the split criterion where a variable is dichotomized.
+Must be one of the following values (may be abbreviated):
 \describe{
-  \item{\code{"median"}}{by default, \code{x} is split into two groups at the median. May be abbreviated as \code{"md"}.}
-  \item{\code{"mean"}}{splits \code{x} into two groups at the mean of \code{x}. May be abbreviated as \code{"m"}.}
-  \item{\code{"value"}}{splits \code{x} into two groups at a specific value (see \code{dich.val}). May be abbreviated as \code{"v"}.}
+  \item{\code{"median"}}{by default, \code{x} is split into two groups at the median.}
+  \item{\code{"mean"}}{splits \code{x} into two groups at the mean of \code{x}.}
+  \item{\code{"value"}}{splits \code{x} into two groups at a specific value (see \code{dich.val}).}
   }}
 
 \item{dich.val}{Numeric, indicates a value where \code{x} is dichotomized when \code{dich.by = "value"}.

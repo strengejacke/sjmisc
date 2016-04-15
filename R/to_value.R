@@ -9,14 +9,14 @@
 #'            factor levels and \code{\link{to_factor}} to convert a numeric variable
 #'            into a factor (and preserve labels)
 #'
-#' @param x \code{\link{factor}} or a data frame with \code{factor}s. May also be
+#' @param x \code{\link{factor}} or a data frame with factors. May also be
 #'          a character vector.
-#' @param start.at starting index, i.e. the lowest numeric value of the variable's
+#' @param start.at Starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
 #'          value of the returned numeric variable corresponds to the lowest factor
 #'          level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 #'          are not numeric).
-#' @param keep.labels logical, if \code{TRUE}, former factor levels will be added as
+#' @param keep.labels Logical, if \code{TRUE}, former factor levels will be added as
 #'          value labels. See \code{\link{set_labels}} for more details.
 #' @return A numeric variable with values ranging either from \code{start.at} to
 #'           \code{start.at} + length of factor levels, or to the corresponding
@@ -97,7 +97,7 @@ to_value_helper <- function(x, start.at, keep.labels) {
     # check start.at value
     if (is.null(start.at)) start.at <- 1
     # get amount of categories
-    l <- length(levels(x))
+    l <- nlevels(x)
     # determine highest category value
     end <- start.at + l - 1
     # replace labels with numeric values
