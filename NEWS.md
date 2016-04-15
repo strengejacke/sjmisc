@@ -1,4 +1,4 @@
-# sjmisc 1.7-3
+# sjmisc 1.7-4
 
 ## Changes to functions
 

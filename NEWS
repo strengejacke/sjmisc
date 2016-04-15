@@ -1,4 +1,4 @@
-Version 1.7-3
+Version 1.7-4
 ------------------------------------------------------------------------------
 Changes to functions:
 * `to_long` can now also gather columns according to their column numbers.
