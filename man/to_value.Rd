@@ -7,16 +7,16 @@
 to_value(x, start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
-\item{x}{\code{\link{factor}} or a data frame with factors. May also be
+\item{x}{\code{\link{factor}} or a data frame with \code{factor}s. May also be
 a character vector.}
 
-\item{start.at}{Starting index, i.e. the lowest numeric value of the variable's
+\item{start.at}{starting index, i.e. the lowest numeric value of the variable's
 value range. By default, this argument is \code{NULL}, hence the lowest
 value of the returned numeric variable corresponds to the lowest factor
 level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 are not numeric).}
 
-\item{keep.labels}{Logical, if \code{TRUE}, former factor levels will be added as
+\item{keep.labels}{logical, if \code{TRUE}, former factor levels will be added as
 value labels. See \code{\link{set_labels}} for more details.}
 }
 \value{
