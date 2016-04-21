@@ -7,9 +7,11 @@
 #'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables
 #'          with partially added value labels (see \code{\link[haven]{labelled}}).
-#' @return \code{x}, where labels for non-labelled values are added
 #'
-#' @seealso \code{\link{drop_labels}} to drop labels from zero-count values.
+#' @return \code{x}, where labels for non-labelled values are added.
+#'
+#' @seealso \code{\link{drop_labels}} is the counterpart to \code{fill_labels}
+#'            and drops labels from zero-count (non-existing) values.
 #'
 #' @examples
 #' # create labelled integer, with missing flag

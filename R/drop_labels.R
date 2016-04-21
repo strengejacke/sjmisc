@@ -6,11 +6,13 @@
 #'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables
 #'          with partially added value labels (see \code{\link[haven]{labelled}}).
-#' @return \code{x}, where labels for non-labelled values are added
+#'
+#' @return \code{x}, where value labels for non-existing values are removed.
 #'
 #' @seealso \code{\link{zap_labels}} and \code{\link{zap_unlabelled}} to convert
 #'            (non-)labelled values into \code{NA}; \code{\link{fill_labels}} to
-#'            add labels to existing, but not yet labelled values.
+#'            add labels to existing, but not yet labelled values. The latter
+#'            function is the counterpart to \code{drop_labels}.
 #'
 #' @examples
 #' rp <- rec_pattern(1, 100)
