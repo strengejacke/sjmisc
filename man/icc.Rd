@@ -25,16 +25,6 @@ This function calculates the intraclass-correlation
                are supported.
 }
 \details{
-Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intraclass Correlation Coefficient in Mixed Models}, \href{http://www.theanalysisfactor.com/the-intraclass-correlation-coefficient-in-mixed-models/}{web}:
-      \itemize{
-       \item It can help you determine whether or not a linear mixed model is even necessary. If you find that the correlation is zero, that means the observations within clusters are no more similar than observations from different clusters. Go ahead and use a simpler analysis technique.
-       \item It can be theoretically meaningful to understand how much of the overall variation in the response is explained simply by clustering. For example, in a repeated measures psychological study you can tell to what extent mood is a trait (varies among people, but not within a person on different occasions) or state (varies little on average among people, but varies a lot across occasions).
-       \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
-      }
-      In short, the ICC can be interpreted as "the proportion of the variance
-      explained by the grouping structure in the population" (Hox 2002: 15).
-}
-\note{
 The calculation of the ICC for generalized linear mixed models with binary outcome is based on
       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
       describe computation of ICC for negative binomial models.
@@ -45,14 +35,24 @@ The calculation of the ICC for generalized linear mixed models with binary outco
       \cr \cr
       The random effect variances indicate the between- and within-group
         variances as well as random-slope variance and random-slope-intercept
-        correlation are returned. The components are denoted as following:
+        correlation. The components are denoted as following:
         \itemize{
-         \item Within-group variance: sigma_2
+         \item Within-group (residual) variance: sigma_2
          \item Between-group-variance: tau.00 (variation between individual intercepts and average intercept)
          \item Random-slope-variance: tau.11 (variation between individual slopes and average slope)
          \item Random-Intercept-Slope-covariance: tau.01
          \item Random-Intercept-Slope-correlation: rho.01
         }
+}
+\note{
+Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intraclass Correlation Coefficient in Mixed Models}, \href{http://www.theanalysisfactor.com/the-intraclass-correlation-coefficient-in-mixed-models/}{web}:
+      \itemize{
+       \item It can help you determine whether or not a linear mixed model is even necessary. If you find that the correlation is zero, that means the observations within clusters are no more similar than observations from different clusters. Go ahead and use a simpler analysis technique.
+       \item It can be theoretically meaningful to understand how much of the overall variation in the response is explained simply by clustering. For example, in a repeated measures psychological study you can tell to what extent mood is a trait (varies among people, but not within a person on different occasions) or state (varies little on average among people, but varies a lot across occasions).
+       \item It can also be meaningful to see how the ICC (as well as the between and within cluster variances) changes as variable are added to the model.
+      }
+      In short, the ICC can be interpreted as "the proportion of the variance
+      explained by the grouping structure in the population" (Hox 2002: 15).
 }
 \examples{
 \dontrun{

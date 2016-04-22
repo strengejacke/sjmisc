@@ -11,7 +11,7 @@ drop_labels(x)
 with partially added value labels (see \code{\link[haven]{labelled}}).}
 }
 \value{
-\code{x}, where labels for non-labelled values are added
+\code{x}, where value labels for non-existing values are removed.
 }
 \description{
 This function drops all value labels for those values that have
@@ -38,6 +38,7 @@ frq(as_labelled(drop_labels(x)))
 \seealso{
 \code{\link{zap_labels}} and \code{\link{zap_unlabelled}} to convert
            (non-)labelled values into \code{NA}; \code{\link{fill_labels}} to
-           add labels to existing, but not yet labelled values.
+           add labels to existing, but not yet labelled values. The latter
+           function is the counterpart to \code{drop_labels}.
 }
 

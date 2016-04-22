@@ -58,7 +58,7 @@
 #' # 2 sd and center binary predictors
 #' std_beta(fit, include.ci = TRUE, type = "std2")
 #'
-#' @importFrom stats model.matrix coef
+#' @importFrom stats model.matrix coef terms
 #' @importFrom nlme getResponse
 #' @export
 std_beta <- function(fit,
@@ -74,7 +74,7 @@ std_beta <- function(fit,
       stop("Package `arm` needed for computing this type of standardized estimates. Please install it.", call. = FALSE)
     }
     # has model intercept?
-    tmp_i <- attr(terms(fit), "intercept")
+    tmp_i <- attr(stats::terms(fit), "intercept")
     has_intercept <- !is.null(tmp_i) & tmp_i == 1
     # get standardized model parameter
     stdbv2_all <- arm::standardize(fit)

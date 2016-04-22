@@ -11,7 +11,7 @@ fill_labels(x)
 with partially added value labels (see \code{\link[haven]{labelled}}).}
 }
 \value{
-\code{x}, where labels for non-labelled values are added
+\code{x}, where labels for non-labelled values are added.
 }
 \description{
 This function adds value labels to a partially labelled vector,
@@ -44,6 +44,7 @@ frq(x)
 
 }
 \seealso{
-\code{\link{drop_labels}} to drop labels from zero-count values.
+\code{\link{drop_labels}} is the counterpart to \code{fill_labels}
+           and drops labels from zero-count (non-existing) values.
 }
 

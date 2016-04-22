@@ -103,7 +103,7 @@ icc.lme4 <- function(fit) {
   }
 
   # check object class
-  if (any(class(fit) == "glmerMod") || any(class(fit) == "lmerMod") || any(class(fit) == "merModLmerTest")) {
+  if (is_merMod(fit)) {
     # get family
     fitfam <- stats::family(fit)$family
     # is neg. binomoal?

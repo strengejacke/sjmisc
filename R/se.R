@@ -31,7 +31,7 @@
 #'
 #' @export
 se <- function(x) {
-  if (any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
+  if (is_merMod(x)) {
     return(std_merMod(x))
   } else if (is.matrix(x) || is.data.frame(x)) {
     # init return variables

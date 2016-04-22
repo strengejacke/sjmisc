@@ -47,7 +47,7 @@ converge_ok <- function(x, tolerance = 0.001) {
     stop("Package `Matrix` needed for this function to work. Please install it.", call. = FALSE)
   }
   # is 'x' an lmer object?
-  if (any(class(x) == "glmerMod") || any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
+  if (is_merMod(x)) {
     relgrad <- with(x@optinfo$derivs, Matrix::solve(Hessian, gradient))
     # copy logical value, TRUE if convergence is OK
     retval <- max(abs(relgrad)) < tolerance
