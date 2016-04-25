@@ -12,6 +12,7 @@
 * `to_label` now also works for character vectors and non-numeric factors.
 * `mwu` now also works when `grp` is a character vector.
 * Generally, a better support for character vectors in label functions.
+* Argument `enc` now also applies to `read_spss` for haven-option.
 
 ## Bug fixes
 

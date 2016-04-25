@@ -10,7 +10,7 @@ read_spss(path, enc = NA, attach.var.labels = FALSE,
 \arguments{
 \item{path}{File path to the data file.}
 
-\item{enc}{File encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}}
+\item{enc}{File encoding of the data file. See 'Details'.}
 
 \item{attach.var.labels}{Logical, if \code{TRUE}, variable labels will automatically be
 added to each variable as \code{"variable.label"} attribute. Use this
@@ -38,6 +38,12 @@ A data frame containing the SPSS data. Retrieve value labels with \code{\link{ge
 }
 \description{
 Import data from SPSS, including NA's, value and variable labels.
+}
+\details{
+In some cases, column names of the imported data set are not properly
+           encoded. Use the \code{enc}-argument to specify the character
+           encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
+           \code{\link{Encoding}}).
 }
 \note{
 This is a wrapper function for \code{\link[haven]{read_spss}} of the

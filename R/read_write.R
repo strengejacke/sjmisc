@@ -11,7 +11,7 @@
 #'            }
 #'
 #' @param path File path to the data file.
-#' @param enc File encoding of the SPSS dataset. \emph{Not needed if \code{option = "haven"} (default).}
+#' @param enc File encoding of the data file. See 'Details'.
 #' @param attach.var.labels Logical, if \code{TRUE}, variable labels will automatically be
 #'          added to each variable as \code{"variable.label"} attribute. Use this
 #'          parameter, if \code{option = "foreign"}, where variable labels are added
@@ -48,6 +48,11 @@
 #'         to get a vector of value and variable labels, which can then be
 #'         used with other functions like \code{\link{barplot}} etc.
 #'         See 'Examples' from \code{\link{get_labels}}.
+#'
+#' @details In some cases, column names of the imported data set are not properly
+#'            encoded. Use the \code{enc}-argument to specify the character
+#'            encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
+#'            \code{\link{Encoding}}).
 #'
 #' @examples
 #' \dontrun{
@@ -120,6 +125,8 @@ read_spss <- function(path,
     }
     # read data file
     data.spss <- haven::read_spss(path)
+    # encoding?
+    if (!is.na(enc) && !is.null(enc)) Encoding(colnames(data.spss)) <- enc
     # convert NA
     if (!keep.na) data.spss <- to_na(data.spss)
     # convert to sjPlot
