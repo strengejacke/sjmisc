@@ -117,20 +117,18 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
     # remove those columns that should not be gathered
     tmp <- data[, -match(remove_cols, colnames(data))]
     # gather data frame
-     tmp <- suppressWarnings(
-       tidyr::gather_(tmp,
-                      keys[i],
-                      values[i],
-                      data_cols[[i]])
-       )
-     # need to recode key-value?
-     if (recode.key)
-       tmp[[keys[i]]] <- to_value(tmp[[keys[i]]], keep.labels = FALSE)
-     # set variable label
-     if (!is.null(labels))
-       set_label(tmp[[values[i]]]) <- labels[i]
-     # add output to list
-     dummy[[length(dummy) + 1]] <- tmp
+    tmp <- suppressWarnings(tidyr::gather_(tmp,
+                                           keys[i],
+                                           values[i],
+                                           data_cols[[i]]))
+    # need to recode key-value?
+    if (recode.key)
+      tmp[[keys[i]]] <- sort(to_value(tmp[[keys[i]]], keep.labels = FALSE))
+    # set variable label
+    if (!is.null(labels))
+      set_label(tmp[[values[i]]]) <- labels[i]
+    # add output to list
+    dummy[[length(dummy) + 1]] <- tmp
   }
   # we have at least one gathered data frame
   mydat <- dummy[[1]]
