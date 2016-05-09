@@ -1,4 +1,8 @@
-# sjmisc 1.7-4
+# sjmisc 1.8
+
+## New functions
+* `samplesize.lmm` to compute approximated sample size for two-level linear mixed models.
+* `deff` to compute the design effect for two-level linear mixed models.
 
 ## Changes to functions
 

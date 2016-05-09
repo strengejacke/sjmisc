@@ -1,5 +1,9 @@
-Version 1.7-4
+Version 1.8
 ------------------------------------------------------------------------------
+New functions:
+* `samplesize.lmm` to compute approximated sample size for two-level linear mixed models.
+* `deff` to compute the design effect for two-level linear mixed models.
+
 Changes to functions:
 * `to_long` can now also gather columns according to their column numbers.
 * `merge_df` now optionally merges more than two data frames at once.
