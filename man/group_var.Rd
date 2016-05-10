@@ -78,9 +78,7 @@ hist(efc$e17age, main = get_label(efc$e17age))
 # grouped variable
 ageGrp <- group_var(efc$e17age)
 ageGrpLab <- group_labels(efc$e17age)
-barplot(table(ageGrp),
-        main = get_label(efc$e17age),
-        names.arg = ageGrpLab)
+barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
 
 }
 \seealso{

@@ -44,8 +44,7 @@ mydf <- data.frame(hi_qol = as.factor(efc$hi_qol),
                    grp = efc$grp)
 # fit glmer
 fit <- glmer(hi_qol ~ sex + c12hour + neg_c_7 + (1|grp),
-             data = mydf,
-             family = binomial("logit"))
+             data = mydf, family = binomial("logit"))
 
 converge_ok(fit)
 

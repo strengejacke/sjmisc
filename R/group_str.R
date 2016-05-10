@@ -89,10 +89,7 @@ group_str <- function(strings,
   }
 
   # create matrix from string values of variable
-  m <- stringdist::stringdistmatrix(strings,
-                                    strings,
-                                    method = method,
-                                    useNames = "strings")
+  m <- stringdist::stringdistmatrix(strings, strings, method = method, useNames = "strings")
 
   # init variable that contains "close" pairs
   pairs <- list()
@@ -111,9 +108,7 @@ group_str <- function(strings,
   }
 
   # create progress bar
-  if (showProgressBar) pb <- utils::txtProgressBar(min = 0,
-                                                   max = ncol(m),
-                                                   style = 3)
+  if (showProgressBar) pb <- utils::txtProgressBar(min = 0, max = ncol(m), style = 3)
 
   # iterate matrix
   for (i in 1:nrow(m)) {

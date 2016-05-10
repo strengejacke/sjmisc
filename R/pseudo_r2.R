@@ -27,8 +27,7 @@
 #' # Tjur's R-squared value
 #' efc$services <- dicho(efc$tot_sc_e, "v", 0, as.num = TRUE)
 #' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
-#'            data = efc,
-#'            family = binomial(link = "logit"))
+#'            data = efc, family = binomial(link = "logit"))
 #' cod(fit)
 #'
 #' @importFrom stats predict predict.glm residuals
@@ -129,8 +128,7 @@ cod <- function(x) {
 #' # Pseudo-R-squared values
 #' efc$services <- dicho(efc$tot_sc_e, "v", 0, as.num = TRUE)
 #' fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
-#'            data = efc,
-#'            family = binomial(link = "logit"))
+#'            data = efc, family = binomial(link = "logit"))
 #' r2(fit)
 #'
 #' # Pseudo-R-squared values for random effect variances
@@ -161,10 +159,8 @@ r2 <- function(x, n = NULL) {
     # return results
     return(structure(class = "sjmisc_r2", list(r2 = rsq, adjr2 = adjr2)))
     # else do we have a mixed model?
-  } else if (str_contains(class(x),
-                          pattern = c("lmerMod", "lme"),
-                          ignore.case = T,
-                          logic = "OR")) {
+  } else if (str_contains(class(x), pattern = c("lmerMod", "lme"),
+                          ignore.case = T, logic = "OR")) {
     # do we have null model?
     if (!is.null(n)) {
       # compute tau for both models

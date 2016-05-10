@@ -33,6 +33,6 @@ re_var(fit2)
 Aguinis H, Gottfredson RK, Culpepper SA. 2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528 (\doi{10.1177/0149206313478188})
 }
 \seealso{
-\code{\link{icc}}
+\code{\link{icc}} and \code{\link{get_re_var}}
 }
 

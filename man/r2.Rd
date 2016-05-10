@@ -64,8 +64,7 @@ r2(fit)
 # Pseudo-R-squared values
 efc$services <- dicho(efc$tot_sc_e, "v", 0, as.num = TRUE)
 fit <- glm(services ~ neg_c_7 + c161sex + e42dep,
-           data = efc,
-           family = binomial(link = "logit"))
+           data = efc, family = binomial(link = "logit"))
 r2(fit)
 
 # Pseudo-R-squared values for random effect variances

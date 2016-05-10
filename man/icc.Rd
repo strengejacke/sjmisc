@@ -53,6 +53,21 @@ Some notes on why the ICC is useful, based on Grace-Martin K: \emph{The Intracla
       }
       In short, the ICC can be interpreted as "the proportion of the variance
       explained by the grouping structure in the population" (Hox 2002: 15).
+      \cr \cr
+      \strong{Caution:} For three-level-models, depending on the nested structure
+      of the model, the ICC only reports the proportion of variance explained
+      for each grouping level. However, the proportion of variance for specific
+      levels related to each other (e.g., similarity of level-1-units within
+      level-2-units or level-2-units within level-3-units) must be computed
+      manually. Use \code{\link{get_re_var}} to get the between-group-variances
+      and residual variance of the model, and calculate the ICC for the various level
+      correlations.
+      \cr \cr
+      For example, for the ICC between level 1 and 2: \cr
+      \code{sum(get_re_var(fit)) / (sum(get_re_var(fit)) + get_re_var(fit, "sigma_2"))}
+      \cr \cr
+      or for the ICC between level 2 and 3: \cr
+      \code{get_re_var(fit)[2] / sum(get_re_var(fit))}
 }
 \examples{
 \dontrun{
@@ -88,6 +103,7 @@ print(icc2, comp = "var")}
             }
 }
 \seealso{
-\code{\link{re_var}} to print random effect variances.
+\code{\link{re_var}} to print random effect variances and \code{\link{get_re_var}}
+           to get the values from a particular variance component.
 }
 

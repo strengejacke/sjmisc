@@ -87,9 +87,7 @@
 #' dummy <- sample(1:5, 100, replace = TRUE)
 #' # declare missing values, but only as attribute
 #' # missing code definition may be logical indices
-#' dummy <- set_na(dummy,
-#'                 c(FALSE, FALSE, FALSE, TRUE, TRUE),
-#'                 as.attr = TRUE)
+#' dummy <- set_na(dummy, c(FALSE, FALSE, FALSE, TRUE, TRUE), as.attr = TRUE)
 #'
 #' str(dummy)
 #' table(dummy)

@@ -62,17 +62,11 @@
 #' dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
 #'                     b = sample(1:4, 10, replace = TRUE),
 #'                     c = sample(1:4, 10, replace = TRUE))
-#' dummy <- set_label(dummy,
-#'                    c("Variable A",
-#'                      "Variable B",
-#'                      "Variable C"))
+#' dummy <- set_label(dummy, c("Variable A", "Variable B", "Variable C"))
 #' str(dummy)
 #'
 #' # remove one variable label
-#' dummy <- set_label(dummy,
-#'                    c("Variable A",
-#'                      "",
-#'                      "Variable C"))
+#' dummy <- set_label(dummy, c("Variable A", "", "Variable C"))
 #' str(dummy)
 #'
 #'

@@ -64,13 +64,13 @@ mean_n <- function(dat, n, digits = 2) {
 
   # check if we have a data framme with at least two columns
   if (!is.data.frame(dat) || ncol(dat) < 2) {
-    warning("'dat' must be a data.frame with at least two columns.", call. = F)
+    warning("`dat` must be a data.frame with at least two columns.", call. = F)
     return(NA)
   }
 
   # n may not be larger as df's amount of columns
   if (ncol(dat) < n) {
-    warning("'n' must be smaller or equal to data.frame's amount of columns.", call. = F)
+    warning("`n` must be smaller or equal to number of columns in data frame.", call. = F)
     return(NA)
   }
   round(apply(dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA)), digits)

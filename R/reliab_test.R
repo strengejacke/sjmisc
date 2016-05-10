@@ -38,11 +38,8 @@
 #'
 #' \dontrun{
 #' library(sjPlot)
-#' sjt.df(reliab_test(x),
-#'        describe = FALSE,
-#'        showCommentRow = TRUE,
-#'        commentString = sprintf("Cronbach's &alpha;=%.2f",
-#'                                cronb(x)))}
+#' sjt.df(reliab_test(x), describe = FALSE, showCommentRow = TRUE,
+#'        commentString = sprintf("Cronbach's &alpha;=%.2f", cronb(x)))}
 #'
 #' # Compute PCA on Cope-Index, and perform a
 #' # reliability check on each extracted factor.
@@ -53,11 +50,8 @@
 #' for (i in 1:length(findex)) {
 #'  rel.df <- subset(x, select = which(factors == findex[i]))
 #'  if (ncol(rel.df) >= 3) {
-#'    sjt.df(reliab_test(rel.df),
-#'           describe = FALSE,
-#'           showCommentRow = TRUE,
-#'           useViewer = FALSE,
-#'           title = "Item-Total-Statistic",
+#'    sjt.df(reliab_test(rel.df), describe = FALSE, showCommentRow = TRUE,
+#'           useViewer = FALSE, title = "Item-Total-Statistic",
 #'           commentString = sprintf("Scale's overall Cronbach's &alpha;=%.2f",
 #'                                   cronb(rel.df)))
 #'    }
@@ -70,7 +64,7 @@ reliab_test <- function(x,
                         digits = 3) {
   # check param
   if (!is.matrix(x) && !is.data.frame(x)) {
-    warning("'x' needs to be a data frame or matrix.", call. = F)
+    warning("`x` needs to be a data frame or matrix.", call. = F)
     return(NULL)
   }
 
@@ -118,7 +112,7 @@ reliab_test <- function(x,
     colnames(ret.df) <- c("Cronbach's &alpha; if item deleted", "Item discrimination")
     rownames(ret.df) <- df.names
   } else {
-    warning("Data frame needs at least three columns for reliability-test!", call. = F)
+    warning("Data frame needs at least three columns for reliability-test.", call. = F)
     ret.df <- NULL
   }
   return(ret.df)

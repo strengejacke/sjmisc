@@ -64,9 +64,7 @@ barplot(table(efc$e42dep),
         main = get_label(efc$e42dep))
 
 # get labels from multiple variables
-get_label(list(efc$e42dep,
-               efc$e16sex,
-               efc$e15relat))
+get_label(list(efc$e42dep, efc$e16sex, efc$e15relat))
 
 }
 \seealso{

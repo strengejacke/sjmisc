@@ -52,8 +52,7 @@
 #' # sjPlot to test
 #' \dontrun{
 #' library(sjPlot)
-#' sjp.frq(dicho(efc$e42dep,
-#'               var.label = "Dependency (dichotomized)",
+#' sjp.frq(dicho(efc$e42dep, var.label = "Dependency (dichotomized)",
 #'               val.labels = c("lower", "higher")))}
 #'
 #' @export

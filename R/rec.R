@@ -160,8 +160,7 @@ rec_to_helper <- function(x, lowest, highest) {
 #' # table(efc$e42dep, exclude = NULL)
 #'
 #' # keep value labels. variable label is automatically preserved
-#' str(rec(efc$e42dep,
-#'         "1,2=1; 3,4=2",
+#' str(rec(efc$e42dep, "1,2=1; 3,4=2",
 #'         val.labels = c("low dependency", "high dependency")))
 #'
 #' # recode 1 to 3 into 4 into 2

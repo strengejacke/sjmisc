@@ -36,8 +36,7 @@
 #' summary(x)
 #'
 #' data(efc)
-#' x <- set_labels(efc$e42dep, c(`1` = "independent",
-#'                               `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' x1 <- as_labelled(x, add.labels = FALSE)
 #' x2 <- as_labelled(x, add.labels = TRUE)
 #'
@@ -58,14 +57,10 @@ as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- as_labelled_helper(x[[i]],
-                                                    add.labels,
-                                                    add.class)
+    for (i in 1:nvars) x[[i]] <- as_labelled_helper(x[[i]], add.labels, add.class)
     return(x)
   } else {
-    return(as_labelled_helper(x,
-                              add.labels,
-                              add.class))
+    return(as_labelled_helper(x, add.labels, add.class))
   }
 }
 

@@ -18,8 +18,8 @@
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with value label attributes; or a \code{list} of variables
-#'          with values label attributes. If \code{x} has no label \code{\link{attributes}},
-#'          factor \code{\link{levels}} are returned. See 'Examples'.
+#'          with values label attributes. If \code{x} has no label attributes,
+#'          factor levels are returned. See 'Examples'.
 #' @param include.values String, indicating whether the values associated with the
 #'          value labels are returned as well. If \code{include.values = "as.name"}
 #'          (or \code{include.values = "n"}), values are set as \code{\link{names}}
@@ -104,9 +104,7 @@
 #' get_labels(efc$e42dep, include.values = "as.prefix")
 #'
 #' # get labels from multiple variables
-#' get_labels(list(efc$e42dep,
-#'                 efc$e16sex,
-#'                 efc$e15relat))
+#' get_labels(list(efc$e42dep, efc$e16sex, efc$e15relat))
 #'
 #'
 #' # create a dummy factor

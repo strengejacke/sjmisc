@@ -34,10 +34,8 @@
 #' barplot(table(efc$tot_sc_e))
 #'
 #' fit <- glm(tot_sc_e ~ neg_c_7 + e42dep + c160age,
-#'            data = efc,
-#'            family = poisson)
+#'            data = efc, family = poisson)
 #' overdisp(fit)
-#'
 #'
 #' library(lme4)
 #' efc$e15relat <- to_factor(efc$e15relat)

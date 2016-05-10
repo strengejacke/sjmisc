@@ -45,7 +45,7 @@ rmse(fit)
 
 # normalized RMSE
 library(nlme)
-fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+fit <- lme(distance ~ age, data = Orthodont)
 rmse(fit, normalized = TRUE)
 
 }

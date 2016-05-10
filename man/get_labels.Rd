@@ -12,8 +12,8 @@ get_labels(x, attr.only = FALSE, include.values = NULL,
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 (vector) with value label attributes; or a \code{list} of variables
-with values label attributes. If \code{x} has no label \code{\link{attributes}},
-factor \code{\link{levels}} are returned. See 'Examples'.}
+with values label attributes. If \code{x} has no label attributes,
+factor levels are returned. See 'Examples'.}
 
 \item{attr.only}{Logical, if \code{TRUE}, labels are only searched for
 in the the vector's \code{\link{attributes}}; else, if \code{x} has no
@@ -115,9 +115,7 @@ get_labels(efc$e42dep, include.values = "as.name")
 get_labels(efc$e42dep, include.values = "as.prefix")
 
 # get labels from multiple variables
-get_labels(list(efc$e42dep,
-                efc$e16sex,
-                efc$e15relat))
+get_labels(list(efc$e42dep, efc$e16sex, efc$e15relat))
 
 
 # create a dummy factor

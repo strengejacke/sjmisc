@@ -34,7 +34,7 @@
 #' cv(fit)
 #'
 #' library(nlme)
-#' fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+#' fit <- lme(distance ~ age, data = Orthodont)
 #' cv(fit)
 #'
 #' @importFrom stats sd
@@ -62,14 +62,14 @@ cv_helper <- function(x) {
     } else if (any(class(x) == "lmerMod") || any(class(x) == "merModLmerTest")) {
       # check for package availability
       if (!requireNamespace("lme4", quietly = TRUE)) {
-        stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+        stop("Package `lme4` needed for this function to work. Please install it.", call. = FALSE)
       }
       # dependent variable in lmerMod
       dv <- lme4::getME(x, "y")
     } else if (any(class(x) == "lme")) {
       # check for package availability
       if (!requireNamespace("nlme", quietly = TRUE)) {
-        stop("Package 'nlme' needed for this function to work. Please install it.", call. = FALSE)
+        stop("Package `nlme` needed for this function to work. Please install it.", call. = FALSE)
       }
       # dependent variable in lme
       dv <- unname(nlme::getResponse(x))
@@ -91,7 +91,7 @@ cv_helper <- function(x) {
       #  we assume a simple vector
       return(stats::sd(x, na.rm = TRUE) / mw)
     } else {
-      warning("Mean of 'x' is zero. Cannot compute coefficient of variation.", call. = F)
+      warning("Mean of `x` is zero. Cannot compute coefficient of variation.", call. = F)
     }
   }
   return(NULL)

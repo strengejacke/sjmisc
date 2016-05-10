@@ -50,7 +50,7 @@ The sample size calculation is based on a power-calculation for the
 samplesize.lmm(eff.size = .3, k = 30)
 
 # Sample size for multilevel model with 20 cluster groups and a medium
-# to large effect size for linear models of 0.1. Nine subjects per cluster and
+# to large effect size for linear models of 0.2. Nine subjects per cluster and
 # hence a total sample size of about 172 observations is needed.
 samplesize.lmm(eff.size = .2, df.n = 5, k = 20, power = .9)
 

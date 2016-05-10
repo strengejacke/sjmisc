@@ -69,9 +69,7 @@
 #' # grouped variable
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
-#' barplot(table(ageGrp),
-#'         main = get_label(efc$e17age),
-#'         names.arg = ageGrpLab)
+#' barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
 #'
 #' @export
 group_var <- function(var,
@@ -146,9 +144,7 @@ group_var <- function(var,
 #' # grouped variable
 #' ageGrp <- group_var(efc$e17age)
 #' ageGrpLab <- group_labels(efc$e17age)
-#' barplot(table(ageGrp),
-#'         main = get_label(efc$e17age),
-#'         names.arg = ageGrpLab)
+#' barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
 #'
 #' @export
 group_labels <- function(var,
@@ -209,9 +205,7 @@ group_helper <- function(var, groupsize, right.interval, groupcount) {
   # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte
   # Faktoren gleich entfernt
   var <- droplevels(cut(var,
-                        breaks = c(seq(minval,
-                                       max(var, na.rm = TRUE) + multip * groupsize,
-                                       by = groupsize)),
+                        breaks = c(seq(minval, max(var, na.rm = TRUE) + multip * groupsize, by = groupsize)),
                         right = right.interval))
   return(var)
 }

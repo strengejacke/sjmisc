@@ -42,7 +42,7 @@ fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
 cv(fit)
 
 library(nlme)
-fit <- lme(distance ~ age, data = Orthodont) # random is ~ age
+fit <- lme(distance ~ age, data = Orthodont)
 cv(fit)
 
 }

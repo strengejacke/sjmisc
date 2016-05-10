@@ -34,6 +34,21 @@
 #'       }
 #'       In short, the ICC can be interpreted as "the proportion of the variance
 #'       explained by the grouping structure in the population" (Hox 2002: 15).
+#'       \cr \cr
+#'       \strong{Caution:} For three-level-models, depending on the nested structure
+#'       of the model, the ICC only reports the proportion of variance explained
+#'       for each grouping level. However, the proportion of variance for specific
+#'       levels related to each other (e.g., similarity of level-1-units within
+#'       level-2-units or level-2-units within level-3-units) must be computed
+#'       manually. Use \code{\link{get_re_var}} to get the between-group-variances
+#'       and residual variance of the model, and calculate the ICC for the various level
+#'       correlations.
+#'       \cr \cr
+#'       For example, for the ICC between level 1 and 2: \cr
+#'       \code{sum(get_re_var(fit)) / (sum(get_re_var(fit)) + get_re_var(fit, "sigma_2"))}
+#'       \cr \cr
+#'       or for the ICC between level 2 and 3: \cr
+#'       \code{get_re_var(fit)[2] / sum(get_re_var(fit))}
 #'
 #' @details The calculation of the ICC for generalized linear mixed models with binary outcome is based on
 #'       Wu et al. (2012). For Poisson multilevel models, please refere to Stryhn et al. (2006). Aly et al. (2014)
@@ -54,7 +69,8 @@
 #'          \item Random-Intercept-Slope-correlation: rho.01
 #'         }
 #'
-#' @seealso \code{\link{re_var}} to print random effect variances.
+#' @seealso \code{\link{re_var}} to print random effect variances and \code{\link{get_re_var}}
+#'            to get the values from a particular variance component.
 #'
 #' @examples
 #' \dontrun{
@@ -205,7 +221,7 @@ icc.lme4 <- function(fit) {
 #'
 #' @references Aguinis H, Gottfredson RK, Culpepper SA. 2013. Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management 39(6): 1490–1528 (\doi{10.1177/0149206313478188})
 #'
-#' @seealso \code{\link{icc}}
+#' @seealso \code{\link{icc}} and \code{\link{get_re_var}}
 #'
 #' @examples
 #' library(lme4)
@@ -222,4 +238,66 @@ re_var <- function(x) {
   # return value
   revar_ <- icc(x)
   print(revar_, comp = "var")
+}
+
+
+#' @title Random effect variances
+#' @name get_re_var
+#' @description This function extracts specific components from the random effect
+#'                variances or the random-intercept-slope-correlation of mixed
+#'                effects models. Currently, only \code{\link[lme4]{merMod}} objects
+#'                are supported.
+#'
+#' @param x An object of class \code{icc.lme4}, as returned by the \code{\link{icc}} function,
+#'          or a fitted mixed effects model (\code{\link[lme4]{merMod}}-class).
+#' @param comp Name of the variance component to be returned. See 'Details'.
+#'
+#' @return The required variance component.
+#'
+#' @seealso \code{\link{icc}} and \code{\link{re_var}}
+#'
+#' @details The random effect variances indicate the between- and within-group
+#'         variances as well as random-slope variance and random-slope-intercept
+#'         correlation. Use following values for \code{comp} to get the particular
+#'         variance component:
+#'         \describe{
+#'          \item{\code{"sigma_2"}}{Within-group (residual) variance}
+#'          \item{\code{"tau.00"}}{Between-group-variance (variation between individual intercepts and average intercept)}
+#'          \item{\code{"tau.11"}}{Random-slope-variance (variation between individual slopes and average slope)}
+#'          \item{\code{"tau.01"}}{Random-Intercept-Slope-covariance}
+#'          \item{\code{"rho.01"}}{Random-Intercept-Slope-correlation}
+#'         }
+#'
+#' @examples
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#'
+#' # icc
+#' icc(fit)
+#'
+#' # all random effect variance components
+#' re_var(fit)
+#'
+#' # just the rand. slope-intercept covariance
+#' get_re_var(fit, "tau.01")
+#'
+#' sleepstudy$mygrp <- sample(1:45, size = 180, replace = TRUE)
+#' fit <- lmer(Reaction ~ Days + (1 | mygrp) + (Days | Subject), sleepstudy)
+#' get_re_var(fit, "rho.01")
+#'
+#' @export
+get_re_var <- function(x, comp = c("tau.00", "tau.01", "tau.11", "rho.01", "sigma_2")) {
+  # check if we have a valid object
+  if (!any(class(x) == "icc.lme4") && !is_merMod(x)) {
+    stop("`x` must either be an object returned by the `icc` function, or a merMod-object.", call. = F)
+  }
+
+  # check arguments
+  comp <- match.arg(comp)
+
+  # do we have a merMod object? If yes, get ICC and var components
+  if (is_merMod(x)) x <- icc(x)
+
+  # return results
+  return(attr(x, comp, exact = TRUE))
 }

@@ -66,7 +66,7 @@ copy_labels <- function(df_new, df_origin = NULL) {
                                               include.values = NULL,
                                               include.non.labelled = FALSE))
     } else {
-      warning("both 'df_origin' and 'df_new' must be of class 'data.frame'.", call. = F)
+      warning("both `df_origin` and `df_new` must be of class `data.frame`.", call. = F)
     }
   }
   return(df_new)

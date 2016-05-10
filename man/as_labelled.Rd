@@ -47,8 +47,7 @@ str(x)
 summary(x)
 
 data(efc)
-x <- set_labels(efc$e42dep, c(`1` = "independent",
-                              `4` = "severe dependency"))
+x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 x1 <- as_labelled(x, add.labels = FALSE)
 x2 <- as_labelled(x, add.labels = TRUE)
 
