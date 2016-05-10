@@ -32,17 +32,16 @@ Compute an approximated sample size for linear mixed models
 \details{
 The sample size calculation is based on a power-calculation for the
          standard design. If \code{df.n} is not specified, a power-calculation
-         for an unpaired two-sample t-test will be computed (using the
-         \code{\link[pwr]{pwr.t.test}} function of the \pkg{pwr}-package).
+         for an unpaired two-sample t-test will be computed (using
+         \code{\link[pwr]{pwr.t.test}} of the \pkg{pwr}-package).
          If \code{df.n} is given, a power-calculation for general linear models
-         will be computed (using the \code{\link[pwr]{pwr.f2.test}} function
-         of the \pkg{pwr}-package). The sample size of the standard design
-         is then adjusted for the design effect of two-level-designs. Thus,
-         the sample size calculation is appropriate in particular for two-level-designs
-         (see Snijders 2005). Models that additionally include repeated
-         measures (three-level-designs) may work as well, however,
-         the resulting sample size is less appropriate than for two-level-
-         models.
+         will be computed (using \code{\link[pwr]{pwr.f2.test}} of the
+         \pkg{pwr}-package). The sample size of the standard design
+         is then adjusted for the design effect of two-level-designs (see
+         \code{\link{deff}}). Thus, the sample size calculation is appropriate
+         in particular for two-level-designs (see Snijders 2005). Models that
+         additionally include repeated measures (three-level-designs) may work
+         as well, however, the computed sample size may be less accurate.
 }
 \examples{
 # Sample size for multilevel model with 30 cluster groups and a small to

@@ -116,15 +116,15 @@ print.icc.lme4 <- function(x, comp, ...) {
     tau.00 <- attr(x, "tau.00", exact = TRUE)
     tau.01 <- attr(x, "tau.01", exact = TRUE)
     tau.11 <- attr(x, "tau.11", exact = TRUE)
+    rho.01 <- attr(x, "rho.01", exact = TRUE)
     # print within-group-variance sigma^2
     tmp <- sprintf("%.3f", attr(x, "sigma_2", exact = TRUE))
-    cat(sprintf("     Within-group-variance: %8s\n", tmp))
+    cat(sprintf("      Within-group-variance: %8s\n", tmp))
     # print between-group-variance tau0
     for (i in 1:(length(tau.00))) {
       tmp <- sprintf("%.3f", tau.00[i])
-      cat(sprintf("    Between-group-variance: %8s (%s)\n",
-                  tmp,
-                  names(tau.00)[i]))
+      cat(sprintf("     Between-group-variance: %8s (%s)\n",
+                  tmp, names(tau.00)[i]))
     }
     # print random-slop-variance tau1
     for (i in 1:length(tau.11)) {
@@ -132,9 +132,8 @@ print.icc.lme4 <- function(x, comp, ...) {
       # any random slope?
       if (!is_empty(tau.rs)) {
         tmp <- sprintf("%.3f", tau.rs)
-        cat(sprintf("     Random-slope-variance: %8s (%s)\n",
-                    tmp,
-                    names(tau.rs)))
+        cat(sprintf("      Random-slope-variance: %8s (%s)\n",
+                    tmp, names(tau.rs)))
       }
     }
     # print random-slope-covariance tau01
@@ -143,9 +142,18 @@ print.icc.lme4 <- function(x, comp, ...) {
       # any random slope?
       if (!is_empty(tau.rs)) {
         tmp <- sprintf("%.3f", tau.rs)
-        cat(sprintf("Slope-Intercept-covariance: %8s (%s)\n",
-                    tmp,
-                    names(tau.rs)))
+        cat(sprintf(" Slope-Intercept-covariance: %8s (%s)\n",
+                    tmp, names(tau.rs)))
+      }
+    }
+    # print random-slope-correlation rho01
+    for (i in 1:length(rho.01)) {
+      rho.rs <- rho.01[i]
+      # any random slope?
+      if (!is_empty(rho.rs)) {
+        tmp <- sprintf("%.3f", rho.rs)
+        cat(sprintf("Slope-Intercept-correlation: %8s (%s)\n",
+                    tmp, names(rho.rs)))
       }
     }
   } else {

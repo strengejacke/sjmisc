@@ -166,7 +166,7 @@ icc.lme4 <- function(fit) {
       std_ <- lapply(rnd_slope, function(x) prod(attr(x, "stddev")))
       # bind to matrix
       tau.01 <- apply(as.matrix(cbind(unlist(cor_), unlist(std_))), MARGIN = 1, FUN = prod)
-      rho.01 <- cor_
+      rho.01 <- unlist(cor_)
     }
 
     # name values
