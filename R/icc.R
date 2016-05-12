@@ -115,7 +115,7 @@ icc <- function(x, ...) {
 icc.lme4 <- function(fit) {
   # check if suggested package is available
   if (!requireNamespace("lme4", quietly = TRUE)) {
-    stop("Package 'lme4' needed for this function to work. Please install it.", call. = FALSE)
+    stop("Package `lme4` needed for this function to work. Please install it.", call. = FALSE)
   }
 
   # check object class
