@@ -32,15 +32,12 @@
 #' head(to_dummy(efc$e42dep, var.name = "dummy"))
 #'
 #' @export
-to_dummy <- function(x, var.name = "name", suffix = "numeric", data = NULL) {
+to_dummy <- function(x,
+                     var.name = "name",
+                     suffix = c("numeric", "label"),
+                     data = NULL) {
   # check for abbr
-  if (suffix == "numeric") suffix <- "n"
-  if (suffix == "label") suffix <- "l"
-  # correct abbr?
-  if (suffix != "n" && suffix != "l") {
-    warning("Argument `suffix` must be either `numeric` (or `n`) or `label` (or `l`). Defaulting to `numeric` now.", call. = F)
-    suffix <- "n"
-  }
+  suffix <- match.arg(suffix)
   # save variable name
   varname <- deparse(substitute(x))
   # remove "data frame name"
@@ -100,7 +97,7 @@ to_dummy <- function(x, var.name = "name", suffix = "numeric", data = NULL) {
   }
   # prepare col.names
   col.nam <- rep(varname, ncol(mydf))
-  if (suffix == "n")
+  if (suffix == "numeric")
     col.nam <- sprintf("%s_%i", col.nam, labels.nr)
   else
     col.nam <- sprintf("%s_%s", col.nam, labels)

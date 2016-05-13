@@ -168,7 +168,7 @@ set_labels_helper <- function(x, labels, force.labels, force.values) {
                                     force.labels,
                                     force.values)
       } else {
-        warning("'labels' must be a list of same length as 'ncol(x)' or a vector.", call. = F)
+        warning("`labels` must be a list of same length as `ncol(x)` or a vector.", call. = TRUE)
       }
     }
     return(x)
@@ -218,7 +218,7 @@ get_value_range <- function(x) {
 set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
   # valid vector?
   if (is.null(x)) {
-    warning("can't add value labels to NULL vectors.", call. = F)
+    warning("can't add value labels to NULL vectors.", call. = T)
     return(x)
   }
   # auto-detect variable label attribute
@@ -239,13 +239,13 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
         dummy.labels <- names(labels)
         # but first check if we have named vector or not...
         if (is.null(dummy.labels)) {
-          warning("`labels` must be a named vector.", call. = F)
+          warning("`labels` must be a named vector.", call. = T)
         } else {
           names(dummy.labels) <- unname(labels)
           attr(x, attr.string) <- dummy.labels
         }
       } else {
-        warning("Character vectors can only get labels of same type.", call. = F)
+        warning("Character vectors can only get labels of same type.", call. = T)
       }
 
       # set labels for numeric vectors or factors here
@@ -275,7 +275,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
 
       # check for valid bounds of values
       if (is.infinite(valrange)) {
-        warning("can't set value labels. Infinite value range.", call. = F)
+        warning("can't set value labels. Infinite value range.", call. = T)
 
         # check if we have named vector. in this
         # case, just add these values

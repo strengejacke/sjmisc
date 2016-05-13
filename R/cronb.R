@@ -15,7 +15,7 @@
 cronb <- function(data) {
   .data <- stats::na.omit(data)
   if (is.null(ncol(.data)) || ncol(.data) < 2) {
-    warning("Too less columns `data`.", call. = F)
+    warning("Too less columns in `data` to compute Cronbach's Alpha.", call. = F)
     return(NULL)
   }
   return(dim(.data)[2] / (dim(.data)[2] - 1) * (1 - sum(apply(.data, 2, var)) / stats::var(rowSums(.data))))

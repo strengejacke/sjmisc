@@ -81,7 +81,7 @@ chisq_gof <- function(x, prob = NULL, weights = NULL) {
   } else {
     # check if we have probs
     if (is.null(prob)) {
-      warning("'prob' needs to be specified.", call. = F)
+      warning("`prob` needs to be specified.", call. = F)
       return(invisible(NULL))
     }
     # performs a Chi-square goodnes-of-fit-test

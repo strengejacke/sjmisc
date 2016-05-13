@@ -4,7 +4,8 @@
 \alias{to_dummy}
 \title{Split (categorical) vectors into dummy variables}
 \usage{
-to_dummy(x, var.name = "name", suffix = "numeric", data = NULL)
+to_dummy(x, var.name = "name", suffix = c("numeric", "label"),
+  data = NULL)
 }
 \arguments{
 \item{x}{a \code{\link{vector}} (variable).}

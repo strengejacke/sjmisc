@@ -100,7 +100,6 @@ to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NUL
 to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   # is already factor?
   if (is.factor(x)) {
-    message("`x` is already a factor.")
     return(x)
   }
   # remove missings?

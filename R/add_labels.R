@@ -85,8 +85,8 @@ add_labels_helper <- function(x, value) {
     all.labels <- c(val.switch[!doubles], value)
     # tell user
     if (any(doubles)) {
-      warning(sprintf("label '%s' was replaced with new value label.\n",
-                      current.labels[doubles]), call. = F)
+      message(sprintf("label '%s' was replaced with new value label.\n",
+                      current.labels[doubles]))
     }
   } else {
     all.labels <- value

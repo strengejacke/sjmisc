@@ -95,7 +95,7 @@ read_spss <- function(path,
 
   # check parameter
   if (!is.null(option) && option != "foreign" && option != "haven") {
-    warning("'option' must be either 'foreign' or 'haven'. Defaulting to 'foreign'.", call. = F)
+    warning("`option` must be either `foreign` or `haven`. Defaulting to `foreign`.", call. = F)
     option <- "foreign"
   }
 

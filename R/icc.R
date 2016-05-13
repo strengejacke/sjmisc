@@ -202,7 +202,7 @@ icc.lme4 <- function(fit) {
     # return results
     return(ri.icc)
   } else {
-    warning("Function `icc` currently only supports `merMod` objects (package `lme4`).", call. = F)
+    warning("Function `icc` currently only supports `merMod` objects (package `lme4`).", call. = TRUE)
   }
 }
 

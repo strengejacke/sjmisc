@@ -43,7 +43,7 @@ is_empty <- function(x) {
   if (!is.null(x)) {
     # if it's a character, check if we have only one element in that vector
     if (is.character(x)) {
-      if (length(x) > 1) warning("`x` must be of length 1 (i.e. is allowed to have only 1 value). Evaluating first element only.", call. = F)
+      if (length(x) > 1) warning("`x` must be of length 1. Evaluating first element only.", call. = TRUE)
       # zero chats, so empty?
       zero_len <- nchar(x) == 0
       # we have a non-character vector here. check for length
