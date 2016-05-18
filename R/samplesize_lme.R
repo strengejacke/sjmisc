@@ -1,5 +1,5 @@
 #' @title Sample size for linear mixed models
-#' @name samplesize.lmm
+#' @name smpsize_lmm
 #'
 #' @description Compute an approximated sample size for linear mixed models
 #'                (two-level-designs), based on power-calculation for standard
@@ -38,15 +38,15 @@
 #' # Sample size for multilevel model with 30 cluster groups and a small to
 #' # medium effect size (Cohen's d) of 0.3. 29 subjects per cluster and
 #' # hence a total sample size of about 859 observations is needed.
-#' samplesize.lmm(eff.size = .3, k = 30)
+#' smpsize_lmm(eff.size = .3, k = 30)
 #'
 #' # Sample size for multilevel model with 20 cluster groups and a medium
 #' # to large effect size for linear models of 0.2. Nine subjects per cluster and
 #' # hence a total sample size of about 172 observations is needed.
-#' samplesize.lmm(eff.size = .2, df.n = 5, k = 20, power = .9)
+#' smpsize_lmm(eff.size = .2, df.n = 5, k = 20, power = .9)
 #'
 #' @export
-samplesize.lmm <- function(eff.size, df.n = NULL, power = .8, sig.level = .05, k, icc = 0.05) {
+smpsize_lmm <- function(eff.size, df.n = NULL, power = .8, sig.level = .05, k, icc = 0.05) {
   if (!requireNamespace("pwr", quietly = TRUE)) {
     stop("Package `pwr` needed for this function to work. Please install it.", call. = FALSE)
   }
