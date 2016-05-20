@@ -56,6 +56,7 @@ rmse(fit, normalized = TRUE)
             }
 }
 \seealso{
-\code{\link{cv}}
+\code{\link{cv}} for the coefficient of variation, and
+           \code{\link{rse}} for the residual standard error.
 }
 

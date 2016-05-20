@@ -9,7 +9,8 @@
 #' @return The root mean squared error of \code{fit}; or the normalized
 #'           root mean squared error of \code{fit} if \code{normalized = TRUE}.
 #'
-#' @seealso \code{\link{cv}}
+#' @seealso \code{\link{cv}} for the coefficient of variation, and
+#'            \code{\link{rse}} for the residual standard error.
 #'
 #' @references \itemize{
 #'              \item \href{http://en.wikipedia.org/wiki/Root-mean-square_deviation}{Wikipedia: RMSD}
@@ -70,4 +71,36 @@ rmse <- function(fit, normalized = FALSE) {
     rmse_val <- rmse_val / (max(resp, na.rm = T) - min(resp, na.rm = T))
   }
   rmse_val
+}
+
+
+#' @title Residual Standard Error (RSE)
+#' @name rse
+#' @description Compute the residual standard error of fitted linear (mixed effects) models.
+#'
+#' @param fit Fitted linear model of class \code{\link{lm}} or
+#'          \code{\link[lme4]{merMod}} (\pkg{lme4}).
+#'
+#' @return The residual standard error of \code{fit}.
+#'
+#' @seealso \code{\link{cv}} for the coefficient of variation, and
+#'            \code{\link{rmse}} for the root mean squared error.
+#'
+#' @note The residual standard error is the square root of the residual
+#'        sum of squares divided by the residual degrees of freedom.
+#'
+#' @examples
+#' data(efc)
+#' fit <- lm(barthtot ~ c160age + c12hour, data = efc)
+#' rse(fit)
+#'
+#' library(lme4)
+#' fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+#' rse(fit)
+#'
+#' @importFrom stats residuals df.residual
+#' @export
+rse <- function(fit) {
+  # Residual standard error
+  sqrt(sum(stats::residuals(fit) ^ 2, na.rm = T) / stats::df.residual(fit))
 }

@@ -1,7 +1,14 @@
+Version 1.8.0-1
+------------------------------------------------------------------------------
+New functions:
+* `rse` to compute the residual standard error for linear (mixed) models.
+* `odds_to_rr` to convert odds ratios of logistic (mixed) regression models to risk ratios.
+
+
 Version 1.8
 ------------------------------------------------------------------------------
 New functions:
-* `samplesize.lmm` to compute approximated sample size for two-level linear mixed models.
+* `smpsize_lmm` to compute approximated sample size for two-level linear mixed models.
 * `deff` to compute the design effect for two-level linear mixed models.
 * `get_re_var` to get specific components of the random effect variances from mixed models.
 
