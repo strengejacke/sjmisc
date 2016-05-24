@@ -59,7 +59,7 @@ print.labelled <- function(x, ...) {
   xx <- unclass(x)
   attr(xx, "label") <- NULL
   attr(xx, "labels") <- NULL
-  attr(xx, "is_na") <- NULL
+  attr(xx, getNaAttribute()) <- NULL
   attr(xx, "note") <- NULL
   # print values
   print(xx)

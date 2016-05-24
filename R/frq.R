@@ -59,7 +59,7 @@ frq <- function(x, print.frq = TRUE) {
     lab_df <- data.frame(value = values,
                          label = names(labels),
                          count = frq,
-                         is_na = attr(x, "is_na"))
+                         is_na = attr(x, getNaAttribute()))
     # check if results should be printed
     if (print.frq) {
       print(table(x))
@@ -129,7 +129,7 @@ frq <- function(x, print.frq = TRUE) {
                            raw.prc = round(100 * fdat$raw, 2),
                            valid.prc = round(100 * fdat$valid, 2),
                            cum.prc = round(100 * cumsum(fdat$valid), 2),
-                           is_na = c(attr(x, "is_na"), NA))
+                           is_na = c(attr(x, getNaAttribute()), NA))
       # print table
       if (print.frq) print(lab_df, row.names = FALSE)
       invisible(lab_df)

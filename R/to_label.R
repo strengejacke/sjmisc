@@ -1,4 +1,4 @@
-#' @title Convert variable into factor and replaces values with associated value labels
+#' @title Convert variable into factor and replace values with associated value labels
 #' @name to_label
 #'
 #' @description This function converts (replaces) variable values (also of factors
@@ -9,17 +9,19 @@
 #'                all 1 to female and returns the new variable as \code{\link{factor}}.
 #'
 #' @seealso \code{\link{to_factor}} to convert a numeric variable into a factor (and
-#'            preserve labels) and \code{\link{to_value}} to convert a factor into
-#'            a numeric variable.
+#'            preserve labels); \code{\link{to_value}} to convert a factor into
+#'            a numeric variable and \code{\link{to_character}} to convert a
+#'            labelled vector into a character vector (using label attributes as
+#'            values).
 #'
 #' @param x A labelled vector (see \code{\link{set_labels}}),
 #'          respectively a data frame with such variables.
 #' @param add.non.labelled logical, if \code{TRUE}, values without associated
 #'          value label will also be converted to labels (as is). See 'Examples'.
 #' @param prefix Logical, if \code{TRUE}, the value labels used as factor levels
-#'          will be prefixed with their associated values. See 'Examples'.
+#'          or character values will be prefixed with their associated values. See 'Examples'.
 #' @param drop.na logical, if \code{TRUE}, all types of missing value codes are
-#'          converted into NA before \code{x} is converted as factor. If
+#'          converted into NA before \code{x} is converted to factor or character. If
 #'          \code{FALSE}, missing values will be left as their original codes.
 #'          See 'Examples' and \code{\link{get_na}}.
 #' @return A factor variable with the associated value labels as factor levels, or a
@@ -27,9 +29,6 @@
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
-#'         \cr \cr
-#'         Factors with non-numeric factor-levels won't be changed and returned "as is"
-#'         (see 'Examples').
 #'
 #' @details See 'Details' in \code{\link{get_na}}.
 #'
@@ -135,4 +134,82 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
   }
   # return as factor
   return(x)
+}
+
+
+#' @title Convert variable into character vector and replace values with associated value labels
+#' @name to_character
+#'
+#' @description This function converts (replaces) variable values (also of factors
+#'                or character vectors) with their associated value labels and returns
+#'                them as character vector. This is just a convenient wrapper for
+#'                \code{as.character(to_label(x))}.
+#'
+#' @inheritParams to_label
+#'
+#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
+#'         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+#'
+#' @return A character vector with the associated value labels as values, or a
+#'           data frame with such factor variables (if \code{x} was a data frame).
+#'
+#' @details See 'Details' in \code{\link{get_na}}.
+#'
+#' @examples
+#' data(efc)
+#' print(get_labels(efc)['c161sex'])
+#' head(efc$c161sex)
+#' head(to_character(efc$c161sex))
+#'
+#' print(get_labels(efc)['e42dep'])
+#' table(efc$e42dep)
+#' table(to_character(efc$e42dep))
+#'
+#' head(efc$e42dep)
+#' head(to_character(efc$e42dep))
+#'
+#' # numeric values w/o value labels will also be converted into character
+#' str(efc$e17age)
+#' str(to_character(efc$e17age))
+#'
+#'
+#' # factor with non-numeric levels, non-prefixed and prefixed
+#' x <- factor(c("a", "b", "c"))
+#' set_labels(x) <- c("ape", "bear", "cat")
+#'
+#' to_character(x, prefix = FALSE)
+#' to_character(x, prefix = TRUE)
+#'
+#'
+#' # create vector
+#' x <- c(1, 2, 3, 2, 4, NA)
+#' # add less labels than values
+#' x <- set_labels(x, c("yes", "maybe", "no"),
+#'                 force.labels = FALSE,
+#'                 force.values = FALSE)
+#' # convert to character w/o non-labelled values
+#' to_character(x)
+#' # convert to character, including non-labelled values
+#' to_character(x, add.non.labelled = TRUE)
+#'
+#'
+#' # create labelled integer, with missing flag
+#' x <- labelled(c(1, 2, 1, 3, 4, 1),
+#'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
+#'               c(FALSE, FALSE, TRUE, TRUE))
+#' # to character, with missing labels
+#' to_character(x, drop.na = FALSE)
+#' # to character, missings removed
+#' to_character(x, drop.na = TRUE)
+#'
+#' @export
+to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  if (is.matrix(x) || is.data.frame(x)) {
+    for (i in 1:ncol(x)) {
+      x[[i]] <- as.character(to_label_helper(x[[i]], add.non.labelled, prefix, drop.na))
+    }
+    return(x)
+  } else {
+    return(as.character(to_label_helper(x, add.non.labelled, prefix, drop.na)))
+  }
 }

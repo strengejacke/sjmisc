@@ -2,7 +2,7 @@
 % Please edit documentation in R/to_label.R
 \name{to_label}
 \alias{to_label}
-\title{Convert variable into factor and replaces values with associated value labels}
+\title{Convert variable into factor and replace values with associated value labels}
 \usage{
 to_label(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE)
 }
@@ -14,10 +14,10 @@ respectively a data frame with such variables.}
 value label will also be converted to labels (as is). See 'Examples'.}
 
 \item{prefix}{Logical, if \code{TRUE}, the value labels used as factor levels
-will be prefixed with their associated values. See 'Examples'.}
+or character values will be prefixed with their associated values. See 'Examples'.}
 
 \item{drop.na}{logical, if \code{TRUE}, all types of missing value codes are
-converted into NA before \code{x} is converted as factor. If
+converted into NA before \code{x} is converted to factor or character. If
 \code{FALSE}, missing values will be left as their original codes.
 See 'Examples' and \code{\link{get_na}}.}
 }
@@ -39,9 +39,6 @@ See 'Details' in \code{\link{get_na}}.
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
-        \cr \cr
-        Factors with non-numeric factor-levels won't be changed and returned "as is"
-        (see 'Examples').
 }
 \examples{
 data(efc)
@@ -103,7 +100,9 @@ to_label(dummy)
 }
 \seealso{
 \code{\link{to_factor}} to convert a numeric variable into a factor (and
-           preserve labels) and \code{\link{to_value}} to convert a factor into
-           a numeric variable.
+           preserve labels); \code{\link{to_value}} to convert a factor into
+           a numeric variable and \code{\link{to_character}} to convert a
+           labelled vector into a character vector (using label attributes as
+           values).
 }
 

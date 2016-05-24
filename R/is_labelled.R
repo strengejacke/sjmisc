@@ -7,9 +7,4 @@
 #'           \code{FALSE} otherwise.
 #'
 #' @export
-is_labelled <- function(x) {
-  # check if object has multiple class attributes
-  if (length(class(x)) > 1) return(any(class(x) == "labelled"))
-  # return if labelled
-  return(class(x) == "labelled")
-}
+is_labelled <- function(x) return(any(class(x) == "labelled"))
