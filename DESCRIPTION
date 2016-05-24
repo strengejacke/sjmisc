@@ -2,20 +2,19 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 1.8.0-1
-Date: 2016-05-20
+Version: 1.8.0-2
+Date: 2016-05-24
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
     for people coming from other statistical software packages like 'SPSS', and/
-    or who are new to R), supporting following common tasks: 1) Reading and writing
-    data between R and other statistical software packages like 'SPSS', 'SAS' or
-    'Stata' and working with labelled data; this includes easy ways to get and set
-    label attributes, to convert labelled vectors into factors (and vice versa),
-    or to deal with multiple declared missing values etc. 2) Data transformation
-    tasks like recoding, dichotomizing or grouping variables, setting and replacing
-    missing values. 3) Convenient functions to perform frequently used statistical
-    tests, or to calculate various commonly used statistical coefficients.
+    or who are new to R), supporting following common tasks when working with
+    data : 1) Reading and writing data between R and other statistical software
+    packages like 'SPSS', 'SAS' or 'Stata' and working with labelled data; this
+    includes easy ways to get and set label attributes, to convert labelled
+    vectors into factors (and vice versa), or to deal with multiple declared
+    missing values etc. 2) Data transformation tasks like recoding,
+    dichotomizing or grouping variables, setting and replacing missing values.
 License: GPL-3
 Depends:
     R (>= 3.2),
@@ -25,17 +24,9 @@ Imports:
     coin,
     dplyr,
     haven,
-    lme4 (>= 1.1-10),
-    MASS,
-    Matrix,
-    nlme,
     stringdist (>= 0.9.2),
     tidyr
 Suggests:
-    AER,
-    arm,
-    foreign,
-    Hmisc,
-    pwr
+    foreign
 URL: https://github.com/sjPlot/sjmisc
 RoxygenNote: 5.0.1

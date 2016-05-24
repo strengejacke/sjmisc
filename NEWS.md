@@ -1,6 +1,5 @@
-# sjmisc 1.8.0-1
+# sjmisc 1.8.0-2
 
-## New functions
+## General
 
-* `rse` to compute the residual standard error for linear (mixed) models.
-* `odds_to_rr` to convert odds ratios of logistic (mixed) regression models to risk ratios.
+* All statistical functions have been removed and are now in a separate package, `sjstats` (https://cran.r-project.org/package=sjstats).

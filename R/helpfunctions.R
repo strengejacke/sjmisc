@@ -3,11 +3,6 @@
 
 is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
 
-is_merMod <- function(fit) {
-  return(any(class(fit) %in% c("lmerMod", "glmerMod", "nlmerMod", "merModLmerTest")))
-}
-
-
 # auto-detect attribute style for variable labels.
 # either haven style ("label") or foreign style
 # ("variable.label")
