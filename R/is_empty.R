@@ -44,8 +44,11 @@ is_empty <- function(x) {
     # if it's a character, check if we have only one element in that vector
     if (is.character(x)) {
       if (length(x) > 1) warning("`x` must be of length 1. Evaluating first element only.", call. = TRUE)
-      # zero chats, so empty?
+      # zero chars, so empty?
       zero_len <- nchar(x) == 0
+      # if 'x' was empty, we have no chars, so zero_len will be integer(0).
+      # check this here, because zero_len needs to be logical
+      if (length(zero_len) == 0) zero_len <- TRUE
       # we have a non-character vector here. check for length
     } else {
       zero_len <- length(x) == 0

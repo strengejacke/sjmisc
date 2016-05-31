@@ -63,7 +63,7 @@ get_na <- function(x) {
   # copy NA-codes to new vector, so we can check length
   nas <- values[na.flag]
   # set return value to NULL, if no missing values
-  if (length(nas) == 0) nas <- NULL
+  if (is_empty(nas)) nas <- NULL
   # return missing values
   return(nas)
 }
