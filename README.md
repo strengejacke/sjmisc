@@ -25,6 +25,8 @@ devtools::install_github("sjPlot/sjmisc")
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sjmisc)](https://cran.r-project.org/package=sjmisc)
 &#160;&#160;
 [![downloads](http://cranlogs.r-pkg.org/badges/sjmisc)](http://cranlogs.r-pkg.org/)
+&#160;&#160;
+[![total](http://cranlogs.r-pkg.org/badges/grand-total/sjmisc)](http://cranlogs.r-pkg.org/)
 
 To install the latest stable release from CRAN, type following command into the R console:
 
