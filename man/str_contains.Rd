@@ -7,7 +7,8 @@
 str_contains(x, pattern, ignore.case = FALSE, logic = NULL)
 }
 \arguments{
-\item{x}{Character string where matches are sought.}
+\item{x}{Character string where matches are sought. May also be a
+character vector of length > 1 (see 'Examples').}
 
 \item{pattern}{Character string to be matched in \code{x}. May also be a
 character vector of length > 1 (see 'Examples').}
@@ -31,6 +32,10 @@ This functions checks whether a string \code{x} contains
                the string \code{pattern}. By default, this function is
                case sensitive.
 }
+\details{
+At least either \code{x} or \code{pattern} must be a of length one,
+           so that it is possible to return proper match indices.
+}
 \examples{
 str_contains("hello", "hel")
 str_contains("hello", "hal")
@@ -40,6 +45,10 @@ str_contains("hello", "Hel", ignore.case = TRUE)
 
 # which patterns are in "abc"?
 str_contains("abc", c("a", "b", "e"))
+
+# is pattern in any matching string?
+str_contains(c("def", "abc", "xyz"), "abc")
+str_contains(c("def", "abc", "xyz"), "abcde")
 
 # any pattern in "abc"?
 str_contains("abc", c("a", "b", "e"), logic = "or")

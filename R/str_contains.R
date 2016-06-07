@@ -4,7 +4,8 @@
 #'                the string \code{pattern}. By default, this function is
 #'                case sensitive.
 #'
-#' @param x Character string where matches are sought.
+#' @param x Character string where matches are sought. May also be a
+#'          character vector of length > 1 (see 'Examples').
 #' @param pattern Character string to be matched in \code{x}. May also be a
 #'          character vector of length > 1 (see 'Examples').
 #' @param ignore.case Logical, whether matching should be case sensitive or not.
@@ -19,6 +20,9 @@
 #'
 #' @return \code{TRUE} if \code{x} contains \code{pattern}.
 #'
+#' @details At least either \code{x} or \code{pattern} must be a of length one,
+#'            so that it is possible to return proper match indices.
+#'
 #' @examples
 #' str_contains("hello", "hel")
 #' str_contains("hello", "hal")
@@ -28,6 +32,10 @@
 #'
 #' # which patterns are in "abc"?
 #' str_contains("abc", c("a", "b", "e"))
+#'
+#' # is pattern in any matching string?
+#' str_contains(c("def", "abc", "xyz"), "abc")
+#' str_contains(c("def", "abc", "xyz"), "abcde")
 #'
 #' # any pattern in "abc"?
 #' str_contains("abc", c("a", "b", "e"), logic = "or")
@@ -46,12 +54,30 @@ str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL) {
   if (ignore.case) x <- tolower(x)
   # counter for matches
   cnt <- c()
-  # iterate patterns
-  for (k in pattern) {
-    # ignore case for
-    if (ignore.case) k <- tolower(k)
-    # append result
-    cnt <- c(cnt, !is_empty(grep(k, x, fixed = T)))
+  # either `x` or `pattern` must be of length 1
+  if (length(x) > 1 && length(pattern) > 1)
+    stop("Either `x` or `pattern` must be of length one.", call. = F)
+  # check which argument is longer than one element
+  if (length(x) > 1) {
+    # ignore case
+    if (ignore.case) pattern <- tolower(pattern)
+    # iterate patterns
+    for (k in x) {
+      # ignore case for
+      if (ignore.case) k <- tolower(k)
+      # append result
+      cnt <- c(cnt, !is_empty(grep(pattern, k, fixed = T)))
+    }
+  } else {
+    # ignore case
+    if (ignore.case) x <- tolower(x)
+    # iterate patterns
+    for (k in pattern) {
+      # ignore case for
+      if (ignore.case) k <- tolower(k)
+      # append result
+      cnt <- c(cnt, !is_empty(grep(k, x, fixed = T)))
+    }
   }
   # which logical combination?
   if (is.null(logic))
