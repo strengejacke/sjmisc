@@ -32,10 +32,6 @@ This functions checks whether a string \code{x} contains
                the string \code{pattern}. By default, this function is
                case sensitive.
 }
-\details{
-At least either \code{x} or \code{pattern} must be a of length one,
-           so that it is possible to return proper match indices.
-}
 \examples{
 str_contains("hello", "hel")
 str_contains("hello", "hal")
@@ -49,6 +45,7 @@ str_contains("abc", c("a", "b", "e"))
 # is pattern in any matching string?
 str_contains(c("def", "abc", "xyz"), "abc")
 str_contains(c("def", "abc", "xyz"), "abcde")
+str_contains(c("def", "abcde", "xyz"), c("abc", "123"))
 
 # any pattern in "abc"?
 str_contains("abc", c("a", "b", "e"), logic = "or")
