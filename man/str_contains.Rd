@@ -4,7 +4,8 @@
 \alias{str_contains}
 \title{Check if string contains pattern}
 \usage{
-str_contains(x, pattern, ignore.case = FALSE, logic = NULL)
+str_contains(x, pattern, ignore.case = FALSE, logic = NULL,
+  switch = FALSE)
 }
 \arguments{
 \item{x}{Character string where matches are sought. May also be a
@@ -23,14 +24,31 @@ should be made.
   \item Use \code{"not"}, \code{"NOT"} or \code{"!"} for a logical NOT-combination, i.e. no element of \code{pattern} is in \code{x}.
   \item By default, \code{logic = NULL}, which means that \code{TRUE} or \code{FALSE} is returned for each element of \code{pattern} separately.
 }}
+
+\item{switch}{Logical, if \code{TRUE}, \code{x} will be sought in each element
+of \code{pattern}. If \code{switch = TRUE}, \code{x} needs to be of
+length 1.}
 }
 \value{
 \code{TRUE} if \code{x} contains \code{pattern}.
 }
 \description{
-This functions checks whether a string \code{x} contains
-               the string \code{pattern}. By default, this function is
-               case sensitive.
+This functions checks whether a string or character vector
+               \code{x} contains the string \code{pattern}. By default,
+               this function is case sensitive.
+}
+\details{
+This function iterates all elements in \code{pattern} and
+           looks for each of these elements if it is found in
+           \emph{any} element of \code{x}, i.e. which elements
+           of \code{pattern} are found in the vector \code{x}.
+           \cr \cr
+           Technically, it iterates \code{pattern} and calls
+           \code{grep(x, pattern(i), fixed = TRUE)} for each element
+           of \code{pattern}. If \code{switch = TRUE}, it iterates
+           \code{pattern} and calls \code{grep(pattern(i), x, fixed = TRUE)}
+           for each element of \code{pattern}. Hence, in the latter case
+           (if \code{switch = TRUE}), \code{x} must be of length 1.
 }
 \examples{
 str_contains("hello", "hel")
@@ -42,9 +60,13 @@ str_contains("hello", "Hel", ignore.case = TRUE)
 # which patterns are in "abc"?
 str_contains("abc", c("a", "b", "e"))
 
-# is pattern in any matching string?
+# is pattern in any element of 'x'?
 str_contains(c("def", "abc", "xyz"), "abc")
-str_contains(c("def", "abc", "xyz"), "abcde")
+# is "abcde" in any element of 'x'?
+str_contains(c("def", "abc", "xyz"), "abcde") # no...
+# is "abc" in any of pattern?
+str_contains("abc", c("defg", "abcde", "xyz12"), switch = TRUE)
+
 str_contains(c("def", "abcde", "xyz"), c("abc", "123"))
 
 # any pattern in "abc"?

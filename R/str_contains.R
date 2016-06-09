@@ -1,8 +1,8 @@
 #' @title Check if string contains pattern
 #' @name str_contains
-#' @description This functions checks whether a string \code{x} contains
-#'                the string \code{pattern}. By default, this function is
-#'                case sensitive.
+#' @description This functions checks whether a string or character vector
+#'                \code{x} contains the string \code{pattern}. By default,
+#'                this function is case sensitive.
 #'
 #' @param x Character string where matches are sought. May also be a
 #'          character vector of length > 1 (see 'Examples').
@@ -17,8 +17,25 @@
 #'            \item Use \code{"not"}, \code{"NOT"} or \code{"!"} for a logical NOT-combination, i.e. no element of \code{pattern} is in \code{x}.
 #'            \item By default, \code{logic = NULL}, which means that \code{TRUE} or \code{FALSE} is returned for each element of \code{pattern} separately.
 #'          }
+#' @param switch Logical, if \code{TRUE}, \code{x} will be sought in each element
+#'          of \code{pattern}. If \code{switch = TRUE}, \code{x} needs to be of
+#'          length 1.
 #'
 #' @return \code{TRUE} if \code{x} contains \code{pattern}.
+#'
+#' @details This function iterates all elements in \code{pattern} and
+#'            looks for each of these elements if it is found in
+#'            \emph{any} element of \code{x}, i.e. which elements
+#'            of \code{pattern} are found in the vector \code{x}.
+#'            \cr \cr
+#'            Technically, it iterates \code{pattern} and calls
+#'            \code{grep(x, pattern(i), fixed = TRUE)} for each element
+#'            of \code{pattern}. If \code{switch = TRUE}, it iterates
+#'            \code{pattern} and calls \code{grep(pattern(i), x, fixed = TRUE)}
+#'            for each element of \code{pattern}. Hence, in the latter case
+#'            (if \code{switch = TRUE}), \code{x} must be of length 1.
+#'
+#'
 #'
 #' @examples
 #' str_contains("hello", "hel")
@@ -30,9 +47,13 @@
 #' # which patterns are in "abc"?
 #' str_contains("abc", c("a", "b", "e"))
 #'
-#' # is pattern in any matching string?
+#' # is pattern in any element of 'x'?
 #' str_contains(c("def", "abc", "xyz"), "abc")
-#' str_contains(c("def", "abc", "xyz"), "abcde")
+#' # is "abcde" in any element of 'x'?
+#' str_contains(c("def", "abc", "xyz"), "abcde") # no...
+#' # is "abc" in any of pattern?
+#' str_contains("abc", c("defg", "abcde", "xyz12"), switch = TRUE)
+#'
 #' str_contains(c("def", "abcde", "xyz"), c("abc", "123"))
 #'
 #' # any pattern in "abc"?
@@ -47,17 +68,26 @@
 #' str_contains("abc", c("d", "e", "f"), logic = "not")
 #'
 #' @export
-str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL) {
-  # ignore case in search term
-  if (ignore.case) x <- tolower(x)
+str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL, switch = FALSE) {
+  # check if correct length when switching
+  if (switch && length(x) > 1) {
+    warning("`x` must be of length 1 when `switch = TRUE`. First element will be used.", call. = F)
+    x <- x[1]
+  }
   # counter for matches
   cnt <- c()
+  # ignore case for x and pattern
+  if (ignore.case) {
+    x <- tolower(x)
+    pattern <- tolower(pattern)
+  }
   # iterate patterns
   for (k in pattern) {
-    # ignore case for
-    if (ignore.case) k <- tolower(k)
     # append result
-    cnt <- c(cnt, !is_empty(grep(k, x, fixed = T)))
+    if (switch)
+      cnt <- c(cnt, !is_empty(grep(x, k, fixed = T)))
+    else
+      cnt <- c(cnt, !is_empty(grep(k, x, fixed = T)))
   }
   # which logical combination?
   if (is.null(logic))

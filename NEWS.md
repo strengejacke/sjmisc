@@ -3,8 +3,10 @@
 ## General
 
 * All statistical functions have been removed and are now in a separate package, `sjstats` (https://cran.r-project.org/package=sjstats).
+* Removed some S3-methods for `labelled`-class, as these are now provided by the haven-package.
 
 ## New functions
+
 * Added `to_character` method.
 
 ## Bug fixes
