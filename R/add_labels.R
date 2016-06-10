@@ -4,8 +4,9 @@
 #' @description This function adds additional labels as attribute to a variable
 #'                or vector \code{x}, resp. to a set of variables in a
 #'                \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
-#'                \code{add_labels} does not replace existing value labels, but adds
-#'                \code{value} to the existing value labels of \code{x}.
+#'                \code{add_labels} does not completely replace existing value labels
+#'                (and hence, remove not specified labels), but adds \code{value}
+#'                to the existing value labels of \code{x}. See 'Note'.
 #'
 #' @seealso \code{\link{set_label}} to manually set variable labels or
 #'            \code{\link{get_label}} to get variable labels; \code{\link{set_labels}} to
@@ -15,12 +16,11 @@
 #'          where value label attributes should be added. Does not replaces former
 #'          value labels.
 #' @param value Named character vector of labels that will be added to \code{x} as
-#'          \code{"labels"} or \code{"value.labels"} attribute. If \code{x} is
-#'          a data frame, \code{value} may also be a \code{\link{list}} of
-#'          named character vectors. If \code{value} is a list, it must have
-#'          the same length as number of columns of \code{x}. If \code{value}
-#'          is a vector and \code{x} is a data frame, \code{value} will be applied
-#'          to each column of \code{x}.
+#'          label attribute. If \code{x} is a data frame, \code{value} may also
+#'          be a \code{\link{list}} of named character vectors. If \code{value}
+#'          is a list, it must have the same length as number of columns of \code{x}.
+#'          If \code{value} is a vector and \code{x} is a data frame, \code{value}
+#'          will be applied to each column of \code{x}.
 #'
 #' @return \code{x} with additional value labels.
 #'

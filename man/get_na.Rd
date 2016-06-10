@@ -2,56 +2,49 @@
 % Please edit documentation in R/get_na.R
 \name{get_na}
 \alias{get_na}
-\title{Retrieve missing values of labelled variables}
+\title{Retrieve tagged NA values of labelled variables}
 \usage{
 get_na(x)
 }
 \arguments{
 \item{x}{Variable (vector) with value label attributes, including
-missing value codes (see \code{\link{labelled}}).}
+tagged missing values (see \code{\link[haven]{tagged_na}}).}
 }
 \value{
-The missing values associated with value labels from \code{x},
-          or \code{NULL} if \code{x} has no missing value attribute.
+The tagged missing values and their associated value labels from \code{x},
+          or \code{NULL} if \code{x} has no tagged missing values.
 }
 \description{
-This function retrieves the value codes associated with missing values
-               of variables of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
-               \code{\link{read_sas}} or \code{\link{read_stata}}), where missing
-               values have not been replaced with \code{NA}s after import,
-               or of \code{\link[haven]{labelled}} vectors.
+This function retrieves tagged NA values and their associated
+               value labels from a labelled vector.
 }
 \details{
-Other statistical software packages (like 'SPSS') allow to define
+Other statistical software packages (like 'SPSS' or 'SAS') allow to define
            multiple missing values, e.g. \emph{not applicable}, \emph{refused answer}
            or "real" missing. These missing types may be assigned with
            different values, so it is possible to distinguish between these
            missing types. In R, multiple declared missings cannot be represented
-           in a similar way. However, \code{\link{labelled}} vectors
-           allow to indicate different missings through the
-           \code{is_na}-\code{\link{attr}}. Technically, these "missings" are
-           stored as normal values. Thus, the \code{\link{table}} command,
-           for instance, would include these values by default. The
-           \pkg{sjmisc} package offers capabilities to deal with multiple
-           declared missings and enhances the possibilities to work with
-           labelled data, allowing for easy access of multiple declared
-           missings or conversion into \code{NA} etc.
+           in a similar way with the regular missing values. However,
+           \code{\link[haven]{tagged_na}} values can do this.
+           Tagged \code{NA}s work exactly like regular R missing values
+           except that they store one additional byte of information: a tag,
+           which is usually a letter ("a" to "z") or character number ("0" to "9").
+           This allows to indicate different missings.
            \cr \cr
            Furthermore, see 'Details' in \code{\link{get_values}}.
 }
 \examples{
-# create labelled factor, with missing flag
-x <- labelled(c("M", "M", "F", "X", "N/A"),
-              c(Male = "M", Female = "F",
-                Refused = "X", "Not applicable" = "N/A"),
-              c(FALSE, FALSE, TRUE, TRUE))
+library(haven)
+x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+# get current NA values
+x
 get_na(x)
 
-# create labelled integer, with missing flag
-x <- labelled(c(1, 2, 1, 3, 4, 1),
-              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
-              c(FALSE, FALSE, TRUE, TRUE))
-get_na(x)
+# replace only the NA, which is tagged as NA(c)
+replace_na(x, 2, tagged.na = "c")
+get_na(replace_na(x, 2, tagged.na = "c"))
 
 }
 \seealso{

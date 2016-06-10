@@ -15,8 +15,8 @@ missing values should be replaced with \code{value}.}
 
 \item{value}{Value that will replace the \code{\link{NA}}'s.}
 
-\item{na.label}{Optional character vector, used to label the NA-value (i.e.
-adding a \code{labels} attribute to \code{x}).}
+\item{na.label}{Optional character vector, used to label the the former NA-value
+(i.e. adding a \code{labels} attribute for \code{value} to \code{x}).}
 
 \item{tagged.na}{Optional, specifies a \code{\link[haven]{tagged_na}} value
 that will be replaced by \code{value}. Herewith it is possible
@@ -26,8 +26,16 @@ to replace only specific \code{NA} values of \code{x}.}
 \code{x}, where \code{NA}'s are replaced with \code{value}.
 }
 \description{
-This function replaces NA's of a variable, data frame
+This function replaces (tagged) NA's of a variable, data frame
                or list of variables with \code{value}.
+}
+\details{
+While regular \code{NA} values can only completely be replaced with
+           a single value, \code{\link[haven]{tagged_na}} allows to differentiate
+           between different qualitative values of \code{NA}s.
+           Tagged \code{NA}s work exactly like regular R missing values
+           except that they store one additional byte of information: a tag,
+           which is usually a letter ("a" to "z") or character number ("0" to "9").
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
@@ -37,6 +45,12 @@ Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 data(efc)
 table(efc$e42dep, exclude = NULL)
 table(replace_na(efc$e42dep, 99), exclude = NULL)
+
+# the original labels
+get_labels(replace_na(efc$e42dep, 99))
+# NA becomes "99", and is labelled as "former NA"
+get_labels(replace_na(efc$e42dep, 99, na.label = "former NA"),
+           include.values = "p")
 
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # show original distribution

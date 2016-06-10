@@ -5,7 +5,8 @@
 \alias{set_labels<-}
 \title{Add value labels to variables}
 \usage{
-set_labels(x, labels, force.labels = FALSE, force.values = TRUE)
+set_labels(x, labels, force.labels = FALSE, force.values = TRUE,
+  drop.na = TRUE)
 
 set_labels(x, force.labels = FALSE, force.values = TRUE) <- value
 }
@@ -34,6 +35,11 @@ This parameter will be ignored, if \code{labels} is a named vector.}
 elements than unique values of \code{x}, additional values not covered
 by \code{labels} will be added as label as well. See 'Examples'.
 This parameter will be ignored, if \code{labels} is a named vector.}
+
+\item{drop.na}{Logical, whether labels of tagged NA values (see \code{\link[haven]{tagged_na}})
+should be included in the return value or not. By default, labelled
+(tagged) missing values are not returned. See \code{\link{get_na}}
+for more details on tagged NA values.}
 
 \item{value}{See \code{labels},}
 }
@@ -102,10 +108,20 @@ x
 x <- c(1, 1, 1, 2, 2, -2, 3, 3, 3, 3, 3, 9)
 x <- set_labels(x, c("Refused", "One", "Two", "Three", "Missing"))
 x
+set_na(x, c(-2, 9))
 
-x <- set_na(x, c(-2, 9), as.attr = TRUE)
+
+library(haven)
+x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+# get current NA values
 x
-frq(as_labelled(x))
+get_na(x)
+# lose value labels by tagged NA by default, if not specified
+set_labels(x, c("New Three" = 3))
+# do not drop na
+set_labels(x, c("New Three" = 3), drop.na = FALSE)
 
 
 # set labels via named vector,

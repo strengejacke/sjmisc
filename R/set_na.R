@@ -42,6 +42,13 @@
 #' # show value distribution, including missings
 #' table(dummy, exclude = NULL)
 #'
+#' # add named vector as further missing value
+#' set_na(dummy, c("Refused" = 5))
+#' # see different missing types
+#' library(haven)
+#' print_tagged_na(set_na(dummy, c("Refused" = 5)))
+#'
+#'
 #' # create sample data frame
 #' dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
 #'                     var2 = sample(1:10, 100, replace = TRUE),

@@ -32,6 +32,10 @@
 #'          'Examples'.
 #' @param include.non.labelled Logical, if \code{TRUE}, values without labels will
 #'          also be included in the returned labels.
+#' @param drop.na Logical, whether labels of tagged NA values (see \code{\link[haven]{tagged_na}})
+#'          should be included in the return value or not. By default, labelled
+#'          (tagged) missing values are not returned. See \code{\link{get_na}}
+#'          for more details on tagged NA values.
 #' @return Either a list with all value labels from all variables if \code{x}
 #'           is a \code{data.frame} or \code{list}; a string with the value
 #'           labels, if \code{x} is a variable;
