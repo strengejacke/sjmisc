@@ -98,10 +98,8 @@ add_labels_helper <- function(x, value) {
 
   # sort labels by values
   all.labels <- all.labels[order(as.numeric(all.labels))]
-
   # add NA
   if (!is.null(current.na)) all.labels <- c(all.labels, current.na)
-
   # set back labels
   x <- set_labels(x, labels = all.labels)
   return(x)

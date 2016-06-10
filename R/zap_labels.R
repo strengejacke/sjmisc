@@ -117,14 +117,14 @@ zap_unlabelled <- function(x) {
 }
 
 zap_labels_helper <- function(x) {
-  x <- set_na(x, get_values(x), as.attr = F)
+  x <- set_na(x, get_values(x))
   if (is_labelled(x)) class(x) <- NULL
   return(x)
 }
 
 zap_unlabelled_helper <- function(x) {
   vals <- get_values(x)
-  x <- set_na(x, stats::na.omit(unique(x)[!unique(x) %in% vals]), as.attr = F)
+  x <- set_na(x, stats::na.omit(unique(x)[!unique(x) %in% vals]))
   if (is_labelled(x)) class(x) <- NULL
   return(x)
 }

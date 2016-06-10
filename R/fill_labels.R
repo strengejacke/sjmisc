@@ -70,6 +70,10 @@ fill_labels_helper <- function(x) {
       # first, we need to switch name attribute and values
       all.val.switch <- as.numeric(names(all.values))
       names(all.val.switch) <- as.character(all.values)
+      # get current NA values
+      current.na <- get_na(x)
+      # add NA
+      if (!is.null(current.na)) all.val.switch <- c(all.val.switch, current.na)
       # then set labels
       x <- set_labels(x, all.val.switch, force.labels = T, force.values = T)
     }

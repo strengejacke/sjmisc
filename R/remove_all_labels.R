@@ -39,9 +39,6 @@ remove_all_labels_helper <- function(x) {
   attr.string <- getVarLabelAttribute(x)
   # remove attributes
   if (!is.null(attr.string)) attr(x, attr.string) <- NULL
-  # remove is_na attribute
-  na.flags <- get_na_flags(x)
-  if (!is.null(na.flags)) attr(x, getNaAttribute()) <- NULL
   # unclass, if labelled. labelled class may throw
   # errors / warnings, when not havin label attributes
   if (is_labelled(x)) x <- unclass(x)
