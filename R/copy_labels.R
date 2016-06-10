@@ -63,7 +63,7 @@ copy_labels <- function(df_new, df_origin = NULL) {
       # same for value labels
       df_new <- set_labels(df_new, get_labels(df_origin[, cn],
                                               attr.only = TRUE,
-                                              include.values = NULL,
+                                              include.values = "n",
                                               include.non.labelled = FALSE))
     } else {
       warning("both `df_origin` and `df_new` must be of class `data.frame`.", call. = F)

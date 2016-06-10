@@ -24,16 +24,13 @@
 #'
 #' x <- as_labelled(efc$e42dep)
 #' str(x)
-#' summary(x)
 #'
 #' x <- as_labelled(efc$e42dep, add.class = TRUE)
 #' str(x)
-#' summary(x)
 #'
 #' a <- c(1, 2, 4)
 #' x <- as_labelled(a, add.class = TRUE)
 #' str(x)
-#' summary(x)
 #'
 #' data(efc)
 #' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
