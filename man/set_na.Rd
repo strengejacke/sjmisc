@@ -3,7 +3,7 @@
 \name{set_na}
 \alias{set_na}
 \alias{set_na<-}
-\title{Set NA for specific variable values}
+\title{Replace specific values in vector with NA}
 \usage{
 set_na(x, value)
 
@@ -14,38 +14,25 @@ set_na(x) <- value
 missing values should be defined. If \code{x} is a \code{data.frame}, each
 column is assumed to be a new variable, where missings should be defined.}
 
-\item{value}{Numeric vector with values that should be replaced with \code{\link{NA}}'s.
-Thus, for each variable in \code{x}, \code{value} are replaced by \code{NA}'s.
-Or: a logical vector describing which values should be translated
-to missing values. See 'Details' and 'Examples'.}
-
-\item{as.attr}{Logical, if \code{TRUE}, \code{value} of \code{x} will \strong{not}
-be converted to \code{NA}. Rather, the missing code values of \code{value}
-will be added as missing-attribute \code{is_na} to the vector. See
-\code{\link{labelled}} for more details, and 'Examples'.}
+\item{value}{Numeric vector with values that should be replaced with a
+\code{\link[haven]{tagged_na}}.
+Thus, for each variable in \code{x}, \code{value} are replaced by
+tagged \code{NA} values.}
 }
 \value{
-\code{x}, where each value of \code{value} is replaced by an \code{NA}.
+\code{x}, where each value of \code{value} is replaced by an a tagged
+          \code{NA}.
 }
 \description{
-This function sets specific values of a variable, data frame
-               or list of variables as missings (\code{NA}).
+This function replaces specific values of a variable, data frame
+               or list of variables with missings (\code{NA}).
 }
 \details{
-\code{set_na} converts those values to \code{NA} that are
-           specified in the function's \code{value} argument; hence,
-           by default, \code{set_na} ignores any missing code attributes
-           like \code{is_na}. \code{\link{to_na}}, by contrast, converts
-           values to \code{NA}, which are defined as missing through the
-           \code{is_na}-attribute of a vector (see \code{\link{labelled}}).
-           \cr \cr
-           If \code{as.attr = TRUE}, \code{value} in \code{x} will \strong{not}
-           be converted to \code{NA}. Instead, the attribute \code{is_na}
-           will be added to \code{x}, indicating which values should be coded
-           as missing. \code{value} may either be numeric, with each number
-           indicating a value that should be defined as missing; or a vector
-           of logicals, describing which values should be translated to
-           missing values (see 'Examples').
+\code{set_na} converts all values defined in \code{value} with
+           a related tagged \code{NA} (see \code{\link[haven]{tagged_na}}).
+           Tagged \code{NA}s work exactly like regular R missing values
+           except that they store one additional byte of information: a tag,
+           which is usually a letter ("a" to "z") or character number ("0" to "9").
            \cr \cr
            Furthermore, see 'Details' in \code{\link{get_na}}.
 }

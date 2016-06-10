@@ -1,8 +1,8 @@
-#' @title Set NA for specific variable values
+#' @title Replace specific values in vector with NA
 #' @name set_na
 #'
-#' @description This function sets specific values of a variable, data frame
-#'                or list of variables as missings (\code{NA}).
+#' @description This function replaces specific values of a variable, data frame
+#'                or list of variables with missings (\code{NA}).
 #'
 #' @seealso \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
 #'            values, \code{\link{rec}} for general recoding of variables and
@@ -13,34 +13,22 @@
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables where new
 #'          missing values should be defined. If \code{x} is a \code{data.frame}, each
 #'          column is assumed to be a new variable, where missings should be defined.
-#' @param value Numeric vector with values that should be replaced with \code{\link{NA}}'s.
-#'          Thus, for each variable in \code{x}, \code{value} are replaced by \code{NA}'s.
-#'          Or: a logical vector describing which values should be translated
-#'          to missing values. See 'Details' and 'Examples'.
-#' @param as.attr Logical, if \code{TRUE}, \code{value} of \code{x} will \strong{not}
-#'          be converted to \code{NA}. Rather, the missing code values of \code{value}
-#'          will be added as missing-attribute \code{is_na} to the vector. See
-#'          \code{\link{labelled}} for more details, and 'Examples'.
+#' @param value Numeric vector with values that should be replaced with a
+#'          \code{\link[haven]{tagged_na}}.
+#'          Thus, for each variable in \code{x}, \code{value} are replaced by
+#'          tagged \code{NA} values.
 #'
-#' @return \code{x}, where each value of \code{value} is replaced by an \code{NA}.
+#' @return \code{x}, where each value of \code{value} is replaced by an a tagged
+#'           \code{NA}.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) are preserved.
 #'
-#' @details \code{set_na} converts those values to \code{NA} that are
-#'            specified in the function's \code{value} argument; hence,
-#'            by default, \code{set_na} ignores any missing code attributes
-#'            like \code{is_na}. \code{\link{to_na}}, by contrast, converts
-#'            values to \code{NA}, which are defined as missing through the
-#'            \code{is_na}-attribute of a vector (see \code{\link{labelled}}).
-#'            \cr \cr
-#'            If \code{as.attr = TRUE}, \code{value} in \code{x} will \strong{not}
-#'            be converted to \code{NA}. Instead, the attribute \code{is_na}
-#'            will be added to \code{x}, indicating which values should be coded
-#'            as missing. \code{value} may either be numeric, with each number
-#'            indicating a value that should be defined as missing; or a vector
-#'            of logicals, describing which values should be translated to
-#'            missing values (see 'Examples').
+#' @details \code{set_na} converts all values defined in \code{value} with
+#'            a related tagged \code{NA} (see \code{\link[haven]{tagged_na}}).
+#'            Tagged \code{NA}s work exactly like regular R missing values
+#'            except that they store one additional byte of information: a tag,
+#'            which is usually a letter ("a" to "z") or character number ("0" to "9").
 #'            \cr \cr
 #'            Furthermore, see 'Details' in \code{\link{get_na}}.
 #'
@@ -123,12 +111,15 @@ set_na_helper <- function(x, value) {
   # get values for value labels
   lab.values <- get_values(x)
 
-  # get na-tags, to check whether NA already was defined
-  nat <- as.vector(stats::na.omit(haven::na_tag(x)))
-  # stop if user wants to assign a value to NA that is
-  # already assigned as NA
-  if (any(nat %in% as.character(value)))
-    stop("Can't set NA values. At least of `value` is already defined as NA.", call. = F)
+  # for character values, na_tag does not work
+  if (!is.character(x) && !is.factor(x)) {
+    # get na-tags, to check whether NA already was defined
+    nat <- as.vector(stats::na.omit(haven::na_tag(x)))
+    # stop if user wants to assign a value to NA that is
+    # already assigned as NA
+    if (any(nat %in% as.character(value)))
+      stop("Can't set NA values. At least of `value` is already defined as NA.", call. = F)
+  }
 
   # iterate all NAs
   for (i in 1:length(value)) {
