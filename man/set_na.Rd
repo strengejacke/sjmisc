@@ -61,6 +61,9 @@ dummy <- set_na(dummy, c(2, 4))
 # show head of new data frame
 head(dummy)
 
+get_na(dummy)
+get_values(dummy)
+
 # create list of variables
 data(efc)
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
@@ -69,24 +72,6 @@ lapply(dummy, table, exclude = NULL)
 # set 3 to NA
 lapply(set_na(dummy, 3), table, exclude = NULL)
 
-# create random variable
-dummy <- sample(1:5, 100, replace = TRUE)
-# declare missing values, but only as attribute
-dummy <- set_na(dummy, c(3, 5), as.attr = TRUE)
-
-str(dummy)
-table(dummy)
-get_na(dummy)
-
-# create random variable
-dummy <- sample(1:5, 100, replace = TRUE)
-# declare missing values, but only as attribute
-# missing code definition may be logical indices
-dummy <- set_na(dummy, c(FALSE, FALSE, FALSE, TRUE, TRUE), as.attr = TRUE)
-
-str(dummy)
-table(dummy)
-get_na(dummy)
 
 }
 \seealso{

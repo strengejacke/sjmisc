@@ -53,6 +53,9 @@
 #' # show head of new data frame
 #' head(dummy)
 #'
+#' get_na(dummy[[1]])
+#' get_values(dummy[[1]])
+#'
 #' # create list of variables
 #' data(efc)
 #' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
@@ -61,24 +64,6 @@
 #' # set 3 to NA
 #' lapply(set_na(dummy, 3), table, exclude = NULL)
 #'
-#' # create random variable
-#' dummy <- sample(1:5, 100, replace = TRUE)
-#' # declare missing values, but only as attribute
-#' dummy <- set_na(dummy, c(3, 5), as.attr = TRUE)
-#'
-#' str(dummy)
-#' table(dummy)
-#' get_na(dummy)
-#'
-#' # create random variable
-#' dummy <- sample(1:5, 100, replace = TRUE)
-#' # declare missing values, but only as attribute
-#' # missing code definition may be logical indices
-#' dummy <- set_na(dummy, c(FALSE, FALSE, FALSE, TRUE, TRUE), as.attr = TRUE)
-#'
-#' str(dummy)
-#' table(dummy)
-#' get_na(dummy)
 #'
 #' @export
 set_na <- function(x, value) {
@@ -112,7 +97,7 @@ set_na_helper <- function(x, value) {
   lab.values <- get_values(x)
 
   # for character values, na_tag does not work
-  if (!is.character(x) && !is.factor(x)) {
+  if (!is.character(x) && !is.factor(x) && !is.integer(x)) {
     # get na-tags, to check whether NA already was defined
     nat <- as.vector(stats::na.omit(haven::na_tag(x)))
     # stop if user wants to assign a value to NA that is
