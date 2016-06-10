@@ -52,13 +52,13 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
   else
     values <- as.numeric(unname(attr(x, attr.string, exact = T)))
   # do we have any tagged NAs?
-  if (any(haven::is_tagged_na(values))) {
-    values <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
+  if (any(haven::is_tagged_na(values)) && !drop.na) {
+    values[haven::is_tagged_na(values)] <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
   }
   # sort values
   if (sort.val) values <- sort(values)
   # remove missing value codes?
-  if (drop.na) values <- na.omit(values)
+  if (drop.na) values <- values[!is.na(values)]
   # foreign? then reverse order
   if (is_foreign(attr.string)) values <- rev(values)
   # return sorted

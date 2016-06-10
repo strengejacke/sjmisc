@@ -5,7 +5,7 @@
 \alias{replace_na<-}
 \title{Replace NA with specific values}
 \usage{
-replace_na(x, value, na.label = NULL)
+replace_na(x, value, na.label = NULL, tagged.na = NULL)
 
 replace_na(x, na.label = NULL) <- value
 }
@@ -17,6 +17,10 @@ missing values should be replaced with \code{value}.}
 
 \item{na.label}{Optional character vector, used to label the NA-value (i.e.
 adding a \code{labels} attribute to \code{x}).}
+
+\item{tagged.na}{Optional, specifies a \code{\link[haven]{tagged_na}} value
+that will be replaced by \code{value}. Herewith it is possible
+to replace only specific \code{NA} values of \code{x}.}
 }
 \value{
 \code{x}, where \code{NA}'s are replaced with \code{value}.
