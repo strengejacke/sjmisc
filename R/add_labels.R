@@ -68,7 +68,11 @@ add_labels_helper <- function(x, value) {
   current.labels <- get_labels(x,
                                attr.only = T,
                                include.values = "n",
-                               include.non.labelled = F)
+                               include.non.labelled = F,
+                               drop.na = TRUE)
+
+  # get current NA values
+  current.na <- get_na(x)
 
   # if we had already labels, append new ones
   if (!is.null(current.labels)) {
@@ -94,6 +98,9 @@ add_labels_helper <- function(x, value) {
 
   # sort labels by values
   all.labels <- all.labels[order(as.numeric(all.labels))]
+
+  # add NA
+  if (!is.null(current.na)) all.labels <- c(all.labels, current.na)
 
   # set back labels
   x <- set_labels(x, labels = all.labels)

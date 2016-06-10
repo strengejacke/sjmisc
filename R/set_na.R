@@ -145,7 +145,7 @@ set_na_helper <- function(x, value) {
       if (!is.null(na.names)) names(attr(x, attr.string))[lv] <- na.names[i]
     } else {
       # no attribute string yet?
-      if (is.null(attr.string)) attr.string <- haven_attr_string()
+      if (is.null(attr.string)) attr.string <- "labels"
       # get labels and label values
       lv <- attr(x, attr.string, exact = T)
       ln <- names(attr(x, attr.string, exact = T))

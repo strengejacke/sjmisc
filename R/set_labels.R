@@ -224,7 +224,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values) {
   # auto-detect variable label attribute
   attr.string <- getValLabelAttribute(x)
   # do we have any label attributes?
-  if (is.null(attr.string)) attr.string <- haven_attr_string()
+  if (is.null(attr.string)) attr.string <- "labels"
   # check for null
   if (!is.null(labels)) {
     # if labels is empty string, remove labels attribute

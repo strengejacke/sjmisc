@@ -136,17 +136,20 @@
 get_labels <- function(x,
                        attr.only = FALSE,
                        include.values = NULL,
-                       include.non.labelled = FALSE) {
+                       include.non.labelled = FALSE,
+                       drop.na = TRUE) {
   if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
     a <- lapply(x, FUN = get_labels_helper,
                 attr.only,
                 include.values,
-                include.non.labelled)
+                include.non.labelled,
+                drop.na)
   } else {
     a <- get_labels_helper(x,
                            attr.only,
                            include.values,
-                           include.non.labelled)
+                           include.non.labelled,
+                           drop.na)
   }
   return(a)
 }
@@ -155,7 +158,7 @@ get_labels <- function(x,
 # Retrieve value labels of a data frame or variable
 # See 'get_labels'
 #' @importFrom haven is_tagged_na na_tag
-get_labels_helper <- function(x, attr.only, include.values, include.non.labelled) {
+get_labels_helper <- function(x, attr.only, include.values, include.non.labelled, drop.na) {
   labels <- NULL
   # haven or sjPlot?
   attr.string <- getValLabelAttribute(x)
@@ -177,8 +180,10 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
   } else {
     # retrieve named labels
     lab <- attr(x, attr.string, exact = T)
+    # drop na?
+    if (drop.na) lab <- lab[!haven::is_tagged_na(lab)]
     # check if we have anything
-    if (!is.null(lab)) {
+    if (!is.null(lab) && length(lab) > 0) {
       # retrieve values associated with labels
       if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
         values <- unname(lab)
@@ -186,6 +191,10 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
         values <- as.numeric(unname(lab))
       # retrieve label values in correct order
       labels <- names(lab)
+      # do we have any tagged NAs? If so, get tagged NAs
+      if (any(haven::is_tagged_na(values))) {
+        values <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
+      }
       # do we want to include non-labelled values as well?
       if (include.non.labelled) {
         # get values of variable
@@ -215,10 +224,6 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
           # set back new values
           values <- new_vals
         }
-      }
-      # do we have any tagged NAs? If so, get tagged NAs
-      if (any(haven::is_tagged_na(values))) {
-        values <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
       }
       # include associated values?
       if (!is.null(include.values)) {

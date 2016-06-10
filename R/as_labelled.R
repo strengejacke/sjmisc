@@ -83,7 +83,7 @@ as_labelled_helper <- function(x, add.labels, add.class) {
   # fill up missing attributes
   if (add.labels) x <- fill_labels(x)
   # reset missings
-  x <- set_na(x, suppressMessages(get_na(x)), as.attr = T)
+  x <- set_na(x, suppressMessages(get_na(x)))
   # get former class attributes
   xc <- class(x)
   if (add.class)

@@ -97,13 +97,11 @@ to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NUL
 }
 
 
-to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
+to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   # is already factor?
   if (is.factor(x)) {
     return(x)
   }
-  # remove missings?
-  if (drop.na) x <- to_na(x)
 
   # retrieve value labels
   lab <- get_labels(x,
@@ -140,7 +138,7 @@ to_fac_helper <- function(x, add.non.labelled, drop.na, ref.lvl) {
   # set back variable labels
   x <- set_label(x, varlab)
   # set back missing codes
-  x <- set_na(x, nas, as.attr = TRUE)
+  x <- set_na(x, nas)
   # change reference level?
   if (!is.null(ref.lvl)) ref_lvl(x) <- ref.lvl
   return(x)

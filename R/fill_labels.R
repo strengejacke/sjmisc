@@ -64,13 +64,6 @@ fill_labels_helper <- function(x) {
                            include.non.labelled = T)
   # have any values?
   if (!is.null(all.values)) {
-    # get missing values
-    missings <- get_na_flags(x)
-    # create new missing vector with same length as
-    # all present values
-    all.missings <- rep(FALSE, length(all.values))
-    # "insert" former missings into new missing vector
-    if (!is.null(missings)) all.missings[match(current.values, all.values)] <- missings
     # set back all labels, if amount of all labels differ
     # from the "current" values
     if (length(all.values) > length(current.values)) {
@@ -80,8 +73,6 @@ fill_labels_helper <- function(x) {
       # then set labels
       x <- set_labels(x, all.val.switch, force.labels = T, force.values = T)
     }
-    # set back missing information
-    x <- set_na(x, all.missings, as.attr = T)
   }
   return(x)
 }

@@ -49,21 +49,19 @@
 #'               c(FALSE, FALSE, TRUE, TRUE))
 #' get_na(x)
 #'
+#' @importFrom haven is_tagged_na
 #' @export
 get_na <- function(x) {
+  # haven or foreign?
+  attr.string <- getValLabelAttribute(x)
+  # have any attribute?
+  if (is.null(attr.string)) return(NULL)
   # get values
-  values <- get_values(x, sort.val = FALSE, drop.na = FALSE)
-  # get NA logicals
-  na.flag <- get_na_flags(x)
-  # do we have missing flag?
-  if (is.null(na.flag)) {
-    message("Variable has no assigned missing value codes.")
-    return(NULL)
-  }
-  # copy NA-codes to new vector, so we can check length
-  nas <- values[na.flag]
-  # set return value to NULL, if no missing values
-  if (is_empty(nas)) nas <- NULL
+  values <- attr(x, attr.string, exact = T)
+  # any labelled?
+  if (is.null(values)) return(NULL)
+  # get NA
+  nas <- values[haven::is_tagged_na(values)]
   # return missing values
   return(nas)
 }

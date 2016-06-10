@@ -5,7 +5,7 @@
 \title{Retrieve value labels of labelled data}
 \usage{
 get_labels(x, attr.only = FALSE, include.values = NULL,
-  include.non.labelled = FALSE)
+  include.non.labelled = FALSE, drop.na = TRUE)
 }
 \arguments{
 \item{x}{\code{data.frame} with variables that have value label attributes (e.g.
