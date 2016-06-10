@@ -19,28 +19,17 @@ This function adds value labels to a partially labelled vector,
                get labels.
 }
 \examples{
-# create labelled integer, with missing flag
-x <- labelled(c(1, 2, 1, 3, 4, 1, 5),
-              c(Good = 1, Bad = 5))
-get_labels(x)
-get_labels(x, include.non.labelled = TRUE)
-
-fill_labels(x)
-get_labels(fill_labels(x))
-
-# create partially labelled vector with missings
-x <- labelled(c(1, 2, 1, 3, 4, 1, 5),
-              c(Male = 1, Female = 2, Refused = 5),
-              c(FALSE, FALSE, TRUE))
+# create labelled integer, with tagged missings
+library(haven)
+x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+# get current values and labels
 x
+get_labels(x)
+
 fill_labels(x)
 get_labels(fill_labels(x))
-
-# get summary
-x <- labelled(c(1, 2, 1, 3, 4, 1, NA, 5),
-              c(Male = 1, Female = 2, Refused = 5),
-              c(FALSE, FALSE, TRUE))
-frq(x)
 
 }
 \seealso{
