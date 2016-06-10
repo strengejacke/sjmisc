@@ -60,6 +60,8 @@ get_na <- function(x) {
   if (is.null(values)) return(NULL)
   # get NA
   nas <- values[haven::is_tagged_na(values)]
+  # if we have no *tagged* NA, return NULL
+  if (suppressWarnings(is_empty(nas))) nas <- NULL
   # return missing values
   return(nas)
 }

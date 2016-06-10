@@ -111,7 +111,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   # retrieve variable labels
   varlab <- get_label(x)
   # retrieve missing codes
-  nas <- suppressMessages(get_na(x))
+  nas <- get_na(x)
 
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
