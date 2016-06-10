@@ -9,9 +9,7 @@
 #'
 #' @seealso \code{\link{get_labels}} to get value labels, or \code{\link{get_values}}
 #'            to get values associated with labels; see \code{\link{set_na}} to
-#'            replace specific values with \code{NA} and \code{\link{to_na}} to
-#'            convert missing value codes into \code{NA}; see \code{\link{get_na_flags}}
-#'            to get a logical vector of missing flags.
+#'            replace specific values with \code{NA}.
 #'
 #' @param x Variable (vector) with value label attributes, including
 #'          missing value codes (see \code{\link{labelled}}).

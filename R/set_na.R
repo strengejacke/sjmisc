@@ -8,8 +8,7 @@
 #'            values, \code{\link{rec}} for general recoding of variables and
 #'            \code{\link{recode_to}} for re-shifting value ranges. See
 #'            \code{\link{get_na}} to get values of missing values in
-#'            labelled vectors and \code{\link{to_na}} to convert missing value
-#'            codes into \code{NA}.
+#'            labelled vectors.
 #'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables where new
 #'          missing values should be defined. If \code{x} is a \code{data.frame}, each

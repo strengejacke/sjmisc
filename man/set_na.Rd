@@ -107,7 +107,6 @@ get_na(dummy)
            values, \code{\link{rec}} for general recoding of variables and
            \code{\link{recode_to}} for re-shifting value ranges. See
            \code{\link{get_na}} to get values of missing values in
-           labelled vectors and \code{\link{to_na}} to convert missing value
-           codes into \code{NA}.
+           labelled vectors.
 }
 

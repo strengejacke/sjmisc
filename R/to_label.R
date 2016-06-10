@@ -101,20 +101,36 @@ to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE
   }
 }
 
-
+#' @importFrom haven na_tag
 to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
   # prefix labels?
   if (prefix)
     iv <- "p"
   else
     iv <- 0
-  # remove missings?
-  if (drop.na) x <- to_na(x)
+  # keep missings?
+  if (!drop.na) {
+    # get NA
+    current.na <- get_na(x)
+    # any NA?
+    if (!is.null(current.na)) {
+      # we have to set all NA labels at once, else NA loses tag
+      # so we prepare a dummy label-vector, where we copy all different
+      # NA labels to `x` afterwards
+      dummy_na <- rep("", times = length(x))
+      # iterare NA
+      for (i in 1:length(current.na)) {
+        dummy_na[haven::na_tag(x) == haven::na_tag(current.na[i])] <- names(current.na)[i]
+      }
+      x[haven::is_tagged_na(x)] <- dummy_na[haven::is_tagged_na(x)]
+    }
+  }
   # get value labels
   vl <- get_labels(x,
                    attr.only = TRUE,
                    include.values = iv,
-                   include.non.labelled = add.non.labelled)
+                   include.non.labelled = add.non.labelled,
+                   drop.na = drop.na)
   # check if we have any labels, else
   # return variable "as is"
   if (!is.null(vl)) {
@@ -129,7 +145,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
     } else {
       for (i in 1:length(vl)) x[x == vn[i]] <- vl[i]
       # to factor
-      x <- factor(x, levels = vl)
+      x <- factor(x, levels = unique(vl))
     }
   }
   # return as factor
