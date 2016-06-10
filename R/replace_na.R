@@ -1,7 +1,7 @@
 #' @title Replace NA with specific values
 #' @name replace_na
 #'
-#' @description This function replaces NA's of a variable, data frame
+#' @description This function replaces (tagged) NA's of a variable, data frame
 #'                or list of variables with \code{value}.
 #'
 #' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{rec}}
@@ -22,6 +22,13 @@
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) are preserved.
 #'
+#' @details While regular \code{NA} values can only completely be replaced with
+#'            a single value, \code{\link[haven]{tagged_na}} allows to differentiate
+#'            between different qualitative values of \code{NA}s.
+#'            Tagged \code{NA}s work exactly like regular R missing values
+#'            except that they store one additional byte of information: a tag,
+#'            which is usually a letter ("a" to "z") or character number ("0" to "9").
+#'
 #' @examples
 #' data(efc)
 #' table(efc$e42dep, exclude = NULL)
@@ -32,6 +39,18 @@
 #' lapply(dummy, table, exclude = NULL)
 #' # show variables, NA's replaced with 99
 #' lapply(replace_na(dummy, 99), table, exclude = NULL)
+#'
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current NA values
+#' x
+#' get_na(x)
+#'
+#' # replace only the NA, which is tagged as NA(c)
+#' replace_na(x, 2, tagged.na = "c")
+#' get_na(replace_na(x, 2, tagged.na = "c"))
 #'
 #' @export
 replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {

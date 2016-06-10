@@ -27,12 +27,14 @@ data(efc)
 x <- rec(efc$c160age, rp$pattern)
 # add value labels to new vector
 set_labels(x) <- rp$labels
+
 # watch result. due to recode-pattern, we have age groups with
 # no observations (zero-counts)
-frq(as_labelled(x))
-
+\dontrun{
+library(sjPlot)
+sjt.frq(x)
 # now, let's drop zero's
-frq(as_labelled(drop_labels(x)))
+sjt.frq(drop_labels(x))}
 
 }
 \seealso{

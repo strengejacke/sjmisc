@@ -96,8 +96,8 @@ set_na_helper <- function(x, value) {
   # get values for value labels
   lab.values <- get_values(x)
 
-  # for character values, na_tag does not work
-  if (!is.character(x) && !is.factor(x) && !is.integer(x)) {
+  # haven::na_tag works only for double
+  if (is.double(x)) {
     # get na-tags, to check whether NA already was defined
     nat <- as.vector(stats::na.omit(haven::na_tag(x)))
     # stop if user wants to assign a value to NA that is

@@ -24,12 +24,14 @@
 #' x <- rec(efc$c160age, rp$pattern)
 #' # add value labels to new vector
 #' set_labels(x) <- rp$labels
+#'
 #' # watch result. due to recode-pattern, we have age groups with
 #' # no observations (zero-counts)
-#' frq(as_labelled(x))
-#'
+#' \dontrun{
+#' library(sjPlot)
+#' sjt.frq(x)
 #' # now, let's drop zero's
-#' frq(as_labelled(drop_labels(x)))
+#' sjt.frq(drop_labels(x))}
 #'
 #' @export
 drop_labels <- function(x) {
@@ -49,16 +51,12 @@ drop_labels <- function(x) {
 }
 
 drop_labels_helper <- function(x) {
-  # first, get frequency table
-  mydat <- get_frq(x, coerce = TRUE)
-  # get all valid values, that have counts
-  valid.values <- !is.na(mydat$value) & mydat$count > 0
-  # create labels
-  value.labels <- as.character(mydat$label[valid.values])
-  # get value names
-  values <- mydat$value[valid.values]
-  # name vector
-  names(value.labels) <- values
+  # get labels
+  tidy.labels <- get_labels(x, attr.only = T, include.values = "n", include.non.labelled = F, drop.na = T)
+  # remove labels with no values in data
+  tidy.labels <- tidy.labels[get_values(x) %in% names(table(x))]
+  # get NA labels
+  current.na <- get_na(x)
   # set labels
-  set_labels(x, labels = value.labels)
+  set_labels(x, labels = c(tidy.labels, current.na))
 }

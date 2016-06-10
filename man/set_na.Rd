@@ -61,8 +61,8 @@ dummy <- set_na(dummy, c(2, 4))
 # show head of new data frame
 head(dummy)
 
-get_na(dummy)
-get_values(dummy)
+get_na(dummy[[1]])
+get_values(dummy[[1]])
 
 # create list of variables
 data(efc)
