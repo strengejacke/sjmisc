@@ -12,10 +12,6 @@
 #'          such vectors.
 #' @param add.non.labelled Logical, if \code{TRUE}, non-labelled values also
 #'          get value labels.
-#' @param drop.na Logical, if \code{TRUE}, all types of missing value codes are
-#'          converted into NA before \code{x} is converted as factor. If
-#'          \code{FALSE}, missing values will be left as their original codes.
-#'          See 'Examples' and \code{\link{get_na}}.
 #' @param ref.lvl Numeric, specifies the reference level for the new factor. Use
 #'          this parameter if a different factor level than the lowest value
 #'          should be used as reference level. If \code{NULL}, lowest value
@@ -61,15 +57,6 @@
 #' to_factor(x, add.non.labelled = TRUE)
 #' get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
 #'
-#' # create labelled integer, with missing flag
-#' x <- labelled(c(1, 2, 1, 3, 4, 1),
-#'               c(Male = 1, Female = 2, Refused = 3, "N/A" = 4),
-#'               c(FALSE, FALSE, TRUE, TRUE))
-#' # to factor, with missing labels
-#' to_factor(x, drop.na = FALSE)
-#' # to factor, missings removed
-#' to_factor(x, drop.na = TRUE)
-#'
 #'
 #' # Convert to factor, using different reference level
 #' x <- to_factor(efc$e42dep)
@@ -81,18 +68,12 @@
 #' table(x)
 #'
 #' @export
-to_factor <- function(x, add.non.labelled = FALSE, drop.na = TRUE, ref.lvl = NULL) {
+to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
   if (is.matrix(x) || is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]],
-                                                 add.non.labelled,
-                                                 drop.na,
-                                                 ref.lvl)
+    for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]], add.non.labelled, ref.lvl)
     return(x)
   } else {
-    return(to_fac_helper(x,
-                         add.non.labelled,
-                         drop.na,
-                         ref.lvl))
+    return(to_fac_helper(x, add.non.labelled, ref.lvl))
   }
 }
 
