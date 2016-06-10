@@ -11,8 +11,8 @@
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables where
 #'          missing values should be replaced with \code{value}.
 #' @param value Value that will replace the \code{\link{NA}}'s.
-#' @param na.label Optional character vector, used to label the NA-value (i.e.
-#'          adding a \code{labels} attribute to \code{x}).
+#' @param na.label Optional character vector, used to label the the former NA-value
+#'          (i.e. adding a \code{labels} attribute for \code{value} to \code{x}).
 #' @param tagged.na Optional, specifies a \code{\link[haven]{tagged_na}} value
 #'          that will be replaced by \code{value}. Herewith it is possible
 #'          to replace only specific \code{NA} values of \code{x}.
@@ -33,6 +33,12 @@
 #' data(efc)
 #' table(efc$e42dep, exclude = NULL)
 #' table(replace_na(efc$e42dep, 99), exclude = NULL)
+#'
+#' # the original labels
+#' get_labels(replace_na(efc$e42dep, 99))
+#' # NA becomes "99", and is labelled as "former NA"
+#' get_labels(replace_na(efc$e42dep, 99, na.label = "former NA"),
+#'            include.values = "p")
 #'
 #' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 #' # show original distribution
