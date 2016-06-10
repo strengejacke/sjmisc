@@ -94,7 +94,7 @@
 #' get_na(dummy)
 #'
 #' @export
-set_na <- function(x, value, as.attr = FALSE) {
+set_na <- function(x, value) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -103,124 +103,71 @@ set_na <- function(x, value, as.attr = FALSE) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], value, as.attr)
+    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], value)
     return(x)
   } else {
-    return(set_na_helper(x, value, as.attr))
+    return(set_na_helper(x, value))
   }
 }
 
 
 #' @importFrom stats na.omit
-set_na_helper <- function(x, value, as.attr = FALSE) {
-  # does user want to add missing codes as is_na attribute?
-  # if yes, do so here...
-  if (as.attr) {
-    x <- set_na_attr(x, value)
-  } else {
-    # check if we have any values at all?
-    if (is.null(value)) return(x)
+set_na_helper <- function(x, value) {
+  # check if we have any values at all?
+  if (is.null(value)) return(x)
+  # get label attribute
+  attr.string <- getValLabelAttribute(x)
 
-    # find associated values in x
-    # and set them to NA
-    x[x %in% value] <- NA
+  # check if value is a named vector
+  na.names <- names(value)
+  # get values for value labels
+  lab.values <- get_values(x)
 
-    # auto-detect variable label attribute
-    attr.string <- getValLabelAttribute(x)
-    # check if x has label attributes
-    if (!is.null(attr.string)) {
-      # retrieve value labels
-      vl <- attr(x, attr.string, exact = T)
-      # retrieve label names
-      ln <- names(vl)
+  # get na-tags, to check whether NA already was defined
+  nat <- as.vector(stats::na.omit(haven::na_tag(x)))
+  # stop if user wants to assign a value to NA that is
+  # already assigned as NA
+  if (any(nat %in% as.character(value)))
+    stop("Can't set NA values. At least of `value` is already defined as NA.", call. = F)
 
-      # check if value labels exist, and if yes, remove them
-      labelpos <- suppressWarnings(which(as.numeric(vl) %in% value))
-
-      # remove NA label
-      if (length(labelpos > 0)) {
-        vl <- vl[-labelpos]
-        ln <- ln[-labelpos]
-      } else {
-        # if vl were not numeric convertable, try character conversion
-        # check if value labels exist, and if yes, remove them
-        labelpos <- suppressWarnings(which(as.character(vl) %in% value))
-        # remove NA label
-        if (length(labelpos > 0)) {
-          vl <- vl[-labelpos]
-          ln <- ln[-labelpos]
-        }
-      }
-
-      # do we have any labels left?
-      if (length(vl) > 0) {
-        # if yes, set back label attribute
-        attr(x, attr.string) <- vl
-        names(attr(x, attr.string)) <- ln
-
-        # shorten is_na attribute
-        na.flag <- get_na_flags(x)
-        if (!is.null(na.flag)) {
-          # do we have is_na attribute? if yes,
-          # remove missing flags of values set to NA
-          attr(x, getNaAttribute()) <- na.flag[-labelpos]
-        }
-      } else {
-        # else remove attribute
-        attr(x, attr.string) <- NULL
-        # remove is_na attribute, no longer needed
-        attr(x, getNaAttribute()) <- NULL
-
-        # unclass labelled, because it may result
-        # in errors when printing a labelled-class-vector
-        # without labelled and is_na attribute
-        if (is_labelled(x)) x <- unclass(x)
-      }
+  # iterate all NAs
+  for (i in 1:length(value)) {
+    # find associated values in x and set them as tagged NA
+    x[x %in% value[i]] <- haven::tagged_na(as.character(value[i]))
+    # is na-value in labelled values?
+    lv <- which(lab.values == value[i])
+    # if yes, replace label
+    if (!is_empty(lv)) {
+      # change value
+      attr(x, attr.string)[lv] <- haven::tagged_na(as.character(value[i]))
+      # change label as well?
+      if (!is.null(na.names)) names(attr(x, attr.string))[lv] <- na.names[i]
+    } else {
+      # no attribute string yet?
+      if (is.null(attr.string)) attr.string <- haven_attr_string()
+      # get labels and label values
+      lv <- attr(x, attr.string, exact = T)
+      ln <- names(attr(x, attr.string, exact = T))
+      # add NA
+      attr(x, attr.string) <- c(lv, haven::tagged_na(as.character(value[i])))
+      if (!is.null(na.names))
+        names(attr(x, attr.string)) <- c(ln, na.names[i])
+      else
+        names(attr(x, attr.string)) <- c(ln, as.character(value[i]))
     }
-
-    # if we have a factor, remove unused levels
-    if (is.factor(x)) x <- droplevels(x)
   }
-  return(x)
-}
 
-
-set_na_attr <- function(x, na.values) {
-  # get values
-  all.values <- get_values(x, sort.val = FALSE, drop.na = FALSE)
-  # do we have value attributes?
-  if (is.null(all.values)) {
-    # we assume a simple numeric vector, so let's add
-    # some label attributes
-    all.values <- sort(unique(stats::na.omit(x)))
-    x <- set_labels(x, as.character(all.values))
-  }
-  if (is.null(na.values)) {
-    # is na.values NULL? Then set FALSE (no missing)
-    # for all value codes
-    na.values <- rep(FALSE, length(all.values))
-  } else if (!is.logical(na.values)) {
-    # if we do not have logical indices,
-    # set TRUE for all NA-codes and FALSE for all other
-    na.values <- !is.na(match(all.values, na.values))
-  }
-  # same length?
-  if (length(na.values) != length(all.values))
-    # If not, warn user
-    warning("Length of logical indices for missing codes did not match length of values.", call. = F)
-  # set is_na attribute
-  attr(x, getNaAttribute()) <- na.values
   return(x)
 }
 
 #' @rdname set_na
 #' @export
-`set_na<-` <- function(x, as.attr = FALSE, value) {
+`set_na<-` <- function(x, value) {
   UseMethod("set_na<-")
 }
 
 #' @export
-`set_na<-.default` <- function(x, as.attr = FALSE, value) {
-  x <- set_na(x, value, as.attr)
+`set_na<-.default` <- function(x, value) {
+  x <- set_na(x, value)
   x
 }

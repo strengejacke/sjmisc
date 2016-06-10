@@ -67,6 +67,3 @@ get_na <- function(x) {
   # return missing values
   return(nas)
 }
-
-
-getNaAttribute <- function() return("is_na")

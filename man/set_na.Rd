@@ -5,9 +5,9 @@
 \alias{set_na<-}
 \title{Set NA for specific variable values}
 \usage{
-set_na(x, value, as.attr = FALSE)
+set_na(x, value)
 
-set_na(x, as.attr = FALSE) <- value
+set_na(x) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where new

@@ -1,5 +1,6 @@
 # Help-functions
 
+haven_attr_string <- function() return("labels")
 
 is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
 
@@ -54,8 +55,8 @@ getValLabelAttribute <- function(x) {
     # find first variable with labels or value.labels attribute
     for (i in 1:ncol(x)) {
       # has any attribute?
-      if (!is.null(attr(x[[i]], "labels", exact = T))) {
-        attr.string <- "labels"
+      if (!is.null(attr(x[[i]], haven_attr_string(), exact = T))) {
+        attr.string <- haven_attr_string()
         break
       } else if (!is.null(attr(x[[i]], "value.labels", exact = T))) {
         attr.string <- "value.labels"
@@ -64,7 +65,7 @@ getValLabelAttribute <- function(x) {
     }
   } else {
     # check if vector has labels attribute
-    if (!is.null(attr(x, "labels", exact = T))) attr.string <- "labels"
+    if (!is.null(attr(x, haven_attr_string(), exact = T))) attr.string <- haven_attr_string()
     # check if vector has value.labels attribute
     if (!is.null(attr(x, "value.labels", exact = T))) attr.string <- "value.labels"
   }

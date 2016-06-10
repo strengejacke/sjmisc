@@ -42,7 +42,7 @@
 #'
 #' @export
 get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
-  # haven or sjPlot?
+  # haven or foreign?
   attr.string <- getValLabelAttribute(x)
   # nothing found? then leave...
   if (is.null(attr.string)) return(NULL)

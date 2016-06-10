@@ -37,7 +37,7 @@ frq <- function(x, print.frq = TRUE) {
   # labels than values
   x <- fill_labels(x)
   # get value labels
-  labels <- attr(x, "labels", exact = T)
+  labels <- attr(x, haven_attr_string(), exact = T)
   # when we have character vectors, simply do table
   if (is.character(object)) {
     # do we have a labelled vector?
