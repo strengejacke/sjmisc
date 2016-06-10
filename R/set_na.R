@@ -112,6 +112,7 @@ set_na <- function(x, value) {
 
 
 #' @importFrom stats na.omit
+#' @importFrom haven tagged_na na_tag
 set_na_helper <- function(x, value) {
   # check if we have any values at all?
   if (is.null(value)) return(x)

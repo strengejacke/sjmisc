@@ -48,7 +48,6 @@ get_values(x)
 # drop NA
 get_values(x, , TRUE)
 
-
 }
 \seealso{
 \code{\link{get_labels}} for getting value labels and \code{\link{get_na}}

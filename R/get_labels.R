@@ -154,6 +154,7 @@ get_labels <- function(x,
 
 # Retrieve value labels of a data frame or variable
 # See 'get_labels'
+#' @importFrom haven is_tagged_na na_tag
 get_labels_helper <- function(x, attr.only, include.values, include.non.labelled) {
   labels <- NULL
   # haven or sjPlot?
@@ -214,6 +215,10 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
           # set back new values
           values <- new_vals
         }
+      }
+      # do we have any tagged NAs? If so, get tagged NAs
+      if (any(haven::is_tagged_na(values))) {
+        values <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
       }
       # include associated values?
       if (!is.null(include.values)) {

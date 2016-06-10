@@ -39,7 +39,7 @@
 #' # drop NA
 #' get_values(x, , TRUE)
 #'
-#'
+#' @importFrom haven is_tagged_na na_tag
 #' @export
 get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
   # haven or foreign?
@@ -51,15 +51,14 @@ get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
     values <- unname(attr(x, attr.string, exact = T))
   else
     values <- as.numeric(unname(attr(x, attr.string, exact = T)))
+  # do we have any tagged NAs?
+  if (any(haven::is_tagged_na(values))) {
+    values <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
+  }
   # sort values
   if (sort.val) values <- sort(values)
   # remove missing value codes?
-  if (drop.na) {
-    # get NA logicals
-    na.flag <- get_na_flags(x)
-    # do we have missing flag? if yes, remove missing code value
-    if (!is.null(na.flag)) values <- values[!na.flag]
-  }
+  if (drop.na) values <- na.omit(values)
   # foreign? then reverse order
   if (is_foreign(attr.string)) values <- rev(values)
   # return sorted
