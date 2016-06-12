@@ -119,7 +119,7 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 # get current NA values
 x
 get_na(x)
-# lose value labels by tagged NA by default, if not specified
+# lose value labels from tagged NA by default, if not specified
 set_labels(x, c("New Three" = 3))
 # do not drop na
 set_labels(x, c("New Three" = 3), drop.na = FALSE)
@@ -134,9 +134,17 @@ x <- set_labels(efc$e42dep, c(`independent` = 1,
                              `severe dependency` = 2,
                              `missing value` = 9))
 get_labels(x, include.values = "p")
-
 get_labels(x, include.values = "p", include.non.labelled = TRUE)
 
+# labels can also be set for tagged NA value
+# create numeric vector
+x <- c(1, 2, 3, 4)
+# set 2 and 3 as missing, which will automatically set as
+# tagged NA by 'set_na()'
+set_na(x) <- c(2, 3)
+x
+# set label via named vector just for tagged NA(3)
+set_labels(x, c(`New Value` = tagged_na("3")))
 
 # setting same value labels to multiple vectors
 # create a set of dummy variables
