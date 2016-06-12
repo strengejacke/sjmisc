@@ -22,12 +22,14 @@
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) are preserved.
 #'
-#' @details While regular \code{NA} values can only completely be replaced with
+#' @details While regular \code{NA} values can only be completely replaced with
 #'            a single value, \code{\link[haven]{tagged_na}} allows to differentiate
 #'            between different qualitative values of \code{NA}s.
 #'            Tagged \code{NA}s work exactly like regular R missing values
 #'            except that they store one additional byte of information: a tag,
 #'            which is usually a letter ("a" to "z") or character number ("0" to "9").
+#'            Therewith it is possible to replace only specific NA values, while
+#'            other NA values with be preserved.
 #'
 #' @examples
 #' data(efc)
@@ -57,6 +59,9 @@
 #' # replace only the NA, which is tagged as NA(c)
 #' replace_na(x, 2, tagged.na = "c")
 #' get_na(replace_na(x, 2, tagged.na = "c"))
+#'
+#' table(x)
+#' table(replace_na(x, 2, tagged.na = "c"))
 #'
 #' @export
 replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {
@@ -116,12 +121,12 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
 
 #' @rdname replace_na
 #' @export
-`replace_na<-` <- function(x, na.label = NULL, value) {
+`replace_na<-` <- function(x, na.label = NULL, tagged.na = NULL, value) {
   UseMethod("replace_na<-")
 }
 
 #' @export
-`replace_na<-.default` <- function(x, na.label = NULL, value) {
-  x <- replace_na(x = x, value = value, na.label = na.label)
+`replace_na<-.default` <- function(x, na.label = NULL, tagged.na = NULL, value) {
+  x <- replace_na(x = x, value = value, na.label = na.label, tagged.na = tagged.na)
   x
 }

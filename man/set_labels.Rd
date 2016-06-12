@@ -8,7 +8,8 @@
 set_labels(x, labels, force.labels = FALSE, force.values = TRUE,
   drop.na = TRUE)
 
-set_labels(x, force.labels = FALSE, force.values = TRUE) <- value
+set_labels(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE)
+  <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
