@@ -63,6 +63,17 @@
 #' table(x)
 #' table(replace_na(x, 2, tagged.na = "c"))
 #'
+#' # tagged NA also works for non-labelled class
+#' # init vector
+#' x <- c(1, 2, 3, 4)
+#' # set values 2 and 3 as NA, will automatically become
+#' # tagged NAs by 'set_na()'.
+#' set_na(x) <- c(2, 3)
+#' # see result
+#' x
+#' # now replace only NA tagged with 2 with value 5
+#' replace_na(x, 5, tagged.na = "2")
+#'
 #' @export
 replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {
   # check for valid value

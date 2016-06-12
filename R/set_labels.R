@@ -235,7 +235,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
   # check for null
   if (!is.null(labels)) {
     # if labels is empty string, remove labels attribute
-    if (length(labels) == 1 && nchar(labels) == 0) {
+    if (length(labels) == 1 && nchar(labels, keepNA = F) == 0) {
       attr(x, attr.string) <- NULL
 
       # set labels for character vectors here!
@@ -291,7 +291,8 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
         # and values might be reversed
         if (!anyNA(suppressWarnings(as.numeric(names(labels)))) &&
             anyNA(suppressWarnings(as.numeric(labels))) &&
-            !anyNA(suppressWarnings(as.numeric(values)))) {
+            !anyNA(suppressWarnings(as.numeric(values))) &&
+            !all(haven::is_tagged_na(labels))) {
           dummy.lab.values <- as.numeric(names((labels)))
           dummy.lab.labels <- as.character(labels)
           labels <- dummy.lab.values
