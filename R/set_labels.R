@@ -381,12 +381,12 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
 
 #' @rdname set_labels
 #' @export
-`set_labels<-` <- function(x, force.labels = FALSE, force.values = TRUE, value) {
+`set_labels<-` <- function(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE, value) {
   UseMethod("set_labels<-")
 }
 
 #' @export
-`set_labels<-.default` <- function(x, force.labels = FALSE, force.values = TRUE, value) {
-  x <- set_labels(x, value, force.labels, force.values)
+`set_labels<-.default` <- function(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE, value) {
+  x <- set_labels(x, value, force.labels, force.values, drop.na)
   x
 }
