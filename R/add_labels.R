@@ -4,9 +4,11 @@
 #' @description This function adds additional labels as attribute to a variable
 #'                or vector \code{x}, resp. to a set of variables in a
 #'                \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
-#'                \code{add_labels} does not completely replace existing value labels
+#'                \code{add_labels} does not \emph{completely} replace existing value labels
 #'                (and hence, remove not specified labels), but adds \code{value}
-#'                to the existing value labels of \code{x}. See 'Note'.
+#'                to the existing value labels of \code{x}. \code{add_labels} also
+#'                replaces existing value labels, but unlike \code{set_labels},
+#'                preserves the remaining labels. See 'Note'.
 #'
 #' @seealso \code{\link{set_label}} to manually set variable labels or
 #'            \code{\link{get_label}} to get variable labels; \code{\link{set_labels}} to
@@ -44,6 +46,17 @@
 #' # replace values, alternative function call
 #' add_labels(x) <- c(`new second` = 2)
 #'
+#' # replace specific missing value (tagged NA)
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current NA values
+#' x
+#' # tagged NA(c) has currently the value label "First", will be
+#' # replaced by "Second" now.
+#' add_labels(x, c("Second" = tagged_na("c")))
+#'
 #'
 #' @export
 add_labels <- function(x, value) {
@@ -62,7 +75,7 @@ add_labels <- function(x, value) {
   }
 }
 
-
+#' @importFrom haven is_tagged_na na_tag
 add_labels_helper <- function(x, value) {
   # get current labels of `x`
   current.labels <- get_labels(x,
@@ -94,6 +107,16 @@ add_labels_helper <- function(x, value) {
     }
   } else {
     all.labels <- value
+  }
+
+  # replace tagged NA
+  if (any(haven::is_tagged_na(value))) {
+    # get tagged NAs
+    value_tag <- haven::na_tag(value)
+    value_tag <- value_tag[!is.na(value_tag)]
+    cna_tag <- haven::na_tag(current.na)
+    # find matches, and remove multiple tagged NA
+    current.na <- current.na[-na.omit(match(value_tag, cna_tag))]
   }
 
   # sort labels by values

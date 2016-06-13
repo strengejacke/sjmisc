@@ -136,6 +136,15 @@
 #' get_labels(x, include.non.labelled = TRUE)
 #'
 #'
+#' # get labels, including tagged NA values
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current NA values
+#' x
+#' get_labels(x, include.values = "n", drop.na = FALSE)
+#'
 #' @export
 get_labels <- function(x,
                        attr.only = FALSE,
@@ -197,7 +206,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       labels <- names(lab)
       # do we have any tagged NAs? If so, get tagged NAs
       if (any(haven::is_tagged_na(values))) {
-        values <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
+        values[haven::is_tagged_na(values)] <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
       }
       # do we want to include non-labelled values as well?
       if (include.non.labelled) {
