@@ -34,7 +34,7 @@
 #' # add value labels to new vector
 #' set_labels(x) <- rp$labels
 #' # watch result
-#' frq(as_labelled(x))
+#' frq(x)
 #'
 #' @export
 rec_pattern <- function(from, to, width = 5, other = NULL){

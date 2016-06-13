@@ -17,11 +17,11 @@ This function retrieves the value of the \code{note}-attribute
                of vectors.
 }
 \examples{
-# create labelled factor, with missing flag
+library(haven)
+# create labelled factor
 x <- labelled(c("M", "M", "F", "X", "N/A"),
               c(Male = "M", Female = "F",
-                Refused = "X", "Not applicable" = "N/A"),
-              c(FALSE, FALSE, TRUE, TRUE))
+                Refused = "X", "Not applicable" = "N/A"))
 
 set_label(x) <- "A labelled vector with note"
 set_note(x) <- "Test annotation."

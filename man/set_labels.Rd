@@ -42,7 +42,7 @@ should be included in the return value or not. By default, labelled
 (tagged) missing values are not returned. See \code{\link{get_na}}
 for more details on tagged NA values.}
 
-\item{value}{See \code{labels},}
+\item{value}{See \code{labels}.}
 }
 \value{
 \code{x} with value label attributes; or with removed label-attributes if
@@ -131,8 +131,8 @@ data(efc)
 get_labels(efc$e42dep)
 
 x <- set_labels(efc$e42dep, c(`independent` = 1,
-                             `severe dependency` = 2,
-                             `missing value` = 9))
+                              `severe dependency` = 2,
+                              `missing value` = 9))
 get_labels(x, include.values = "p")
 get_labels(x, include.values = "p", include.non.labelled = TRUE)
 

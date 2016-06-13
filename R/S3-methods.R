@@ -20,3 +20,8 @@ print.lbl_df <- function(x, ..., n = NULL, width = NULL) {
   # use dplyr-print method now
   print(dmat, ..., n = n, width = width)
 }
+
+#' @export
+print.sjmisc.frq <- function(x, ...) {
+  print.data.frame(x$mydat, ..., row.names = FALSE)
+}

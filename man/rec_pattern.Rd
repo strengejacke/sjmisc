@@ -43,7 +43,7 @@ x <- rec(efc$c160age, rp$pattern)
 # add value labels to new vector
 set_labels(x) <- rp$labels
 # watch result
-frq(as_labelled(x))
+frq(x)
 
 }
 \seealso{

@@ -27,11 +27,9 @@
 #'
 #' # watch result. due to recode-pattern, we have age groups with
 #' # no observations (zero-counts)
-#' \dontrun{
-#' library(sjPlot)
-#' sjt.frq(x)
+#' frq(x)
 #' # now, let's drop zero's
-#' sjt.frq(drop_labels(x))}
+#' frq(drop_labels(x))
 #'
 #' @export
 drop_labels <- function(x) {

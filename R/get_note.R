@@ -8,11 +8,11 @@
 #' @return The the value of the \code{note}-attribute of \code{x}.
 #'
 #' @examples
-#' # create labelled factor, with missing flag
+#' library(haven)
+#' # create labelled factor
 #' x <- labelled(c("M", "M", "F", "X", "N/A"),
 #'               c(Male = "M", Female = "F",
-#'                 Refused = "X", "Not applicable" = "N/A"),
-#'               c(FALSE, FALSE, TRUE, TRUE))
+#'                 Refused = "X", "Not applicable" = "N/A"))
 #'
 #' set_label(x) <- "A labelled vector with note"
 #' set_note(x) <- "Test annotation."
@@ -38,11 +38,11 @@ get_note <- function(x) {
 #' @return \code{x}, with \code{value} stored as attribute.
 #'
 #' @examples
-#' # create labelled factor, with missing flag
+#' library(haven)
+#' # create labelled factor
 #' x <- labelled(c("M", "M", "F", "X", "N/A"),
 #'               c(Male = "M", Female = "F",
-#'                 Refused = "X", "Not applicable" = "N/A"),
-#'               c(FALSE, FALSE, TRUE, TRUE))
+#'                 Refused = "X", "Not applicable" = "N/A"))
 #'
 #' set_label(x) <- "A labelled vector with note"
 #' set_note(x) <- "Test annotation."
