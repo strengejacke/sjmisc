@@ -4,8 +4,8 @@
 #' @description This function returns a frequency table of labelled vectors, as data frame.
 #'
 #' @param x A labelled vector.
-#' @param sort.val Logical, if \code{TRUE}, values of associated value labels
-#'          are sorted.
+#' @param sort.frq Logical, if \code{TRUE}, rows will be sorted according to
+#'          value frequencies.
 #' @return A data frame with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
@@ -24,7 +24,8 @@
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @export
-frq <- function(x, sort.frq = "none") {
+frq <- function(x, sort.frq = c("none", "asc", "desc")) {
+  sort.frq <- match.arg(sort.frq)
   #---------------------------------------------------
   # variable with only mising?
   #---------------------------------------------------

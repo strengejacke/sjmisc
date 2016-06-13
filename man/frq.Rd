@@ -4,13 +4,13 @@
 \alias{frq}
 \title{Frequencies of labelled variables}
 \usage{
-frq(x, sort.frq = "none")
+frq(x, sort.frq = c("none", "asc", "desc"))
 }
 \arguments{
 \item{x}{A labelled vector.}
 
-\item{sort.val}{Logical, if \code{TRUE}, values of associated value labels
-are sorted.}
+\item{sort.frq}{Logical, if \code{TRUE}, rows will be sorted according to
+value frequencies.}
 }
 \value{
 A data frame with values, value labels, frequencies, raw, valid and
