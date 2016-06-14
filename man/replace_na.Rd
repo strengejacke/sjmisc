@@ -30,14 +30,14 @@ This function replaces (tagged) NA's of a variable, data frame
                or list of variables with \code{value}.
 }
 \details{
-While regular \code{NA} values can only be completely replaced with
+While regular \code{NA} values can only be \emph{completely} replaced with
            a single value, \code{\link[haven]{tagged_na}} allows to differentiate
            between different qualitative values of \code{NA}s.
            Tagged \code{NA}s work exactly like regular R missing values
            except that they store one additional byte of information: a tag,
            which is usually a letter ("a" to "z") or character number ("0" to "9").
            Therewith it is possible to replace only specific NA values, while
-           other NA values with be preserved.
+           other NA values are preserved.
 }
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}

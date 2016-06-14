@@ -378,7 +378,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       if (is.infinite(old_val[k])) {
         # else-token found. we first need to preserve NA, but only,
         # if these haven't been copied before
-        if (!na_recoded) new_var[which(is.na(x))] <- NA
+        if (!na_recoded) new_var[which(is.na(x))] <- x[which(is.na(x))]
         # find replace-indices. since "else"-token has to be
         # the last argument in the "recodes"-string, the remaining,
         # non-recoded values are still "-Inf". Hence, find positions

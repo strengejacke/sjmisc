@@ -27,6 +27,7 @@
 #'            \item if \code{labels} is a vector and \code{x} is a data frame, \code{labels} will be applied to each column of \code{x}.
 #'            }
 #'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
+#' @param value See \code{labels}.
 #' @param force.labels Logical; if \code{TRUE}, all \code{labels} are added as value label
 #'          attribute, even if \code{x} has less unique values then length of \code{labels}
 #'          or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
@@ -39,7 +40,6 @@
 #'          should be included in the return value or not. By default, labelled
 #'          (tagged) missing values are not returned. See \code{\link{get_na}}
 #'          for more details on tagged NA values.
-#' @param value See \code{labels}.
 #' @return \code{x} with value label attributes; or with removed label-attributes if
 #'            \code{labels = ""}.
 #'
@@ -396,6 +396,6 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
 
 #' @export
 `set_labels<-.default` <- function(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE, value) {
-  x <- set_labels(x, value, force.labels, force.values, drop.na)
+  x <- set_labels(x, labels = value, force.labels = force.labels, force.values = force.values, drop.na = drop.na)
   x
 }
