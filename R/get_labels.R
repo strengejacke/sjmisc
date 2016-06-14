@@ -27,11 +27,11 @@
 #'          (or \code{include.values = "p"}), values are included as prefix
 #'          to each label. See 'Examples'.
 #' @param attr.only Logical, if \code{TRUE}, labels are only searched for
-#'          in the the vector's \code{\link{attributes}}; else, if \code{x} has no
-#'          label attributes, factor levels or string values are returned. See
-#'          'Examples'.
+#'          in the the vector's \code{\link{attributes}}; else, if \code{attr.only = FALSE}
+#'          and \code{x} has no label attributes, factor levels or string values
+#'          are returned. See 'Examples'.
 #' @param include.non.labelled Logical, if \code{TRUE}, values without labels will
-#'          also be included in the returned labels.
+#'          also be included in the returned labels (see \code{\link{fill_labels}}).
 #' @param drop.na Logical, whether labels of tagged NA values (see \code{\link[haven]{tagged_na}})
 #'          should be included in the return value or not. By default, labelled
 #'          (tagged) missing values are not returned. See \code{\link{get_na}}
@@ -46,19 +46,19 @@
 #'            or in \pkg{haven} package style (attributes are named \emph{labels} and
 #'            \emph{label}). By default, the \pkg{haven} package style is used.
 #'            \cr \cr
-#'            Working with labelled data is a key element of the \pkg{sjPlot} package,
+#'            Working with labelled data is a key feature of the \pkg{sjPlot} package,
 #'            which accesses these attributes to automatically read label attributes
-#'            for labelling axis categories and titles or table rows and columns.
+#'            for labelling axis categories and titles or table rows and columns
+#'            in graphical or tabular outputs.
 #'            \cr \cr
 #'            When working with labelled data, you can, e.g., use
 #'            \code{\link{get_label}} or \code{\link{get_labels}}
 #'            to get a vector of value and variable labels, which can then be
 #'            used with other functions like \code{\link{barplot}} etc.
-#'            See 'Examples'.
-#'            \cr \cr
-#'            Furthermore, value and variable labels are used when saving data, e.g. to SPSS
-#'            (see \code{\link{write_spss}}), which means that the written SPSS file
-#'            contains proper labels for each variable.
+#'            See 'Examples'. Furthermore, value and variable labels are used
+#'            when saving data, e.g. to SPSS (see \code{\link{write_spss}}),
+#'            which means that the written SPSS file contains proper labels
+#'            for each variable.
 #'            \cr \cr
 #'            You can set a default label style (i.e. the names of the label
 #'            attributes, see above) via \code{options(value_labels = "haven")}

@@ -1,5 +1,6 @@
 #' @title Add value labels to variables
 #' @name set_labels
+#' @usage set_labels(x, labels, force.labels = FALSE, force.values = TRUE, drop.na = TRUE)
 #'
 #' @description This function adds character \code{labels} as attribute
 #'                (named \code{"labels"} or \code{"value.labels"}) to a variable
@@ -54,13 +55,11 @@
 #'         Furthermore, see 'Note' in \code{\link{get_labels}}.
 #'
 #' @examples
-#' \dontrun{
-#' library(sjPlot)
 #' dummy <- sample(1:4, 40, replace = TRUE)
-#' sjp.frq(dummy)
+#' frq(dummy)
 #'
 #' dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
-#' sjp.frq(dummy)}
+#' frq(dummy)
 #'
 #' # force using all labels, even if not all labels
 #' # have associated values in vector
@@ -68,17 +67,15 @@
 #' # only two value labels
 #' x <- set_labels(x, c("1", "2", "3"))
 #' x
+#' frq(x)
 #'
 #' # or use:
 #' # set_labels(x) <- c("1", "2", "3")
 #'
-#' \dontrun{
-#' sjp.frq(x)}
 #' # all three value labels
 #' x <- set_labels(x, c("1", "2", "3"), force.labels = TRUE)
 #' x
-#' \dontrun{
-#' sjp.frq(x)}
+#' frq(x)
 #'
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
@@ -389,6 +386,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
 }
 
 #' @rdname set_labels
+#' @usage set_labels(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE) <- value
 #' @export
 `set_labels<-` <- function(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE, value) {
   UseMethod("set_labels<-")

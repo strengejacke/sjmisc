@@ -5,11 +5,9 @@
 \alias{set_labels<-}
 \title{Add value labels to variables}
 \usage{
-set_labels(x, labels, force.labels = FALSE, force.values = TRUE,
-  drop.na = TRUE)
+set_labels(x, labels, force.labels = FALSE, force.values = TRUE, drop.na = TRUE)
 
-set_labels(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE)
-  <- value
+set_labels(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
@@ -70,13 +68,11 @@ See 'Details' in \code{\link{get_labels}}.
         Furthermore, see 'Note' in \code{\link{get_labels}}.
 }
 \examples{
-\dontrun{
-library(sjPlot)
 dummy <- sample(1:4, 40, replace = TRUE)
-sjp.frq(dummy)
+frq(dummy)
 
 dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
-sjp.frq(dummy)}
+frq(dummy)
 
 # force using all labels, even if not all labels
 # have associated values in vector
@@ -84,17 +80,15 @@ x <- c(2, 2, 3, 3, 2)
 # only two value labels
 x <- set_labels(x, c("1", "2", "3"))
 x
+frq(x)
 
 # or use:
 # set_labels(x) <- c("1", "2", "3")
 
-\dontrun{
-sjp.frq(x)}
 # all three value labels
 x <- set_labels(x, c("1", "2", "3"), force.labels = TRUE)
 x
-\dontrun{
-sjp.frq(x)}
+frq(x)
 
 # create vector
 x <- c(1, 2, 3, 2, 4, NA)

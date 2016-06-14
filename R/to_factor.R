@@ -91,8 +91,6 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
                     include.non.labelled = add.non.labelled)
   # retrieve variable labels
   varlab <- get_label(x)
-  # retrieve missing codes
-  nas <- get_na(x)
 
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
@@ -118,8 +116,6 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
                                    force.values = FALSE))
   # set back variable labels
   x <- set_label(x, varlab)
-  # set back missing codes
-  x <- set_na(x, nas)
   # change reference level?
   if (!is.null(ref.lvl)) ref_lvl(x) <- ref.lvl
   return(x)

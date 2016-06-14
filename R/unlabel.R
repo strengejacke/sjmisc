@@ -39,7 +39,7 @@ unlabel <- function(x) {
     message("Converting labelled-classes. Please wait...\n")
     for (i in 1:ncol(x)) {
       # remove labelled class
-      if (is_labelled(x[[i]])) x[[i]] <- unclass(x[[i]])
+      if (haven::is.labelled(x[[i]])) x[[i]] <- unclass(x[[i]])
       # update progress bar
       utils::setTxtProgressBar(pb, i)
     }
@@ -48,7 +48,7 @@ unlabel <- function(x) {
     class(x) <- c("lbl_df", "data.frame")
   } else {
     # remove labelled class
-    if (is_labelled(x)) x <- unclass(x)
+    if (haven::is.labelled(x)) x <- unclass(x)
   }
   return(x)
 }

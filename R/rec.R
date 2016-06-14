@@ -141,6 +141,7 @@ rec_to_helper <- function(x, lowest, highest) {
 #'       \itemize{
 #'         \item the \code{"else"}-token should always be the last argument in the \code{recodes}-string.
 #'         \item Non-matching values will be set to \code{\link{NA}}, unless captured by the \code{"else"}-token.
+#'         \item Tagged NA values (see \code{\link[haven]{tagged_na}}) and their value labels will be preserved when copying NA values to the recoded vector with  \code{"else=copy"}.
 #'         \item Variable label attributes (see, for instance, \code{\link{get_label}}) are preserved (unless changes via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
 #'         \item If \code{x} is a \code{data.frame} or \code{list} of variables, all variables should have the same categories resp. value range (else, see second bullet, \code{NA}s are produced).
 #'       }
@@ -197,6 +198,18 @@ rec_to_helper <- function(x, lowest, highest) {
 #' # recode non-numeric factors
 #' data(iris)
 #' rec(iris$Species, "setosa=huhu; else=copy")
+#'
+#'
+#' # preserve tagged NAs
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current value labels
+#' x
+#' # recode 2 into 5; Values of tagged NAs are preserved
+#' rec(x, "2=5;else=copy")
+#' na_tag(rec(x, "2=5;else=copy"))
 #'
 #' @export
 rec <- function(x,

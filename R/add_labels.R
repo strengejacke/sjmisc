@@ -1,22 +1,22 @@
-#' @title Add value labels to variables
+#' @title Add or replace value labels of variables
 #' @name add_labels
 #'
 #' @description This function adds additional labels as attribute to a variable
 #'                or vector \code{x}, resp. to a set of variables in a
 #'                \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
 #'                \code{add_labels} does not \emph{completely} replace existing value labels
-#'                (and hence, remove not specified labels), but adds \code{value}
+#'                (and hence, it does not remove non-specified labels), but adds \code{value}
 #'                to the existing value labels of \code{x}. \code{add_labels} also
 #'                replaces existing value labels, but unlike \code{set_labels},
 #'                preserves the remaining labels. See 'Note'.
 #'
 #' @seealso \code{\link{set_label}} to manually set variable labels or
 #'            \code{\link{get_label}} to get variable labels; \code{\link{set_labels}} to
-#'            add value labels, replacing the existing ones.
+#'            add value labels, replacing the existing ones (and removing non-specified
+#'            value labels).
 #'
 #' @param x Variable (vector), \code{list} of variables or a \code{data.frame}
-#'          where value label attributes should be added. Does not replaces former
-#'          value labels.
+#'          where value label attributes should be added.
 #' @param value Named character vector of labels that will be added to \code{x} as
 #'          label attribute. If \code{x} is a data frame, \code{value} may also
 #'          be a \code{\link{list}} of named character vectors. If \code{value}
@@ -27,7 +27,8 @@
 #' @return \code{x} with additional value labels.
 #'
 #' @note Existing labelled values will be replaced by new labelled values
-#'         in \code{value}. See 'Examples'.
+#'         in \code{value}. See 'Examples'. \code{replace_labels} is a simple
+#'         wrapper and just calls \code{add_labels}.
 #'
 #' @examples
 #' data(efc)
@@ -44,7 +45,7 @@
 #' get_labels(x, include.values = "p")
 #'
 #' # replace values, alternative function call
-#' add_labels(x) <- c(`new second` = 2)
+#' replace_labels(x) <- c(`new second` = 2)
 #'
 #' # replace specific missing value (tagged NA)
 #' library(haven)
@@ -55,7 +56,7 @@
 #' x
 #' # tagged NA(c) has currently the value label "First", will be
 #' # replaced by "Second" now.
-#' add_labels(x, c("Second" = tagged_na("c")))
+#' replace_labels(x, c("Second" = tagged_na("c")))
 #'
 #'
 #' @export
@@ -115,8 +116,14 @@ add_labels_helper <- function(x, value) {
     value_tag <- haven::na_tag(value)
     value_tag <- value_tag[!is.na(value_tag)]
     cna_tag <- haven::na_tag(current.na)
-    # find matches, and remove multiple tagged NA
-    current.na <- current.na[-na.omit(match(value_tag, cna_tag))]
+    # find matches (replaced NA)
+    doubles <- na.omit(match(value_tag, cna_tag))
+    if (any(doubles)) {
+      message(sprintf("tagged NA '%s' was replaced with new value label.\n",
+                      names(current.na)[doubles]))
+    }
+    # remove multiple tagged NA
+    current.na <- current.na[-doubles]
   }
 
   # sort labels by values
@@ -137,5 +144,25 @@ add_labels_helper <- function(x, value) {
 #' @export
 `add_labels<-.default` <- function(x, value) {
   x <- add_labels(x, value)
+  x
+}
+
+
+
+#' @rdname add_labels
+#' @export
+replace_labels <- function(x, value) {
+  return(add_labels(x, value))
+}
+
+#' @rdname add_labels
+#' @export
+`replace_labels<-` <- function(x, value) {
+  UseMethod("replace_labels<-")
+}
+
+#' @export
+`replace_labels<-.default` <- function(x, value) {
+  x <- replace_labels(x, value)
   x
 }

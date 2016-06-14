@@ -299,7 +299,7 @@ write_stata <- function(x, path, enc.to.utf8 = TRUE) {
 }
 
 
-#' @importFrom haven write_sav write_dta
+#' @importFrom haven write_sav write_dta is.labelled
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, enc.to.utf8) {
   # check if suggested package is available
@@ -324,7 +324,7 @@ write_data <- function(x, path, type, enc.to.utf8) {
       if (!is.null(var.lab)) x[[i]] <- set_label(x[[i]], enc2utf8(var.lab))
     }
     # haven labelled objects don't need conversion
-    if (!is_labelled(x[[i]])) {
+    if (!haven::is.labelled(x[[i]])) {
       # convert variable to labelled factor, so it can be saved
       x[[i]] <- suppressWarnings(to_label(x[[i]]))
       # set back variable label

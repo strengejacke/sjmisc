@@ -138,7 +138,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
   # return variable "as is"
   if (!is.null(vl)) {
     # get associated values for value labels
-    vn <- get_values(x, sort.val = FALSE, drop.na = FALSE)
+    vn <- get_values(x, sort.val = FALSE, drop.na = drop.na)
     # replace values with labels
     if (is.factor(x)) {
       # set new levels

@@ -40,13 +40,13 @@ get_values(efc$e42dep)
 get_labels(efc$e42dep)
 
 library(haven)
-# create labelled integer
-x <- labelled(c(1, 2, 1, 3, 4, 1),
-              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4))
+x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
 # get all values
 get_values(x)
 # drop NA
-get_values(x, , TRUE)
+get_values(x, drop.na = TRUE)
 
 }
 \seealso{

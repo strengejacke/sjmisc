@@ -3,16 +3,21 @@
 \name{add_labels}
 \alias{add_labels}
 \alias{add_labels<-}
-\title{Add value labels to variables}
+\alias{replace_labels}
+\alias{replace_labels<-}
+\title{Add or replace value labels of variables}
 \usage{
 add_labels(x, value)
 
 add_labels(x) <- value
+
+replace_labels(x, value)
+
+replace_labels(x) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
-where value label attributes should be added. Does not replaces former
-value labels.}
+where value label attributes should be added.}
 
 \item{value}{Named character vector of labels that will be added to \code{x} as
 label attribute. If \code{x} is a data frame, \code{value} may also
@@ -29,14 +34,15 @@ This function adds additional labels as attribute to a variable
                or vector \code{x}, resp. to a set of variables in a
                \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
                \code{add_labels} does not \emph{completely} replace existing value labels
-               (and hence, remove not specified labels), but adds \code{value}
+               (and hence, it does not remove non-specified labels), but adds \code{value}
                to the existing value labels of \code{x}. \code{add_labels} also
                replaces existing value labels, but unlike \code{set_labels},
                preserves the remaining labels. See 'Note'.
 }
 \note{
 Existing labelled values will be replaced by new labelled values
-        in \code{value}. See 'Examples'.
+        in \code{value}. See 'Examples'. \code{replace_labels} is a simple
+        wrapper and just calls \code{add_labels}.
 }
 \examples{
 data(efc)
@@ -53,7 +59,7 @@ x <- add_labels(efc$e42dep, c(`not so dependent` = 4, `lorem ipsum` = 5))
 get_labels(x, include.values = "p")
 
 # replace values, alternative function call
-add_labels(x) <- c(`new second` = 2)
+replace_labels(x) <- c(`new second` = 2)
 
 # replace specific missing value (tagged NA)
 library(haven)
@@ -64,13 +70,14 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 x
 # tagged NA(c) has currently the value label "First", will be
 # replaced by "Second" now.
-add_labels(x, c("Second" = tagged_na("c")))
+replace_labels(x, c("Second" = tagged_na("c")))
 
 
 }
 \seealso{
 \code{\link{set_label}} to manually set variable labels or
            \code{\link{get_label}} to get variable labels; \code{\link{set_labels}} to
-           add value labels, replacing the existing ones.
+           add value labels, replacing the existing ones (and removing non-specified
+           value labels).
 }
 

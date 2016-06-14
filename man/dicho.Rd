@@ -4,8 +4,8 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(x, dich.by = c("median", "mean", "value"), dich.val = -1,
-  as.num = FALSE, var.label = NULL, val.labels = NULL)
+dicho(x, dich.by = "median", dich.val = -1, as.num = FALSE,
+  var.label = NULL, val.labels = NULL)
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables
@@ -14,15 +14,12 @@ that should be dichotomized}
 \item{dich.by}{Indicates the split criterion where a variable is dichotomized.
 Must be one of the following values (may be abbreviated):
 \describe{
-  \item{\code{"median"}}{by default, \code{x} is split into two groups at the median.}
-  \item{\code{"mean"}}{splits \code{x} into two groups at the mean of \code{x}.}
-  \item{\code{"value"}}{splits \code{x} into two groups at a specific value (see \code{dich.val}).}
+  \item{\code{"median"} or \code{"md"}}{by default, \code{x} is split into two groups at the median.}
+  \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
+  \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
   }}
 
-\item{dich.val}{Numeric, indicates a value where \code{x} is dichotomized when \code{dich.by = "value"}.
-\strong{Note that \code{dich.val} is inclusive}, i.e. \code{dich.val = 10} will split \code{x}
-into one group with values from lowest to 10 and another group with values greater
-than 10.}
+\item{dich.val}{Deprecated, use \code{dich.by}.}
 
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
@@ -51,14 +48,17 @@ Variable label attributes (see, for instance, \code{\link{set_label}}) are prese
 \examples{
 data(efc)
 summary(efc$c12hour)
+# split at median
 table(dicho(efc$c12hour))
+# split at mean
 table(dicho(efc$c12hour, "mean"))
-table(dicho(efc$c12hour, "value", 30))
+# split between value lowest to 30, and above 30
+table(dicho(efc$c12hour, 30))
 
 # sample data frame, values from 1-4
 head(efc[, 6:10])
 # dichtomized values (1 to 2 = 0, 3 to 4 = 1)
-head(dicho(efc[, 6:10], "v", 2))
+head(dicho(efc[, 6:10], 2))
 
 # dichtomize several variables in a list
 dummy <- list(efc$c12hour, efc$e17age, efc$c160age)

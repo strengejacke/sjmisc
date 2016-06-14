@@ -28,5 +28,11 @@ set_note(x) <- "Test annotation."
 get_note(x)
 x
 
+# Annotate simple vector
+x <- c(1, 2, 3)
+set_note(x) <- "Another note"
+x
+get_note(x)
+
 }
 

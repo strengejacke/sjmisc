@@ -13,10 +13,11 @@ remove_labels(x) <- value
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
 where value label attributes should be removed.}
 
-\item{value}{Either a numeric vector, indicating one or more label attributes that
-should be removed (see \code{\link{get_labels}} to retrieve a vector's
-label attributes), or a character vector with names of label attributes
-that should be removed.}
+\item{value}{Either a numeric vector, indicating the position of one or more label
+attributes that should be removed (see \code{\link{get_labels}} to
+retrieve a vector's label attributes); a character vector with names
+of label attributes that should be removed; or a \code{\link[haven]{tagged_na}}
+to remove the labels from specific NA values.}
 }
 \value{
 \code{x} with removed value labels.
@@ -36,6 +37,14 @@ get_labels(x, include.values = "p")
 
 x <- remove_labels(efc$e42dep, "independent")
 get_labels(x, include.values = "p")
+
+library(haven)
+x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+# get current NA values
+get_na(x)
+get_na(remove_labels(x, tagged_na("c")))
 
 
 }
