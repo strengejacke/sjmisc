@@ -4,11 +4,14 @@
 \alias{get_na}
 \title{Retrieve tagged NA values of labelled variables}
 \usage{
-get_na(x)
+get_na(x, as.tag = FALSE)
 }
 \arguments{
 \item{x}{Variable (vector) with value label attributes, including
 tagged missing values (see \code{\link[haven]{tagged_na}}).}
+
+\item{as.tag}{Logical, if \code{TRUE}, the returned values are not tagged NA's,
+but their string representative including the tag value. See 'Examples'.}
 }
 \value{
 The tagged missing values and their associated value labels from \code{x},
@@ -41,6 +44,8 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 # get current NA values
 x
 get_na(x)
+# which NA has which tag?
+get_na(x, as.tag = TRUE)
 
 # replace only the NA, which is tagged as NA(c)
 replace_na(x, 2, tagged.na = "c")

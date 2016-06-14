@@ -10,6 +10,8 @@
 #'
 #' @param x Variable (vector) with value label attributes, including
 #'          tagged missing values (see \code{\link[haven]{tagged_na}}).
+#' @param as.tag Logical, if \code{TRUE}, the returned values are not tagged NA's,
+#'          but their string representative including the tag value. See 'Examples'.
 #' @return The tagged missing values and their associated value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no tagged missing values.
 #'
@@ -35,6 +37,8 @@
 #' # get current NA values
 #' x
 #' get_na(x)
+#' # which NA has which tag?
+#' get_na(x, as.tag = TRUE)
 #'
 #' # replace only the NA, which is tagged as NA(c)
 #' replace_na(x, 2, tagged.na = "c")
@@ -42,7 +46,7 @@
 #'
 #' @importFrom haven is_tagged_na
 #' @export
-get_na <- function(x) {
+get_na <- function(x, as.tag = FALSE) {
   # haven or foreign?
   attr.string <- getValLabelAttribute(x)
   # have any attribute?
@@ -55,6 +59,15 @@ get_na <- function(x) {
   nas <- values[haven::is_tagged_na(values)]
   # if we have no *tagged* NA, return NULL
   if (length(nas) == 0) nas <- NULL
+  # print as tag?
+  if (as.tag && !is.null(nas)) {
+    # save names
+    nn <- names(nas)
+    # make character vector with NA tags
+    nas <- paste0("NA(", haven::na_tag(nas), ")")
+    # set back names
+    names(nas) <- nn
+  }
   # return missing values
   return(nas)
 }
