@@ -231,6 +231,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   val_lab <- val.labels
   # remember if NA's have been recoded...
   na_recoded <- FALSE
+  # get current NA values
+  current.na <- get_na(x)
 
   # do we have a factor with "x"?
   if (is.factor(x)) {
@@ -410,6 +412,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   }
   # replace remaining -Inf with NA
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
+  # add back NA labels
+  if (!is.null(current.na) && length(current.na) > 0) val_lab <- c(val_lab, current.na)
   # set back variable and value labels
   new_var <- suppressWarnings(set_label(x = new_var, lab = var_lab))
   new_var <- suppressWarnings(set_labels(x = new_var, labels = val_lab))
