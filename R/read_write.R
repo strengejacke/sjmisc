@@ -1,69 +1,50 @@
 #' @title Import SPSS dataset as data frame into R
 #' @name read_spss
 #'
-#' @description Import data from SPSS, including NA's, value and variable labels.
+#' @description Import data from SPSS, including NA's, value and variable
+#'   labels.
 #'
-#' @seealso \itemize{
-#'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'            \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
-#'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'            \item \code{\link{write_spss}}
-#'            }
+#' @seealso \itemize{ \item
+#'   \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data
+#'   initialization} \item
+#'   \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual:
+#'   working with labelled data} \item
+#'   \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual:
+#'   inspecting (SPSS imported) data frames} \item \code{\link{write_spss}} }
 #'
 #' @param path File path to the data file.
-#' @param enc File encoding of the data file. See 'Details'.
-#' @param attach.var.labels Logical, if \code{TRUE}, variable labels will automatically be
-#'          added to each variable as \code{"variable.label"} attribute. Use this
-#'          parameter, if \code{option = "foreign"}, where variable labels are added
-#'          as list-attribute to the imported data frame.
-#'          \emph{Not needed if \code{option = "haven"} (default).}
-#' @param atomic.to.fac Logical, if \code{TRUE}, factor variables imported from
-#'          the dataset (which are imported as \code{\link{atomic}}) will be converted
-#'          to \code{\link{factor}}s.
-#' @param keep.na Logical, if \code{TRUE}, user-defined missing values will be
-#'          left as their original codes. If \code{FALSE} (default), corresponding
-#'          values are converted to \code{NA}.
-#' @param option String, indicating which package will be used to read the SPSS data file.
-#'          By default, \code{option = "haven"}, which means, the \code{read_spss} function
-#'          from the \pkg{haven} package is used. Use \code{option = "foreign"} to
-#'          use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}
-#'          to make this function always use the \pkg{foreign} package \code{\link[foreign]{read.spss}} function.
-#' @return A data frame containing the SPSS data. Retrieve value labels with \code{\link{get_labels}}
-#'   and variable labels with \code{\link{get_label}}.
+#' @param enc File encoding of the data file. See 'Details' in \code{\link{read_spss}}.
+#' @param atomic.to.fac Logical, if \code{TRUE}, categorical variables imported
+#'   from the dataset (which are imported as \code{\link{atomic}}) will be
+#'   converted to factors.
+#' @return A data frame containing the SPSS data. Retrieve value labels with
+#'   \code{\link{get_labels}} and variable labels with \code{\link{get_label}}.
 #'
 #' @note This is a wrapper function for \code{\link[haven]{read_spss}} of the
-#'         \pkg{haven} package and \code{\link[foreign]{read.spss}} of the
-#'         \pkg{foreign} package. This function adds value and variable
-#'         labels as attributes to the imported variables of the data frame.
-#'         \cr \cr
-#'         Most functions of the \pkg{sjPlot} package access value and variable label
-#'         attributes to automatically detect labels in order to set them as axis,
-#'         legend or title labels in plots (\code{sjp.}-functions) respectively as
-#'         column or row headers in table outputs (\code{sjt.}-functions).  See
-#'         \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
-#'         for more details.
-#'         \cr \cr
-#'         When working with labelled data, you can, e.g., use
-#'         \code{\link{get_label}} or \code{\link{get_labels}}
-#'         to get a vector of value and variable labels, which can then be
-#'         used with other functions like \code{\link{barplot}} etc.
-#'         See 'Examples' from \code{\link{get_labels}}.
+#'   \pkg{haven} package. This function adds value and variable labels as
+#'   attributes to the imported variables of the data frame. \cr \cr Most
+#'   functions of the \pkg{sjPlot} package access value and variable label
+#'   attributes to automatically detect labels in order to set them as axis,
+#'   legend or title labels in plots (\code{sjp.}-functions) respectively as
+#'   column or row headers in table outputs (\code{sjt.}-functions).  See
+#'   \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual} for more
+#'   details. \cr \cr When working with labelled data, you can, e.g., use
+#'   \code{\link{get_label}} or \code{\link{get_labels}} to get a vector of
+#'   value and variable labels, which can then be used with other functions like
+#'   \code{\link{barplot}} etc. See 'Examples' from \code{\link{get_labels}}.
 #'
-#' @details In some cases, column names of the imported data set are not properly
-#'            encoded. Use the \code{enc}-argument to specify the character
-#'            encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
-#'            \code{\link{Encoding}}).
+#' @details In some cases, column names of the imported data set are not
+#'   properly encoded. Use the \code{enc}-argument to specify the character
+#'   encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
+#'   \code{\link{Encoding}}). \cr \cr The \code{atomic.to.fac} option only
+#'   converts those variables into factors that are of class \code{atomic} and
+#'   which have value labels after import. Atomic vectors without value labels
+#'   are considered as continuous and not converted to factors.
 #'
 #' @examples
 #' \dontrun{
 #' # import SPSS data set. uses haven's read function
-#' # by default
 #' mydat <- read_spss("my_spss_data.sav")
-#'
-#' # use foreign's read function
-#' mydat <- read_spss("my_spss_data.sav",
-#'                    enc = "UTF-8",
-#'                    option = "foreign")
 #'
 #' # use haven's read function, convert atomic to factor
 #' mydat <- read_spss("my_spss_data.sav", atomic.to.fac = TRUE)
@@ -76,64 +57,55 @@
 #'
 #' @importFrom haven read_spss
 #' @export
-read_spss <- function(path,
-                      enc = NA,
-                      attach.var.labels = FALSE,
-                      atomic.to.fac = FALSE,
-                      keep.na = FALSE,
-                      option = "haven") {
-
-  # check read_spss option
-  if (is.null(option)) {
-    opt <- getOption("read_spss")
-    if (is.null(opt) || opt == "foreign") {
-      option <- "foreign"
-    } else {
-      option <- "haven"
+read_spss <- function(path, enc = NA, atomic.to.fac = FALSE) {
+  # read data file
+  data.spss <- haven::read_spss(file = path, user_na = TRUE)
+  # encoding?
+  if (!is.na(enc) && !is.null(enc)) Encoding(colnames(data.spss)) <- enc
+  # convert NA for all variables
+  for (i in 1:ncol(data.spss)) {
+    # get variable
+    x <- data.spss[[i]]
+    # get NA values
+    na.values <- attr(x, "na_values", exact = TRUE)
+    na.range <- attr(x, "na_range", exact = TRUE)
+    # has any NA values?
+    if (!is.null(na.values)) {
+      # get label attr
+      labels <- attr(x, "labels", exact = TRUE)
+      # get missing label
+      na.val.labels <- names(labels)[labels == na.values]
+      # create tagged NA
+      tna <- haven::tagged_na(as.character(na.values))
+      # names taggend NA
+      names(tna) <- na.val.labels
+      # add/replace value labeld for tagged NA
+      labels <- c(labels[labels != na.values], tna)
+      # set back attribute
+      attr(x, "labels", exact = TRUE) <- labels
     }
+    # do we have NA range?
+    if (!is.null(na.range)) {
+      # check if any of the missing range values actually exists in data
+      min.range.start <- min(na.range[!is.infinite(na.range)], na.rm = T)
+      # we start with range up to highest value
+      if (any(na.range == Inf) && min.range.start <= max(x, na.rm = TRUE)) {
+        x <- set_na(x, unique(x[x >= min.range.start]))
+      }
+      # check if any of the missing range values actually exists in data
+      max.range.end <- max(na.range[!is.infinite(na.range)], na.rm = T)
+      # we start with range up to highest value
+      if (any(na.range == -Inf) && max.range.end >= min(x, na.rm = TRUE)) {
+        x <- set_na(x, unique(x[x <= max.range.end]))
+      }
+    }
+    # finally, copy x back to data frame
+    if (!is.null(na.range) || !is.null(na.values)) data.spss[[i]] <- x
   }
-
-  # check parameter
-  if (!is.null(option) && option != "foreign" && option != "haven") {
-    warning("`option` must be either `foreign` or `haven`. Defaulting to `foreign`.", call. = F)
-    option <- "foreign"
-  }
-
-  # foreign import
-  if (option == "foreign") {
-    # check if suggested package is available
-    if (!requireNamespace("foreign", quietly = TRUE)) {
-      stop("Package 'foreign' needed for this function to work. Please install it.", call. = FALSE)
-    }
-    # import data as data frame
-    data.spss <- suppressWarnings(foreign::read.spss(path,
-                                                     to.data.frame = TRUE,
-                                                     use.value.labels = FALSE,
-                                                     use.missings = !keep.na,
-                                                     reencode = enc))
-    # convert atomic values to factors
-    if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
-    # auto attach labels
-    if (attach.var.labels) {
-      message("Attaching variable labels. Please wait...\n")
-      data.spss <- set_label(data.spss, get_label(data.spss))
-    }
-  } else {
-    # check if suggested package is available
-    if (!requireNamespace("haven", quietly = TRUE)) {
-      stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
-    }
-    # read data file
-    data.spss <- haven::read_spss(path)
-    # encoding?
-    if (!is.na(enc) && !is.null(enc)) Encoding(colnames(data.spss)) <- enc
-    # convert NA
-    if (!keep.na) data.spss <- to_na(data.spss)
-    # convert to sjPlot
-    data.spss <- unlabel(data.spss)
-    # convert atomic values to factors
-    if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
-  }
+  # convert to sjPlot
+  data.spss <- unlabel(data.spss)
+  # convert atomic values to factors
+  if (atomic.to.fac) data.spss <- atomic_to_fac(data.spss, getValLabelAttribute(data.spss))
   # return data frame
   return(data.spss)
 }
@@ -199,13 +171,9 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #'
 #' @importFrom haven read_sas
 #' @export
-read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
-  # check if suggested package is available
-  if (!requireNamespace("haven", quietly = TRUE)) {
-    stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
-  }
+read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
-  data <- haven::read_sas(path, path.cat)
+  data <- haven::read_sas(b7dat = path, b7cat = path.cat, encoding = enc)
   # convert to sjPlot
   data <- unlabel(data)
   # convert atomic values to factors
@@ -234,13 +202,9 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE) {
 #'
 #' @importFrom haven read_dta
 #' @export
-read_stata <- function(path, atomic.to.fac = FALSE) {
-  # check if suggested package is available
-  if (!requireNamespace("haven", quietly = TRUE)) {
-    stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
-  }
+read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
-  data <- haven::read_dta(path)
+  data <- haven::read_dta(file = path, encoding = enc)
   # convert to sjPlot
   data <- unlabel(data)
   # convert atomic values to factors
@@ -273,7 +237,7 @@ read_stata <- function(path, atomic.to.fac = FALSE) {
 #'          value labels will be converted to UTF-8.
 #'
 #' @export
-write_spss <- function(x, path, enc.to.utf8 = TRUE) {
+write_spss <- function(x, path, enc.to.utf8 = FALSE) {
   write_data(x = x, path = path, type = "spss", enc.to.utf8 = enc.to.utf8)
 }
 
@@ -294,7 +258,7 @@ write_spss <- function(x, path, enc.to.utf8 = TRUE) {
 #' @inheritParams write_spss
 #'
 #' @export
-write_stata <- function(x, path, enc.to.utf8 = TRUE) {
+write_stata <- function(x, path, enc.to.utf8 = FALSE) {
   write_data(x = x, path = path, type = "stata", enc.to.utf8 = enc.to.utf8)
 }
 
@@ -302,11 +266,6 @@ write_stata <- function(x, path, enc.to.utf8 = TRUE) {
 #' @importFrom haven write_sav write_dta is.labelled
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, enc.to.utf8) {
-  # check if suggested package is available
-  if (!requireNamespace("haven", quietly = TRUE)) {
-    stop("Package 'haven' needed for this function to work. Please install it.", call. = FALSE)
-  }
-
   # create progress bar
   pb <- utils::txtProgressBar(min = 0,
                               max = ncol(x),
@@ -335,15 +294,13 @@ write_data <- function(x, path, type, enc.to.utf8) {
   }
   # hide pb
   close(pb)
+  # tell user
+  message(sprintf("Writing %s file to '%s'. Please wait...\n", type, path))
   if (type == "spss") {
-    # tell user
-    message(sprintf("Writing %s file to '%s'. Please wait...\n", type, path))
     # write SPSS
-    haven::write_sav(x, path)
+    haven::write_sav(data = x, path = path)
   } else if (type == "stata") {
-    # tell user
-    message(sprintf("Writing %s file to '%s'. Please wait...\n", type, path))
     # write SPSS
-    haven::write_dta(x, path)
+    haven::write_dta(data = x, path = path)
   }
 }

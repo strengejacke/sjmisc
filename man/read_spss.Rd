@@ -4,76 +4,52 @@
 \alias{read_spss}
 \title{Import SPSS dataset as data frame into R}
 \usage{
-read_spss(path, enc = NA, attach.var.labels = FALSE,
-  atomic.to.fac = FALSE, keep.na = FALSE, option = "haven")
+read_spss(path, enc = NA, atomic.to.fac = FALSE)
 }
 \arguments{
 \item{path}{File path to the data file.}
 
-\item{enc}{File encoding of the data file. See 'Details'.}
+\item{enc}{File encoding of the data file. See 'Details' in \code{\link{read_spss}}.}
 
-\item{attach.var.labels}{Logical, if \code{TRUE}, variable labels will automatically be
-added to each variable as \code{"variable.label"} attribute. Use this
-parameter, if \code{option = "foreign"}, where variable labels are added
-as list-attribute to the imported data frame.
-\emph{Not needed if \code{option = "haven"} (default).}}
-
-\item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
-the dataset (which are imported as \code{\link{atomic}}) will be converted
-to \code{\link{factor}}s.}
-
-\item{keep.na}{Logical, if \code{TRUE}, user-defined missing values will be
-left as their original codes. If \code{FALSE} (default), corresponding
-values are converted to \code{NA}.}
-
-\item{option}{String, indicating which package will be used to read the SPSS data file.
-By default, \code{option = "haven"}, which means, the \code{read_spss} function
-from the \pkg{haven} package is used. Use \code{option = "foreign"} to
-use foreign's \code{\link[foreign]{read.spss}} function. Use \code{options(read_spss = "foreign")}
-to make this function always use the \pkg{foreign} package \code{\link[foreign]{read.spss}} function.}
+\item{atomic.to.fac}{Logical, if \code{TRUE}, categorical variables imported
+from the dataset (which are imported as \code{\link{atomic}}) will be
+converted to factors.}
 }
 \value{
-A data frame containing the SPSS data. Retrieve value labels with \code{\link{get_labels}}
-  and variable labels with \code{\link{get_label}}.
+A data frame containing the SPSS data. Retrieve value labels with
+  \code{\link{get_labels}} and variable labels with \code{\link{get_label}}.
 }
 \description{
-Import data from SPSS, including NA's, value and variable labels.
+Import data from SPSS, including NA's, value and variable
+  labels.
 }
 \details{
-In some cases, column names of the imported data set are not properly
-           encoded. Use the \code{enc}-argument to specify the character
-           encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
-           \code{\link{Encoding}}).
+In some cases, column names of the imported data set are not
+  properly encoded. Use the \code{enc}-argument to specify the character
+  encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
+  \code{\link{Encoding}}). \cr \cr The \code{atomic.to.fac} option only
+  converts those variables into factors that are of class \code{atomic} and
+  which have value labels after import. Atomic vectors without value labels
+  are considered as continuous and not converted to factors.
 }
 \note{
 This is a wrapper function for \code{\link[haven]{read_spss}} of the
-        \pkg{haven} package and \code{\link[foreign]{read.spss}} of the
-        \pkg{foreign} package. This function adds value and variable
-        labels as attributes to the imported variables of the data frame.
-        \cr \cr
-        Most functions of the \pkg{sjPlot} package access value and variable label
-        attributes to automatically detect labels in order to set them as axis,
-        legend or title labels in plots (\code{sjp.}-functions) respectively as
-        column or row headers in table outputs (\code{sjt.}-functions).  See
-        \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual}
-        for more details.
-        \cr \cr
-        When working with labelled data, you can, e.g., use
-        \code{\link{get_label}} or \code{\link{get_labels}}
-        to get a vector of value and variable labels, which can then be
-        used with other functions like \code{\link{barplot}} etc.
-        See 'Examples' from \code{\link{get_labels}}.
+  \pkg{haven} package. This function adds value and variable labels as
+  attributes to the imported variables of the data frame. \cr \cr Most
+  functions of the \pkg{sjPlot} package access value and variable label
+  attributes to automatically detect labels in order to set them as axis,
+  legend or title labels in plots (\code{sjp.}-functions) respectively as
+  column or row headers in table outputs (\code{sjt.}-functions).  See
+  \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual} for more
+  details. \cr \cr When working with labelled data, you can, e.g., use
+  \code{\link{get_label}} or \code{\link{get_labels}} to get a vector of
+  value and variable labels, which can then be used with other functions like
+  \code{\link{barplot}} etc. See 'Examples' from \code{\link{get_labels}}.
 }
 \examples{
 \dontrun{
 # import SPSS data set. uses haven's read function
-# by default
 mydat <- read_spss("my_spss_data.sav")
-
-# use foreign's read function
-mydat <- read_spss("my_spss_data.sav",
-                   enc = "UTF-8",
-                   option = "foreign")
 
 # use haven's read function, convert atomic to factor
 mydat <- read_spss("my_spss_data.sav", atomic.to.fac = TRUE)
@@ -86,11 +62,12 @@ mydat.val <- get_labels(mydat)}
 
 }
 \seealso{
-\itemize{
-           \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-           \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
-           \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-           \item \code{\link{write_spss}}
-           }
+\itemize{ \item
+  \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data
+  initialization} \item
+  \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual:
+  working with labelled data} \item
+  \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual:
+  inspecting (SPSS imported) data frames} \item \code{\link{write_spss}} }
 }
 

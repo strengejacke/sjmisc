@@ -4,14 +4,16 @@
 \alias{read_stata}
 \title{Import STATA dataset as data frame into R}
 \usage{
-read_stata(path, atomic.to.fac = FALSE)
+read_stata(path, atomic.to.fac = FALSE, enc = NULL)
 }
 \arguments{
 \item{path}{File path to the data file.}
 
-\item{atomic.to.fac}{Logical, if \code{TRUE}, factor variables imported from
-the dataset (which are imported as \code{\link{atomic}}) will be converted
-to \code{\link{factor}}s.}
+\item{atomic.to.fac}{Logical, if \code{TRUE}, categorical variables imported
+from the dataset (which are imported as \code{\link{atomic}}) will be
+converted to factors.}
+
+\item{enc}{File encoding of the data file. See 'Details' in \code{\link{read_spss}}.}
 }
 \value{
 A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}

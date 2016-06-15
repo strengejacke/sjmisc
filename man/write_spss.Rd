@@ -4,7 +4,7 @@
 \alias{write_spss}
 \title{Write content of data frame to SPSS sav-file}
 \usage{
-write_spss(x, path, enc.to.utf8 = TRUE)
+write_spss(x, path, enc.to.utf8 = FALSE)
 }
 \arguments{
 \item{x}{\code{data.frame} that should be saved as file.}

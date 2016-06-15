@@ -4,7 +4,7 @@
 \alias{write_stata}
 \title{Write content of data frame to STATA dta-file}
 \usage{
-write_stata(x, path, enc.to.utf8 = TRUE)
+write_stata(x, path, enc.to.utf8 = FALSE)
 }
 \arguments{
 \item{x}{\code{data.frame} that should be saved as file.}

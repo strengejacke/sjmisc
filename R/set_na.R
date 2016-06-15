@@ -110,7 +110,7 @@ set_na_helper <- function(x, value) {
     # stop if user wants to assign a value to NA that is
     # already assigned as NA
     if (any(nat %in% as.character(value)))
-      stop("Can't set NA values. At least of `value` is already defined as NA.", call. = F)
+      stop("Can't set NA values. At least one element of `value` is already defined as NA.", call. = F)
   }
 
   # iterate all NAs
