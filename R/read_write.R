@@ -73,16 +73,27 @@ read_spss <- function(path, enc = NA, atomic.to.fac = FALSE) {
     if (!is.null(na.values)) {
       # get label attr
       labels <- attr(x, "labels", exact = TRUE)
-      # get missing label
-      na.val.labels <- names(labels)[labels == na.values]
       # create tagged NA
       tna <- haven::tagged_na(as.character(na.values))
-      # names taggend NA
-      names(tna) <- na.val.labels
-      # add/replace value labeld for tagged NA
-      labels <- c(labels[labels != na.values], tna)
+      # do we have any labels?
+      if (!is.null(labels)) {
+        # get missing labels
+        na.val.labels <- names(labels)[labels %in% na.values]
+        # do we have any labels for missings? then name tagged
+        # NA with value labels, else use values as labels
+        if (!is.null(na.val.labels))
+          names(tna) <- na.val.labels
+        else
+          names(tna) <- na.values
+        # add/replace value labeld for tagged NA
+        labels <- c(labels[!labels %in% na.values], tna)
+      } else {
+        # use values as names, if we don't have value labels
+        names(tna) <- na.values
+        labels <- tna
+      }
       # set back attribute
-      attr(x, "labels", exact = TRUE) <- labels
+      attr(x, "labels") <- labels
     }
     # do we have NA range?
     if (!is.null(na.range)) {
