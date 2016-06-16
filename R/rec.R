@@ -252,12 +252,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
     # save variable labels before in case we just want
     # to reverse the order
     if (is.null(val_lab) && recodes == "rev") {
-      val_lab <- rev(get_labels(
-        x,
-        attr.only = TRUE,
-        include.values = NULL,
-        include.non.labelled = TRUE
-      ))
+      val_lab <- rev(get_labels(x, attr.only = TRUE, include.values = NULL,
+                                include.non.labelled = TRUE, drop.na = TRUE))
     }
 
     if (is_num_fac(x)) {
@@ -285,12 +281,8 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
     recodes <- paste(sprintf("%i=%i", ov, nv), collapse = ";")
     # when we simply reverse values, we can keep value labels
     if (is.null(val_lab)) {
-      val_lab <- rev(get_labels(
-        x,
-        attr.only = TRUE,
-        include.values = NULL,
-        include.non.labelled = TRUE
-      ))
+      val_lab <- rev(get_labels(x, attr.only = TRUE, include.values = NULL,
+                                include.non.labelled = TRUE, drop.na = TRUE))
     }
   }
 
