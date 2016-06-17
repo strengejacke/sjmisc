@@ -48,12 +48,7 @@ See 'Note' in \code{\link{get_labels}}
 \examples{
 # sample data set, imported from SPSS.
 data(efc)
-
-\dontrun{
-library(sjPlot)
-sjt.frq(efc$e42dep)
-sjt.frq(data.frame(efc$e42dep, efc$e16sex))}
-
+frq(efc$e42dep)
 
 # manually set value and variable labels
 dummy <- sample(1:4, 40, replace = TRUE)

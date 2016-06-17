@@ -23,11 +23,11 @@
 #' data(efc)
 #' x <- to_factor(efc$e42dep)
 #' str(x)
-#' table(x)
+#' frq(x)
 #'
 #' ref_lvl(x) <- 3
 #' str(x)
-#' table(x)
+#' frq(x)
 #'
 #' @export
 ref_lvl <- function(x, value = NULL) {

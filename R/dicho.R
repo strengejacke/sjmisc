@@ -48,12 +48,9 @@
 #' dummy <- list(efc$c12hour, efc$e17age, efc$c160age)
 #' dicho(dummy)
 #'
-#' # dichotomize and set labels. requires package
-#' # sjPlot to test
-#' \dontrun{
-#' library(sjPlot)
-#' sjp.frq(dicho(efc$e42dep, var.label = "Dependency (dichotomized)",
-#'               val.labels = c("lower", "higher")))}
+#' # dichotomize and set labels
+#' frq(dicho(efc$e42dep, var.label = "Dependency (dichotomized)",
+#'           val.labels = c("lower", "higher")))
 #'
 #' @export
 dicho <- function(x,

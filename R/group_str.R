@@ -37,24 +37,19 @@
 #' # count for each groups
 #' table(newstring)
 #'
-#' \dontrun{
-#' library(sjPlot)
 #' # print table to compare original and grouped string
-#' sjt.frq(data.frame(oldstring, newstring),
-#'         removeStringVectors = FALSE,
-#'         autoGroupStrings = FALSE)
+#' frq(oldstring)
+#' frq(newstring)
 #'
 #' # larger groups
 #' newstring <- group_str(oldstring, maxdist = 3)
-#' sjt.frq(data.frame(oldstring, newstring),
-#'         removeStringVectors = FALSE,
-#'         autoGroupStrings = FALSE)
+#' frq(oldstring)
+#' frq(newstring)
 #'
 #' # be more strict with matching pairs
 #' newstring <- group_str(oldstring, maxdist = 3, strict = TRUE)
-#' sjt.frq(data.frame(oldstring, newstring),
-#'         removeStringVectors = FALSE,
-#'         autoGroupStrings = FALSE)}
+#' frq(oldstring)
+#' frq(newstring)
 #'
 #' @importFrom utils txtProgressBar
 #' @importFrom stringdist stringdistmatrix

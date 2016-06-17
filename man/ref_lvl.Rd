@@ -33,11 +33,11 @@ Unlike \code{\link[stats]{relevel}}, this function a) only accepts
 data(efc)
 x <- to_factor(efc$e42dep)
 str(x)
-table(x)
+frq(x)
 
 ref_lvl(x) <- 3
 str(x)
-table(x)
+frq(x)
 
 }
 \seealso{

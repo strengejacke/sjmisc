@@ -42,18 +42,15 @@ This function is intended for use with vectors that have value and variable
        with \code{\link{set_labels}} and \code{\link{set_label}}.
 }
 \examples{
-\dontrun{
 data(efc)
-library(sjPlot)
 # normal factor conversion, loses value attributes
-efc$e42dep <- as.factor(efc$e42dep)
-sjt.frq(efc$e42dep)
+x <- as.factor(efc$e42dep)
+frq(x)
 
 # factor conversion, which keeps value attributes
-efc$e42dep <- to_factor(efc$e42dep)
-sjt.frq(efc$e42dep)}
+x <- to_factor(efc$e42dep)
+frq(x)
 
-data(efc)
 # create parially labelled vector
 x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency",
                               `9` = "missing value"))
@@ -65,7 +62,6 @@ get_labels(to_factor(x), include.values = "p")
 # also add labels to non-labelled values
 to_factor(x, add.non.labelled = TRUE)
 get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
-
 
 # Convert to factor, using different reference level
 x <- to_factor(efc$e42dep)
