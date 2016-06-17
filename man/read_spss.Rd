@@ -4,7 +4,7 @@
 \alias{read_spss}
 \title{Import SPSS dataset as data frame into R}
 \usage{
-read_spss(path, enc = NA, atomic.to.fac = FALSE)
+read_spss(path, enc = NA, atomic.to.fac = FALSE, tag.na = TRUE)
 }
 \arguments{
 \item{path}{File path to the data file.}
@@ -14,6 +14,10 @@ read_spss(path, enc = NA, atomic.to.fac = FALSE)
 \item{atomic.to.fac}{Logical, if \code{TRUE}, categorical variables imported
 from the dataset (which are imported as \code{\link{atomic}}) will be
 converted to factors.}
+
+\item{tag.na}{Logical, if \code{TRUE} (default), missing values are imported
+as \code{\link[haven]{tagged_na}} values; else, missing values are
+converted to regular \code{NA}.}
 }
 \value{
 A data frame containing the SPSS data. Retrieve value labels with

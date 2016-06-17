@@ -17,6 +17,9 @@
 #' @param atomic.to.fac Logical, if \code{TRUE}, categorical variables imported
 #'   from the dataset (which are imported as \code{\link{atomic}}) will be
 #'   converted to factors.
+#' @param tag.na Logical, if \code{TRUE} (default), missing values are imported
+#'          as \code{\link[haven]{tagged_na}} values; else, missing values are
+#'          converted to regular \code{NA}.
 #' @return A data frame containing the SPSS data. Retrieve value labels with
 #'   \code{\link{get_labels}} and variable labels with \code{\link{get_label}}.
 #'
@@ -57,9 +60,9 @@
 #'
 #' @importFrom haven read_spss
 #' @export
-read_spss <- function(path, enc = NA, atomic.to.fac = FALSE) {
+read_spss <- function(path, enc = NA, atomic.to.fac = FALSE, tag.na = TRUE) {
   # read data file
-  data.spss <- haven::read_spss(file = path, user_na = TRUE)
+  data.spss <- haven::read_spss(file = path, user_na = tag.na)
   # encoding?
   if (!is.na(enc) && !is.null(enc)) Encoding(colnames(data.spss)) <- enc
   # convert NA for all variables
@@ -76,8 +79,8 @@ read_spss <- function(path, enc = NA, atomic.to.fac = FALSE) {
       # create tagged NA
       tna <- haven::tagged_na(as.character(na.values))
       # replace values with tagged NA
-      for (j in i:length(na.values)) {
-        x[x == na.values[i]] <- tna[i]
+      for (j in 1:length(na.values)) {
+        x[x == na.values[j]] <- tna[j]
       }
       # do we have any labels?
       if (!is.null(labels)) {
@@ -103,15 +106,18 @@ read_spss <- function(path, enc = NA, atomic.to.fac = FALSE) {
     if (!is.null(na.range)) {
       # check if any of the missing range values actually exists in data
       min.range.start <- min(na.range[!is.infinite(na.range)], na.rm = T)
-      # we start with range up to highest value
-      if (any(na.range == Inf) && min.range.start <= max(x, na.rm = TRUE)) {
-        x <- set_na(x, unique(x[x >= min.range.start]))
-      }
-      # check if any of the missing range values actually exists in data
       max.range.end <- max(na.range[!is.infinite(na.range)], na.rm = T)
       # we start with range up to highest value
+      if (any(na.range == Inf) && min.range.start <= max(x, na.rm = TRUE)) {
+        x <- set_na(x, sort(stats::na.omit(unique(x[x >= min.range.start]))))
+      }
+      # we start with range up to highest value
       if (any(na.range == -Inf) && max.range.end >= min(x, na.rm = TRUE)) {
-        x <- set_na(x, unique(x[x <= max.range.end]))
+        x <- set_na(x, sort(stats::na.omit(unique(x[x <= max.range.end]))))
+      }
+      # here we have no infinite value range
+      if (!any(is.infinite(na.range))) {
+        x <- set_na(x, sort(stats::na.omit(unique(c(na.range, x[x >= min.range.start & x <= max.range.end])))))
       }
     }
     # finally, copy x back to data frame
