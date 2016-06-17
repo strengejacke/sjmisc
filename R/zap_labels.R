@@ -116,6 +116,50 @@ zap_unlabelled <- function(x) {
   }
 }
 
+
+#' @title Convert tagged NA values into regular NA
+#' @name zap_na_tags
+#'
+#' @description Replaces all \code{\link[haven]{tagged_na}} values into
+#'                regular \code{NA}.
+#'
+#' @param x \code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
+#'            of labelled vectors with \code{\link[haven]{tagged_na}} values.
+#' @return \code{x}, where all \code{\link[haven]{tagged_na}} values are converted to \code{NA}.
+#'
+#' @seealso \code{\link{set_na}} and \code{\link{get_na}};
+#'          \code{\link{drop_labels}} to drop labels from zero-count values.
+#'
+#' @examples
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current NA values
+#' x
+#' get_na(x)
+#' zap_na_tags(x)
+#' get_na(zap_na_tags(x))
+#'
+#' @importFrom stats na.omit
+#' @export
+zap_na_tags <- function(x) {
+  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+    # get length of data frame or list, i.e.
+    # determine number of variables
+    if (is.data.frame(x) || is.matrix(x))
+      nvars <- ncol(x)
+    else
+      nvars <- length(x)
+    # na all
+    for (i in 1:nvars) x[[i]] <- zap_na_tags_helper(x[[i]])
+    return(x)
+  } else {
+    return(zap_na_tags_helper(x))
+  }
+}
+
+
 zap_labels_helper <- function(x) {
   x <- set_na(x, get_values(x, drop.na = T))
   # auto-detect variable label attribute
@@ -130,5 +174,13 @@ zap_unlabelled_helper <- function(x) {
   vals <- get_values(x)
   x <- set_na(x, stats::na.omit(unique(x)[!unique(x) %in% vals]))
   if (haven::is.labelled(x)) class(x) <- NULL
+  return(x)
+}
+
+zap_na_tags_helper <- function(x) {
+  # convert all NA, including tagged NA, into regular NA
+  x[is.na(x)] <- NA
+  # "remove" labels from tagged NA values
+  set_labels(x) <- get_labels(x, attr.only = T, include.values = "n", drop.na = T)
   return(x)
 }

@@ -8,6 +8,7 @@
 
 ## Changes to functions
 
+* `zap_na_tags` to turn tagged `NA` values into regular `NA` values.
 * `str_contains` gets a `switch` argument to switch the role of `x` and `pattern`.
 
 ## New functions
