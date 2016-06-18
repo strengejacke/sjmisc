@@ -27,4 +27,5 @@ Imports:
     stringdist (>= 0.9.2),
     tidyr
 URL: https://github.com/sjPlot/sjmisc
+BugReports: https://github.com/sjPlot/sjmisc/issues
 RoxygenNote: 5.0.1
