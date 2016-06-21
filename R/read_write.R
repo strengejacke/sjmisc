@@ -67,63 +67,78 @@ read_spss <- function(path, enc = NA, atomic.to.fac = FALSE, tag.na = TRUE) {
   if (!is.na(enc) && !is.null(enc)) Encoding(colnames(data.spss)) <- enc
   # prepare tagged NA?
   if (tag.na) {
+    # remember all-NA values
+    all_missings <- c()
     # convert NA for all variables
     for (i in 1:ncol(data.spss)) {
       # get variable
       x <- data.spss[[i]]
-      # get NA values
-      na.values <- attr(x, "na_values", exact = TRUE)
-      na.range <- attr(x, "na_range", exact = TRUE)
-      # has any NA values?
-      if (!is.null(na.values)) {
-        # get label attr
-        labels <- attr(x, "labels", exact = TRUE)
-        # create tagged NA
-        tna <- haven::tagged_na(as.character(na.values))
-        # replace values with tagged NA
-        for (j in 1:length(na.values)) {
-          x[x == na.values[j]] <- tna[j]
-        }
-        # do we have any labels?
-        if (!is.null(labels)) {
-          # get missing labels
-          na.val.labels <- names(labels)[labels %in% na.values]
-          # do we have any labels for missings? then name tagged
-          # NA with value labels, else use values as labels
-          if (!is.null(na.val.labels))
-            names(tna) <- na.val.labels
-          else
+      # has variable ONLY missings?
+      if (all(is.na(x))) {
+        all_missings <- c(all_missings, i)
+      } else {
+        # get NA values
+        na.values <- attr(x, "na_values", exact = TRUE)
+        na.range <- attr(x, "na_range", exact = TRUE)
+        # has any NA values?
+        if (!is.null(na.values)) {
+          # get label attr
+          labels <- attr(x, "labels", exact = TRUE)
+          # create tagged NA
+          tna <- haven::tagged_na(as.character(na.values))
+          # replace values with tagged NA
+          for (j in 1:length(na.values)) {
+            x[x == na.values[j]] <- tna[j]
+          }
+          # do we have any labels?
+          if (!is.null(labels)) {
+            # get missing labels
+            na.val.labels <- names(labels)[labels %in% na.values]
+            # do we have any labels for missings? then name tagged
+            # NA with value labels, else use values as labels
+            if (!is_empty(na.val.labels))
+              names(tna) <- na.val.labels
+            else
+              names(tna) <- na.values
+            # add/replace value labeld for tagged NA
+            labels <- c(labels[!labels %in% na.values], tna)
+          } else {
+            # use values as names, if we don't have value labels
             names(tna) <- na.values
-          # add/replace value labeld for tagged NA
-          labels <- c(labels[!labels %in% na.values], tna)
-        } else {
-          # use values as names, if we don't have value labels
-          names(tna) <- na.values
-          labels <- tna
+            labels <- tna
+          }
+          # set back attribute
+          attr(x, "labels") <- labels
         }
-        # set back attribute
-        attr(x, "labels") <- labels
+        # do we have NA range?
+        if (!is.null(na.range)) {
+          # check if any of the missing range values actually exists in data
+          min.range.start <- min(na.range[!is.infinite(na.range)], na.rm = T)
+          max.range.end <- max(na.range[!is.infinite(na.range)], na.rm = T)
+          # we start with range up to highest value
+          if (any(na.range == Inf) && min.range.start <= max(x, na.rm = TRUE)) {
+            x <- set_na(x, sort(stats::na.omit(unique(x[x >= min.range.start]))))
+          }
+          # we start with range up to highest value
+          if (any(na.range == -Inf) && max.range.end >= min(x, na.rm = TRUE)) {
+            x <- set_na(x, sort(stats::na.omit(unique(x[x <= max.range.end]))))
+          }
+          # here we have no infinite value range
+          if (!any(is.infinite(na.range))) {
+            x <- set_na(x, sort(stats::na.omit(unique(c(
+              na.range[!is.infinite(na.range)], x[x >= min.range.start & x <= max.range.end]
+            )))))
+          }
+        }
+        # finally, copy x back to data frame
+        if (!is.null(na.range) || !is.null(na.values)) data.spss[[i]] <- x
       }
-      # do we have NA range?
-      if (!is.null(na.range)) {
-        # check if any of the missing range values actually exists in data
-        min.range.start <- min(na.range[!is.infinite(na.range)], na.rm = T)
-        max.range.end <- max(na.range[!is.infinite(na.range)], na.rm = T)
-        # we start with range up to highest value
-        if (any(na.range == Inf) && min.range.start <= max(x, na.rm = TRUE)) {
-          x <- set_na(x, sort(stats::na.omit(unique(x[x >= min.range.start]))))
-        }
-        # we start with range up to highest value
-        if (any(na.range == -Inf) && max.range.end >= min(x, na.rm = TRUE)) {
-          x <- set_na(x, sort(stats::na.omit(unique(x[x <= max.range.end]))))
-        }
-        # here we have no infinite value range
-        if (!any(is.infinite(na.range))) {
-          x <- set_na(x, sort(stats::na.omit(unique(c(na.range, x[x >= min.range.start & x <= max.range.end])))))
-        }
-      }
-      # finally, copy x back to data frame
-      if (!is.null(na.range) || !is.null(na.values)) data.spss[[i]] <- x
+    }
+    # do we have any "all-missing-variables"?
+    if (!is_empty(all_missings)) {
+      message(sprintf("Following %i variables have only missing values:", length(all_missings)))
+      cat(paste(all_missings, collapse = ", "))
+      cat("\n")
     }
   }
   # convert to sjPlot
