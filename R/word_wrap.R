@@ -27,6 +27,8 @@ word_wrap <- function(labels, wrap, linesep = NULL) {
   if (is.null(labels) || length(labels) == 0) return(NULL)
   # infinite wrap? then return labels
   if (is.infinite(wrap)) return(labels)
+  # coerce to character, if factor
+  if (!is.character(labels)) labels <- as.character(labels)
   # default line separator is \n
   if (is.null(linesep)) {
     linesep <- '\\1\n'
