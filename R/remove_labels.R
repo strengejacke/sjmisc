@@ -48,7 +48,7 @@ remove_labels <- function(x, value) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- remove_labels_helper(x[[i]], value)
+    for (i in seq_len(nvars)) x[[i]] <- remove_labels_helper(x[[i]], value)
     return(x)
   } else {
     return(remove_labels_helper(x, value))

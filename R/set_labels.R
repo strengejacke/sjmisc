@@ -37,10 +37,10 @@
 #'          elements than unique values of \code{x}, additional values not covered
 #'          by \code{labels} will be added as label as well. See 'Examples'.
 #'          This parameter will be ignored, if \code{labels} is a named vector.
-#' @param drop.na Logical, whether labels of tagged NA values (see \code{\link[haven]{tagged_na}})
-#'          should be included in the return value or not. By default, labelled
-#'          (tagged) missing values are not returned. See \code{\link{get_na}}
-#'          for more details on tagged NA values.
+#' @param drop.na Logical, whether existing value labels of tagged NA values
+#'          (see \code{\link[haven]{tagged_na}}) should be removed (\code{drop.na = TRUE},
+#'          the default) or preserved (\code{drop.na = FALSE}).
+#'          See \code{\link{get_na}} for more details on tagged NA values.
 #' @return \code{x} with value label attributes; or with removed label-attributes if
 #'            \code{labels = ""}.
 #'
@@ -163,7 +163,7 @@ set_labels_helper <- function(x, labels, force.labels, force.values, drop.na) {
       nvars <- ncol(x)
     else
       nvars <- length(x)
-    for (i in 1:nvars) {
+    for (i in seq_len(nvars)) {
       # list of labels makes sense if multiple variable
       # should be labelled with different labels
       if (is.list(labels)) {

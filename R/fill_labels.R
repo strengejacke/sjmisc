@@ -36,7 +36,7 @@ fill_labels <- function(x) {
     else
       nvars <- length(x)
     # na all
-    for (i in 1:nvars) x[[i]] <- fill_labels_helper(x[[i]])
+    for (i in seq_len(nvars)) x[[i]] <- fill_labels_helper(x[[i]])
     return(x)
   } else {
     return(fill_labels_helper(x))

@@ -86,7 +86,7 @@ replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {
     else
       nvars <- length(x)
     # replace NA
-    for (i in 1:nvars) x[[i]] <- replace_na_helper(x[[i]], value, na.label, tagged.na)
+    for (i in seq_len(nvars)) x[[i]] <- replace_na_helper(x[[i]], value, na.label, tagged.na)
     return(x)
   } else {
     return(replace_na_helper(x, value, na.label, tagged.na))

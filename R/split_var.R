@@ -68,20 +68,12 @@ split_var <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.labe
     else
       nvars <- length(x)
     # na all
-    for (i in 1:nvars) x[[i]] <- split_var_helper(x[[i]],
-                                                  groupcount,
-                                                  as.num,
-                                                  val.labels,
-                                                  var.label,
-                                                  inclusive)
+    for (i in seq_len(nvars)) x[[i]] <- split_var_helper(x[[i]], groupcount, as.num,
+                                                         val.labels, var.label,
+                                                         inclusive)
     return(x)
   } else {
-    return(split_var_helper(x,
-                            groupcount,
-                            as.num,
-                            val.labels,
-                            var.label,
-                            inclusive))
+    return(split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive))
   }
 }
 

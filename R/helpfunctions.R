@@ -51,7 +51,7 @@ getValLabelAttribute <- function(x) {
   # check if x is data frame. if yes, just retrieve one "example" variable
   if (is.data.frame(x)) {
     # find first variable with labels or value.labels attribute
-    for (i in 1:ncol(x)) {
+    for (i in seq_len(ncol(x))) {
       # has any attribute?
       if (!is.null(attr(x[[i]], "labels", exact = T))) {
         attr.string <- "labels"

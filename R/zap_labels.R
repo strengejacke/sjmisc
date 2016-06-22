@@ -50,7 +50,7 @@ zap_labels <- function(x) {
     else
       nvars <- length(x)
     # na all
-    for (i in 1:nvars) x[[i]] <- zap_labels_helper(x[[i]])
+    for (i in seq_len(nvars)) x[[i]] <- zap_labels_helper(x[[i]])
     return(x)
   } else {
     return(zap_labels_helper(x))
@@ -109,7 +109,7 @@ zap_unlabelled <- function(x) {
     else
       nvars <- length(x)
     # na all
-    for (i in 1:nvars) x[[i]] <- zap_unlabelled_helper(x[[i]])
+    for (i in seq_len(nvars)) x[[i]] <- zap_unlabelled_helper(x[[i]])
     return(x)
   } else {
     return(zap_unlabelled_helper(x))
@@ -152,7 +152,7 @@ zap_na_tags <- function(x) {
     else
       nvars <- length(x)
     # na all
-    for (i in 1:nvars) x[[i]] <- zap_na_tags_helper(x[[i]])
+    for (i in seq_len(nvars)) x[[i]] <- zap_na_tags_helper(x[[i]])
     return(x)
   } else {
     return(zap_na_tags_helper(x))

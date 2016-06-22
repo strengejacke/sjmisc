@@ -35,10 +35,10 @@ elements than unique values of \code{x}, additional values not covered
 by \code{labels} will be added as label as well. See 'Examples'.
 This parameter will be ignored, if \code{labels} is a named vector.}
 
-\item{drop.na}{Logical, whether labels of tagged NA values (see \code{\link[haven]{tagged_na}})
-should be included in the return value or not. By default, labelled
-(tagged) missing values are not returned. See \code{\link{get_na}}
-for more details on tagged NA values.}
+\item{drop.na}{Logical, whether existing value labels of tagged NA values
+(see \code{\link[haven]{tagged_na}}) should be removed (\code{drop.na = TRUE},
+the default) or preserved (\code{drop.na = FALSE}).
+See \code{\link{get_na}} for more details on tagged NA values.}
 
 \item{value}{See \code{labels}.}
 }

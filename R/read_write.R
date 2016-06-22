@@ -70,7 +70,7 @@ read_spss <- function(path, enc = NA, atomic.to.fac = FALSE, tag.na = TRUE) {
     # remember all-NA values
     all_missings <- c()
     # convert NA for all variables
-    for (i in 1:ncol(data.spss)) {
+    for (i in seq_len(ncol(data.spss))) {
       # get variable
       x <- data.spss[[i]]
       # has variable ONLY missings?

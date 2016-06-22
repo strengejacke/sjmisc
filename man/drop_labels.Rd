@@ -4,11 +4,16 @@
 \alias{drop_labels}
 \title{Drop labels of zero-count values}
 \usage{
-drop_labels(x)
+drop_labels(x, drop.na = TRUE)
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables
 with partially added value labels (see \code{\link[haven]{labelled}}).}
+
+\item{drop.na}{Logical, whether existing value labels of tagged NA values
+(see \code{\link[haven]{tagged_na}}) should be removed (\code{drop.na = TRUE},
+the default) or preserved (\code{drop.na = FALSE}).
+See \code{\link{get_na}} for more details on tagged NA values.}
 }
 \value{
 \code{x}, where value labels for non-existing values are removed.

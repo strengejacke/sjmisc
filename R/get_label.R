@@ -73,7 +73,7 @@ get_label <- function(x, def.value = NULL) {
       # return value
       all.labels <- c()
       # iterate df
-      for (i in 1:ncol(x)) {
+      for (i in seq_len(x)) {
         # get label
         label <- attr(x[[i]], attr.string, exact = T)
         # any label?

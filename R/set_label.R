@@ -105,7 +105,7 @@ set_label <- function(x, lab, attr.string = NULL) {
         if (is.data.frame(x)) cnames <- colnames(x)
 
         # iterate all columns / list elements
-        for (i in 1:nvars) {
+        for (i in seq_len(nvars)) {
           if (is_empty(lab[i])) {
             # empty label value means, remove
             # the label attribute

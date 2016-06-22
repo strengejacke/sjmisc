@@ -6,6 +6,7 @@
 #'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables
 #'          with partially added value labels (see \code{\link[haven]{labelled}}).
+#' @inheritParams set_labels
 #'
 #' @return \code{x}, where value labels for non-existing values are removed.
 #'
@@ -32,7 +33,7 @@
 #' frq(drop_labels(x))
 #'
 #' @export
-drop_labels <- function(x) {
+drop_labels <- function(x, drop.na = TRUE) {
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
@@ -41,20 +42,21 @@ drop_labels <- function(x) {
     else
       nvars <- length(x)
     # na all
-    for (i in 1:nvars) x[[i]] <- drop_labels_helper(x[[i]])
+    for (i in seq_len(nvars)) x[[i]] <- drop_labels_helper(x[[i]], drop.na)
     return(x)
   } else {
-    return(drop_labels_helper(x))
+    return(drop_labels_helper(x, drop.na))
   }
 }
 
-drop_labels_helper <- function(x) {
+drop_labels_helper <- function(x, drop.na) {
   # get labels
   tidy.labels <- get_labels(x, attr.only = T, include.values = "n", include.non.labelled = F, drop.na = T)
+  # return x, if no attribute
+  if (is.null(tidy.labels)) return(x)
   # remove labels with no values in data
   tidy.labels <- tidy.labels[get_values(x) %in% names(table(x))]
-  # get NA labels
-  current.na <- get_na(x)
   # set labels
-  set_labels(x, labels = c(tidy.labels, current.na))
+  set_labels(x, drop.na = drop.na) <- tidy.labels
+  return(x)
 }

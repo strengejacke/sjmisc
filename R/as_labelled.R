@@ -54,7 +54,7 @@ as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- as_labelled_helper(x[[i]], add.labels, add.class)
+    for (i in seq_len(nvars)) x[[i]] <- as_labelled_helper(x[[i]], add.labels, add.class)
     return(x)
   } else {
     return(as_labelled_helper(x, add.labels, add.class))

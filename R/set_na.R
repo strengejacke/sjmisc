@@ -82,7 +82,7 @@ set_na <- function(x, value) {
     else
       nvars <- length(x)
     # dichotomize all
-    for (i in 1:nvars) x[[i]] <- set_na_helper(x[[i]], value)
+    for (i in seq_len(nvars)) x[[i]] <- set_na_helper(x[[i]], value)
     return(x)
   } else {
     return(set_na_helper(x, value))
