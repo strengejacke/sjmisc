@@ -22,7 +22,7 @@
 #' @export
 remove_all_labels <- function(x) {
   if (is.data.frame(x)) {
-    for (i in seq_len(x)) x[[i]] <- remove_all_labels_helper(x[[i]])
+    for (i in seq_len(ncol(x))) x[[i]] <- remove_all_labels_helper(x[[i]])
   } else {
     x <- remove_all_labels_helper(x)
   }
