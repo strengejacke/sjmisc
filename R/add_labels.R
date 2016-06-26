@@ -17,7 +17,7 @@
 #'
 #' @param x Variable (vector), \code{list} of variables or a \code{data.frame}
 #'          where value label attributes should be added.
-#' @param value Named character vector of labels that will be added to \code{x} as
+#' @param value Named (numeric) vector of labels that will be added to \code{x} as
 #'          label attribute. If \code{x} is a data frame, \code{value} may also
 #'          be a \code{\link{list}} of named character vectors. If \code{value}
 #'          is a list, it must have the same length as number of columns of \code{x}.
@@ -61,6 +61,10 @@
 #'
 #' @export
 add_labels <- function(x, value) {
+  # check for valid value. value must be a named vector
+  if (is.null(value)) stop("`value` is NULL.", call. = F)
+  if (is.null(names(value))) stop("`value` must be a named vector.", call. = F)
+
   if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables

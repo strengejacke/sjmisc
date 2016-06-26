@@ -19,7 +19,7 @@ replace_labels(x) <- value
 \item{x}{Variable (vector), \code{list} of variables or a \code{data.frame}
 where value label attributes should be added.}
 
-\item{value}{Named character vector of labels that will be added to \code{x} as
+\item{value}{Named (numeric) vector of labels that will be added to \code{x} as
 label attribute. If \code{x} is a data frame, \code{value} may also
 be a \code{\link{list}} of named character vectors. If \code{value}
 is a list, it must have the same length as number of columns of \code{x}.
