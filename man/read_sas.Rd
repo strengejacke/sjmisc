@@ -15,7 +15,9 @@ read_sas(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL)
 from the dataset (which are imported as \code{\link{atomic}}) will be
 converted to factors.}
 
-\item{enc}{File encoding of the data file. See 'Details' in \code{\link{read_spss}}.}
+\item{enc}{The character encoding used for the file. This defaults to the encoding
+specified in the file, or UTF-8. Use this argument to override the default
+encoding stored in the file.}
 }
 \value{
 A data frame containing the SAS data. Retrieve value labels with \code{\link{get_labels}}

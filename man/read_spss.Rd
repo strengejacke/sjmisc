@@ -4,12 +4,10 @@
 \alias{read_spss}
 \title{Import SPSS dataset as data frame into R}
 \usage{
-read_spss(path, enc = NA, atomic.to.fac = FALSE, tag.na = TRUE)
+read_spss(path, atomic.to.fac = FALSE, tag.na = TRUE)
 }
 \arguments{
 \item{path}{File path to the data file.}
-
-\item{enc}{File encoding of the data file. See 'Details' in \code{\link{read_spss}}.}
 
 \item{atomic.to.fac}{Logical, if \code{TRUE}, categorical variables imported
 from the dataset (which are imported as \code{\link{atomic}}) will be
@@ -28,10 +26,7 @@ Import data from SPSS, including NA's, value and variable
   labels.
 }
 \details{
-In some cases, column names of the imported data set are not
-  properly encoded. Use the \code{enc}-argument to specify the character
-  encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
-  \code{\link{Encoding}}). \cr \cr The \code{atomic.to.fac} option only
+The \code{atomic.to.fac} option only
   converts those variables into factors that are of class \code{atomic} and
   which have value labels after import. Atomic vectors without value labels
   are considered as continuous and not converted to factors.

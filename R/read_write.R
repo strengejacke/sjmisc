@@ -13,7 +13,6 @@
 #'   inspecting (SPSS imported) data frames} \item \code{\link{write_spss}} }
 #'
 #' @param path File path to the data file.
-#' @param enc File encoding of the data file. See 'Details' in \code{\link{read_spss}}.
 #' @param atomic.to.fac Logical, if \code{TRUE}, categorical variables imported
 #'   from the dataset (which are imported as \code{\link{atomic}}) will be
 #'   converted to factors.
@@ -36,10 +35,7 @@
 #'   value and variable labels, which can then be used with other functions like
 #'   \code{\link{barplot}} etc. See 'Examples' from \code{\link{get_labels}}.
 #'
-#' @details In some cases, column names of the imported data set are not
-#'   properly encoded. Use the \code{enc}-argument to specify the character
-#'   encoding for the SPSS data set (like \code{enc = "UTF-8"}, see
-#'   \code{\link{Encoding}}). \cr \cr The \code{atomic.to.fac} option only
+#' @details The \code{atomic.to.fac} option only
 #'   converts those variables into factors that are of class \code{atomic} and
 #'   which have value labels after import. Atomic vectors without value labels
 #'   are considered as continuous and not converted to factors.
@@ -60,11 +56,9 @@
 #'
 #' @importFrom haven read_spss
 #' @export
-read_spss <- function(path, enc = NA, atomic.to.fac = FALSE, tag.na = TRUE) {
+read_spss <- function(path, atomic.to.fac = FALSE, tag.na = TRUE) {
   # read data file
   data.spss <- haven::read_spss(file = path, user_na = tag.na)
-  # encoding?
-  if (!is.na(enc) && !is.null(enc)) Encoding(colnames(data.spss)) <- enc
   # prepare tagged NA?
   if (tag.na) {
     # remember all-NA values
@@ -199,6 +193,10 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #' @seealso \code{\link{read_spss}}
 #'
 #' @param path.cat Optional, the file path to the SAS catalog file.
+#' @param enc The character encoding used for the file. This defaults to the encoding
+#'          specified in the file, or UTF-8. Use this argument to override the default
+#'          encoding stored in the file.
+#'
 #' @return A data frame containing the SAS data. Retrieve value labels with \code{\link{get_labels}}
 #'   and variable labels with \code{\link{get_label}}.
 #'
@@ -231,6 +229,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
 #' @seealso \code{\link{read_spss}}
 #'
 #' @inheritParams read_spss
+#' @inheritParams read_sas
 #'
 #' @return A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}
 #'   and variable labels with \code{\link{get_label}}.
