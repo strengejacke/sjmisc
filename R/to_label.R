@@ -126,6 +126,10 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
       }
       x[haven::is_tagged_na(x)] <- dummy_na[haven::is_tagged_na(x)]
     }
+  } else {
+    # in case x has tagged NA's we need to be sure to convert
+    # those into regular NA's, because else saving would not work
+    x[is.na(x)] <- NA
   }
   # get value labels
   vl <- get_labels(x,

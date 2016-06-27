@@ -323,9 +323,16 @@ write_data <- function(x, path, type, enc.to.utf8) {
     # haven labelled objects don't need conversion
     if (!haven::is.labelled(x[[i]])) {
       # convert variable to labelled factor, so it can be saved
-      x[[i]] <- suppressWarnings(to_label(x[[i]]))
+      x[[i]] <- suppressWarnings(to_label(x[[i]], add.non.labelled = F,
+                                          prefix = F, drop.na = T))
       # set back variable label
       x[[i]] <- set_label(x[[i]], var.lab, "label")
+    }
+    # check column name
+    end.point <- colnames(x)[i]
+    # if it ends with a dot, add a char. dot is invalid last char for SPSS
+    if (substr(end.point, nchar(end.point), nchar(end.point)) == ".") {
+      colnames(x)[i] <- paste0(end.point, i)
     }
     # update progress bar
     utils::setTxtProgressBar(pb, i)
