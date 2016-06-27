@@ -4,12 +4,17 @@
 \alias{write_stata}
 \title{Write content of data frame to STATA dta-file}
 \usage{
-write_stata(x, path, enc.to.utf8 = FALSE)
+write_stata(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE)
 }
 \arguments{
 \item{x}{\code{data.frame} that should be saved as file.}
 
 \item{path}{File path of the output file.}
+
+\item{use.tagged.na}{Logical, if \code{TRUE}, \code{\link[haven]{tagged_na}}
+values are converted to their values, i.e. values of tagged NA's are
+converted to factor levels. If \code{FALSE} (default), tagged NA's
+are converted to regular NA's.}
 
 \item{enc.to.utf8}{Logical, if \code{TRUE}, character encoding of variable and
 value labels will be converted to UTF-8.}

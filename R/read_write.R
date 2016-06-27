@@ -271,12 +271,16 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'
 #' @param x \code{data.frame} that should be saved as file.
 #' @param path File path of the output file.
+#' @param use.tagged.na Logical, if \code{TRUE}, \code{\link[haven]{tagged_na}}
+#'          values are converted to their values, i.e. values of tagged NA's are
+#'          converted to factor levels. If \code{FALSE} (default), tagged NA's
+#'          are converted to regular NA's.
 #' @param enc.to.utf8 Logical, if \code{TRUE}, character encoding of variable and
 #'          value labels will be converted to UTF-8.
 #'
 #' @export
-write_spss <- function(x, path, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "spss", enc.to.utf8 = enc.to.utf8)
+write_spss <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
+  write_data(x = x, path = path, type = "spss", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8)
 }
 
 
@@ -296,14 +300,14 @@ write_spss <- function(x, path, enc.to.utf8 = FALSE) {
 #' @inheritParams write_spss
 #'
 #' @export
-write_stata <- function(x, path, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "stata", enc.to.utf8 = enc.to.utf8)
+write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
+  write_data(x = x, path = path, type = "stata", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8)
 }
 
 
 #' @importFrom haven write_sav write_dta is.labelled
 #' @importFrom utils txtProgressBar setTxtProgressBar
-write_data <- function(x, path, type, enc.to.utf8) {
+write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
   # create progress bar
   pb <- utils::txtProgressBar(min = 0,
                               max = ncol(x),
@@ -324,7 +328,7 @@ write_data <- function(x, path, type, enc.to.utf8) {
     if (!haven::is.labelled(x[[i]])) {
       # convert variable to labelled factor, so it can be saved
       x[[i]] <- suppressWarnings(to_label(x[[i]], add.non.labelled = F,
-                                          prefix = F, drop.na = T))
+                                          prefix = F, drop.na = !use.tagged.na))
       # set back variable label
       x[[i]] <- set_label(x[[i]], var.lab, "label")
     }
