@@ -30,7 +30,10 @@
 #'        Else, value and variable labels can be manually added to vectors
 #'        with \code{\link{set_labels}} and \code{\link{set_label}}.
 #'
-#' @details See 'Details' in \code{\link{get_na}}.
+#' @details \code{to_factor} converts numeric values into a factor with numeric
+#'            levels. \code{\link{to_label}}, however, converts a vector into
+#'            a factor and uses value labels as factor levels.
+#'            Furthermore, see 'Details' in \code{\link{get_na}}.
 #'
 #' @examples
 #' data(efc)

@@ -324,14 +324,11 @@ write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
       if (!is.null(val.lab)) x[[i]] <- set_labels(x[[i]], enc2utf8(val.lab))
       if (!is.null(var.lab)) x[[i]] <- set_label(x[[i]], enc2utf8(var.lab))
     }
-    # haven labelled objects don't need conversion
-    if (!haven::is.labelled(x[[i]])) {
-      # convert variable to labelled factor, so it can be saved
-      x[[i]] <- suppressWarnings(to_label(x[[i]], add.non.labelled = F,
-                                          prefix = F, drop.na = !use.tagged.na))
-      # set back variable label
-      x[[i]] <- set_label(x[[i]], var.lab, "label")
-    }
+    # convert variable to labelled factor, so it can be saved
+    x[[i]] <- suppressWarnings(to_label(x[[i]], add.non.labelled = TRUE,
+                                        prefix = FALSE, drop.na = !use.tagged.na))
+    # set back variable label
+    x[[i]] <- set_label(x[[i]], var.lab, "label")
     # check column name
     end.point <- colnames(x)[i]
     # if it ends with a dot, add a char. dot is invalid last char for SPSS

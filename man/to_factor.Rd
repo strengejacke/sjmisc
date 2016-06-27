@@ -29,7 +29,10 @@ This function converts a variable into a factor, but preserves
                variable and value label attributes. See 'Examples'.
 }
 \details{
-See 'Details' in \code{\link{get_na}}.
+\code{to_factor} converts numeric values into a factor with numeric
+           levels. \code{\link{to_label}}, however, converts a vector into
+           a factor and uses value labels as factor levels.
+           Furthermore, see 'Details' in \code{\link{get_na}}.
 }
 \note{
 This function is intended for use with vectors that have value and variable
