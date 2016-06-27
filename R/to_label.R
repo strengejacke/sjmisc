@@ -132,16 +132,23 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
     x[is.na(x)] <- NA
   }
   # get value labels
-  vl <- get_labels(x,
-                   attr.only = TRUE,
-                   include.values = iv,
+  vl <- get_labels(x, attr.only = TRUE, include.values = iv,
                    include.non.labelled = add.non.labelled,
                    drop.na = drop.na)
   # check if we have any labels, else
   # return variable "as is"
   if (!is.null(vl)) {
     # get associated values for value labels
-    vn <- get_values(x, sort.val = FALSE, drop.na = drop.na)
+    vnn <- get_labels(x, attr.only = TRUE, include.values = "n",
+                      include.non.labelled = add.non.labelled,
+                      drop.na = drop.na)
+
+    # convert to numeric
+    vn <- suppressWarnings(as.numeric(names(vnn)))
+    # where some values non-numeric? if yes,
+    # use value names as character values
+    if (anyNA(vn)) vn <- names(vnn)
+
     # replace values with labels
     if (is.factor(x)) {
       # set new levels
