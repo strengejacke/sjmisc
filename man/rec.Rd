@@ -14,7 +14,8 @@ rec(x, as.fac = FALSE, var.label = NULL, val.labels = NULL) <- value
 or a \code{data.frame} or \code{list} of variables.}
 
 \item{recodes}{String with recode pairs of old and new values. See
-'Details' for examples.}
+'Details' for examples. \code{\link{rec_pattern}} is a convenient
+function to create recode strings for grouping variables.}
 
 \item{as.fac}{Logical, if \code{TRUE}, recoded variable is returned as factor.
 Default is \code{FALSE}, thus a numeric variable is returned.}
@@ -45,7 +46,7 @@ The \code{recodes} string has following syntax:
            \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
            \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
            \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
-           \item{\code{"else"}}{all other values except specified are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
+           \item{\code{"else"}}{all other values, which have not been specified yet, are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
            \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
            \item{\code{NA}'s}{\code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA from old value into 1, and all old values from 3 to 5 into NA in the new variable)}
            \item{\code{"rev"}}{\code{"rev"} is a special token that reverses the value order (see 'Examples')}

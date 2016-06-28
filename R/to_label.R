@@ -21,7 +21,7 @@
 #' @param prefix Logical, if \code{TRUE}, the value labels used as factor levels
 #'          or character values will be prefixed with their associated values. See 'Examples'.
 #' @param drop.na Logical, if \code{TRUE}, tagged \code{NA} values with value labels
-#'          will be converted to normal NA's. Else, tagged \code{NA} values will be replaced
+#'          will be converted to regular NA's. Else, tagged \code{NA} values will be replaced
 #'          with their value labels. See 'Examples' and \code{\link{get_na}}.
 #' @return A factor variable with the associated value labels as factor levels, or a
 #'           data frame with such factor variables (if \code{x} was a data frame).
