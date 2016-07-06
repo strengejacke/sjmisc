@@ -42,10 +42,10 @@
 #' @importFrom stats na.omit
 #' @export
 zap_labels <- function(x) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -101,10 +101,10 @@ zap_labels <- function(x) {
 #' @importFrom stats na.omit
 #' @export
 zap_unlabelled <- function(x) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -144,10 +144,10 @@ zap_unlabelled <- function(x) {
 #' @importFrom stats na.omit
 #' @export
 zap_na_tags <- function(x) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)

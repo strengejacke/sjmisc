@@ -60,10 +60,10 @@
 #' @importFrom stats quantile
 #' @export
 split_var <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)

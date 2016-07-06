@@ -68,7 +68,7 @@
 #'
 #' @export
 to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  if (is.matrix(x) || is.data.frame(x)) {
+  if (is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]], add.non.labelled, ref.lvl)
     return(x)
   } else {

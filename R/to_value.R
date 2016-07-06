@@ -53,7 +53,7 @@
 to_value <- function(x,
                      start.at = NULL,
                      keep.labels = TRUE) {
-  if (is.matrix(x) || is.data.frame(x)) {
+  if (is.data.frame(x)) {
     for (i in 1:ncol(x)) x[[i]] <- to_value_helper(x[[i]], start.at, keep.labels)
     return(x)
   } else {

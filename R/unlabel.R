@@ -30,7 +30,7 @@
 unlabel <- function(x) {
   # check if complete data frame or only single
   # vector should be converted
-  if (is.data.frame(x) || is.matrix(x)) {
+  if (is.data.frame(x)) {
     # create progress bar
     pb <- utils::txtProgressBar(min = 0,
                                 max = ncol(x),

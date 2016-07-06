@@ -156,10 +156,10 @@ set_labels_helper <- function(x, labels, force.labels, force.values, drop.na) {
   # convert single vector
   if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
     return(set_values_vector(x, labels, NULL, force.labels, force.values, drop.na))
-  } else if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
+  } else if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)

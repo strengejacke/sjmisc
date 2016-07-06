@@ -151,7 +151,7 @@ get_labels <- function(x,
                        include.values = NULL,
                        include.non.labelled = FALSE,
                        drop.na = TRUE) {
-  if (is.data.frame(x) || is.matrix(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     a <- lapply(x, FUN = get_labels_helper,
                 attr.only,
                 include.values,

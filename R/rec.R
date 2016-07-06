@@ -51,10 +51,10 @@
 #'
 #' @export
 recode_to <- function(x, lowest = 0, highest = -1) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)
@@ -218,10 +218,10 @@ rec <- function(x,
                 as.fac = FALSE,
                 var.label = NULL,
                 val.labels = NULL) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)

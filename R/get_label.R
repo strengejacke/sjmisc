@@ -64,7 +64,7 @@ get_label <- function(x, def.value = NULL) {
   # auto-detect variable label attribute
   attr.string <- getVarLabelAttribute(x)
   # do we have a df?
-  if (is.data.frame(x) || is.matrix(x)) {
+  if (is.data.frame(x)) {
     # if yes, check if we have attached label table
     # from foreign import
     labels <- attr(x, "variable.labels", exact = T)

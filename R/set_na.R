@@ -74,10 +74,10 @@
 #'
 #' @export
 set_na <- function(x, value) {
-  if (is.matrix(x) || is.data.frame(x) || is.list(x)) {
+  if (is.data.frame(x) || is.list(x)) {
     # get length of data frame or list, i.e.
     # determine number of variables
-    if (is.data.frame(x) || is.matrix(x))
+    if (is.data.frame(x))
       nvars <- ncol(x)
     else
       nvars <- length(x)

@@ -93,7 +93,7 @@
 #'
 #' @export
 to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  if (is.matrix(x) || is.data.frame(x)) {
+  if (is.data.frame(x)) {
     for (i in 1:ncol(x)) {
       x[[i]] <- to_label_helper(x[[i]], add.non.labelled, prefix, drop.na)
     }
@@ -236,7 +236,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
 #'
 #' @export
 to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  if (is.matrix(x) || is.data.frame(x)) {
+  if (is.data.frame(x)) {
     for (i in 1:ncol(x)) {
       x[[i]] <- as.character(to_label_helper(x[[i]], add.non.labelled, prefix, drop.na))
     }
