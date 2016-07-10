@@ -73,12 +73,6 @@ str_pos <- function(searchString,
   pos <- as.numeric(grep(findTerm, searchString, ignore.case = T))
   if (length(pos) > 0) indices <- c(indices, pos)
 
-  # check if required package is available
-  if (!requireNamespace("stringdist", quietly = TRUE)) {
-    warning("Package 'stringdist' needed for this function to fully work. Please install it. Only partial matching indices are returned.", call. = F)
-    return(indices)
-  }
-
   # find element indices from similar strings
   pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) <= maxdist)
   if (length(pos) > 0) indices <- c(indices, pos)

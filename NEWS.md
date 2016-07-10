@@ -10,6 +10,7 @@
 ## New functions
 
 * `zap_na_tags` to turn tagged `NA` values into regular `NA` values.
+* `merge_imputations` to find the most likely imputed value for a missing value.
 * Added `to_character` method.
 
 ## Changes to functions

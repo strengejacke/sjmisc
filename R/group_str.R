@@ -61,11 +61,6 @@ group_str <- function(strings,
                       trim.whitespace = TRUE,
                       remove.empty = TRUE,
                       showProgressBar = FALSE) {
-  # check if required package is available
-  if (!requireNamespace("stringdist", quietly = TRUE)) {
-    stop("Package `stringdist` needed for this function to work. Please install it.", call. = FALSE)
-  }
-
   # coerce to character, if necessary
   if (!is.character(strings)) strings <- as.character(strings)
 
