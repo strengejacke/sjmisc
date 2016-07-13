@@ -9,7 +9,8 @@
 #'            replace specific values with \code{NA}.
 #'
 #' @param x Variable (vector) with value label attributes, including
-#'          tagged missing values (see \code{\link[haven]{tagged_na}}).
+#'          tagged missing values (see \code{\link[haven]{tagged_na}});
+#'          or a data frame or list with such variables.
 #' @param as.tag Logical, if \code{TRUE}, the returned values are not tagged NA's,
 #'          but their string representative including the tag value. See 'Examples'.
 #' @return The tagged missing values and their associated value labels from \code{x},
@@ -44,9 +45,25 @@
 #' replace_na(x, 2, tagged.na = "c")
 #' get_na(replace_na(x, 2, tagged.na = "c"))
 #'
+#' # data frame as input
+#' y <- labelled(c(2:3, 3:1, tagged_na("y"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "Why" = tagged_na("y")))
+#' get_na(data.frame(x, y))
+#'
+#'
 #' @importFrom haven is_tagged_na
 #' @export
 get_na <- function(x, as.tag = FALSE) {
+  if (is.data.frame(x) || is.list(x)) {
+    a <- lapply(x, FUN = get_na_helper, as.tag)
+  } else {
+    a <- get_na_helper(x, as.tag)
+  }
+  return(a)
+}
+
+
+get_na_helper <- function(x, as.tag) {
   # haven or foreign?
   attr.string <- getValLabelAttribute(x)
   # have any attribute?

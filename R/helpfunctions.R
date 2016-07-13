@@ -1,5 +1,7 @@
 # Help-functions
 
+is_float <- function(x) is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
+
 is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
 
 # auto-detect attribute style for variable labels.

@@ -8,7 +8,8 @@ get_na(x, as.tag = FALSE)
 }
 \arguments{
 \item{x}{Variable (vector) with value label attributes, including
-tagged missing values (see \code{\link[haven]{tagged_na}}).}
+tagged missing values (see \code{\link[haven]{tagged_na}});
+or a data frame or list with such variables.}
 
 \item{as.tag}{Logical, if \code{TRUE}, the returned values are not tagged NA's,
 but their string representative including the tag value. See 'Examples'.}
@@ -50,6 +51,12 @@ get_na(x, as.tag = TRUE)
 # replace only the NA, which is tagged as NA(c)
 replace_na(x, 2, tagged.na = "c")
 get_na(replace_na(x, 2, tagged.na = "c"))
+
+# data frame as input
+y <- labelled(c(2:3, 3:1, tagged_na("y"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "Why" = tagged_na("y")))
+get_na(data.frame(x, y))
+
 
 }
 \seealso{

@@ -1,13 +1,13 @@
-#' @importFrom dplyr tbl_df trunc_mat
+#' @importFrom tibble trunc_mat as_data_frame
 #' @export
 print.lbl_df <- function(x, ..., n = NULL, width = NULL) {
   # get labels
   dlab <- get_label(x)
   # if x of class tbl_df?
   if (!"tbl_df" %in% class(x))
-    x <- dplyr::tbl_df(x)
+    x <- tibble::as_data_frame(x)
   # get df matrix
-  dmat <- dplyr::trunc_mat(x, n = n, width = width)
+  dmat <- tibble::trunc_mat(x, n = n, width = width)
   # set labels, if we have any
   if (!is.null(dlab)) {
     # iterate all columns

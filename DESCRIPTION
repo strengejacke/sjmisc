@@ -25,6 +25,7 @@ Imports:
     dplyr (>= 0.5.0),
     haven (>= 0.2.0),
     stringdist (>= 0.9.2),
+    tibble (>= 1.1.0),
     tidyr (>= 0.5.0)
 Suggests:
     mice

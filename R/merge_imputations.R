@@ -18,18 +18,18 @@
 #'         imputed variables, if \code{ori} was specified.
 #'
 #' @details This method merges multiple imputations of variables into a single
-#'          variable by calculation the (rounded) mean of all imputed values
+#'          variable by computing the (rounded) mean of all imputed values
 #'          of missing values. By this, each missing value is replaced by
 #'          those values that have been imputed the most times.
 #'          \cr \cr
 #'          \code{imp} must be a \code{mids}-object, which is returned by the
-#'          \code{mice}-function of the \pkg{mice}-package. This function than
+#'          \code{mice}-function of the \pkg{mice}-package. \code{merge_imputations} than
 #'          creates a data frame for each imputed variable, by combining all
 #'          imputations (as returned by the \code{\link[mice]{complete}}-function)
 #'          of each variable, and computing the row means of this data frame.
-#'          The mean value is then rounded for non-integer values (numerical
+#'          The mean value is then rounded for integer values (and not for numerical
 #'          values with fractional part), which corresponds to the most frequent
-#'          imputed value for a missing value. The original variable with missing
+#'          imputed value for a missing value. The original variable with missings
 #'          is then copied, missing values replaced by the most frequent imputed
 #'          value and appended as new column to the original data frame.
 #'
@@ -57,6 +57,7 @@ merge_imputations <- function(dat, imp, ori = NULL) {
   # copy data frame with missing to return data frame,
   # if not specified
   if (is.null(ori)) ori <- dat
+
   # iterate all variables of data frame that has missing values
   for (i in seq_len(ncol(dat))) {
     # check if current variable was imputed or not
@@ -64,6 +65,7 @@ merge_imputations <- function(dat, imp, ori = NULL) {
       # copy indices of missing values from original variable
       miss_inc <- which(is.na(dat[[i]]))
       miss_inc_dat <- data.frame()
+
       # create a new data frame from all imputation steps, where only the
       # imputations of the current variables are in
       for (j in seq_len(imp$m)) {
@@ -72,21 +74,24 @@ merge_imputations <- function(dat, imp, ori = NULL) {
         else
           miss_inc_dat <- cbind(miss_inc_dat, data.frame(inc = mice::complete(imp, action = j)[[i]]))
       }
+
       # convert imputed variable to numeric. needed to perform row means.
       miss_inc_dat <- to_value(miss_inc_dat)
       # copy original variable with missings to a new dummy vector
       x <- ori[[colnames(dat)[i]]]
+
       # now compute the row means for this variable from all imputed variables
       # (which are in the data frame miss_inc_dat). This mean value represents
       # the most imputed value for a missing value. Copy this "final imputed"
       # value into the variable with missings, thus replacing the missings
       # in the original variable with the most likely imputed value. For numeric
       # integer values, this mean is rounded.
-      if (is.numeric(x) && !all(x %% 1 == 0, na.rm = T))
+      if (is_float(x))
         x[miss_inc] <- rowMeans(miss_inc_dat[miss_inc, ])
       else
         x[miss_inc] <- round(rowMeans(miss_inc_dat[miss_inc, ]))
-      # append the imputed variabke to the original data frame and preserve
+
+      # append the imputed variable to the original data frame and preserve
       # the non-imputed variable with missing values as well
       ori <- cbind(ori, x)
       # give meaningful column-/variable name.

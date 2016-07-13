@@ -29,18 +29,18 @@ This function merges multiple imputed data frames from
 }
 \details{
 This method merges multiple imputations of variables into a single
-         variable by calculation the (rounded) mean of all imputed values
+         variable by computing the (rounded) mean of all imputed values
          of missing values. By this, each missing value is replaced by
          those values that have been imputed the most times.
          \cr \cr
          \code{imp} must be a \code{mids}-object, which is returned by the
-         \code{mice}-function of the \pkg{mice}-package. This function than
+         \code{mice}-function of the \pkg{mice}-package. \code{merge_imputations} than
          creates a data frame for each imputed variable, by combining all
          imputations (as returned by the \code{\link[mice]{complete}}-function)
          of each variable, and computing the row means of this data frame.
-         The mean value is then rounded for non-integer values (numerical
+         The mean value is then rounded for integer values (and not for numerical
          values with fractional part), which corresponds to the most frequent
-         imputed value for a missing value. The original variable with missing
+         imputed value for a missing value. The original variable with missings
          is then copied, missing values replaced by the most frequent imputed
          value and appended as new column to the original data frame.
 }

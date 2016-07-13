@@ -7,7 +7,8 @@
 get_values(x, sort.val = FALSE, drop.na = FALSE)
 }
 \arguments{
-\item{x}{Variable (vector) with value label attributes.}
+\item{x}{Variable (vector) with value label attributes; or a data frame or
+list with such variables.}
 
 \item{sort.val}{Logical, if \code{TRUE} (default), values of associated value labels
 are sorted.}
@@ -47,6 +48,11 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 get_values(x)
 # drop NA
 get_values(x, drop.na = TRUE)
+
+# data frame as input
+y <- labelled(c(2:3, 3:1, tagged_na("y"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "Why" = tagged_na("y")))
+get_values(data.frame(x, y))
 
 }
 \seealso{

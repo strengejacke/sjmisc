@@ -31,11 +31,9 @@
 #' # use "dummy" as new variable name
 #' head(to_dummy(efc$e42dep, var.name = "dummy"))
 #'
+#'
 #' @export
-to_dummy <- function(x,
-                     var.name = "name",
-                     suffix = c("numeric", "label"),
-                     data = NULL) {
+to_dummy <- function(x, var.name = "name", suffix = c("numeric", "label"), data = NULL) {
   # check for abbr
   suffix <- match.arg(suffix)
   # save variable name

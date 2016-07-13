@@ -45,5 +45,6 @@ head(to_dummy(efc$e42dep, suffix = "label"))
 # use "dummy" as new variable name
 head(to_dummy(efc$e42dep, var.name = "dummy"))
 
+
 }
 
