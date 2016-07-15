@@ -20,5 +20,6 @@
 
 ## Bug fixes
 
+* `rec` did not recode values, when these were the first element of a multi-line string of the `recodes` argument.
 * `is_empty` returned `NA` instead of `TRUE` for empty character vectors.
 * Fixed bug with erroneous assignment of value labels to subset data when using `copy_labels` ([#20](https://github.com/sjPlot/sjmisc/issues/20))

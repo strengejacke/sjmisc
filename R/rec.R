@@ -292,6 +292,9 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   rec_string <- unlist(strsplit(recodes, ";", fixed = TRUE))
   # remove spaces
   rec_string <- gsub(" ", "", rec_string, fixed = TRUE)
+  # remove line breaks
+  rec_string <- gsub("\n", "", rec_string, fixed = F)
+  rec_string <- gsub("\r", "", rec_string, fixed = F)
   # replace min and max placeholders
   rec_string <- gsub("min", as.character(min_val), rec_string, fixed = TRUE)
   rec_string <- gsub("lo", as.character(min_val), rec_string, fixed = TRUE)
