@@ -15,6 +15,7 @@ Description: Collection of miscellaneous utility functions (especially intended
     vectors into factors (and vice versa), or to deal with multiple declared
     missing values etc. 2) Data transformation tasks like recoding,
     dichotomizing or grouping variables, setting and replacing missing values.
+    The data transformation functions also support labelled data.
 License: GPL-3
 Depends:
     R (>= 3.2),

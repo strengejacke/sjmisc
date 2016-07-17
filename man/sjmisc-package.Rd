@@ -8,7 +8,7 @@
 Collection of miscellaneous utility functions (especially intended for people coming from other statistical software packages like 'SPSS', and/or who are new to R), supporting following common tasks when working with data:
 \itemize{
   \item Reading and writing data between R and other statistical software packages like 'SPSS', 'SAS' or 'Stata' and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
-  \item Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values.
+  \item Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
 }
 See also package-vignettes.
 }

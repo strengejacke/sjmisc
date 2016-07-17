@@ -7,20 +7,21 @@
 merge_imputations(dat, imp, ori = NULL)
 }
 \arguments{
-\item{dat}{The data frame that imputed and used as argument in the
+\item{dat}{The data frame that was imputed and used as argument in the
 \code{\link[mice]{mice}}-function call.}
 
 \item{imp}{The \code{\link[mice]{mids}}-object with the imputed data frames
 from \code{dat}.}
 
-\item{ori}{Optional, data frame specifying the original data frame with
-missing values, if \code{dat} was only a subset of \code{ori} that
+\item{ori}{Optional, data frame specifying the original, non-imputed data
+frame with missing values, if \code{dat} was only a subset of \code{ori} that
 was imputed. If \code{ori} is specified, the imputed variables are
-appended to this data frame; else, they are appended to \code{dat}.}
+appended to this data frame; else, a new data frame with the imputed
+variables is returned.}
 }
 \value{
-\code{dat}, with appended imputed variables; or \code{ori} with
-        imputed variables, if \code{ori} was specified.
+A data frame with imputed variables; or \code{ori} with
+        appended imputed variables, if \code{ori} was specified.
 }
 \description{
 This function merges multiple imputed data frames from
@@ -47,7 +48,12 @@ This method merges multiple imputations of variables into a single
 \examples{
 library(mice)
 imp <- mice(nhanes)
+
+# return data frame with imputed variables
 merge_imputations(nhanes, imp)
+
+# append imputed variables to original data frame
+merge_imputations(nhanes, imp, nhanes)
 
 }
 

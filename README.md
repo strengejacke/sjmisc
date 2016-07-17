@@ -6,7 +6,7 @@ Basically, this package covers three domains of functionality:
 
 * reading and writing data between other statistical packages (like 'SPSS') and R, based on the haven and foreign packages
 * hence, this package also includes functions to make working with labelled data easier
-* frequently applied recoding and variable transformation tasks
+* frequently applied recoding and variable transformation tasks, also with support for labelled data
 
 
 ## Installation
