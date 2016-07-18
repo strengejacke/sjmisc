@@ -3,15 +3,13 @@
 #'
 #' @description This function merges multiple imputed data frames from
 #'                \code{\link[mice]{mids}}-objects into a single data frame
-#'                by appending the imputed variables to the original data frame.
+#'                by computing the mean or selecting the most likely imputed value.
 #'
 #' @param dat The data frame that was imputed and used as argument in the
 #'        \code{\link[mice]{mice}}-function call.
 #' @param imp The \code{\link[mice]{mids}}-object with the imputed data frames
 #'        from \code{dat}.
-#' @param ori Optional, data frame specifying the original, non-imputed data
-#'        frame with missing values, if \code{dat} was only a subset of \code{ori} that
-#'        was imputed. If \code{ori} is specified, the imputed variables are
+#' @param ori Optional, if \code{ori} is specified, the imputed variables are
 #'        appended to this data frame; else, a new data frame with the imputed
 #'        variables is returned.
 #'
@@ -31,8 +29,8 @@
 #'          The mean value is then rounded for integer values (and not for numerical
 #'          values with fractional part), which corresponds to the most frequent
 #'          imputed value for a missing value. The original variable with missings
-#'          is then copied, missing values replaced by the most frequent imputed
-#'          value and appended as new column to the original data frame.
+#'          is then copied and missing values are replaced by the most frequent imputed
+#'          value.
 #'
 #' @examples
 #' library(mice)
@@ -69,16 +67,12 @@ merge_imputations <- function(dat, imp, ori = NULL) {
     if (!is_empty(imp$method[i])) {
       # copy indices of missing values from original variable
       miss_inc <- which(is.na(dat[[i]]))
-      miss_inc_dat <- data.frame()
 
       # create a new data frame from all imputation steps, where only the
       # imputations of the current variables are in
-      for (j in seq_len(imp$m)) {
-        if (ncol(miss_inc_dat) == 0)
-          miss_inc_dat <- data.frame(inc = mice::complete(imp, action = j)[[i]])
-        else
-          miss_inc_dat <- cbind(miss_inc_dat, data.frame(inc = mice::complete(imp, action = j)[[i]]))
-      }
+      miss_inc_dat <- as.data.frame(lapply(seq_len(imp$m), function(x) {
+        mice::complete(imp, action = x)[[i]]
+      }))
 
       # convert imputed variable to numeric. needed to perform row means.
       miss_inc_dat <- to_value(miss_inc_dat)

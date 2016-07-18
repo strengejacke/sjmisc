@@ -13,9 +13,7 @@ merge_imputations(dat, imp, ori = NULL)
 \item{imp}{The \code{\link[mice]{mids}}-object with the imputed data frames
 from \code{dat}.}
 
-\item{ori}{Optional, data frame specifying the original, non-imputed data
-frame with missing values, if \code{dat} was only a subset of \code{ori} that
-was imputed. If \code{ori} is specified, the imputed variables are
+\item{ori}{Optional, if \code{ori} is specified, the imputed variables are
 appended to this data frame; else, a new data frame with the imputed
 variables is returned.}
 }
@@ -26,7 +24,7 @@ A data frame with imputed variables; or \code{ori} with
 \description{
 This function merges multiple imputed data frames from
                \code{\link[mice]{mids}}-objects into a single data frame
-               by appending the imputed variables to the original data frame.
+               by computing the mean or selecting the most likely imputed value.
 }
 \details{
 This method merges multiple imputations of variables into a single
@@ -42,8 +40,8 @@ This method merges multiple imputations of variables into a single
          The mean value is then rounded for integer values (and not for numerical
          values with fractional part), which corresponds to the most frequent
          imputed value for a missing value. The original variable with missings
-         is then copied, missing values replaced by the most frequent imputed
-         value and appended as new column to the original data frame.
+         is then copied and missing values are replaced by the most frequent imputed
+         value.
 }
 \examples{
 library(mice)
