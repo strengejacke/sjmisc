@@ -50,15 +50,12 @@
 #' table(to_value(dummy))
 #'
 #' @export
-to_value <- function(x,
-                     start.at = NULL,
-                     keep.labels = TRUE) {
-  if (is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- to_value_helper(x[[i]], start.at, keep.labels)
-    return(x)
-  } else {
-    return(to_value_helper(x, start.at, keep.labels))
-  }
+to_value <- function(x, start.at = NULL, keep.labels = TRUE) {
+  if (is.data.frame(x) || is.list(x))
+    x <- as.data.frame(lapply(x, FUN = to_value_helper, start.at, keep.labels))
+  else
+    x <- to_value_helper(x, start.at, keep.labels)
+  return(x)
 }
 
 

@@ -70,10 +70,8 @@ get_label <- function(x, def.value = NULL) {
     labels <- attr(x, "variable.labels", exact = T)
     # if not, get labels from each single vector
     if (is.null(labels) && !is.null(attr.string)) {
-      # return value
-      all.labels <- c()
       # iterate df
-      for (i in seq_len(ncol(x))) {
+      all.labels <- sapply(seq_along(x), function(i) {
         # get label
         label <- attr(x[[i]], attr.string, exact = T)
         # any label?
@@ -81,11 +79,11 @@ get_label <- function(x, def.value = NULL) {
           # name label
           names(label) <- colnames(x)[i]
           # append to return result
-          all.labels <- c(all.labels, label)
+          label
         } else {
-          all.labels <- c(all.labels, "")
+          ""
         }
-      }
+      })
       return(all.labels)
     } else {
       return(attr(x, "variable.labels", exact = T))

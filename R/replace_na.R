@@ -78,19 +78,10 @@
 replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {
   # check for valid value
   if (is.null(value) || is.na(value)) return(x)
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # replace NA
-    for (i in seq_len(nvars)) x[[i]] <- replace_na_helper(x[[i]], value, na.label, tagged.na)
-    return(x)
-  } else {
-    return(replace_na_helper(x, value, na.label, tagged.na))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- as.data.frame(lapply(x, FUN = replace_na_helper, value, na.label, tagged.na))
+  else
+    x <- replace_na_helper(x, value, na.label, tagged.na)
   return(x)
 }
 

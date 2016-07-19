@@ -68,12 +68,11 @@
 #'
 #' @export
 to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  if (is.data.frame(x)) {
-    for (i in 1:ncol(x)) x[[i]] <- to_fac_helper(x[[i]], add.non.labelled, ref.lvl)
-    return(x)
-  } else {
-    return(to_fac_helper(x, add.non.labelled, ref.lvl))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- as.data.frame(lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl))
+  else
+    x <- to_fac_helper(x, add.non.labelled, ref.lvl)
+  return(x)
 }
 
 

@@ -60,21 +60,11 @@
 #' @importFrom stats quantile
 #' @export
 split_var <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # na all
-    for (i in seq_len(nvars)) x[[i]] <- split_var_helper(x[[i]], groupcount, as.num,
-                                                         val.labels, var.label,
-                                                         inclusive)
-    return(x)
-  } else {
-    return(split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- as.data.frame(lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive))
+  else
+    x <- split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive)
+  return(x)
 }
 
 split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclusive) {

@@ -146,25 +146,16 @@
 #' get_labels(x, include.values = "n", drop.na = FALSE)
 #'
 #' @export
-get_labels <- function(x,
-                       attr.only = FALSE,
-                       include.values = NULL,
-                       include.non.labelled = FALSE,
-                       drop.na = TRUE) {
+get_labels <- function(x, attr.only = FALSE, include.values = NULL,
+                       include.non.labelled = FALSE, drop.na = TRUE) {
   if (is.data.frame(x) || is.list(x)) {
-    a <- lapply(x, FUN = get_labels_helper,
-                attr.only,
-                include.values,
-                include.non.labelled,
-                drop.na)
+    x <- lapply(x, FUN = get_labels_helper, attr.only, include.values,
+                include.non.labelled, drop.na)
   } else {
-    a <- get_labels_helper(x,
-                           attr.only,
-                           include.values,
-                           include.non.labelled,
-                           drop.na)
+    x <- get_labels_helper(x, attr.only, include.values,
+                           include.non.labelled, drop.na)
   }
-  return(a)
+  return(x)
 }
 
 
