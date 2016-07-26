@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 1.8.0-3
-Date: 2016-05-31
+Version: 1.8.0-4
+Date: 2016-07-26
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
@@ -23,8 +23,10 @@ Depends:
     utils
 Imports:
     coin,
+    broom (>= 0.4.1),
     dplyr (>= 0.5.0),
     haven (>= 0.2.0),
+    magrittr,
     stringdist (>= 0.9.2),
     tibble (>= 1.1.0),
     tidyr (>= 0.5.0)

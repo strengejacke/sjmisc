@@ -52,7 +52,7 @@ merge_df <- function(x1, x2, ..., id = NULL) {
   # merge remaining df's if we have more data frames
   if (!is.null(more_dfs) && length(more_dfs) > 0) {
     # iterate all remaining data frames
-    for (i in 1:length(more_dfs)) {
+    for (i in seq_len(length(more_dfs))) {
       # create ID vector
       x_final <- merge_df_helper(x_final, more_dfs[[i]])
     }
