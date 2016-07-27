@@ -41,16 +41,9 @@ to_dummy <- function(x, var.name = "name", suffix = c("numeric", "label"), data 
   # remove "data frame name"
   dollar_pos <- regexpr("$", varname, fixed = T)[1]
   if (dollar_pos != -1)
-    varname <-
-    substr(varname, start = dollar_pos + 1, stop = nchar(varname))
+    varname <- substr(varname, start = dollar_pos + 1, stop = nchar(varname))
   # check whether we have labels
-  labels <-
-    get_labels(
-      x,
-      attr.only = F,
-      include.values = "n",
-      include.non.labelled = T
-    )
+  labels <- get_labels(x, attr.only = F, include.values = "n", include.non.labelled = T)
   # get resp. set variable label for new dummy variables
   # get variable label
   label <- get_label(x, def.value = varname)
@@ -78,7 +71,7 @@ to_dummy <- function(x, var.name = "name", suffix = c("numeric", "label"), data 
   # return value
   mydf <- data.frame()
   # create all dummy variables
-  for (i in 1:length(values)) {
+  for (i in seq_len(length(values))) {
     # create dummy var
     dummy <- rep(0, length(x))
     # set NA
@@ -101,7 +94,6 @@ to_dummy <- function(x, var.name = "name", suffix = c("numeric", "label"), data 
     col.nam <- sprintf("%s_%s", col.nam, labels)
   colnames(mydf) <- col.nam
   # append data?
-  if (!is.null(data))
-    return(cbind(data, mydf))
+  if (!is.null(data)) return(cbind(data, mydf))
   return(mydf)
 }

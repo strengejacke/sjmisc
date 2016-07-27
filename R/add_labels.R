@@ -59,25 +59,19 @@
 #' replace_labels(x, c("Second" = tagged_na("c")))
 #'
 #'
+#' @importFrom tibble as_tibble
 #' @export
 add_labels <- function(x, value) {
   # check for valid value. value must be a named vector
   if (is.null(value)) stop("`value` is NULL.", call. = F)
   if (is.null(names(value))) stop("`value` must be a named vector.", call. = F)
 
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in seq_len(nvars)) x[[i]] <- add_labels_helper(x[[i]], value)
-    return(x)
-  } else {
-    return(add_labels_helper(x, value))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = add_labels_helper, value))
+  else
+    x <- add_labels_helper(x, value)
+
+  return(x)
 }
 
 #' @importFrom haven is_tagged_na na_tag

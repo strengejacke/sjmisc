@@ -12,6 +12,8 @@
 #' @param model.term Optional, name of a model term. If specified, only this model
 #'          term (including p-value) will be extracted from each model and
 #'          added as new column.
+#' @param ... Other arguments passed down to the \code{\link[broom]{tidy}}-function.
+#'
 #' @return \code{data}, with new columns for each coefficients of the models
 #'           that are stored in the list-variable; or, if \code{model.term} is given,
 #'           with two new columns (one for the term's estimate value and one
@@ -66,7 +68,7 @@
 #' @importFrom tidyr spread_
 #' @importFrom magrittr "%>%"
 #' @export
-spread_coef <- function(data, model.column, model.term) {
+spread_coef <- function(data, model.column, model.term, ...) {
   # check if we have a data frame
   if (!is.data.frame(data))
     stop("`data` needs to be a data frame.", call. = FALSE)
@@ -82,7 +84,7 @@ spread_coef <- function(data, model.column, model.term) {
     coef.data <-
       lapply(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        tmp <- broom::tidy(x, effects = "fixed") %>%
+        tmp <- broom::tidy(x, effects = "fixed", ...) %>%
           # filter term
           dplyr::filter(term == model.term) %>%
           # just select estimate and p-value
@@ -96,7 +98,7 @@ spread_coef <- function(data, model.column, model.term) {
     coef.data <-
       lapply(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        broom::tidy(x, effects = "fixed") %>%
+        broom::tidy(x, effects = "fixed", ...) %>%
           # just select term name and estimate value
           dplyr::select_("term", "estimate") %>%
           # spread to columns

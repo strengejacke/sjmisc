@@ -51,19 +51,11 @@
 #'
 #' @export
 recode_to <- function(x, lowest = 0, highest = -1) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in 1:nvars) x[[i]] <- rec_to_helper(x[[i]], lowest, highest)
-    return(x)
-  } else {
-    return(rec_to_helper(x, lowest, highest))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = rec_to_helper, lowest, highest))
+  else
+    x <- rec_to_helper(x, lowest, highest)
+  return(x)
 }
 
 
@@ -213,24 +205,12 @@ rec_to_helper <- function(x, lowest, highest) {
 #' na_tag(rec(x, "2=5;else=copy"))
 #'
 #' @export
-rec <- function(x,
-                recodes,
-                as.fac = FALSE,
-                var.label = NULL,
-                val.labels = NULL) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in 1:nvars) x[[i]] <- rec_helper(x[[i]], recodes, as.fac, var.label, val.labels)
-    return(x)
-  } else {
-    return(rec_helper(x, recodes, as.fac, var.label, val.labels))
-  }
+rec <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL) {
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = rec_helper, recodes, as.fac, var.label, val.labels))
+  else
+    x <- rec_helper(x, recodes, as.fac, var.label, val.labels)
+  return(x)
 }
 
 
@@ -335,14 +315,12 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       # can new value be converted to numeric?
       new_val <- suppressWarnings(as.numeric(new_val_string))
       # if not, assignment is wrong
-      if (is.na(new_val)) {
-        new_val <- new_val_string
-      }
+      if (is.na(new_val)) new_val <- new_val_string
     }
 
     # retrieve and check old values
     old_val <- c()
-    for (j in 1:length(old_val_string)) {
+    for (j in seq_len(length(old_val_string))) {
       # copy to shorten code
       ovs <- old_val_string[j]
 
@@ -373,10 +351,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
         # can new value be converted to numeric?
         ovn <- suppressWarnings(as.numeric(ovs))
         # if not, assignment is wrong
-        if (is.na(ovn)) {
-          # stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = F)
-          ovn <- ovs
-        }
+        if (is.na(ovn)) ovn <- ovs
         # add old recode values to final vector of values
         old_val <- c(old_val, ovn)
       }

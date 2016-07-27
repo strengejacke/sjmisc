@@ -28,19 +28,11 @@
 #'
 #' @export
 fill_labels <- function(x) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # na all
-    for (i in seq_len(nvars)) x[[i]] <- fill_labels_helper(x[[i]])
-    return(x)
-  } else {
-    return(fill_labels_helper(x))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = fill_labels_helper))
+  else
+    x <- fill_labels_helper(x)
+  return(x)
 }
 
 fill_labels_helper <- function(x) {

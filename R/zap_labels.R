@@ -42,19 +42,11 @@
 #' @importFrom stats na.omit
 #' @export
 zap_labels <- function(x) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # na all
-    for (i in seq_len(nvars)) x[[i]] <- zap_labels_helper(x[[i]])
-    return(x)
-  } else {
-    return(zap_labels_helper(x))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = zap_labels_helper))
+  else
+    x <- zap_labels_helper(x)
+  return(x)
 }
 
 
@@ -101,19 +93,11 @@ zap_labels <- function(x) {
 #' @importFrom stats na.omit
 #' @export
 zap_unlabelled <- function(x) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # na all
-    for (i in seq_len(nvars)) x[[i]] <- zap_unlabelled_helper(x[[i]])
-    return(x)
-  } else {
-    return(zap_unlabelled_helper(x))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = zap_unlabelled_helper))
+  else
+    x <- zap_unlabelled_helper(x)
+  return(x)
 }
 
 
@@ -144,19 +128,11 @@ zap_unlabelled <- function(x) {
 #' @importFrom stats na.omit
 #' @export
 zap_na_tags <- function(x) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # na all
-    for (i in seq_len(nvars)) x[[i]] <- zap_na_tags_helper(x[[i]])
-    return(x)
-  } else {
-    return(zap_na_tags_helper(x))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = zap_na_tags_helper))
+  else
+    x <- zap_na_tags_helper(x)
+  return(x)
 }
 
 

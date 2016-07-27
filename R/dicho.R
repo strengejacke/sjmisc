@@ -15,7 +15,6 @@
 #'            \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
 #'            \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
 #'            }
-#' @param dich.val Deprecated, use \code{dich.by}.
 #' @param as.num Logical, if \code{TRUE}, return value will be numeric, not a factor.
 #' @param var.label Optional string, to set variable label attribute for the
 #'          dichotomized variable (see \code{\link{set_label}}). If \code{NULL}
@@ -55,37 +54,20 @@
 #' @export
 dicho <- function(x,
                   dich.by = "median",
-                  dich.val = -1,
                   as.num = FALSE,
                   var.label = NULL,
                   val.labels = NULL) {
-  # check deprecated
-  if (!missing(dich.val)) {
-    .Deprecated("dich.by", old = "dich.val")
-    dich.by <- dich.val
-  }
-
   # check for correct dichotome types
-  if (!is.numeric(dich.by) && dich.by != "median" && dich.by != "mean" && dich.by != "md" && dich.by != "m") {
+  if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
     stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)
   }
 
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels))
+  else
+    x <- dicho_helper(x, dich.by, as.num, var.label, val.labels)
 
-    # dichotomize all
-    for (i in 1:nvars) {
-      x[[i]] <- dicho_helper(x[[i]], dich.by, as.num, var.label, val.labels)
-    }
-    return(x)
-  } else {
-    return(dicho_helper(x, dich.by, as.num, var.label, val.labels))
-  }
+  return(x)
 }
 
 

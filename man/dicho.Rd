@@ -4,8 +4,8 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(x, dich.by = "median", dich.val = -1, as.num = FALSE,
-  var.label = NULL, val.labels = NULL)
+dicho(x, dich.by = "median", as.num = FALSE, var.label = NULL,
+  val.labels = NULL)
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables
@@ -18,8 +18,6 @@ Must be one of the following values (may be abbreviated):
   \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
   \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
   }}
-
-\item{dich.val}{Deprecated, use \code{dich.by}.}
 
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 

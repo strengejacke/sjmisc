@@ -69,7 +69,7 @@
 #' @export
 to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
   if (is.data.frame(x) || is.list(x))
-    x <- as.data.frame(lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl))
+    x <- tibble::as_tibble(lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl))
   else
     x <- to_fac_helper(x, add.non.labelled, ref.lvl)
   return(x)
@@ -78,15 +78,10 @@ to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
 
 to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   # is already factor?
-  if (is.factor(x)) {
-    return(x)
-  }
+  if (is.factor(x)) return(x)
 
   # retrieve value labels
-  lab <- get_labels(x,
-                    attr.only = TRUE,
-                    include.values = "n",
-                    include.non.labelled = add.non.labelled)
+  lab <- get_labels(x, attr.only = TRUE, include.values = "n", include.non.labelled = add.non.labelled)
   # retrieve variable labels
   varlab <- get_label(x)
 
@@ -108,10 +103,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   x <- as.factor(x)
 
   # set back value labels
-  x <- suppressMessages(set_labels(x,
-                                   lab.switch,
-                                   force.labels = TRUE,
-                                   force.values = FALSE))
+  x <- suppressMessages(set_labels(x, lab.switch, force.labels = TRUE, force.values = FALSE))
   # set back variable labels
   x <- set_label(x, varlab)
   # change reference level?

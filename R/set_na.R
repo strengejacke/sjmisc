@@ -74,19 +74,11 @@
 #'
 #' @export
 set_na <- function(x, value) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in seq_len(nvars)) x[[i]] <- set_na_helper(x[[i]], value)
-    return(x)
-  } else {
-    return(set_na_helper(x, value))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = set_na_helper, value))
+  else
+    x <- set_na_helper(x, value)
+  return(x)
 }
 
 
@@ -114,7 +106,7 @@ set_na_helper <- function(x, value) {
   }
 
   # iterate all NAs
-  for (i in 1:length(value)) {
+  for (i in seq_len(length(value))) {
     # find associated values in x and set them as tagged NA
     x[x %in% value[i]] <- haven::tagged_na(as.character(value[i]))
     # is na-value in labelled values?

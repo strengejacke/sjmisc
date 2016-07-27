@@ -46,19 +46,12 @@
 #' @importFrom stats na.omit
 #' @export
 as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in seq_len(nvars)) x[[i]] <- as_labelled_helper(x[[i]], add.labels, add.class)
-    return(x)
-  } else {
-    return(as_labelled_helper(x, add.labels, add.class))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = as_labelled_helper, add.labels, add.class))
+  else
+    x <- as_labelled_helper(x, add.labels, add.class)
+
+  return(x)
 }
 
 

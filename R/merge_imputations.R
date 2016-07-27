@@ -72,7 +72,7 @@ merge_imputations <- function(dat, imp, ori = NULL) {
       # imputations of the current variables are in
       miss_inc_dat <- as.data.frame(lapply(seq_len(imp$m), function(x) {
         mice::complete(imp, action = x)[[i]]
-      }))
+      }), stringsAsFactors = F)
 
       # convert imputed variable to numeric. needed to perform row means.
       miss_inc_dat <- to_value(miss_inc_dat)

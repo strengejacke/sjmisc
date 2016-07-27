@@ -40,19 +40,11 @@
 #'
 #' @export
 remove_labels <- function(x, value) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # dichotomize all
-    for (i in seq_len(nvars)) x[[i]] <- remove_labels_helper(x[[i]], value)
-    return(x)
-  } else {
-    return(remove_labels_helper(x, value))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = remove_labels_helper, value))
+  else
+    x <- remove_labels_helper(x, value)
+  return(x)
 }
 
 #' @importFrom haven is_tagged_na na_tag

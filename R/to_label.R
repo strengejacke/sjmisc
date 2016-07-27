@@ -93,14 +93,11 @@
 #'
 #' @export
 to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  if (is.data.frame(x)) {
-    for (i in 1:ncol(x)) {
-      x[[i]] <- to_label_helper(x[[i]], add.non.labelled, prefix, drop.na)
-    }
-    return(x)
-  } else {
-    return(to_label_helper(x, add.non.labelled, prefix, drop.na))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = to_label_helper, add.non.labelled, prefix, drop.na))
+  else
+    x <- to_label_helper(x, add.non.labelled, prefix, drop.na)
+  return(x)
 }
 
 #' @importFrom haven na_tag
@@ -121,7 +118,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
       # NA labels to `x` afterwards
       dummy_na <- rep("", times = length(x))
       # iterare NA
-      for (i in 1:length(current.na)) {
+      for (i in seq_len(length(current.na))) {
         dummy_na[haven::na_tag(x) == haven::na_tag(current.na[i])] <- names(current.na)[i]
       }
       x[haven::is_tagged_na(x)] <- dummy_na[haven::is_tagged_na(x)]
@@ -156,7 +153,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
       # remove attributes
       x <- remove_all_labels(x)
     } else {
-      for (i in 1:length(vl)) x[x == vn[i]] <- vl[i]
+      for (i in seq_len(length(vl))) x[x == vn[i]] <- vl[i]
       # to factor
       x <- factor(x, levels = unique(vl))
     }
@@ -236,12 +233,9 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
 #'
 #' @export
 to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  if (is.data.frame(x)) {
-    for (i in 1:ncol(x)) {
-      x[[i]] <- as.character(to_label_helper(x[[i]], add.non.labelled, prefix, drop.na))
-    }
-    return(x)
-  } else {
-    return(as.character(to_label_helper(x, add.non.labelled, prefix, drop.na)))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))))
+  else
+    x <- as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))
+  return(x)
 }

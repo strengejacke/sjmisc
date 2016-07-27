@@ -16,9 +16,9 @@
 #' @param atomic.to.fac Logical, if \code{TRUE}, categorical variables imported
 #'   from the dataset (which are imported as \code{\link{atomic}}) will be
 #'   converted to factors.
-#' @param tag.na Logical, if \code{TRUE} (default), missing values are imported
+#' @param tag.na Logical, if \code{TRUE}, missing values are imported
 #'          as \code{\link[haven]{tagged_na}} values; else, missing values are
-#'          converted to regular \code{NA}.
+#'          converted to regular \code{NA} (default behaviour).
 #' @return A data frame containing the SPSS data. Retrieve value labels with
 #'   \code{\link{get_labels}} and variable labels with \code{\link{get_label}}.
 #'
@@ -56,7 +56,7 @@
 #'
 #' @importFrom haven read_spss
 #' @export
-read_spss <- function(path, atomic.to.fac = FALSE, tag.na = TRUE) {
+read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
   # read data file
   data.spss <- haven::read_spss(file = path, user_na = tag.na)
   # prepare tagged NA?
@@ -81,7 +81,7 @@ read_spss <- function(path, atomic.to.fac = FALSE, tag.na = TRUE) {
           # create tagged NA
           tna <- haven::tagged_na(as.character(na.values))
           # replace values with tagged NA
-          for (j in 1:length(na.values)) {
+          for (j in seq_len(length(na.values))) {
             x[x == na.values[j]] <- tna[j]
           }
           # do we have any labels?
@@ -151,17 +151,17 @@ atomic_to_fac <- function(data.spss, attr.string) {
   # check for valid attr.string
   if (!is.null(attr.string)) {
     # create progress bar
-    pb <- utils::txtProgressBar(min = 0,
-                                max = ncol(data.spss),
-                                style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = ncol(data.spss), style = 3)
     # tell user...
     message("Converting atomic to factors. Please wait...\n")
     # iterate all columns
-    for (i in 1:ncol(data.spss)) {
+    for (i in seq_len(ncol(data.spss))) {
       # copy column to vector
       x <- data.spss[[i]]
-      # capture labels attribute first
+      # capture value labels attribute first
       labs <- attr(x, attr.string, exact = T)
+      # and save variable label, if any
+      lab <- attr(x, "label", exact = T)
       # is atomic, which was factor in SPSS?
       if (is.atomic(x) && !is.null(labs)) {
         # so we have value labels (only typical for factors, not
@@ -172,6 +172,8 @@ atomic_to_fac <- function(data.spss, attr.string) {
         x <- as.factor(x)
         # set back labels attribute
         attr(x, attr.string) <- labs
+        # any variable label?
+        if (!is.null(lab)) attr(x, "label") <- lab
         # copy vector back to data frame
         data.spss[[i]] <- x
       }
@@ -309,13 +311,11 @@ write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
   # create progress bar
-  pb <- utils::txtProgressBar(min = 0,
-                              max = ncol(x),
-                              style = 3)
+  pb <- utils::txtProgressBar(min = 0, max = ncol(x), style = 3)
   # tell user...
   message(sprintf("Prepare writing %s file. Please wait...\n", type))
   # check if variables should be converted to factors
-  for (i in 1:ncol(x)) {
+  for (i in seq_len(ncol(x))) {
     # get value and variable labels
     val.lab <- get_labels(x[[i]], include.values = "n")
     var.lab <- get_label(x[[i]])

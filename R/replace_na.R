@@ -78,8 +78,9 @@
 replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {
   # check for valid value
   if (is.null(value) || is.na(value)) return(x)
+
   if (is.data.frame(x) || is.list(x))
-    x <- as.data.frame(lapply(x, FUN = replace_na_helper, value, na.label, tagged.na))
+    x <- tibble::as_tibble(lapply(x, FUN = replace_na_helper, value, na.label, tagged.na))
   else
     x <- replace_na_helper(x, value, na.label, tagged.na)
   return(x)

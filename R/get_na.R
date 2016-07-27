@@ -54,12 +54,12 @@
 #' @importFrom haven is_tagged_na
 #' @export
 get_na <- function(x, as.tag = FALSE) {
-  if (is.data.frame(x) || is.list(x)) {
-    a <- lapply(x, FUN = get_na_helper, as.tag)
-  } else {
-    a <- get_na_helper(x, as.tag)
-  }
-  return(a)
+  if (is.data.frame(x) || is.list(x))
+    x <- lapply(x, FUN = get_na_helper, as.tag)
+  else
+    x <- get_na_helper(x, as.tag)
+
+  return(x)
 }
 
 

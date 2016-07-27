@@ -52,7 +52,7 @@
 #' @export
 to_value <- function(x, start.at = NULL, keep.labels = TRUE) {
   if (is.data.frame(x) || is.list(x))
-    x <- as.data.frame(lapply(x, FUN = to_value_helper, start.at, keep.labels))
+    x <- tibble::as_tibble(lapply(x, FUN = to_value_helper, start.at, keep.labels))
   else
     x <- to_value_helper(x, start.at, keep.labels)
   return(x)

@@ -21,7 +21,7 @@ getVarLabelAttribute <- function(x) {
     # labels would return NULL, so if -e.g.- first variable
     # of data set has no label attribute, but second had, this
     # function would stop after first attribute and return NULL
-    for (i in 1:counter) {
+    for (i in seq_len(counter)) {
       # retrieve attribute names
       an <- names(attributes(x[[i]]))
       # check for label attributes

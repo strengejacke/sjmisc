@@ -100,7 +100,7 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
     labels <- NULL
   }
   # check for numeric indices, and get column names then
-  for (i in length(data_cols)) {
+  for (i in seq_len(length(data_cols))) {
     # check if all values are numeric
     if (all(is.numeric(data_cols[[i]]))) {
       # get column names instead
@@ -110,7 +110,7 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
   # get all columns that should be gathered
   all_data_cols <- unlist(data_cols)
   # iterate each column group
-  for (i in 1:length(data_cols)) {
+  for (i in seq_len(length(data_cols))) {
     # which of all column groups should be gathered in this step,
     # which not?
     remove_cols <- all_data_cols[!all_data_cols %in% data_cols[[i]]]

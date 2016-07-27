@@ -4,7 +4,7 @@
 \alias{spread_coef}
 \title{Spread model coefficients of nested data frames into columns}
 \usage{
-spread_coef(data, model.column, model.term)
+spread_coef(data, model.column, model.term, ...)
 }
 \arguments{
 \item{data}{A nested data frame with a list-variable that contains fitted
@@ -16,6 +16,8 @@ fitted model objects.}
 \item{model.term}{Optional, name of a model term. If specified, only this model
 term (including p-value) will be extracted from each model and
 added as new column.}
+
+\item{...}{Other arguments passed down to the \code{\link[broom]{tidy}}-function.}
 }
 \value{
 \code{data}, with new columns for each coefficients of the models
@@ -59,6 +61,9 @@ model.data <- efc \%>\%
 # spread coefficients, so we can easily access and compare
 # the coefficients over all models
 spread_coef(model.data, "models")
+
+# select only specific model term
+spread_coef(model.data, "models", "c12hour")
 
 # spread_coef can be used directly within a pipe-chain
 efc \%>\%

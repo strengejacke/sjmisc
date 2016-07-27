@@ -61,7 +61,7 @@
 #' @export
 split_var <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
   if (is.data.frame(x) || is.list(x))
-    x <- as.data.frame(lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive))
+    x <- tibble::as_tibble(lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive))
   else
     x <- split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive)
   return(x)

@@ -21,11 +21,10 @@
 #'
 #' @export
 remove_all_labels <- function(x) {
-  if (is.data.frame(x)) {
-    for (i in seq_len(ncol(x))) x[[i]] <- remove_all_labels_helper(x[[i]])
-  } else {
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = remove_all_labels_helper))
+  else
     x <- remove_all_labels_helper(x)
-  }
   return(x)
 }
 

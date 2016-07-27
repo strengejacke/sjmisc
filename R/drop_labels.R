@@ -34,19 +34,11 @@
 #'
 #' @export
 drop_labels <- function(x, drop.na = TRUE) {
-  if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    # na all
-    for (i in seq_len(nvars)) x[[i]] <- drop_labels_helper(x[[i]], drop.na)
-    return(x)
-  } else {
-    return(drop_labels_helper(x, drop.na))
-  }
+  if (is.data.frame(x) || is.list(x))
+    x <- tibble::as_tibble(lapply(x, FUN = drop_labels_helper, drop.na))
+  else
+    x <- drop_labels_helper(x, drop.na)
+  return(x)
 }
 
 drop_labels_helper <- function(x, drop.na) {
