@@ -48,10 +48,10 @@
 #'
 #' # spread coefficients, so we can easily access and compare
 #' # the coefficients over all models
-#' spread_coef(model.data, "models")
+#' spread_coef(model.data, models)
 #'
 #' # select only specific model term
-#' spread_coef(model.data, "models", "c12hour")
+#' spread_coef(model.data, models, c12hour)
 #'
 #' # spread_coef can be used directly within a pipe-chain
 #' efc %>%
@@ -61,7 +61,7 @@
 #'   mutate(models = lapply(data, function(x) {
 #'     lm(neg_c_7 ~ c12hour + c172code, data = x)
 #'   })) %>%
-#'   spread_coef("models")
+#'   spread_coef(models)
 #'
 #' @importFrom broom tidy
 #' @importFrom dplyr select_ bind_cols
@@ -73,13 +73,17 @@ spread_coef <- function(data, model.column, model.term, ...) {
   if (!is.data.frame(data))
     stop("`data` needs to be a data frame.", call. = FALSE)
 
+  # evaluate arguments
+  model.column <- deparse(substitute(model.column))
+  model.term <- deparse(substitute(model.term))
+
   # check if variable is a list variable
   if (!is.list(data[[model.column]]))
     stop(sprintf("%s needs to be a list-variable.", model.column), call. = FALSE)
 
   # check if user just wants a specific model term
   # if yes, select this, and its p-value
-  if (!missing(model.term) && !is.null(model.term)) {
+  if (!is_empty(model.term)) {
     # iterate list variable
     coef.data <-
       lapply(data[[model.column]], function(x) {
@@ -106,12 +110,8 @@ spread_coef <- function(data, model.column, model.term, ...) {
       })
   }
 
-  # create new data frame
-  dat <- data.frame()
-  # and copy all coefficient columns to data frame
-  for (i in seq_len(length(coef.data))) {
-    dat <- rbind(dat, coef.data[[i]])
-  }
+  # copy all coefficient columns to data frame
+  dat <- do.call(rbind, coef.data)
   # bind result to original data frame
   dplyr::bind_cols(data, dat)
 }

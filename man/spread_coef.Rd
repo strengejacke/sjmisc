@@ -60,10 +60,10 @@ model.data <- efc \%>\%
 
 # spread coefficients, so we can easily access and compare
 # the coefficients over all models
-spread_coef(model.data, "models")
+spread_coef(model.data, models)
 
 # select only specific model term
-spread_coef(model.data, "models", "c12hour")
+spread_coef(model.data, models, c12hour)
 
 # spread_coef can be used directly within a pipe-chain
 efc \%>\%
@@ -73,7 +73,7 @@ efc \%>\%
   mutate(models = lapply(data, function(x) {
     lm(neg_c_7 ~ c12hour + c172code, data = x)
   })) \%>\%
-  spread_coef("models")
+  spread_coef(models)
 
 }
 
