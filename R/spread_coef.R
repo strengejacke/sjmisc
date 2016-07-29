@@ -1,11 +1,11 @@
-#' @title Spread model coefficients of nested data frames into columns
+#' @title Spread model coefficients of list-variables into columns
 #' @name spread_coef
 #'
 #' @description This function extracts the coefficients of fitted model objects
-#'              from nested data frames and spreads the coefficients into
-#'              new colummns.
+#'              from (nested) data frames, which are saved in a list-variable,
+#'              and spreads the coefficients into new colummns.
 #'
-#' @param data A nested data frame with a list-variable that contains fitted
+#' @param data A (nested) data frame with a list-variable that contains fitted
 #'          model objects (see 'Details').
 #' @param model.column Name or index of the list-variable that contains the
 #'          fitted model objects.
@@ -19,8 +19,8 @@
 #'           with two new columns (one for the term's estimate value and one
 #'           for the related p-value).
 #'
-#' @details This function requires a nested data frame, as created by the
-#'            \code{\link[tidyr]{nest}}-function of the \pkg{tidyr}-package,
+#' @details This function requires a (nested) data frame (e.g. created by the
+#'            \code{\link[tidyr]{nest}}-function of the \pkg{tidyr}-package),
 #'            where several fitted models are saved in a list-variable (see
 #'            'Examples'). As nested data frames with fitted models as list-variable
 #'            are typically fit with an identical formula, all models have the same
@@ -62,6 +62,20 @@
 #'     lm(neg_c_7 ~ c12hour + c172code, data = x)
 #'   })) %>%
 #'   spread_coef(models)
+#'
+#' # spread_coef() makes it easy to generate bootstrapped
+#' # confidence intervals, using the 'bootstrap()' and 'boot_ci()'
+#' # functions from the 'sjstats' package, which creates nested
+#' # data frames of bootstrap replicates
+#' library(dplyr)
+#' library(sjstats)
+#' efc %>%
+#'   bootstrap(100) %>%
+#'   mutate(models = lapply(.$strap, function(x) {
+#'     lm(neg_c_7 ~ e42dep + c161sex, data = x)
+#'   })) %>%
+#'   spread_coef(models) %>%
+#'   boot_ci(e42dep)
 #'
 #' @importFrom broom tidy
 #' @importFrom dplyr select_ bind_cols
