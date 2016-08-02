@@ -68,11 +68,22 @@
 #'
 #' @export
 to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl))
-  else
-    x <- to_fac_helper(x, add.non.labelled, ref.lvl)
-  return(x)
+  UseMethod("to_factor")
+}
+
+#' @export
+to_factor.data.frame <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
+  tibble::as_tibble(lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl))
+}
+
+#' @export
+to_factor.list <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
+  lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl)
+}
+
+#' @export
+to_factor.default <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
+  to_fac_helper(x, add.non.labelled, ref.lvl)
 }
 
 

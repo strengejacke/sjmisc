@@ -52,24 +52,29 @@
 #'           val.labels = c("lower", "higher")))
 #'
 #' @export
-dicho <- function(x,
-                  dich.by = "median",
-                  as.num = FALSE,
-                  var.label = NULL,
-                  val.labels = NULL) {
+dicho <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL) {
   # check for correct dichotome types
   if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
     stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)
   }
 
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels))
-  else
-    x <- dicho_helper(x, dich.by, as.num, var.label, val.labels)
-
-  return(x)
+  UseMethod("dicho")
 }
 
+#' @export
+dicho.data.frame <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL) {
+  tibble::as_tibble(lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels))
+}
+
+#' @export
+dicho.list <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL) {
+  lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels)
+}
+
+#' @export
+dicho.default <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL) {
+  dicho_helper(x, dich.by, as.num, var.label, val.labels)
+}
 
 #' @importFrom stats median
 dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {

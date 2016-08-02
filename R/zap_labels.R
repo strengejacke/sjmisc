@@ -42,13 +42,23 @@
 #' @importFrom stats na.omit
 #' @export
 zap_labels <- function(x) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = zap_labels_helper))
-  else
-    x <- zap_labels_helper(x)
-  return(x)
+  UseMethod("zap_labels")
 }
 
+#' @export
+zap_labels.data.frame <- function(x) {
+  tibble::as_tibble(lapply(x, FUN = zap_labels_helper))
+}
+
+#' @export
+zap_labels.list <- function(x) {
+  lapply(x, FUN = zap_labels_helper)
+}
+
+#' @export
+zap_labels.default <- function(x) {
+  zap_labels_helper(x)
+}
 
 #' @title Convert non-labelled values into NA
 #' @name zap_unlabelled
@@ -93,11 +103,22 @@ zap_labels <- function(x) {
 #' @importFrom stats na.omit
 #' @export
 zap_unlabelled <- function(x) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = zap_unlabelled_helper))
-  else
-    x <- zap_unlabelled_helper(x)
-  return(x)
+  UseMethod("zap_unlabelled")
+}
+
+#' @export
+zap_unlabelled.data.frame <- function(x) {
+  tibble::as_tibble(lapply(x, FUN = zap_unlabelled_helper))
+}
+
+#' @export
+zap_unlabelled.list <- function(x) {
+  lapply(x, FUN = zap_unlabelled_helper)
+}
+
+#' @export
+zap_unlabelled.default <- function(x) {
+  zap_unlabelled_helper(x)
 }
 
 
@@ -127,12 +148,24 @@ zap_unlabelled <- function(x) {
 #'
 #' @importFrom stats na.omit
 #' @export
+#' @export
 zap_na_tags <- function(x) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = zap_na_tags_helper))
-  else
-    x <- zap_na_tags_helper(x)
-  return(x)
+  UseMethod("zap_na_tags")
+}
+
+#' @export
+zap_na_tags.data.frame <- function(x) {
+  tibble::as_tibble(lapply(x, FUN = zap_na_tags_helper))
+}
+
+#' @export
+zap_na_tags.list <- function(x) {
+  lapply(x, FUN = zap_na_tags_helper)
+}
+
+#' @export
+zap_na_tags.default <- function(x) {
+  zap_na_tags_helper(x)
 }
 
 

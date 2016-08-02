@@ -60,11 +60,22 @@
 #' @importFrom stats quantile
 #' @export
 split_var <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive))
-  else
-    x <- split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive)
-  return(x)
+  UseMethod("split_var")
+}
+
+#' @export
+split_var.data.frame <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
+  tibble::as_tibble(lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive))
+}
+
+#' @export
+split_var.list <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
+  lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive)
+}
+
+#' @export
+split_var.default <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE) {
+  split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive)
 }
 
 split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclusive) {

@@ -4,7 +4,7 @@
 \alias{spread_coef}
 \title{Spread model coefficients of list-variables into columns}
 \usage{
-spread_coef(data, model.column, model.term, ...)
+spread_coef(data, model.column, model.term, append = TRUE, ...)
 }
 \arguments{
 \item{data}{A (nested) data frame with a list-variable that contains fitted
@@ -17,13 +17,19 @@ fitted model objects.}
 term (including p-value) will be extracted from each model and
 added as new column.}
 
+\item{append}{Logical, if \code{TRUE} (default), this function returns
+\code{data} with new columns for the model coefficients; else,
+a new data frame with model coefficients only are returned.}
+
 \item{...}{Other arguments passed down to the \code{\link[broom]{tidy}}-function.}
 }
 \value{
-\code{data}, with new columns for each coefficients of the models
-          that are stored in the list-variable; or, if \code{model.term} is given,
-          with two new columns (one for the term's estimate value and one
-          for the related p-value).
+A data frame with columns for each coefficient of the models
+          that are stored in the list-variable of \code{data}; or, if
+          \code{model.term} is given, a data frame with two columns
+          (one for the term's estimate value and one for the related p-value).
+          If \code{append = TRUE}, the columns are appended to \code{data},
+          i.e. \code{data} is also returned.
 }
 \description{
 This function extracts the coefficients of fitted model objects
@@ -84,10 +90,10 @@ library(sjstats)
 efc \%>\%
   bootstrap(100) \%>\%
   mutate(models = lapply(.$strap, function(x) {
-    lm(neg_c_7 ~ e42dep + c161sex, data = x)
+    lm(neg_c_7 ~ e42dep + c161sex + c172code, data = x)
   })) \%>\%
   spread_coef(models) \%>\%
-  boot_ci(e42dep)
+  boot_ci(e42dep, c161sex, c172code)
 
 }
 

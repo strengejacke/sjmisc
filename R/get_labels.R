@@ -148,16 +148,26 @@
 #' @export
 get_labels <- function(x, attr.only = FALSE, include.values = NULL,
                        include.non.labelled = FALSE, drop.na = TRUE) {
-  if (is.data.frame(x) || is.list(x)) {
-    x <- lapply(x, FUN = get_labels_helper, attr.only, include.values,
-                include.non.labelled, drop.na)
-  } else {
-    x <- get_labels_helper(x, attr.only, include.values,
-                           include.non.labelled, drop.na)
-  }
-  return(x)
+  UseMethod("get_labels")
 }
 
+#' @export
+get_labels.data.frame <- function(x, attr.only = FALSE, include.values = NULL,
+                                  include.non.labelled = FALSE, drop.na = TRUE) {
+  lapply(x, FUN = get_labels_helper, attr.only, include.values, include.non.labelled, drop.na)
+}
+
+#' @export
+get_labels.list <- function(x, attr.only = FALSE, include.values = NULL,
+                                  include.non.labelled = FALSE, drop.na = TRUE) {
+  lapply(x, FUN = get_labels_helper, attr.only, include.values, include.non.labelled, drop.na)
+}
+
+#' @export
+get_labels.default <- function(x, attr.only = FALSE, include.values = NULL,
+                                  include.non.labelled = FALSE, drop.na = TRUE) {
+  get_labels_helper(x, attr.only, include.values, include.non.labelled, drop.na)
+}
 
 # Retrieve value labels of a data frame or variable
 # See 'get_labels'

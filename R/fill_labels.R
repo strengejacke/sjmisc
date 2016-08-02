@@ -28,11 +28,22 @@
 #'
 #' @export
 fill_labels <- function(x) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = fill_labels_helper))
-  else
-    x <- fill_labels_helper(x)
-  return(x)
+  UseMethod("fill_labels")
+}
+
+#' @export
+fill_labels.data.frame <- function(x) {
+  tibble::as_tibble(lapply(x, FUN = fill_labels_helper))
+}
+
+#' @export
+fill_labels.list <- function(x) {
+  lapply(x, FUN = fill_labels_helper)
+}
+
+#' @export
+fill_labels.default <- function(x) {
+  fill_labels_helper(x)
 }
 
 fill_labels_helper <- function(x) {

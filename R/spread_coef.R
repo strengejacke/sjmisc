@@ -1,3 +1,5 @@
+utils::globalVariables("term")
+
 #' @title Spread model coefficients of list-variables into columns
 #' @name spread_coef
 #'
@@ -12,12 +14,17 @@
 #' @param model.term Optional, name of a model term. If specified, only this model
 #'          term (including p-value) will be extracted from each model and
 #'          added as new column.
+#' @param append Logical, if \code{TRUE} (default), this function returns
+#'          \code{data} with new columns for the model coefficients; else,
+#'          a new data frame with model coefficients only are returned.
 #' @param ... Other arguments passed down to the \code{\link[broom]{tidy}}-function.
 #'
-#' @return \code{data}, with new columns for each coefficients of the models
-#'           that are stored in the list-variable; or, if \code{model.term} is given,
-#'           with two new columns (one for the term's estimate value and one
-#'           for the related p-value).
+#' @return A data frame with columns for each coefficient of the models
+#'           that are stored in the list-variable of \code{data}; or, if
+#'           \code{model.term} is given, a data frame with two columns
+#'           (one for the term's estimate value and one for the related p-value).
+#'           If \code{append = TRUE}, the columns are appended to \code{data},
+#'           i.e. \code{data} is also returned.
 #'
 #' @details This function requires a (nested) data frame (e.g. created by the
 #'            \code{\link[tidyr]{nest}}-function of the \pkg{tidyr}-package),
@@ -72,17 +79,18 @@
 #' efc %>%
 #'   bootstrap(100) %>%
 #'   mutate(models = lapply(.$strap, function(x) {
-#'     lm(neg_c_7 ~ e42dep + c161sex, data = x)
+#'     lm(neg_c_7 ~ e42dep + c161sex + c172code, data = x)
 #'   })) %>%
 #'   spread_coef(models) %>%
-#'   boot_ci(e42dep)
+#'   boot_ci(e42dep, c161sex, c172code)
 #'
 #' @importFrom broom tidy
 #' @importFrom dplyr select_ bind_cols
 #' @importFrom tidyr spread_
 #' @importFrom magrittr "%>%"
+#' @importFrom purrr map_df
 #' @export
-spread_coef <- function(data, model.column, model.term, ...) {
+spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
   # check if we have a data frame
   if (!is.data.frame(data))
     stop("`data` needs to be a data frame.", call. = FALSE)
@@ -99,8 +107,8 @@ spread_coef <- function(data, model.column, model.term, ...) {
   # if yes, select this, and its p-value
   if (!is_empty(model.term)) {
     # iterate list variable
-    coef.data <-
-      lapply(data[[model.column]], function(x) {
+    dat <-
+      purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
         tmp <- broom::tidy(x, effects = "fixed", ...) %>%
           # filter term
@@ -113,8 +121,8 @@ spread_coef <- function(data, model.column, model.term, ...) {
       })
   } else {
     # iterate list variable
-    coef.data <-
-      lapply(data[[model.column]], function(x) {
+    dat <-
+      purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
         broom::tidy(x, effects = "fixed", ...) %>%
           # just select term name and estimate value
@@ -123,9 +131,9 @@ spread_coef <- function(data, model.column, model.term, ...) {
           tidyr::spread_(key_col = "term", value_col = "estimate")
       })
   }
-
-  # copy all coefficient columns to data frame
-  dat <- do.call(rbind, coef.data)
   # bind result to original data frame
-  dplyr::bind_cols(data, dat)
+  if (append)
+    dplyr::bind_cols(data, dat)
+  else
+    dat
 }

@@ -48,14 +48,23 @@
 #' @importFrom haven is_tagged_na na_tag
 #' @export
 get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
-  if (is.data.frame(x) || is.list(x)) {
-    a <- lapply(x, FUN = get_values_helper, sort.val, drop.na)
-  } else {
-    a <- get_values_helper(x, sort.val, drop.na)
-  }
-  return(a)
+  UseMethod("get_values")
 }
 
+#' @export
+get_values.data.frame <- function(x, sort.val = FALSE, drop.na = FALSE) {
+  lapply(x, FUN = get_values_helper, sort.val, drop.na)
+}
+
+#' @export
+get_values.list <- function(x, sort.val = FALSE, drop.na = FALSE) {
+  lapply(x, FUN = get_values_helper, sort.val, drop.na)
+}
+
+#' @export
+get_values.default <- function(x, sort.val = FALSE, drop.na = FALSE) {
+  get_values_helper(x, sort.val, drop.na)
+}
 
 get_values_helper <- function(x, sort.val = FALSE, drop.na = FALSE) {
   # haven or foreign?

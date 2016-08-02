@@ -51,13 +51,23 @@
 #'
 #' @export
 to_value <- function(x, start.at = NULL, keep.labels = TRUE) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = to_value_helper, start.at, keep.labels))
-  else
-    x <- to_value_helper(x, start.at, keep.labels)
-  return(x)
+  UseMethod("to_value")
 }
 
+#' @export
+to_value.data.frame <- function(x, start.at = NULL, keep.labels = TRUE) {
+  tibble::as_tibble(lapply(x, FUN = to_value_helper, start.at, keep.labels))
+}
+
+#' @export
+to_value.list <- function(x, start.at = NULL, keep.labels = TRUE) {
+  lapply(x, FUN = to_value_helper, start.at, keep.labels)
+}
+
+#' @export
+to_value.default <- function(x, start.at = NULL, keep.labels = TRUE) {
+  to_value_helper(x, start.at, keep.labels)
+}
 
 to_value_helper <- function(x, start.at, keep.labels) {
   labels <- NULL

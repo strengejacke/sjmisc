@@ -74,13 +74,23 @@
 #'
 #' @export
 set_na <- function(x, value) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = set_na_helper, value))
-  else
-    x <- set_na_helper(x, value)
-  return(x)
+  UseMethod("set_na")
 }
 
+#' @export
+set_na.data.frame <- function(x, value) {
+  tibble::as_tibble(lapply(x, FUN = set_na_helper, value))
+}
+
+#' @export
+set_na.list <- function(x, value) {
+  lapply(x, FUN = set_na_helper, value)
+}
+
+#' @export
+set_na.default <- function(x, value) {
+  set_na_helper(x, value)
+}
 
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag

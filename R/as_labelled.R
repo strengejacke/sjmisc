@@ -46,14 +46,23 @@
 #' @importFrom stats na.omit
 #' @export
 as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = as_labelled_helper, add.labels, add.class))
-  else
-    x <- as_labelled_helper(x, add.labels, add.class)
-
-  return(x)
+  UseMethod("as_labelled")
 }
 
+#' @export
+as_labelled.data.frame <- function(x, add.labels = FALSE, add.class = FALSE) {
+  tibble::as_tibble(lapply(x, FUN = as_labelled_helper, add.labels, add.class))
+}
+
+#' @export
+as_labelled.list <- function(x, add.labels = FALSE, add.class = FALSE) {
+  lapply(x, FUN = as_labelled_helper, add.labels, add.class)
+}
+
+#' @export
+as_labelled.default <- function(x, add.labels = FALSE, add.class = FALSE) {
+  as_labelled_helper(x, add.labels, add.class)
+}
 
 as_labelled_helper <- function(x, add.labels, add.class) {
   # check if we have any value label attributes

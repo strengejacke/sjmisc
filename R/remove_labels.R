@@ -40,12 +40,24 @@
 #'
 #' @export
 remove_labels <- function(x, value) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = remove_labels_helper, value))
-  else
-    x <- remove_labels_helper(x, value)
-  return(x)
+  UseMethod("remove_labels")
 }
+
+#' @export
+remove_labels.data.frame <- function(x, value) {
+  tibble::as_tibble(lapply(x, FUN = remove_labels_helper, value))
+}
+
+#' @export
+remove_labels.list <- function(x, value) {
+  lapply(x, FUN = remove_labels_helper, value)
+}
+
+#' @export
+remove_labels.default <- function(x, value) {
+  remove_labels_helper(x, value)
+}
+
 
 #' @importFrom haven is_tagged_na na_tag
 remove_labels_helper <- function(x, value) {
@@ -103,6 +115,5 @@ remove_labels_helper <- function(x, value) {
 
 #' @export
 `remove_labels<-.default` <- function(x, value) {
-  x <- remove_labels(x, value)
-  x
+  remove_labels(x, value)
 }

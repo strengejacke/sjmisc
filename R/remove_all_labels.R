@@ -21,13 +21,24 @@
 #'
 #' @export
 remove_all_labels <- function(x) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = remove_all_labels_helper))
-  else
-    x <- remove_all_labels_helper(x)
-  return(x)
+  UseMethod("remove_all_labels")
 }
 
+
+#' @export
+remove_all_labels.data.frame <- function(x) {
+  tibble::as_tibble(lapply(x, FUN = remove_all_labels_helper))
+}
+
+#' @export
+remove_all_labels.list <- function(x) {
+  lapply(x, FUN = remove_all_labels_helper)
+}
+
+#' @export
+remove_all_labels.default <- function(x) {
+  remove_all_labels_helper(x)
+}
 
 remove_all_labels_helper <- function(x) {
   # find label-attribute string

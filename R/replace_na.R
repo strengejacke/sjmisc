@@ -78,14 +78,24 @@
 replace_na <- function(x, value, na.label = NULL, tagged.na = NULL) {
   # check for valid value
   if (is.null(value) || is.na(value)) return(x)
-
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = replace_na_helper, value, na.label, tagged.na))
-  else
-    x <- replace_na_helper(x, value, na.label, tagged.na)
-  return(x)
+  UseMethod("replace_na")
 }
 
+
+#' @export
+replace_na.data.frame <- function(x, value, na.label = NULL, tagged.na = NULL) {
+  tibble::as_tibble(lapply(x, FUN = replace_na_helper, value, na.label, tagged.na))
+}
+
+#' @export
+replace_na.list <- function(x, value, na.label = NULL, tagged.na = NULL) {
+  lapply(x, FUN = replace_na_helper, value, na.label, tagged.na)
+}
+
+#' @export
+replace_na.default <- function(x, value, na.label = NULL, tagged.na = NULL) {
+  replace_na_helper(x, value, na.label, tagged.na)
+}
 
 replace_na_helper <- function(x, value, na.label, tagged.na) {
   # create named vector, for labelleing

@@ -34,11 +34,22 @@
 #'
 #' @export
 drop_labels <- function(x, drop.na = TRUE) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = drop_labels_helper, drop.na))
-  else
-    x <- drop_labels_helper(x, drop.na)
-  return(x)
+  UseMethod("drop_labels")
+}
+
+#' @export
+drop_labels.data.frame <- function(x, drop.na = TRUE) {
+  tibble::as_tibble(lapply(x, FUN = drop_labels_helper, drop.na))
+}
+
+#' @export
+drop_labels.list <- function(x, drop.na = TRUE) {
+  lapply(x, FUN = drop_labels_helper, drop.na)
+}
+
+#' @export
+drop_labels.default <- function(x, drop.na = TRUE) {
+  drop_labels_helper(x, drop.na)
 }
 
 drop_labels_helper <- function(x, drop.na) {

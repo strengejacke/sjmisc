@@ -93,11 +93,23 @@
 #'
 #' @export
 to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = to_label_helper, add.non.labelled, prefix, drop.na))
-  else
-    x <- to_label_helper(x, add.non.labelled, prefix, drop.na)
-  return(x)
+  UseMethod("to_label")
+}
+
+
+#' @export
+to_label.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  tibble::as_tibble(lapply(x, FUN = to_label_helper, add.non.labelled, prefix, drop.na))
+}
+
+#' @export
+to_label.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  lapply(x, FUN = to_label_helper, add.non.labelled, prefix, drop.na)
+}
+
+#' @export
+to_label.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  to_label_helper(x, add.non.labelled, prefix, drop.na)
 }
 
 #' @importFrom haven na_tag
@@ -233,9 +245,21 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
 #'
 #' @export
 to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))))
-  else
-    x <- as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))
-  return(x)
+  UseMethod("to_character")
+}
+
+
+#' @export
+to_character.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  tibble::as_tibble(lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))))
+}
+
+#' @export
+to_character.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, drop.na)))
+}
+
+#' @export
+to_character.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+  as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))
 }

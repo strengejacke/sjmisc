@@ -88,6 +88,5 @@ ref_lvl <- function(x, value = NULL) {
 
 #' @export
 `ref_lvl<-.default` <- function(x, value) {
-  x <- ref_lvl(x = x, value = value)
-  x
+  ref_lvl(x = x, value = value)
 }

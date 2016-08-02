@@ -66,12 +66,22 @@ add_labels <- function(x, value) {
   if (is.null(value)) stop("`value` is NULL.", call. = F)
   if (is.null(names(value))) stop("`value` must be a named vector.", call. = F)
 
-  if (is.data.frame(x) || is.list(x))
-    x <- tibble::as_tibble(lapply(x, FUN = add_labels_helper, value))
-  else
-    x <- add_labels_helper(x, value)
+  UseMethod("add_labels")
+}
 
-  return(x)
+#' @export
+add_labels.data.frame <- function(x, value) {
+  tibble::as_tibble(lapply(x, FUN = add_labels_helper, value))
+}
+
+#' @export
+add_labels.list <- function(x, value) {
+  lapply(x, FUN = add_labels_helper, value)
+}
+
+#' @export
+add_labels.default <- function(x, value) {
+  add_labels_helper(x, value)
 }
 
 #' @importFrom haven is_tagged_na na_tag
@@ -141,8 +151,7 @@ add_labels_helper <- function(x, value) {
 
 #' @export
 `add_labels<-.default` <- function(x, value) {
-  x <- add_labels(x, value)
-  x
+  add_labels(x, value)
 }
 
 
@@ -150,17 +159,11 @@ add_labels_helper <- function(x, value) {
 #' @rdname add_labels
 #' @export
 replace_labels <- function(x, value) {
-  return(add_labels(x, value))
+  UseMethod("add_labels")
 }
 
 #' @rdname add_labels
 #' @export
 `replace_labels<-` <- function(x, value) {
-  UseMethod("replace_labels<-")
-}
-
-#' @export
-`replace_labels<-.default` <- function(x, value) {
-  x <- replace_labels(x, value)
-  x
+  UseMethod("add_labels<-")
 }
