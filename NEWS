@@ -1,4 +1,4 @@
-Version 1.8.0-4
+Version 1.8.0-5
 ------------------------------------------------------------------------------
 General:
 * sjmisc now supports tagged NA values, a new structure for labelled missing values introduced by the haven-package. This means that functions or arguments that are no longer useful, have been removed while other functions dealing with NA values have been largely revised.
