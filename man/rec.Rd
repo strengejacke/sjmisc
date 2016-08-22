@@ -21,8 +21,9 @@ function to create recode strings for grouping variables.}
 Default is \code{FALSE}, thus a numeric variable is returned.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-recoded variable (see \code{\link{set_label}}). If \code{NULL}
-(default), variable label attribute of \code{x} will be used (if present).}
+returned variable (see \code{\link{set_label}}). If \code{NULL}
+(default), variable label attribute of \code{x} will be used (if present).
+If empty, variable label attributes will be removed.}
 
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).

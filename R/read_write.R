@@ -4,13 +4,12 @@
 #' @description Import data from SPSS, including NA's, value and variable
 #'   labels.
 #'
-#' @seealso \itemize{ \item
-#'   \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data
-#'   initialization} \item
-#'   \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual:
-#'   working with labelled data} \item
-#'   \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual:
-#'   inspecting (SPSS imported) data frames} \item \code{\link{write_spss}} }
+#' @seealso \itemize{
+#'  \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
+#'  \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
+#'  \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
+#'  \item \code{\link{write_spss}}
+#'  }
 #'
 #' @param path File path to the data file.
 #' @param atomic.to.fac Logical, if \code{TRUE}, categorical variables imported

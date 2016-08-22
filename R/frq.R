@@ -56,7 +56,7 @@ frq <- function(x, sort.frq = c("none", "asc", "desc")) {
     else
       dat$val <- as.numeric(dat$val)
     # create frequency table
-    dat2 <- data.frame(table(x, exclude = NULL))
+    dat2 <- data.frame(table(x, useNA = "always"))
     colnames(dat2) <- c("val", "frq")
     dat2$val <- to_value(dat2$val, keep.labels = F)
     # join frq table and label columns
@@ -66,7 +66,7 @@ frq <- function(x, sort.frq = c("none", "asc", "desc")) {
     suppressMessages(replace_na(mydat$frq) <- 0)
   } else {
     # if we have no labels, do simple frq table
-    mydat <- data.frame(table(x, exclude = NULL))
+    mydat <- data.frame(table(x, useNA = "always"))
     colnames(mydat) <- c("val", "frq")
     # add values as label
     mydat$label <- labels <- as.character(mydat$val)

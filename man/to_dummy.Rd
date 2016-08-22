@@ -8,18 +8,18 @@ to_dummy(x, var.name = "name", suffix = c("numeric", "label"),
   data = NULL)
 }
 \arguments{
-\item{x}{a \code{\link{vector}} (variable).}
+\item{x}{A \code{\link{vector}} (variable).}
 
-\item{var.name}{indicates how the new dummy variables are named. Use
+\item{var.name}{Indicates how the new dummy variables are named. Use
 \code{"name"} to use the variable name or any other string that will
 be used as is. See 'Examples'.}
 
-\item{suffix}{indicates which suffix will be added to each dummy variable.
+\item{suffix}{Indicates which suffix will be added to each dummy variable.
 Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
 \emph{x_2}, \emph{x_3} etc. Use \code{"label"} to add value label,
 e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.}
 
-\item{data}{optional, a data frame where the new dummy variables are appended
+\item{data}{Optional, a data frame where the new dummy variables are appended
 as additional columns.}
 }
 \value{

@@ -61,12 +61,11 @@ mydat.val <- get_labels(mydat)}
 
 }
 \seealso{
-\itemize{ \item
-  \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data
-  initialization} \item
-  \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual:
-  working with labelled data} \item
-  \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual:
-  inspecting (SPSS imported) data frames} \item \code{\link{write_spss}} }
+\itemize{
+ \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
+ \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
+ \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
+ \item \code{\link{write_spss}}
+ }
 }
 

@@ -1,7 +1,7 @@
 #' @title Drop labels of zero-count values
 #' @name drop_labels
 #'
-#' @description This function drops all value labels for those values that have
+#' @description This function drops all value labels for unused values that have
 #'                no cases (frequencies) in a vector.
 #'
 #' @param x Variable (vector), \code{data.frame} or \code{list} of variables

@@ -14,8 +14,9 @@
 #'            labelled vector into a character vector (using label attributes as
 #'            values).
 #'
-#' @param x A labelled vector (see \code{\link{set_labels}}),
-#'          respectively a data frame with such variables.
+#' @param x A labelled vector (see \code{\link{set_labels}} or
+#'          \code{\link[haven]{labelled}}), respectively a data frame with
+#'          such variables.
 #' @param add.non.labelled logical, if \code{TRUE}, values without associated
 #'          value label will also be converted to labels (as is). See 'Examples'.
 #' @param prefix Logical, if \code{TRUE}, the value labels used as factor levels
@@ -23,11 +24,15 @@
 #' @param drop.na Logical, if \code{TRUE}, tagged \code{NA} values with value labels
 #'          will be converted to regular NA's. Else, tagged \code{NA} values will be replaced
 #'          with their value labels. See 'Examples' and \code{\link{get_na}}.
+#' @param drop.levels Logical, if \code{TRUE}, unused factor levels will be
+#'          dropped (i.e. \code{\link{droplevels}} will be applied before returning
+#'          the result).
+#' @inheritParams rec
 #' @return A factor variable with the associated value labels as factor levels, or a
 #'           data frame with such factor variables (if \code{x} was a data frame).
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+#' @note Value label attributes (see, for instance, \code{\link{get_labels}})
+#'       will be removed when converting variables to factors.
 #'
 #' @details See 'Details' in \code{\link{get_na}}.
 #'
@@ -91,34 +96,49 @@
 #' get_labels(dummy,, "p")
 #' to_label(dummy)
 #'
+#' # drop unused factor levels, but preserve variable label
+#' x <- factor(c("a", "b", "c"), levels = c("a", "b", "c", "d"))
+#' set_labels(x) <- c("ape", "bear", "cat")
+#' set_label(x) <- "A factor!"
+#' x
+#' to_label(x, drop.levels = TRUE)
+#'
+#' # change variable label
+#' to_label(x, var.label = "New variable label!", drop.levels = TRUE)
+#'
 #' @export
-to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
   UseMethod("to_label")
 }
 
 
 #' @export
-to_label.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  tibble::as_tibble(lapply(x, FUN = to_label_helper, add.non.labelled, prefix, drop.na))
+to_label.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  tibble::as_tibble(lapply(x, FUN = to_label_helper, add.non.labelled, prefix, var.label, drop.na, drop.levels))
 }
 
 #' @export
-to_label.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  lapply(x, FUN = to_label_helper, add.non.labelled, prefix, drop.na)
+to_label.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  lapply(x, FUN = to_label_helper, add.non.labelled, prefix, var.label, drop.na, drop.levels)
 }
 
 #' @export
-to_label.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  to_label_helper(x, add.non.labelled, prefix, drop.na)
+to_label.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels)
 }
 
 #' @importFrom haven na_tag
-to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
+to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, drop.levels) {
   # prefix labels?
   if (prefix)
     iv <- "p"
   else
     iv <- 0
+  # retrieve variable label
+  if (is.null(var.label))
+    var_lab <- get_label(x)
+  else
+    var_lab <- var.label
   # keep missings?
   if (!drop.na) {
     # get NA
@@ -160,8 +180,10 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
 
     # replace values with labels
     if (is.factor(x)) {
+      # more levels than labels?
+      remain_labels <- levels(x)[!levels(x) %in% vn]
       # set new levels
-      levels(x) <- vl
+      levels(x) <- c(vl, remain_labels)
       # remove attributes
       x <- remove_all_labels(x)
     } else {
@@ -170,6 +192,10 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
       x <- factor(x, levels = unique(vl))
     }
   }
+  # drop unused levels?
+  if (drop.levels) x <- droplevels(x)
+  # set back variable labels
+  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, var_lab))
   # return as factor
   return(x)
 }
@@ -244,22 +270,22 @@ to_label_helper <- function(x, add.non.labelled, prefix, drop.na) {
 #' to_character(x, add.non.labelled = TRUE, drop.na = FALSE)
 #'
 #' @export
-to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
+to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
   UseMethod("to_character")
 }
 
 
 #' @export
-to_character.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  tibble::as_tibble(lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))))
+to_character.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  tibble::as_tibble(lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels))))
 }
 
 #' @export
-to_character.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, drop.na)))
+to_character.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels)))
 }
 
 #' @export
-to_character.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE) {
-  as.character(to_label_helper(x, add.non.labelled, prefix, drop.na))
+to_character.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  as.character(to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels))
 }

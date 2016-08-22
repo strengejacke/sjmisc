@@ -18,8 +18,9 @@
 #' @param as.fac Logical, if \code{TRUE}, recoded variable is returned as factor.
 #'          Default is \code{FALSE}, thus a numeric variable is returned.
 #' @param var.label Optional string, to set variable label attribute for the
-#'          recoded variable (see \code{\link{set_label}}). If \code{NULL}
+#'          returned variable (see \code{\link{set_label}}). If \code{NULL}
 #'          (default), variable label attribute of \code{x} will be used (if present).
+#'          If empty, variable label attributes will be removed.
 #' @param val.labels Optional character vector, to set value label attributes
 #'          of recoded variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.

@@ -4,15 +4,15 @@
 #' @description This function splits categorical or numeric vectors with
 #'                more than two categories into 0/1-coded dummy variables.
 #'
-#' @param x a \code{\link{vector}} (variable).
-#' @param var.name indicates how the new dummy variables are named. Use
+#' @param x A \code{\link{vector}} (variable).
+#' @param var.name Indicates how the new dummy variables are named. Use
 #'          \code{"name"} to use the variable name or any other string that will
 #'          be used as is. See 'Examples'.
-#' @param suffix indicates which suffix will be added to each dummy variable.
+#' @param suffix Indicates which suffix will be added to each dummy variable.
 #'          Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
 #'          \emph{x_2}, \emph{x_3} etc. Use \code{"label"} to add value label,
 #'          e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.
-#' @param data optional, a data frame where the new dummy variables are appended
+#' @param data Optional, a data frame where the new dummy variables are appended
 #'          as additional columns.
 #' @return A data frame with dummy variables for each category of \code{x}, or
 #'           \code{data} where new dummy variables are appended as additional

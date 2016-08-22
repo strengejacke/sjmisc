@@ -4,11 +4,13 @@
 \alias{to_label}
 \title{Convert variable into factor and replace values with associated value labels}
 \usage{
-to_label(x, add.non.labelled = FALSE, prefix = FALSE, drop.na = TRUE)
+to_label(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL,
+  drop.na = TRUE, drop.levels = FALSE)
 }
 \arguments{
-\item{x}{A labelled vector (see \code{\link{set_labels}}),
-respectively a data frame with such variables.}
+\item{x}{A labelled vector (see \code{\link{set_labels}} or
+\code{\link[haven]{labelled}}), respectively a data frame with
+such variables.}
 
 \item{add.non.labelled}{logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}
@@ -16,9 +18,18 @@ value label will also be converted to labels (as is). See 'Examples'.}
 \item{prefix}{Logical, if \code{TRUE}, the value labels used as factor levels
 or character values will be prefixed with their associated values. See 'Examples'.}
 
+\item{var.label}{Optional string, to set variable label attribute for the
+returned variable (see \code{\link{set_label}}). If \code{NULL}
+(default), variable label attribute of \code{x} will be used (if present).
+If empty, variable label attributes will be removed.}
+
 \item{drop.na}{Logical, if \code{TRUE}, tagged \code{NA} values with value labels
 will be converted to regular NA's. Else, tagged \code{NA} values will be replaced
 with their value labels. See 'Examples' and \code{\link{get_na}}.}
+
+\item{drop.levels}{Logical, if \code{TRUE}, unused factor levels will be
+dropped (i.e. \code{\link{droplevels}} will be applied before returning
+the result).}
 }
 \value{
 A factor variable with the associated value labels as factor levels, or a
@@ -36,8 +47,8 @@ This function converts (replaces) variable values (also of factors
 See 'Details' in \code{\link{get_na}}.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+Value label attributes (see, for instance, \code{\link{get_labels}})
+      will be removed when converting variables to factors.
 }
 \examples{
 data(efc)
@@ -98,6 +109,16 @@ dummy <- c("M", "F", "F", "X")
 set_labels(dummy) <- c(`M` = "Male", `F` = "Female", `X` = "Refused")
 get_labels(dummy,, "p")
 to_label(dummy)
+
+# drop unused factor levels, but preserve variable label
+x <- factor(c("a", "b", "c"), levels = c("a", "b", "c", "d"))
+set_labels(x) <- c("ape", "bear", "cat")
+set_label(x) <- "A factor!"
+x
+to_label(x, drop.levels = TRUE)
+
+# change variable label
+to_label(x, var.label = "New variable label!", drop.levels = TRUE)
 
 }
 \seealso{

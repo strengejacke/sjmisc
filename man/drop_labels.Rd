@@ -19,7 +19,7 @@ See \code{\link{get_na}} for more details on tagged NA values.}
 \code{x}, where value labels for non-existing values are removed.
 }
 \description{
-This function drops all value labels for those values that have
+This function drops all value labels for unused values that have
                no cases (frequencies) in a vector.
 }
 \examples{

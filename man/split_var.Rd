@@ -21,8 +21,9 @@ of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-recoded variable (see \code{\link{set_label}}). If \code{NULL}
-(default), variable label attribute of \code{x} will be used (if present).}
+returned variable (see \code{\link{set_label}}). If \code{NULL}
+(default), variable label attribute of \code{x} will be used (if present).
+If empty, variable label attributes will be removed.}
 
 \item{inclusive}{Logical; if \code{TRUE}, cut point value are included in
 the preceeding group. This may be necessary if cutting a vector into

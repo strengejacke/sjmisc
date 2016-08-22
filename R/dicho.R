@@ -16,12 +16,10 @@
 #'            \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
 #'            }
 #' @param as.num Logical, if \code{TRUE}, return value will be numeric, not a factor.
-#' @param var.label Optional string, to set variable label attribute for the
-#'          dichotomized variable (see \code{\link{set_label}}). If \code{NULL}
-#'          (default), variable label attribute of \code{x} will be used (if present).
 #' @param val.labels Optional character vector (of length two), to set value label
 #'          attributes of dichotomized variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
+#' @inheritParams rec
 #' @return A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
@@ -111,8 +109,8 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
 
   if (!as.num) x <- as.factor(x)
   # set back variable labels
-  if (!is.null(varlab)) x <- set_label(x, varlab)
+  if (!is.null(varlab)) x <- suppressWarnings(set_label(x, varlab))
   # set value labels
-  if (!is.null(val.labels)) x <- set_labels(x, val.labels)
+  if (!is.null(val.labels)) x <- suppressWarnings(set_labels(x, val.labels))
   return(x)
 }
