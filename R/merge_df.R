@@ -12,13 +12,10 @@
 #' @return A full joined data frame.
 #'
 #' @details This function merges two data frames, where equal named columns
-#'            will be joined together. This function is a convenient wrapper for
-#'            \code{merge(x1, x2, all = TRUE)}, however, unlike base
-#'            \code{\link{merge}}, this function preserves value and
-#'            variable labels. If matching columns have different value
+#'            will be joined together. Value and variable labels are
+#'            preserved. If matching columns have different value
 #'            label attributes, attributes from first data frame will be
-#'            used. For more details on the join operation, see
-#'            'Details' in \code{\link{merge}} on \code{all}-argument.
+#'            used.
 #'
 #' @examples
 #' library(dplyr)
