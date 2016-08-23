@@ -6,7 +6,7 @@
 * All statistical functions have been removed and are now in a separate package, [sjstats](https://cran.r-project.org/package=sjstats).
 * Removed some S3-methods for `labelled`-class, as these are now provided by the haven-package.
 * Functions no longer check input for type `matrix`, to avoid conflicts with scaled vectors (that were recognized as matrix and hence treated as data frame).
-* `table*, exclude = NULL)` was changed to `table*, useNA = "always")`, because of planned changes in upcoming R version 3.4.
+* `table(*, exclude = NULL)` was changed to `table(*, useNA = "always")`, because of planned changes in upcoming R version 3.4.
 
 ## New functions
 
