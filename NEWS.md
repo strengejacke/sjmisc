@@ -20,6 +20,7 @@
 * `str_contains` gets a `switch` argument to switch the role of `x` and `pattern`.
 * `word_wrap` coerces vectors to character if necessary.
 * `to_label` gets a `var.label` and `drop.levels` argument, and now preserves variable labels by default.
+* Argument `def.value` in `get_label` now also applies to data frame arguments.
 
 ## Bug fixes
 

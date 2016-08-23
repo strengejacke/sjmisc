@@ -69,25 +69,33 @@ get_label <- function(x, def.value = NULL) {
     # from foreign import
     labels <- attr(x, "variable.labels", exact = T)
     # if not, get labels from each single vector
-    if (is.null(labels) && !is.null(attr.string)) {
+    if (is.null(labels)) {
       # iterate df
-      all.labels <- sapply(seq_along(x), function(i) {
+      labels <- sapply(seq_along(x), function(i) {
         # get label
-        label <- attr(x[[i]], attr.string, exact = T)
+        if (!is.null(attr.string))
+          label <- attr(x[[i]], attr.string, exact = T)
+        else
+          label <- NULL
         # any label?
         if (!is.null(label)) {
           # name label
           names(label) <- colnames(x)[i]
           # append to return result
-          label
+          return(label)
+        } else if (!is.null(def.value)) {
+          # def.value may also apply to data frame arguments,
+          # so it can be greater than length one
+          if (i <= length(def.value))
+            return(def.value[i])
+          else
+            return(def.value)
         } else {
-          ""
+          return("")
         }
       })
-      return(all.labels)
-    } else {
-      return(attr(x, "variable.labels", exact = T))
     }
+    return(labels)
   } else if (is.list(x)) {
     # nothing found? then leave...
     if (is.null(attr.string)) return(NULL)

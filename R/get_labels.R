@@ -174,11 +174,12 @@ get_labels.default <- function(x, attr.only = FALSE, include.values = NULL,
 #' @importFrom haven is_tagged_na na_tag
 get_labels_helper <- function(x, attr.only, include.values, include.non.labelled, drop.na) {
   labels <- NULL
-  # haven or sjPlot?
+  # get label attribute, which may differ depending on the package
+  # used for reading the data
   attr.string <- getValLabelAttribute(x)
-  # nothing found? then check for factor levels
+  # if variable has no label attribute, use factor levels as labels
   if (is.null(attr.string)) {
-    # does user want to look everywhere?
+    # only use factor level if explicitly chosen by user
     if (!attr.only) {
       # get levels of vector
       lv <- levels(x)
@@ -198,7 +199,9 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
     if (drop.na) lab <- lab[!haven::is_tagged_na(lab)]
     # check if we have anything
     if (!is.null(lab) && length(lab) > 0) {
-      # retrieve values associated with labels
+      # retrieve values associated with labels. for character vectors
+      # or factors with character levels, these values are character values,
+      # else, they are numeric values
       if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
         values <- unname(lab)
       else
@@ -206,10 +209,12 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       # retrieve label values in correct order
       labels <- names(lab)
       # do we have any tagged NAs? If so, get tagged NAs
+      # and annotate them properly
       if (any(haven::is_tagged_na(values))) {
         values[haven::is_tagged_na(values)] <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
       }
-      # do we want to include non-labelled values as well?
+      # do we want to include non-labelled values as well? if yes,
+      # find all values in variable that have no label attributes
       if (include.non.labelled) {
         # get values of variable
         valid.vals <- sort(unique(stats::na.omit(as.vector(x))))
