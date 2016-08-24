@@ -35,7 +35,7 @@ utils::globalVariables("term")
 #'            subsets of data. The function then extracts all coefficients from
 #'            each model and saves each estimate in a new column. The result
 #'            is a data frame, where each \emph{row} is a model with each
-#'            each model's \emph{coefficient} in an own column.
+#'            model's \emph{coefficient} in an own column.
 #'
 #' @examples
 #' library(tidyr)
@@ -77,11 +77,15 @@ utils::globalVariables("term")
 #' library(dplyr)
 #' library(sjstats)
 #' efc %>%
+#'   # generate bootstrap replicates
 #'   bootstrap(100) %>%
+#'   # apply lm to all bootstrapped data sets
 #'   mutate(models = lapply(.$strap, function(x) {
 #'     lm(neg_c_7 ~ e42dep + c161sex + c172code, data = x)
 #'   })) %>%
+#'   # spread model coefficient for all 100 models
 #'   spread_coef(models) %>%
+#'   # compute the CI for all bootstrapped model coefficients
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
 #' @importFrom broom tidy
