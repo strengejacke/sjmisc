@@ -21,6 +21,7 @@
 * `word_wrap` coerces vectors to character if necessary.
 * `to_label` gets a `var.label` and `drop.levels` argument, and now preserves variable labels by default.
 * Argument `def.value` in `get_label` now also applies to data frame arguments.
+* If factor levels are numeric and factor has value labels, these are used in `to_value` by default.
 
 ## Bug fixes
 

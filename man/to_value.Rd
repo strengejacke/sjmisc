@@ -17,7 +17,8 @@ level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
 are not numeric).}
 
 \item{keep.labels}{logical, if \code{TRUE}, former factor levels will be added as
-value labels. See \code{\link{set_labels}} for more details.}
+value labels. For numeric factor levels, values labels will be used,
+if present. See 'Examples' and \code{\link{set_labels}} for more details.}
 }
 \value{
 A numeric variable with values ranging either from \code{start.at} to
@@ -38,8 +39,7 @@ table(test)
 table(to_value(test))
 hist(to_value(test, 0))
 
-# set lowest value of new variable
-# to "5".
+# set lowest value of new variable to "5".
 table(to_value(test, 5))
 
 # numeric factor keeps values
@@ -55,6 +55,20 @@ to_value(dummy)
 # starting at 1
 dummy <- factor(c("D", "F", "H"))
 table(to_value(dummy))
+
+# for numeric factor levels, value labels will be used, if present
+dummy1 <- factor(c("3", "4", "6"))
+set_labels(dummy1) <- c("first", "2nd", "3rd")
+dummy1
+to_value(dummy1)
+
+# for non-numeric factor levels, these will be used.
+# value labels will be ignored
+dummy2 <- factor(c("D", "F", "H"))
+set_labels(dummy2) <- c("first", "2nd", "3rd")
+dummy2
+to_value(dummy2)
+
 
 }
 \seealso{
