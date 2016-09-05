@@ -44,9 +44,9 @@ This function iterates all elements in \code{pattern} and
            of \code{pattern} are found in the vector \code{x}.
            \cr \cr
            Technically, it iterates \code{pattern} and calls
-           \code{grep(x, pattern(i), fixed = TRUE)} for each element
+           \code{grep(x, pattern[i], fixed = TRUE)} for each element
            of \code{pattern}. If \code{switch = TRUE}, it iterates
-           \code{pattern} and calls \code{grep(pattern(i), x, fixed = TRUE)}
+           \code{pattern} and calls \code{grep(pattern[i], x, fixed = TRUE)}
            for each element of \code{pattern}. Hence, in the latter case
            (if \code{switch = TRUE}), \code{x} must be of length 1.
 }

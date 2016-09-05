@@ -43,6 +43,12 @@ This method merges multiple imputations of variables into a single
          is then copied and missing values are replaced by the most frequent imputed
          value.
 }
+\note{
+Typically, further analyses are conducted on pooled results of multiple
+      imputed data sets (see \code{\link[mice]{pool}}), however, sometimes
+      (in social sciences) it is also feasible to compute the mean of multiple
+      imputed variables (see \cite{Burns et al. 2011}).
+}
 \examples{
 library(mice)
 imp <- mice(nhanes)
@@ -53,5 +59,8 @@ merge_imputations(nhanes, imp)
 # append imputed variables to original data frame
 merge_imputations(nhanes, imp, nhanes)
 
+}
+\references{
+Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787–93 \doi{10.1016/j.jclinepi.2010.10.011}
 }
 
