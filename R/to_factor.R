@@ -111,7 +111,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   }
 
   # convert variable to factor
-  x <- as.factor(x)
+  x <- factor(x, exclude = c(NA_character_, "NaN"))
 
   # set back value labels
   x <- suppressMessages(set_labels(x, lab.switch, force.labels = TRUE, force.values = FALSE))

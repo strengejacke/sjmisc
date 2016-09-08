@@ -9,7 +9,7 @@
 #' @param searchString Character vector with string elements.
 #' @param findTerm String that should be matched against the elements of \code{searchString}.
 #' @param maxdist Maximum distance between two string elements, which is allowed to treat them
-#'          as similar or equal.
+#'          as similar or equal. Smaller values mean less tolerance in matching.
 #' @param part.dist.match Activates similar matching (close distance strings) for parts (substrings)
 #'          of the \code{searchString}. Following values are accepted:
 #'          \itemize{
