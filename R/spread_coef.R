@@ -89,9 +89,8 @@ utils::globalVariables("term")
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
 #' @importFrom broom tidy
-#' @importFrom dplyr select_ bind_cols
+#' @importFrom dplyr select_ bind_cols "%>%"
 #' @importFrom tidyr spread_
-#' @importFrom magrittr "%>%"
 #' @importFrom purrr map_df
 #' @export
 spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
