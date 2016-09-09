@@ -327,7 +327,7 @@ write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
     x[[i]] <- suppressWarnings(to_label(x[[i]], add.non.labelled = TRUE,
                                         prefix = FALSE, drop.na = !use.tagged.na))
     # set back variable label
-    x[[i]] <- set_label(x[[i]], var.lab, "label")
+    set_label(x[[i]], attr.string = "label") <- var.lab
     # check column name
     end.point <- colnames(x)[i]
     # if it ends with a dot, add a char. dot is invalid last char for SPSS

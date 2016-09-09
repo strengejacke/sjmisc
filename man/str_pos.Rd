@@ -13,7 +13,7 @@ str_pos(searchString, findTerm, maxdist = 2, part.dist.match = 0,
 \item{findTerm}{String that should be matched against the elements of \code{searchString}.}
 
 \item{maxdist}{Maximum distance between two string elements, which is allowed to treat them
-as similar or equal.}
+as similar or equal. Smaller values mean less tolerance in matching.}
 
 \item{part.dist.match}{Activates similar matching (close distance strings) for parts (substrings)
 of the \code{searchString}. Following values are accepted:

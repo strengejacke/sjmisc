@@ -226,7 +226,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
 
   # now iterate all recode pairs
   # and do each recoding step
-  for (i in 1:length(rec_pairs)) {
+  for (i in seq_len(length(rec_pairs))) {
     # retrieve recode pairs as string, and start with separaring old-values
     # at comma separator
     old_val_string <- unlist(strsplit(rec_pairs[[i]][1], ",", fixed = TRUE))
@@ -290,7 +290,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
 
     # now we have all recode values and want
     # to replace old with new values...
-    for (k in 1:length(old_val)) {
+    for (k in seq_len(length(old_val))) {
       # check for "else" token
       if (is.infinite(old_val[k])) {
         # else-token found. we first need to preserve NA, but only,

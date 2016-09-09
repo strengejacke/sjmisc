@@ -13,6 +13,7 @@
 * `zap_na_tags` to turn tagged `NA` values into regular `NA` values.
 * `spread_coef` to spread coefficients of multiple fitted models in nested data frames into columns.
 * `merge_imputations` to find the most likely imputed value for a missing value.
+* `flat_table` to print flat (proportional) tables of labelled variables.
 * Added `to_character` method.
 
 ## Changes to functions
