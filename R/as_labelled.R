@@ -101,7 +101,7 @@ as_labelled_helper <- function(x, add.labels, add.class) {
 #'
 #' @description This method wraps a local data frame and adds a \code{lbl_df} class
 #'                attribute. Printing a \code{lbl_df}-data frame is comparable
-#'                to printing \code{\link[dplyr]{tbl_df}} objects, but the class
+#'                to printing \code{\link[tibble]{tibble}} objects, but the class
 #'                information in the output is replaced by the variable label.
 #'
 #' @param x A data frame.
@@ -111,26 +111,17 @@ as_labelled_helper <- function(x, add.labels, add.class) {
 #' @examples
 #' data(efc)
 #' library(dplyr)
-#' mydf <- lbl_df(efc %>%
+#'
+#' efc %>%
 #'   select(e15relat, e16sex, e17age) %>%
-#'   slice(1:3))
+#'   slice(1:3) %>%
+#'   lbl_df()
 #'
-#' mydf
-#'
-#' # or...
-#' mydf <- efc %>%
-#'   select(e15relat, e16sex, e17age) %>%
-#'   slice(1:3)
-#'
-#' lbl_df(mydf)
-#'
-#'
-#' mydf <- lbl_df(efc %>%
+#' efc %>%
 #'   select(e15relat, e16sex, e17age) %>%
 #'   to_label() %>%
-#'   set_label(c("Relationship", "Elder's gender", "Elder's age")))
-#'
-#' mydf
+#'   set_label(c("Relationship", "Elder's gender", "Elder's age")) %>%
+#'   lbl_df()
 #'
 #' @export
 lbl_df <- function(x) {

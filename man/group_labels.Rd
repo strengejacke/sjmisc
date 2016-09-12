@@ -4,13 +4,14 @@
 \alias{group_labels}
 \title{Create labels for recoded groups}
 \usage{
-group_labels(var, groupsize = 5, right.interval = FALSE, groupcount = 30)
+group_labels(x, groupsize = 5, right.interval = FALSE, groupcount = 30)
 }
 \arguments{
-\item{var}{Numeric; variable, which should recoded into groups.}
+\item{x}{Numeric variable, which should recoded into groups, or a list or
+data frame with such variables.}
 
 \item{groupsize}{Numeric; group-size, i.e. the range for grouping. By default,
-for each 5 categories of \code{var} a new group is defined, i.e. \code{groupsize=5}.
+for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
 Use \code{groupsize = "auto"} to automatically resize a variable into
 a maximum of 30 groups (which is the ggplot-default grouping when
 plotting histograms). Use \code{groupcount} to determine the amount
@@ -24,9 +25,9 @@ bound of \code{groupsize}. See 'Details'.}
 this argument will be ignored.}
 }
 \value{
-A string vector containing labels based on the grouped categories of \code{var},
-          formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc.
-          See examples below.
+A string vector or a list of string vectors containing labels based
+          on the grouped categories of \code{x}, formatted as "from lower bound to upper bound",
+          e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
 }
 \description{
 Creates the related labels for the grouped variable created by

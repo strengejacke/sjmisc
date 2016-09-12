@@ -7,7 +7,8 @@
 is_even(x)
 }
 \arguments{
-\item{x}{Numeric vector or single numeric value.}
+\item{x}{Numeric vector or single numeric value, or a data frame or list with
+such vectors.}
 }
 \value{
 \code{TRUE} for each even value of \code{x}, \code{FALSE} for

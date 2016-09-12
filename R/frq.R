@@ -9,6 +9,8 @@
 #' @return A data frame with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
+#' @seealso \code{\link{flat_table}} for labelled (proportional) tables.
+#'
 #' @examples
 #' library(haven)
 #' # create labelled integer
@@ -21,11 +23,42 @@
 #'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
 #' frq(x)
 #'
+#' # in a pipe
+#' data(efc)
+#' library(dplyr)
+#' tmp <- efc %>% select(e42dep, e15relat, c172code) %>% frq()
+#' tmp[[1]]
+#' tmp[[2]]
+#' tmp[[3]]
+#'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @export
+#' @export
 frq <- function(x, sort.frq = c("none", "asc", "desc")) {
+  UseMethod("frq")
+}
+
+#' @export
+frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc")) {
   sort.frq <- match.arg(sort.frq)
+  tibble::as_tibble(lapply(x, FUN = frq_helper, sort.frq = sort.frq))
+}
+
+#' @export
+frq.list <- function(x, sort.frq = c("none", "asc", "desc")) {
+  sort.frq <- match.arg(sort.frq)
+  lapply(x, FUN = frq_helper, sort.frq = sort.frq)
+}
+
+#' @export
+frq.default <- function(x, sort.frq = c("none", "asc", "desc")) {
+  sort.frq <- match.arg(sort.frq)
+  frq_helper(x = x, sort.frq = sort.frq)
+}
+
+
+frq_helper <- function(x, sort.frq) {
   #---------------------------------------------------
   # variable with only mising?
   #---------------------------------------------------

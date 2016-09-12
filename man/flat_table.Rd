@@ -37,4 +37,7 @@ flat_table(efc, e42dep, c172code, e16sex)
 flat_table(efc, e42dep, c172code, e16sex, margin = "row")
 
 }
+\seealso{
+\code{\link{frq}} for simple frequency table of labelled vectors.
+}
 

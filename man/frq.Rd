@@ -31,5 +31,16 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
 frq(x)
 
+# in a pipe
+data(efc)
+library(dplyr)
+tmp <- efc \%>\% select(e42dep, e15relat, c172code) \%>\% frq()
+tmp[[1]]
+tmp[[2]]
+tmp[[3]]
+
+}
+\seealso{
+\code{\link{flat_table}} for labelled (proportional) tables.
 }
 

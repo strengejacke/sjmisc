@@ -13,7 +13,7 @@
 #' @param value Value that will replace the \code{\link{NA}}'s.
 #' @param na.label Optional character vector, used to label the the former NA-value
 #'          (i.e. adding a \code{labels} attribute for \code{value} to \code{x}).
-#' @param tagged.na Optional, specifies a \code{\link[haven]{tagged_na}} value
+#' @param tagged.na Optional single character, specifies a \code{\link[haven]{tagged_na}} value
 #'          that will be replaced by \code{value}. Herewith it is possible
 #'          to replace only specific \code{NA} values of \code{x}.
 #'
@@ -119,7 +119,7 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
       # replace tagged NA
       x[which(haven::na_tag(x) == haven::na_tag(tagged.na))] <- value
       # remove label
-      remove_labels(x) <- tagged.na
+      x <- suppressMessages(remove_labels(x, value = tagged.na))
     } else {
       x[is.na(x)] <- value
     }

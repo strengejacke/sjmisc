@@ -1,8 +1,55 @@
 # Help-functions
 
+# evaluates arguments
+get_dot_data <- function(data, dots) {
+  # any dots?
+  if (length(dots) > 0)
+    # get variable names
+    vars <- dot_names(dots)
+  else
+    vars <- NULL
+
+  # check if data is a data frame
+  if (is.data.frame(data) && !is.null(vars))
+    x <- data[, vars, drop = FALSE]
+  else
+    x <- data
+  x
+}
+
+# return names of objects passed as ellipses argument
+dot_names <- function(dots) unname(unlist(lapply(dots, as.character)))
+
 is_float <- function(x) is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
 
 is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
+
+is_completely_labelled <- function(x) {
+  # get label attribute, which may differ depending on the package
+  # used for reading the data
+  attr.string <- getValLabelAttribute(x)
+  # if variable has no label attribute, use factor levels as labels
+  if (is.null(attr.string)) return(TRUE)
+  # retrieve named labels
+  lab <- attr(x, attr.string, exact = T)
+  lab <- lab[!haven::is_tagged_na(lab)]
+  if (!is.null(lab) && length(lab) > 0) {
+    # get values of variable
+    valid.vals <- sort(unique(stats::na.omit(as.vector(x))))
+    # retrieve values associated with labels. for character vectors
+    # or factors with character levels, these values are character values,
+    # else, they are numeric values
+    if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
+      values <- unname(lab)
+    else
+      values <- as.numeric(unname(lab))
+    # check if we have different amount values than labels
+    # or, if we have same amount of values and labels, whether
+    # values and labels match or not
+    return(length(valid.vals) == length(lab) && !anyNA(match(values, valid.vals)))
+  }
+  return(TRUE)
+}
 
 # auto-detect attribute style for variable labels.
 # either haven style ("label") or foreign style

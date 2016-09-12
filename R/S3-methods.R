@@ -1,17 +1,17 @@
-#' @importFrom tibble trunc_mat as_data_frame
+#' @importFrom tibble trunc_mat as_tibble
 #' @export
 print.lbl_df <- function(x, ..., n = NULL, width = NULL) {
   # get labels
   dlab <- get_label(x)
   # if x of class tbl_df?
   if (!"tbl_df" %in% class(x))
-    x <- tibble::as_data_frame(x)
+    x <- tibble::as_tibble(x)
   # get df matrix
   dmat <- tibble::trunc_mat(x, n = n, width = width)
   # set labels, if we have any
   if (!is.null(dlab)) {
     # iterate all columns
-    for (i in 1:ncol(dmat[[1]])) {
+    for (i in seq_len(ncol(dmat[[1]]))) {
       # replace first value of each column, which is the class description
       # with variable label
       dmat[[1]][[i]][1] <- dlab[i]

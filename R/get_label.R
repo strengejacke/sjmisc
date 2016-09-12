@@ -6,7 +6,7 @@
 #'                imported from SPSS, SAS or STATA files (via \code{\link{read_spss}},
 #'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
 #'                \itemize{
-#'                  \item if \code{x} is a data frame or a list of variables, returns the all variable labels as names character vector of length \code{ncol(x)}.
+#'                  \item if \code{x} is a data frame or a list of variables, returns the all variable labels as named character vector of length \code{ncol(x)}.
 #'                  \item or, if \code{x} is a vector, returns the variable label as string.
 #'                  }
 #'
@@ -19,11 +19,15 @@
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with variable label attribute; or a \code{list} of variables
 #'          with variable label attributes. See 'Examples'.
+#' @param ... Optional, names of variables, where labels should be retrieved.
+#'            Required, if either data is a data frame and no vector, or if only
+#'            selected variables from \code{x} should be used in the function.
+#'            Convenient argument to work with pipe-chains (see 'Examples').
 #' @param def.value Optional, a character string which will be returned as label
 #'          if \code{x} has no label attribute. By default, \code{NULL} is returned.
 #'
-#' @return A named char vector with all variable labels from the data frame or list;
-#'           or a simple char vector (of length 1) with the variable label, if \code{x} is a variable.
+#' @return A named character vector with all variable labels from the data frame or list;
+#'           or a simple character vector (of length 1) with the variable label, if \code{x} is a variable.
 #'           If \code{x} is a single vector and has no label attribute, the value
 #'           of \code{def.value} will be returned (which is by default \code{NULL}).
 #'
@@ -49,6 +53,13 @@
 #' # alternative way
 #' get_label(efc)["e42dep"]
 #'
+#' # 'get_label()' also works within pipe-chains
+#' library(dplyr)
+#' efc %>% get_label(e42dep, e16sex)
+#'
+#' # set default values
+#' get_label(mtcars, mpg, cyl, def.value = "no var labels")
+#'
 #' # simple barplot
 #' barplot(table(efc$e42dep))
 #' # get value labels to annotate barplot
@@ -60,7 +71,9 @@
 #' get_label(list(efc$e42dep, efc$e16sex, efc$e15relat))
 #'
 #' @export
-get_label <- function(x, def.value = NULL) {
+get_label <- function(x, ..., def.value = NULL) {
+  # evaluate arguments, generate data
+  x <- get_dot_data(x, match.call(expand.dots = FALSE)$`...`)
   # auto-detect variable label attribute
   attr.string <- getVarLabelAttribute(x)
   # do we have a df?

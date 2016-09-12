@@ -8,7 +8,7 @@ to_dummy(x, var.name = "name", suffix = c("numeric", "label"),
   data = NULL)
 }
 \arguments{
-\item{x}{A \code{\link{vector}} (variable).}
+\item{x}{A vector.}
 
 \item{var.name}{Indicates how the new dummy variables are named. Use
 \code{"name"} to use the variable name or any other string that will

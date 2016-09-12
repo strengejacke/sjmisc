@@ -4,14 +4,15 @@
 \alias{group_var}
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
-group_var(var, groupsize = 5, as.num = TRUE, right.interval = FALSE,
+group_var(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
   groupcount = 30)
 }
 \arguments{
-\item{var}{Numeric; variable, which should recoded into groups.}
+\item{x}{Numeric variable, which should recoded into groups, or a list or
+data frame with such variables.}
 
 \item{groupsize}{Numeric; group-size, i.e. the range for grouping. By default,
-for each 5 categories of \code{var} a new group is defined, i.e. \code{groupsize=5}.
+for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
 Use \code{groupsize = "auto"} to automatically resize a variable into
 a maximum of 30 groups (which is the ggplot-default grouping when
 plotting histograms). Use \code{groupcount} to determine the amount
@@ -38,12 +39,12 @@ Recode numeric variables into \emph{equal spaced} grouped factors,
 \details{
 If \code{groupsize} is set to a specific value, the variable is recoded
            into several groups, where each group has a maximum range of \code{groupsize}.
-           Hence, the amount of groups differ depending on the range of \code{var}.
+           Hence, the amount of groups differ depending on the range of \code{x}.
            \cr \cr
            If \code{groupsize = "auto"}, the variable is recoded into a maximum of
            \code{groupcount} groups. Hence, independent from the range of
-           \code{var}, always the same amount of groups are created, so the range
-           within each group differs (depending on \code{var}'s range).
+           \code{x}, always the same amount of groups are created, so the range
+           within each group differs (depending on \code{x}'s range).
            \cr \cr
            \code{right.interval} determins which boundary values to include when
            grouping is done. If \code{TRUE}, grouping starts with the \strong{lower
@@ -68,7 +69,6 @@ age.grp <- group_var(age, 10)
 hist(age)
 hist(age.grp)
 
-
 # histogram with EUROFAMCARE sample dataset
 # variable not grouped
 data(efc)
@@ -79,6 +79,10 @@ hist(efc$e17age, main = get_label(efc$e17age))
 ageGrp <- group_var(efc$e17age)
 ageGrpLab <- group_labels(efc$e17age)
 barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
+
+# within a pipe-chain
+library(dplyr)
+efc \%>\% select(e17age, c12hour, c160age) \%>\% group_var(groupsize = 20)
 
 }
 \seealso{

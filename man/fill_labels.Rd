@@ -30,6 +30,8 @@ get_labels(x)
 
 fill_labels(x)
 get_labels(fill_labels(x))
+# same as
+get_labels(x, include.non.labelled = TRUE)
 
 }
 \seealso{

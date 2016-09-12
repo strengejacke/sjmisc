@@ -211,7 +211,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #' @export
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
-  data <- haven::read_sas(b7dat = path, b7cat = path.cat, encoding = enc)
+  data <- haven::read_sas(data_file = path, catalog_file = path.cat, encoding = enc)
   # convert to sjPlot
   data <- unlabel(data)
   # convert atomic values to factors
@@ -306,6 +306,27 @@ write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 }
 
 
+#' @title Write content of data frame to SAS-file
+#' @name write_sas
+#'
+#' @description This function saves the content of a data frame to a SAS-file.
+#'
+#' @seealso \code{\link{write_spss}}
+#'
+#' @note You don't need to take care whether variables have been imported with
+#'         the \code{\link{read_stata}} function from this package or from \pkg{haven},
+#'         or if you have imported STATA data and
+#'         created new variables. This function does all necessary data preparation
+#'         to write a properly labelled STATA file.
+#'
+#' @inheritParams write_spss
+#'
+#' @export
+write_sas <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
+  write_data(x = x, path = path, type = "sas", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8)
+}
+
+
 #' @importFrom haven write_sav write_dta is.labelled
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
@@ -315,11 +336,13 @@ write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
   message(sprintf("Prepare writing %s file. Please wait...\n", type))
   # check if variables should be converted to factors
   for (i in seq_len(ncol(x))) {
-    # get value and variable labels
-    val.lab <- get_labels(x[[i]], include.values = "n")
+    # get variable label
     var.lab <- get_label(x[[i]])
     # Encode to UTF-8
     if (enc.to.utf8) {
+      # get value labels
+      val.lab <- get_labels(x[[i]], attr.only = F, include.values = "n")
+      # encode to UTF-8, if requested
       if (!is.null(val.lab)) x[[i]] <- set_labels(x[[i]], enc2utf8(val.lab))
       if (!is.null(var.lab)) x[[i]] <- set_label(x[[i]], enc2utf8(var.lab))
     }
@@ -327,7 +350,7 @@ write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
     x[[i]] <- suppressWarnings(to_label(x[[i]], add.non.labelled = TRUE,
                                         prefix = FALSE, drop.na = !use.tagged.na))
     # set back variable label
-    set_label(x[[i]], attr.string = "label") <- var.lab
+    x[[i]] <- set_label(x[[i]], var.lab, "label")
     # check column name
     end.point <- colnames(x)[i]
     # if it ends with a dot, add a char. dot is invalid last char for SPSS
@@ -345,7 +368,10 @@ write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
     # write SPSS
     haven::write_sav(data = x, path = path)
   } else if (type == "stata") {
-    # write SPSS
+    # write Stata
     haven::write_dta(data = x, path = path)
+  } else if (type == "sas") {
+    # write Stata
+    haven::write_sas(data = x, path = path)
   }
 }

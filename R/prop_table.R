@@ -15,6 +15,8 @@
 #'
 #' @return An object of class \code{\link[stats]{ftable}}.
 #'
+#' @seealso \code{\link{frq}} for simple frequency table of labelled vectors.
+#'
 #' @examples
 #' data(efc)
 #'

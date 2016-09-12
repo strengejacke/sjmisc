@@ -27,9 +27,13 @@ This function is currently only used to avoid possible compatibility issues
         \code{tbl} class attributes for data frames. Some known issues with \code{\link[haven]{labelled}}
         class vectors have already been fixed, so it might be that this function
         will become redundant in the future. Currently, data frames with \code{tbl_df} and
-        \code{tbl} class attributes may cause difficulties when indexing columns
-        like \code{data.frame[, colnr]} - only \code{data.frame[[colnr]]} seems
-        to be safe when accessing data frame columns from within function calls.
+        \code{tbl} class attributes may cause difficulties when indexing columns,
+        because the \pkg{haven} package's \code{read_*}-functions return a \code{tibble},
+        which never simplifies data frame when indexing like \code{data.frame[, colnr]}.
+        Thus, packages or functions that expect \code{data.frame[, colnr]} to return a
+        vector, might throw an error - only \code{data.frame[[colnr]]} is safe
+        when accessing data frame columns from within function calls (see
+        \code{\link[tibble]{tibble-package}} for details).
         \cr \cr
         Data frames will be converted into labelled data frames (see \code{\link{lbl_df}}).
 }

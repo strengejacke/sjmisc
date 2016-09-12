@@ -39,6 +39,16 @@ frq(x)
 # now, let's drop zero's
 frq(drop_labels(x))
 
+# drop labels, also drop NA value labels, then also zap tagged NA
+library(haven)
+x <- labelled(c(1:3, tagged_na("z"), 4:1),
+              c("Agreement" = 1, "Disagreement" = 4, "Unused" = 5,
+                "Not home" = tagged_na("z")))
+x
+drop_labels(x, drop.na = FALSE)
+drop_labels(x)
+zap_na_tags(drop_labels(x))
+
 }
 \seealso{
 \code{\link{zap_labels}} and \code{\link{zap_unlabelled}} to convert

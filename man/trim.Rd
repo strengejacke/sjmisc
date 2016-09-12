@@ -7,8 +7,9 @@
 trim(x)
 }
 \arguments{
-\item{x}{Character vector or string. Function is vectorized, i.e. vector
-may have a length greater than 1. See 'Examples'.}
+\item{x}{Character vector or string, or a list or data frame with such vectors.
+Function is vectorized, i.e. vector may have a length greater than
+1. See 'Examples'.}
 }
 \value{
 Trimmed \code{x}, i.e. with leading and trailing spaces removed.
@@ -21,6 +22,12 @@ Trims leading and trailing whitespaces from strings or
 trim("white space at end ")
 trim(" white space at start and end ")
 trim(c(" string1 ", "   string2", "string 3   "))
+
+tmp <- data.frame(a = c(" string1 ", "   string2", "string 3   "),
+                  b = c(" strong one  ", "    string two", "  third string "),
+                  c = c(" str1 ", "   str2", "str3   "))
+tmp
+trim(tmp)
 
 }
 

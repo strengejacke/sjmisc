@@ -11,9 +11,10 @@
 #'          or \code{\link{rec_pattern}} and \code{\link{rec}} for another
 #'          convenbient way of recoding variables into smaller groups.
 #'
-#' @param var Numeric; variable, which should recoded into groups.
+#' @param x Numeric variable, which should recoded into groups, or a list or
+#'          data frame with such variables.
 #' @param groupsize Numeric; group-size, i.e. the range for grouping. By default,
-#'          for each 5 categories of \code{var} a new group is defined, i.e. \code{groupsize=5}.
+#'          for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
 #'          Use \code{groupsize = "auto"} to automatically resize a variable into
 #'          a maximum of 30 groups (which is the ggplot-default grouping when
 #'          plotting histograms). Use \code{groupcount} to determine the amount
@@ -32,12 +33,12 @@
 #'
 #' @details If \code{groupsize} is set to a specific value, the variable is recoded
 #'            into several groups, where each group has a maximum range of \code{groupsize}.
-#'            Hence, the amount of groups differ depending on the range of \code{var}.
+#'            Hence, the amount of groups differ depending on the range of \code{x}.
 #'            \cr \cr
 #'            If \code{groupsize = "auto"}, the variable is recoded into a maximum of
 #'            \code{groupcount} groups. Hence, independent from the range of
-#'            \code{var}, always the same amount of groups are created, so the range
-#'            within each group differs (depending on \code{var}'s range).
+#'            \code{x}, always the same amount of groups are created, so the range
+#'            within each group differs (depending on \code{x}'s range).
 #'            \cr \cr
 #'            \code{right.interval} determins which boundary values to include when
 #'            grouping is done. If \code{TRUE}, grouping starts with the \strong{lower
@@ -59,7 +60,6 @@
 #' hist(age)
 #' hist(age.grp)
 #'
-#'
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
 #' data(efc)
@@ -71,23 +71,51 @@
 #' ageGrpLab <- group_labels(efc$e17age)
 #' barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
 #'
+#' # within a pipe-chain
+#' library(dplyr)
+#' efc %>% select(e17age, c12hour, c160age) %>% group_var(groupsize = 20)
+#'
 #' @export
-group_var <- function(var,
-                      groupsize = 5,
-                      as.num = TRUE,
-                      right.interval = FALSE,
+group_var <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
                       groupcount = 30) {
+  UseMethod("group_var")
+}
+
+#' @export
+group_var.data.frame <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
+                                 groupcount = 30) {
+  tibble::as_tibble(lapply(x, FUN = g_v_helper, groupsize = groupsize,
+                           as.num = as.num, right.interval = right.interval,
+                           groupcount = groupcount))
+}
+
+#' @export
+group_var.list <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
+                           groupcount = 30) {
+  lapply(x, FUN = g_v_helper, groupsize = groupsize, as.num = as.num,
+         right.interval = right.interval, groupcount = groupcount)
+}
+
+#' @export
+group_var.default <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
+                              groupcount = 30) {
+  g_v_helper(x = x, groupsize = groupsize,  as.num = as.num,
+             right.interval = right.interval, groupcount = groupcount)
+}
+
+
+g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   # do we have labels?
-  varlab <- get_label(var)
+  varlab <- get_label(x)
   # group variable
-  var <- group_helper(var, groupsize, right.interval, groupcount)
+  x <- group_helper(x, groupsize, right.interval, groupcount)
   # set new levels of grouped variable
-  levels(var) <- c(1:nlevels(var))
+  levels(x) <- 1:nlevels(x)
   # convert to numeric?
-  if (as.num) var <- as.numeric(as.character(var))
+  if (as.num) x <- as.numeric(as.character(x))
   # set back variable labels
-  if (!is.null(varlab)) var <- set_label(var, varlab)
-  return(var)
+  if (!is.null(varlab)) x <- set_label(x, varlab)
+  return(x)
 }
 
 
@@ -106,9 +134,9 @@ group_var <- function(var,
 #'         \code{right.interval} as used in the \code{\link{group_var}} function
 #'         if you want to create labels for the related recoded variable.
 #'
-#' @return A string vector containing labels based on the grouped categories of \code{var},
-#'           formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc.
-#'           See examples below.
+#' @return A string vector or a list of string vectors containing labels based
+#'           on the grouped categories of \code{x}, formatted as "from lower bound to upper bound",
+#'           e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
 #'
 #' @inheritParams group_var
 #'
@@ -147,16 +175,34 @@ group_var <- function(var,
 #' barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
 #'
 #' @export
-group_labels <- function(var,
-                         groupsize = 5,
-                         right.interval = FALSE,
-                         groupcount = 30) {
+group_labels <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
+  UseMethod("group_labels")
+}
+
+#' @export
+group_labels.data.frame <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
+  lapply(x, FUN = g_l_helper, groupsize = groupsize, right.interval = right.interval, groupcount = groupcount)
+}
+
+#' @export
+group_labels.list <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
+  lapply(x, FUN = g_l_helper, groupsize = groupsize, right.interval = right.interval, groupcount = groupcount)
+}
+
+#' @export
+group_labels.default <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
+  g_l_helper(x = x, groupsize = groupsize, right.interval = right.interval,
+             groupcount = groupcount)
+}
+
+
+g_l_helper <- function(x, groupsize, right.interval, groupcount) {
   # do we have labels?
-  varlab <- get_label(var)
+  varlab <- get_label(x)
   # group variable
-  var <- group_helper(var, groupsize, right.interval, groupcount)
+  x <- group_helper(x, groupsize, right.interval, groupcount)
   # Gruppen holen
-  lvl <- levels(var)
+  lvl <- levels(x)
   # rückgabewert init
   retval <- rep(c(""), length(lvl))
   # alle Gruppierungen durchgehen
@@ -188,24 +234,23 @@ group_labels <- function(var,
 }
 
 
-group_helper <- function(var, groupsize, right.interval, groupcount) {
+group_helper <- function(x, groupsize, right.interval, groupcount) {
   # minimum range. will be changed when autogrouping
   minval <- 0
   multip <- 2
   # check for auto-grouping
   if (groupsize == "auto") {
     # determine groupsize, which is 1/30 of range
-    size <- ceiling((max(var, na.rm = TRUE) - min(var, na.rm = TRUE)) / groupcount)
-    # reset groupsize var
+    size <- ceiling((max(x, na.rm = TRUE) - min(x, na.rm = TRUE)) / groupcount)
+    # reset groupsize
     groupsize <- as.numeric(size)
     # change minvalue
-    minval <- min(var, na.rm = TRUE)
+    minval <- min(x, na.rm = TRUE)
     multip <- 1
   }
   # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte
   # Faktoren gleich entfernt
-  var <- droplevels(cut(var,
-                        breaks = c(seq(minval, max(var, na.rm = TRUE) + multip * groupsize, by = groupsize)),
-                        right = right.interval))
-  return(var)
+  x <- droplevels(cut(x, breaks = c(seq(minval, max(x, na.rm = TRUE) + multip * groupsize, by = groupsize)),
+                      right = right.interval))
+  return(x)
 }

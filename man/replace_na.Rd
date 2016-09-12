@@ -18,7 +18,7 @@ missing values should be replaced with \code{value}.}
 \item{na.label}{Optional character vector, used to label the the former NA-value
 (i.e. adding a \code{labels} attribute for \code{value} to \code{x}).}
 
-\item{tagged.na}{Optional, specifies a \code{\link[haven]{tagged_na}} value
+\item{tagged.na}{Optional single character, specifies a \code{\link[haven]{tagged_na}} value
 that will be replaced by \code{value}. Herewith it is possible
 to replace only specific \code{NA} values of \code{x}.}
 }

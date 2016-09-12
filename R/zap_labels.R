@@ -16,25 +16,19 @@
 #' data(efc)
 #' str(efc$e42dep)
 #'
-#' x <- set_labels(efc$e42dep,
-#'                 c(`1` = "independent",
-#'                   `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' table(x)
 #' get_values(x)
 #' str(x)
 #'
 #' # zap all labelled values
-#' x <- set_labels(efc$e42dep,
-#'                 c(`1` = "independent",
-#'                   `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' table(zap_labels(x))
 #' get_values(zap_labels(x))
 #' str(zap_labels(x))
 #'
 #' # zap all unlabelled values
-#' x <- set_labels(efc$e42dep,
-#'                 c(`1` = "independent",
-#'                   `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' table(zap_unlabelled(x))
 #' get_values(zap_unlabelled(x))
 #' str(zap_unlabelled(x))
@@ -77,25 +71,19 @@ zap_labels.default <- function(x) {
 #' data(efc)
 #' str(efc$e42dep)
 #'
-#' x <- set_labels(efc$e42dep,
-#'                 c(`1` = "independent",
-#'                   `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' table(x)
 #' get_values(x)
 #' str(x)
 #'
 #' # zap all labelled values
-#' x <- set_labels(efc$e42dep,
-#'                 c(`1` = "independent",
-#'                   `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' table(zap_labels(x))
 #' get_values(zap_labels(x))
 #' str(zap_labels(x))
 #'
 #' # zap all unlabelled values
-#' x <- set_labels(efc$e42dep,
-#'                 c(`1` = "independent",
-#'                   `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 #' table(zap_unlabelled(x))
 #' get_values(zap_unlabelled(x))
 #' str(zap_unlabelled(x))
@@ -145,6 +133,11 @@ zap_unlabelled.default <- function(x) {
 #' get_na(x)
 #' zap_na_tags(x)
 #' get_na(zap_na_tags(x))
+#'
+#' # also works with non-labelled vector that have tagged NA values
+#' x <- c(1:5, tagged_na("a"), tagged_na("z"), NA)
+#' haven::print_tagged_na(x)
+#' haven::print_tagged_na(zap_na_tags(x))
 #'
 #' @importFrom stats na.omit
 #' @export

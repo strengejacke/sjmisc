@@ -28,6 +28,11 @@ get_na(x)
 zap_na_tags(x)
 get_na(zap_na_tags(x))
 
+# also works with non-labelled vector that have tagged NA values
+x <- c(1:5, tagged_na("a"), tagged_na("z"), NA)
+haven::print_tagged_na(x)
+haven::print_tagged_na(zap_na_tags(x))
+
 }
 \seealso{
 \code{\link{set_na}} and \code{\link{get_na}};
