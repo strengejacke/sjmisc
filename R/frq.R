@@ -26,10 +26,7 @@
 #' # in a pipe
 #' data(efc)
 #' library(dplyr)
-#' tmp <- efc %>% select(e42dep, e15relat, c172code) %>% frq()
-#' tmp[[1]]
-#' tmp[[2]]
-#' tmp[[3]]
+#' efc %>% select(e42dep, e15relat, c172code) %>% frq()
 #'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
