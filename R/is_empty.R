@@ -39,25 +39,6 @@
 #'
 #' @export
 is_empty <- function(x) {
-  UseMethod("is_empty")
-}
-
-#' @export
-is_empty.data.frame <- function(x) {
-  lapply(x, FUN = is_empty_helper)
-}
-
-#' @export
-is_empty.list <- function(x) {
-  lapply(x, FUN = is_empty_helper)
-}
-
-#' @export
-is_empty.default <- function(x) {
-  is_empty_helper(x)
-}
-
-is_empty_helper <- function(x) {
   # do we have a valid vector?
   if (!is.null(x)) {
     # if it's a character, check if we have only one element in that vector
