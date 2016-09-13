@@ -42,7 +42,7 @@ frq <- function(x, sort.frq = c("none", "asc", "desc")) {
 #' @export
 frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc")) {
   sort.frq <- match.arg(sort.frq)
-  tibble::as_tibble(lapply(x, FUN = frq_helper, sort.frq = sort.frq))
+  lapply(x, FUN = frq_helper, sort.frq = sort.frq)
 }
 
 #' @export
