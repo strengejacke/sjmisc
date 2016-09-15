@@ -48,7 +48,7 @@ table(dummy)
 # set value 1 and 8 as missings
 dummy <- set_na(dummy, c(1, 8))
 # show value distribution, including missings
-table(dummy, exclude = NULL)
+table(dummy, useNA = "always")
 
 # add named vector as further missing value
 set_na(dummy, c("Refused" = 5))
@@ -61,23 +61,19 @@ print_tagged_na(set_na(dummy, c("Refused" = 5)))
 dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
                     var2 = sample(1:10, 100, replace = TRUE),
                     var3 = sample(1:6, 100, replace = TRUE))
-# show head of data frame
-head(dummy)
 # set value 2 and 4 as missings
-dummy <- set_na(dummy, c(2, 4))
-# show head of new data frame
-head(dummy)
-
-get_na(dummy[[1]])
-get_values(dummy[[1]])
+library(dplyr)
+dummy \%>\% set_na(c(2, 4)) \%>\% head()
+dummy \%>\% set_na(c(2, 4)) \%>\% get_na()
+dummy \%>\% set_na(c(2, 4)) \%>\% get_values()
 
 # create list of variables
 data(efc)
 dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # check original distribution of categories
-lapply(dummy, table, exclude = NULL)
+lapply(dummy, table, useNA = "always")
 # set 3 to NA
-lapply(set_na(dummy, 3), table, exclude = NULL)
+lapply(set_na(dummy, 3), table, useNA = "always")
 
 
 }

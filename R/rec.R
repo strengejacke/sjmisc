@@ -51,30 +51,34 @@
 #'
 #' @examples
 #' data(efc)
-#' table(efc$e42dep, exclude = NULL)
+#' table(efc$e42dep, useNA = "always")
 #'
 #' # replace NA with 5
-#' table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), exclude = NULL)
+#' table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
 #'
 #' # recode 1 to 2 into 1 and 3 to 4 into 2
-#' table(rec(efc$e42dep, "1,2=1; 3,4=2"), exclude = NULL)
+#' table(rec(efc$e42dep, "1,2=1; 3,4=2"), useNA = "always")
 #'
 #' # or:
 #' # rec(efc$e42dep) <- "1,2=1; 3,4=2"
-#' # table(efc$e42dep, exclude = NULL)
+#' # table(efc$e42dep, useNA = "always")
 #'
 #' # keep value labels. variable label is automatically preserved
-#' str(rec(efc$e42dep, "1,2=1; 3,4=2",
-#'         val.labels = c("low dependency", "high dependency")))
+#' library(dplyr)
+#' efc %>%
+#'   select(e42dep) %>%
+#'   rec(recodes = "1,2=1; 3,4=2",
+#'       val.labels = c("low dependency", "high dependency")) %>%
+#'   str()
 #'
 #' # recode 1 to 3 into 4 into 2
-#' table(rec(efc$e42dep, "min:3=1; 4=2"), exclude = NULL)
+#' table(rec(efc$e42dep, "min:3=1; 4=2"), useNA = "always")
 #'
 #' # recode 2 to 1 and all others into 2
-#' table(rec(efc$e42dep, "2=1; else=2"), exclude = NULL)
+#' table(rec(efc$e42dep, "2=1; else=2"), useNA = "always")
 #'
 #' # reverse value order
-#' table(rec(efc$e42dep, "rev"), exclude = NULL)
+#' table(rec(efc$e42dep, "rev"), useNA = "always")
 #'
 #' # recode only selected values, copy remaining
 #' table(efc$e15relat)
@@ -88,20 +92,17 @@
 #' # variables with same value-range
 #' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 #' # show original distribution
-#' lapply(dummy, table, exclude = NULL)
+#' lapply(dummy, table, useNA = "always")
 #' # show recodes
-#' lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, exclude = NULL)
-#'
+#' lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, useNA = "always")
 #'
 #' # recode character vector
 #' dummy <- c("M", "F", "F", "X")
 #' rec(dummy, "M=Male; F=Female; X=Refused")
 #'
-#'
 #' # recode non-numeric factors
 #' data(iris)
 #' rec(iris$Species, "setosa=huhu; else=copy")
-#'
 #'
 #' # preserve tagged NAs
 #' library(haven)

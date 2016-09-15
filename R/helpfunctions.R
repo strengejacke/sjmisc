@@ -1,5 +1,3 @@
-# Help-functions
-
 # evaluates arguments
 get_dot_data <- function(data, dots) {
   # any dots?

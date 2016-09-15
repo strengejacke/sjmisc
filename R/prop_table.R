@@ -26,7 +26,7 @@
 #' # flat table with proportions
 #' flat_table(efc, e42dep, c172code, e16sex, margin = "row")
 #'
-#' @importFrom dplyr case_when select "%>%"
+#' @importFrom dplyr case_when select
 #' @importFrom stats ftable
 #' @export
 flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), digits = 2) {

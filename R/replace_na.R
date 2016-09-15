@@ -33,8 +33,8 @@
 #'
 #' @examples
 #' data(efc)
-#' table(efc$e42dep, exclude = NULL)
-#' table(replace_na(efc$e42dep, 99), exclude = NULL)
+#' table(efc$e42dep, useNA = "always")
+#' table(replace_na(efc$e42dep, 99), useNA = "always")
 #'
 #' # the original labels
 #' get_labels(replace_na(efc$e42dep, 99))
@@ -44,9 +44,9 @@
 #'
 #' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 #' # show original distribution
-#' lapply(dummy, table, exclude = NULL)
+#' lapply(dummy, table, useNA = "always")
 #' # show variables, NA's replaced with 99
-#' lapply(replace_na(dummy, 99), table, exclude = NULL)
+#' lapply(replace_na(dummy, 99), table, useNA = "always")
 #'
 #' library(haven)
 #' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),

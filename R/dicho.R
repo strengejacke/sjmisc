@@ -38,8 +38,13 @@
 #'
 #' # sample data frame, values from 1-4
 #' head(efc[, 6:10])
+#'
 #' # dichtomized values (1 to 2 = 0, 3 to 4 = 1)
-#' head(dicho(efc[, 6:10], 2))
+#' library(dplyr)
+#' efc %>%
+#'   select(6:10) %>%
+#'   dicho(dich.by = 2) %>%
+#'   head()
 #'
 #' # dichtomize several variables in a list
 #' dummy <- list(efc$c12hour, efc$e17age, efc$c160age)
