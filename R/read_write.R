@@ -281,7 +281,7 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'
 #' @export
 write_spss <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "spss", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8)
+  write_data(x = x, path = path, type = "spss", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = 14)
 }
 
 
@@ -298,11 +298,12 @@ write_spss <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 #'         created new variables. This function does all necessary data preparation
 #'         to write a properly labelled STATA file.
 #'
+#' @param version File version to use. Supports versions 8-14.
 #' @inheritParams write_spss
 #'
 #' @export
-write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "stata", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8)
+write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE, version = 14) {
+  write_data(x = x, path = path, type = "stata", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = version)
 }
 
 
@@ -323,13 +324,13 @@ write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 #'
 #' @export
 write_sas <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "sas", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8)
+  write_data(x = x, path = path, type = "sas", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = 14)
 }
 
 
 #' @importFrom haven write_sav write_dta is.labelled
 #' @importFrom utils txtProgressBar setTxtProgressBar
-write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
+write_data <- function(x, path, type, use.tagged.na, enc.to.utf8, version) {
   # create progress bar
   pb <- utils::txtProgressBar(min = 0, max = ncol(x), style = 3)
   # tell user...
@@ -369,7 +370,7 @@ write_data <- function(x, path, type, use.tagged.na, enc.to.utf8) {
     haven::write_sav(data = x, path = path)
   } else if (type == "stata") {
     # write Stata
-    haven::write_dta(data = x, path = path)
+    haven::write_dta(data = x, path = path, version = version)
   } else if (type == "sas") {
     # write Stata
     haven::write_sas(data = x, path = path)
