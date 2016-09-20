@@ -56,3 +56,62 @@ is_empty <- function(x) {
   }
   return(is.null(x) || zero_len || is.na(x))
 }
+
+
+#' @title Return or remove variables or observations that are completely missing
+#' @name empty_cols
+#'
+#' @description These functions check which rows or columns of a data frame completely
+#'                contain missing values, i.e. which observations or variables
+#'                completely have missing values, and either 1) returns their
+#'                indices; or 2) removes them from the data frame.
+#'
+#'
+#' @param x A data frame.
+#'
+#' @return For \code{empty_cols} and \code{empty_rows}, a numeric (named) vector
+#'           with row or column indices of those variables that completely have
+#'           missing values.
+#'           \cr \cr
+#'           For \code{remove_empty_cols} and \code{remove_empty_rows}, a
+#'           \code{\link[tibble]{tibble}} with "empty" columns or rows removed.
+#'
+#' @examples
+#' tmp <- data.frame(a = c(1, 2, 3, NA, 5),
+#'                   b = c(1, NA, 3, NA , 5),
+#'                   c = c(NA, NA, NA, NA, NA),
+#'                   d = c(1, NA, 3, NA, 5))
+#'
+#' tmp
+#'
+#' empty_cols(tmp)
+#' empty_rows(tmp)
+#'
+#' remove_empty_cols(tmp)
+#' remove_empty_rows(tmp)
+#'
+#' @export
+empty_cols <- function(x) {
+  which(colSums(is.na(x)) == nrow(x))
+}
+
+#' @rdname empty_cols
+#' @export
+empty_rows <- function(x) {
+  which(rowSums(is.na(x)) == ncol(x))
+}
+
+#' @rdname empty_cols
+#' @importFrom tibble as_tibble
+#' @export
+remove_empty_cols <- function(x) {
+  tibble::as_tibble(x[, -empty_cols(x)])
+}
+
+#' @rdname empty_cols
+#' @importFrom tibble as_tibble
+#' @export
+remove_empty_rows <- function(x) {
+  tibble::as_tibble(x[-empty_rows(x), ])
+}
+

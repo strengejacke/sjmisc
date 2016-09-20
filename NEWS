@@ -15,6 +15,8 @@ New functions:
 * `flat_table()` to print flat (proportional) tables of labelled variables.
 * Added `to_character()` method.
 * `big_mark()` to format large numbers with big marks.
+* `empty_cols()` and `empty_rows()` to find variables or observations with exclusively NA values in a data frame.
+* `remove_empty_cols()` and `remove_empty_rows()` to remove variables or observations with exclusively NA values from a data frame.
 
 Changes to functions:
 * `str_contains()` gets a `switch` argument to switch the role of `x` and `pattern`.
