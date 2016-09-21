@@ -38,6 +38,7 @@
 #' mydf
 #' str(mydf)
 #'
+#' @importFrom tibble as_tibble
 #' @export
 merge_df <- function(x1, x2, ..., id = NULL) {
   # retrieve list of parameters
@@ -66,11 +67,13 @@ merge_df <- function(x1, x2, ..., id = NULL) {
                   rep(deparse(substitute(x2)), times = nrow(x2)))
       # do we have more data frames?
       if (!is.null(more_dfs) && length(more_dfs) > 0) {
+        # get names of data frames for ID column
+        more_df_names <- match.call(expand.dots = FALSE)$`...`
+
         # iterate all remaining data frames
-        for (i in 1:length(more_dfs)) {
+        for (i in seq_len(length(more_dfs))) {
           # create ID vector
-          id_col <- c(id_col, rep(sprintf("%s_%i", deparse(substitute(x1)), i),
-                                  times = nrow(more_dfs[[i]])))
+          id_col <- c(id_col, rep(as.character(more_df_names[[i]]), times = nrow(more_dfs[[i]])))
         }
       }
       # bind id column
@@ -80,7 +83,7 @@ merge_df <- function(x1, x2, ..., id = NULL) {
     }
   }
   # return merged df
-  x_final
+  tibble::as_tibble(x_final)
 }
 
 merge_df_helper <- function(x1, x2) {
@@ -125,7 +128,7 @@ merge_df_helper <- function(x1, x2) {
   # x1 and x2
   tmp <- rbind(tmp, x2[, x2_remain])
   # copy attributes
-  for (i in 1:length(x2_remain)) {
+  for (i in seq_len(length(x2_remain))) {
     attributes(tmp[[i]]) <- attributes(x2[, x2_remain[i]])
   }
 

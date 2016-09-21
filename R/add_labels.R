@@ -121,8 +121,7 @@ add_labels_helper <- function(x, value) {
   # replace tagged NA
   if (any(haven::is_tagged_na(value))) {
     # get tagged NAs
-    value_tag <- haven::na_tag(value)
-    value_tag <- value_tag[!is.na(value_tag)]
+    value_tag <- haven::na_tag(value)[haven::is_tagged_na(value)]
     cna_tag <- haven::na_tag(current.na)
     # find matches (replaced NA)
     doubles <- na.omit(match(value_tag, cna_tag))
