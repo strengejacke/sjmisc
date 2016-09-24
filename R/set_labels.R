@@ -279,7 +279,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
       if (is.ordered(x)) values <- values[order(levels(x))]
 
       # set var name string
-      if (is.null(var.name) || nchar(var.name) < 1) {
+      if (is_empty(var.name)) {
         name.string <- "x"
       } else {
         name.string <- var.name
@@ -287,7 +287,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
 
       # check for valid bounds of values
       if (is.infinite(valrange)) {
-        warning("can't set value labels. Infinite value range.", call. = T)
+        warning(sprintf("Can't set value labels for \"%s\". Infinite value range.", name.string), call. = T)
 
         # check if we have named vector. in this
         # case, just add these values
