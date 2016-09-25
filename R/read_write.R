@@ -89,7 +89,8 @@ read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
             na.val.labels <- names(labels)[labels %in% na.values]
             # do we have any labels for missings? then name tagged
             # NA with value labels, else use values as labels
-            if (length(na.val.labels) > 0 && !is_empty(na.val.labels))
+            empty_val_labels <- suppressWarnings(is_empty(na.val.labels))
+            if (length(na.val.labels) > 0 && !empty_val_labels)
               names(tna) <- na.val.labels
             else
               names(tna) <- na.values
