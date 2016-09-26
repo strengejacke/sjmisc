@@ -22,7 +22,6 @@ Depends:
     stats,
     utils
 Imports:
-    coin,
     broom (>= 0.4.1),
     dplyr (>= 0.5.0),
     haven (>= 1.0.0),

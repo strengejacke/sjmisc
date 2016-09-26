@@ -1,3 +1,11 @@
+Version 2.0.1
+------------------------------------------------------------------------------
+General:
+* Removed package `coin` from Imports.
+
+New functions:
+* `count_na()` to print a frequency table of tagged NA values.
+
 Version 2.0.0
 ------------------------------------------------------------------------------
 General:

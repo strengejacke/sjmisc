@@ -1,3 +1,14 @@
+# sjmisc 2.0.1
+
+## General
+
+* Removed package `coin` from Imports.
+
+## New functions
+
+* `count_na()` to print a frequency table of tagged NA values.
+
+
 # sjmisc 2.0.0
 
 ## General
