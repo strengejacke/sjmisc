@@ -25,12 +25,10 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1, tagged_na("a", "a", "c"),
                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
 count_na(x)
 
-
 y <- labelled(c(1:3, tagged_na("e", "d", "f"), 4:1, tagged_na("f", "f", "d"),
                 1:3, tagged_na("f", "d", "d"), 1:4, tagged_na("f", "d", "f")),
               c("Agreement" = 1, "Disagreement" = 4, "An E" = tagged_na("e"),
                 "A D" = tagged_na("d"), "The eff" = tagged_na("f")))
-
 count_na(tibble::data_frame(x, y))
 
 }
