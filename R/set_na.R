@@ -17,6 +17,8 @@
 #'          \code{\link[haven]{tagged_na}}.
 #'          Thus, for each variable in \code{x}, \code{value} are replaced by
 #'          tagged \code{NA} values.
+#' @param drop.levels Logical, if \code{TRUE}, factor levels of values that have
+#'          been replaced with \code{NA} are dropped. See 'Examples'.
 #'
 #' @return \code{x}, where each value of \code{value} is replaced by an a tagged
 #'           \code{NA}.
@@ -67,30 +69,35 @@
 #' # set 3 to NA
 #' lapply(set_na(dummy, 3), table, useNA = "always")
 #'
+#' # drop unused factor levels when being set to NA
+#' x <- factor(c("a", "b", "c"))
+#' x
+#' set_na(x, "b")
+#' set_na(x, "b", drop.levels = FALSE)
 #'
 #' @export
-set_na <- function(x, value) {
+set_na <- function(x, value, drop.levels = TRUE) {
   UseMethod("set_na")
 }
 
 #' @export
-set_na.data.frame <- function(x, value) {
-  tibble::as_tibble(lapply(x, FUN = set_na_helper, value))
+set_na.data.frame <- function(x, value, drop.levels = TRUE) {
+  tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels))
 }
 
 #' @export
-set_na.list <- function(x, value) {
-  lapply(x, FUN = set_na_helper, value)
+set_na.list <- function(x, value, drop.levels = TRUE) {
+  lapply(x, FUN = set_na_helper, value, drop.levels)
 }
 
 #' @export
-set_na.default <- function(x, value) {
-  set_na_helper(x, value)
+set_na.default <- function(x, value, drop.levels = TRUE) {
+  set_na_helper(x, value, drop.levels)
 }
 
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag
-set_na_helper <- function(x, value) {
+set_na_helper <- function(x, value, drop.levels) {
   # check if we have any values at all?
   if (is.null(value)) return(x)
   # get label attribute
@@ -99,7 +106,7 @@ set_na_helper <- function(x, value) {
   # check if value is a named vector
   na.names <- names(value)
   # get values for value labels
-  lab.values <- get_values(x)
+  lab.values <- get_values(x, drop.na = F)
 
   # haven::na_tag works only for double
   if (is.double(x)) {
@@ -136,6 +143,19 @@ set_na_helper <- function(x, value) {
       else
         names(attr(x, attr.string)) <- c(ln, as.character(value[i]))
     }
+  }
+
+  # if we have a factor, check if we have unused levels now due to NA
+  # assignment. If yes, drop levels
+  if (is.factor(x) && drop.levels && length(levels(x)) != length(levels(droplevels(x)))) {
+    # save value and variable labels
+    keep.val <- attr(x, "labels", exact = T)
+    keep.var <- attr(x, "label", exact = T)
+    # drop levels
+    x <- droplevels(x)
+    # set back labels
+    attr(x, "labels") <- keep.val
+    attr(x, "label") <- keep.var
   }
 
   return(x)

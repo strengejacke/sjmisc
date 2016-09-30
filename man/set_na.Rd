@@ -5,7 +5,7 @@
 \alias{set_na<-}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, value)
+set_na(x, value, drop.levels = TRUE)
 
 set_na(x) <- value
 }
@@ -18,6 +18,9 @@ column is assumed to be a new variable, where missings should be defined.}
 \code{\link[haven]{tagged_na}}.
 Thus, for each variable in \code{x}, \code{value} are replaced by
 tagged \code{NA} values.}
+
+\item{drop.levels}{Logical, if \code{TRUE}, factor levels of values that have
+been replaced with \code{NA} are dropped. See 'Examples'.}
 }
 \value{
 \code{x}, where each value of \code{value} is replaced by an a tagged
@@ -75,6 +78,11 @@ lapply(dummy, table, useNA = "always")
 # set 3 to NA
 lapply(set_na(dummy, 3), table, useNA = "always")
 
+# drop unused factor levels when being set to NA
+x <- factor(c("a", "b", "c"))
+x
+set_na(x, "b")
+set_na(x, "b", drop.levels = FALSE)
 
 }
 \seealso{

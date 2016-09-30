@@ -8,6 +8,10 @@
 
 * `count_na()` to print a frequency table of tagged NA values.
 
+## Changes to functions
+
+* `set_na()` gets a `drop.levels` argument to keep or drop factor levels of values that have been replaced with NA.
+
 
 # sjmisc 2.0.0
 
