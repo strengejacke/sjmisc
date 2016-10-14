@@ -3,7 +3,7 @@
 #'
 #' @description This function returns a frequency table of labelled vectors, as data frame.
 #'
-#' @param x A labelled vector.
+#' @param x A labelled vector or a \code{data.frame} with labelled vectors.
 #' @param sort.frq Logical, if \code{TRUE}, rows will be sorted according to
 #'          value frequencies.
 #' @return A data frame with values, value labels, frequencies, raw, valid and

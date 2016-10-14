@@ -48,9 +48,11 @@ flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), d
   # correct result
   if (marge == 0) marge <- NULL
 
+  # get dot data
+  .data <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
+
   # select variables, convert to label and create ftable-pbject
   x <- .data %>%
-    dplyr::select(...) %>%
     to_label() %>%
     stats::ftable()
 

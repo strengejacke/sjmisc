@@ -7,7 +7,7 @@
 frq(x, sort.frq = c("none", "asc", "desc"))
 }
 \arguments{
-\item{x}{A labelled vector.}
+\item{x}{A labelled vector or a \code{data.frame} with labelled vectors.}
 
 \item{sort.frq}{Logical, if \code{TRUE}, rows will be sorted according to
 value frequencies.}
