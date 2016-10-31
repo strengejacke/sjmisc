@@ -11,6 +11,7 @@
 ## Changes to functions
 
 * `set_na()` gets a `drop.levels` argument to keep or drop factor levels of values that have been replaced with NA.
+* `set_na()` gets a `as.tag` argument to set NA values as regular or tagged NA.
 
 
 # sjmisc 2.0.0

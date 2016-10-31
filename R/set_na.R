@@ -19,6 +19,8 @@
 #'          tagged \code{NA} values.
 #' @param drop.levels Logical, if \code{TRUE}, factor levels of values that have
 #'          been replaced with \code{NA} are dropped. See 'Examples'.
+#' @param as.tag Logical, if \code{TRUE}, values in \code{x} will be replaced
+#'          by \code{\link[haven]{tagged_na}}, else by usual \code{NA} values.
 #'
 #' @return \code{x}, where each value of \code{value} is replaced by an a tagged
 #'           \code{NA}.
@@ -76,28 +78,28 @@
 #' set_na(x, "b", drop.levels = FALSE)
 #'
 #' @export
-set_na <- function(x, value, drop.levels = TRUE) {
+set_na <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
   UseMethod("set_na")
 }
 
 #' @export
-set_na.data.frame <- function(x, value, drop.levels = TRUE) {
-  tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels))
+set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+  tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels, as.tag))
 }
 
 #' @export
-set_na.list <- function(x, value, drop.levels = TRUE) {
-  lapply(x, FUN = set_na_helper, value, drop.levels)
+set_na.list <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+  lapply(x, FUN = set_na_helper, value, drop.levels, as.tag)
 }
 
 #' @export
-set_na.default <- function(x, value, drop.levels = TRUE) {
-  set_na_helper(x, value, drop.levels)
+set_na.default <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+  set_na_helper(x, value, drop.levels, as.tag)
 }
 
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag
-set_na_helper <- function(x, value, drop.levels) {
+set_na_helper <- function(x, value, drop.levels, as.tag) {
   # check if we have any values at all?
   if (is.null(value)) return(x)
   # get label attribute
@@ -109,39 +111,45 @@ set_na_helper <- function(x, value, drop.levels) {
   lab.values <- get_values(x, drop.na = F)
 
   # haven::na_tag works only for double
-  if (is.double(x)) {
+  if (is.double(x) && as.tag) {
     # get na-tags, to check whether NA already was defined
     nat <- as.vector(stats::na.omit(haven::na_tag(x)))
     # stop if user wants to assign a value to NA that is
     # already assigned as NA
     if (any(nat %in% as.character(value)))
-      stop("Can't set NA values. At least one element of `value` is already defined as NA.", call. = F)
+      stop("Can't set NA values. At least one element of `value` is already defined as NA. Use `zap_na_tags()` to remove tags from NA values.", call. = F)
   }
 
   # iterate all NAs
   for (i in seq_len(length(value))) {
-    # find associated values in x and set them as tagged NA
-    x[x %in% value[i]] <- haven::tagged_na(as.character(value[i]))
-    # is na-value in labelled values?
-    lv <- which(lab.values == value[i])
-    # if yes, replace label
-    if (!is_empty(lv)) {
-      # change value
-      attr(x, attr.string)[lv] <- haven::tagged_na(as.character(value[i]))
-      # change label as well?
-      if (!is.null(na.names)) names(attr(x, attr.string))[lv] <- na.names[i]
+    if (as.tag) {
+      # find associated values in x and set them as tagged NA
+      x[x %in% value[i]] <- haven::tagged_na(as.character(value[i]))
+      # is na-value in labelled values?
+      lv <- which(lab.values == value[i])
+      # if yes, replace label
+      if (!is_empty(lv)) {
+        # for tagged NA, use tag as new attribute
+        # change value
+        attr(x, attr.string)[lv] <- haven::tagged_na(as.character(value[i]))
+        # change label as well?
+        if (!is.null(na.names)) names(attr(x, attr.string))[lv] <- na.names[i]
+      } else {
+        # no attribute string yet?
+        if (is.null(attr.string)) attr.string <- "labels"
+        # get labels and label values
+        lv <- attr(x, attr.string, exact = T)
+        ln <- names(attr(x, attr.string, exact = T))
+        # add NA
+        attr(x, attr.string) <- c(lv, haven::tagged_na(as.character(value[i])))
+        if (!is.null(na.names))
+          names(attr(x, attr.string)) <- c(ln, na.names[i])
+        else
+          names(attr(x, attr.string)) <- c(ln, as.character(value[i]))
+      }
     } else {
-      # no attribute string yet?
-      if (is.null(attr.string)) attr.string <- "labels"
-      # get labels and label values
-      lv <- attr(x, attr.string, exact = T)
-      ln <- names(attr(x, attr.string, exact = T))
-      # add NA
-      attr(x, attr.string) <- c(lv, haven::tagged_na(as.character(value[i])))
-      if (!is.null(na.names))
-        names(attr(x, attr.string)) <- c(ln, na.names[i])
-      else
-        names(attr(x, attr.string)) <- c(ln, as.character(value[i]))
+      # find associated values in x and set them as tagged NA
+      x[x %in% value[i]] <- NA
     }
   }
 

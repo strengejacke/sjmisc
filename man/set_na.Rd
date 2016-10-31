@@ -5,7 +5,7 @@
 \alias{set_na<-}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, value, drop.levels = TRUE)
+set_na(x, value, drop.levels = TRUE, as.tag = TRUE)
 
 set_na(x) <- value
 }
@@ -21,6 +21,9 @@ tagged \code{NA} values.}
 
 \item{drop.levels}{Logical, if \code{TRUE}, factor levels of values that have
 been replaced with \code{NA} are dropped. See 'Examples'.}
+
+\item{as.tag}{Logical, if \code{TRUE}, values in \code{x} will be replaced
+by \code{\link[haven]{tagged_na}}, else by usual \code{NA} values.}
 }
 \value{
 \code{x}, where each value of \code{value} is replaced by an a tagged
