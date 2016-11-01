@@ -2,7 +2,7 @@
 % Please edit documentation in R/count_na.R
 \name{count_na}
 \alias{count_na}
-\title{Frequency zable of tagged NA values}
+\title{Frequency table of tagged NA values}
 \usage{
 count_na(x)
 }

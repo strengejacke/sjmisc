@@ -1,4 +1,6 @@
-#' @title Frequency zable of tagged NA values
+utils::globalVariables("label")
+
+#' @title Frequency table of tagged NA values
 #' @name count_na
 #'
 #' @description This method counts tagged NA values (see \code{\link[haven]{tagged_na}})

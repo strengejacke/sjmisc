@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 2.0.0
-Date: 2016-09-25
+Version: 2.0.1
+Date: 2016-11-01
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
@@ -31,7 +31,7 @@ Imports:
     tidyr (>= 0.6.0)
 Suggests:
     mice,
-    sjstats (>= 0.4.0)
+    sjstats (>= 0.5.0)
 URL: https://github.com/sjPlot/sjmisc
 BugReports: https://github.com/sjPlot/sjmisc/issues
 RoxygenNote: 5.0.1
