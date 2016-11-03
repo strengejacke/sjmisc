@@ -1,3 +1,16 @@
+# sjmisc 2.0.2
+
+## New functions
+
+* `find_var()` to find variables in data frames by name or label.
+* `var_labels()` as "tidyversed" alternative to `set_label()` to set variable labels.
+* `var_rename()` to rename variables.
+
+## Bug fixes
+
+* Fixed bug with copying attributes from tibbles for `merge_df()`.
+
+
 # sjmisc 2.0.1
 
 ## General

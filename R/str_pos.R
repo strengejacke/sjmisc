@@ -87,7 +87,7 @@ str_pos <- function(searchString,
                                                      style = 3)
 
     # iterate search string vector
-    for (ssl in 1:length(searchString)) {
+    for (ssl in seq_len(length(searchString))) {
       # retrieve each element of search string vector
       # we do this step by step instead of vectorizing
       # due to the substring approach
@@ -97,7 +97,7 @@ str_pos <- function(searchString,
       # starting from first char of searchString until end
       # and try to find similar matches
       steps <- nchar(sst) - ftlength + 1
-      for (pi in 1:steps) {
+      for (pi in seq_len(steps)) {
         # retrieve substring
         sust <- trim(substr(sst, pi, pi + ftlength - 1))
 

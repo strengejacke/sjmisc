@@ -129,7 +129,7 @@ merge_df_helper <- function(x1, x2) {
   tmp <- rbind(tmp, x2[, x2_remain])
   # copy attributes
   for (i in seq_len(length(x2_remain))) {
-    attributes(tmp[[i]]) <- attributes(x2[, x2_remain[i]])
+    attributes(tmp[[i]]) <- attributes(x2[[x2_remain[i]]])
   }
 
   # final merge

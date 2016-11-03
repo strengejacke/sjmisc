@@ -41,7 +41,11 @@ This function retrieves the value labels of labelled data, which
 See 'Details' in \code{\link{get_labels}}.
 }
 \note{
-See 'Note' in \code{\link{get_labels}}.
+\code{\link{var_labels}} is an alternative way to set variable labels,
+      which follows the philosophy of tidyvers API design (data as first argument,
+      dots as value pairs indicating variables).
+      \cr \cr
+      Furthermore, see 'Note' in \code{\link{get_labels}}.
 }
 \examples{
 # import SPSS data set
@@ -82,6 +86,7 @@ get_label(list(efc$e42dep, efc$e16sex, efc$e15relat))
 \seealso{
 See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
            for more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}
-           to get value labels.
+           to get value labels; \code{\link{var_labels}} to set multiple variable
+           labels at once.
 }
 

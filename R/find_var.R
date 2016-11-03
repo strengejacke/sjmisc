@@ -1,0 +1,123 @@
+#' @title Find variable by name or label
+#' @name find_var
+#'
+#' @description This functions finds variables in a data frame, which variable
+#'                names or variable (and value) label attribute match a specific
+#'                pattern. Regular expression for the pattern is supported.
+#'
+#' @param data A data frame.
+#' @param pattern Character string to be matched in \code{data}. May also be a
+#'          character vector of length > 1 (see 'Examples'). \code{pattern} is
+#'          searched for in column names and variable label attributes of
+#'          \code{data} (see \code{\link{get_label}}). \code{pattern} might also
+#'          be a regular-expression object, as returned by \code{\link[stringr]{regex}},
+#'          or any of \pkg{stringr}'s supported \code{\link[stringr]{modifiers}}.
+#' @param ignore.case Logical, whether matching should be case sensitive or not.
+#' @param search Character string, indicating where \code{pattern} is sought.
+#'          Use one of following options:
+#'          \describe{
+#'            \item{\code{"name_label"}}{The default, searches for \code{pattern} in
+#'                  variable names and variable labels.}
+#'            \item{\code{"name_value"}}{Searches for \code{pattern} in
+#'                  variable names and value labels.}
+#'            \item{\code{"label_value"}}{Searches for \code{pattern} in
+#'                  variable and value labels.}
+#'            \item{\code{"name"}}{Searches for \code{pattern} in
+#'                  variable names.}
+#'            \item{\code{"label"}}{Searches for \code{pattern} in
+#'                  variable labels}
+#'            \item{\code{"value"}}{Searches for \code{pattern} in
+#'                  value labels.}
+#'            \item{\code{"all"}}{Searches for \code{pattern} in
+#'                  variable names, variable and value labels.}
+#'          }
+#'
+#' @return A named vector with column indices of found variables. Variable names
+#'           are used as names-attribute.
+#'
+#' @details This function searches for \code{pattern} in \code{data}'s column names
+#'            and - for labelled data - in all variable and value labels of \code{data}'s
+#'            variables (see \code{\link{get_label}} for details on variable labels and
+#'            labelled data). Search is performed using the
+#'            \code{\link[stringr]{str_detect}} functions; hence, regular
+#'            expressions are supported as well, by simply using
+#'            \code{pattern = stringr::regex(...)}.
+#'
+#' @examples
+#' data(efc)
+#'
+#' # find variables with "cop" in variable name
+#' find_var(efc, "cop")
+#'
+#' # find variables with "dependency" in names and variable labels
+#' find_var(efc, "dependency")
+#' get_label(efc$e42dep)
+#'
+#' # find variables with "level" in names and value labels
+#' res <- find_var(efc, "level", search = "name_value")
+#' res
+#' get_labels(efc[, res], attr.only = FALSE)
+#'
+#' # use sjPlot::view_df() to view results
+#' \dontrun{
+#' library(sjPlot)
+#' view_df(efc[, res])}
+#'
+#' @importFrom stringr regex coll
+#' @export
+find_var <- function(data, pattern, ignore.case = TRUE, search = c("name_label", "name_value", "label_value", "name", "label", "value", "all")) {
+  # check valid args
+  if (!is.data.frame(data)) {
+    stop("`data` must be a data frame.", call. = F)
+  }
+
+  # match args
+  search <- match.arg(search)
+
+  pos1 <- pos2 <- pos3 <- c()
+
+  # search for pattern in variable names
+  if (search %in% c("name", "name_label", "name_value", "all")) {
+    # check variable names
+    if (any(class(pattern) == "regex"))
+      pos1 <- which(stringr::str_detect(colnames(data), pattern))
+    else
+      pos1 <- which(stringr::str_detect(colnames(data), stringr::coll(pattern, ignore_case = ignore.case)))
+  }
+
+
+  # search for pattern in variable labels
+  if (search %in% c("label", "name_label", "label_value", "all")) {
+    # get labels and variable names
+    labels <- get_label(data)
+
+    # check labels
+    if (any(class(pattern) == "regex"))
+      pos2 <- which(stringr::str_detect(labels, pattern))
+    else
+      pos2 <- which(stringr::str_detect(labels, stringr::coll(pattern, ignore_case = ignore.case)))
+  }
+
+  # search for pattern in value labels
+  if (search %in% c("value", "name_value", "label_value", "all")) {
+    labels <- get_labels(data, attr.only = F)
+
+    # check value labels with regex
+    if (any(class(pattern) == "regex")) {
+      pos3 <- which(unlist(lapply(labels, function(x) {
+        any(stringr::str_detect(x, pattern))
+      })))
+    } else {
+      pos3 <- which(unlist(lapply(labels, function(x) {
+        any(stringr::str_detect(x, stringr::coll(pattern, ignore_case = ignore.case)))
+      })))
+    }
+  }
+
+  # get unqiue variable indices
+  pos <- unique(c(pos1, pos2, pos3))
+  # also use column names
+  names(pos) <- colnames(data)[pos]
+
+  pos
+}
