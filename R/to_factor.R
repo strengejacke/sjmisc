@@ -10,6 +10,9 @@
 #'
 #' @param x Numeric, atomic or character vector or a data frame with
 #'          such vectors.
+#' @param ... Optional, unquoted names of variables. Required, if either
+#'          \code{x} is a data frame and no vector, or if only selected variables
+#'          from \code{x} should be used in the function. See 'Examples'.
 #' @param add.non.labelled Logical, if \code{TRUE}, non-labelled values also
 #'          get value labels.
 #' @param ref.lvl Numeric, specifies the reference level for the new factor. Use
@@ -57,6 +60,7 @@
 #' to_factor(x, add.non.labelled = TRUE)
 #' get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
 #'
+#'
 #' # Convert to factor, using different reference level
 #' x <- to_factor(efc$e42dep)
 #' str(x)
@@ -66,24 +70,39 @@
 #' str(x)
 #' table(x)
 #'
+#'
+#' # easily coerce specific variables in a data frame to factor
+#' # and keep other variables, with their class preserved
+#' to_factor(efc, e42dep, e16sex, c172code)
+#'
+#'
+#' @importFrom tibble as_tibble
 #' @export
-to_factor <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  UseMethod("to_factor")
-}
+to_factor <- function(x, ..., add.non.labelled = FALSE, ref.lvl = NULL) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-to_factor.data.frame <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  tibble::as_tibble(lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-to_factor.list <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  lapply(x, FUN = to_fac_helper, add.non.labelled, ref.lvl)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-to_factor.default <- function(x, add.non.labelled = FALSE, ref.lvl = NULL) {
-  to_fac_helper(x, add.non.labelled, ref.lvl)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- to_fac_helper(.dat[[i]], add.non.labelled, ref.lvl)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- to_fac_helper(.dat, add.non.labelled, ref.lvl)
+  }
+
+  x
 }
 
 

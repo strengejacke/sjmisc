@@ -27,7 +27,10 @@
 #' @param drop.levels Logical, if \code{TRUE}, unused factor levels will be
 #'          dropped (i.e. \code{\link{droplevels}} will be applied before returning
 #'          the result).
+#'
+#' @inheritParams to_factor
 #' @inheritParams rec
+#'
 #' @return A factor variable with the associated value labels as factor levels, or a
 #'           data frame with such factor variables (if \code{x} was a data frame).
 #'
@@ -106,25 +109,37 @@
 #' # change variable label
 #' to_label(x, var.label = "New variable label!", drop.levels = TRUE)
 #'
+#'
+#' # easily coerce specific variables in a data frame to factor
+#' # and keep other variables, with their class preserved
+#' to_label(efc, e42dep, e16sex, c172code)
+#'
 #' @export
-to_label <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  UseMethod("to_label")
-}
+to_label <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-to_label.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  tibble::as_tibble(lapply(x, FUN = to_label_helper, add.non.labelled, prefix, var.label, drop.na, drop.levels))
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-to_label.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  lapply(x, FUN = to_label_helper, add.non.labelled, prefix, var.label, drop.na, drop.levels)
-}
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
 
-#' @export
-to_label.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels)
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- to_label_helper(.dat[[i]], add.non.labelled, prefix, var.label, drop.na, drop.levels)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- to_label_helper(.dat, add.non.labelled, prefix, var.label, drop.na, drop.levels)
+  }
+
+  x
 }
 
 #' @importFrom haven na_tag
@@ -269,23 +284,35 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #' # keep missings, and use non-labelled values as well
 #' to_character(x, add.non.labelled = TRUE, drop.na = FALSE)
 #'
+#'
+#' # easily coerce specific variables in a data frame to character
+#' # and keep other variables, with their class preserved
+#' to_character(efc, e42dep, e16sex, c172code)
+#'
 #' @export
-to_character <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  UseMethod("to_character")
-}
+to_character <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-to_character.data.frame <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  tibble::as_tibble(lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels))))
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-to_character.list <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  lapply(x, function(x) as.character(to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels)))
-}
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
 
-#' @export
-to_character.default <- function(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  as.character(to_label_helper(x, add.non.labelled, prefix, var.label, drop.na, drop.levels))
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- as.character(to_label_helper(.dat[[i]], add.non.labelled, prefix, var.label, drop.na, drop.levels))
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- as.character(to_label_helper(.dat, add.non.labelled, prefix, var.label, drop.na, drop.levels))
+  }
+
+  x
 }

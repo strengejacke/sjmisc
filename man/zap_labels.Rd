@@ -2,20 +2,29 @@
 % Please edit documentation in R/zap_labels.R
 \name{zap_labels}
 \alias{zap_labels}
-\title{Convert labelled values into NA}
+\alias{zap_unlabelled}
+\title{Convert (non-)labelled values into NA}
 \usage{
-zap_labels(x)
+zap_labels(x, ...)
+
+zap_unlabelled(x, ...)
 }
 \arguments{
-\item{x}{(partially) \code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
-of (partially) labelled vectors}
+\item{x}{(partially) \code{\link[haven]{labelled}} vector or a data frame
+with such vectors.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 }
 \value{
 \code{x}, where all labelled values are converted to \code{NA}.
 }
 \description{
-For (partially) labelled vectors, all values that have
-               a value label attribute will be replaced by \code{NA}.
+For (partially) labelled vectors, \code{zap_labels} will replace
+               all values that have a value label attribute by \code{NA};
+               \code{zap_unlabelled} will replace all values that \emph{don't}
+               have a value label attribute by \code{NA}.
 }
 \examples{
 
@@ -38,6 +47,13 @@ x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
 table(zap_unlabelled(x))
 get_values(zap_unlabelled(x))
 str(zap_unlabelled(x))
+
+# in a pipe-workflow
+library(dplyr)
+set_labels(efc$e42dep) <-  c(`1` = "independent", `4` = "severe dependency")
+efc \%>\%
+  select(c172code, e42dep) \%>\%
+  zap_labels()
 
 }
 \seealso{

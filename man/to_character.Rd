@@ -4,13 +4,17 @@
 \alias{to_character}
 \title{Convert variable into character vector and replace values with associated value labels}
 \usage{
-to_character(x, add.non.labelled = FALSE, prefix = FALSE,
+to_character(x, ..., add.non.labelled = FALSE, prefix = FALSE,
   var.label = NULL, drop.na = TRUE, drop.levels = FALSE)
 }
 \arguments{
 \item{x}{A labelled vector (see \code{\link{set_labels}} or
 \code{\link[haven]{labelled}}), respectively a data frame with
 such variables.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 
 \item{add.non.labelled}{logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}
@@ -97,6 +101,11 @@ to_character(x, drop.na = FALSE)
 to_character(x, drop.na = TRUE)
 # keep missings, and use non-labelled values as well
 to_character(x, add.non.labelled = TRUE, drop.na = FALSE)
+
+
+# easily coerce specific variables in a data frame to character
+# and keep other variables, with their class preserved
+to_character(efc, e42dep, e16sex, c172code)
 
 }
 

@@ -1,11 +1,16 @@
-#' @title Convert labelled values into NA
+#' @title Convert (non-)labelled values into NA
 #' @name zap_labels
 #'
-#' @description For (partially) labelled vectors, all values that have
-#'                a value label attribute will be replaced by \code{NA}.
+#' @description For (partially) labelled vectors, \code{zap_labels} will replace
+#'                all values that have a value label attribute by \code{NA};
+#'                \code{zap_unlabelled} will replace all values that \emph{don't}
+#'                have a value label attribute by \code{NA}.
 #'
-#' @param x (partially) \code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
-#'            of (partially) labelled vectors
+#' @param x (partially) \code{\link[haven]{labelled}} vector or a data frame
+#'          with such vectors.
+#'
+#' @inheritParams to_factor
+#'
 #' @return \code{x}, where all labelled values are converted to \code{NA}.
 #'
 #' @seealso \code{\link{get_values}} and \code{\link{zap_unlabelled}};
@@ -33,80 +38,69 @@
 #' get_values(zap_unlabelled(x))
 #' str(zap_unlabelled(x))
 #'
-#' @importFrom stats na.omit
-#' @export
-zap_labels <- function(x) {
-  UseMethod("zap_labels")
-}
-
-#' @export
-zap_labels.data.frame <- function(x) {
-  tibble::as_tibble(lapply(x, FUN = zap_labels_helper))
-}
-
-#' @export
-zap_labels.list <- function(x) {
-  lapply(x, FUN = zap_labels_helper)
-}
-
-#' @export
-zap_labels.default <- function(x) {
-  zap_labels_helper(x)
-}
-
-#' @title Convert non-labelled values into NA
-#' @name zap_unlabelled
-#'
-#' @description For (partially) labelled vectors, all values that don't have
-#'                a value label attribute will be replaced by \code{NA}.
-#'
-#' @inheritParams zap_labels
-#' @return \code{x}, where all non-labelled values are converted to \code{NA}.
-#'
-#' @seealso \code{\link{get_values}} and \code{\link{zap_labels}};
-#'          \code{\link{drop_labels}} to drop labels from zero-count values.
-#'
-#' @examples
-#'
-#' data(efc)
-#' str(efc$e42dep)
-#'
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
-#' table(x)
-#' get_values(x)
-#' str(x)
-#'
-#' # zap all labelled values
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
-#' table(zap_labels(x))
-#' get_values(zap_labels(x))
-#' str(zap_labels(x))
-#'
-#' # zap all unlabelled values
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
-#' table(zap_unlabelled(x))
-#' get_values(zap_unlabelled(x))
-#' str(zap_unlabelled(x))
+#' # in a pipe-workflow
+#' library(dplyr)
+#' set_labels(efc$e42dep) <-  c(`1` = "independent", `4` = "severe dependency")
+#' efc %>%
+#'   select(c172code, e42dep) %>%
+#'   zap_labels()
 #'
 #' @importFrom stats na.omit
 #' @export
-zap_unlabelled <- function(x) {
-  UseMethod("zap_unlabelled")
+zap_labels <- function(x, ...) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
+
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- zap_labels_helper(.dat[[i]])
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- zap_labels_helper(.dat)
+  }
+
+  x
 }
 
-#' @export
-zap_unlabelled.data.frame <- function(x) {
-  tibble::as_tibble(lapply(x, FUN = zap_unlabelled_helper))
-}
 
+#' @rdname zap_labels
+#' @importFrom stats na.omit
 #' @export
-zap_unlabelled.list <- function(x) {
-  lapply(x, FUN = zap_unlabelled_helper)
-}
+zap_unlabelled <- function(x, ...) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-zap_unlabelled.default <- function(x) {
-  zap_unlabelled_helper(x)
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- zap_unlabelled_helper(.dat[[i]])
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- zap_unlabelled_helper(.dat)
+  }
+
+  x
 }
 
 
@@ -116,8 +110,11 @@ zap_unlabelled.default <- function(x) {
 #' @description Replaces all \code{\link[haven]{tagged_na}} values into
 #'                regular \code{NA}.
 #'
-#' @param x \code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
-#'            of labelled vectors with \code{\link[haven]{tagged_na}} values.
+#' @param x \code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
+#'            values, or a data frame with such vectors .
+#'
+#' @inheritParams to_factor
+#'
 #' @return \code{x}, where all \code{\link[haven]{tagged_na}} values are converted to \code{NA}.
 #'
 #' @seealso \code{\link{set_na}} and \code{\link{get_na}};
@@ -141,24 +138,30 @@ zap_unlabelled.default <- function(x) {
 #'
 #' @importFrom stats na.omit
 #' @export
-#' @export
-zap_na_tags <- function(x) {
-  UseMethod("zap_na_tags")
-}
+zap_na_tags <- function(x, ...) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-zap_na_tags.data.frame <- function(x) {
-  tibble::as_tibble(lapply(x, FUN = zap_na_tags_helper))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-zap_na_tags.list <- function(x) {
-  lapply(x, FUN = zap_na_tags_helper)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-zap_na_tags.default <- function(x) {
-  zap_na_tags_helper(x)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- zap_na_tags_helper(.dat[[i]])
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- zap_na_tags_helper(.dat)
+  }
+
+  x
 }
 
 

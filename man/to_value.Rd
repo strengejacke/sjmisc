@@ -4,11 +4,15 @@
 \alias{to_value}
 \title{Convert factors to numeric variables}
 \usage{
-to_value(x, start.at = NULL, keep.labels = TRUE)
+to_value(x, ..., start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
-\item{x}{\code{\link{factor}} or a data frame with \code{factor}s. May also be
+\item{x}{\code{\link{factor}} or a data frame with factors. May also be
 a character vector.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 
 \item{start.at}{starting index, i.e. the lowest numeric value of the variable's
 value range. By default, this argument is \code{NULL}, hence the lowest
@@ -37,10 +41,10 @@ test <- to_label(efc$e42dep)
 table(test)
 
 table(to_value(test))
-hist(to_value(test, 0))
+hist(to_value(test, start.at = 0))
 
 # set lowest value of new variable to "5".
-table(to_value(test, 5))
+table(to_value(test, start.at = 5))
 
 # numeric factor keeps values
 dummy <- factor(c("3", "4", "6"))
@@ -69,6 +73,16 @@ set_labels(dummy2) <- c("first", "2nd", "3rd")
 dummy2
 to_value(dummy2)
 
+
+# easily coerce specific variables in a data frame to numeric
+# and keep other variables, with their class preserved
+data(efc)
+efc$e42dep <- as.factor(efc$e42dep)
+efc$e16sex <- as.factor(efc$e16sex)
+efc$e17age <- as.factor(efc$e17age)
+
+# convert back "sex" and "age" into numeric
+to_value(efc, e16sex, e17age)
 
 }
 \seealso{

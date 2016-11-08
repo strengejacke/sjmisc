@@ -4,13 +4,17 @@
 \alias{to_label}
 \title{Convert variable into factor and replace values with associated value labels}
 \usage{
-to_label(x, add.non.labelled = FALSE, prefix = FALSE, var.label = NULL,
-  drop.na = TRUE, drop.levels = FALSE)
+to_label(x, ..., add.non.labelled = FALSE, prefix = FALSE,
+  var.label = NULL, drop.na = TRUE, drop.levels = FALSE)
 }
 \arguments{
 \item{x}{A labelled vector (see \code{\link{set_labels}} or
 \code{\link[haven]{labelled}}), respectively a data frame with
 such variables.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 
 \item{add.non.labelled}{logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}
@@ -119,6 +123,11 @@ to_label(x, drop.levels = TRUE)
 
 # change variable label
 to_label(x, var.label = "New variable label!", drop.levels = TRUE)
+
+
+# easily coerce specific variables in a data frame to factor
+# and keep other variables, with their class preserved
+to_label(efc, e42dep, e16sex, c172code)
 
 }
 \seealso{

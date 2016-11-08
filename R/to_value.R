@@ -9,7 +9,7 @@
 #'            factor levels and \code{\link{to_factor}} to convert a numeric variable
 #'            into a factor (and preserve labels)
 #'
-#' @param x \code{\link{factor}} or a data frame with \code{factor}s. May also be
+#' @param x \code{\link{factor}} or a data frame with factors. May also be
 #'          a character vector.
 #' @param start.at starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
@@ -24,16 +24,18 @@
 #'           factor levels (if these were numeric). Or a data frame with numeric
 #'           variables, if \code{x} was a data frame.
 #'
+#' @inheritParams to_factor
+#'
 #' @examples
 #' data(efc)
 #' test <- to_label(efc$e42dep)
 #' table(test)
 #'
 #' table(to_value(test))
-#' hist(to_value(test, 0))
+#' hist(to_value(test, start.at = 0))
 #'
 #' # set lowest value of new variable to "5".
-#' table(to_value(test, 5))
+#' table(to_value(test, start.at = 5))
 #'
 #' # numeric factor keeps values
 #' dummy <- factor(c("3", "4", "6"))
@@ -63,25 +65,44 @@
 #' to_value(dummy2)
 #'
 #'
+#' # easily coerce specific variables in a data frame to numeric
+#' # and keep other variables, with their class preserved
+#' data(efc)
+#' efc$e42dep <- as.factor(efc$e42dep)
+#' efc$e16sex <- as.factor(efc$e16sex)
+#' efc$e17age <- as.factor(efc$e17age)
+#'
+#' # convert back "sex" and "age" into numeric
+#' to_value(efc, e16sex, e17age)
+#'
 #' @export
-to_value <- function(x, start.at = NULL, keep.labels = TRUE) {
-  UseMethod("to_value")
+to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
+
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- to_value_helper(.dat[[i]], start.at, keep.labels)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- to_value_helper(.dat, start.at, keep.labels)
+  }
+
+  x
 }
 
-#' @export
-to_value.data.frame <- function(x, start.at = NULL, keep.labels = TRUE) {
-  tibble::as_tibble(lapply(x, FUN = to_value_helper, start.at, keep.labels))
-}
-
-#' @export
-to_value.list <- function(x, start.at = NULL, keep.labels = TRUE) {
-  lapply(x, FUN = to_value_helper, start.at, keep.labels)
-}
-
-#' @export
-to_value.default <- function(x, start.at = NULL, keep.labels = TRUE) {
-  to_value_helper(x, start.at, keep.labels)
-}
 
 to_value_helper <- function(x, start.at, keep.labels) {
   labels <- NULL

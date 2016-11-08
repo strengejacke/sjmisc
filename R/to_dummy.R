@@ -4,16 +4,17 @@
 #' @description This function splits categorical or numeric vectors with
 #'                more than two categories into 0/1-coded dummy variables.
 #'
-#' @param x A vector.
+#' @param x A vector or a data frame.
 #' @param var.name Indicates how the new dummy variables are named. Use
 #'          \code{"name"} to use the variable name or any other string that will
-#'          be used as is. See 'Examples'.
+#'          be used as is. Only applies, if \code{x} is a vector. See 'Examples'.
 #' @param suffix Indicates which suffix will be added to each dummy variable.
 #'          Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
 #'          \emph{x_2}, \emph{x_3} etc. Use \code{"label"} to add value label,
 #'          e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.
-#' @param data Optional, a data frame where the new dummy variables are appended
-#'          as additional columns.
+#'
+#' @inheritParams to_factor
+#'
 #' @return A data frame with dummy variables for each category of \code{x}, or
 #'           \code{data} where new dummy variables are appended as additional
 #'           columns. The dummy coded variables are of type \code{\link{atomic}}.
@@ -31,23 +32,67 @@
 #' # use "dummy" as new variable name
 #' head(to_dummy(efc$e42dep, var.name = "dummy"))
 #'
+#' # create multiple dummies, append to data frame
+#' to_dummy(efc, c172code, e42dep)
 #'
+#' # pipe-workflow
+#' library(dplyr)
+#' efc %>%
+#'   select(e42dep, e16sex, c172code) %>%
+#'   to_dummy(c172code, e42dep)
+#'
+#'
+#' @importFrom tibble as_tibble
 #' @export
-to_dummy <- function(x, var.name = "name", suffix = c("numeric", "label"), data = NULL) {
+to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) {
   # check for abbr
   suffix <- match.arg(suffix)
   # save variable name
   varname <- deparse(substitute(x))
-  # remove "data frame name"
-  dollar_pos <- regexpr("$", varname, fixed = T)[1]
-  if (dollar_pos != -1)
-    varname <- substr(varname, start = dollar_pos + 1, stop = nchar(varname))
+
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
+
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      # convert to dummy
+      x <- dplyr::bind_cols(x, to_dummy_helper(x = .dat[[i]], varname = i, suffix = suffix))
+    }
+  } else {
+    # remove "data frame name"
+    dollar_pos <- regexpr("$", varname, fixed = T)[1]
+    if (dollar_pos != -1)
+      varname <- substr(varname, start = dollar_pos + 1, stop = nchar(varname))
+
+    # set default variable name
+    if (var.name != "name") varname <- var.name
+
+    # convert to dummy
+    x <- to_dummy_helper(.dat, varname, suffix)
+  }
+
+  # coerce to tibble
+  tibble::as_tibble(x)
+}
+
+
+to_dummy_helper <- function(x, varname, suffix) {
   # check whether we have labels
   labels <- get_labels(x, attr.only = F, include.values = "n", include.non.labelled = T)
   # get resp. set variable label for new dummy variables
   # get variable label
   label <- get_label(x, def.value = varname)
-  if (var.name != "name") varname <- var.name
+
   # get unique values
   values <- sort(unique(x))
   # find which labels / categories were
@@ -93,7 +138,6 @@ to_dummy <- function(x, var.name = "name", suffix = c("numeric", "label"), data 
   else
     col.nam <- sprintf("%s_%s", col.nam, labels)
   colnames(mydf) <- col.nam
-  # append data?
-  if (!is.null(data)) return(cbind(data, mydf))
-  return(mydf)
+
+  mydf
 }

@@ -4,11 +4,15 @@
 \alias{zap_na_tags}
 \title{Convert tagged NA values into regular NA}
 \usage{
-zap_na_tags(x)
+zap_na_tags(x, ...)
 }
 \arguments{
-\item{x}{\code{\link[haven]{labelled}} vector, \code{data.frame} or \code{list}
-of labelled vectors with \code{\link[haven]{tagged_na}} values.}
+\item{x}{\code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
+values, or a data frame with such vectors .}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 }
 \value{
 \code{x}, where all \code{\link[haven]{tagged_na}} values are converted to \code{NA}.

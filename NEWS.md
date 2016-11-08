@@ -1,10 +1,14 @@
-# sjmisc 2.0.2
+# sjmisc 2.1.0
 
 ## New functions
 
 * `find_var()` to find variables in data frames by name or label.
 * `var_labels()` as "tidyversed" alternative to `set_label()` to set variable labels.
 * `var_rename()` to rename variables.
+
+## Changes to functions
+
+* Following functions now get an ellipses-argument `...`, to apply function only to selected variables, but return the complete data frame (thus, overwriting existing variables in a data frame, if requested): `to_factor()`, `to_value()`, `to_label()`, `to_character()`, `to_dummy()`, `zap_labels()`, `zap_unlabelled()`, `zap_na_tags()`.
 
 ## Bug fixes
 

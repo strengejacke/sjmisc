@@ -4,11 +4,15 @@
 \alias{to_factor}
 \title{Convert variable into factor and keep value labels}
 \usage{
-to_factor(x, add.non.labelled = FALSE, ref.lvl = NULL)
+to_factor(x, ..., add.non.labelled = FALSE, ref.lvl = NULL)
 }
 \arguments{
 \item{x}{Numeric, atomic or character vector or a data frame with
 such vectors.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 
 \item{add.non.labelled}{Logical, if \code{TRUE}, non-labelled values also
 get value labels.}
@@ -66,6 +70,7 @@ get_labels(to_factor(x), include.values = "p")
 to_factor(x, add.non.labelled = TRUE)
 get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
 
+
 # Convert to factor, using different reference level
 x <- to_factor(efc$e42dep)
 str(x)
@@ -74,6 +79,12 @@ table(x)
 x <- to_factor(efc$e42dep, ref.lvl = 3)
 str(x)
 table(x)
+
+
+# easily coerce specific variables in a data frame to factor
+# and keep other variables, with their class preserved
+to_factor(efc, e42dep, e16sex, c172code)
+
 
 }
 \seealso{

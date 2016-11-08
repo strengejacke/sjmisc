@@ -4,23 +4,23 @@
 \alias{to_dummy}
 \title{Split (categorical) vectors into dummy variables}
 \usage{
-to_dummy(x, var.name = "name", suffix = c("numeric", "label"),
-  data = NULL)
+to_dummy(x, ..., var.name = "name", suffix = c("numeric", "label"))
 }
 \arguments{
-\item{x}{A vector.}
+\item{x}{A vector or a data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 
 \item{var.name}{Indicates how the new dummy variables are named. Use
 \code{"name"} to use the variable name or any other string that will
-be used as is. See 'Examples'.}
+be used as is. Only applies, if \code{x} is a vector. See 'Examples'.}
 
 \item{suffix}{Indicates which suffix will be added to each dummy variable.
 Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
 \emph{x_2}, \emph{x_3} etc. Use \code{"label"} to add value label,
 e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.}
-
-\item{data}{Optional, a data frame where the new dummy variables are appended
-as additional columns.}
 }
 \value{
 A data frame with dummy variables for each category of \code{x}, or
@@ -44,6 +44,15 @@ head(to_dummy(efc$e42dep, suffix = "label"))
 
 # use "dummy" as new variable name
 head(to_dummy(efc$e42dep, var.name = "dummy"))
+
+# create multiple dummies, append to data frame
+to_dummy(efc, c172code, e42dep)
+
+# pipe-workflow
+library(dplyr)
+efc \%>\%
+  select(e42dep, e16sex, c172code) \%>\%
+  to_dummy(c172code, e42dep)
 
 
 }
