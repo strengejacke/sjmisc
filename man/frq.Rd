@@ -9,8 +9,10 @@ frq(x, sort.frq = c("none", "asc", "desc"))
 \arguments{
 \item{x}{A labelled vector or a \code{data.frame} with labelled vectors.}
 
-\item{sort.frq}{Logical, if \code{TRUE}, rows will be sorted according to
-value frequencies.}
+\item{sort.frq}{Determines whether categories should be sorted
+according to their frequencies or not. Default is \code{"none"}, so
+categories are not sorted by frequency. Use \code{"asc"} or
+\code{"desc"} for sorting categories ascending or descending order.}
 }
 \value{
 A data frame with values, value labels, frequencies, raw, valid and

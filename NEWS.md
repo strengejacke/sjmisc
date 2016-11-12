@@ -13,7 +13,7 @@
 ## Bug fixes
 
 * Fixed bug with copying attributes from tibbles for `merge_df()`.
-
+* Fixed wrong argument-description in docs of `frq()`.
 
 # sjmisc 2.0.1
 

@@ -4,8 +4,10 @@
 #' @description This function returns a frequency table of labelled vectors, as data frame.
 #'
 #' @param x A labelled vector or a \code{data.frame} with labelled vectors.
-#' @param sort.frq Logical, if \code{TRUE}, rows will be sorted according to
-#'          value frequencies.
+#' @param sort.frq Determines whether categories should be sorted
+#'          according to their frequencies or not. Default is \code{"none"}, so
+#'          categories are not sorted by frequency. Use \code{"asc"} or
+#'          \code{"desc"} for sorting categories ascending or descending order.
 #' @return A data frame with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
