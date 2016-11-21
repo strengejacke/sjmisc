@@ -171,12 +171,12 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
 
 #' @rdname set_na
 #' @export
-`set_na<-` <- function(x, value) {
+`set_na<-` <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   UseMethod("set_na<-")
 }
 
 #' @export
-`set_na<-.default` <- function(x, value) {
-  x <- set_na(x, value)
+`set_na<-.default` <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+  x <- set_na(x, value, drop.levels, as.tag)
   x
 }

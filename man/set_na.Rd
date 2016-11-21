@@ -7,7 +7,7 @@
 \usage{
 set_na(x, value, drop.levels = TRUE, as.tag = FALSE)
 
-set_na(x) <- value
+set_na(x, drop.levels = TRUE, as.tag = FALSE) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where new
