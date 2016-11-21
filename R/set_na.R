@@ -78,22 +78,22 @@
 #' set_na(x, "b", drop.levels = FALSE)
 #'
 #' @export
-set_na <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   UseMethod("set_na")
 }
 
 #' @export
-set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels, as.tag))
 }
 
 #' @export
-set_na.list <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na.list <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   lapply(x, FUN = set_na_helper, value, drop.levels, as.tag)
 }
 
 #' @export
-set_na.default <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na.default <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   set_na_helper(x, value, drop.levels, as.tag)
 }
 

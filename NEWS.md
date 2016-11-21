@@ -1,3 +1,9 @@
+# sjmisc 2.1.1
+
+## Changes to functions
+
+* `as.tag`-argument in `set_na()` now defaults to `FALSE`.
+
 # sjmisc 2.1.0
 
 ## New functions

@@ -5,7 +5,7 @@
 \alias{set_na<-}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, value, drop.levels = TRUE, as.tag = TRUE)
+set_na(x, value, drop.levels = TRUE, as.tag = FALSE)
 
 set_na(x) <- value
 }
