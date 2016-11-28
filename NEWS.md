@@ -2,7 +2,7 @@
 
 ## Changes to functions
 
-* `as.tag`-argument in `set_na()` now defaults to `FALSE`.
+* `set_na()` did not work on vectors of class `Date` when argument `as.tag = TRUE`.
 
 # sjmisc 2.1.0
 

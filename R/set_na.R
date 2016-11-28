@@ -78,22 +78,22 @@
 #' set_na(x, "b", drop.levels = FALSE)
 #'
 #' @export
-set_na <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+set_na <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
   UseMethod("set_na")
 }
 
 #' @export
-set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
   tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels, as.tag))
 }
 
 #' @export
-set_na.list <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+set_na.list <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
   lapply(x, FUN = set_na_helper, value, drop.levels, as.tag)
 }
 
 #' @export
-set_na.default <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+set_na.default <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
   set_na_helper(x, value, drop.levels, as.tag)
 }
 
@@ -109,6 +109,9 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
   na.names <- names(value)
   # get values for value labels
   lab.values <- get_values(x, drop.na = F)
+
+  # no tagged NA's for date values
+  if (inherits(x, "Date")) as.tag <- F
 
   # haven::na_tag works only for double
   if (is.double(x) && as.tag) {
@@ -171,12 +174,12 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
 
 #' @rdname set_na
 #' @export
-`set_na<-` <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+`set_na<-` <- function(x, drop.levels = TRUE, as.tag = TRUE, value) {
   UseMethod("set_na<-")
 }
 
 #' @export
-`set_na<-.default` <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
+`set_na<-.default` <- function(x, drop.levels = TRUE, as.tag = TRUE, value) {
   x <- set_na(x, value, drop.levels, as.tag)
   x
 }
