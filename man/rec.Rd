@@ -5,9 +5,11 @@
 \alias{rec<-}
 \title{Recode variables}
 \usage{
-rec(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL)
+rec(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL,
+  suffix = "_r")
 
-rec(x, as.fac = FALSE, var.label = NULL, val.labels = NULL) <- value
+rec(x, as.fac = FALSE, var.label = NULL, val.labels = NULL,
+  suffix = "_r") <- value
 }
 \arguments{
 \item{x}{Numeric, charactor or factor variable that should be recoded;
@@ -28,6 +30,16 @@ If empty, variable label attributes will be removed.}
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
+
+\item{suffix}{String value, will be appended to variable (column) names of
+\code{x}, if \code{x} is a data frame. If \code{x} is not a data
+frame, this argument will be ignored. The default value to suffix
+column names in a data frame depends on the function call:
+\itemize{
+  \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
+  \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
+  \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+}}
 
 \item{value}{See \code{recodes}.}
 }
@@ -68,10 +80,10 @@ data(efc)
 table(efc$e42dep, useNA = "always")
 
 # replace NA with 5
-table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
+table(rec(efc$e42dep, recodes = "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
 
 # recode 1 to 2 into 1 and 3 to 4 into 2
-table(rec(efc$e42dep, "1,2=1; 3,4=2"), useNA = "always")
+table(rec(efc$e42dep, recodes = "1,2=1; 3,4=2"), useNA = "always")
 
 # or:
 # rec(efc$e42dep) <- "1,2=1; 3,4=2"
@@ -86,21 +98,21 @@ efc \%>\%
   str()
 
 # recode 1 to 3 into 4 into 2
-table(rec(efc$e42dep, "min:3=1; 4=2"), useNA = "always")
+table(rec(efc$e42dep, recodes = "min:3=1; 4=2"), useNA = "always")
 
 # recode 2 to 1 and all others into 2
-table(rec(efc$e42dep, "2=1; else=2"), useNA = "always")
+table(rec(efc$e42dep, recodes = "2=1; else=2"), useNA = "always")
 
 # reverse value order
-table(rec(efc$e42dep, "rev"), useNA = "always")
+table(rec(efc$e42dep, recodes = "rev"), useNA = "always")
 
 # recode only selected values, copy remaining
 table(efc$e15relat)
-table(rec(efc$e15relat, "1,2,4=1; else=copy"))
+table(rec(efc$e15relat, recodes = "1,2,4=1; else=copy"))
 
 # recode variables with same categorie in a data frame
 head(efc[, 6:9])
-head(rec(efc[, 6:9], "1=10;2=20;3=30;4=40"))
+head(rec(efc[, 6:9], recodes = "1=10;2=20;3=30;4=40"))
 
 # recode list of variables. create dummy-list of
 # variables with same value-range
@@ -108,11 +120,11 @@ dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
 # show original distribution
 lapply(dummy, table, useNA = "always")
 # show recodes
-lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, useNA = "always")
+lapply(rec(dummy, recodes = "1,2=1; NA=9; else=copy"), table, useNA = "always")
 
 # recode character vector
 dummy <- c("M", "F", "F", "X")
-rec(dummy, "M=Male; F=Female; X=Refused")
+rec(dummy, recodes = "M=Male; F=Female; X=Refused")
 
 # recode non-numeric factors
 data(iris)
@@ -126,8 +138,8 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 # get current value labels
 x
 # recode 2 into 5; Values of tagged NAs are preserved
-rec(x, "2=5;else=copy")
-na_tag(rec(x, "2=5;else=copy"))
+rec(x, recodes = "2=5;else=copy")
+na_tag(rec(x, recodes = "2=5;else=copy"))
 
 }
 \seealso{

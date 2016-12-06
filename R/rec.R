@@ -24,6 +24,15 @@
 #' @param val.labels Optional character vector, to set value label attributes
 #'          of recoded variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
+#' @param suffix String value, will be appended to variable (column) names of
+#'           \code{x}, if \code{x} is a data frame. If \code{x} is not a data
+#'           frame, this argument will be ignored. The default value to suffix
+#'           column names in a data frame depends on the function call:
+#'           \itemize{
+#'             \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
+#'             \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
+#'             \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+#'           }
 #' @return A numeric variable (or a factor, if \code{as.fac = TRUE} or if \code{x}
 #'           was a character vector) with recoded category values, or a data
 #'           frame or \code{list}-object with recoded categories for all variables.
@@ -54,10 +63,10 @@
 #' table(efc$e42dep, useNA = "always")
 #'
 #' # replace NA with 5
-#' table(rec(efc$e42dep, "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
+#' table(rec(efc$e42dep, recodes = "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
 #'
 #' # recode 1 to 2 into 1 and 3 to 4 into 2
-#' table(rec(efc$e42dep, "1,2=1; 3,4=2"), useNA = "always")
+#' table(rec(efc$e42dep, recodes = "1,2=1; 3,4=2"), useNA = "always")
 #'
 #' # or:
 #' # rec(efc$e42dep) <- "1,2=1; 3,4=2"
@@ -72,21 +81,21 @@
 #'   str()
 #'
 #' # recode 1 to 3 into 4 into 2
-#' table(rec(efc$e42dep, "min:3=1; 4=2"), useNA = "always")
+#' table(rec(efc$e42dep, recodes = "min:3=1; 4=2"), useNA = "always")
 #'
 #' # recode 2 to 1 and all others into 2
-#' table(rec(efc$e42dep, "2=1; else=2"), useNA = "always")
+#' table(rec(efc$e42dep, recodes = "2=1; else=2"), useNA = "always")
 #'
 #' # reverse value order
-#' table(rec(efc$e42dep, "rev"), useNA = "always")
+#' table(rec(efc$e42dep, recodes = "rev"), useNA = "always")
 #'
 #' # recode only selected values, copy remaining
 #' table(efc$e15relat)
-#' table(rec(efc$e15relat, "1,2,4=1; else=copy"))
+#' table(rec(efc$e15relat, recodes = "1,2,4=1; else=copy"))
 #'
 #' # recode variables with same categorie in a data frame
 #' head(efc[, 6:9])
-#' head(rec(efc[, 6:9], "1=10;2=20;3=30;4=40"))
+#' head(rec(efc[, 6:9], recodes = "1=10;2=20;3=30;4=40"))
 #'
 #' # recode list of variables. create dummy-list of
 #' # variables with same value-range
@@ -94,11 +103,11 @@
 #' # show original distribution
 #' lapply(dummy, table, useNA = "always")
 #' # show recodes
-#' lapply(rec(dummy, "1,2=1; NA=9; else=copy"), table, useNA = "always")
+#' lapply(rec(dummy, recodes = "1,2=1; NA=9; else=copy"), table, useNA = "always")
 #'
 #' # recode character vector
 #' dummy <- c("M", "F", "F", "X")
-#' rec(dummy, "M=Male; F=Female; X=Refused")
+#' rec(dummy, recodes = "M=Male; F=Female; X=Refused")
 #'
 #' # recode non-numeric factors
 #' data(iris)
@@ -112,38 +121,41 @@
 #' # get current value labels
 #' x
 #' # recode 2 into 5; Values of tagged NAs are preserved
-#' rec(x, "2=5;else=copy")
-#' na_tag(rec(x, "2=5;else=copy"))
+#' rec(x, recodes = "2=5;else=copy")
+#' na_tag(rec(x, recodes = "2=5;else=copy"))
 #'
 #' @export
-rec <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL) {
+rec <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r") {
   UseMethod("rec")
 }
 
 #' @export
-rec.data.frame <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL) {
-  tibble::as_tibble(lapply(x, FUN = rec_helper, recodes, as.fac, var.label, val.labels))
+rec.data.frame <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r") {
+  tmp <- tibble::as_tibble(lapply(x, FUN = rec_helper, recodes, as.fac, var.label, val.labels))
+  # change variable names, add suffix "_r"
+  if (!is.null(suffix) && !is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
+  tmp
 }
 
 #' @export
-rec.list <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL) {
+rec.list <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r") {
   lapply(x, FUN = rec_helper, recodes, as.fac, var.label, val.labels)
 }
 
 #' @export
-rec.default <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL) {
+rec.default <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r") {
   rec_helper(x, recodes, as.fac, var.label, val.labels)
 }
 
 #' @rdname rec
 #' @export
-`rec<-` <- function(x, as.fac = FALSE, var.label = NULL, val.labels = NULL, value) {
+`rec<-` <- function(x, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r", value) {
   UseMethod("rec<-")
 }
 
 #' @export
-`rec<-.default` <- function(x, as.fac = FALSE, var.label = NULL, val.labels = NULL, value) {
-  rec(x = x, recodes = value, as.fac = as.fac, var.label = var.label, val.labels = val.labels)
+`rec<-.default` <- function(x, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r", value) {
+  rec(x = x, recodes = value, as.fac = as.fac, var.label = var.label, val.labels = val.labels, suffix = suffix)
 }
 
 #' @importFrom stats na.omit

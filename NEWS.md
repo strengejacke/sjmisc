@@ -2,6 +2,10 @@
 
 ## Changes to functions
 
+* `rec()`, `split_var()` and `dicho()` get an argument `suffix`, to append a suffix to variable (column) names, if applied on a data frame.
+
+## Bug fixes
+
 * `set_na()` did not work on vectors of class `Date` when argument `as.tag = TRUE`.
 
 # sjmisc 2.1.0

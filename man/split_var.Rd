@@ -5,7 +5,7 @@
 \title{Split numeric variables into smaller groups}
 \usage{
 split_var(x, groupcount, as.num = FALSE, val.labels = NULL,
-  var.label = NULL, inclusive = FALSE)
+  var.label = NULL, inclusive = FALSE, suffix = "_g")
 }
 \arguments{
 \item{x}{Numeric vector, data frame or list of numeric vectors,
@@ -29,6 +29,16 @@ If empty, variable label attributes will be removed.}
 the preceeding group. This may be necessary if cutting a vector into
 groups does not define proper ("equal sized") group sizes.
 See 'Note' and 'Examples'.}
+
+\item{suffix}{String value, will be appended to variable (column) names of
+\code{x}, if \code{x} is a data frame. If \code{x} is not a data
+frame, this argument will be ignored. The default value to suffix
+column names in a data frame depends on the function call:
+\itemize{
+  \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
+  \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
+  \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+}}
 }
 \value{
 A grouped variable with equal sized groups.

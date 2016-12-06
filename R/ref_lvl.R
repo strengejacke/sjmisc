@@ -64,7 +64,7 @@ ref_lvl <- function(x, value = NULL) {
   # for the recoding
   rec.pattern <- paste0(sprintf("%i=%i;", neword, vals), collapse = "")
   # recode now
-  x <- rec(x, rec.pattern, as.fac = TRUE)
+  x <- rec(x, recodes = rec.pattern, as.fac = TRUE)
   # set back labels
   if (!is.null(var.lab) && !is_empty(var.lab)) {
     set_label(x) <- var.lab
