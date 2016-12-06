@@ -32,7 +32,7 @@ will be applied to each column of \code{x}.}
 \description{
 This function adds additional labels as attribute to a variable
                or vector \code{x}, resp. to a set of variables in a
-               \code{data.frame} or \code{list}-object. Unlike \code{\link{set_labels}},
+               data frame or list-object. Unlike \code{\link{set_labels}},
                \code{add_labels} does not \emph{completely} replace existing value labels
                (and hence, it does not remove non-specified labels), but adds \code{value}
                to the existing value labels of \code{x}. \code{add_labels} also
@@ -41,8 +41,8 @@ This function adds additional labels as attribute to a variable
 }
 \note{
 Existing labelled values will be replaced by new labelled values
-        in \code{value}. See 'Examples'. \code{replace_labels} is a simple
-        wrapper and just calls \code{add_labels}.
+        in \code{value}. See 'Examples'. \code{replace_labels} is an alias
+        for \code{add_labels}.
 }
 \examples{
 data(efc)

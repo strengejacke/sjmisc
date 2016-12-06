@@ -2,9 +2,12 @@
 % Please edit documentation in R/is_crossed.R
 \name{is_crossed}
 \alias{is_crossed}
-\title{Check whether two factors are crossed}
+\alias{is_nested}
+\title{Check whether two factors are crossed or nested}
 \usage{
 is_crossed(f1, f2)
+
+is_nested(f1, f2)
 }
 \arguments{
 \item{f1}{Numeric vector or \code{\link{factor}}.}
@@ -12,12 +15,19 @@ is_crossed(f1, f2)
 \item{f2}{Numeric vector or \code{\link{factor}}.}
 }
 \value{
-Logical, \code{TRUE} if factors are crossed, \code{FALSE} otherwise.
+Logical. For \code{is_crossed()}, \code{TRUE} if factors are crossed, \code{FALSE} otherwise.
+        For \code{nested()}, \code{TRUE} if factors are nested, \code{FALSE} otherwise.
 }
 \description{
-This function checks whether two factors are crossed,
+These functions checks whether two factors are crossed or nested,
                i.e. if each level of one factor occurs in combination
-               with each level of the other factor.
+               with each level of the other factor (\code{is_crossed()})
+               resp. if each category of the first factor co-occurs
+               with only one category of the other (\code{is_nested()}).
+}
+\note{
+If factors are nested, a message is displayed to tell whether \code{f1}
+        is nested within \code{f2} or vice versa.
 }
 \examples{
 # crossed factors, each category of
@@ -37,11 +47,28 @@ table(x, y)
 # check if crossed
 is_crossed(x, y)
 
+
+# nested factors, each category of
+# x appears in one category of y
+x <- c(1,2,3,4,5,6,7,8,9)
+y <- c(1,1,1,2,2,2,3,3,3)
+# show distribution
+table(x, y)
+# check if nested
+is_nested(x, y)
+is_nested(y, x)
+
+# not nested factors
+x <- c(1,2,3,4,5,6,7,8,9,1,2)
+y <- c(1,1,1,2,2,2,3,3,3,2,3)
+# show distribution
+table(x, y)
+# check if nested
+is_nested(x, y)
+is_nested(y, x)
+
 }
 \references{
 Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
-}
-\seealso{
-\code{\link{is_nested}}
 }
 

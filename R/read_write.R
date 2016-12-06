@@ -1,7 +1,7 @@
-#' @title Import SPSS dataset as data frame into R
+#' @title Import data from other statistical software packages
 #' @name read_spss
 #'
-#' @description Import data from SPSS, including NA's, value and variable
+#' @description Import data from SPSS, SAS or Stata, including NA's, value and variable
 #'   labels.
 #'
 #' @seealso \itemize{
@@ -18,23 +18,23 @@
 #' @param tag.na Logical, if \code{TRUE}, missing values are imported
 #'          as \code{\link[haven]{tagged_na}} values; else, missing values are
 #'          converted to regular \code{NA} (default behaviour).
-#' @return A data frame containing the SPSS data. Retrieve value labels with
+#' @param path.cat Optional, the file path to the SAS catalog file.
+#' @param enc The character encoding used for the file. This defaults to the encoding
+#'          specified in the file, or UTF-8. Use this argument to override the default
+#'          encoding stored in the file.
+#'
+#' @return A data frame containing the imported, labelled data. Retrieve value labels with
 #'   \code{\link{get_labels}} and variable labels with \code{\link{get_label}}.
 #'
-#' @note This is a wrapper function for \code{\link[haven]{read_spss}} of the
-#'   \pkg{haven} package. This function adds value and variable labels as
-#'   attributes to the imported variables of the data frame. \cr \cr Most
-#'   functions of the \pkg{sjPlot} package access value and variable label
-#'   attributes to automatically detect labels in order to set them as axis,
-#'   legend or title labels in plots (\code{sjp.}-functions) respectively as
-#'   column or row headers in table outputs (\code{sjt.}-functions).  See
-#'   \href{http://www.strengejacke.de/sjPlot/datainit/}{online manual} for more
-#'   details. \cr \cr When working with labelled data, you can, e.g., use
-#'   \code{\link{get_label}} or \code{\link{get_labels}} to get a vector of
-#'   value and variable labels, which can then be used with other functions like
-#'   \code{\link{barplot}} etc. See 'Examples' from \code{\link{get_labels}}.
+#' @note These are wrapper functions for \CRANpkg{haven}'s \code{read_*}-functions.
 #'
-#' @details The \code{atomic.to.fac} option only
+#' @details These read-functions behave slightly differently from \pkg{haven}'s
+#'   read-functions:
+#'   \itemize{
+#'     \item The vectors in the returned data frame are of class \code{atomic}, not of class \code{labelled}. The labelled-class might cause issues with other packages.
+#'     \item When importing SPSS data, variables with user defined missings \emph{won't} be read into \code{labelled_spss} objects, but imported as \emph{tagged NA values}.
+#'   }
+#'   The \code{atomic.to.fac} option only
 #'   converts those variables into factors that are of class \code{atomic} and
 #'   which have value labels after import. Atomic vectors without value labels
 #'   are considered as continuous and not converted to factors.
@@ -53,7 +53,7 @@
 #' # retrieve value labels
 #' mydat.val <- get_labels(mydat)}
 #'
-#' @importFrom haven read_spss
+#' @importFrom haven read_spss read_sas read_dta
 #' @export
 read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
   # read data file
@@ -186,29 +186,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 }
 
 
-#' @title Import SAS dataset as data frame into R
-#' @name read_sas
-#'
-#' @description Imports data from SAS (\code{.sas7bdat}), including NA's,
-#'                value and variable labels.
-#'
-#' @seealso \code{\link{read_spss}}
-#'
-#' @param path.cat Optional, the file path to the SAS catalog file.
-#' @param enc The character encoding used for the file. This defaults to the encoding
-#'          specified in the file, or UTF-8. Use this argument to override the default
-#'          encoding stored in the file.
-#'
-#' @return A data frame containing the SAS data. Retrieve value labels with \code{\link{get_labels}}
-#'   and variable labels with \code{\link{get_label}}.
-#'
-#' @inheritParams read_spss
-#'
-#' @note This is a wrapper function for \code{\link[haven]{read_sas}} function of the
-#'         \pkg{haven} package. This function converts the imported data
-#'         into a common class format (see \code{\link{unlabel}}).
-#'
-#' @importFrom haven read_sas
+#' @rdname read_spss
 #' @export
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
@@ -222,25 +200,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
 }
 
 
-#' @title Import STATA dataset as data frame into R
-#' @name read_stata
-#'
-#' @description Imports data from STATA dta-files, including NA's,
-#'                value and variable labels.
-#'
-#' @seealso \code{\link{read_spss}}
-#'
-#' @inheritParams read_spss
-#' @inheritParams read_sas
-#'
-#' @return A data frame containing the STATA data. Retrieve value labels with \code{\link{get_labels}}
-#'   and variable labels with \code{\link{get_label}}.
-#'
-#' @note This is a wrapper function for \code{\link[haven]{read_dta}} function of the
-#'         \pkg{haven} package. This function converts the imported data
-#'         into a common class format (see \code{\link{unlabel}}).
-#'
-#' @importFrom haven read_dta
+#' @rdname read_spss
 #' @export
 read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
@@ -254,10 +214,11 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 }
 
 
-#' @title Write content of data frame to SPSS sav-file
+#' @title Write data to other statistical software packages
 #' @name write_spss
 #'
-#' @description This function saves the content of a data frame to an SPSS sav-file.
+#' @description These functions write the content of a data frame to an SPSS, SAS or
+#'                Stata-file.
 #'
 #' @seealso \itemize{
 #'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
@@ -266,12 +227,12 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'            }
 #'
 #' @note You don't need to take care whether variables have been imported with
-#'         the \code{\link{read_spss}} function from this package or from \pkg{haven}
-#'         or even the \pkg{foreign} package, or if you have imported SPSS data and
-#'         created new variables. This function does all necessary data preparation
-#'         to write a properly labelled SPSS sav file.
+#'         the \code{read_*} function from this package or from \pkg{haven}
+#'         or even the \pkg{foreign} package, or if you have imported data and
+#'         created new variables. These functions do all necessary data preparation
+#'         to write a properly labelled data file.
 #'
-#' @param x \code{data.frame} that should be saved as file.
+#' @param x A data frame that should be saved as file.
 #' @param path File path of the output file.
 #' @param use.tagged.na Logical, if \code{TRUE}, \code{\link[haven]{tagged_na}}
 #'          values are converted to their values, i.e. values of tagged NA's are
@@ -279,6 +240,7 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'          are converted to regular NA's.
 #' @param enc.to.utf8 Logical, if \code{TRUE}, character encoding of variable and
 #'          value labels will be converted to UTF-8.
+#' @param version File version to use. Supports versions 8-14.
 #'
 #' @export
 write_spss <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
@@ -286,50 +248,21 @@ write_spss <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 }
 
 
-#' @title Write content of data frame to STATA dta-file
-#' @name write_stata
-#'
-#' @description This function saves the content of a data frame to an STATA dta-file.
-#'
-#' @seealso \code{\link{write_spss}}
-#'
-#' @note You don't need to take care whether variables have been imported with
-#'         the \code{\link{read_stata}} function from this package or from \pkg{haven},
-#'         or if you have imported STATA data and
-#'         created new variables. This function does all necessary data preparation
-#'         to write a properly labelled STATA file.
-#'
-#' @param version File version to use. Supports versions 8-14.
-#' @inheritParams write_spss
-#'
+#' @rdname write_spss
 #' @export
 write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE, version = 14) {
   write_data(x = x, path = path, type = "stata", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = version)
 }
 
 
-#' @title Write content of data frame to SAS-file
-#' @name write_sas
-#'
-#' @description This function saves the content of a data frame to a SAS-file.
-#'
-#' @seealso \code{\link{write_spss}}
-#'
-#' @note You don't need to take care whether variables have been imported with
-#'         the \code{\link{read_stata}} function from this package or from \pkg{haven},
-#'         or if you have imported STATA data and
-#'         created new variables. This function does all necessary data preparation
-#'         to write a properly labelled STATA file.
-#'
-#' @inheritParams write_spss
-#'
+#' @rdname write_spss
 #' @export
 write_sas <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
   write_data(x = x, path = path, type = "sas", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = 14)
 }
 
 
-#' @importFrom haven write_sav write_dta is.labelled
+#' @importFrom haven write_sav write_dta write_sas is.labelled
 #' @importFrom utils txtProgressBar setTxtProgressBar
 write_data <- function(x, path, type, use.tagged.na, enc.to.utf8, version) {
   # create progress bar

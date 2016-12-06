@@ -47,13 +47,11 @@ See \code{\link{get_na}} for more details on tagged NA values.}
            \code{labels = ""}.
 }
 \description{
-This function adds character \code{labels} as attribute
-               (named \code{"labels"} or \code{"value.labels"}) to a variable
-               or vector \code{x}, resp. to a set of variables in a
-               \code{data.frame} or a \code{list}-object. These value labels will be accessed
-               by functions of the \pkg{sjPlot} package, in order to automatically set values
-               or legend labels, however, \pkg{sjmisc} provides functions to
-               quickly access these attributes for other purposes.
+This function adds labels as attribute (named \code{"labels"})
+               to a variable or vector \code{x}, resp. to a set of variables in a
+               data frame or a list-object. A use-case is, for instance, the
+               \CRANpkg{sjPlot}-package, which supports labelled data and automatically
+               assigns labels to axes or legends in plots or to be used in tables.
 }
 \details{
 See 'Details' in \code{\link{get_labels}}.

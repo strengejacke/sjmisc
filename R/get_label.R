@@ -1,14 +1,7 @@
 #' @title Retrieve variable label(s) of labelled data
 #' @name get_label
 #'
-#' @description This function retrieves the value labels of labelled data, which
-#'                was created with the \pkg{labelled} or \pkg{haven} package, or
-#'                imported from SPSS, SAS or STATA files (via \code{\link{read_spss}},
-#'                \code{\link{read_sas}} or \code{\link{read_stata}}) and
-#'                \itemize{
-#'                  \item if \code{x} is a data frame or a list of variables, returns the all variable labels as named character vector of length \code{ncol(x)}.
-#'                  \item or, if \code{x} is a vector, returns the variable label as string.
-#'                  }
+#' @description This function returns the variable labels of labelled data.
 #'
 #' @seealso See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
 #'            for more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}

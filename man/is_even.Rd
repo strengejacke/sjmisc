@@ -2,20 +2,24 @@
 % Please edit documentation in R/is_even.R
 \name{is_even}
 \alias{is_even}
-\title{Check whether value is even}
+\alias{is_odd}
+\title{Check whether value is even or odd}
 \usage{
 is_even(x)
+
+is_odd(x)
 }
 \arguments{
 \item{x}{Numeric vector or single numeric value, or a data frame or list with
 such vectors.}
 }
 \value{
-\code{TRUE} for each even value of \code{x}, \code{FALSE} for
-          odd values.
+\code{is_even()} returns \code{TRUE} for each even value of \code{x}, \code{FALSE} for
+          odd values. \code{is_odd()} returns \code{TRUE} for each odd value of \code{x}
+          and \code{FALSE} for even values.
 }
 \description{
-Checks whether \code{x} is an even number or not. Only
+Checks whether \code{x} is an even or odd number. Only
                accepts numeric vectors.
 }
 \examples{
@@ -23,8 +27,9 @@ is_even(4)
 is_even(5)
 is_even(1:4)
 
-}
-\seealso{
-\code{\link{is_odd}}
+is_odd(4)
+is_odd(5)
+is_odd(1:4)
+
 }
 

@@ -42,22 +42,15 @@ Either a list with all value labels from all variables if \code{x}
           or \code{NULL} if no value label attribute was found.
 }
 \description{
-This function retrieves the value labels of labelled data, which
-               was created with the \pkg{labelled} or \pkg{haven} package, or
-               imported from SPSS, SAS or STATA files (via \code{\link{read_spss}},
-               \code{\link{read_sas}} or \code{\link{read_stata}}) and
-               \itemize{
-                 \item if \code{x} is a data frame or list of variables, returns all variables' value labels as \code{\link{list}}
-                 \item or, if \code{x} is a vector, returns the value labels as string.
-                 }
+This function returns the value labels of labelled data.
 }
 \details{
-This package can add (and read) value and variable labels either in \pkg{foreign}
+This package can add (and read) value and variable labels either in \CRANpkg{foreign}
            package style (attributes are named \emph{value.labels} and \emph{variable.label})
-           or in \pkg{haven} package style (attributes are named \emph{labels} and
+           or in \CRANpkg{haven} package style (attributes are named \emph{labels} and
            \emph{label}). By default, the \pkg{haven} package style is used.
            \cr \cr
-           Working with labelled data is a key feature of the \pkg{sjPlot} package,
+           Working with labelled data is a key feature of the \CRANpkg{sjPlot} package,
            which accesses these attributes to automatically read label attributes
            for labelling axis categories and titles or table rows and columns
            in graphical or tabular outputs.
@@ -70,10 +63,6 @@ This package can add (and read) value and variable labels either in \pkg{foreign
            when saving data, e.g. to SPSS (see \code{\link{write_spss}}),
            which means that the written SPSS file contains proper labels
            for each variable.
-           \cr \cr
-           You can set a default label style (i.e. the names of the label
-           attributes, see above) via \code{options(value_labels = "haven")}
-           or \code{options(value_labels = "foreign")}.
 }
 \note{
 This function works with vectors that have value and variable
@@ -85,7 +74,7 @@ This function works with vectors that have value and variable
        label attributes, either factor-\code{\link{levels}} or the numeric values
        of the vector are returned as labels.
        \cr \cr
-       Most functions of the \pkg{sjPlot} package access value and variable label
+       Most functions of the \CRANpkg{sjPlot} package access value and variable label
        attributes to automatically detect labels in order to set them as axis,
        legend or title labels in plots (\code{sjp.}-functions) respectively as
        column or row headers in table outputs (\code{sjt.}-functions). See
