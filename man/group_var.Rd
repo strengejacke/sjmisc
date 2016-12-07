@@ -8,8 +8,7 @@ group_var(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
   groupcount = 30)
 }
 \arguments{
-\item{x}{Numeric variable, which should recoded into groups, or a list or
-data frame with such variables.}
+\item{x}{A variable, data frame or list-object.}
 
 \item{groupsize}{Numeric; group-size, i.e. the range for grouping. By default,
 for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
@@ -32,9 +31,9 @@ this argument will be ignored.}
 A grouped variable, either as numeric or as factor (see paramter \code{as.num}).
 }
 \description{
-Recode numeric variables into \emph{equal spaced} grouped factors,
+Recode numeric variables into equal ranged, grouped factors,
                i.e. a variable is cut into a smaller number of groups,
-               where each group has values of equal range.
+               where each group has the same value range.
 }
 \details{
 If \code{groupsize} is set to a specific value, the variable is recoded

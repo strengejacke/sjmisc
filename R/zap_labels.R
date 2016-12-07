@@ -1,23 +1,32 @@
-#' @title Convert (non-)labelled values into NA
+#' @title Drop, add or convert (non-)labelled values to vectors
 #' @name zap_labels
 #'
-#' @description For (partially) labelled vectors, \code{zap_labels} will replace
+#' @description For (partially) labelled vectors, \code{zap_labels()} will replace
 #'                all values that have a value label attribute by \code{NA};
-#'                \code{zap_unlabelled} will replace all values that \emph{don't}
-#'                have a value label attribute by \code{NA}.
+#'                \code{zap_unlabelled()} will replace all values that \emph{don't}
+#'                have a value label attribute by \code{NA}. \code{drop_labels()}
+#'                drops all value labels for unused values that have
+#'                no cases (counts) in a vector. \code{fill_labels()} is the
+#'                counterpart to \code{drop_labels()} and adds value labels to
+#'                a partially labelled vector, i.e. if not all values are
+#'                labelled, non-labelled values get labels.
 #'
 #' @param x (partially) \code{\link[haven]{labelled}} vector or a data frame
 #'          with such vectors.
 #'
 #' @inheritParams to_factor
+#' @inheritParams set_labels
 #'
-#' @return \code{x}, where all labelled values are converted to \code{NA}.
-#'
-#' @seealso \code{\link{get_values}} and \code{\link{zap_unlabelled}};
-#'          \code{\link{drop_labels}} to drop labels from zero-count values.
+#' @return For \code{zap_labels()}, \code{x}, where all labelled values are converted to \code{NA}.
+#'         For \code{zap_unlabelled()}, \code{x}, where all non-labelled values are converted to \code{NA}.
+#'         For \code{drop_labels()}, \code{x}, where value labels for non-existing values are removed.
+#'         For \code{fill_labels()}, \code{x}, where labels for non-labelled values are added.
 #'
 #' @examples
 #'
+#' # ------------------------
+#' # zap_labels()
+#' # ------------------------
 #' data(efc)
 #' str(efc$e42dep)
 #'
@@ -44,6 +53,52 @@
 #' efc %>%
 #'   select(c172code, e42dep) %>%
 #'   zap_labels()
+#'
+#' # ------------------------
+#' # drop_labels()
+#' # ------------------------
+#' rp <- rec_pattern(1, 100)
+#' rp
+#'
+#' # sample data
+#' data(efc)
+#' # recode carers age into groups of width 5
+#' x <- rec(efc$c160age, recodes = rp$pattern)
+#' # add value labels to new vector
+#' set_labels(x) <- rp$labels
+#'
+#' # watch result. due to recode-pattern, we have age groups with
+#' # no observations (zero-counts)
+#' frq(x)
+#' # now, let's drop zero's
+#' frq(drop_labels(x))
+#'
+#' # drop labels, also drop NA value labels, then also zap tagged NA
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "Unused" = 5,
+#'                 "Not home" = tagged_na("z")))
+#' x
+#' drop_labels(x, drop.na = FALSE)
+#' drop_labels(x)
+#' zap_na_tags(drop_labels(x))
+#'
+#' # ------------------------
+#' # fill_labels()
+#' # ------------------------
+#' # create labelled integer, with tagged missings
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current values and labels
+#' x
+#' get_labels(x)
+#'
+#' fill_labels(x)
+#' get_labels(fill_labels(x))
+#' # same as
+#' get_labels(x, include.non.labelled = TRUE)
 #'
 #' @importFrom stats na.omit
 #' @export
@@ -107,11 +162,11 @@ zap_unlabelled <- function(x, ...) {
 #' @title Convert tagged NA values into regular NA
 #' @name zap_na_tags
 #'
-#' @description Replaces all \code{\link[haven]{tagged_na}} values into
+#' @description Replaces all \code{\link[haven]{tagged_na}} values with
 #'                regular \code{NA}.
 #'
-#' @param x \code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
-#'            values, or a data frame with such vectors .
+#' @param x A \code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
+#'            values, or a data frame with such vectors.
 #'
 #' @inheritParams to_factor
 #'

@@ -8,14 +8,14 @@
 #'            for general recoding of variables and \code{\link{recode_to}}
 #'            for re-shifting value ranges.
 #'
-#' @param x Variable (vector), \code{data.frame} or \code{list} of variables where
-#'          missing values should be replaced with \code{value}.
 #' @param value Value that will replace the \code{\link{NA}}'s.
 #' @param na.label Optional character vector, used to label the the former NA-value
 #'          (i.e. adding a \code{labels} attribute for \code{value} to \code{x}).
 #' @param tagged.na Optional single character, specifies a \code{\link[haven]{tagged_na}} value
 #'          that will be replaced by \code{value}. Herewith it is possible
 #'          to replace only specific \code{NA} values of \code{x}.
+#'
+#' @inheritParams rec
 #'
 #' @return \code{x}, where \code{NA}'s are replaced with \code{value}.
 #'

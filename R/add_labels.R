@@ -1,36 +1,47 @@
-#' @title Add or replace value labels of variables
+#' @title Add, replace or remove value labels of variables
 #' @name add_labels
 #'
-#' @description This function adds additional labels as attribute to a variable
-#'                or vector \code{x}, resp. to a set of variables in a
-#'                data frame or list-object. Unlike \code{\link{set_labels}},
-#'                \code{add_labels} does not \emph{completely} replace existing value labels
-#'                (and hence, it does not remove non-specified labels), but adds \code{value}
-#'                to the existing value labels of \code{x}. \code{add_labels} also
-#'                replaces existing value labels, but unlike \code{set_labels},
+#' @description These functions add, replace or remove value labels to or from variables.
+#'                Unlike \code{\link{set_labels}}, \code{add_labels()} does not
+#'                \emph{completely} replace value labels (and hence,
+#'                it does \emph{not} remove labels that were not specified in
+#'                \code{value}), but adds \code{value} to the existing value
+#'                labels of \code{x}. \code{add_labels()} also
+#'                replaces existing value labels, but unlike \code{set_labels()},
 #'                preserves the remaining labels. See 'Note'.
+#'                \code{remove_labels()} is the counterpart to \code{add_labels()}.
+#'                It removes labels from a label attribute of \code{x}.
 #'
 #' @seealso \code{\link{set_label}} to manually set variable labels or
 #'            \code{\link{get_label}} to get variable labels; \code{\link{set_labels}} to
 #'            add value labels, replacing the existing ones (and removing non-specified
 #'            value labels).
 #'
-#' @param x Variable (vector), \code{list} of variables or a \code{data.frame}
-#'          where value label attributes should be added.
-#' @param value Named (numeric) vector of labels that will be added to \code{x} as
+#' @param value \describe{
+#'          \item{For \code{add_labels()}}{A named (numeric) vector of labels that will be added to \code{x} as
 #'          label attribute. If \code{x} is a data frame, \code{value} may also
-#'          be a \code{\link{list}} of named character vectors. If \code{value}
-#'          is a list, it must have the same length as number of columns of \code{x}.
+#'          be a list of named character vectors and must have the same length as
+#'          number of columns of \code{x}.
 #'          If \code{value} is a vector and \code{x} is a data frame, \code{value}
-#'          will be applied to each column of \code{x}.
+#'          will be applied to each column of \code{x}.}
+#'          \item{For \code{remove_labels()}}{Either a numeric vector, indicating the position of one or more label
+#'          attributes that should be removed; a character vector with names
+#'          of label attributes that should be removed; or a \code{\link[haven]{tagged_na}}
+#'          to remove the labels from specific NA values.}
+#'          }
 #'
-#' @return \code{x} with additional value labels.
+#' @inheritParams rec
 #'
-#' @note Existing labelled values will be replaced by new labelled values
-#'         in \code{value}. See 'Examples'. \code{replace_labels} is an alias
-#'         for \code{add_labels}.
+#' @return \code{x} with additional or removed value labels.
+#'
+#' @note \code{add_labels()} replaces existing value labels with new value labels
+#'         in \code{value}. See 'Examples'. \code{replace_labels()} is an alias
+#'         for \code{add_labels()}.
 #'
 #' @examples
+#' # ----------------------
+#' # add_labels()
+#' # ----------------------
 #' data(efc)
 #' get_labels(efc$e42dep)
 #'
@@ -40,7 +51,7 @@
 #' x <- add_labels(efc$e42dep, c(`nothing` = 5, `zero value` = 0))
 #' get_labels(x, include.values = "p")
 #'
-#' # replace old values
+#' # replace old value labels
 #' x <- add_labels(efc$e42dep, c(`not so dependent` = 4, `lorem ipsum` = 5))
 #' get_labels(x, include.values = "p")
 #'
@@ -58,6 +69,23 @@
 #' # replaced by "Second" now.
 #' replace_labels(x, c("Second" = tagged_na("c")))
 #'
+#'
+#' # ----------------------
+#' # remove_labels()
+#' # ----------------------
+#' x <- remove_labels(efc$e42dep, 2)
+#' get_labels(x, include.values = "p")
+#'
+#' x <- remove_labels(efc$e42dep, "independent")
+#' get_labels(x, include.values = "p")
+#'
+#' library(haven)
+#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#' # get current NA values
+#' get_na(x)
+#' get_na(remove_labels(x, tagged_na("c")))
 #'
 #' @importFrom tibble as_tibble
 #' @export

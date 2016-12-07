@@ -10,8 +10,7 @@ replace_na(x, value, na.label = NULL, tagged.na = NULL)
 replace_na(x, na.label = NULL, tagged.na = NULL) <- value
 }
 \arguments{
-\item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where
-missing values should be replaced with \code{value}.}
+\item{x}{A variable, data frame or list-object.}
 
 \item{value}{Value that will replace the \code{\link{NA}}'s.}
 

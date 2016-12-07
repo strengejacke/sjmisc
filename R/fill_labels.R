@@ -1,33 +1,4 @@
-#' @title Add missing value labels to partially labelled vector
-#' @name fill_labels
-#'
-#' @description This function adds value labels to a partially labelled vector,
-#'                i.e. if not all values are labelled, non-labelled values
-#'                get labels.
-#'
-#' @param x Variable (vector), \code{data.frame} or \code{list} of variables
-#'          with partially added value labels (see \code{\link[haven]{labelled}}).
-#'
-#' @return \code{x}, where labels for non-labelled values are added.
-#'
-#' @seealso \code{\link{drop_labels}} is the counterpart to \code{fill_labels}
-#'            and drops labels from zero-count (non-existing) values.
-#'
-#' @examples
-#' # create labelled integer, with tagged missings
-#' library(haven)
-#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
-#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
-#' # get current values and labels
-#' x
-#' get_labels(x)
-#'
-#' fill_labels(x)
-#' get_labels(fill_labels(x))
-#' # same as
-#' get_labels(x, include.non.labelled = TRUE)
-#'
+#' @rdname zap_labels
 #' @export
 fill_labels <- function(x) {
   UseMethod("fill_labels")

@@ -1,9 +1,9 @@
 #' @title Recode numeric variables into equal-ranged groups
 #' @name group_var
 #'
-#' @description Recode numeric variables into \emph{equal spaced} grouped factors,
+#' @description Recode numeric variables into equal ranged, grouped factors,
 #'                i.e. a variable is cut into a smaller number of groups,
-#'                where each group has values of equal range.
+#'                where each group has the same value range.
 #'
 #' @seealso \code{\link{group_labels}} to create the associated value labels for
 #'          grouped variables, \code{\link{split_var}} to split variables into
@@ -11,8 +11,6 @@
 #'          or \code{\link{rec_pattern}} and \code{\link{rec}} for another
 #'          convenbient way of recoding variables into smaller groups.
 #'
-#' @param x Numeric variable, which should recoded into groups, or a list or
-#'          data frame with such variables.
 #' @param groupsize Numeric; group-size, i.e. the range for grouping. By default,
 #'          for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
 #'          Use \code{groupsize = "auto"} to automatically resize a variable into
@@ -26,6 +24,8 @@
 #' @param groupcount Sets the maximum number of groups that are defined when auto-grouping is on
 #'          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 #'          this argument will be ignored.
+#'
+#' @inheritParams rec
 #'
 #' @return A grouped variable, either as numeric or as factor (see paramter \code{as.num}).
 #'
@@ -110,7 +110,7 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   # group variable
   x <- group_helper(x, groupsize, right.interval, groupcount)
   # set new levels of grouped variable
-  levels(x) <- 1:nlevels(x)
+  levels(x) <- seq_len(nlevels(x))
   # convert to numeric?
   if (as.num) x <- as.numeric(as.character(x))
   # set back variable labels
@@ -206,7 +206,7 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
   # rückgabewert init
   retval <- rep(c(""), length(lvl))
   # alle Gruppierungen durchgehen
-  for (i in 1:length(lvl)) {
+  for (i in seq_len(length(lvl))) {
     # Länge jedes Labels der Gruppeneinteilungen auslesen
     sublength <- nchar(lvl[i])
     # "(" und "]", das bei "cut"-Funktion automatisch erstellt wird,
@@ -235,6 +235,10 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
 
 
 group_helper <- function(x, groupsize, right.interval, groupcount) {
+  # check if factor. factors need conversion
+  # to numeric before grouped
+  if (is.factor(x)) x <- to_value(x, keep.labels = FALSE)
+
   # minimum range. will be changed when autogrouping
   minval <- 0
   multip <- 2

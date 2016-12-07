@@ -8,8 +8,7 @@ split_var(x, groupcount, as.num = FALSE, val.labels = NULL,
   var.label = NULL, inclusive = FALSE, suffix = "_g")
 }
 \arguments{
-\item{x}{Numeric vector, data frame or list of numeric vectors,
-which should split into groups.}
+\item{x}{A variable, data frame or list-object.}
 
 \item{groupcount}{The new number of groups that \code{x} should be split into.}
 
@@ -55,7 +54,7 @@ Recode numeric variables into equal sized groups, i.e. a
            specified \code{\link[stats]{quantile}s}.
            \cr \cr
            By contrast, \code{\link{group_var}} recodes a variable into
-           groups, where all values within a group have the same range
+           groups, where groups have the same value range
            (e.g., from 1-5, 6-10, 11-15 etc.).
 }
 \note{
@@ -86,9 +85,7 @@ table(split_var(efc$e42dep, 2, inclusive = TRUE))
 
 }
 \seealso{
-\itemize{
-           \item \code{\link{group_var}}
-           \item \code{\link{rec}}
-         }
+\code{\link{group_var}} to group variables into equal ranged groups,
+         or \code{\link{rec}} to recode variables.
 }
 

@@ -7,8 +7,8 @@
 zap_na_tags(x, ...)
 }
 \arguments{
-\item{x}{\code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
-values, or a data frame with such vectors .}
+\item{x}{A \code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
+values, or a data frame with such vectors.}
 
 \item{...}{Optional, unquoted names of variables. Required, if either
 \code{x} is a data frame and no vector, or if only selected variables
@@ -18,7 +18,7 @@ from \code{x} should be used in the function. See 'Examples'.}
 \code{x}, where all \code{\link[haven]{tagged_na}} values are converted to \code{NA}.
 }
 \description{
-Replaces all \code{\link[haven]{tagged_na}} values into
+Replaces all \code{\link[haven]{tagged_na}} values with
                regular \code{NA}.
 }
 \examples{

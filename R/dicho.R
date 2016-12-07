@@ -6,8 +6,6 @@
 #'                Either single vectors, a complete data frame or a list of
 #'                variables can be dichotomized.
 #'
-#' @param x Variable (vector), \code{data.frame} or \code{list} of variables
-#'          that should be dichotomized
 #' @param dich.by Indicates the split criterion where a variable is dichotomized.
 #'          Must be one of the following values (may be abbreviated):
 #'          \describe{
@@ -20,6 +18,7 @@
 #'          attributes of dichotomized variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
 #' @inheritParams rec
+#'
 #' @return A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
