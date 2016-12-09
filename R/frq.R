@@ -150,8 +150,8 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # raw percentages
   mydat$raw.prc <- mydat$frq / sum(mydat$frq)
   # compute valud and cumulative percentages
-  mydat$valid.prc <- c(mydat$frq[1:valid.vals] / length(stats::na.omit(x)), NA)
-  mydat$cum.prc <- c(cumsum(mydat$valid.prc[1:valid.vals]), NA)
+  mydat$valid.prc <- c(mydat$frq[seq_len(valid.vals)] / length(stats::na.omit(x)), NA)
+  mydat$cum.prc <- c(cumsum(mydat$valid.prc[seq_len(valid.vals)]), NA)
   # proper rounding
   mydat$raw.prc <- 100 * round(mydat$raw.prc, 4)
   mydat$cum.prc <- 100 * round(mydat$cum.prc, 4)
@@ -170,5 +170,6 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # -------------------------------------
   # return results
   # -------------------------------------
-  return(structure(class = "sjmisc.frq", list(mydat = mydat)))
+  class(mydat) <- c("sjmisc.frq", "data.frame")
+  mydat
 }
