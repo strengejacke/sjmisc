@@ -12,6 +12,8 @@
 #'               column or row percentages of the table margins.
 #' @param digits Numeric; for proportional tables, \code{digits} indicates the
 #'               number of decimal places.
+#' @param show.values Logical, if \code{TRUE}, value labels are prefixed by the
+#'          associated value.
 #'
 #' @return An object of class \code{\link[stats]{ftable}}.
 #'
@@ -29,7 +31,7 @@
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
 #' @export
-flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), digits = 2) {
+flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
 
   # match arguments
   margin <- match.arg(margin)
@@ -53,7 +55,7 @@ flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), d
 
   # select variables, convert to label and create ftable-pbject
   x <- .data %>%
-    to_label() %>%
+    to_label(add.non.labelled = TRUE, prefix = show.values) %>%
     stats::ftable()
 
   # if required, compute table margins

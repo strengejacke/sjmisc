@@ -5,7 +5,7 @@
 \title{Flat (proportional) tables}
 \usage{
 flat_table(.data, ..., margin = c("counts", "cell", "row", "col"),
-  digits = 2)
+  digits = 2, show.values = FALSE)
 }
 \arguments{
 \item{.data}{A data frame.}
@@ -19,6 +19,9 @@ column or row percentages of the table margins.}
 
 \item{digits}{Numeric; for proportional tables, \code{digits} indicates the
 number of decimal places.}
+
+\item{show.values}{Logical, if \code{TRUE}, value labels are prefixed by the
+associated value.}
 }
 \value{
 An object of class \code{\link[stats]{ftable}}.

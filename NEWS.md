@@ -4,10 +4,13 @@
 
 * `rec()`, `split_var()` and `dicho()` get an argument `suffix`, to append a suffix to variable (column) names, if applied on a data frame.
 * `find_var()` gets a `as.df`-argument, to return a data frame with matching variables, instead of their column indices only.
+`flat_table()` gets a `show.values`-argument, to add values to value labels in output.
+* `frq()` gets a `weight.by`-argument to weight frequencies.
 
 ## Bug fixes
 
 * `set_na()` did not work on vectors of class `Date` when argument `as.tag = TRUE`.
+* `flat_table()` did not show values that had no value labels. Now all categories are shown in the frequency table.
 
 # sjmisc 2.1.0
 

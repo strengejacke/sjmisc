@@ -8,6 +8,10 @@
 #'          according to their frequencies or not. Default is \code{"none"}, so
 #'          categories are not sorted by frequency. Use \code{"asc"} or
 #'          \code{"desc"} for sorting categories ascending or descending order.
+#' @param weight.by Vector of weights that will be applied to weight all observations.
+#'          Must be a vector of same length as the input vector. Default is
+#'          \code{NULL}, so no weights are used.
+#'
 #' @return A data frame with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
@@ -34,30 +38,30 @@
 #' @importFrom dplyr full_join
 #' @export
 #' @export
-frq <- function(x, sort.frq = c("none", "asc", "desc")) {
+frq <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
   UseMethod("frq")
 }
 
 #' @export
-frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc")) {
+frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
   sort.frq <- match.arg(sort.frq)
-  lapply(x, FUN = frq_helper, sort.frq = sort.frq)
+  lapply(x, FUN = frq_helper, sort.frq = sort.frq, weight.by = weight.by)
 }
 
 #' @export
-frq.list <- function(x, sort.frq = c("none", "asc", "desc")) {
+frq.list <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
   sort.frq <- match.arg(sort.frq)
-  lapply(x, FUN = frq_helper, sort.frq = sort.frq)
+  lapply(x, FUN = frq_helper, sort.frq = sort.frq, weight.by = weight.by)
 }
 
 #' @export
-frq.default <- function(x, sort.frq = c("none", "asc", "desc")) {
+frq.default <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
   sort.frq <- match.arg(sort.frq)
-  frq_helper(x = x, sort.frq = sort.frq)
+  frq_helper(x = x, sort.frq = sort.frq, weight.by = weight.by)
 }
 
 
-frq_helper <- function(x, sort.frq) {
+frq_helper <- function(x, sort.frq, weight.by) {
   #---------------------------------------------------
   # variable with only mising?
   #---------------------------------------------------
@@ -75,6 +79,10 @@ frq_helper <- function(x, sort.frq) {
   #---------------------------------------------------
   labels <- get_labels(x, attr.only = T, include.values = "n", include.non.labelled = T)
   #---------------------------------------------------
+  # get variable label (if any)
+  #---------------------------------------------------
+  varlab <- get_label(x)
+  #---------------------------------------------------
   # do we have a labelled vector?
   #---------------------------------------------------
   if (!is.null(labels)) {
@@ -87,8 +95,18 @@ frq_helper <- function(x, sort.frq) {
       dat$val <- to_value(dat$val, keep.labels = F)
     else
       dat$val <- as.numeric(dat$val)
-    # create frequency table
-    dat2 <- data.frame(table(x, useNA = "always"))
+    # weight data?
+    if (!is.null(weight.by)) {
+      dat2 <- data.frame(
+        round(stats::xtabs(weights ~ x,
+                           data = data.frame(weights = weight.by, x = x),
+                           na.action = stats::na.pass,
+                           exclude = NULL), 0)
+        )
+    } else {
+      # create frequency table
+      dat2 <- data.frame(table(x, useNA = "always"))
+    }
     colnames(dat2) <- c("val", "frq")
     dat2$val <- to_value(dat2$val, keep.labels = F)
     # join frq table and label columns
@@ -97,8 +115,18 @@ frq_helper <- function(x, sort.frq) {
     # missing values don't appear (zero counts)
     suppressMessages(replace_na(mydat$frq) <- 0)
   } else {
-    # if we have no labels, do simple frq table
-    mydat <- data.frame(table(x, useNA = "always"))
+    # weight data?
+    if (!is.null(weight.by)) {
+      mydat <- data.frame(
+        round(stats::xtabs(weights ~ x,
+                           data = data.frame(weights = weight.by, x = x),
+                           na.action = stats::na.pass,
+                           exclude = NULL), 0)
+      )
+    } else {
+      # if we have no labels, do simple frq table
+      mydat <- data.frame(table(x, useNA = "always"))
+    }
     colnames(mydat) <- c("val", "frq")
     # add values as label
     mydat$label <- labels <- as.character(mydat$val)
@@ -115,7 +143,7 @@ frq_helper <- function(x, sort.frq) {
   # sort categories ascending or descending
   # --------------------------------------------------------
   if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
-    ord <- order(mydat$frq[1:valid.vals], decreasing = (sort.frq == "desc"))
+    ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
     mydat <- mydat[c(ord, valid.vals + 1), ]
     labels <- labels[ord]
   }
@@ -137,6 +165,8 @@ frq_helper <- function(x, sort.frq) {
   reihe <- to_value(mydat$val, keep.labels = F)
   # sort for x-axis
   mydat$val <- sort(reihe)
+  # add variable label as attribute, for print-method
+  attr(mydat, "label") <- varlab
   # -------------------------------------
   # return results
   # -------------------------------------
