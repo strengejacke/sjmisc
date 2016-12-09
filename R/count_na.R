@@ -67,7 +67,7 @@ count_na_helper <- function(x) {
     values[values == nav[i]] <- nav.labels[i]
   }
   # now compute frequency, and return a proper data frame
-  tibble::as_tibble(frq(values)[[1]]) %>%
+  tibble::as_tibble(frq(values)) %>%
     dplyr::select_("-val") %>%
     dplyr::filter(label != "NA")
 }
