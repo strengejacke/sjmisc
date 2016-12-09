@@ -5,7 +5,8 @@
 \title{Find variable by name or label}
 \usage{
 find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
-  "name_value", "label_value", "name", "label", "value", "all"))
+  "name_value", "label_value", "name", "label", "value", "all"),
+  as.df = FALSE)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -37,10 +38,14 @@ Use one of following options:
   \item{\code{"all"}}{Searches for \code{pattern} in
         variable names, variable and value labels.}
 }}
+
+\item{as.df}{Logical, if \code{TRUE}, a data frame with matching variables
+is returned (instead of their column indices only).}
 }
 \value{
-A named vector with column indices of found variables. Variable names
-          are used as names-attribute.
+A named vector with column indices of found variables (variable names
+          are used as names-attribute); or, if \code{as.df = TRUE}, a tibble
+          with found variables.
 }
 \description{
 This functions finds variables in a data frame, which variable
@@ -61,6 +66,9 @@ data(efc)
 
 # find variables with "cop" in variable name
 find_var(efc, "cop")
+
+# return tibble with matching variables
+find_var(efc, "cop", as.df = TRUE)
 
 # find variables with "dependency" in names and variable labels
 find_var(efc, "dependency")

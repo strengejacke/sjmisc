@@ -3,6 +3,7 @@
 ## Changes to functions
 
 * `rec()`, `split_var()` and `dicho()` get an argument `suffix`, to append a suffix to variable (column) names, if applied on a data frame.
+* `find_var()` gets a `as.df`-argument, to return a data frame with matching variables, instead of their column indices only.
 
 ## Bug fixes
 

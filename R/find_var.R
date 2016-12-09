@@ -31,9 +31,12 @@
 #'            \item{\code{"all"}}{Searches for \code{pattern} in
 #'                  variable names, variable and value labels.}
 #'          }
+#' @param as.df Logical, if \code{TRUE}, a data frame with matching variables
+#'                is returned (instead of their column indices only).
 #'
-#' @return A named vector with column indices of found variables. Variable names
-#'           are used as names-attribute.
+#' @return A named vector with column indices of found variables (variable names
+#'           are used as names-attribute); or, if \code{as.df = TRUE}, a tibble
+#'           with found variables.
 #'
 #' @details This function searches for \code{pattern} in \code{data}'s column names
 #'            and - for labelled data - in all variable and value labels of \code{data}'s
@@ -48,6 +51,9 @@
 #'
 #' # find variables with "cop" in variable name
 #' find_var(efc, "cop")
+#'
+#' # return tibble with matching variables
+#' find_var(efc, "cop", as.df = TRUE)
 #'
 #' # find variables with "dependency" in names and variable labels
 #' find_var(efc, "dependency")
@@ -64,8 +70,13 @@
 #' view_df(efc[, res])}
 #'
 #' @importFrom stringr regex coll
+#' @importFrom tibble as_tibble
 #' @export
-find_var <- function(data, pattern, ignore.case = TRUE, search = c("name_label", "name_value", "label_value", "name", "label", "value", "all")) {
+find_var <- function(data,
+                     pattern,
+                     ignore.case = TRUE,
+                     search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
+                     as.df = FALSE) {
   # check valid args
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame.", call. = F)
@@ -116,8 +127,13 @@ find_var <- function(data, pattern, ignore.case = TRUE, search = c("name_label",
 
   # get unqiue variable indices
   pos <- unique(c(pos1, pos2, pos3))
-  # also use column names
-  names(pos) <- colnames(data)[pos]
 
+  # return data frame?
+  if (as.df) {
+    return(tibble::as_tibble(data[, pos]))
+  }
+
+  # use column names
+  names(pos) <- colnames(data)[pos]
   pos
 }
