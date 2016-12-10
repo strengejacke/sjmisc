@@ -21,15 +21,13 @@ will be removed and the class-attribute of \code{x} will only
 be \code{labelled}.}
 }
 \value{
-\code{x}, as \code{\link[haven]{labelled}}-class object, including
-          missing-flags (\code{is_na}-attribute).
+\code{x}, as \code{labelled}-class object.
 }
 \description{
 Converts a (labelled) vector of any class into a \code{labelled}
                class vector, resp. adds a \code{labelled} class-attribute.
 }
 \examples{
-
 data(efc)
 str(efc$e42dep)
 

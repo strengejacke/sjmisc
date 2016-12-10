@@ -2,9 +2,9 @@
 #' @name get_values
 #'
 #' @description This function retrieves the values associated with value labels
-#'                of an imported SPSS, SAS or STATA data set (via \code{\link{read_spss}},
-#'                \code{\link{read_sas}} or \code{\link{read_stata}}),
-#'                or of a \code{\link[haven]{labelled}} vector.
+#'                from \code{\link[haven]{labelled}} vectors. Data is also labelled
+#'                when imported from SPSS, SAS or STATA via \code{\link{read_spss}},
+#'                \code{\link{read_sas}} or \code{\link{read_stata}}.
 #'
 #' @seealso \code{\link{get_labels}} for getting value labels and \code{\link{get_na}}
 #'            to get values for missing values.
@@ -13,8 +13,9 @@
 #'          list with such variables.
 #' @param sort.val Logical, if \code{TRUE} (default), values of associated value labels
 #'          are sorted.
-#' @param drop.na Logical, if \code{TRUE}, missing code values are excluded from
+#' @param drop.na Logical, if \code{TRUE}, tagged NA values are excluded from
 #'          the return value. See 'Examples' and \code{\link{get_na}}.
+#'
 #' @return The values associated with value labels from \code{x},
 #'           or \code{NULL} if \code{x} has no label attributes.
 #'
@@ -22,8 +23,8 @@
 #'            like \code{\link{read_spss}}) and have variable and value labels attributes.
 #'            The value labels are associated with those values from the labelled vector.
 #'            This function returns the values associated with the vector's value labels,
-#'            which may differ from actual values in the vector (e.g. due to missings)
-#'            or are not represented in sorted order.
+#'            which may differ from actual values in the vector (e.g. if not all
+#'            values have a related label).
 #'
 #' @examples
 #' data(efc)

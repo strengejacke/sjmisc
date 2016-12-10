@@ -8,7 +8,7 @@
 #'            to get value labels; \code{\link{var_labels}} to set multiple variable
 #'            labels at once.
 
-#' @param x \code{data.frame} with variables that have label attributes (e.g.
+#' @param x A data frame with variables that have label attributes (e.g.
 #'          from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 #'          \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 #'          (vector) with variable label attribute; or a \code{list} of variables
@@ -29,9 +29,7 @@
 #'
 #' @note \code{\link{var_labels}} is an alternative way to set variable labels,
 #'       which follows the philosophy of tidyvers API design (data as first argument,
-#'       dots as value pairs indicating variables).
-#'       \cr \cr
-#'       Furthermore, see 'Note' in \code{\link{get_labels}}.
+#'       dots as value pairs indicating variables)
 #'
 #' @examples
 #' # import SPSS data set

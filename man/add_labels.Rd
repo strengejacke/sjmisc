@@ -25,16 +25,14 @@ remove_labels(x) <- value
 \item{x}{A variable, data frame or list-object.}
 
 \item{value}{\describe{
-\item{For \code{add_labels()}}{A named (numeric) vector of labels that will be added to \code{x} as
-label attribute. If \code{x} is a data frame, \code{value} may also
-be a list of named character vectors and must have the same length as
-number of columns of \code{x}.
-If \code{value} is a vector and \code{x} is a data frame, \code{value}
-will be applied to each column of \code{x}.}
-\item{For \code{remove_labels()}}{Either a numeric vector, indicating the position of one or more label
-attributes that should be removed; a character vector with names
-of label attributes that should be removed; or a \code{\link[haven]{tagged_na}}
-to remove the labels from specific NA values.}
+\item{For \code{add_labels()}}{A named (numeric) vector of labels
+that will be added to \code{x} as label attribute. If \code{x} is
+a data frame, \code{value} will be applied to each column of \code{x}.}
+\item{For \code{remove_labels()}}{Either a numeric vector, indicating
+the position of one or more label attributes that should be removed;
+a character vector with names of label attributes that should be
+removed; or a \code{\link[haven]{tagged_na}} to remove the labels
+from specific NA values.}
 }}
 }
 \value{
@@ -42,20 +40,18 @@ to remove the labels from specific NA values.}
 }
 \description{
 These functions add, replace or remove value labels to or from variables.
-               Unlike \code{\link{set_labels}}, \code{add_labels()} does not
-               \emph{completely} replace value labels (and hence,
-               it does \emph{not} remove labels that were not specified in
-               \code{value}), but adds \code{value} to the existing value
-               labels of \code{x}. \code{add_labels()} also
-               replaces existing value labels, but unlike \code{set_labels()},
-               preserves the remaining labels. See 'Note'.
-               \code{remove_labels()} is the counterpart to \code{add_labels()}.
-               It removes labels from a label attribute of \code{x}.
 }
-\note{
-\code{add_labels()} replaces existing value labels with new value labels
-        in \code{value}. See 'Examples'. \code{replace_labels()} is an alias
-        for \code{add_labels()}.
+\details{
+\code{add_labels()} adds \code{value} to the existing value
+         labels of \code{x}, however, unlike \code{\link{set_labels}}, it
+         does \emph{not} remove labels that were \emph{not} specified in
+         \code{value}. \code{add_labels()} also replaces existing
+         value labels, but preserves the remaining labels.
+         \cr \cr
+         \code{remove_labels()} is the counterpart to \code{add_labels()}.
+         It removes labels from a label attribute of \code{x}.
+         \cr \cr
+         \code{replace_labels()} is an alias for \code{add_labels()}.
 }
 \examples{
 # ----------------------

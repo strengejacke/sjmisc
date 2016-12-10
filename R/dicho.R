@@ -22,8 +22,8 @@
 #' @return A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
 #'           respectively a data frame or list of dichotomized factor (or numeric) variables.
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved
-#'         (unless changes via \code{var.label}-argument).
+#' @note Variable label attributes are preserved (unless changes via
+#'       \code{var.label}-argument).
 #'
 #' @examples
 #' data(efc)

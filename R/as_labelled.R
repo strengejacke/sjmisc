@@ -14,11 +14,9 @@
 #'          attribute. If \code{FALSE} (default), all former \code{class}-attributes
 #'          will be removed and the class-attribute of \code{x} will only
 #'          be \code{labelled}.
-#' @return \code{x}, as \code{\link[haven]{labelled}}-class object, including
-#'           missing-flags (\code{is_na}-attribute).
+#' @return \code{x}, as \code{labelled}-class object.
 #'
 #' @examples
-#'
 #' data(efc)
 #' str(efc$e42dep)
 #'

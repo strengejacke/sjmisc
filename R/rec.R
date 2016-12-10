@@ -5,7 +5,7 @@
 #'                category values.
 #'
 #' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
-#'            to replace \code{\link{NA}}'s with specific value, \code{\link{recode_to}}
+#'            to replace \code{NA}'s with specific value, \code{\link{recode_to}}
 #'            for re-shifting value ranges and \code{\link{ref_lvl}} to change the
 #'            reference level of (numeric) factors.
 #'

@@ -50,8 +50,8 @@ Dichotomizes variables into dummy variables (0/1). Dichotomization is
                variables can be dichotomized.
 }
 \note{
-Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved
-        (unless changes via \code{var.label}-argument).
+Variable label attributes are preserved (unless changes via
+      \code{var.label}-argument).
 }
 \examples{
 data(efc)

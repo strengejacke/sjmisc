@@ -75,14 +75,14 @@ find_var(efc, "dependency")
 get_label(efc$e42dep)
 
 # find variables with "level" in names and value labels
-res <- find_var(efc, "level", search = "name_value")
+res <- find_var(efc, "level", search = "name_value", as.df = TRUE)
 res
-get_labels(efc[, res], attr.only = FALSE)
+get_labels(res, attr.only = FALSE)
 
 # use sjPlot::view_df() to view results
 \dontrun{
 library(sjPlot)
-view_df(efc[, res])}
+view_df(res)}
 
 }
 

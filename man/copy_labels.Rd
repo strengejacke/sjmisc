@@ -23,15 +23,10 @@ Subsetting-functions usually drop value and variable labels from
                label attributes). This function copies these value and variable
                labels back to subsetted data frames that have been subsetted, for instance,
                with \code{\link{subset}}.
-               \cr \cr
-               In case \code{df_origin = NULL}, all possible label attributes
-               from \code{df_new} are removed.
 }
 \note{
 In case \code{df_origin = NULL}, all possible label attributes
-        from \code{df_new} are removed. dplyr >= 0.4.2 no longer drops
-        vector attributes; you'll only need to copy labels when using
-        dplyr up to 0.4.1.
+        from \code{df_new} are removed.
 }
 \examples{
 data(efc)

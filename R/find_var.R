@@ -60,14 +60,14 @@
 #' get_label(efc$e42dep)
 #'
 #' # find variables with "level" in names and value labels
-#' res <- find_var(efc, "level", search = "name_value")
+#' res <- find_var(efc, "level", search = "name_value", as.df = TRUE)
 #' res
-#' get_labels(efc[, res], attr.only = FALSE)
+#' get_labels(res, attr.only = FALSE)
 #'
 #' # use sjPlot::view_df() to view results
 #' \dontrun{
 #' library(sjPlot)
-#' view_df(efc[, res])}
+#' view_df(res)}
 #'
 #' @importFrom stringr regex coll
 #' @importFrom tibble as_tibble
@@ -90,7 +90,7 @@ find_var <- function(data,
   # search for pattern in variable names
   if (search %in% c("name", "name_label", "name_value", "all")) {
     # check variable names
-    if (any(class(pattern) == "regex"))
+    if (inherits(pattern, "regex"))
       pos1 <- which(stringr::str_detect(colnames(data), pattern))
     else
       pos1 <- which(stringr::str_detect(colnames(data), stringr::coll(pattern, ignore_case = ignore.case)))
@@ -103,7 +103,7 @@ find_var <- function(data,
     labels <- get_label(data)
 
     # check labels
-    if (any(class(pattern) == "regex"))
+    if (inherits(pattern, "regex"))
       pos2 <- which(stringr::str_detect(labels, pattern))
     else
       pos2 <- which(stringr::str_detect(labels, stringr::coll(pattern, ignore_case = ignore.case)))
@@ -114,7 +114,7 @@ find_var <- function(data,
     labels <- get_labels(data, attr.only = F)
 
     # check value labels with regex
-    if (any(class(pattern) == "regex")) {
+    if (inherits(pattern, "regex")) {
       pos3 <- which(unlist(lapply(labels, function(x) {
         any(stringr::str_detect(x, pattern))
       })))

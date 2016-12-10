@@ -3,10 +3,10 @@
 #'
 #' @description Recode numeric variables into equal ranged, grouped factors,
 #'                i.e. a variable is cut into a smaller number of groups,
-#'                where each group has the same value range.
+#'                where each group has the same value range, and create the
+#'                related value labels.
 #'
-#' @seealso \code{\link{group_labels}} to create the associated value labels for
-#'          grouped variables, \code{\link{split_var}} to split variables into
+#' @seealso \code{\link{split_var}} to split variables into
 #'          equal sized groups, \code{\link{group_str}} for grouping string vectors
 #'          or \code{\link{rec_pattern}} and \code{\link{rec}} for another
 #'          convenbient way of recoding variables into smaller groups.
@@ -27,9 +27,16 @@
 #'
 #' @inheritParams rec
 #'
-#' @return A grouped variable, either as numeric or as factor (see paramter \code{as.num}).
+#' @return \itemize{
+#'           \item For \code{group_var}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}).
+#'           \item For \code{group_label}, a string vector or a list of string vectors containing labels based on the grouped categories of \code{x}, formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
+#'         }
 #'
 #' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
+#'       Usually you should use the same values for \code{groupsize} and
+#'       \code{right.interval} in \code{group_label()} as used in the
+#'       \code{group_var} function if you want matching labels for the related
+#'       recoded variable.
 #'
 #' @details If \code{groupsize} is set to a specific value, the variable is recoded
 #'            into several groups, where each group has a maximum range of \code{groupsize}.
@@ -48,7 +55,7 @@
 #'            of \code{groupsize}. In this case, groups cover the ranges from
 #'            46-50, 51-55, 56-60, 61-65 etc. \strong{Note:} This will cover
 #'            a range from 46-50 as first group, even if values from 46 to 49
-#'            are not present. See 'Examples' in \code{\link{group_labels}}.
+#'            are not present. See 'Examples'.
 #'            \cr \cr
 #'            If you want to split a variable into a certain amount of equal
 #'            sized groups (instead of having groups where values have all the same
@@ -59,6 +66,10 @@
 #' age.grp <- group_var(age, 10)
 #' hist(age)
 #' hist(age.grp)
+#'
+#' age.grpvar <- group_labels(age, 10)
+#' table(age.grp)
+#' print(age.grpvar)
 #'
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
@@ -74,6 +85,13 @@
 #' # within a pipe-chain
 #' library(dplyr)
 #' efc %>% select(e17age, c12hour, c160age) %>% group_var(groupsize = 20)
+#'
+#' # create vector with values from 50 to 80
+#' dummy <- round(runif(200, 50, 80))
+#' # labels with grouping starting at lower bound
+#' group_labels(dummy)
+#' # labels with grouping startint at upper bound
+#' group_labels(dummy, right.interval = TRUE)
 #'
 #' @export
 group_var <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
@@ -119,61 +137,7 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
 }
 
 
-#' @title Create labels for recoded groups
-#' @name group_labels
-#'
-#' @description Creates the related labels for the grouped variable created by
-#'                \code{\link{group_var}}.
-#'
-#' @seealso \itemize{
-#'            \item \code{\link{group_var}}
-#'            \item \code{\link{group_str}}
-#'          }
-#'
-#' @note Usually you should use the same values for \code{groupsize} and
-#'         \code{right.interval} as used in the \code{\link{group_var}} function
-#'         if you want to create labels for the related recoded variable.
-#'
-#' @return A string vector or a list of string vectors containing labels based
-#'           on the grouped categories of \code{x}, formatted as "from lower bound to upper bound",
-#'           e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
-#'
-#' @inheritParams group_var
-#'
-#' @details See 'Details' in \code{\link{group_var}}.
-#'
-#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
-#'
-#' @examples
-#' age <- abs(round(rnorm(100, 65, 20)))
-#' age.grp <- group_var(age, 10)
-#' hist(age)
-#' hist(age.grp)
-#'
-#' age.grpvar <- group_labels(age, 10)
-#' table(age.grp)
-#' print(age.grpvar)
-#'
-#'
-#' # create vector with values from 50 to 80
-#' dummy <- round(runif(200, 50, 80))
-#' # labels with grouping starting at lower bound
-#' group_labels(dummy)
-#' # labels with grouping startint at upper bound
-#' group_labels(dummy, right.interval = TRUE)
-#'
-#'
-#' # histogram with EUROFAMCARE sample dataset
-#' # variable not grouped
-#' data(efc)
-#' hist(efc$e17age, main = get_label(efc$e17age))
-#'
-#' # bar plot with EUROFAMCARE sample dataset
-#' # grouped variable
-#' ageGrp <- group_var(efc$e17age)
-#' ageGrpLab <- group_labels(efc$e17age)
-#' barplot(table(ageGrp), main = get_label(efc$e17age), names.arg = ageGrpLab)
-#'
+#' @rdname group_var
 #' @export
 group_labels <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
   UseMethod("group_labels")

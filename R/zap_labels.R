@@ -3,9 +3,10 @@
 #'
 #' @description For (partially) labelled vectors, \code{zap_labels()} will replace
 #'                all values that have a value label attribute by \code{NA};
-#'                \code{zap_unlabelled()} will replace all values that \emph{don't}
-#'                have a value label attribute by \code{NA}. \code{drop_labels()}
-#'                drops all value labels for unused values that have
+#'                \code{zap_unlabelled()}, as counterpart, will replace all values
+#'                that \emph{don't} have a value label attribute by \code{NA}.
+#'                \cr \cr
+#'                \code{drop_labels()} drops all value labels for unused values that have
 #'                no cases (counts) in a vector. \code{fill_labels()} is the
 #'                counterpart to \code{drop_labels()} and adds value labels to
 #'                a partially labelled vector, i.e. if not all values are
@@ -17,13 +18,14 @@
 #' @inheritParams to_factor
 #' @inheritParams set_labels
 #'
-#' @return For \code{zap_labels()}, \code{x}, where all labelled values are converted to \code{NA}.
-#'         For \code{zap_unlabelled()}, \code{x}, where all non-labelled values are converted to \code{NA}.
-#'         For \code{drop_labels()}, \code{x}, where value labels for non-existing values are removed.
-#'         For \code{fill_labels()}, \code{x}, where labels for non-labelled values are added.
+#' @return \itemize{
+#'           \item For \code{zap_labels()}, \code{x}, where all labelled values are converted to \code{NA}.
+#'           \item For \code{zap_unlabelled()}, \code{x}, where all non-labelled values are converted to \code{NA}.
+#'           \item For \code{drop_labels()}, \code{x}, where value labels for non-existing values are removed.
+#'           \item For \code{fill_labels()}, \code{x}, where labels for non-labelled values are added.
+#'         }
 #'
 #' @examples
-#'
 #' # ------------------------
 #' # zap_labels()
 #' # ------------------------

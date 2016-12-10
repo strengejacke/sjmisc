@@ -8,7 +8,7 @@ get_labels(x, attr.only = FALSE, include.values = NULL,
   include.non.labelled = FALSE, drop.na = TRUE)
 }
 \arguments{
-\item{x}{\code{data.frame} with variables that have value label attributes (e.g.
+\item{x}{A data frame with variables that have value label attributes (e.g.
 from an imported SPSS, SAS or STATA data set, via \code{\link{read_spss}},
 \code{\link{read_sas}} or \code{\link{read_stata}}); a variable
 (vector) with value label attributes; or a \code{list} of variables
@@ -70,17 +70,17 @@ This function works with vectors that have value and variable
        objects). Adding label attributes is automatically done when importing data sets
        with the \code{\link{read_spss}}, \code{\link{read_sas}} or \code{\link{read_stata}}
        functions. Labels can also manually be added using the \code{\link{set_labels}}
-       and \code{\link{set_label}} functions. If vectors \strong{do not} have
-       label attributes, either factor-\code{\link{levels}} or the numeric values
+       and \code{\link{set_label}} functions. If vectors \emph{do not} have
+       label attributes, either factor-levels or the numeric values
        of the vector are returned as labels.
        \cr \cr
-       Most functions of the \CRANpkg{sjPlot} package access value and variable label
-       attributes to automatically detect labels in order to set them as axis,
-       legend or title labels in plots (\code{sjp.}-functions) respectively as
-       column or row headers in table outputs (\code{sjt.}-functions). See
+       Most functions of the \CRANpkg{sjPlot} package make use of value and variable
+       labels to automatically label axes, legend or title labels in plots
+       (\code{sjp.}-functions) respectively column or row headers in table
+       outputs (\code{sjt.}-functions). See
        \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
        \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
-       online manuals for more details.
+       online manual for more details.
 }
 \examples{
 # import SPSS data set
@@ -148,8 +148,10 @@ get_labels(x, include.values = "n", drop.na = FALSE)
 
 }
 \seealso{
-See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
-           for more details; \code{\link{set_labels}} to manually set value labels, \code{\link{get_label}}
-           to get variable labels and \code{\link{get_values}} to retrieve value label associated values.
+See \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+           for more details; \code{\link{set_labels}} to manually set value
+           labels, \code{\link{get_label}} to get variable labels and
+           \code{\link{get_values}} to retrieve the values associated
+           with value labels.
 }
 
