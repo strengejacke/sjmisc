@@ -6,6 +6,7 @@
 * `find_var()` gets a `as.df`-argument, to return a data frame with matching variables, instead of their column indices only.
 * `flat_table()` gets a `show.values`-argument, to add values to associated labels in output.
 * `frq()` gets a `weight.by`-argument to weight frequencies.
+* Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `rec()`).
 
 ## Bug fixes
 

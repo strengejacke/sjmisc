@@ -17,7 +17,9 @@ be returned as numeric vector. If \code{FALSE}, a factor is returned.}
 
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
-If \code{NULL} (default), no value labels will be set.}
+If \code{NULL} (default), no value labels will be set. Value labels
+can also be directly defined in the \code{recodes}-syntax, see
+'Details'.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
 returned variable (see \code{\link{set_label}}). If \code{NULL}

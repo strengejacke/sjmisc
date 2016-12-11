@@ -28,7 +28,9 @@ If empty, variable label attributes will be removed.}
 
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
-If \code{NULL} (default), no value labels will be set.}
+If \code{NULL} (default), no value labels will be set. Value labels
+can also be directly defined in the \code{recodes}-syntax, see
+'Details'.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data
@@ -62,6 +64,7 @@ The \code{recodes} string has following syntax:
            \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
            \item{\code{NA}'s}{\code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA into 1, and all values from 3 to 5 into NA in the new variable)}
            \item{\code{"rev"}}{\code{"rev"} is a special token that reverses the value order (see 'Examples')}
+           \item{direct value labelling}{value labels for new values can be assigned inside the recode pattern by writing the value label in square brackets after defining the new value in a recode pair, e.g. \code{"15:30=1 [young aged]; 31:55=2 [middle aged]; 56:max=3 [old aged]"}. See 'Examples'.}
           }
 }
 \note{
@@ -109,9 +112,14 @@ table(rec(efc$e42dep, recodes = "rev"), useNA = "always")
 table(efc$e15relat)
 table(rec(efc$e15relat, recodes = "1,2,4=1; else=copy"))
 
-# recode variables with same categorie in a data frame
+# recode variables with same category in a data frame
 head(efc[, 6:9])
 head(rec(efc[, 6:9], recodes = "1=10;2=20;3=30;4=40"))
+
+# recode variable and set value labels via recode-syntax
+dummy <- rec(efc$c160age,
+             recodes = "15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]")
+frq(dummy)
 
 # recode list of variables. create dummy-list of
 # variables with same value-range
