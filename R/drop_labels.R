@@ -20,8 +20,6 @@ drop_labels.default <- function(x, drop.na = TRUE) {
 }
 
 drop_labels_helper <- function(x, drop.na) {
-  # zap tagged na, if requested
-  if (drop.na) x <- zap_na_tags(x)
   # get labels
   tidy.labels <- get_labels(x, attr.only = T, include.values = "n", include.non.labelled = F, drop.na = T)
   # return x, if no attribute
@@ -29,7 +27,7 @@ drop_labels_helper <- function(x, drop.na) {
   # all missing in variable?
   if (all(is.na(x))) return(x)
   # remove labels with no values in data
-  tidy.labels <- tidy.labels[get_values(x) %in% names(table(x))]
+  tidy.labels <- tidy.labels[get_values(x, drop.na = drop.na) %in% names(table(x))]
   # set labels
   set_labels(x, drop.na = drop.na) <- tidy.labels
   return(x)
