@@ -11,6 +11,7 @@
 
 * `set_na()` did not work on vectors of class `Date` when argument `as.tag = TRUE`.
 * `flat_table()` did not show values that had no value labels. Now all categories are shown in the frequency table.
+* `rec()` did not properly copy labels of tagged NA values when not all recoded values appeared in the vector.
 
 # sjmisc 2.1.0
 

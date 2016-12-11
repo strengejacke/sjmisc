@@ -341,17 +341,6 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
   # add back NA labels
   if (!is.null(current.na) && length(current.na) > 0) {
-    # first, we need a named vector for value labels, so labels from
-    # "val_lab" need to become the name attribute, and the values
-    # from "new_var" need to become the values of "val_lab"
-    if (!is.null(val_lab)) {
-      # save value labels
-      vln <- val_lab
-      # set values
-      val_lab <- stats::na.omit(sort(unique(new_var)))
-      # name values
-      names(val_lab) <- vln
-    }
     # add named missings
     val_lab <- c(val_lab, current.na)
   }
