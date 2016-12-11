@@ -32,11 +32,15 @@
 #'                  variable names, variable and value labels.}
 #'          }
 #' @param as.df Logical, if \code{TRUE}, a data frame with matching variables
-#'                is returned (instead of their column indices only).
+#'                is returned (instead of their column indices).
+#' @param as.varlab Logical, if \code{TRUE}, not only column indices, but also
+#'                variables labels of matching variables are returned (as
+#'                data frame).
 #'
 #' @return A named vector with column indices of found variables (variable names
-#'           are used as names-attribute); or, if \code{as.df = TRUE}, a tibble
-#'           with found variables.
+#'           are used as names-attribute); if \code{as.df = TRUE}, a tibble
+#'           with found variables; or, if \code{as.varlab = TRUE}, a tibble
+#'           with three columns: column number, variable name and variable label.
 #'
 #' @details This function searches for \code{pattern} in \code{data}'s column names
 #'            and - for labelled data - in all variable and value labels of \code{data}'s
@@ -54,6 +58,10 @@
 #'
 #' # return tibble with matching variables
 #' find_var(efc, "cop", as.df = TRUE)
+#'
+#' # or return "summary"-tibble with matching variables
+#' # and their variable labels
+#' find_var(efc, "cop", as.varlab = TRUE)
 #'
 #' # find variables with "dependency" in names and variable labels
 #' find_var(efc, "dependency")
@@ -76,7 +84,8 @@ find_var <- function(data,
                      pattern,
                      ignore.case = TRUE,
                      search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
-                     as.df = FALSE) {
+                     as.df = FALSE,
+                     as.varlab = FALSE) {
   # check valid args
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame.", call. = F)
@@ -131,6 +140,15 @@ find_var <- function(data,
   # return data frame?
   if (as.df) {
     return(tibble::as_tibble(data[, pos]))
+  }
+
+  # return variable labels?
+  if (as.varlab) {
+    return(tibble::tibble(
+      col.nr = pos,
+      var.name = colnames(data)[pos],
+      var.label = get_label(data[, pos], def.value = colnames(data)[pos])
+    ))
   }
 
   # use column names
