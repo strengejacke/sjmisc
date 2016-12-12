@@ -62,6 +62,8 @@ frq.default <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL
 
 
 frq_helper <- function(x, sort.frq, weight.by) {
+  # convert NaN and Inf to missing
+  x <- zap_inf(x)
   #---------------------------------------------------
   # variable with only mising?
   #---------------------------------------------------

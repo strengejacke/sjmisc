@@ -32,26 +32,26 @@
 #' data(efc)
 #' str(efc$e42dep)
 #'
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 #' table(x)
 #' get_values(x)
 #' str(x)
 #'
 #' # zap all labelled values
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 #' table(zap_labels(x))
 #' get_values(zap_labels(x))
 #' str(zap_labels(x))
 #'
 #' # zap all unlabelled values
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 #' table(zap_unlabelled(x))
 #' get_values(zap_unlabelled(x))
 #' str(zap_unlabelled(x))
 #'
 #' # in a pipe-workflow
 #' library(dplyr)
-#' set_labels(efc$e42dep) <-  c(`1` = "independent", `4` = "severe dependency")
+#' set_labels(efc$e42dep) <-  c("independent" = 1, "severe dependency" = 4)
 #' efc %>%
 #'   select(c172code, e42dep) %>%
 #'   zap_labels()
@@ -167,12 +167,12 @@ zap_unlabelled <- function(x, ...) {
 #' @description Replaces all \code{\link[haven]{tagged_na}} values with
 #'                regular \code{NA}.
 #'
-#' @param x A \code{\link[haven]{labelled}} vector with \code{\link[haven]{tagged_na}}
+#' @param x A \code{\link[haven]{labelled}} vector with \code{tagged_na}
 #'            values, or a data frame with such vectors.
 #'
 #' @inheritParams to_factor
 #'
-#' @return \code{x}, where all \code{\link[haven]{tagged_na}} values are converted to \code{NA}.
+#' @return \code{x}, where all \code{tagged_na} values are converted to \code{NA}.
 #'
 #' @seealso \code{\link{set_na}} and \code{\link{get_na}};
 #'          \code{\link{drop_labels}} to drop labels from zero-count values.
@@ -220,6 +220,74 @@ zap_na_tags <- function(x, ...) {
 
   x
 }
+
+
+
+#' @title Convert infiite or NaN values into regular NA
+#' @name zap_inf
+#'
+#' @description Replaces all infinite (\code{Inf} and \code{-Inf}) or \code{NaN}
+#'                values with regular \code{NA}.
+#'
+#' @param x A vector or a data frame.
+#'
+#' @inheritParams to_factor
+#'
+#' @return \code{x}, where all \code{Inf}, \code{-Inf} and \code{NaN} are converted to \code{NA}.
+#'
+#' @examples
+#' x <- c(1, 2, NA, 3, NaN, 4, NA, 5, Inf, -Inf, 6, 7)
+#' zap_inf(x)
+#'
+#' data(efc)
+#' # produce some NA and NaN values
+#' efc$e42dep[1] <- NaN
+#' efc$e42dep[2] <- NA
+#' efc$c12hour[1] <- NaN
+#' efc$c12hour[2] <- NA
+#' efc$e17age[2] <- NaN
+#' efc$e17age[1] <- NA
+#'
+#' # only zap NaN for c12hour
+#' zap_inf(efc$c12hour)
+#'
+#' # only zap NaN for c12hour and e17age, not for e42dep,
+#' # but return complete data framee
+#' zap_inf(efc, c12hour, e17age)
+#'
+#' # zap NaN for complete data frame
+#' zap_inf(efc)
+#'
+#' @importFrom tibble as_tibble
+#' @export
+zap_inf <- function(x, ...) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+    # iterate variables of data frame
+    for (i in .vars) {
+      # convert NaN and Inf to missing
+      x[[i]][is.nan(x[[i]])] <- NA
+      x[[i]][is.infinite(x[[i]])] <- NA
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x[is.nan(x)] <- NA
+    x[is.infinite(x)] <- NA
+  }
+
+  x
+}
+
 
 
 zap_labels_helper <- function(x) {

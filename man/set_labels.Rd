@@ -74,7 +74,7 @@ frq(dummy)
 
 # assign labels with named vector
 dummy <- sample(1:4, 40, replace = TRUE)
-set_labels(dummy) <- c("very low" = 1, "hi" = 4))
+set_labels(dummy) <- c("very low" = 1, "very high" = 4)
 frq(dummy)
 
 # force using all labels, even if not all labels

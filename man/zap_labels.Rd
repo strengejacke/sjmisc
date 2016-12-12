@@ -55,26 +55,26 @@ For (partially) labelled vectors, \code{zap_labels()} will replace
 data(efc)
 str(efc$e42dep)
 
-x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 table(x)
 get_values(x)
 str(x)
 
 # zap all labelled values
-x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 table(zap_labels(x))
 get_values(zap_labels(x))
 str(zap_labels(x))
 
 # zap all unlabelled values
-x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 table(zap_unlabelled(x))
 get_values(zap_unlabelled(x))
 str(zap_unlabelled(x))
 
 # in a pipe-workflow
 library(dplyr)
-set_labels(efc$e42dep) <-  c(`1` = "independent", `4` = "severe dependency")
+set_labels(efc$e42dep) <-  c("independent" = 1, "severe dependency" = 4)
 efc \%>\%
   select(c172code, e42dep) \%>\%
   zap_labels()
