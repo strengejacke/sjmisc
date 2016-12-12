@@ -278,9 +278,6 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
       lablen <- length(labels)
       values <- sort(unique(stats::na.omit(as.vector(x))))
 
-      # do we have an ordered factor?
-      if (is.ordered(x)) values <- values[order(levels(x))]
-
       # set var name string
       if (is_empty(var.name)) {
         name.string <- "x"
@@ -306,6 +303,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
           labels <- dummy.lab.values
           names(labels) <- dummy.lab.labels
         }
+
         # sort labels
         labels <- labels[order(labels)]
         # set attributes
@@ -331,6 +329,10 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
           attr(x, attr.string) <- as.numeric(values)
         else
           attr(x, attr.string) <- as.character(values)
+
+        # do we have an ordered factor?
+        if (is.ordered(x)) labels <- labels[order(levels(x))]
+
         names(attr(x, attr.string)) <- labels
         # check for valid length of labels
         # here, we have a smaller value range (i.e. less values)

@@ -21,6 +21,7 @@
 * `flat_table()` did not show values that had no value labels. Now all categories are shown in the frequency table.
 * `rec()` did not properly copy labels of tagged NA values when not all recoded values appeared in the vector.
 * `frq()` did not show correct values, when value labels of a vector were not sorted according their values.
+* `set_labels()` did not set labels properly for ordered factors.
 
 # sjmisc 2.1.0
 
