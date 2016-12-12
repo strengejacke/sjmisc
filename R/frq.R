@@ -162,9 +162,9 @@ frq_helper <- function(x, sort.frq, weight.by) {
   if (!is.null(mydat$label)) mydat$label[is.na(mydat$label)] <- "NA"
   suppressMessages(replace_na(mydat$val) <- max(to_value(mydat$val), na.rm = T) + 1)
   # save original order
-  reihe <- to_value(mydat$val, keep.labels = F)
+  reihe <- to_value(mydat$val, start.at = 1, keep.labels = F)
   # sort for x-axis
-  mydat$val <- sort(reihe)
+  mydat <- mydat[order(reihe), ]
   # add variable label as attribute, for print-method
   attr(mydat, "label") <- varlab
   # -------------------------------------

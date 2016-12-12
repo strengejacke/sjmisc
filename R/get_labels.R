@@ -193,6 +193,8 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
     if (drop.na) lab <- lab[!haven::is_tagged_na(lab)]
     # check if we have anything
     if (!is.null(lab) && length(lab) > 0) {
+      # sort labels
+      lab <- lab[order(lab)]
       # retrieve values associated with labels. for character vectors
       # or factors with character levels, these values are character values,
       # else, they are numeric values

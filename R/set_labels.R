@@ -301,7 +301,8 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
           labels <- dummy.lab.values
           names(labels) <- dummy.lab.labels
         }
-
+        # sort labels
+        labels <- labels[order(labels)]
         # set attributes
         if (anyNA(suppressWarnings(as.numeric(labels)))) {
           # here we have also non-numeric labels, so we set
@@ -333,14 +334,14 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
         # do we want to force to set labels, even if we have more labels
         # than values in variable?
         if (force.labels) {
-          attr(x, attr.string) <- as.numeric(c(1:lablen))
+          attr(x, attr.string) <- as.numeric(seq_len(lablen))
           names(attr(x, attr.string)) <- labels
         } else {
           # we have more labels than values, so just take as many
           # labes as values are present
           message(sprintf("More labels than values of \"%s\". Using first %i labels.", name.string, valrange))
-          attr(x, attr.string) <- as.numeric(c(minval:maxval))
-          names(attr(x, attr.string)) <- labels[1:valrange]
+          attr(x, attr.string) <- as.numeric(minval:maxval)
+          names(attr(x, attr.string)) <- labels[seq_len(valrange)]
         }
         # value range is larger than amount of labels. we may
         # have not continuous value range, e.g. "-2" as filter and
@@ -362,17 +363,17 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
           }
 
           # set attributes
-          attr(x, attr.string) <- as.numeric(c(1:valrange))
+          attr(x, attr.string) <- as.numeric(seq_len(valrange))
           names(attr(x, attr.string)) <- labels
         } else {
           # tell user about modification
           message(sprintf("\"%s\" has more values than \"labels\", hence not all values are labelled.", name.string))
           # drop values with no associated labels
-          attr(x, attr.string) <- as.numeric(c(1:length(labels)))
+          attr(x, attr.string) <- as.numeric(seq_len(length(labels)))
           names(attr(x, attr.string)) <- labels
         }
       } else {
-        attr(x, attr.string) <- as.numeric(c(minval:maxval))
+        attr(x, attr.string) <- as.numeric(minval:maxval)
         names(attr(x, attr.string)) <- labels
       }
     }
