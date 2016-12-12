@@ -8,7 +8,7 @@
 
 * `rec()`, `split_var()` and `dicho()` get an argument `suffix`, to append a suffix to variable (column) names, if applied on a data frame.
 * `find_var()` gets a `as.df`-argument, to return a data frame with matching variables, instead of their column indices only.
-* `find_var()` gets a `as.varlab`-argument, to return a "summary"" data frame with column number, variable name and variable label.
+* `find_var()` gets a `as.varlab`-argument, to return a "summary" data frame with column number, variable name and variable label.
 * `flat_table()` gets a `show.values`-argument, to add values to associated labels in output.
 * `frq()` gets a `weight.by`-argument to weight frequencies.
 * Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `rec()`).
