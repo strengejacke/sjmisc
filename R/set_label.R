@@ -127,7 +127,7 @@ set_label <- function(x, lab, attr.string = NULL) {
         attr(x, attr.string) <- lab
     }
   }
-  return(x)
+  x
 }
 
 

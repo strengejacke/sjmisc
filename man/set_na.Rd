@@ -10,24 +10,21 @@ set_na(x, value, drop.levels = TRUE, as.tag = FALSE)
 set_na(x, drop.levels = TRUE, as.tag = FALSE) <- value
 }
 \arguments{
-\item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where new
+\item{x}{Variable (vector), data frame or list of variables where new
 missing values should be defined. If \code{x} is a \code{data.frame}, each
 column is assumed to be a new variable, where missings should be defined.}
 
-\item{value}{Numeric vector with values that should be replaced with a
-\code{\link[haven]{tagged_na}}.
-Thus, for each variable in \code{x}, \code{value} are replaced by
-tagged \code{NA} values.}
+\item{value}{Numeric vector with values that should be replaced with NA values.}
 
 \item{drop.levels}{Logical, if \code{TRUE}, factor levels of values that have
 been replaced with \code{NA} are dropped. See 'Examples'.}
 
 \item{as.tag}{Logical, if \code{TRUE}, values in \code{x} will be replaced
-by \code{\link[haven]{tagged_na}}, else by usual \code{NA} values.}
+by \code{tagged_na}, else by usual \code{NA} values. Use a named
+vector to assign the value label to the tagged NA value (see 'Examples').}
 }
 \value{
-\code{x}, where each value of \code{value} is replaced by an a tagged
-          \code{NA}.
+\code{x}, with all elements of \code{value} being replaced by \code{NA}.
 }
 \description{
 This function replaces specific values of a variable, data frame
@@ -35,7 +32,7 @@ This function replaces specific values of a variable, data frame
 }
 \details{
 \code{set_na} converts all values defined in \code{value} with
-           a related tagged \code{NA} (see \code{\link[haven]{tagged_na}}).
+           a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
            Tagged \code{NA}s work exactly like regular R missing values
            except that they store one additional byte of information: a tag,
            which is usually a letter ("a" to "z") or character number ("0" to "9").
