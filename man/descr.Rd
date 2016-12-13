@@ -20,8 +20,10 @@ This function wraps the \code{\link[psych]{describe}}-function
              and prints a basic descriptive statistic, including variable labels.
 }
 \examples{
-library(dplyr)
 data(efc)
+descr(efc, e17age, c160age)
+
+library(dplyr)
 efc \%>\% select(e42dep, e15relat, c172code) \%>\% descr()
 
 }

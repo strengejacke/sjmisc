@@ -11,8 +11,10 @@
 #'         \code{\link[psych]{describe}}-function.
 #'
 #' @examples
-#' library(dplyr)
 #' data(efc)
+#' descr(efc, e17age, c160age)
+#'
+#' library(dplyr)
 #' efc %>% select(e42dep, e15relat, c172code) %>% descr()
 #'
 #' @importFrom tibble as_tibble rownames_to_column
