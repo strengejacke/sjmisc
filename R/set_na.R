@@ -47,10 +47,10 @@
 #' table(dummy, useNA = "always")
 #'
 #' # add named vector as further missing value
-#' set_na(dummy, c("Refused" = 5))
+#' set_na(dummy, c("Refused" = 5), as.tag = TRUE)
 #' # see different missing types
 #' library(haven)
-#' print_tagged_na(set_na(dummy, c("Refused" = 5)))
+#' print_tagged_na(set_na(dummy, c("Refused" = 5), as.tag = TRUE)
 #'
 #'
 #' # create sample data frame
@@ -61,7 +61,7 @@
 #' library(dplyr)
 #' dummy %>% set_na(c(2, 4)) %>% head()
 #' dummy %>% set_na(c(2, 4)) %>% get_na()
-#' dummy %>% set_na(c(2, 4)) %>% get_values()
+#' dummy %>% set_na(c(2, 4), as.tag = TRUE) %>% get_values()
 #'
 #' # create list of variables
 #' data(efc)
@@ -74,26 +74,26 @@
 #' # drop unused factor levels when being set to NA
 #' x <- factor(c("a", "b", "c"))
 #' x
-#' set_na(x, "b")
-#' set_na(x, "b", drop.levels = FALSE)
+#' set_na(x, "b", as.tag = TRUE)
+#' set_na(x, "b", drop.levels = FALSE, as.tag = TRUE)
 #'
 #' @export
-set_na <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   UseMethod("set_na")
 }
 
 #' @export
-set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels, as.tag))
 }
 
 #' @export
-set_na.list <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na.list <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   lapply(x, FUN = set_na_helper, value, drop.levels, as.tag)
 }
 
 #' @export
-set_na.default <- function(x, value, drop.levels = TRUE, as.tag = TRUE) {
+set_na.default <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
   set_na_helper(x, value, drop.levels, as.tag)
 }
 
@@ -174,12 +174,12 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
 
 #' @rdname set_na
 #' @export
-`set_na<-` <- function(x, drop.levels = TRUE, as.tag = TRUE, value) {
+`set_na<-` <- function(x, drop.levels = TRUE, as.tag = FALSE, value) {
   UseMethod("set_na<-")
 }
 
 #' @export
-`set_na<-.default` <- function(x, drop.levels = TRUE, as.tag = TRUE, value) {
+`set_na<-.default` <- function(x, drop.levels = TRUE, as.tag = FALSE, value) {
   x <- set_na(x, value, drop.levels, as.tag)
   x
 }

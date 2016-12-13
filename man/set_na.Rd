@@ -5,9 +5,9 @@
 \alias{set_na<-}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, value, drop.levels = TRUE, as.tag = TRUE)
+set_na(x, value, drop.levels = TRUE, as.tag = FALSE)
 
-set_na(x, drop.levels = TRUE, as.tag = TRUE) <- value
+set_na(x, drop.levels = TRUE, as.tag = FALSE) <- value
 }
 \arguments{
 \item{x}{Variable (vector), \code{data.frame} or \code{list} of variables where new
@@ -57,10 +57,10 @@ dummy <- set_na(dummy, c(1, 8))
 table(dummy, useNA = "always")
 
 # add named vector as further missing value
-set_na(dummy, c("Refused" = 5))
+set_na(dummy, c("Refused" = 5), as.tag = TRUE)
 # see different missing types
 library(haven)
-print_tagged_na(set_na(dummy, c("Refused" = 5)))
+print_tagged_na(set_na(dummy, c("Refused" = 5), as.tag = TRUE)
 
 
 # create sample data frame
@@ -71,7 +71,7 @@ dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
 library(dplyr)
 dummy \%>\% set_na(c(2, 4)) \%>\% head()
 dummy \%>\% set_na(c(2, 4)) \%>\% get_na()
-dummy \%>\% set_na(c(2, 4)) \%>\% get_values()
+dummy \%>\% set_na(c(2, 4), as.tag = TRUE) \%>\% get_values()
 
 # create list of variables
 data(efc)
@@ -84,8 +84,8 @@ lapply(set_na(dummy, 3), table, useNA = "always")
 # drop unused factor levels when being set to NA
 x <- factor(c("a", "b", "c"))
 x
-set_na(x, "b")
-set_na(x, "b", drop.levels = FALSE)
+set_na(x, "b", as.tag = TRUE)
+set_na(x, "b", drop.levels = FALSE, as.tag = TRUE)
 
 }
 \seealso{
