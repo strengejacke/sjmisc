@@ -24,13 +24,18 @@ descr <- function(.data, ...) {
   # get dot data
   .data <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
 
+  # call psych::describe and convert to tibble, remove some unnecessary
+  # columns and and a variable label column
   x <- tibble::as_tibble(psych::describe(.data)) %>%
     tibble::rownames_to_column(var = "variable") %>%
     dplyr::select_("-vars", "-mad") %>%
     dplyr::mutate(label = unname(get_label(.data, def.value = colnames(.data)))) %>%
     var_rename(median = "md")
 
+  # sort columns a bit
   x <- x[, c(1, 13, 2, 3, 4, 12, 5, 6, 7, 8, 9, 10, 11)]
+
+  # add own class for print-method
   class(x) <- c("sjmisc.descr", "data.frame")
   x
 }
