@@ -176,6 +176,10 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   val_lab <- val.labels
   # remember if NA's have been recoded...
   na_recoded <- FALSE
+
+  # drop labels when reversing
+  if (recodes == "rev") x <- drop_labels(x, drop.na = TRUE)
+
   # get current NA values
   current.na <- get_na(x)
 
