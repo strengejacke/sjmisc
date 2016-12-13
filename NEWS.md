@@ -1,8 +1,9 @@
-# sjmisc 2.1.1
+# sjmisc 2.2.0
 
 ## New functions
 
 * `zap_inf()` to "clean" vectors from `NaN` and infinite values.
+* `descr()` to provide basic descriptive statistics (similar to `describe()` in the psych-package), but including variable labels and usable in pipe-workflows.
 
 ## Changes to functions
 
