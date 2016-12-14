@@ -14,7 +14,11 @@ set_na(x, drop.levels = TRUE, as.tag = FALSE) <- value
 missing values should be defined. If \code{x} is a \code{data.frame}, each
 column is assumed to be a new variable, where missings should be defined.}
 
-\item{value}{Numeric vector with values that should be replaced with NA values.}
+\item{value}{Numeric vector with values that should be replaced with NA values,
+or a character vector if values of factors or character vectors should be
+replaced. For labelled vectors, may also be the name of a value label. In
+this case, the associated values for the value labels in each vector
+will be replaced with NA (see 'Examples').}
 
 \item{drop.levels}{Logical, if \code{TRUE}, factor levels of values that have
 been replaced with \code{NA} are dropped. See 'Examples'.}
@@ -67,7 +71,7 @@ dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
 # set value 2 and 4 as missings
 library(dplyr)
 dummy \%>\% set_na(c(2, 4)) \%>\% head()
-dummy \%>\% set_na(c(2, 4)) \%>\% get_na()
+dummy \%>\% set_na(c(2, 4), as.tag = TRUE) \%>\% get_na()
 dummy \%>\% set_na(c(2, 4), as.tag = TRUE) \%>\% get_values()
 
 # create list of variables
@@ -83,6 +87,25 @@ x <- factor(c("a", "b", "c"))
 x
 set_na(x, "b", as.tag = TRUE)
 set_na(x, "b", drop.levels = FALSE, as.tag = TRUE)
+
+# set_na() can also remove a missing by defining the value label
+# of the value that should be replaced with NA. This is in particular
+# helpful if a certain category should be set as NA, however, this category
+# is assigned with different values accross variables
+x1 <- sample(1:4, 20, replace = TRUE)
+x2 <- sample(1:7, 20, replace = TRUE)
+set_labels(x1) <- c("Refused" = 3, "No answer" = 4)
+set_labels(x2) <- c("Refused" = 6, "No answer" = 7)
+
+tmp <- data.frame(x1, x2)
+get_labels(tmp)
+get_labels(set_na(tmp, "No answer"))
+get_labels(set_na(tmp, c("Refused", "No answer")))
+
+# show values
+tmp
+set_na(tmp, c("Refused", "No answer"))
+
 
 }
 \seealso{

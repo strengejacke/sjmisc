@@ -63,8 +63,18 @@ remove_labels_helper <- function(x, value) {
   # sort labels by values
   all.labels <- all.labels[order(as.numeric(all.labels))]
 
-  # set back labels
-  x <- set_labels(x, labels = c(all.labels, current.na))
+  # complete labels, including NA labels
+  compl.lab <- c(all.labels, current.na)
+
+  # check if any labels left after removing
+  if (is.null(compl.lab) || is_empty(compl.lab)) {
+    # clear all labels
+    x <- remove_all_labels(x)
+  } else {
+    # set back labels
+    x <- set_labels(x, labels = compl.lab)
+  }
+
   return(x)
 }
 

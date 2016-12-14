@@ -13,6 +13,7 @@
 * `find_var()` gets a `as.varlab`-argument, to return a "summary" data frame with column number, variable name and variable label.
 * `flat_table()` gets a `show.values`-argument, to add values to associated labels in output.
 * `frq()` gets a `weight.by`-argument to weight frequencies.
+* `set_na()` can now also find values by their value labels and replace them with NA.
 * Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec`).
 * `get_labels()` now always returns labels in sorted order of the associated values.
 * For a named vector as `labels`-argument, `set_labels()` now always sorts labels in sorted order of the associated values.
@@ -25,6 +26,8 @@
 * `rec()` did not properly copy labels of tagged NA values when not all recoded values appeared in the vector.
 * `frq()` did not show correct values, when value labels of a vector were not sorted according their values.
 * `set_labels()` did not set labels properly for ordered factors.
+* `remove_labels()` returned NA-values for value labels (instead of no value labels) when the last value label of a vector was removed.
+
 
 # sjmisc 2.1.0
 

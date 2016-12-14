@@ -154,7 +154,7 @@ set_labels <- function(x,
 
 set_labels_helper <- function(x, labels, force.labels, force.values, drop.na) {
   # any valid labels? if not, return vector
-  if (is.null(labels)) return(x)
+  if (is.null(labels) || length(labels) == 0) return(x)
 
   # convert single vector
   if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
