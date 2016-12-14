@@ -5,6 +5,9 @@
 #'
 #'
 #' @param x String, character vector of length 1, or vector.
+#' @param first.only Logical, if \code{FALSE} and \code{x} is a character
+#'        vector, each element of \code{x} will be checked if empty. If
+#'        \code{TRUE}, only the first element of \code{x} will be checked.
 #' @return Logical, \code{TRUE} if \code{x} is a character vector or string and
 #'           is empty, \code{TRUE} if \code{x} is any vector and of length 0,
 #'           \code{FALSE} otherwise.
@@ -37,18 +40,31 @@
 #' x <- x[-1]
 #' is_empty(x)
 #'
+#' # check multiple elements of character vectors
+#' is_empty(c("", "a"))
+#' is_empty(c("", "a"), first.only = FALSE)
+#'
 #' @export
-is_empty <- function(x) {
+is_empty <- function(x, first.only = TRUE) {
   # do we have a valid vector?
   if (!is.null(x)) {
     # if it's a character, check if we have only one element in that vector
     if (is.character(x)) {
-      if (length(x) > 1) warning("`x` must be of length 1. Evaluating first element only.", call. = TRUE)
-      # zero chars, so empty?
-      zero_len <- nchar(x) == 0
-      # if 'x' was empty, we have no chars, so zero_len will be integer(0).
-      # check this here, because zero_len needs to be logical
-      if (length(zero_len) == 0) zero_len <- TRUE
+      zero_len <- sapply(x, function(y) {
+        # zero chars, so empty?
+        l <- nchar(y) == 0
+        # if 'x' was empty, we have no chars, so zero_len will be integer(0).
+        # check this here, because zero_len needs to be logical
+        if (length(l) == 0) l <- TRUE
+        l
+      })
+      # return result for multiple elements of character vector
+      if (first.only) {
+        if (length(x) > 1) warning("`x` has more than one element. Evaluating first element only. Use `first.only = FALSE` to evaluate all elements.", call. = TRUE)
+        return(unname(zero_len)[1])
+      } else {
+        return(unname(zero_len))
+      }
       # we have a non-character vector here. check for length
     } else {
       zero_len <- length(x) == 0

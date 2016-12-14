@@ -11,9 +11,10 @@ Changes to functions:
 * `find_var()` gets a `as.varlab`-argument, to return a "summary" data frame with column number, variable name and variable label.
 * `flat_table()` gets a `show.values`-argument, to add values to associated labels in output.
 * `frq()` gets a `weight.by`-argument to weight frequencies.
-* Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec()`).
+* Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec`).
 * `get_labels()` now always returns labels in sorted order of the associated values.
 * For a named vector as `labels`-argument, `set_labels()` now always sorts labels in sorted order of the associated values.
+* `is_empty()` gets a `first.only`-argument, to evaluate either first or all elements of a character vector.
 
 Bug fixes:
 * `set_na()` did not work on vectors of class `Date` when argument `as.tag = TRUE`.

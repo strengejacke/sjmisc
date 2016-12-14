@@ -4,10 +4,14 @@
 \alias{is_empty}
 \title{Check whether string or vector is empty}
 \usage{
-is_empty(x)
+is_empty(x, first.only = TRUE)
 }
 \arguments{
 \item{x}{String, character vector of length 1, or vector.}
+
+\item{first.only}{Logical, if \code{FALSE} and \code{x} is a character
+vector, each element of \code{x} will be checked if empty. If
+\code{TRUE}, only the first element of \code{x} will be checked.}
 }
 \value{
 Logical, \code{TRUE} if \code{x} is a character vector or string and
@@ -46,6 +50,10 @@ x <- 1
 is_empty(x)
 x <- x[-1]
 is_empty(x)
+
+# check multiple elements of character vectors
+is_empty(c("", "a"))
+is_empty(c("", "a"), first.only = FALSE)
 
 }
 
