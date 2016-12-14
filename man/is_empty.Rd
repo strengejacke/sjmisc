@@ -15,7 +15,7 @@ vector, each element of \code{x} will be checked if empty. If
 }
 \value{
 Logical, \code{TRUE} if \code{x} is a character vector or string and
-          is empty, \code{TRUE} if \code{x} is any vector and of length 0,
+          is empty, \code{TRUE} if \code{x} is a vector or list and of length 0,
           \code{FALSE} otherwise.
 }
 \description{
