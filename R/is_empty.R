@@ -1,10 +1,10 @@
-#' @title Check whether string or vector is empty
+#' @title Check whether string, list or vector is empty
 #' @name is_empty
 #' @description This function checks whether a string or character vector (of
-#'                length 1) or any vector (numeric, atomic) is empty or not.
+#'                length 1), a list or any vector (numeric, atomic) is empty or not.
 #'
 #'
-#' @param x String, character vector of length 1, or vector.
+#' @param x String, character vector of length 1, list or vector.
 #' @param first.only Logical, if \code{FALSE} and \code{x} is a character
 #'        vector, each element of \code{x} will be checked if empty. If
 #'        \code{TRUE}, only the first element of \code{x} will be checked.
