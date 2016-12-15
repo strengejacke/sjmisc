@@ -51,10 +51,10 @@ flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), d
   if (marge == 0) marge <- NULL
 
   # get dot data
-  .data <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
+  dd <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
 
   # select variables, convert to label and create ftable-pbject
-  x <- .data %>%
+  x <- dd %>%
     to_label(add.non.labelled = TRUE, prefix = show.values) %>%
     stats::ftable()
 

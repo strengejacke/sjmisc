@@ -24,14 +24,14 @@
 descr <- function(.data, ...) {
 
   # get dot data
-  .data <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
+  dd <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
 
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
-  x <- tibble::as_tibble(psych::describe(.data)) %>%
+  x <- tibble::as_tibble(psych::describe(dd)) %>%
     tibble::rownames_to_column(var = "variable") %>%
     dplyr::select_("-vars", "-mad") %>%
-    dplyr::mutate(label = unname(get_label(.data, def.value = colnames(.data)))) %>%
+    dplyr::mutate(label = unname(get_label(dd, def.value = colnames(dd)))) %>%
     var_rename(median = "md")
 
   # sort columns a bit
