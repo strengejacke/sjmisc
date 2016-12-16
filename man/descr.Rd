@@ -4,12 +4,12 @@
 \alias{descr}
 \title{Basic descriptive statistics}
 \usage{
-descr(.data, ...)
+descr(data, ...)
 }
 \arguments{
-\item{.data}{A vector or a data frame.}
+\item{data}{A vector or a data frame.}
 
-\item{...}{One or more variables of \code{.data} that should be printed as table.}
+\item{...}{One or more variables of \code{data} that should be printed as table.}
 }
 \value{
 A data frame with basic descriptive statistics, derived from the

@@ -4,13 +4,13 @@
 \alias{flat_table}
 \title{Flat (proportional) tables}
 \usage{
-flat_table(.data, ..., margin = c("counts", "cell", "row", "col"),
+flat_table(data, ..., margin = c("counts", "cell", "row", "col"),
   digits = 2, show.values = FALSE)
 }
 \arguments{
-\item{.data}{A data frame.}
+\item{data}{A data frame.}
 
-\item{...}{One or more variables of \code{.data} that should be printed as table.}
+\item{...}{One or more variables of \code{data} that should be printed as table.}
 
 \item{margin}{Specify the table margin that should be computed for proportional
 tables. By default, counts are printed. Use \code{margin = "cell"},

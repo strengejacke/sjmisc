@@ -4,7 +4,7 @@
 #' @description This function wraps the \code{\link[psych]{describe}}-function
 #'              and prints a basic descriptive statistic, including variable labels.
 #'
-#' @param .data A vector or a data frame.
+#' @param data A vector or a data frame.
 #' @inheritParams flat_table
 #'
 #' @return A data frame with basic descriptive statistics, derived from the
@@ -21,10 +21,10 @@
 #' @importFrom dplyr select mutate
 #' @importFrom psych describe
 #' @export
-descr <- function(.data, ...) {
+descr <- function(data, ...) {
 
   # get dot data
-  dd <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
+  dd <- get_dot_data(data, match.call(expand.dots = FALSE)$`...`)
 
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column

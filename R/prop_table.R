@@ -4,8 +4,8 @@
 #' @description This function creates a labelled flat table or flat
 #'              proportional (marginal) table.
 #'
-#' @param .data A data frame.
-#' @param ... One or more variables of \code{.data} that should be printed as table.
+#' @param data A data frame.
+#' @param ... One or more variables of \code{data} that should be printed as table.
 #' @param margin Specify the table margin that should be computed for proportional
 #'               tables. By default, counts are printed. Use \code{margin = "cell"},
 #'               \code{margin = "col"} or \code{margin = "row"} to print cell,
@@ -31,7 +31,7 @@
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
 #' @export
-flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
+flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
 
   # match arguments
   margin <- match.arg(margin)
@@ -51,7 +51,7 @@ flat_table <- function(.data, ..., margin = c("counts", "cell", "row", "col"), d
   if (marge == 0) marge <- NULL
 
   # get dot data
-  dd <- get_dot_data(.data, match.call(expand.dots = FALSE)$`...`)
+  dd <- get_dot_data(data, match.call(expand.dots = FALSE)$`...`)
 
   # select variables, convert to label and create ftable-pbject
   x <- dd %>%
