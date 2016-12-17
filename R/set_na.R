@@ -26,8 +26,10 @@
 #'
 #' @return \code{x}, with all elements of \code{value} being replaced by \code{NA}.
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are preserved.
+#' @note Labels from values that are replaced with NA and no longer used will be
+#'         removed from \code{x}, however, other value and variable label
+#'         attributes (see, for instance, \code{\link{get_labels}} or
+#'         \code{\link{set_labels}}) are preserved.
 #'
 #' @details \code{set_na} converts all values defined in \code{value} with
 #'            a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
@@ -196,6 +198,9 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
       x[x %in% value[i]] <- NA
     }
   }
+
+  # remove value labels
+  x <- remove_labels(x, which(get_values(x) %in% value))
 
   # if we have a factor, check if we have unused levels now due to NA
   # assignment. If yes, drop levels

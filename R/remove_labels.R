@@ -43,7 +43,7 @@ remove_labels_helper <- function(x, value) {
   }
 
   # remove by index?
-  if (haven::is_tagged_na(value)) {
+  if (haven::is_tagged_na(value[1])) {
     current.na <- current.na[haven::na_tag(current.na) != haven::na_tag(value)]
   } else if (is.numeric(value)) {
     current.labels <- current.labels[-value]

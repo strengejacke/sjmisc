@@ -14,6 +14,7 @@
 * `flat_table()` gets a `show.values`-argument, to add values to associated labels in output.
 * `frq()` gets a `weight.by`-argument to weight frequencies.
 * `set_na()` can now also find values by their value labels and replace them with NA.
+* `set_na()` now removes unused value labels from values that have been replaced with NA.
 * Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec`).
 * `get_labels()` now always returns labels in sorted order of the associated values.
 * For a named vector as `labels`-argument, `set_labels()` now always sorts labels in sorted order of the associated values.

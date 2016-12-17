@@ -44,8 +44,10 @@ This function replaces specific values of a variable, data frame
            Furthermore, see 'Details' in \code{\link{get_na}}.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) are preserved.
+Labels from values that are replaced with NA and no longer used will be
+        removed from \code{x}, however, other value and variable label
+        attributes (see, for instance, \code{\link{get_labels}} or
+        \code{\link{set_labels}}) are preserved.
 }
 \examples{
 # create random variable
