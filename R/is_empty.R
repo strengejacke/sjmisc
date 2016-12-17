@@ -50,6 +50,9 @@ is_empty <- function(x, first.only = TRUE) {
   if (!is.null(x)) {
     # if it's a character, check if we have only one element in that vector
     if (is.character(x)) {
+      # characters may also be of length 0
+      if (length(x) == 0) return(TRUE)
+      # else, check all elements of x
       zero_len <- sapply(x, function(y) {
         # zero chars, so empty?
         l <- nchar(y) == 0
