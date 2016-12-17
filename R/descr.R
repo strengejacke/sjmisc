@@ -26,12 +26,16 @@ descr <- function(data, ...) {
   # get dot data
   dd <- get_dot_data(data, match.call(expand.dots = FALSE)$`...`)
 
+  # get default variable name
+  var.name <- colnames(dd)
+  if (is.null(var.name)) var.name <- NA
+
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
   x <- tibble::as_tibble(psych::describe(dd)) %>%
     tibble::rownames_to_column(var = "variable") %>%
     dplyr::select_("-vars", "-mad") %>%
-    dplyr::mutate(label = unname(get_label(dd, def.value = colnames(dd)))) %>%
+    dplyr::mutate(label = unname(get_label(dd, def.value = var.name))) %>%
     var_rename(median = "md")
 
   # sort columns a bit
