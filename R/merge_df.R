@@ -115,7 +115,7 @@ merge_df_helper <- function(x1, x2) {
   # in certain cases, e.g. when we have no matching columns at all,
   # x2_match is of length 0. in this case, all columns are still remaining,
   # so we need to check this here
-  if (is_empty(x2_match))
+  if (sjmisc::is_empty(x2_match))
     x2_remain <- seq_len(ncol(x2))
   else
     x2_remain <- seq_len(ncol(x2))[-x2_match]

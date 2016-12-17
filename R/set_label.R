@@ -106,7 +106,7 @@ set_label <- function(x, lab, attr.string = NULL) {
 
         # iterate all columns / list elements
         for (i in seq_len(nvars)) {
-          if (is_empty(lab[i])) {
+          if (sjmisc::is_empty(lab[i])) {
             # empty label value means, remove
             # the label attribute
             attr(x[[i]], attr.string) <- NULL
@@ -119,7 +119,7 @@ set_label <- function(x, lab, attr.string = NULL) {
         }
       }
     } else {
-      if (is_empty(lab))
+      if (sjmisc::is_empty(lab))
         # empty label, so remove label attribute
         attr(x, attr.string) <- NULL
       else

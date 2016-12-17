@@ -60,7 +60,6 @@ is_empty <- function(x, first.only = TRUE) {
       })
       # return result for multiple elements of character vector
       if (first.only) {
-        if (length(x) > 1) warning("`x` has more than one element. Evaluating first element only. Use `first.only = FALSE` to evaluate all elements.", call. = TRUE)
         return(unname(zero_len)[1])
       } else {
         return(unname(zero_len))

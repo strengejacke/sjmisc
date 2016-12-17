@@ -66,7 +66,7 @@ ref_lvl <- function(x, value = NULL) {
   # recode now
   x <- rec(x, recodes = rec.pattern, as.fac = TRUE)
   # set back labels
-  if (!is.null(var.lab) && !is_empty(var.lab)) {
+  if (!is.null(var.lab) && !sjmisc::is_empty(var.lab)) {
     set_label(x) <- var.lab
   }
   if (!is.null(val.labs)) {

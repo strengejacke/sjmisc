@@ -89,7 +89,7 @@ read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
             na.val.labels <- names(labels)[labels %in% na.values]
             # do we have any labels for missings? then name tagged
             # NA with value labels, else use values as labels
-            empty_val_labels <- suppressWarnings(is_empty(na.val.labels))
+            empty_val_labels <- sjmisc::is_empty(na.val.labels)
             if (length(na.val.labels) > 0 && !empty_val_labels)
               names(tna) <- na.val.labels
             else
@@ -129,7 +129,7 @@ read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
       }
     }
     # do we have any "all-missing-variables"?
-    if (!is_empty(all_missings)) {
+    if (!sjmisc::is_empty(all_missings)) {
       message(sprintf("Following %i variables have only missing values:", length(all_missings)))
       cat(paste(all_missings, collapse = ", "))
       cat("\n")

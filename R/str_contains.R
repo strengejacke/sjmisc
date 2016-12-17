@@ -85,9 +85,9 @@ str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL, switch =
   for (k in pattern) {
     # append result
     if (switch)
-      cnt <- c(cnt, !is_empty(grep(x, k, fixed = T)))
+      cnt <- c(cnt, !sjmisc::is_empty(grep(x, k, fixed = T)))
     else
-      cnt <- c(cnt, !is_empty(grep(k, x, fixed = T)))
+      cnt <- c(cnt, !sjmisc::is_empty(grep(k, x, fixed = T)))
   }
   # which logical combination?
   if (is.null(logic))

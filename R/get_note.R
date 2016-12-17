@@ -57,7 +57,7 @@ get_note <- function(x) {
 #'
 #' @export
 set_note <- function(x, value = NULL) {
-  if (is.null(value) || is_empty(value)) {
+  if (is.null(value) || sjmisc::is_empty(value)) {
     attr(x, "note") <- NULL
   } else {
     attr(x, "note") <- value

@@ -144,7 +144,7 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
     # get value labels that match the values which should be set to NA
     val.match <- val.lab[val.lab %in% value]
     # now get values for this vector
-    if (!suppressWarnings(is_empty(val.match)) && !suppressWarnings(is_empty(names(val.match)))) {
+    if (!sjmisc::is_empty(val.match) && !sjmisc::is_empty(names(val.match))) {
       # should be numeric, else we might have a factor
       na.values <- suppressWarnings(as.numeric(names(val.match)))
       # if we have no NA, coercing to numeric worked. Now get these
@@ -174,7 +174,7 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
       # is na-value in labelled values?
       lv <- which(lab.values == value[i])
       # if yes, replace label
-      if (!is_empty(lv)) {
+      if (!sjmisc::is_empty(lv)) {
         # for tagged NA, use tag as new attribute
         # change value
         attr(x, attr.string)[lv] <- haven::tagged_na(as.character(value[i]))
@@ -199,8 +199,9 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
     }
   }
 
-  # remove value labels
-  x <- remove_labels(x, which(get_values(x) %in% value))
+  # remove unused value labels
+  removers <- which(get_values(x) %in% value)
+  if (!is.null(removers) && !sjmisc::is_empty(removers, first.only = T)) x <- remove_labels(x, removers)
 
   # if we have a factor, check if we have unused levels now due to NA
   # assignment. If yes, drop levels

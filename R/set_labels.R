@@ -279,7 +279,7 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
       values <- sort(unique(stats::na.omit(as.vector(x))))
 
       # set var name string
-      if (is_empty(var.name)) {
+      if (sjmisc::is_empty(var.name)) {
         name.string <- "x"
       } else {
         name.string <- var.name

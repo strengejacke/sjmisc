@@ -69,10 +69,7 @@ group_str <- function(strings,
 
   # remove empty values
   if (remove.empty) {
-    removers <- c()
-    for (i in seq_len(length(strings))) {
-      if (is_empty(strings[i])) removers <- c(removers, i)
-    }
+    removers <- which(sjmisc::is_empty(strings, first.only = F))
     if (length(removers) > 0) strings <- strings[-removers]
   }
 

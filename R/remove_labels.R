@@ -25,7 +25,7 @@ remove_labels_helper <- function(x, value) {
   # value needs to be specified
   if (is.null(value)) stop("`value` must not be NULL.", call. = F)
   # if value is NA, it must be tagged
-  if ((is.na(value) && !haven::is_tagged_na(value))) stop("`value` must be a tagged NA.", call. = F)
+  if (is.na(value) && !haven::is_tagged_na(value)) stop("`value` must be a tagged NA.", call. = F)
 
   # get current labels of `x`
   current.labels <- get_labels(x,
@@ -67,7 +67,7 @@ remove_labels_helper <- function(x, value) {
   compl.lab <- c(all.labels, current.na)
 
   # check if any labels left after removing
-  if (is.null(compl.lab) || is_empty(compl.lab)) {
+  if (is.null(compl.lab) || sjmisc::is_empty(compl.lab)) {
     # clear all labels
     x <- remove_all_labels(x)
   } else {

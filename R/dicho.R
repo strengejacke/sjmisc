@@ -67,7 +67,7 @@ dicho <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.l
 dicho.data.frame <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
   tmp <- tibble::as_tibble(lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels))
   # change variable names, add suffix "_r"
-  if (!is.null(suffix) && !is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
+  if (!is.null(suffix) && !sjmisc::is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
   tmp
 }
 

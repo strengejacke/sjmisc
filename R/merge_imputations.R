@@ -71,7 +71,7 @@ merge_imputations <- function(dat, imp, ori = NULL) {
   # iterate all variables of data frame that has missing values
   for (i in seq_len(ncol(dat))) {
     # check if current variable was imputed or not
-    if (!is_empty(imp$method[i])) {
+    if (!sjmisc::is_empty(imp$method[i])) {
       # copy indices of missing values from original variable
       miss_inc <- which(is.na(dat[[i]]))
 

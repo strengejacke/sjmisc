@@ -81,7 +81,7 @@ as_labelled_helper <- function(x, add.labels, add.class) {
   if (add.labels) x <- fill_labels(x)
   # reset missings
   xna <- get_na(x)
-  if (suppressWarnings(!is_empty(xna))) x <- set_na(x, xna)
+  if (!sjmisc::is_empty(xna)) x <- set_na(x, xna)
   # get former class attributes
   xc <- class(x)
   if (add.class)

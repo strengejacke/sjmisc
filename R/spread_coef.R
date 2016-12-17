@@ -108,7 +108,7 @@ spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
 
   # check if user just wants a specific model term
   # if yes, select this, and its p-value
-  if (!is_empty(model.term)) {
+  if (!sjmisc::is_empty(model.term)) {
     # iterate list variable
     dat <-
       purrr::map_df(data[[model.column]], function(x) {

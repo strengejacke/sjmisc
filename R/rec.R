@@ -140,7 +140,7 @@ rec <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL,
 rec.data.frame <- function(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r") {
   tmp <- tibble::as_tibble(lapply(x, FUN = rec_helper, recodes, as.fac, var.label, val.labels))
   # change variable names, add suffix "_r"
-  if (!is.null(suffix) && !is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
+  if (!is.null(suffix) && !sjmisc::is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
   tmp
 }
 
@@ -248,7 +248,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   }))
 
   # if we found any labels, replace the value label argument
-  if (!is.null(dir.label) && suppressWarnings(!is_empty(dir.label))) val_lab <- dir.label
+  if (!is.null(dir.label) && !sjmisc::is_empty(dir.label)) val_lab <- dir.label
 
   # remove possible direct labels from recode pattern
   recodes <- gsub(pattern = "\\[([^\\[]*)\\]", replacement = "", x = recodes, perl = T)
