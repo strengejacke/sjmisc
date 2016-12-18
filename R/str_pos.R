@@ -6,35 +6,38 @@
 #'
 #' @seealso \code{\link{group_str}}
 #'
-#' @param searchString Character vector with string elements.
-#' @param findTerm String that should be matched against the elements of \code{searchString}.
+#' @param search.string Character vector with string elements.
+#' @param find.term String that should be matched against the elements of \code{search.string}.
 #' @param maxdist Maximum distance between two string elements, which is allowed to treat them
 #'          as similar or equal. Smaller values mean less tolerance in matching.
 #' @param part.dist.match Activates similar matching (close distance strings) for parts (substrings)
-#'          of the \code{searchString}. Following values are accepted:
+#'          of the \code{search.string}. Following values are accepted:
 #'          \itemize{
 #'            \item 0 for no partial distance matching
-#'            \item 1 for one-step matching, which means, only substrings of same length as \code{findTerm} are extracted from \code{searchString} matching
-#'            \item 2 for two-step matching, which means, substrings of same length as \code{findTerm} as well as strings with a slightly wider range are extracted from \code{searchString} matching
+#'            \item 1 for one-step matching, which means, only substrings of same length as \code{find.term} are extracted from \code{search.string} matching
+#'            \item 2 for two-step matching, which means, substrings of same length as \code{find.term} as well as strings with a slightly wider range are extracted from \code{search.string} matching
 #'          }
 #'          Default value is 0. See 'Details' for more information.
-#' @param showProgressBar Logical; f \code{TRUE}, the progress bar is displayed when computing the distance matrix.
+#' @param show.pbar Logical; f \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 #'          Default in \code{FALSE}, hence the bar is hidden.
+#' @param searchString Deprecated, please use \code{search.string} instead.
+#' @param findTerm Deprecated, please use \code{find.term} instead.
+#' @param showProgressBar Deprecated, please use \code{show.pbar} instead.
 #'
-#' @return A numeric vector with index position of elements in \code{searchString} that
-#'           partially match or are similar to \code{findTerm}. Returns \code{-1} if no
+#' @return A numeric vector with index position of elements in \code{search.string} that
+#'           partially match or are similar to \code{find.term}. Returns \code{-1} if no
 #'           match was found.
 #'
 #' @note This function does \emph{not} return the position of a matching string \emph{inside}
-#'         another string, but the element's index of the \code{searchString} vector, where
-#'         a (partial) match with \code{findTerm} was found. Thus, searching for "abc" in
+#'         another string, but the element's index of the \code{search.string} vector, where
+#'         a (partial) match with \code{find.term} was found. Thus, searching for "abc" in
 #'         a string "this is abc" will not return 9 (the start position of the substring),
-#'         but 1 (the element index, which is always 1 if \code{searchString} only has one element).
+#'         but 1 (the element index, which is always 1 if \code{search.string} only has one element).
 #'
-#' @details For \code{part.dist.match = 1}, a substring of \code{length(findTerm)} is extracted
-#'            from \code{searchString}, starting at position 0 in \code{searchString} until
-#'            the end of \code{searchString} is reached. Each substring is matched against
-#'            \code{findTerm}, and results with a maximum distance of \code{maxdist}
+#' @details For \code{part.dist.match = 1}, a substring of \code{length(find.term)} is extracted
+#'            from \code{search.string}, starting at position 0 in \code{search.string} until
+#'            the end of \code{search.string} is reached. Each substring is matched against
+#'            \code{find.term}, and results with a maximum distance of \code{maxdist}
 #'            are considered as "matching". If \code{part.dist.match = 2}, the range
 #'            of the extracted substring is increased by 2, i.e. the extracted substring
 #'            is two chars longer and so on.
@@ -61,40 +64,59 @@
 #' @importFrom stringdist stringdist
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
-str_pos <- function(searchString,
-                    findTerm,
+str_pos <- function(search.string,
+                    find.term,
                     maxdist = 2,
                     part.dist.match = 0,
-                    showProgressBar = FALSE) {
+                    show.pbar = FALSE,
+                    searchString,
+                    findTerm,
+                    showProgressBar) {
   # init return value
   indices <- c()
 
+  # check deprecated arguments
+  if (!missing(searchString) && !is.null(searchString)) {
+    search.string <- searchString
+    warning("Argument `searchString` is deprecated. Please use `search.string` instead.", call. = F)
+  }
+  # check deprecated arguments
+  if (!missing(findTerm) && !is.null(findTerm)) {
+    find.term <- findTerm
+    warning("Argument `findTerm` is deprecated. Please use `find.term` instead.", call. = F)
+  }
+  # check deprecated arguments
+  if (!missing(showProgressBar) && !is.null(showProgressBar)) {
+    show.pbar <- showProgressBar
+    warning("Argument `showProgressBar` is deprecated. Please use `show.pbar` instead.", call. = F)
+  }
+
   # find element indices from partial matching of string and find term
-  pos <- as.numeric(grep(findTerm, searchString, ignore.case = T))
+  pos <- as.numeric(grep(find.term, search.string, ignore.case = T))
   if (length(pos) > 0) indices <- c(indices, pos)
 
   # find element indices from similar strings
-  pos <- which(stringdist::stringdist(tolower(findTerm), tolower(searchString)) <= maxdist)
+  pos <- which(stringdist::stringdist(tolower(find.term), tolower(search.string)) <= maxdist)
   if (length(pos) > 0) indices <- c(indices, pos)
 
   # find element indices from partial similar (distance)
   # string matching
   if (part.dist.match > 0) {
-    ftlength <- nchar(findTerm)
+    ftlength <- nchar(find.term)
     # create progress bar
-    if (showProgressBar) pb <- utils::txtProgressBar(min = 0,
-                                                     max = length(searchString),
-                                                     style = 3)
+    if (show.pbar) pb <- utils::txtProgressBar(min = 0,
+                                               max = length(search.string),
+                                               style = 3)
 
     # iterate search string vector
-    for (ssl in seq_len(length(searchString))) {
+    for (ssl in seq_len(length(search.string))) {
       # retrieve each element of search string vector
       # we do this step by step instead of vectorizing
       # due to the substring approach
-      sst <- searchString[ssl]
+      sst <- search.string[ssl]
 
-      # we extract substrings of same length as findTerm
-      # starting from first char of searchString until end
+      # we extract substrings of same length as find.term
+      # starting from first char of search.string until end
       # and try to find similar matches
       steps <- nchar(sst) - ftlength + 1
       for (pi in seq_len(steps)) {
@@ -102,7 +124,7 @@ str_pos <- function(searchString,
         sust <- trim(substr(sst, pi, pi + ftlength - 1))
 
         # find element indices from similar substrings
-        pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) <= maxdist)
+        pos <- which(stringdist::stringdist(tolower(find.term), tolower(sust)) <= maxdist)
         if (length(pos) > 0) indices <- c(indices, ssl)
       }
       if (part.dist.match > 1) {
@@ -117,16 +139,16 @@ str_pos <- function(searchString,
             sust <- trim(substr(sst, pi - 1, pi + ftlength))
 
             # find element indices from similar substrings
-            pos <- which(stringdist::stringdist(tolower(findTerm), tolower(sust)) <= maxdist)
+            pos <- which(stringdist::stringdist(tolower(find.term), tolower(sust)) <= maxdist)
             if (length(pos) > 0) indices <- c(indices, ssl)
           }
         }
       }
       # update progress bar
-      if (showProgressBar) utils::setTxtProgressBar(pb, ssl)
+      if (show.pbar) utils::setTxtProgressBar(pb, ssl)
     }
   }
-  if (showProgressBar) close(pb)
+  if (show.pbar) close(pb)
 
   # return result
   if (length(indices) > 0) return(sort(unique(indices)))
