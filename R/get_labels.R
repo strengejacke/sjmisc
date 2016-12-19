@@ -31,6 +31,8 @@
 #'          should be included in the return value or not. By default, labelled
 #'          (tagged) missing values are not returned. See \code{\link{get_na}}
 #'          for more details on tagged NA values.
+#' @param drop.unused Logical, if \code{TRUE}, unused labels will be removed from
+#'          the return value.
 #' @return Either a list with all value labels from all variables if \code{x}
 #'           is a \code{data.frame} or \code{list}; a string with the value
 #'           labels, if \code{x} is a variable;
@@ -136,38 +138,50 @@
 #' x
 #' get_labels(x, include.values = "n", drop.na = FALSE)
 #'
+#'
+#' # create vector with unused labels
+#' data(efc)
+#' set_labels(efc$e42dep) <- c("independent" = 1, "dependent" = 4, "not used" = 5)
+#' get_labels(efc$e42dep)
+#' get_labels(efc$e42dep, drop.unused = TRUE)
+#' get_labels(efc$e42dep, include.non.labelled = TRUE, drop.unused = TRUE)
+#'
 #' @export
 get_labels <- function(x, attr.only = FALSE, include.values = NULL,
-                       include.non.labelled = FALSE, drop.na = TRUE) {
+                       include.non.labelled = FALSE, drop.na = TRUE, drop.unused = FALSE) {
   UseMethod("get_labels")
 }
 
 #' @export
 get_labels.data.frame <- function(x, attr.only = FALSE, include.values = NULL,
-                                  include.non.labelled = FALSE, drop.na = TRUE) {
+                                  include.non.labelled = FALSE, drop.na = TRUE,
+                                  drop.unused = FALSE) {
   lapply(x, FUN = get_labels_helper, attr.only = attr.only, include.values = include.values,
-         include.non.labelled = include.non.labelled, drop.na = drop.na)
+         include.non.labelled = include.non.labelled, drop.na = drop.na, drop.unused = drop.unused)
 }
 
 #' @export
 get_labels.list <- function(x, attr.only = FALSE, include.values = NULL,
-                                  include.non.labelled = FALSE, drop.na = TRUE) {
+                            include.non.labelled = FALSE, drop.na = TRUE, drop.unused = FALSE) {
   lapply(x, FUN = get_labels_helper, attr.only = attr.only, include.values = include.values,
-         include.non.labelled = include.non.labelled, drop.na = drop.na)
+         include.non.labelled = include.non.labelled, drop.na = drop.na, drop.unused = drop.unused)
 }
 
 #' @export
 get_labels.default <- function(x, attr.only = FALSE, include.values = NULL,
-                                  include.non.labelled = FALSE, drop.na = TRUE) {
+                               include.non.labelled = FALSE, drop.na = TRUE,
+                               drop.unused = FALSE) {
   get_labels_helper(x, attr.only = attr.only, include.values = include.values,
-                    include.non.labelled = include.non.labelled, drop.na = drop.na)
+                    include.non.labelled = include.non.labelled, drop.na = drop.na,
+                    drop.unused = drop.unused)
 }
 
 # Retrieve value labels of a data frame or variable
 # See 'get_labels'
 #' @importFrom haven is_tagged_na na_tag
-get_labels_helper <- function(x, attr.only, include.values, include.non.labelled, drop.na) {
+get_labels_helper <- function(x, attr.only, include.values, include.non.labelled, drop.na, drop.unused) {
   labels <- NULL
+  add_vals <- NULL
   # get label attribute, which may differ depending on the package
   # used for reading the data
   attr.string <- getValLabelAttribute(x)
@@ -260,6 +274,11 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
   }
   # foreign? then reverse order
   if (is_foreign(attr.string)) labels <- rev(labels)
+
+  # drop unused labels with no values in data
+  if (drop.unused)
+    labels <- labels[sort(c(get_values(x, drop.na = drop.na), add_vals)) %in% names(table(x))]
+
   # return them
   return(labels)
 }

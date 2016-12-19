@@ -14,6 +14,7 @@ Changes to functions:
 * `set_na()` can now also find values by their value labels and replace them with NA.
 * `set_na()` now removes unused value labels from values that have been replaced with NA.
 * Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec`).
+* `get_labels()` gets a `drop.unused`-argument, to automatically drop labels from values that don't occur in the vector.
 * `get_labels()` now always returns labels in sorted order of the associated values.
 * For a named vector as `labels`-argument, `set_labels()` now always sorts labels in sorted order of the associated values.
 * `is_empty()` gets a `first.only`-argument, to evaluate either first or all elements of a character vector.

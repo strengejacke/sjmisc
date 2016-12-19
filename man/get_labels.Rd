@@ -5,7 +5,7 @@
 \title{Retrieve value labels of labelled data}
 \usage{
 get_labels(x, attr.only = FALSE, include.values = NULL,
-  include.non.labelled = FALSE, drop.na = TRUE)
+  include.non.labelled = FALSE, drop.na = TRUE, drop.unused = FALSE)
 }
 \arguments{
 \item{x}{A data frame with variables that have value label attributes (e.g.
@@ -34,6 +34,9 @@ also be included in the returned labels (see \code{\link{fill_labels}}).}
 should be included in the return value or not. By default, labelled
 (tagged) missing values are not returned. See \code{\link{get_na}}
 for more details on tagged NA values.}
+
+\item{drop.unused}{Logical, if \code{TRUE}, unused labels will be removed from
+the return value.}
 }
 \value{
 Either a list with all value labels from all variables if \code{x}
@@ -145,6 +148,14 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 # get current NA values
 x
 get_labels(x, include.values = "n", drop.na = FALSE)
+
+
+# create vector with unused labels
+data(efc)
+set_labels(efc$e42dep) <- c("independent" = 1, "dependent" = 4, "not used" = 5)
+get_labels(efc$e42dep)
+get_labels(efc$e42dep, drop.unused = TRUE)
+get_labels(efc$e42dep, include.non.labelled = TRUE, drop.unused = TRUE)
 
 }
 \seealso{
