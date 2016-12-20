@@ -276,8 +276,12 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
   if (is_foreign(attr.string)) labels <- rev(labels)
 
   # drop unused labels with no values in data
-  if (drop.unused)
-    labels <- labels[sort(c(get_values(x, drop.na = drop.na), add_vals)) %in% names(table(x))]
+  if (drop.unused) {
+    # get all values
+    av <- c(get_values(x, drop.na = drop.na), add_vals)
+    # drop unused values
+    if (!is.null(av)) labels <- labels[sort(av) %in% names(table(x))]
+  }
 
   # return them
   return(labels)
