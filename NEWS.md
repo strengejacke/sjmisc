@@ -3,7 +3,7 @@
 ## New functions
 
 * `zap_inf()` to "clean" vectors from `NaN` and infinite values.
-* `descr()` to provide basic descriptive statistics (similar to `describe()` in the psych-package), but including variable labels and usable in pipe-workflows.
+* `descr()` to provide basic descriptive statistics (similar to `describe()` in the psych-package), but including variable labels and usable in pipe-workflows. Also works with grouped data frames.
 
 ## Changes to functions
 

@@ -7,7 +7,8 @@
 descr(data, ...)
 }
 \arguments{
-\item{data}{A vector or a data frame.}
+\item{data}{A vector or a data frame. May also be a grouped data frame
+(see 'Note' and 'Examples').}
 
 \item{...}{One or more variables of \code{data} that should be printed as table.}
 }
@@ -19,12 +20,28 @@ A data frame with basic descriptive statistics, derived from the
 This function wraps the \code{\link[psych]{describe}}-function
              and prints a basic descriptive statistic, including variable labels.
 }
+\note{
+\code{data} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
+      with up to two grouping variables. Descriptive tables are created for each
+      subgroup then.
+}
 \examples{
 data(efc)
 descr(efc, e17age, c160age)
 
 library(dplyr)
 efc \%>\% select(e42dep, e15relat, c172code) \%>\% descr()
+
+# with grouped data frames
+efc \%>\%
+  group_by(e16sex) \%>\%
+  select(e16sex, e42dep, e15relat, c172code) \%>\%
+  descr()
+
+efc \%>\%
+  group_by(e16sex, c172code) \%>\%
+  select(e16sex, c172code, e17age, c160age) \%>\%
+  descr()
 
 }
 

@@ -19,7 +19,7 @@
 #' @return An object of class \code{\link[stats]{ftable}}.
 #'
 #' @note \code{data} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
-#'       with up to two grouping variables. Plots are created for each subgroup then.
+#'       with up to two grouping variables. Cross tables are created for each subgroup then.
 #'
 #' @seealso \code{\link{frq}} for simple frequency table of labelled vectors.
 #'

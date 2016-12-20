@@ -33,7 +33,7 @@ This function creates a labelled flat table or flat
 }
 \note{
 \code{data} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
-      with up to two grouping variables. Plots are created for each subgroup then.
+      with up to two grouping variables. Cross tables are created for each subgroup then.
 }
 \examples{
 data(efc)

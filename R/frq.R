@@ -17,7 +17,8 @@
 #'           cumulative percentages of \code{x}.
 #'
 #' @note \code{x} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
-#'       with up to two grouping variables. Plots are created for each subgroup then.
+#'       with up to two grouping variables. Frequency tables are created for each
+#'       subgroup then.
 #'
 #' @seealso \code{\link{flat_table}} for labelled (proportional) tables.
 #'
