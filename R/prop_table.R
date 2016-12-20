@@ -4,7 +4,8 @@
 #' @description This function creates a labelled flat table or flat
 #'              proportional (marginal) table.
 #'
-#' @param data A data frame.
+#' @param data A data frame. May also be a grouped data frame (see 'Note' and
+#'          'Examples').
 #' @param ... One or more variables of \code{data} that should be printed as table.
 #' @param margin Specify the table margin that should be computed for proportional
 #'               tables. By default, counts are printed. Use \code{margin = "cell"},
@@ -17,6 +18,9 @@
 #'
 #' @return An object of class \code{\link[stats]{ftable}}.
 #'
+#' @note \code{data} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
+#'       with up to two grouping variables. Plots are created for each subgroup then.
+#'
 #' @seealso \code{\link{frq}} for simple frequency table of labelled vectors.
 #'
 #' @examples
@@ -27,6 +31,26 @@
 #'
 #' # flat table with proportions
 #' flat_table(efc, e42dep, c172code, e16sex, margin = "row")
+#'
+#' # flat table from grouped data frame. You need to select
+#' # the grouping variables and at least two more variables for
+#' # cross tabulation.
+#' library(dplyr)
+#' efc %>%
+#'   group_by(e16sex) %>%
+#'   select(e16sex, c172code, e42dep) %>%
+#'   flat_table()
+#'
+#' efc %>%
+#'   group_by(e16sex, e42dep) %>%
+#'   select(e16sex, e42dep, c172code, n4pstu) %>%
+#'   flat_table()
+#'
+#' # now it gets weird...
+#' efc %>%
+#'   group_by(e16sex, e42dep) %>%
+#'   select(e16sex, e42dep, c172code, n4pstu, c161sex) %>%
+#'   flat_table()
 #'
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
@@ -53,6 +77,27 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
   # get dot data
   dd <- get_dot_data(data, match.call(expand.dots = FALSE)$`...`)
 
+  # do we have a grouped data frame?
+  if (inherits(dd, "grouped_df")) {
+    # get grouped data
+    grps <- get_grouped_data(dd)
+    # now plot everything
+    for (i in seq_len(nrow(grps))) {
+      # copy back labels to grouped data frame
+      tmp <- copy_labels(grps$data[[i]], dd)
+      # print title for grouping
+      cat(sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n")))
+      # print frequencies
+      print(com_ft(tmp, show.values, no.prop.table, marge, digits))
+      cat("\n")
+    }
+  } else {
+    com_ft(dd, show.values, no.prop.table, marge, digits)
+  }
+}
+
+
+com_ft <- function(dd, show.values, no.prop.table, marge, digits) {
   # select variables, convert to label and create ftable-pbject
   x <- dd %>%
     to_label(add.non.labelled = TRUE, prefix = show.values) %>%
