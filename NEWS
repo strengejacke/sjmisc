@@ -5,15 +5,16 @@ New functions:
 * `descr()` to provide basic descriptive statistics (similar to `describe()` in the psych-package), but including variable labels and usable in pipe-workflows.
 
 Changes to functions:
-* The `as.tag`-argument in `set_na()` now defaults to `FALSE`.
 * `rec()`, `split_var()` and `dicho()` get an argument `suffix`, to append a suffix to variable (column) names, if applied on a data frame.
+* Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec`).
 * `find_var()` gets a `as.df`-argument, to return a data frame with matching variables, instead of their column indices only.
 * `find_var()` gets a `as.varlab`-argument, to return a "summary" data frame with column number, variable name and variable label.
 * `flat_table()` gets a `show.values`-argument, to add values to associated labels in output.
+* `frq()` now also accepts grouped data frames.
 * `frq()` gets a `weight.by`-argument to weight frequencies.
 * `set_na()` can now also find values by their value labels and replace them with NA.
 * `set_na()` now removes unused value labels from values that have been replaced with NA.
-* Value labels in `rec()` can now directly be assigned inside the `recodes`-syntax (see 'Details' in `?rec`).
+* The `as.tag`-argument in `set_na()` now defaults to `FALSE`.
 * `get_labels()` gets a `drop.unused`-argument, to automatically drop labels from values that don't occur in the vector.
 * `get_labels()` now always returns labels in sorted order of the associated values.
 * For a named vector as `labels`-argument, `set_labels()` now always sorts labels in sorted order of the associated values.

@@ -7,7 +7,8 @@
 frq(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 }
 \arguments{
-\item{x}{A labelled vector or a \code{data.frame} with labelled vectors.}
+\item{x}{A labelled vector or a \code{data.frame} with labelled vectors.
+May also be a grouped data frame (see 'Note' and 'Examples').}
 
 \item{sort.frq}{Determines whether categories should be sorted
 according to their frequencies or not. Default is \code{"none"}, so
@@ -25,6 +26,10 @@ A data frame with values, value labels, frequencies, raw, valid and
 \description{
 This function returns a frequency table of labelled vectors, as data frame.
 }
+\note{
+\code{x} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
+      with up to two grouping variables. Plots are created for each subgroup then.
+}
 \examples{
 library(haven)
 # create labelled integer
@@ -41,6 +46,12 @@ frq(x)
 data(efc)
 library(dplyr)
 efc \%>\% select(e42dep, e15relat, c172code) \%>\% frq()
+
+# with grouped data frames, in a pipe
+efc \%>\%
+  group_by(e16sex, c172code) \%>\%
+  select(e16sex, c172code, e42dep) \%>\%
+  frq()
 
 }
 \seealso{

@@ -4,6 +4,7 @@
 #' @description This function returns a frequency table of labelled vectors, as data frame.
 #'
 #' @param x A labelled vector or a \code{data.frame} with labelled vectors.
+#'          May also be a grouped data frame (see 'Note' and 'Examples').
 #' @param sort.frq Determines whether categories should be sorted
 #'          according to their frequencies or not. Default is \code{"none"}, so
 #'          categories are not sorted by frequency. Use \code{"asc"} or
@@ -14,6 +15,9 @@
 #'
 #' @return A data frame with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
+#'
+#' @note \code{x} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
+#'       with up to two grouping variables. Plots are created for each subgroup then.
 #'
 #' @seealso \code{\link{flat_table}} for labelled (proportional) tables.
 #'
@@ -34,6 +38,12 @@
 #' library(dplyr)
 #' efc %>% select(e42dep, e15relat, c172code) %>% frq()
 #'
+#' # with grouped data frames, in a pipe
+#' efc %>%
+#'   group_by(e16sex, c172code) %>%
+#'   select(e16sex, c172code, e42dep) %>%
+#'   frq()
+#'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @export
@@ -45,7 +55,24 @@ frq <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 #' @export
 frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
   sort.frq <- match.arg(sort.frq)
-  lapply(x, FUN = frq_helper, sort.frq = sort.frq, weight.by = weight.by)
+
+  # do we have a grouped data frame?
+  if (inherits(x, "grouped_df")) {
+    # get grouped data
+    grps <- get_grouped_data(x)
+    # now plot everything
+    for (i in seq_len(nrow(grps))) {
+      # copy back labels to grouped data frame
+      tmp <- copy_labels(grps$data[[i]], x)
+      # print title for grouping
+      cat(sprintf("\nGrouped by:\n%s\n", get_grouped_title(x, grps, i, sep = "\n")))
+      # print frequencies
+      print(frq_helper(x = tmp[[1]], sort.frq = sort.frq, weight.by = weight.by))
+      cat("\n")
+    }
+  } else {
+    lapply(x, FUN = frq_helper, sort.frq = sort.frq, weight.by = weight.by)
+  }
 }
 
 #' @export
@@ -174,4 +201,50 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # -------------------------------------
   class(mydat) <- c("sjmisc.frq", "data.frame")
   mydat
+}
+
+
+get_grouped_title <- function(x, grps, i, sep = "\n") {
+  # prepare title for group
+  var.name <- colnames(grps)[1]
+  t1 <- get_label(x[[var.name]], def.value = var.name)
+  t2 <- get_labels(x[[var.name]])[grps[[var.name]][i]]
+  title <- sprintf("%s: %s", t1, t2)
+
+  # do we have another groupng variable?
+  if (length(attr(x, "vars", exact = T)) > 1) {
+    # prepare title for group
+    var.name <- colnames(grps)[2]
+    t1 <- get_label(x[[var.name]], def.value = var.name)
+    t2 <- get_labels(x[[var.name]])[grps[[var.name]][i]]
+    title <- sprintf("%s%s%s: %s", title, sep, t1, t2)
+  }
+
+  # return title
+  title
+}
+
+
+#' @importFrom tidyr nest
+#' @importFrom dplyr select_ filter
+#' @importFrom stats complete.cases
+get_grouped_data <- function(x) {
+  # nest data frame
+  grps <- tidyr::nest(x)
+
+  # remove NA category
+  cc <- grps %>%
+    dplyr::select_("-data") %>%
+    stats::complete.cases()
+  # select only complete cases
+  grps <- grps %>% dplyr::filter(cc)
+
+  # arrange data
+  if (length(attr(x, "vars", exact = T)) == 1)
+    reihe <- order(grps[[1]])
+  else
+    reihe <- order(grps[[1]], grps[[2]])
+  grps <- grps[reihe, ]
+
+  grps
 }
