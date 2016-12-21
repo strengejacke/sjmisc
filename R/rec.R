@@ -34,6 +34,7 @@
 #'             \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
 #'             \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
 #'           }
+#'
 #' @return A numeric variable (or a factor, if \code{as.fac = TRUE} or if \code{x}
 #'           was a character vector) with recoded category values, or a data
 #'           frame or \code{list}-object with recoded categories for all variables.
