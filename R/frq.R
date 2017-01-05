@@ -132,7 +132,7 @@ frq_helper <- function(x, sort.frq, weight.by) {
                            data = data.frame(weights = weight.by, x = x),
                            na.action = stats::na.pass,
                            exclude = NULL), 0)
-        )
+      )
     } else {
       # create frequency table
       dat2 <- data.frame(table(x, useNA = "always"))
@@ -194,7 +194,7 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # save original order
   reihe <- to_value(mydat$val, start.at = 1, keep.labels = F)
   # sort for x-axis
-  mydat <- mydat[order(reihe), ]
+  if (sort.frq == "none") mydat <- mydat[order(reihe), ]
   # add variable label as attribute, for print-method
   attr(mydat, "label") <- varlab
   # -------------------------------------

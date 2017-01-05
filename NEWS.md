@@ -1,3 +1,9 @@
+# sjmisc 2.2.0-1
+
+## Bug fixes
+
+* The `sort.frq` did not work `frq()`.
+
 # sjmisc 2.2.0
 
 ## New functions
