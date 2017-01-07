@@ -29,13 +29,13 @@ utils::globalVariables("term")
 #' @details This function requires a (nested) data frame (e.g. created by the
 #'            \code{\link[tidyr]{nest}}-function of the \pkg{tidyr}-package),
 #'            where several fitted models are saved in a list-variable (see
-#'            'Examples'). As nested data frames with fitted models as list-variable
+#'            'Examples'). Since nested data frames with fitted models stored as list-variable
 #'            are typically fit with an identical formula, all models have the same
 #'            dependent and independent variables and only differ in their
 #'            subsets of data. The function then extracts all coefficients from
 #'            each model and saves each estimate in a new column. The result
 #'            is a data frame, where each \emph{row} is a model with each
-#'            model's \emph{coefficient} in an own column.
+#'            model's coefficients in an own \emph{column}.
 #'
 #' @examples
 #' library(tidyr)
