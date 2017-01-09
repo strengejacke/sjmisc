@@ -1,4 +1,4 @@
-# sjmisc 2.2.0-1
+# sjmisc 2.2.1
 
 ## Bug fixes
 
