@@ -1,3 +1,9 @@
+# sjmisc 2.2.2
+
+## Changes to functions
+
+* `frq()` now has the same argument-structure as `flat_table()`.
+
 # sjmisc 2.2.1
 
 ## Bug fixes

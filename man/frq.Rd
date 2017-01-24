@@ -4,11 +4,14 @@
 \alias{frq}
 \title{Frequencies of labelled variables}
 \usage{
-frq(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL)
+frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 }
 \arguments{
-\item{x}{A labelled vector or a \code{data.frame} with labelled vectors.
-May also be a grouped data frame (see 'Note' and 'Examples').}
+\item{x}{A data frame or vector.}
+
+\item{...}{Optional, unquoted names of variables. Required, if either
+\code{x} is a data frame and no vector, or if only selected variables
+from \code{x} should be used in the function. See 'Examples'.}
 
 \item{sort.frq}{Determines whether categories should be sorted
 according to their frequencies or not. Default is \code{"none"}, so
@@ -46,7 +49,12 @@ frq(x)
 # in a pipe
 data(efc)
 library(dplyr)
-efc \%>\% select(e42dep, e15relat, c172code) \%>\% frq()
+efc \%>\%
+  select(e42dep, e15relat, c172code) \%>\%
+  frq()
+
+# or:
+# frq(efc, e42dep, e15relat, c172code)
 
 # with grouped data frames, in a pipe
 efc \%>\%

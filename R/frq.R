@@ -3,8 +3,7 @@
 #'
 #' @description This function returns a frequency table of labelled vectors, as data frame.
 #'
-#' @param x A labelled vector or a \code{data.frame} with labelled vectors.
-#'          May also be a grouped data frame (see 'Note' and 'Examples').
+#' @param x A data frame or vector.
 #' @param sort.frq Determines whether categories should be sorted
 #'          according to their frequencies or not. Default is \code{"none"}, so
 #'          categories are not sorted by frequency. Use \code{"asc"} or
@@ -12,6 +11,8 @@
 #' @param weight.by Vector of weights that will be applied to weight all observations.
 #'          Must be a vector of same length as the input vector. Default is
 #'          \code{NULL}, so no weights are used.
+#'
+#' @inheritParams to_factor
 #'
 #' @return A data frame with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
@@ -37,7 +38,12 @@
 #' # in a pipe
 #' data(efc)
 #' library(dplyr)
-#' efc %>% select(e42dep, e15relat, c172code) %>% frq()
+#' efc %>%
+#'   select(e42dep, e15relat, c172code) %>%
+#'   frq()
+#'
+#' # or:
+#' # frq(efc, e42dep, e15relat, c172code)
 #'
 #' # with grouped data frames, in a pipe
 #' efc %>%
@@ -48,13 +54,12 @@
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @export
-#' @export
-frq <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
-  UseMethod("frq")
-}
+frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 
-#' @export
-frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
+  # get dot data
+  x <- get_dot_data(x, match.call(expand.dots = FALSE)$`...`)
+
+  # match args
   sort.frq <- match.arg(sort.frq)
 
   # do we have a grouped data frame?
@@ -66,26 +71,21 @@ frq.data.frame <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = N
       # copy back labels to grouped data frame
       tmp <- copy_labels(grps$data[[i]], x)
       # print title for grouping
-      cat(sprintf("\nGrouped by:\n%s\n", get_grouped_title(x, grps, i, sep = "\n")))
+      cat(sprintf("\nGrouped by:\n%s\n\n", get_grouped_title(x, grps, i, sep = "\n")))
       # print frequencies
       print(frq_helper(x = tmp[[1]], sort.frq = sort.frq, weight.by = weight.by))
       cat("\n")
     }
   } else {
-    lapply(x, FUN = frq_helper, sort.frq = sort.frq, weight.by = weight.by)
+
+    # if we don't have data frame, coerce
+    if (!is.data.frame(x)) x <- tibble::tibble(x)
+
+    for (i in seq_len(ncol(x))) {
+      print(frq_helper(x = x[[i]], sort.frq = sort.frq, weight.by = weight.by))
+      cat("\n\n")
+    }
   }
-}
-
-#' @export
-frq.list <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
-  sort.frq <- match.arg(sort.frq)
-  lapply(x, FUN = frq_helper, sort.frq = sort.frq, weight.by = weight.by)
-}
-
-#' @export
-frq.default <- function(x, sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
-  sort.frq <- match.arg(sort.frq)
-  frq_helper(x = x, sort.frq = sort.frq, weight.by = weight.by)
 }
 
 
