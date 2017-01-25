@@ -12,9 +12,9 @@ to_character(x, ..., add.non.labelled = FALSE, prefix = FALSE,
 \code{\link[haven]{labelled}}), respectively a data frame with
 such variables.}
 
-\item{...}{Optional, unquoted names of variables. Required, if either
-\code{x} is a data frame and no vector, or if only selected variables
-from \code{x} should be used in the function. See 'Examples'.}
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{add.non.labelled}{logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}

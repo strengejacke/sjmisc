@@ -10,9 +10,9 @@
 #'
 #' @param x Numeric, atomic or character vector or a data frame with
 #'          such vectors.
-#' @param ... Optional, unquoted names of variables. Required, if either
-#'          \code{x} is a data frame and no vector, or if only selected variables
-#'          from \code{x} should be used in the function. See 'Examples'.
+#' @param ... Optional, unquoted names of variables. Required, if \code{x} is
+#'          a data frame (and no vector) and only selected variables
+#'          from \code{x} should be processed. See 'Examples'.
 #' @param add.non.labelled Logical, if \code{TRUE}, non-labelled values also
 #'          get value labels.
 #' @param ref.lvl Numeric, specifies the reference level for the new factor. Use
@@ -20,9 +20,10 @@
 #'          should be used as reference level. If \code{NULL}, lowest value
 #'          will become the reference level. See \code{\link{ref_lvl}} for
 #'          details.
+#'
 #' @return A factor variable, including variable and value labels, respectively
-#'           a data frame with factor variables (including variable and value labels)
-#'           if \code{x} was a data frame.
+#'           a data frame where variables specified in \code{...} are converted
+#'           to factor variables (including variable and value labels).
 #'
 #' @note This function is intended for use with vectors that have value and variable
 #'        label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts

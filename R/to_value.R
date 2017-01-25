@@ -9,16 +9,17 @@
 #'            factor levels and \code{\link{to_factor}} to convert a numeric variable
 #'            into a factor (and preserve labels)
 #'
-#' @param x \code{\link{factor}} or a data frame with factors. May also be
+#' @param x A factor or a data frame with factors. May also be
 #'          a character vector.
-#' @param start.at starting index, i.e. the lowest numeric value of the variable's
+#' @param start.at Starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
 #'          value of the returned numeric variable corresponds to the lowest factor
-#'          level (if factor is \code{\link{numeric}}) or to \code{1} (if factor levels
+#'          level (if factor levels are numeric) or to \code{1} (if factor levels
 #'          are not numeric).
-#' @param keep.labels logical, if \code{TRUE}, former factor levels will be added as
+#' @param keep.labels Logical, if \code{TRUE}, former factor levels will be added as
 #'          value labels. For numeric factor levels, values labels will be used,
 #'          if present. See 'Examples' and \code{\link{set_labels}} for more details.
+#'
 #' @return A numeric variable with values ranging either from \code{start.at} to
 #'           \code{start.at} + length of factor levels, or to the corresponding
 #'           factor levels (if these were numeric). Or a data frame with numeric

@@ -10,9 +10,9 @@ zap_na_tags(x, ...)
 \item{x}{A \code{\link[haven]{labelled}} vector with \code{tagged_na}
 values, or a data frame with such vectors.}
 
-\item{...}{Optional, unquoted names of variables. Required, if either
-\code{x} is a data frame and no vector, or if only selected variables
-from \code{x} should be used in the function. See 'Examples'.}
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 }
 \value{
 \code{x}, where all \code{tagged_na} values are converted to \code{NA}.

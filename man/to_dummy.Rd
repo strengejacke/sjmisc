@@ -9,9 +9,9 @@ to_dummy(x, ..., var.name = "name", suffix = c("numeric", "label"))
 \arguments{
 \item{x}{A vector or a data frame.}
 
-\item{...}{Optional, unquoted names of variables. Required, if either
-\code{x} is a data frame and no vector, or if only selected variables
-from \code{x} should be used in the function. See 'Examples'.}
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{var.name}{Indicates how the new dummy variables are named. Use
 \code{"name"} to use the variable name or any other string that will

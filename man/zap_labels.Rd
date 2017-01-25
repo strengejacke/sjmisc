@@ -24,9 +24,9 @@ with such vectors.}
 the default) or preserved (\code{drop.na = FALSE}).
 See \code{\link{get_na}} for more details on tagged NA values.}
 
-\item{...}{Optional, unquoted names of variables. Required, if either
-\code{x} is a data frame and no vector, or if only selected variables
-from \code{x} should be used in the function. See 'Examples'.}
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 }
 \value{
 \itemize{

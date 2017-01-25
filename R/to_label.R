@@ -31,8 +31,9 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return A factor variable with the associated value labels as factor levels, or a
-#'           data frame with such factor variables (if \code{x} was a data frame).
+#' @return A factor variable with the associated value labels as factor levels, or
+#'           a data frame where variables specified in \code{...} are converted
+#'           to these factors.
 #'
 #' @note Value label attributes (see, for instance, \code{\link{get_labels}})
 #'       will be removed when converting variables to factors.

@@ -9,9 +9,9 @@ frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 \arguments{
 \item{x}{A data frame or vector.}
 
-\item{...}{Optional, unquoted names of variables. Required, if either
-\code{x} is a data frame and no vector, or if only selected variables
-from \code{x} should be used in the function. See 'Examples'.}
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{sort.frq}{Determines whether categories should be sorted
 according to their frequencies or not. Default is \code{"none"}, so
