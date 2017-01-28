@@ -23,7 +23,7 @@ Must be a vector of same length as the input vector. Default is
 \code{NULL}, so no weights are used.}
 }
 \value{
-A data frame with values, value labels, frequencies, raw, valid and
+A list of data frames with values, value labels, frequencies, raw, valid and
           cumulative percentages of \code{x}.
 }
 \description{

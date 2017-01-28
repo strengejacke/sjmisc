@@ -14,7 +14,7 @@
 #'
 #' @inheritParams to_factor
 #'
-#' @return A data frame with values, value labels, frequencies, raw, valid and
+#' @return A list of data frames with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
 #' @note \code{x} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
@@ -62,19 +62,29 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
   # match args
   sort.frq <- match.arg(sort.frq)
 
+  # return values
+  dataframes <- list()
+
   # do we have a grouped data frame?
   if (inherits(x, "grouped_df")) {
     # get grouped data
     grps <- get_grouped_data(x)
+
     # now plot everything
     for (i in seq_len(nrow(grps))) {
       # copy back labels to grouped data frame
       tmp <- copy_labels(grps$data[[i]], x)
+
       # print title for grouping
       cat(sprintf("\nGrouped by:\n%s\n\n", get_grouped_title(x, grps, i, sep = "\n")))
+
       # print frequencies
-      print(frq_helper(x = tmp[[1]], sort.frq = sort.frq, weight.by = weight.by))
+      dummy <- frq_helper(x = tmp[[1]], sort.frq = sort.frq, weight.by = weight.by)
+      print(dummy)
       cat("\n")
+
+      # save data frame for return value
+      dataframes[[length(dataframes) + 1]] <- dummy
     }
   } else {
 
@@ -82,10 +92,18 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
     if (!is.data.frame(x)) x <- tibble::tibble(x)
 
     for (i in seq_len(ncol(x))) {
-      print(frq_helper(x = x[[i]], sort.frq = sort.frq, weight.by = weight.by))
+      # print frequencies
+      dummy <- frq_helper(x = x[[i]], sort.frq = sort.frq, weight.by = weight.by)
+      print(dummy)
       cat("\n\n")
+
+      # save data frame for return value
+      dataframes[[length(dataframes) + 1]] <- dummy
     }
   }
+
+  # return list of df
+  invisible(dataframes)
 }
 
 

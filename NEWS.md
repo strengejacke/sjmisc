@@ -3,7 +3,7 @@
 ## Changes to functions
 
 * `frq()` now has the same argument-structure as `flat_table()`.
-* Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`.
+* Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`, `count_na()`.
 
 # sjmisc 2.2.1
 

@@ -4,14 +4,17 @@
 \alias{count_na}
 \title{Frequency table of tagged NA values}
 \usage{
-count_na(x)
+count_na(x, ...)
 }
 \arguments{
-\item{x}{A vector with tagged NA values, or a data frame or list with such
-vectors.}
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 }
 \value{
-A \code{\link[tibble]{tibble}} with counted tagged NA values.
+A data frame with counted tagged NA values.
 }
 \description{
 This method counts tagged NA values (see \code{\link[haven]{tagged_na}})
@@ -29,7 +32,14 @@ y <- labelled(c(1:3, tagged_na("e", "d", "f"), 4:1, tagged_na("f", "f", "d"),
                 1:3, tagged_na("f", "d", "d"), 1:4, tagged_na("f", "d", "f")),
               c("Agreement" = 1, "Disagreement" = 4, "An E" = tagged_na("e"),
                 "A D" = tagged_na("d"), "The eff" = tagged_na("f")))
-count_na(tibble::data_frame(x, y))
+# create data frame
+dat <- tibble::data_frame(x, y)
+
+# possible count()-function calls
+count_na(dat)
+count_na(dat$x)
+count_na(dat, x)
+count_na(dat, x, y)
 
 }
 
