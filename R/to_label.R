@@ -1,4 +1,4 @@
-#' @title Convert variable into factor and replace values with associated value labels
+#' @title Convert variable into factor with associated value labels
 #' @name to_label
 #'
 #' @description This function converts (replaces) variable values (also of factors
@@ -6,17 +6,8 @@
 #'                be helpful for factor variables.
 #'                For instance, if you have a Gender variable with 0/1 value, and associated
 #'                labels are male/female, this function would convert all 0 to male and
-#'                all 1 to female and returns the new variable as \code{\link{factor}}.
+#'                all 1 to female and returns the new variable as factor.
 #'
-#' @seealso \code{\link{to_factor}} to convert a numeric variable into a factor (and
-#'            preserve labels); \code{\link{to_value}} to convert a factor into
-#'            a numeric variable and \code{\link{to_character}} to convert a
-#'            labelled vector into a character vector (using label attributes as
-#'            values).
-#'
-#' @param x A labelled vector (see \code{\link{set_labels}} or
-#'          \code{\link[haven]{labelled}}), respectively a data frame with
-#'          such variables.
 #' @param add.non.labelled logical, if \code{TRUE}, values without associated
 #'          value label will also be converted to labels (as is). See 'Examples'.
 #' @param prefix Logical, if \code{TRUE}, the value labels used as factor levels
@@ -35,7 +26,7 @@
 #'           a data frame where variables specified in \code{...} are converted
 #'           to these factors.
 #'
-#' @note Value label attributes (see, for instance, \code{\link{get_labels}})
+#' @note Value label attributes (see \code{\link{get_labels}})
 #'       will be removed when converting variables to factors.
 #'
 #' @details See 'Details' in \code{\link{get_na}}.

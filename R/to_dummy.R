@@ -4,7 +4,6 @@
 #' @description This function splits categorical or numeric vectors with
 #'                more than two categories into 0/1-coded dummy variables.
 #'
-#' @param x A vector or a data frame.
 #' @param var.name Indicates how the new dummy variables are named. Use
 #'          \code{"name"} to use the variable name or any other string that will
 #'          be used as is. Only applies, if \code{x} is a vector. See 'Examples'.

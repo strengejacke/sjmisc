@@ -7,7 +7,7 @@
 to_dummy(x, ..., var.name = "name", suffix = c("numeric", "label"))
 }
 \arguments{
-\item{x}{A vector or a data frame.}
+\item{x}{A vector or data frame.}
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables

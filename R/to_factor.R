@@ -8,8 +8,7 @@
 #'            \code{\link{to_label}} to convert a value into a factor with labelled
 #'            factor levels.
 #'
-#' @param x Numeric, atomic or character vector or a data frame with
-#'          such vectors.
+#' @param x A vector or data frame.
 #' @param ... Optional, unquoted names of variables. Required, if \code{x} is
 #'          a data frame (and no vector) and only selected variables
 #'          from \code{x} should be processed. See 'Examples'.

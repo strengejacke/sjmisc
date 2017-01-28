@@ -5,12 +5,6 @@
 #' related factor level index number, thus the factor is converted to
 #' a numeric variable.
 #'
-#' @seealso \code{\link{to_label}} to convert a labelled vector into a factor with labelled
-#'            factor levels and \code{\link{to_factor}} to convert a numeric variable
-#'            into a factor (and preserve labels)
-#'
-#' @param x A factor or a data frame with factors. May also be
-#'          a character vector.
 #' @param start.at Starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
 #'          value of the returned numeric variable corresponds to the lowest factor

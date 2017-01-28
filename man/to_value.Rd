@@ -7,8 +7,7 @@
 to_value(x, ..., start.at = NULL, keep.labels = TRUE)
 }
 \arguments{
-\item{x}{A factor or a data frame with factors. May also be
-a character vector.}
+\item{x}{A vector or data frame.}
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables
@@ -84,10 +83,5 @@ efc$e17age <- as.factor(efc$e17age)
 # convert back "sex" and "age" into numeric
 to_value(efc, e16sex, e17age)
 
-}
-\seealso{
-\code{\link{to_label}} to convert a labelled vector into a factor with labelled
-           factor levels and \code{\link{to_factor}} to convert a numeric variable
-           into a factor (and preserve labels)
 }
 

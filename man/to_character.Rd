@@ -8,9 +8,7 @@ to_character(x, ..., add.non.labelled = FALSE, prefix = FALSE,
   var.label = NULL, drop.na = TRUE, drop.levels = FALSE)
 }
 \arguments{
-\item{x}{A labelled vector (see \code{\link{set_labels}} or
-\code{\link[haven]{labelled}}), respectively a data frame with
-such variables.}
+\item{x}{A vector or data frame.}
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables

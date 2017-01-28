@@ -1,32 +1,40 @@
 #' @rdname add_labels
 #' @export
-remove_labels <- function(x, value) {
-  UseMethod("remove_labels")
-}
+remove_labels <- function(x, ..., value) {
+  # check for valid value. value must be a named vector
+  if (is.null(value)) stop("`value` is NULL.", call. = F)
+  # if value is NA, it must be tagged
+  if (is.na(value) && !haven::is_tagged_na(value)) stop("`value` must be a tagged NA.", call. = F)
 
-#' @export
-remove_labels.data.frame <- function(x, value) {
-  tibble::as_tibble(lapply(x, FUN = remove_labels_helper, value))
-}
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-remove_labels.list <- function(x, value) {
-  lapply(x, FUN = remove_labels_helper, value)
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-remove_labels.default <- function(x, value) {
-  remove_labels_helper(x, value)
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- remove_labels_helper(.dat[[i]], value)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- remove_labels_helper(.dat, value)
+  }
+
+  x
 }
 
 
 #' @importFrom haven is_tagged_na na_tag
 remove_labels_helper <- function(x, value) {
-  # value needs to be specified
-  if (is.null(value)) stop("`value` must not be NULL.", call. = F)
-  # if value is NA, it must be tagged
-  if (is.na(value) && !haven::is_tagged_na(value)) stop("`value` must be a tagged NA.", call. = F)
-
   # get current labels of `x`
   current.labels <- get_labels(x,
                                attr.only = T,
@@ -76,15 +84,4 @@ remove_labels_helper <- function(x, value) {
   }
 
   return(x)
-}
-
-#' @rdname add_labels
-#' @export
-`remove_labels<-` <- function(x, value) {
-  UseMethod("remove_labels<-")
-}
-
-#' @export
-`remove_labels<-.default` <- function(x, value) {
-  remove_labels(x, value)
 }

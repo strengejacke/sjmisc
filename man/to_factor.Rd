@@ -7,8 +7,7 @@
 to_factor(x, ..., add.non.labelled = FALSE, ref.lvl = NULL)
 }
 \arguments{
-\item{x}{Numeric, atomic or character vector or a data frame with
-such vectors.}
+\item{x}{A vector or data frame.}
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables

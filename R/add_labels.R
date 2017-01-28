@@ -19,7 +19,7 @@
 #'          from specific NA values.}
 #'          }
 #'
-#' @inheritParams rec
+#' @inheritParams to_factor
 #'
 #' @return \code{x} with additional or removed value labels.
 #'
@@ -41,18 +41,27 @@
 #' data(efc)
 #' get_labels(efc$e42dep)
 #'
-#' x <- add_labels(efc$e42dep, c(`nothing` = 5))
+#' x <- add_labels(efc$e42dep, value = c(`nothing` = 5))
 #' get_labels(x)
 #'
-#' x <- add_labels(efc$e42dep, c(`nothing` = 5, `zero value` = 0))
+#' library(dplyr)
+#' x <- efc %>%
+#'   # select three variables
+#'   dplyr::select(e42dep, c172code, c161sex) %>%
+#'   # only add new label to two of those
+#'   add_labels(e42dep, c172code, value = c(`nothing` = 5))
+#' # see data frame, with selected variables having new labels
+#' get_labels(x)
+#'
+#' x <- add_labels(efc$e42dep, value = c(`nothing` = 5, `zero value` = 0))
 #' get_labels(x, include.values = "p")
 #'
 #' # replace old value labels
-#' x <- add_labels(efc$e42dep, c(`not so dependent` = 4, `lorem ipsum` = 5))
+#' x <- add_labels(
+#'   efc$e42dep,
+#'   values = c(`not so dependent` = 4, `lorem ipsum` = 5)
+#' )
 #' get_labels(x, include.values = "p")
-#'
-#' # replace values, alternative function call
-#' replace_labels(x) <- c(`new second` = 2)
 #'
 #' # replace specific missing value (tagged NA)
 #' library(haven)
@@ -63,16 +72,16 @@
 #' x
 #' # tagged NA(c) has currently the value label "First", will be
 #' # replaced by "Second" now.
-#' replace_labels(x, c("Second" = tagged_na("c")))
+#' replace_labels(x, value = c("Second" = tagged_na("c")))
 #'
 #'
 #' # ----------------------
 #' # remove_labels()
 #' # ----------------------
-#' x <- remove_labels(efc$e42dep, 2)
+#' x <- remove_labels(efc$e42dep, value = 2)
 #' get_labels(x, include.values = "p")
 #'
-#' x <- remove_labels(efc$e42dep, "independent")
+#' x <- remove_labels(efc$e42dep, value = "independent")
 #' get_labels(x, include.values = "p")
 #'
 #' library(haven)
@@ -81,31 +90,39 @@
 #'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
 #' # get current NA values
 #' get_na(x)
-#' get_na(remove_labels(x, tagged_na("c")))
+#' get_na(remove_labels(x, value = tagged_na("c")))
 #'
 #' @importFrom tibble as_tibble
 #' @export
-add_labels <- function(x, value) {
+add_labels <- function(x, ..., value) {
   # check for valid value. value must be a named vector
   if (is.null(value)) stop("`value` is NULL.", call. = F)
   if (is.null(names(value))) stop("`value` must be a named vector.", call. = F)
 
-  UseMethod("add_labels")
-}
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-add_labels.data.frame <- function(x, value) {
-  tibble::as_tibble(lapply(x, FUN = add_labels_helper, value))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-add_labels.list <- function(x, value) {
-  lapply(x, FUN = add_labels_helper, value)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-add_labels.default <- function(x, value) {
-  add_labels_helper(x, value)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- add_labels_helper(.dat[[i]], value)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- add_labels_helper(.dat, value)
+  }
+
+  x
 }
 
 #' @importFrom haven is_tagged_na na_tag
@@ -166,27 +183,9 @@ add_labels_helper <- function(x, value) {
   return(x)
 }
 
-#' @rdname add_labels
-#' @export
-`add_labels<-` <- function(x, value) {
-  UseMethod("add_labels<-")
-}
-
-#' @export
-`add_labels<-.default` <- function(x, value) {
-  add_labels(x, value)
-}
-
-
 
 #' @rdname add_labels
 #' @export
-replace_labels <- function(x, value) {
-  UseMethod("add_labels")
-}
-
-#' @rdname add_labels
-#' @export
-`replace_labels<-` <- function(x, value) {
-  UseMethod("add_labels<-")
+replace_labels <- function(x, ..., value) {
+  add_labels(x = x, ..., value = value)
 }
