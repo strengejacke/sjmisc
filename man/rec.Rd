@@ -2,17 +2,17 @@
 % Please edit documentation in R/rec.R
 \name{rec}
 \alias{rec}
-\alias{rec<-}
 \title{Recode variables}
 \usage{
-rec(x, recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL,
+rec(x, ..., recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL,
   suffix = "_r")
-
-rec(x, as.fac = FALSE, var.label = NULL, val.labels = NULL,
-  suffix = "_r") <- value
 }
 \arguments{
-\item{x}{A variable, data frame or list-object.}
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{recodes}{String with recode pairs of old and new values. See
 'Details' for examples. \code{\link{rec_pattern}} is a convenient
@@ -41,13 +41,10 @@ column names in a data frame depends on the function call:
   \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
   \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
 }}
-
-\item{value}{See \code{recodes}.}
 }
 \value{
-A numeric variable (or a factor, if \code{as.fac = TRUE} or if \code{x}
-          was a character vector) with recoded category values, or a data
-          frame or \code{list}-object with recoded categories for all variables.
+\code{x} with recoded categories. If \code{x} is a data frame, only
+        the recoded variables will be returned.
 }
 \description{
 Recodes the categories / values of a variable \code{x} into new
@@ -116,18 +113,17 @@ table(rec(efc$e15relat, recodes = "1,2,4=1; else=copy"))
 head(efc[, 6:9])
 head(rec(efc[, 6:9], recodes = "1=10;2=20;3=30;4=40"))
 
-# recode variable and set value labels via recode-syntax
-dummy <- rec(efc$c160age,
+# recode multiple variables and set value labels via recode-syntax
+dummy <- rec(efc, c160age, e17age,
              recodes = "15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]")
 frq(dummy)
 
-# recode list of variables. create dummy-list of
-# variables with same value-range
-dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
-# show original distribution
-lapply(dummy, table, useNA = "always")
-# show recodes
-lapply(rec(dummy, recodes = "1,2=1; NA=9; else=copy"), table, useNA = "always")
+# recode variables with same value-range
+lapply(
+  rec(efc, c82cop1, c83cop2, c84cop3, recodes = "1,2=1; NA=9; else=copy"),
+  table,
+  useNA = "always"
+)
 
 # recode character vector
 dummy <- c("M", "F", "F", "X")
@@ -135,7 +131,7 @@ rec(dummy, recodes = "M=Male; F=Female; X=Refused")
 
 # recode non-numeric factors
 data(iris)
-rec(iris$Species, "setosa=huhu; else=copy")
+table(rec(iris, Species, recodes = "setosa=huhu; else=copy"))
 
 # preserve tagged NAs
 library(haven)

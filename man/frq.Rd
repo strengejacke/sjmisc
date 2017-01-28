@@ -7,7 +7,8 @@
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 }
 \arguments{
-\item{x}{A data frame or vector.}
+\item{x}{A vector or a data frame. May also be a grouped data frame
+(see 'Note' and 'Examples').}
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables

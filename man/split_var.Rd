@@ -8,7 +8,7 @@ split_var(x, groupcount, as.num = FALSE, val.labels = NULL,
   var.label = NULL, inclusive = FALSE, suffix = "_g")
 }
 \arguments{
-\item{x}{A variable, data frame or list-object.}
+\item{x}{A vector or data frame.}
 
 \item{groupcount}{The new number of groups that \code{x} should be split into.}
 

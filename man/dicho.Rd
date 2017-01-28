@@ -8,8 +8,6 @@ dicho(x, dich.by = "median", as.num = FALSE, var.label = NULL,
   val.labels = NULL, suffix = "_d")
 }
 \arguments{
-\item{x}{A variable, data frame or list-object.}
-
 \item{dich.by}{Indicates the split criterion where a variable is dichotomized.
 Must be one of the following values (may be abbreviated):
 \describe{

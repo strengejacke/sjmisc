@@ -11,8 +11,6 @@ group_var(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
 group_labels(x, groupsize = 5, right.interval = FALSE, groupcount = 30)
 }
 \arguments{
-\item{x}{A variable, data frame or list-object.}
-
 \item{groupsize}{Numeric; group-size, i.e. the range for grouping. By default,
 for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
 Use \code{groupsize = "auto"} to automatically resize a variable into

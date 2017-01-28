@@ -10,7 +10,7 @@ replace_na(x, value, na.label = NULL, tagged.na = NULL)
 replace_na(x, na.label = NULL, tagged.na = NULL) <- value
 }
 \arguments{
-\item{x}{A variable, data frame or list-object.}
+\item{x}{A vector or data frame.}
 
 \item{value}{Value that will replace the \code{\link{NA}}'s.}
 
