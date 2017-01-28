@@ -4,7 +4,7 @@
 \alias{dicho}
 \title{Dichotomize variables}
 \usage{
-dicho(x, dich.by = "median", as.num = FALSE, var.label = NULL,
+dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
   val.labels = NULL, suffix = "_d")
 }
 \arguments{
@@ -38,17 +38,15 @@ column names in a data frame depends on the function call:
 }}
 }
 \value{
-A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
-          respectively a data frame or list of dichotomized factor (or numeric) variables.
+\code{x}, dichotomized. If \code{x} is a data frame, only
+        the dichotomized variables will be returned.
 }
 \description{
 Dichotomizes variables into dummy variables (0/1). Dichotomization is
                either done by median, mean or a specific value (see \code{dich.by}).
-               Either single vectors, a complete data frame or a list of
-               variables can be dichotomized.
 }
 \note{
-Variable label attributes are preserved (unless changes via
+Variable label attributes are preserved (unless changed via
       \code{var.label}-argument).
 }
 \examples{
@@ -57,9 +55,9 @@ summary(efc$c12hour)
 # split at median
 table(dicho(efc$c12hour))
 # split at mean
-table(dicho(efc$c12hour, "mean"))
+table(dicho(efc$c12hour, dich.by = "mean"))
 # split between value lowest to 30, and above 30
-table(dicho(efc$c12hour, 30))
+table(dicho(efc$c12hour, dich.by = 30))
 
 # sample data frame, values from 1-4
 head(efc[, 6:10])
@@ -71,12 +69,11 @@ efc \%>\%
   dicho(dich.by = 2) \%>\%
   head()
 
-# dichtomize several variables in a list
-dummy <- list(efc$c12hour, efc$e17age, efc$c160age)
-dicho(dummy)
+# dichtomize several variables in a data frame
+dicho(efc, c12hour, e17age, c160age)
 
 # dichotomize and set labels
-frq(dicho(efc$e42dep, var.label = "Dependency (dichotomized)",
+frq(dicho(efc, e42dep, var.label = "Dependency (dichotomized)",
           val.labels = c("lower", "higher")))
 
 }

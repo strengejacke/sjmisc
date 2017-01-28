@@ -17,8 +17,6 @@
 #'          a maximum of 30 groups (which is the ggplot-default grouping when
 #'          plotting histograms). Use \code{groupcount} to determine the amount
 #'          of groups.
-#' @param as.num Logical; if \code{TRUE}, the recoded variable will
-#'          be returned as numeric vector. If \code{FALSE}, a factor is returned.
 #' @param right.interval Logical; if \code{TRUE}, grouping starts with the lower
 #'          bound of \code{groupsize}. See 'Details'.
 #' @param groupcount Sets the maximum number of groups that are defined when auto-grouping is on

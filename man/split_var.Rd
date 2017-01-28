@@ -12,8 +12,7 @@ split_var(x, groupcount, as.num = FALSE, val.labels = NULL,
 
 \item{groupcount}{The new number of groups that \code{x} should be split into.}
 
-\item{as.num}{Logical; if \code{TRUE}, the recoded variable will
-be returned as numeric vector. If \code{FALSE}, a factor is returned.}
+\item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).

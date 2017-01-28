@@ -3,8 +3,6 @@
 #'
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is
 #'                either done by median, mean or a specific value (see \code{dich.by}).
-#'                Either single vectors, a complete data frame or a list of
-#'                variables can be dichotomized.
 #'
 #' @param dich.by Indicates the split criterion where a variable is dichotomized.
 #'          Must be one of the following values (may be abbreviated):
@@ -13,16 +11,16 @@
 #'            \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
 #'            \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
 #'            }
-#' @param as.num Logical, if \code{TRUE}, return value will be numeric, not a factor.
 #' @param val.labels Optional character vector (of length two), to set value label
 #'          attributes of dichotomized variable (see \code{\link{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
+#'
 #' @inheritParams rec
 #'
-#' @return A dichotomized factor (or numeric, if \code{as.num = TRUE}) variable (0/1-coded),
-#'           respectively a data frame or list of dichotomized factor (or numeric) variables.
+#' @return \code{x}, dichotomized. If \code{x} is a data frame, only
+#'         the dichotomized variables will be returned.
 #'
-#' @note Variable label attributes are preserved (unless changes via
+#' @note Variable label attributes are preserved (unless changed via
 #'       \code{var.label}-argument).
 #'
 #' @examples
@@ -31,9 +29,9 @@
 #' # split at median
 #' table(dicho(efc$c12hour))
 #' # split at mean
-#' table(dicho(efc$c12hour, "mean"))
+#' table(dicho(efc$c12hour, dich.by = "mean"))
 #' # split between value lowest to 30, and above 30
-#' table(dicho(efc$c12hour, 30))
+#' table(dicho(efc$c12hour, dich.by = 30))
 #'
 #' # sample data frame, values from 1-4
 #' head(efc[, 6:10])
@@ -45,40 +43,62 @@
 #'   dicho(dich.by = 2) %>%
 #'   head()
 #'
-#' # dichtomize several variables in a list
-#' dummy <- list(efc$c12hour, efc$e17age, efc$c160age)
-#' dicho(dummy)
+#' # dichtomize several variables in a data frame
+#' dicho(efc, c12hour, e17age, c160age)
 #'
 #' # dichotomize and set labels
-#' frq(dicho(efc$e42dep, var.label = "Dependency (dichotomized)",
+#' frq(dicho(efc, e42dep, var.label = "Dependency (dichotomized)",
 #'           val.labels = c("lower", "higher")))
 #'
 #' @export
-dicho <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
+dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
   # check for correct dichotome types
   if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
     stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)
   }
 
-  UseMethod("dicho")
-}
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-dicho.data.frame <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
-  tmp <- tibble::as_tibble(lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels))
-  # change variable names, add suffix "_r"
-  if (!is.null(suffix) && !sjmisc::is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
-  tmp
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-dicho.list <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
-  lapply(x, FUN = dicho_helper, dich.by, as.num, var.label, val.labels)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-dicho.default <- function(x, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
-  dicho_helper(x, dich.by, as.num, var.label, val.labels)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- dicho_helper(
+        x = .dat[[i]],
+        dich.by = dich.by,
+        as.num = as.num,
+        var.label = var.label,
+        val.labels = val.labels
+      )
+    }
+
+    # coerce to tibble and select only recoded variables
+    x <- tibble::as_tibble(x[.vars])
+
+    # add suffix to recoded variables?
+    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
+      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
+    }
+  } else {
+    x <- dicho_helper(
+      x = .dat,
+      dich.by = dich.by,
+      as.num = as.num,
+      var.label = var.label,
+      val.labels = val.labels
+    )
+  }
+
+  x
 }
 
 #' @importFrom stats median

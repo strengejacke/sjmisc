@@ -12,8 +12,7 @@
 #' @param recodes String with recode pairs of old and new values. See
 #'          'Details' for examples. \code{\link{rec_pattern}} is a convenient
 #'          function to create recode strings for grouping variables.
-#' @param as.fac Logical, if \code{TRUE}, recoded variable is returned as factor.
-#'          Default is \code{FALSE}, thus a numeric variable is returned.
+#' @param as.num Logical, if \code{TRUE}, return value will be numeric, not a factor.
 #' @param var.label Optional string, to set variable label attribute for the
 #'          returned variable (see \code{\link{set_label}}). If \code{NULL}
 #'          (default), variable label attribute of \code{x} will be used (if present).
@@ -131,7 +130,7 @@
 #' na_tag(rec(x, recodes = "2=5;else=copy"))
 #'
 #' @export
-rec <- function(x, ..., recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL, suffix = "_r") {
+rec <- function(x, ..., recodes, as.num = TRUE, var.label = NULL, val.labels = NULL, suffix = "_r") {
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
@@ -150,7 +149,7 @@ rec <- function(x, ..., recodes, as.fac = FALSE, var.label = NULL, val.labels = 
       x[[i]] <- rec_helper(
         x = .dat[[i]],
         recodes = recodes,
-        as.fac = as.fac,
+        as.num = as.num,
         var.label = var.label,
         val.labels = val.labels
       )
@@ -167,7 +166,7 @@ rec <- function(x, ..., recodes, as.fac = FALSE, var.label = NULL, val.labels = 
     x <- rec_helper(
       x = .dat,
       recodes = recodes,
-      as.fac = as.fac,
+      as.num = as.num,
       var.label = var.label,
       val.labels = val.labels
     )
@@ -178,7 +177,7 @@ rec <- function(x, ..., recodes, as.fac = FALSE, var.label = NULL, val.labels = 
 
 
 #' @importFrom stats na.omit
-rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
+rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   # retrieve variable label
   if (is.null(var.label))
     var_lab <- get_label(x)
@@ -211,7 +210,7 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
       # non-numeric factors coerced to character
       x <- as.character(x)
       # non-numeric factors will always be factor again
-      as.fac = TRUE
+      as.num <- FALSE
     }
   }
 
@@ -403,6 +402,6 @@ rec_helper <- function(x, recodes, as.fac, var.label, val.labels) {
   new_var <- suppressWarnings(set_label(x = new_var, lab = var_lab))
   new_var <- suppressWarnings(set_labels(x = new_var, labels = val_lab))
   # return result as factor?
-  if (as.fac) new_var <- to_factor(new_var)
+  if (!as.num) new_var <- to_factor(new_var)
   return(new_var)
 }

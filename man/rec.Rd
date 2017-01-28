@@ -4,7 +4,7 @@
 \alias{rec}
 \title{Recode variables}
 \usage{
-rec(x, ..., recodes, as.fac = FALSE, var.label = NULL, val.labels = NULL,
+rec(x, ..., recodes, as.num = TRUE, var.label = NULL, val.labels = NULL,
   suffix = "_r")
 }
 \arguments{
@@ -18,8 +18,7 @@ from \code{x} should be processed. See 'Examples'.}
 'Details' for examples. \code{\link{rec_pattern}} is a convenient
 function to create recode strings for grouping variables.}
 
-\item{as.fac}{Logical, if \code{TRUE}, recoded variable is returned as factor.
-Default is \code{FALSE}, thus a numeric variable is returned.}
+\item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
 returned variable (see \code{\link{set_label}}). If \code{NULL}
