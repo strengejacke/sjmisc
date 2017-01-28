@@ -124,7 +124,7 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
       x[is.na(x)] <- value
     }
     # add NA label
-    if (!is.null(na.label)) add_labels(x) <- na.vec
+    if (!is.null(na.label)) x <- add_labels(x, value = na.vec)
   } else {
     message("`x` has no missings.")
   }

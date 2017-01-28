@@ -150,7 +150,7 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
       # if we have no NA, coercing to numeric worked. Now get these
       # NA values and remove value labels from vector
       if (!anyNA(na.values)) {
-        x <- suppressWarnings(remove_labels(x, value))
+        x <- suppressWarnings(remove_labels(x, value = value))
         value <- na.values
       }
     }
@@ -201,7 +201,9 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
 
   # remove unused value labels
   removers <- which(get_values(x) %in% value)
-  if (!is.null(removers) && !sjmisc::is_empty(removers, first.only = T)) x <- remove_labels(x, removers)
+  if (!is.null(removers) && !sjmisc::is_empty(removers, first.only = T)) {
+    x <- remove_labels(x, value = removers)
+  }
 
   # if we have a factor, check if we have unused levels now due to NA
   # assignment. If yes, drop levels
@@ -209,8 +211,10 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
     # save value and variable labels
     keep.val <- attr(x, "labels", exact = T)
     keep.var <- attr(x, "label", exact = T)
+
     # drop levels
     x <- droplevels(x)
+
     # set back labels
     attr(x, "labels") <- keep.val
     attr(x, "label") <- keep.var

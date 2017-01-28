@@ -164,20 +164,24 @@ add_labels_helper <- function(x, value) {
     # get tagged NAs
     value_tag <- haven::na_tag(value)[haven::is_tagged_na(value)]
     cna_tag <- haven::na_tag(current.na)
+
     # find matches (replaced NA)
     doubles <- na.omit(match(value_tag, cna_tag))
     if (any(doubles)) {
       message(sprintf("tagged NA '%s' was replaced with new value label.\n",
                       names(current.na)[doubles]))
     }
+
     # remove multiple tagged NA
     current.na <- current.na[-doubles]
   }
 
   # sort labels by values
   all.labels <- all.labels[order(as.numeric(all.labels))]
+
   # add NA
   if (!is.null(current.na)) all.labels <- c(all.labels, current.na)
+
   # set back labels
   x <- set_labels(x, labels = all.labels)
   return(x)
