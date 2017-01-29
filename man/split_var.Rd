@@ -4,11 +4,15 @@
 \alias{split_var}
 \title{Split numeric variables into smaller groups}
 \usage{
-split_var(x, groupcount, as.num = FALSE, val.labels = NULL,
+split_var(x, ..., groupcount, as.num = FALSE, val.labels = NULL,
   var.label = NULL, inclusive = FALSE, suffix = "_g")
 }
 \arguments{
 \item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{groupcount}{The new number of groups that \code{x} should be split into.}
 
@@ -70,19 +74,22 @@ data(efc)
 table(efc$neg_c_7)
 
 # split into 3 groups
-table(split_var(efc$neg_c_7, 3))
+table(split_var(efc$neg_c_7, groupcount = 3))
 
+# split multiple variables into 3 groups
+split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3)
+frq(split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3))
 
 # original
 table(efc$e42dep)
 
 # two groups, non-inclusive cut-point
 # vector split leads to unequal group sizes
-table(split_var(efc$e42dep, 2))
+table(split_var(efc$e42dep, groupcount = 2))
 
 # two groups, inclusive cut-point
 # group sizes are equal
-table(split_var(efc$e42dep, 2, inclusive = TRUE))
+table(split_var(efc$e42dep, groupcount = 2, inclusive = TRUE))
 
 }
 \seealso{

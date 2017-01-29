@@ -14,6 +14,7 @@
 #'          groups does not define proper ("equal sized") group sizes.
 #'          See 'Note' and 'Examples'.
 #'
+#' @inheritParams to_factor
 #' @inheritParams group_var
 #' @inheritParams rec
 #'
@@ -39,42 +40,70 @@
 #' table(efc$neg_c_7)
 #'
 #' # split into 3 groups
-#' table(split_var(efc$neg_c_7, 3))
+#' table(split_var(efc$neg_c_7, groupcount = 3))
 #'
+#' # split multiple variables into 3 groups
+#' split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3)
+#' frq(split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3))
 #'
 #' # original
 #' table(efc$e42dep)
 #'
 #' # two groups, non-inclusive cut-point
 #' # vector split leads to unequal group sizes
-#' table(split_var(efc$e42dep, 2))
+#' table(split_var(efc$e42dep, groupcount = 2))
 #'
 #' # two groups, inclusive cut-point
 #' # group sizes are equal
-#' table(split_var(efc$e42dep, 2, inclusive = TRUE))
+#' table(split_var(efc$e42dep, groupcount = 2, inclusive = TRUE))
 #'
 #' @importFrom stats quantile
 #' @export
-split_var <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, suffix = "_g") {
-  UseMethod("split_var")
-}
+split_var <- function(x, ..., groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, suffix = "_g") {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-split_var.data.frame <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, suffix = "_g") {
-  tmp <- tibble::as_tibble(lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive))
-  # change variable names, add suffix "_r"
-  if (!is.null(suffix) && !is_empty(suffix)) colnames(tmp) <- sprintf("%s%s", colnames(tmp), suffix)
-  tmp
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-split_var.list <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, suffix = "_g") {
-  lapply(x, FUN = split_var_helper, groupcount, as.num, val.labels, var.label, inclusive)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-split_var.default <- function(x, groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, suffix = "_g") {
-  split_var_helper(x, groupcount, as.num, val.labels, var.label, inclusive)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- split_var_helper(
+        x = .dat[[i]],
+        groupcount = groupcount,
+        as.num = as.num,
+        var.label = var.label,
+        val.labels = val.labels,
+        inclusive = inclusive
+      )
+    }
+
+    # coerce to tibble and select only recoded variables
+    x <- tibble::as_tibble(x[.vars])
+
+    # add suffix to recoded variables?
+    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
+      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
+    }
+  } else {
+    x <- split_var_helper(
+      x = .dat,
+      groupcount = groupcount,
+      as.num = as.num,
+      var.label = var.label,
+      val.labels = val.labels,
+      inclusive = inclusive
+    )
+  }
+
+  x
 }
 
 split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclusive) {
@@ -99,7 +128,7 @@ split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclu
                 include.lowest = !inclusive,
                 right = inclusive)
   # rename factor levels
-  levels(retval) <- c(1:groupcount)
+  levels(retval) <- seq_len(groupcount)
   # to numeric?
   if (as.num) retval <- to_value(retval)
   # set back variable and value labels
