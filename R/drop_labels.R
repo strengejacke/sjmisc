@@ -1,22 +1,29 @@
 #' @rdname zap_labels
 #' @export
-drop_labels <- function(x, drop.na = TRUE) {
-  UseMethod("drop_labels")
-}
+drop_labels <- function(x, ..., drop.na = TRUE) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-drop_labels.data.frame <- function(x, drop.na = TRUE) {
-  tibble::as_tibble(lapply(x, FUN = drop_labels_helper, drop.na))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-drop_labels.list <- function(x, drop.na = TRUE) {
-  lapply(x, FUN = drop_labels_helper, drop.na)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-drop_labels.default <- function(x, drop.na = TRUE) {
-  drop_labels_helper(x, drop.na)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- drop_labels_helper(.dat[[i]], drop.na = drop.na)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- drop_labels_helper(.dat, drop.na = drop.na)
+  }
+
+  x
 }
 
 drop_labels_helper <- function(x, drop.na) {

@@ -1,22 +1,29 @@
 #' @rdname zap_labels
 #' @export
-fill_labels <- function(x) {
-  UseMethod("fill_labels")
-}
+fill_labels <- function(x, ...) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-fill_labels.data.frame <- function(x) {
-  tibble::as_tibble(lapply(x, FUN = fill_labels_helper))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-fill_labels.list <- function(x) {
-  lapply(x, FUN = fill_labels_helper)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-fill_labels.default <- function(x) {
-  fill_labels_helper(x)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- fill_labels_helper(.dat[[i]])
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- fill_labels_helper(.dat)
+  }
+
+  x
 }
 
 fill_labels_helper <- function(x) {

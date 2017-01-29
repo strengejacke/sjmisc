@@ -7,9 +7,9 @@
 \alias{zap_unlabelled}
 \title{Drop, add or convert (non-)labelled values to vectors}
 \usage{
-drop_labels(x, drop.na = TRUE)
+drop_labels(x, ..., drop.na = TRUE)
 
-fill_labels(x)
+fill_labels(x, ...)
 
 zap_labels(x, ...)
 
@@ -19,14 +19,14 @@ zap_unlabelled(x, ...)
 \item{x}{(partially) \code{\link[haven]{labelled}} vector or a data frame
 with such vectors.}
 
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
+
 \item{drop.na}{Logical, whether existing value labels of tagged NA values
 (see \code{\link[haven]{tagged_na}}) should be removed (\code{drop.na = TRUE},
 the default) or preserved (\code{drop.na = FALSE}).
 See \code{\link{get_na}} for more details on tagged NA values.}
-
-\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
-a data frame (and no vector) and only selected variables
-from \code{x} should be processed. See 'Examples'.}
 }
 \value{
 \itemize{
