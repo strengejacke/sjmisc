@@ -34,8 +34,12 @@ dropped (i.e. \code{\link{droplevels}} will be applied before returning
 the result).}
 }
 \value{
-A character vector with the associated value labels as values, or a
-          data frame with such factor variables (if \code{x} was a data frame).
+A character vector with the associated value labels as values. If \code{x}
+          is a data frame, the complete data frame \code{x} will be returned,
+          where variables specified in \code{...} are coerced
+          to character variables;
+          if \code{...} is not specified, applies to all variables in the
+          data frame.
 }
 \description{
 This function converts (replaces) variable values (also of factors

@@ -42,10 +42,12 @@ column names in a data frame depends on the function call:
   \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
   \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
   \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+  \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
 }}
 }
 \value{
-A grouped variable with equal sized groups.
+A grouped variable with equal sized groups. If \code{x} is a data
+        frame, only the grouped variables will be returned.
 }
 \description{
 Recode numeric variables into equal sized groups, i.e. a

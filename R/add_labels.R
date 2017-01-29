@@ -10,8 +10,7 @@
 #'
 #' @param value \describe{
 #'          \item{For \code{add_labels()}}{A named (numeric) vector of labels
-#'          that will be added to \code{x} as label attribute. If \code{x} is
-#'          a data frame, \code{value} will be applied to each column of \code{x}.}
+#'          that will be added to \code{x} as label attribute.}
 #'          \item{For \code{remove_labels()}}{Either a numeric vector, indicating
 #'          the position of one or more label attributes that should be removed;
 #'          a character vector with names of label attributes that should be
@@ -21,7 +20,11 @@
 #'
 #' @inheritParams to_factor
 #'
-#' @return \code{x} with additional or removed value labels.
+#' @return \code{x} with additional or removed value labels. If \code{x}
+#'           is a data frame, the complete data frame \code{x} will be returned,
+#'           with removed or added to variables specified in \code{...};
+#'           if \code{...} is not specified, applies to all variables in the
+#'           data frame.
 #'
 #' @details \code{add_labels()} adds \code{value} to the existing value
 #'          labels of \code{x}, however, unlike \code{\link{set_labels}}, it

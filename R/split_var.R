@@ -18,7 +18,8 @@
 #' @inheritParams group_var
 #' @inheritParams rec
 #'
-#' @return A grouped variable with equal sized groups.
+#' @return A grouped variable with equal sized groups. If \code{x} is a data
+#'         frame, only the grouped variables will be returned.
 #'
 #' @details \code{split_var} splits a variable into equal sized groups, where the
 #'            amount of groups depends on the \code{groupcount}-argument. Thus,

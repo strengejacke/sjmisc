@@ -14,9 +14,8 @@
 #'
 #' @inheritParams to_factor
 #'
-#' @return A data frame with dummy variables for each category of \code{x}, or
-#'           \code{data} where new dummy variables are appended as additional
-#'           columns. The dummy coded variables are of type \code{\link{atomic}}.
+#' @return A data frame with dummy variables for each category of \code{x}.
+#'         The dummy coded variables are of type \code{\link{atomic}}.
 #'
 #' @note \code{NA} values will be copied from \code{x}, so each dummy variable
 #'         has the same amount of \code{NA}'s at the same position as \code{x}.
@@ -38,7 +37,7 @@
 #' library(dplyr)
 #' efc %>%
 #'   select(e42dep, e16sex, c172code) %>%
-#'   to_dummy(c172code, e42dep)
+#'   to_dummy()
 #'
 #'
 #' @importFrom tibble as_tibble
@@ -63,10 +62,12 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
   if (!is.null(.vars)) {
 
     # iterate variables of data frame
-    for (i in .vars) {
-      # convert to dummy
-      x <- dplyr::bind_cols(x, to_dummy_helper(x = .dat[[i]], varname = i, suffix = suffix))
-    }
+    x <- dplyr::bind_cols(
+      purrr::map(.vars, ~ to_dummy_helper(
+        x = .dat[[.x]], varname = .x, suffix = suffix
+      ))
+    )
+
   } else {
     # remove "data frame name"
     dollar_pos <- regexpr("$", varname, fixed = T)[1]

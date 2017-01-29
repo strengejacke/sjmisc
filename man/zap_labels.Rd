@@ -35,6 +35,10 @@ See \code{\link{get_na}} for more details on tagged NA values.}
           \item For \code{drop_labels()}, \code{x}, where value labels for non-existing values are removed.
           \item For \code{fill_labels()}, \code{x}, where labels for non-labelled values are added.
         }
+        If \code{x} is a data frame, the complete data frame \code{x} will be
+        returned, with variables specified in \code{...} being converted;
+        if \code{...} is not specified, applies to all variables in the
+        data frame.
 }
 \description{
 For (partially) labelled vectors, \code{zap_labels()} will replace

@@ -20,9 +20,12 @@
 #'          will become the reference level. See \code{\link{ref_lvl}} for
 #'          details.
 #'
-#' @return A factor variable, including variable and value labels, respectively
-#'           a data frame where variables specified in \code{...} are converted
-#'           to factor variables (including variable and value labels).
+#' @return A factor variable, including variable and value labels. If \code{x}
+#'           is a data frame, the complete data frame \code{x} will be returned,
+#'           where variables specified in \code{...} are coerced
+#'           to factor variables (including variable and value labels);
+#'           if \code{...} is not specified, applies to all variables in the
+#'           data frame.
 #'
 #' @note This function is intended for use with vectors that have value and variable
 #'        label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts

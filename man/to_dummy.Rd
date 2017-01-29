@@ -23,9 +23,8 @@ Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
 e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.}
 }
 \value{
-A data frame with dummy variables for each category of \code{x}, or
-          \code{data} where new dummy variables are appended as additional
-          columns. The dummy coded variables are of type \code{\link{atomic}}.
+A data frame with dummy variables for each category of \code{x}.
+        The dummy coded variables are of type \code{\link{atomic}}.
 }
 \description{
 This function splits categorical or numeric vectors with
@@ -52,7 +51,7 @@ to_dummy(efc, c172code, e42dep)
 library(dplyr)
 efc \%>\%
   select(e42dep, e16sex, c172code) \%>\%
-  to_dummy(c172code, e42dep)
+  to_dummy()
 
 
 }

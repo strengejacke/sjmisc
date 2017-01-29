@@ -22,9 +22,11 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return A factor variable with the associated value labels as factor levels, or
-#'           a data frame where variables specified in \code{...} are converted
-#'           to these factors.
+#' @return A factor variable with the associated value labels as factor levels. If \code{x}
+#'           is a data frame, the complete data frame \code{x} will be returned,
+#'           where variables specified in \code{...} are coerced to factors;
+#'           if \code{...} is not specified, applies to all variables in the
+#'           data frame.
 #'
 #' @note Value label attributes (see \code{\link{get_labels}})
 #'       will be removed when converting variables to factors.
@@ -221,8 +223,12 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
 #'
-#' @return A character vector with the associated value labels as values, or a
-#'           data frame with such factor variables (if \code{x} was a data frame).
+#' @return A character vector with the associated value labels as values. If \code{x}
+#'           is a data frame, the complete data frame \code{x} will be returned,
+#'           where variables specified in \code{...} are coerced
+#'           to character variables;
+#'           if \code{...} is not specified, applies to all variables in the
+#'           data frame.
 #'
 #' @details See 'Details' in \code{\link{get_na}}.
 #'

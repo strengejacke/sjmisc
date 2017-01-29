@@ -23,10 +23,11 @@
 #'          (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 #'          this argument will be ignored.
 #'
+#' @inheritParams to_factor
 #' @inheritParams rec
 #'
 #' @return \itemize{
-#'           \item For \code{group_var}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}).
+#'           \item For \code{group_var}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}). If \code{x} is a data frame, only the grouped variables will be returned.
 #'           \item For \code{group_label}, a string vector or a list of string vectors containing labels based on the grouped categories of \code{x}, formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
 #'         }
 #'
@@ -91,32 +92,51 @@
 #' # labels with grouping startint at upper bound
 #' group_labels(dummy, right.interval = TRUE)
 #'
+#' @importFrom purrr map
 #' @export
-group_var <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
-                      groupcount = 30) {
-  UseMethod("group_var")
-}
+group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FALSE,
+                      groupcount = 30, suffix = "_gr") {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-group_var.data.frame <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
-                                 groupcount = 30) {
-  tibble::as_tibble(lapply(x, FUN = g_v_helper, groupsize = groupsize,
-                           as.num = as.num, right.interval = right.interval,
-                           groupcount = groupcount))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-group_var.list <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
-                           groupcount = 30) {
-  lapply(x, FUN = g_v_helper, groupsize = groupsize, as.num = as.num,
-         right.interval = right.interval, groupcount = groupcount)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-group_var.default <- function(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
-                              groupcount = 30) {
-  g_v_helper(x = x, groupsize = groupsize,  as.num = as.num,
-             right.interval = right.interval, groupcount = groupcount)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    for (i in .vars) {
+      x[[i]] <- g_v_helper(
+        x = .dat[[i]],
+        groupsize = groupsize,
+        as.num = as.num,
+        right.interval = right.interval,
+        groupcount = groupcount
+      )
+    }
+
+    # coerce to tibble and select only recoded variables
+    x <- tibble::as_tibble(x[.vars])
+
+    # add suffix to recoded variables?
+    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
+      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
+    }
+  } else {
+    x <- g_v_helper(
+      x = .dat,
+      groupsize = groupsize,
+      as.num = as.num,
+      right.interval = right.interval,
+      groupcount = groupcount
+    )
+  }
+
+  x
 }
 
 
@@ -137,24 +157,39 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
 
 #' @rdname group_var
 #' @export
-group_labels <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
-  UseMethod("group_labels")
-}
+group_labels <- function(x, ..., groupsize = 5, right.interval = FALSE, groupcount = 30) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-group_labels.data.frame <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
-  lapply(x, FUN = g_l_helper, groupsize = groupsize, right.interval = right.interval, groupcount = groupcount)
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-group_labels.list <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
-  lapply(x, FUN = g_l_helper, groupsize = groupsize, right.interval = right.interval, groupcount = groupcount)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-group_labels.default <- function(x, groupsize = 5, right.interval = FALSE, groupcount = 30) {
-  g_l_helper(x = x, groupsize = groupsize, right.interval = right.interval,
-             groupcount = groupcount)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    return(
+      purrr::map(.dat, ~ g_l_helper(
+        x = .x,
+        groupsize = groupsize,
+        right.interval = right.interval,
+        groupcount = groupcount
+    )))
+
+  } else {
+    x <- g_l_helper(
+      x = .dat,
+      groupsize = groupsize,
+      right.interval = right.interval,
+      groupcount = groupcount
+    )
+  }
+
+  x
 }
 
 

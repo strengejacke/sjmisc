@@ -5,12 +5,19 @@
 \alias{group_var}
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
-group_var(x, groupsize = 5, as.num = TRUE, right.interval = FALSE,
-  groupcount = 30)
+group_var(x, ..., groupsize = 5, as.num = TRUE, right.interval = FALSE,
+  groupcount = 30, suffix = "_gr")
 
-group_labels(x, groupsize = 5, right.interval = FALSE, groupcount = 30)
+group_labels(x, ..., groupsize = 5, right.interval = FALSE,
+  groupcount = 30)
 }
 \arguments{
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
+
 \item{groupsize}{Numeric; group-size, i.e. the range for grouping. By default,
 for each 5 categories of \code{x} a new group is defined, i.e. \code{groupsize=5}.
 Use \code{groupsize = "auto"} to automatically resize a variable into
@@ -26,10 +33,21 @@ bound of \code{groupsize}. See 'Details'.}
 \item{groupcount}{Sets the maximum number of groups that are defined when auto-grouping is on
 (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 this argument will be ignored.}
+
+\item{suffix}{String value, will be appended to variable (column) names of
+\code{x}, if \code{x} is a data frame. If \code{x} is not a data
+frame, this argument will be ignored. The default value to suffix
+column names in a data frame depends on the function call:
+\itemize{
+  \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
+  \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
+  \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+  \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
+}}
 }
 \value{
 \itemize{
-          \item For \code{group_var}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}).
+          \item For \code{group_var}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}). If \code{x} is a data frame, only the grouped variables will be returned.
           \item For \code{group_label}, a string vector or a list of string vectors containing labels based on the grouped categories of \code{x}, formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
         }
 }
