@@ -1,4 +1,4 @@
-#' @title Drop, add or convert (non-)labelled values to vectors
+#' @title Drop, add or convert (non-)labelled values
 #' @name zap_labels
 #'
 #' @description For (partially) labelled vectors, \code{zap_labels()} will replace

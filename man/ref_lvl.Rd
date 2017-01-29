@@ -2,21 +2,25 @@
 % Please edit documentation in R/ref_lvl.R
 \name{ref_lvl}
 \alias{ref_lvl}
-\alias{ref_lvl<-}
 \title{Change reference level of (numeric) factors}
 \usage{
-ref_lvl(x, value = NULL)
-
-ref_lvl(x) <- value
+ref_lvl(x, ..., value = NULL)
 }
 \arguments{
-\item{x}{\code{\link{factor}} with numeric levels where a new reference
-level should be set.}
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{value}{Numeric, the new reference level.}
 }
 \value{
-\code{x} with new reference level. See 'Details'.
+\code{x} with new reference level. If \code{x}
+          is a data frame, the complete data frame \code{x} will be returned,
+          where variables specified in \code{...} will be re-leveled;
+          if \code{...} is not specified, applies to all variables in the
+          data frame.
 }
 \description{
 Changes the reference level of numeric factor. See 'Details'.
@@ -35,9 +39,17 @@ x <- to_factor(efc$e42dep)
 str(x)
 frq(x)
 
-ref_lvl(x) <- 3
+x <- ref_lvl(x, value = 3)
 str(x)
 frq(x)
+
+library(dplyr)
+dat <- efc \%>\%
+  select(c82cop1, c83cop2, c84cop3) \%>\%
+  to_factor()
+
+str(dat)
+ref_lvl(dat, c82cop1, c83cop2, value = 2) \%>\% str()
 
 }
 \seealso{

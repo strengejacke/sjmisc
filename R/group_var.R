@@ -62,11 +62,11 @@
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
-#' age.grp <- group_var(age, 10)
+#' age.grp <- group_var(age, groupsize = 10)
 #' hist(age)
 #' hist(age.grp)
 #'
-#' age.grpvar <- group_labels(age, 10)
+#' age.grpvar <- group_labels(age, groupsize = 10)
 #' table(age.grp)
 #' print(age.grpvar)
 #'
@@ -83,7 +83,9 @@
 #'
 #' # within a pipe-chain
 #' library(dplyr)
-#' efc %>% select(e17age, c12hour, c160age) %>% group_var(groupsize = 20)
+#' efc %>%
+#'   select(e17age, c12hour, c160age) %>%
+#'   group_var(groupsize = 20)
 #'
 #' # create vector with values from 50 to 80
 #' dummy <- round(runif(200, 50, 80))

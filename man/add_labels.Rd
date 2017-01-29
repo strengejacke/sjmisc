@@ -76,7 +76,7 @@ get_labels(x, include.values = "p")
 # replace old value labels
 x <- add_labels(
   efc$e42dep,
-  values = c(`not so dependent` = 4, `lorem ipsum` = 5)
+  value = c(`not so dependent` = 4, `lorem ipsum` = 5)
 )
 get_labels(x, include.values = "p")
 

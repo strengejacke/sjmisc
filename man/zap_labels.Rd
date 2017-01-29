@@ -5,7 +5,7 @@
 \alias{fill_labels}
 \alias{zap_labels}
 \alias{zap_unlabelled}
-\title{Drop, add or convert (non-)labelled values to vectors}
+\title{Drop, add or convert (non-)labelled values}
 \usage{
 drop_labels(x, ..., drop.na = TRUE)
 

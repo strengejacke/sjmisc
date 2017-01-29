@@ -2,7 +2,7 @@ Version 2.2.2
 ------------------------------------------------------------------------------
 Changes to functions:
 * `frq()` now has the same argument-structure as `flat_table()`.
-* Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`, `count_na()`, `rec()`, `dicho()`, `split_var()`, `drop_labels()`, `fill_labels()`, `group_var()`, `group_labels()`.
+* Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`, `count_na()`, `rec()`, `dicho()`, `split_var()`, `drop_labels()`, `fill_labels()`, `group_var()`, `group_labels()`, `ref_lvl()`.
 
 
 Version 2.2.1

@@ -8,6 +8,12 @@ dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
   val.labels = NULL, suffix = "_d")
 }
 \arguments{
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
+
 \item{dich.by}{Indicates the split criterion where a variable is dichotomized.
 Must be one of the following values (may be abbreviated):
 \describe{

@@ -6,10 +6,14 @@
 #' @seealso \code{\link{to_factor}} to convert numeric vectors into factors;
 #'            \code{\link{rec}} to recode variables.
 #'
-#' @param x \code{\link{factor}} with numeric levels where a new reference
-#'          level should be set.
 #' @param value Numeric, the new reference level.
-#' @return \code{x} with new reference level. See 'Details'.
+#' @inheritParams to_factor
+#'
+#' @return \code{x} with new reference level. If \code{x}
+#'           is a data frame, the complete data frame \code{x} will be returned,
+#'           where variables specified in \code{...} will be re-leveled;
+#'           if \code{...} is not specified, applies to all variables in the
+#'           data frame.
 #'
 #' @details Unlike \code{\link[stats]{relevel}}, this function a) only accepts
 #'            numeric factors and b) changes the reference level by recoding
@@ -18,19 +22,53 @@
 #'            \code{value} are recoded, with \code{value} starting as lowest
 #'            factor value. See 'Examples'.
 #'
-#'
 #' @examples
 #' data(efc)
 #' x <- to_factor(efc$e42dep)
 #' str(x)
 #' frq(x)
 #'
-#' ref_lvl(x) <- 3
+#' x <- ref_lvl(x, value = 3)
 #' str(x)
 #' frq(x)
 #'
+#' library(dplyr)
+#' dat <- efc %>%
+#'   select(c82cop1, c83cop2, c84cop3) %>%
+#'   to_factor()
+#'
+#' str(dat)
+#' ref_lvl(dat, c82cop1, c83cop2, value = 2) %>% str()
+#'
 #' @export
-ref_lvl <- function(x, value = NULL) {
+ref_lvl <- function(x, ..., value = NULL) {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
+
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- ref_lvl_helper(.dat[[i]], value)
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- ref_lvl_helper(.dat, value)
+  }
+
+  x
+}
+
+ref_lvl_helper <- function(x, value) {
   # check correct arguments
   if (is.null(x)) {
     warning("`x` is NULL.", call. = F)
@@ -78,15 +116,4 @@ ref_lvl <- function(x, value = NULL) {
     set_labels(x) <- val.labs[order(order(neword))]
   }
   return(x)
-}
-
-#' @rdname ref_lvl
-#' @export
-`ref_lvl<-` <- function(x, value) {
-  UseMethod("ref_lvl<-")
-}
-
-#' @export
-`ref_lvl<-.default` <- function(x, value) {
-  ref_lvl(x = x, value = value)
 }
