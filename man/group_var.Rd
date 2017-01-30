@@ -43,6 +43,8 @@ column names in a data frame depends on the function call:
   \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
   \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
   \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
+  \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
+  \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
 }
 \value{

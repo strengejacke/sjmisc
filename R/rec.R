@@ -31,6 +31,8 @@
 #'             \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
 #'             \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
 #'             \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
+#'             \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
+#'             \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 #'           }
 #'
 #' @inheritParams to_factor
@@ -81,6 +83,12 @@
 #'   rec(recodes = "1,2=1; 3,4=2",
 #'       val.labels = c("low dependency", "high dependency")) %>%
 #'   str()
+#'
+#' # works with mutate
+#' efc %>%
+#'   select(e42dep, e17age) %>%
+#'   mutate(dependency_rev = rec(e42dep, recodes = "rev")) %>%
+#'   head()
 #'
 #' # recode 1 to 3 into 4 into 2
 #' table(rec(efc$e42dep, recodes = "min:3=1; 4=2"), useNA = "always")

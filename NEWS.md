@@ -1,4 +1,8 @@
-# sjmisc 2.2.2
+# sjmisc 2.3.0
+
+## New functions
+
+* `center()` and `std()` are moving from package `sjstats` to `sjmisc`.
 
 ## Changes to functions
 
