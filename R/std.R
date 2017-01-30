@@ -7,6 +7,7 @@
 #'          vectors and also standardized or centered.
 #'
 #' @inheritParams to_factor
+#' @inheritParams rec
 #'
 #' @return A vector with standardized or centered variables. If \code{x} is a
 #'         data frame, only the transformed variables will be returned.

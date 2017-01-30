@@ -18,6 +18,19 @@ from \code{x} should be processed. See 'Examples'.}
 
 \item{include.fac}{Logical, if \code{TRUE}, factors will be converted to numeric
 vectors and also standardized or centered.}
+
+\item{suffix}{String value, will be appended to variable (column) names of
+\code{x}, if \code{x} is a data frame. If \code{x} is not a data
+frame, this argument will be ignored. The default value to suffix
+column names in a data frame depends on the function call:
+\itemize{
+  \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
+  \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
+  \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+  \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
+  \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
+  \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
+}}
 }
 \value{
 A vector with standardized or centered variables. If \code{x} is a

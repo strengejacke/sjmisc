@@ -4,16 +4,18 @@
 \alias{var_rename}
 \title{Rename variables}
 \usage{
-var_rename(data, ...)
+var_rename(x, ...)
 }
 \arguments{
-\item{data}{A data frame.}
+\item{x}{Variable (vector), list of variables or a data frame where variables
+labels should be added as attribute. For \code{var_labels()}, \code{x}
+must be a data frame only.}
 
-\item{...}{Pairs of named vectors, where the name equals the old variable name
-(column name), and the value is the new variable (column) name.}
+\item{...}{Pairs of named vectors, where the name equals the variable name,
+which should be labelled, and the value is the new variable label.}
 }
 \value{
-\code{data}, with new column names for those variables specified in \code{...}.
+\code{x}, with new column names for those variables specified in \code{...}.
 }
 \description{
 This function renames variables in a data frame, i.e. it

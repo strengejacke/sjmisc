@@ -2,19 +2,21 @@
 #' @name set_label
 #'
 #' @description This function adds variable labels as attribute
-#'                (named \code{"label"}) to a variable
-#'                or vector \code{x}, resp. to a set of variables in a
-#'                data frame or a list-object. Most functions of the
-#'                \CRANpkg{sjPlot} package can automatically read the variable
-#'                labels to use it as axis labels or plot title (see 'Details').
+#'                (named \code{"label"}) to the variable \code{x}, resp. to a
+#'                set of variables in a data frame or a list-object. \code{var_labels()}
+#'                is intended for use within pipe-workflows and has a tidyverse-consistent
+#'                syntax (see 'Examples').
 #'
 #' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
 #'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
 #'            more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
 #'            to get variable labels.
 #'
-#' @param x Variable (vector), \code{list} of variables or a \code{data.frame}
-#'          where variables labels should be added as attribute
+#' @param x Variable (vector), list of variables or a data frame where variables
+#'          labels should be added as attribute. For \code{var_labels()}, \code{x}
+#'          must be a data frame only.
+#' @param ... Pairs of named vectors, where the name equals the variable name,
+#'          which should be labelled, and the value is the new variable label.
 #' @param lab If \code{x} is a vector (single variable), use a single character string with
 #'          the variable label for \code{x}. If \code{x} is a data frame, use a
 #'          vector with character labels of same length as \code{ncol(x)}.
@@ -25,9 +27,10 @@
 #' @param attr.string Attribute string for the variable label. \strong{Note:}
 #'          Usually, this argument should be ignored. It is only used internally
 #'          for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.
+#'
 #' @return \code{x}, with variable label attribute(s), which contains the
 #'           variable name(s); or with removed label-attribute if
-#'            \code{lab = ""}.
+#'           \code{lab = ""}.
 #'
 #' @details See 'Details' in \code{\link{get_labels}}
 #'
@@ -77,6 +80,19 @@
 #' dummies <- set_label(dummies, c("First Dummy", "2nd Dummy", "Third dummy"))
 #' # see result...
 #' get_label(dummies)
+#'
+#'
+#' # use 'var_labels()' to set labels within a pipe-workflow, and
+#' # when you need "tidyverse-consistent" api.
+#' library(dplyr)
+#' # Set variable labels for data frame
+#' dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
+#'                     b = sample(1:4, 10, replace = TRUE),
+#'                     c = sample(1:4, 10, replace = TRUE))
+#'
+#' dummy %>%
+#'   var_labels(a = "First variable", c = "third variable") %>%
+#'   get_label()
 #'
 #' @export
 set_label <- function(x, lab, attr.string = NULL) {
