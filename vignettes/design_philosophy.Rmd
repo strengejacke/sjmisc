@@ -63,7 +63,7 @@ to_factor(efc, e42dep, e16sex)
 
 ### transformation/recoding functions
 
-Functions like `rec()` or `dicho()`, which transform or recode variables, typically do _not_ return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the `...`-ellipses argument. 
+Functions like `rec()` or `dicho()`, which transform or recode variables, typically do _not_ return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the `...`-ellipses argument. The reason for this is to keep the original variable and not overwriting it with completeley new values.
 
 ```{r collapse=TRUE}
 rec(efc, c82cop1, c83cop2, recodes = "1,2=0; 3:4=2")

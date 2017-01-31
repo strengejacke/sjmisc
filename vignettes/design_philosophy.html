@@ -169,7 +169,7 @@ efc %&gt;%<span class="st"> </span>
 </div>
 <div id="transformationrecoding-functions" class="section level3">
 <h3>transformation/recoding functions</h3>
-<p>Functions like <code>rec()</code> or <code>dicho()</code>, which transform or recode variables, typically do <em>not</em> return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the <code>...</code>-ellipses argument.</p>
+<p>Functions like <code>rec()</code> or <code>dicho()</code>, which transform or recode variables, typically do <em>not</em> return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the <code>...</code>-ellipses argument. The reason for this is to keep the original variable and not overwriting it with completeley new values.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rec</span>(efc, c82cop1, c83cop2, <span class="dt">recodes =</span> <span class="st">&quot;1,2=0; 3:4=2&quot;</span>)
 ## # A tibble: 908 × 2
 ##    c82cop1_r c83cop2_r
