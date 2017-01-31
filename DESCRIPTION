@@ -32,7 +32,9 @@ Imports:
     tibble (>= 1.2.0),
     tidyr (>= 0.6.0)
 Suggests:
+    Hmisc,
     mice,
+    sjPlot,
     sjstats (>= 0.7.0),
     knitr,
     rmarkdown
