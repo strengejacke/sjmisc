@@ -26,8 +26,13 @@ efc %>%
   head()
 
 ## ----collapse=TRUE-------------------------------------------------------
+to_factor(efc, e42dep, e16sex)
+
+## ----collapse=TRUE-------------------------------------------------------
 rec(efc, c82cop1, c83cop2, recodes = "1,2=0; 3:4=2")
 
 ## ----collapse=TRUE-------------------------------------------------------
-to_factor(efc, e42dep, e16sex)
+efc %>% 
+  rec(c82cop1, c83cop2, recodes = "1,2=0; 3:4=2") %>% 
+  add_columns(efc)
 

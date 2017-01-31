@@ -53,18 +53,26 @@ efc %>%
 
 There are two types of function designs:
 
+### coercing/converting functions
+
+Functions like `to_factor()` or `add_labels()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument. The variables specified in the `...`-ellipses argument are converted, all other variables remain unchanged.
+
+```{r collapse=TRUE}
+to_factor(efc, e42dep, e16sex)
+```
+
 ### transformation/recoding functions
 
-Functions like `rec()` or `dicho()`, that transform or recode variables, typically do _not_ return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the `...`-ellipses argument. The variables usually get a suffix, so you can bind these variables as new columns to a data frame.
+Functions like `rec()` or `dicho()`, which transform or recode variables, typically do _not_ return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the `...`-ellipses argument. 
 
 ```{r collapse=TRUE}
 rec(efc, c82cop1, c83cop2, recodes = "1,2=0; 3:4=2")
 ```
 
-### coercing/converting functions
-
-Functions like `to_factor()` or `add_labels()`, convert variables into other types or add additional information like variable or value labels as attribute, typically return the complete data frame that was given as first argument. The variables specified in the `...`-ellipses argument are converted, all remaining variables remain unchanged.
+These variables usually get a suffix, so you can bind these variables as new columns to a data frame, for instance with `add_columns()`. The function `add_columns()` is useful if you want to bind/add columns within a pipe-chain _to the end_ of a data frame.
 
 ```{r collapse=TRUE}
-to_factor(efc, e42dep, e16sex)
+efc %>% 
+  rec(c82cop1, c83cop2, recodes = "1,2=0; 3:4=2") %>% 
+  add_columns(efc)
 ```

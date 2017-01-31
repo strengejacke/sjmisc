@@ -138,7 +138,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Converting <code>labelled</code>-class vectors into factors usually drops label attributes (e.g. using <code>as_factor()</code>) or replaces values with the associated labels (like <code>to_label()</code> does). If you want to convert a labelled vector into a numeric factor, but keep the label attributes (including variable labels), use <code>to_factor()</code>.</p>
 <p>Functions like <code>lm()</code> simply copy the label-attributes and store these information in the returned object; see following example from the <code>sjPlot</code>-package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sjPlot)
-## Visit http://strengejacke.de/sjPlot for package-vignettes.
 <span class="kw">data</span>(efc)
 <span class="co"># make education categorical</span>
 efc$c172code &lt;-<span class="st"> </span><span class="kw">to_factor</span>(efc$c172code)

@@ -21,10 +21,10 @@ The design of this package follows, where appropriate, the \emph{tidyverse-appro
 There are two types of function designs:
 \describe{
   \item{\emph{transformation/recoding functions}}{
-    Functions like \code{rec()} or \code{dicho()}, that transform or recode variables, typically do \emph{not} return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the \code{...}-ellipses argument. The variables usually get a suffix, so you can bind these variables as new columns to a data frame.
+    Functions like \code{rec()} or \code{dicho()}, which transform or recode variables, typically do \emph{not} return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the \code{...}-ellipses argument. The variables usually get a suffix, so you can bind these variables as new columns to a data frame.
   }
   \item{\emph{coercing/converting functions}}{
-    Functions like \code{to_factor()} or \code{add_labels()}, convert variables into other types or add additional information like variable or value labels as attribute, typically return the complete data frame that was given as first argument. The variables specified in the \code{...}-ellipses argument are converted, all remaining variables remain unchanged.
+    Functions like \code{to_factor()} or \code{add_labels()}, which convert variables into other types or add additional information like variable or value labels as attribute, typically return the complete data frame that was given as first argument. The variables specified in the \code{...}-ellipses argument are converted, all other variables remain unchanged.
   }
 }
 }
