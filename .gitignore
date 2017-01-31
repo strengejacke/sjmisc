@@ -39,3 +39,4 @@ $RECYCLE.BIN/
 *.msp
 .Rproj.user
 inst/doc
+revdep
