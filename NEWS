@@ -1,5 +1,8 @@
-Version 2.2.2
+Version 2.3.0
 ------------------------------------------------------------------------------
+General:
+* Added package-vignettes.
+
 New functions:
 * `center()` and `std()` are moving from package `sjstats` to `sjmisc`.
 * `add_columns()` to bind columns of first data frame at the end of all data frames.

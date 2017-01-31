@@ -33,7 +33,10 @@ Imports:
     tidyr (>= 0.6.0)
 Suggests:
     mice,
-    sjstats (>= 0.7.0)
+    sjstats (>= 0.7.0),
+    knitr,
+    rmarkdown
 URL: https://github.com/sjPlot/sjmisc
 BugReports: https://github.com/sjPlot/sjmisc/issues
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr

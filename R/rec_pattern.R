@@ -30,9 +30,11 @@
 #' table(rec(efc$c160age, recodes = rp$pattern), exclude = NULL)
 #'
 #' # recode carers age into groups of width 5
-#' x <- rec(efc$c160age, recodes = rp$pattern)
-#' # add value labels to new vector
-#' x <- set_labels(x, labels = rp$labels)
+#' x <- rec(
+#'   efc$c160age,
+#'   recodes = rp$pattern,
+#'   val.labels = rp$labels
+#' )
 #' # watch result
 #' frq(x)
 #'
@@ -41,21 +43,26 @@ rec_pattern <- function(from, to, width = 5, other = NULL){
   # init variables
   rec.pat <- c()
   rec.labels <- c()
+
   # create sequence of recode-groups
   values <- seq(from, to + width, by = width)
+
   # create pattern for each group
-  for (x in 1:(length(values) - 1)) {
+  for (x in seq_len(length(values) - 1)) {
     rec.pat <- paste0(rec.pat,
                       sprintf("%i:%i=%i", values[x], values[x + 1] - 1, x),
                       sep = ";")
     # also create associated labels
     rec.labels <- c(rec.labels, sprintf("%i-%i", values[x], values[x + 1] - 1))
   }
+
   # do we have an "else"-token?
   if (!is.null(other) && !sjmisc::is_empty(other))
     rec.pat <- paste0(rec.pat, "else=", other, sep = "")
+
   # name labels
   names(rec.labels) <- seq_len(length(values) - 1)
+
   # return results
   list(pattern = rec.pat, labels = rec.labels)
 }

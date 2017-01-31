@@ -53,6 +53,5 @@ efc \%>\%
   select(e42dep, e16sex, c172code) \%>\%
   to_dummy()
 
-
 }
 

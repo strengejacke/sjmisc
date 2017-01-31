@@ -1,0 +1,33 @@
+## ----collapse=TRUE-------------------------------------------------------
+library(sjmisc)
+data(efc)
+
+# returns a vector
+x <- rec(efc$e42dep, recodes = "1,2=1; 3,4=2")
+str(x)
+
+# returns a data frame (a tibble, to be exactly)
+rec(efc, e42dep, recodes = "1,2=1; 3,4=2")
+
+## ----collapse=TRUE, echo=FALSE, message=FALSE----------------------------
+library(dplyr)
+
+## ----collapse=TRUE-------------------------------------------------------
+efc %>% 
+  select(c82cop1, c83cop2) %>% 
+  rec(recodes = "1,2=0; 3:4=2")
+
+efc %>% 
+  select(c82cop1, c83cop2) %>% 
+  mutate(
+    c82cop1_dicho = rec(c82cop1, recodes = "1,2=0; 3:4=2"),
+    c83cop2_dicho = rec(c83cop2, recodes = "1,2=0; 3:4=2")
+  ) %>% 
+  head()
+
+## ----collapse=TRUE-------------------------------------------------------
+rec(efc, c82cop1, c83cop2, recodes = "1,2=0; 3:4=2")
+
+## ----collapse=TRUE-------------------------------------------------------
+to_factor(efc, e42dep, e16sex)
+

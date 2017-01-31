@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Daniel Lüdecke" />
+
+<meta name="date" content="2017-01-31" />
+
+<title>Introduction into the sjmisc-Package</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Introduction into the sjmisc-Package</h1>
+<h4 class="author"><em>Daniel Lüdecke</em></h4>
+<h4 class="date"><em>2017-01-31</em></h4>
+
+
+
+<p><em>Labelled data</em> (or labelled vectors) is a common data structure in other statistical environments to store meta-information about variables, like variable names, value labels or multiple defined missing values.</p>
+<p><em>Labelled data</em> not only extends <strong>R</strong>‘s capabilities to deal with proper value <em>and</em> variable labels, but also facilitates the representation of different types of missing values, like in other statistical software packages. Typically, in R, multiple declared missings cannot be represented in a similar way, like in ’SPSS’ or ‘SAS’, with the regular missing values. However, the <strong>haven</strong> package introduced <code>tagged_na</code> values, which can do this. Tagged NA’s work exactly like regular R missing values except that they store one additional byte of information: a tag, which is usually a letter (“a” to “z”) or also may be a character number (“0” to “9”). This allows to indicate different missings.</p>
+<p>Labelled data supported by the <strong>sjmisc</strong>-package does not require vectors of class <code>labelled</code>. The <code>labelled</code> class, implemented by the packages <strong>haven</strong> and <strong>labelled</strong>, may cause troubles with other packages (e.g. with the <strong>effects</strong>-package), thus it’s only intended as being an intermediate data structure that should be converted to common R classes. However, coercing a <code>labelled</code> vector to other classes (like factor or numeric) typically means that meta information like value and variable label attributes are lost. Actually, there is no need to drop these attributes for non-<code>labelled</code>-class vectors. Functions like <code>lm()</code> simply copy these attributes to the data that is included in the returned object. Packages like <strong>sjPlot</strong> support labelled data for easily annotated data visualization. The <strong>sjmisc</strong>-package supports working with <em>labelled data</em> and offers functions to benefit from these features.</p>
+<div id="labelled-data-in-haven-and-labelled" class="section level2">
+<h2>Labelled Data in haven and labelled</h2>
+<p>The <strong>labelled</strong>-package is intended to support <code>labelled</code> metadata structures, thus the data structure of labelled vectors in <strong>haven</strong> and <strong>labelled</strong> is the same.</p>
+<p>Labelled data in this format stores information about value labels, variable names and multiple defined missing values. However, <em>variable names</em> are only part of this information if data was imported with one of <code>haven</code>s read-functions. Adding a variable label attribute is (at least up to version 1.0.0) not possible via the <code>labelled</code>-constructor method.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(haven)
+## 
+## Attache Paket: 'haven'
+## The following objects are masked from 'package:sjmisc':
+## 
+##     read_sas, read_spss, read_stata, write_sas, zap_labels
+x &lt;-<span class="st"> </span><span class="kw">labelled</span>(<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>, <span class="kw">tagged_na</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dv">4</span>:<span class="dv">1</span>),
+              <span class="kw">c</span>(<span class="st">&quot;Agreement&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;Disagreement&quot;</span> =<span class="st"> </span><span class="dv">4</span>, <span class="st">&quot;First&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;c&quot;</span>),
+                <span class="st">&quot;Refused&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;a&quot;</span>), <span class="st">&quot;Not home&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;z&quot;</span>)))
+
+<span class="kw">print</span>(x)
+## &lt;Labelled double&gt;
+##  [1]     1     2     3 NA(a) NA(c) NA(z)     4     3     2     1
+## 
+## Labels:
+##  value        label
+##      1    Agreement
+##      4 Disagreement
+##  NA(c)        First
+##  NA(a)      Refused
+##  NA(z)     Not home</code></pre></div>
+<p>A <code>labelled</code> vector can either be a numeric or character vector. Conversion to factors copies the value labels as factor levels, but drops the label attributes and missing information:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.na</span>(x)
+##  [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+
+<span class="kw">as_factor</span>(x)
+##  [1] Agreement    2            3            Refused      First       
+##  [6] Not home     Disagreement 3            2            Agreement   
+## Levels: Agreement 2 3 Disagreement Refused First Not home
+
+<span class="kw">is.na</span>(<span class="kw">as_factor</span>(x))
+##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre></div>
+</div>
+<div id="labelled-data-in-hmisc" class="section level2">
+<h2>Labelled Data in Hmisc</h2>
+<p>The <strong>Hmisc</strong>-package only supports variable labels. As additional information, it can also store a unit measure.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(Hmisc)
+x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)
+<span class="kw">label</span>(x) &lt;-<span class="st"> &quot;Variable label&quot;</span>
+<span class="kw">units</span>(x) &lt;-<span class="st"> &quot;cm&quot;</span>
+<span class="kw">str</span>(x)
+## Classes 'labelled', 'numeric'  atomic [1:4] 1 2 3 4
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable label&quot;
+##   ..- attr(*, &quot;units&quot;)= chr &quot;cm&quot;</code></pre></div>
+</div>
+<div id="labelled-data-in-foreign" class="section level2">
+<h2>Labelled Data in foreign</h2>
+<p>The <strong>foreign</strong>-package stores value labels as <code>value.labels</code> attribute, while variable labels are stored as attribute of the data frame returned by the <code>read.spss()</code>-method. If you use <code>sjmisc::read_spss()</code>, variable labels are added as attribute to each variable.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
+efc &lt;-<span class="st"> </span><span class="kw">read.spss</span>(<span class="st">&quot;sample_dataset.sav&quot;</span>, 
+                 <span class="dt">to.data.frame =</span> <span class="ot">TRUE</span>, 
+                 <span class="dt">use.value.labels =</span> <span class="ot">FALSE</span>, 
+                 <span class="dt">reencode =</span> <span class="st">&quot;UTF-8&quot;</span>)
+<span class="kw">str</span>(efc$16sex)
+
+&gt;<span class="st"> </span><span class="er">$</span>e16sex  :<span class="st"> </span>atomic  <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">1</span> <span class="dv">2</span> <span class="dv">2</span> <span class="dv">2</span> ...
+&gt;<span class="st">  </span>..-<span class="st"> </span><span class="kw">attr</span>(*, <span class="st">&quot;value.labels&quot;</span>)=<span class="st"> </span>Named chr  <span class="st">&quot;2&quot;</span> <span class="st">&quot;1&quot;</span>
+&gt;<span class="st">  </span>.. ..-<span class="st"> </span><span class="kw">attr</span>(*, <span class="st">&quot;names&quot;</span>)=<span class="st"> </span>chr  <span class="st">&quot;female&quot;</span> <span class="st">&quot;male&quot;</span>
+
+<span class="kw">attr</span>(efc, <span class="st">&quot;variable.labels&quot;</span>)[<span class="st">'e16sex'</span>]
+
+&gt;<span class="st">            </span>e16sex 
+&gt;<span class="st">  &quot;elder's gender&quot;</span> </code></pre></div>
+</div>
+<div id="labelled-data-in-sjmisc" class="section level2">
+<h2>Labelled Data in sjmisc</h2>
+<p>The <strong>sjmisc</strong>-package supports both label attributes in <strong>haven</strong>-style (<code>label</code> and <code>labels</code>) and <strong>foreign</strong>-style (<code>value.labels</code> and <code>variable.label</code>). Unlike <strong>haven</strong>, you can also have factors with label attributes; you’re not restricted to the <code>labelled</code> class for vectors when working with <strong>sjmisc</strong> and labelled data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sjmisc)
+<span class="co"># sjmisc-sample data, an atomic vector with label attributes</span>
+<span class="kw">data</span>(efc)
+<span class="kw">str</span>(efc$e16sex)
+##  atomic [1:908] 2 2 2 2 2 2 1 2 2 2 ...
+##  - attr(*, &quot;label&quot;)= chr &quot;elder's gender&quot;
+##  - attr(*, &quot;labels&quot;)= Named num [1:2] 1 2
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;male&quot; &quot;female&quot;</code></pre></div>
+</div>
+<div id="value-labels" class="section level1">
+<h1>Value Labels</h1>
+<div id="getting-value-labels" class="section level2">
+<h2>Getting value labels</h2>
+<p>The <code>get_labels()</code>-method is a generic method to return value labels of a vector or data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_labels</span>(efc$e42dep)
+## [1] &quot;independent&quot;          &quot;slightly dependent&quot;   &quot;moderately dependent&quot;
+## [4] &quot;severely dependent&quot;</code></pre></div>
+<p>You can prefix the value labels with the associated values or return them as named vector with the <code>include.values</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_labels</span>(efc$e42dep, <span class="dt">include.values =</span> <span class="st">&quot;p&quot;</span>)
+## [1] &quot;[1] independent&quot;          &quot;[2] slightly dependent&quot;  
+## [3] &quot;[3] moderately dependent&quot; &quot;[4] severely dependent&quot;</code></pre></div>
+<p><code>get_labels()</code> also returns “labels” of factors, even if the factor has no label attributes.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;hi&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;low&quot;</span>))
+<span class="kw">get_labels</span>(x)
+## [1] &quot;hi&quot;  &quot;low&quot; &quot;mid&quot;</code></pre></div>
+<p>To ensure that labels are only returned for vectors with label-attribute, use the <code>attr.only</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;hi&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;low&quot;</span>))
+<span class="kw">get_labels</span>(x, <span class="dt">attr.only =</span> <span class="ot">TRUE</span>)
+## NULL</code></pre></div>
+<p>If a vector has a label attribute, only these labels are returned. Non-labelled values are excluded from the output by default…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get labels, including tagged NA values</span>
+x &lt;-<span class="st"> </span><span class="kw">labelled</span>(
+  <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>, <span class="kw">tagged_na</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;z&quot;</span>), <span class="dv">4</span>:<span class="dv">1</span>),
+  <span class="kw">c</span>(<span class="st">&quot;Agreement&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;Disagreement&quot;</span> =<span class="st"> </span><span class="dv">4</span>, <span class="st">&quot;First&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;c&quot;</span>),
+    <span class="st">&quot;Refused&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;a&quot;</span>), <span class="st">&quot;Not home&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;z&quot;</span>))
+)
+<span class="kw">get_labels</span>(x)
+## [1] &quot;Agreement&quot;    &quot;Disagreement&quot;</code></pre></div>
+<p>… however, you can add non-labelled values to the return value as well, using the <code>include.non.labelled</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_labels</span>(x, <span class="dt">include.non.labelled =</span> <span class="ot">TRUE</span>)
+## [1] &quot;Agreement&quot;    &quot;2&quot;            &quot;3&quot;            &quot;Disagreement&quot;</code></pre></div>
+<p>Tagged missing values can also be included in the output, using the <code>drop.na</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_labels</span>(x, <span class="dt">include.values =</span> <span class="st">&quot;n&quot;</span>, <span class="dt">drop.na =</span> <span class="ot">FALSE</span>)
+##              1              4          NA(c)          NA(a)          NA(z) 
+##    &quot;Agreement&quot; &quot;Disagreement&quot;        &quot;First&quot;      &quot;Refused&quot;     &quot;Not home&quot;</code></pre></div>
+</div>
+<div id="getting-labelled-values" class="section level2">
+<h2>Getting labelled values</h2>
+<p>The <code>get_values()</code> method returns the values for labelled values (i.e. values that have an associated label). We still use the vector <code>x</code> from the above examples.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(x)
+##  
+##  [1]  1  2  3 NA NA NA  4  3  2  1
+## attr(,&quot;labels&quot;)
+##    Agreement Disagreement        First      Refused     Not home 
+##            1            4           NA           NA           NA
+
+<span class="kw">get_values</span>(x)
+## [1] &quot;1&quot;     &quot;4&quot;     &quot;NA(c)&quot; &quot;NA(a)&quot; &quot;NA(z)&quot;</code></pre></div>
+<p>With the <code>drop.na</code> argument you can omit those values from the return values that are defined as missing.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_values</span>(x, <span class="dt">drop.na =</span> <span class="ot">TRUE</span>)
+## [1] 1 4</code></pre></div>
+</div>
+<div id="setting-value-labels" class="section level2">
+<h2>Setting value labels</h2>
+<p>With <code>set_labels()</code> you can add label attributes to any vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">20</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># return new labelled vector</span>
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;very low&quot;</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;hi&quot;</span>))
+x
+##  [1] 4 2 1 4 3 4 1 1 3 2 4 3 3 4 2 1 1 4 2 2
+## attr(,&quot;labels&quot;)
+## very low      low      mid       hi 
+##        1        2        3        4</code></pre></div>
+<p>If more labels than values are given, only as many labels elements are used as values are present.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))
+## More labels than values of &quot;x&quot;. Using first 2 labels.
+x
+## [1] 2 2 3 3 2
+## attr(,&quot;labels&quot;)
+## a b 
+## 2 3</code></pre></div>
+<p>However, you can force to use all labels, even for values that are not in the vector, using the <code>force.labels</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">2</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(
+  x, 
+  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>), 
+  <span class="dt">force.labels =</span> <span class="ot">TRUE</span>
+)
+x
+## [1] 2 2 3 3 2
+## attr(,&quot;labels&quot;)
+## a b c 
+## 1 2 3</code></pre></div>
+<p>For vectors with more unique values than labels, additional labels for non-labelled values are added.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="ot">NA</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;maybe&quot;</span>, <span class="st">&quot;no&quot;</span>))
+## More values in &quot;x&quot; than length of &quot;labels&quot;. Additional values were added to labels.
+x
+## [1]  1  2  3  2  4 NA
+## attr(,&quot;labels&quot;)
+##   yes maybe    no     4 
+##     1     2     3     4</code></pre></div>
+<p>Use <code>force.values</code> to add only those labels that have been passed as argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="ot">NA</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(
+  x, 
+  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;yes&quot;</span>, <span class="st">&quot;maybe&quot;</span>, <span class="st">&quot;no&quot;</span>),
+  <span class="dt">force.values =</span> <span class="ot">FALSE</span>
+)
+## &quot;x&quot; has more values than &quot;labels&quot;, hence not all values are labelled.
+x
+## [1]  1  2  3  2  4 NA
+## attr(,&quot;labels&quot;)
+##   yes maybe    no 
+##     1     2     3</code></pre></div>
+<p>To add explicit labels for values (without adding more labels than wanted and without dropping labels for values that do not appear in the vector), use a named vector of labels as argument. The arguments <code>force.values</code> and <code>force.labels</code> are ignored when using named vectors.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(
+  x, 
+  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;strongly agree&quot;</span> =<span class="st"> </span><span class="dv">1</span>, 
+             <span class="st">&quot;totally disagree&quot;</span> =<span class="st"> </span><span class="dv">4</span>, 
+             <span class="st">&quot;refused&quot;</span> =<span class="st"> </span><span class="dv">5</span>,
+             <span class="st">&quot;missing&quot;</span> =<span class="st"> </span><span class="dv">9</span>)
+)
+x
+## [1] 1 2 3 2 4 5
+## attr(,&quot;labels&quot;)
+##   strongly agree totally disagree          refused          missing 
+##                1                4                5                9</code></pre></div>
+<p>You can use <code>set_labels()</code> within a pipe-workflow with <em>dplyr</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(efc)
+
+efc %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">select</span>(c82cop1, c83cop2, c84cop3) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">set_labels</span>(<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;not often&quot;</span> =<span class="st"> </span><span class="dv">1</span>, <span class="st">&quot;very often&quot;</span> =<span class="st"> </span><span class="dv">4</span>)) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">frq</span>()
+## # do you feel you cope well as caregiver?
+## 
+##  val      label frq raw.prc valid.prc cum.prc
+##    1  not often   3    0.33      0.33    0.33
+##    2          2  97   10.68     10.77   11.10
+##    3          3 591   65.09     65.59   76.69
+##    4 very often 210   23.13     23.31  100.00
+##    5         NA   7    0.77        NA      NA
+## 
+## 
+## # do you find caregiving too demanding?
+## 
+##  val      label frq raw.prc valid.prc cum.prc
+##    1  not often 186   20.48     20.62   20.62
+##    2          2 547   60.24     60.64   81.26
+##    3          3 130   14.32     14.41   95.68
+##    4 very often  39    4.30      4.32  100.00
+##    5         NA   6    0.66        NA      NA
+## 
+## 
+## # does caregiving cause difficulties in your relationship with your friends?
+## 
+##  val      label frq raw.prc valid.prc cum.prc
+##    1  not often 516   56.83     57.21   57.21
+##    2          2 252   27.75     27.94   85.14
+##    3          3  82    9.03      9.09   94.24
+##    4 very often  52    5.73      5.76  100.00
+##    5         NA   6    0.66        NA      NA</code></pre></div>
+</div>
+</div>
+<div id="variable-labels" class="section level1">
+<h1>Variable Labels</h1>
+<div id="getting-variable-labels" class="section level2">
+<h2>Getting variable labels</h2>
+<p>The <code>get_label()</code>-method returns the variable label of a vector or all variable labels from a data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_label</span>(efc$e42dep)
+## [1] &quot;elder's dependency&quot;
+
+<span class="kw">get_label</span>(efc, e42dep, e16sex, e15relat)
+##                  e42dep                  e16sex                e15relat 
+##    &quot;elder's dependency&quot;        &quot;elder's gender&quot; &quot;relationship to elder&quot;</code></pre></div>
+<p>If a vector has no variable label, <code>NULL</code> is returned. However, <code>get_label()</code> also allows returning a standard value instead of <code>NULL</code>, in case the vector has no label attribute. This is useful to combine with <code>deparse(substitute())</code> in function calls, so - for instance - the name of the vector can be used as default value if no variable labels are present.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dummy &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)
+testit &lt;-<span class="st"> </span>function(x) <span class="kw">get_label</span>(x, <span class="dt">def.value =</span> <span class="kw">deparse</span>(<span class="kw">substitute</span>(x)))
+<span class="co"># returns name of vector, if it has no variable label</span>
+<span class="kw">testit</span>(dummy)
+## [1] &quot;dummy&quot;</code></pre></div>
+</div>
+<div id="setting-variable-labels" class="section level2">
+<h2>Setting variable labels</h2>
+<p>The <code>set_label()</code> function adds the variable label attribute to a vector. You can either return a new vecor, or label an existing vector</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># return new vector</span>
+x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x, <span class="dt">lab =</span> <span class="st">&quot;Dummy-variable&quot;</span>)
+<span class="kw">str</span>(x)
+##  atomic [1:10] 4 1 2 1 3 4 1 1 1 3
+##  - attr(*, &quot;label&quot;)= chr &quot;Dummy-variable&quot;
+
+<span class="co"># label existing vector</span>
+<span class="kw">set_label</span>(x) &lt;-<span class="st"> &quot;Another Dummy-variable&quot;</span>
+<span class="kw">str</span>(x)
+##  atomic [1:10] 4 1 2 1 3 4 1 1 1 3
+##  - attr(*, &quot;label&quot;)= chr &quot;Another Dummy-variable&quot;</code></pre></div>
+<p><code>set_label()</code> can also set variable labels for a data frame. In this case, the variable attributes get an additional <code>name</code> attribute with the vector’s name. This makes it easier to see which label belongs to which vector.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">a =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+  <span class="dt">b =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+  <span class="dt">c =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+)
+x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x, <span class="dt">lab =</span> <span class="kw">c</span>(<span class="st">&quot;Variable A&quot;</span>,
+                          <span class="st">&quot;Variable B&quot;</span>,
+                          <span class="st">&quot;Variable C&quot;</span>))
+
+<span class="kw">str</span>(x)
+## 'data.frame':    10 obs. of  3 variables:
+##  $ a: atomic  3 4 2 4 4 2 1 4 4 4
+##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable A&quot;
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;a&quot;
+##  $ b: atomic  1 2 3 3 2 4 1 3 2 3
+##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable B&quot;
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;b&quot;
+##  $ c: atomic  3 1 1 4 1 2 2 3 3 2
+##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable C&quot;
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c&quot;
+
+<span class="kw">get_label</span>(x)
+##            a            b            c 
+## &quot;Variable A&quot; &quot;Variable B&quot; &quot;Variable C&quot;</code></pre></div>
+<p>An alternative to <code>set_label()</code> is <code>var_labels()</code>, which also works within pipe-workflows. <code>var_labels()</code> requires names vectors as arguments to match the column names of the input, and set the associated variable labels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">a =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+  <span class="dt">b =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>),
+  <span class="dt">c =</span> <span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">4</span>, <span class="dv">10</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+)
+
+x %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">var_labels</span>(
+    <span class="dt">a =</span> <span class="st">&quot;Variable A&quot;</span>,
+    <span class="dt">b =</span> <span class="st">&quot;Variable B&quot;</span>,
+    <span class="dt">c =</span> <span class="st">&quot;Variable C&quot;</span>
+  ) %&gt;%<span class="st"> </span>
+<span class="st">  </span><span class="kw">str</span>()
+## 'data.frame':    10 obs. of  3 variables:
+##  $ a: atomic  3 3 1 1 4 2 3 2 3 2
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable A&quot;
+##  $ b: atomic  1 1 2 3 1 4 2 1 3 2
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable B&quot;
+##  $ c: atomic  3 1 3 3 1 3 1 1 2 2
+##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable C&quot;</code></pre></div>
+</div>
+</div>
+<div id="missing-values" class="section level1">
+<h1>Missing Values</h1>
+<div id="defining-missing-values" class="section level2">
+<h2>Defining missing values</h2>
+<p><code>set_na()</code> converts values of a vector or of multiple vectors in a data frame into <code>NA</code>s. With <code>as.tag = TRUE</code>, <code>set_na()</code> creates tagged <code>NA</code> values, which means that these missing values get an information tag and a value label (which is, by default, the former value that was converted to NA). You can either return a new vector/data frame, or set <code>NA</code>s into an existing vector/data frame.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="dv">1</span>:<span class="dv">8</span>, <span class="dv">100</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)
+<span class="co"># show value distribution</span>
+<span class="kw">table</span>(x)
+## x
+##  1  2  3  4  5  6  7  8 
+## 16 10 11 13 13 12  9 16
+
+<span class="co"># set value 1 and 8 as tagged missings</span>
+x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">8</span>), <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+x
+##   [1]  3 NA NA  2  5  4 NA  6  4  6 NA NA NA  5 NA  2  3  6 NA NA  2  6  3
+##  [24]  4  7  4  4  6 NA  6  2 NA  5  3 NA NA  5  4  5 NA NA  7  4  3 NA NA
+##  [47]  2  2  6 NA  5  3  7  3 NA  4  6  7  5  2  6  5  3  5  5  4 NA  7  3
+##  [70] NA  6 NA  5 NA NA  2 NA  2  7  6  7  4 NA  3 NA  4  6  5  3 NA  5  7
+##  [93]  2  4  7  4 NA NA NA NA
+## attr(,&quot;labels&quot;)
+##  1  8 
+## NA NA
+
+<span class="co"># show value distribution, including missings</span>
+<span class="kw">table</span>(x, <span class="dt">useNA =</span> <span class="st">&quot;always&quot;</span>)
+## x
+##    2    3    4    5    6    7 &lt;NA&gt; 
+##   10   11   13   13   12    9   32
+
+<span class="co"># now let's see, which NA's were &quot;1&quot; and which were &quot;8&quot;</span>
+<span class="kw">print_tagged_na</span>(x)
+##   [1]     3 NA(8) NA(8)     2     5     4 NA(1)     6     4     6 NA(1)
+##  [12] NA(8) NA(1)     5 NA(8)     2     3     6 NA(1) NA(8)     2     6
+##  [23]     3     4     7     4     4     6 NA(8)     6     2 NA(1)     5
+##  [34]     3 NA(1) NA(1)     5     4     5 NA(1) NA(8)     7     4     3
+##  [45] NA(8) NA(8)     2     2     6 NA(1)     5     3     7     3 NA(1)
+##  [56]     4     6     7     5     2     6     5     3     5     5     4
+##  [67] NA(1)     7     3 NA(1)     6 NA(8)     5 NA(1) NA(8)     2 NA(1)
+##  [78]     2     7     6     7     4 NA(1)     3 NA(1)     4     6     5
+##  [89]     3 NA(8)     5     7     2     4     7     4 NA(8) NA(8) NA(8)
+## [100] NA(8)
+
+x &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))
+x
+## [1] a b c
+## Levels: a b c
+
+<span class="co"># set NA into existing vector</span>
+x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="dt">value =</span> <span class="st">&quot;b&quot;</span>, <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+x
+## [1] a    &lt;NA&gt; c   
+## attr(,&quot;labels&quot;)
+##  b 
+## NA 
+## Levels: a c</code></pre></div>
+</div>
+<div id="getting-missing-values" class="section level2">
+<h2>Getting missing values</h2>
+<p>The <code>get_na()</code> function returns all tagged NA values. We still use the vector <code>x</code> from the previous example.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_na</span>(x)
+##  b 
+## NA</code></pre></div>
+<p>To see the tags of the NA values, use the <code>as.tag</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_na</span>(x, <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+##       b 
+## &quot;NA(b)&quot;</code></pre></div>
+</div>
+<div id="replacing-specific-na-with-values" class="section level2">
+<h2>Replacing specific NA with values</h2>
+<p>While <code>set_na()</code> allows you to replace values with (tagged) NA’s, <code>replace_na()</code> allows you to replace either all NA values of a vector or specific tagged NA values with a non-NA value.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(efc$c84cop3)
+##  atomic [1:908] 2 3 1 3 1 3 4 2 3 1 ...
+##  - attr(*, &quot;label&quot;)= chr &quot;does caregiving cause difficulties in your relationship with your friends?&quot;
+##  - attr(*, &quot;labels&quot;)= Named num [1:4] 1 2 3 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:4] &quot;Never&quot; &quot;Sometimes&quot; &quot;Often&quot; &quot;Always&quot;
+
+efc$c84cop3 &lt;-<span class="st"> </span><span class="kw">set_na</span>(efc$c84cop3, <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+<span class="kw">get_na</span>(efc$c84cop3)
+## Sometimes     Often 
+##        NA        NA
+
+<span class="kw">get_na</span>(<span class="kw">replace_na</span>(efc$c84cop3, <span class="dt">value =</span> <span class="dv">2</span>, <span class="dt">na.label =</span> <span class="st">&quot;restored NA&quot;</span>, <span class="dt">tagged.na =</span> <span class="st">&quot;2&quot;</span>))
+## Often 
+##    NA</code></pre></div>
+</div>
+<div id="replacing-values-labels" class="section level2">
+<h2>Replacing values labels</h2>
+<p>With <code>replace_labels()</code>, you can replace (change) value labels of labelled values. This can also be used to change the labels of tagged missing values. Make sure to know the missing tag, which can be accessed via <code>get_na()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(efc$c82cop1)
+##  atomic [1:908] 3 3 2 4 3 2 4 3 3 3 ...
+##  - attr(*, &quot;label&quot;)= chr &quot;do you feel you cope well as caregiver?&quot;
+##  - attr(*, &quot;labels&quot;)= Named num [1:4] 1 2 3 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:4] &quot;never&quot; &quot;sometimes&quot; &quot;often&quot; &quot;always&quot;
+
+efc$c82cop1 &lt;-<span class="st"> </span><span class="kw">set_na</span>(efc$c82cop1, <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+<span class="kw">get_na</span>(efc$c82cop1, <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+## sometimes     often 
+##   &quot;NA(2)&quot;   &quot;NA(3)&quot;
+
+efc$c82cop1 &lt;-<span class="st"> </span><span class="kw">replace_labels</span>(efc$c82cop1, <span class="dt">value =</span> <span class="kw">c</span>(<span class="st">&quot;new NA label&quot;</span> =<span class="st"> </span><span class="kw">tagged_na</span>(<span class="st">&quot;2&quot;</span>)))
+## tagged NA 'sometimes' was replaced with new value label.
+
+<span class="kw">get_na</span>(efc$c82cop1, <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+## new NA label        often 
+##      &quot;NA(2)&quot;      &quot;NA(3)&quot;</code></pre></div>
+</div>
+</div>
+<div id="converting-labelled-vectors" class="section level1">
+<h1>Converting Labelled Vectors</h1>
+<div id="converting-labelled-numeric-into-factor" class="section level2">
+<h2>Converting labelled numeric into factor</h2>
+<p><code>to_label()</code> converts numeric labelled vectors into a factor and sets the former labels as factor levels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw">to_label</span>(efc$c87cop6))
+## [1] Never     Never     Never     Never     Sometimes Sometimes
+## Levels: Never Sometimes Often Always</code></pre></div>
+<p>By default, <code>to_label()</code> preserves all <code>NA</code> values, even if these are tagged NA’s with value labels. Use <code>drop.na</code> to change this behaviour.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc$c83cop2 &lt;-<span class="st"> </span><span class="kw">set_na</span>(efc$c83cop2, <span class="dt">value =</span> <span class="dv">3</span>, <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># &quot;Often&quot; is now a tagged NA</span>
+<span class="kw">get_na</span>(efc$c83cop2, <span class="dt">as.tag =</span> T)
+##   Often 
+## &quot;NA(3)&quot;
+
+<span class="kw">head</span>(<span class="kw">to_label</span>(efc$c83cop2))
+## [1] Sometimes &lt;NA&gt;      Sometimes Never     Sometimes Sometimes
+## Levels: Never Sometimes Always
+
+<span class="kw">table</span>(<span class="kw">to_label</span>(efc$c83cop2))
+## 
+##     Never Sometimes    Always 
+##       186       547        39
+
+<span class="co"># &quot;Often&quot; is a tagged NA. This NA value will be used </span>
+<span class="co"># as factor level, when drop.na is set to FALSE</span>
+<span class="kw">head</span>(<span class="kw">to_label</span>(efc$c83cop2, <span class="dt">drop.na =</span> <span class="ot">FALSE</span>))
+## [1] Sometimes Often     Sometimes Never     Sometimes Sometimes
+## Levels: Never Sometimes Always Often
+
+<span class="kw">table</span>(<span class="kw">to_label</span>(efc$c83cop2, <span class="dt">drop.na =</span> <span class="ot">FALSE</span>))
+## 
+##     Never Sometimes    Always     Often 
+##       186       547        39       130</code></pre></div>
+<p><code>to_label()</code> only converts those values into factor levels, which have associated value labels. All other values are converted to <code>NA</code>. However, with the <code>add.non.labelled</code> argument additional factor levels for non-labelled values are created.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="ot">NA</span>)
+x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(
+  x, 
+  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">`</span><span class="dt">1</span><span class="st">`</span> =<span class="st"> &quot;always&quot;</span>,
+             <span class="st">`</span><span class="dt">4</span><span class="st">`</span> =<span class="st"> &quot;never&quot;</span>)
+)
+<span class="kw">str</span>(x)
+##  atomic [1:6] 1 2 3 2 4 NA
+##  - attr(*, &quot;labels&quot;)= Named num [1:2] 1 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;always&quot; &quot;never&quot;
+
+<span class="kw">to_label</span>(x)
+## [1] always &lt;NA&gt;   &lt;NA&gt;   &lt;NA&gt;   never  &lt;NA&gt;  
+## Levels: always never
+
+<span class="kw">to_label</span>(x, <span class="dt">add.non.labelled =</span> T)
+## [1] always 2      3      2      never  &lt;NA&gt;  
+## Levels: always 2 3 never</code></pre></div>
+</div>
+<div id="converting-labelled-numeric-into-numeric-factor" class="section level2">
+<h2>Converting labelled numeric into numeric factor</h2>
+<p><code>to_factor()</code> converts any numeric labelled vector into a factor with numeric levels, however, value and variable lables are preserved as attribute.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw">to_factor</span>(efc$e42dep))
+##  Factor w/ 4 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;: 3 3 3 4 4 4 4 4 4 4 ...
+##  - attr(*, &quot;labels&quot;)= Named num [1:4] 1 2 3 4
+##   ..- attr(*, &quot;names&quot;)= chr [1:4] &quot;independent&quot; &quot;slightly dependent&quot; &quot;moderately dependent&quot; &quot;severely dependent&quot;
+##  - attr(*, &quot;label&quot;)= chr &quot;elder's dependency&quot;
+
+<span class="kw">str</span>(<span class="kw">as.factor</span>(efc$e42dep))
+##  Factor w/ 4 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;: 3 3 3 4 4 4 4 4 4 4 ...</code></pre></div>
+<p>You can also set a new reference level when converting to factor with the <code>ref.lvl</code> argument.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_labels</span>(<span class="kw">as.factor</span>(efc$e42dep), <span class="dt">include.values =</span> <span class="st">&quot;p&quot;</span>)
+## [1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot;
+
+<span class="kw">get_labels</span>(<span class="kw">to_factor</span>(efc$e42dep), <span class="dt">include.values =</span> <span class="st">&quot;p&quot;</span>)
+## [1] &quot;[1] independent&quot;          &quot;[2] slightly dependent&quot;  
+## [3] &quot;[3] moderately dependent&quot; &quot;[4] severely dependent&quot;
+
+<span class="kw">get_labels</span>(<span class="kw">to_factor</span>(efc$e42dep, <span class="dt">ref.lvl =</span> <span class="dv">3</span>), <span class="dt">include.values =</span> <span class="st">&quot;p&quot;</span>)
+## [1] &quot;[1] moderately dependent&quot; &quot;[2] independent&quot;         
+## [3] &quot;[3] slightly dependent&quot;   &quot;[4] severely dependent&quot;</code></pre></div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

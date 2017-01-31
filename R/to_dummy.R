@@ -39,7 +39,6 @@
 #'   select(e42dep, e16sex, c172code) %>%
 #'   to_dummy()
 #'
-#'
 #' @importFrom tibble as_tibble
 #' @export
 to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) {

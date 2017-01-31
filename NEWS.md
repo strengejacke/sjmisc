@@ -1,5 +1,9 @@
 # sjmisc 2.3.0
 
+## General
+
+* Added package-vignettes.
+
 ## New functions
 
 * `center()` and `std()` are moving from package `sjstats` to `sjmisc`.
