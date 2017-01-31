@@ -1,8 +1,7 @@
 #' @title Replace specific values in vector with NA
 #' @name set_na
 #'
-#' @description This function replaces specific values of a variable, data frame
-#'                or list of variables with missings (\code{NA}).
+#' @description This function replaces specific values of variables with \code{NA}.
 #'
 #' @seealso \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
 #'            values, \code{\link{rec}} for general recoding of variables and
@@ -10,9 +9,6 @@
 #'            \code{\link{get_na}} to get values of missing values in
 #'            labelled vectors.
 #'
-#' @param x Variable (vector), data frame or list of variables where new
-#'          missing values should be defined. If \code{x} is a \code{data.frame}, each
-#'          column is assumed to be a new variable, where missings should be defined.
 #' @param value Numeric vector with values that should be replaced with NA values,
 #'        or a character vector if values of factors or character vectors should be
 #'        replaced. For labelled vectors, may also be the name of a value label. In
@@ -24,14 +20,20 @@
 #'          by \code{tagged_na}, else by usual \code{NA} values. Use a named
 #'          vector to assign the value label to the tagged NA value (see 'Examples').
 #'
+#' @inheritParams to_factor
+#'
 #' @return \code{x}, with all elements of \code{value} being replaced by \code{NA}.
+#'           If \code{x} is a data frame, the complete data frame \code{x} will
+#'           be returned, with NA's set for variables specified in \code{...};
+#'           if \code{...} is not specified, applies to all variables in the
+#'           data frame.
 #'
 #' @note Labels from values that are replaced with NA and no longer used will be
 #'         removed from \code{x}, however, other value and variable label
 #'         attributes (see, for instance, \code{\link{get_labels}} or
 #'         \code{\link{set_labels}}) are preserved.
 #'
-#' @details \code{set_na} converts all values defined in \code{value} with
+#' @details \code{set_na()} converts all values defined in \code{value} with
 #'            a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
 #'            Tagged \code{NA}s work exactly like regular R missing values
 #'            except that they store one additional byte of information: a tag,
@@ -45,15 +47,15 @@
 #' # show value distribution
 #' table(dummy)
 #' # set value 1 and 8 as missings
-#' dummy <- set_na(dummy, c(1, 8))
+#' dummy <- set_na(dummy, value = c(1, 8))
 #' # show value distribution, including missings
 #' table(dummy, useNA = "always")
 #'
 #' # add named vector as further missing value
-#' set_na(dummy, c("Refused" = 5), as.tag = TRUE)
+#' set_na(dummy, value = c("Refused" = 5), as.tag = TRUE)
 #' # see different missing types
 #' library(haven)
-#' print_tagged_na(set_na(dummy, c("Refused" = 5), as.tag = TRUE))
+#' print_tagged_na(set_na(dummy, value = c("Refused" = 5), as.tag = TRUE))
 #'
 #'
 #' # create sample data frame
@@ -62,23 +64,26 @@
 #'                     var3 = sample(1:6, 100, replace = TRUE))
 #' # set value 2 and 4 as missings
 #' library(dplyr)
-#' dummy %>% set_na(c(2, 4)) %>% head()
-#' dummy %>% set_na(c(2, 4), as.tag = TRUE) %>% get_na()
-#' dummy %>% set_na(c(2, 4), as.tag = TRUE) %>% get_values()
+#' dummy %>% set_na(value = c(2, 4)) %>% head()
+#' dummy %>% set_na(value = c(2, 4), as.tag = TRUE) %>% get_na()
+#' dummy %>% set_na(value = c(2, 4), as.tag = TRUE) %>% get_values()
 #'
-#' # create list of variables
 #' data(efc)
-#' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+#' dummy <- data.frame(
+#'   var1 = efc$c82cop1,
+#'   var2 = efc$c83cop2,
+#'   var3 = efc$c84cop3
+#' )
 #' # check original distribution of categories
 #' lapply(dummy, table, useNA = "always")
-#' # set 3 to NA
-#' lapply(set_na(dummy, 3), table, useNA = "always")
+#' # set 3 to NA for two variables
+#' lapply(set_na(dummy, var1, var3, value = 3), table, useNA = "always")
 #'
 #' # drop unused factor levels when being set to NA
 #' x <- factor(c("a", "b", "c"))
 #' x
-#' set_na(x, "b", as.tag = TRUE)
-#' set_na(x, "b", drop.levels = FALSE, as.tag = TRUE)
+#' set_na(x, value = "b", as.tag = TRUE)
+#' set_na(x, value = "b", drop.levels = FALSE, as.tag = TRUE)
 #'
 #' # set_na() can also remove a missing by defining the value label
 #' # of the value that should be replaced with NA. This is in particular
@@ -86,44 +91,65 @@
 #' # is assigned with different values accross variables
 #' x1 <- sample(1:4, 20, replace = TRUE)
 #' x2 <- sample(1:7, 20, replace = TRUE)
-#' set_labels(x1) <- c("Refused" = 3, "No answer" = 4)
-#' set_labels(x2) <- c("Refused" = 6, "No answer" = 7)
+#' x1 <- set_labels(x1, labels = c("Refused" = 3, "No answer" = 4))
+#' x2 <- set_labels(x2, labels = c("Refused" = 6, "No answer" = 7))
 #'
 #' tmp <- data.frame(x1, x2)
 #' get_labels(tmp)
-#' get_labels(set_na(tmp, "No answer"))
-#' get_labels(set_na(tmp, c("Refused", "No answer")))
+#' get_labels(set_na(tmp, value = "No answer"))
+#' get_labels(set_na(tmp, value = c("Refused", "No answer")))
 #'
 #' # show values
 #' tmp
-#' set_na(tmp, c("Refused", "No answer"))
+#' set_na(tmp, value = c("Refused", "No answer"))
 #'
 #'
 #' @export
-set_na <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
-  UseMethod("set_na")
-}
+set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
+  # check for valid value
+  if (is.null(value) || is.na(value)) return(x)
 
-#' @export
-set_na.data.frame <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
-  tibble::as_tibble(lapply(x, FUN = set_na_helper, value, drop.levels, as.tag))
-}
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-set_na.list <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
-  lapply(x, FUN = set_na_helper, value, drop.levels, as.tag)
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-set_na.default <- function(x, value, drop.levels = TRUE, as.tag = FALSE) {
-  set_na_helper(x, value, drop.levels, as.tag)
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- set_na_helper(
+        x = .dat[[i]],
+        value = value,
+        drop.levels = drop.levels,
+        as.tag = as.tag
+      )
+    }
+
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+
+  } else {
+    x <- set_na_helper(
+      x = .dat,
+      value = value,
+      drop.levels = drop.levels,
+      as.tag = as.tag
+    )
+  }
+
+  x
 }
 
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag
 set_na_helper <- function(x, value, drop.levels, as.tag) {
-  # check if we have any values at all?
-  if (is.null(value)) return(x)
   # get label attribute
   attr.string <- getValLabelAttribute(x)
 
@@ -221,16 +247,4 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
   }
 
   return(x)
-}
-
-#' @rdname set_na
-#' @export
-`set_na<-` <- function(x, drop.levels = TRUE, as.tag = FALSE, value) {
-  UseMethod("set_na<-")
-}
-
-#' @export
-`set_na<-.default` <- function(x, drop.levels = TRUE, as.tag = FALSE, value) {
-  x <- set_na(x, value, drop.levels, as.tag)
-  x
 }

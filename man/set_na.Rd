@@ -2,17 +2,16 @@
 % Please edit documentation in R/set_na.R
 \name{set_na}
 \alias{set_na}
-\alias{set_na<-}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, value, drop.levels = TRUE, as.tag = FALSE)
-
-set_na(x, drop.levels = TRUE, as.tag = FALSE) <- value
+set_na(x, ..., value, drop.levels = TRUE, as.tag = FALSE)
 }
 \arguments{
-\item{x}{Variable (vector), data frame or list of variables where new
-missing values should be defined. If \code{x} is a \code{data.frame}, each
-column is assumed to be a new variable, where missings should be defined.}
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{value}{Numeric vector with values that should be replaced with NA values,
 or a character vector if values of factors or character vectors should be
@@ -29,13 +28,16 @@ vector to assign the value label to the tagged NA value (see 'Examples').}
 }
 \value{
 \code{x}, with all elements of \code{value} being replaced by \code{NA}.
+          If \code{x} is a data frame, the complete data frame \code{x} will
+          be returned, with NA's set for variables specified in \code{...};
+          if \code{...} is not specified, applies to all variables in the
+          data frame.
 }
 \description{
-This function replaces specific values of a variable, data frame
-               or list of variables with missings (\code{NA}).
+This function replaces specific values of variables with \code{NA}.
 }
 \details{
-\code{set_na} converts all values defined in \code{value} with
+\code{set_na()} converts all values defined in \code{value} with
            a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
            Tagged \code{NA}s work exactly like regular R missing values
            except that they store one additional byte of information: a tag,
@@ -55,15 +57,15 @@ dummy <- sample(1:8, 100, replace = TRUE)
 # show value distribution
 table(dummy)
 # set value 1 and 8 as missings
-dummy <- set_na(dummy, c(1, 8))
+dummy <- set_na(dummy, value = c(1, 8))
 # show value distribution, including missings
 table(dummy, useNA = "always")
 
 # add named vector as further missing value
-set_na(dummy, c("Refused" = 5), as.tag = TRUE)
+set_na(dummy, value = c("Refused" = 5), as.tag = TRUE)
 # see different missing types
 library(haven)
-print_tagged_na(set_na(dummy, c("Refused" = 5), as.tag = TRUE))
+print_tagged_na(set_na(dummy, value = c("Refused" = 5), as.tag = TRUE))
 
 
 # create sample data frame
@@ -72,23 +74,26 @@ dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
                     var3 = sample(1:6, 100, replace = TRUE))
 # set value 2 and 4 as missings
 library(dplyr)
-dummy \%>\% set_na(c(2, 4)) \%>\% head()
-dummy \%>\% set_na(c(2, 4), as.tag = TRUE) \%>\% get_na()
-dummy \%>\% set_na(c(2, 4), as.tag = TRUE) \%>\% get_values()
+dummy \%>\% set_na(value = c(2, 4)) \%>\% head()
+dummy \%>\% set_na(value = c(2, 4), as.tag = TRUE) \%>\% get_na()
+dummy \%>\% set_na(value = c(2, 4), as.tag = TRUE) \%>\% get_values()
 
-# create list of variables
 data(efc)
-dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+dummy <- data.frame(
+  var1 = efc$c82cop1,
+  var2 = efc$c83cop2,
+  var3 = efc$c84cop3
+)
 # check original distribution of categories
 lapply(dummy, table, useNA = "always")
-# set 3 to NA
-lapply(set_na(dummy, 3), table, useNA = "always")
+# set 3 to NA for two variables
+lapply(set_na(dummy, var1, var3, value = 3), table, useNA = "always")
 
 # drop unused factor levels when being set to NA
 x <- factor(c("a", "b", "c"))
 x
-set_na(x, "b", as.tag = TRUE)
-set_na(x, "b", drop.levels = FALSE, as.tag = TRUE)
+set_na(x, value = "b", as.tag = TRUE)
+set_na(x, value = "b", drop.levels = FALSE, as.tag = TRUE)
 
 # set_na() can also remove a missing by defining the value label
 # of the value that should be replaced with NA. This is in particular
@@ -96,17 +101,17 @@ set_na(x, "b", drop.levels = FALSE, as.tag = TRUE)
 # is assigned with different values accross variables
 x1 <- sample(1:4, 20, replace = TRUE)
 x2 <- sample(1:7, 20, replace = TRUE)
-set_labels(x1) <- c("Refused" = 3, "No answer" = 4)
-set_labels(x2) <- c("Refused" = 6, "No answer" = 7)
+x1 <- set_labels(x1, labels = c("Refused" = 3, "No answer" = 4))
+x2 <- set_labels(x2, labels = c("Refused" = 6, "No answer" = 7))
 
 tmp <- data.frame(x1, x2)
 get_labels(tmp)
-get_labels(set_na(tmp, "No answer"))
-get_labels(set_na(tmp, c("Refused", "No answer")))
+get_labels(set_na(tmp, value = "No answer"))
+get_labels(set_na(tmp, value = c("Refused", "No answer")))
 
 # show values
 tmp
-set_na(tmp, c("Refused", "No answer"))
+set_na(tmp, value = c("Refused", "No answer"))
 
 
 }

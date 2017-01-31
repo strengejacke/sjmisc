@@ -59,28 +59,32 @@ For (partially) labelled vectors, \code{zap_labels()} will replace
 data(efc)
 str(efc$e42dep)
 
-x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
+x <- set_labels(
+  efc$e42dep,
+  labels = c("independent" = 1, "severe dependency" = 4)
+)
 table(x)
 get_values(x)
 str(x)
 
 # zap all labelled values
-x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 table(zap_labels(x))
 get_values(zap_labels(x))
 str(zap_labels(x))
 
 # zap all unlabelled values
-x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 table(zap_unlabelled(x))
 get_values(zap_unlabelled(x))
 str(zap_unlabelled(x))
 
 # in a pipe-workflow
 library(dplyr)
-set_labels(efc$e42dep) <-  c("independent" = 1, "severe dependency" = 4)
 efc \%>\%
   select(c172code, e42dep) \%>\%
+  set_labels(
+    e42dep,
+    labels = c("independent" = 1, "severe dependency" = 4)
+  ) \%>\%
   zap_labels()
 
 # ------------------------
@@ -94,7 +98,7 @@ data(efc)
 # recode carers age into groups of width 5
 x <- rec(efc$c160age, recodes = rp$pattern)
 # add value labels to new vector
-set_labels(x) <- rp$labels
+x <- set_labels(x, labels = rp$labels)
 
 # watch result. due to recode-pattern, we have age groups with
 # no observations (zero-counts)

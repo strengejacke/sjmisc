@@ -61,8 +61,9 @@ x <- to_factor(efc$e42dep)
 frq(x)
 
 # create parially labelled vector
-x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency",
-                              `9` = "missing value"))
+x <- set_labels(efc$e42dep,
+                labels = c(`1` = "independent", `4` = "severe dependency",
+                           `9` = "missing value"))
 
 # only copy existing value labels
 to_factor(x)

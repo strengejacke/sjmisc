@@ -4,25 +4,42 @@
 \alias{recode_to}
 \title{Recode variable categories into new values}
 \usage{
-recode_to(x, lowest = 0, highest = -1)
+recode_to(x, ..., lowest = 0, highest = -1, suffix = "_r0")
 }
 \arguments{
-\item{x}{Variable (vector), \code{data.frame} or \code{list} of variables that should be recoded.}
+\item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{lowest}{Indicating the lowest category value for recoding. Default is 0, so the new
 variable starts with value 0.}
 
-\item{highest}{If specified and larger than \code{lowest}, all category values larger than
+\item{highest}{If specified and greater than \code{lowest}, all category values larger than
 \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this argument is ignored
 and no NA's will be produced.}
+
+\item{suffix}{String value, will be appended to variable (column) names of
+\code{x}, if \code{x} is a data frame. If \code{x} is not a data
+frame, this argument will be ignored. The default value to suffix
+column names in a data frame depends on the function call:
+\itemize{
+  \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
+  \item recoded variables (\code{recode_to()}) will be suffixed with \code{"_r0"}
+  \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
+  \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
+  \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
+  \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
+  \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
+}}
 }
 \value{
-A new variable with recoded category values, where \code{lowest} indicates the lowest
-          value; or a data frame or list of variables where variables have
-          been recoded as described.
+\code{x} with recoded category values, where \code{lowest} indicates the lowest
+          value;  If \code{x} is a data frame, only the recoded variables will be returned.
 }
 \description{
-Recodes (or "renumbers") the categories of \code{var} into new category values, beginning
+Recodes (or "renumbers") the categories of variables into new category values, beginning
                with the lowest value specified by \code{lowest}. Useful if you want
                to recode dummy variables with 1/2 coding to 0/1 coding, or recoding scales from
                1-4 to 0-3 etc.
@@ -43,20 +60,26 @@ recode_to(dummy)
 
 # lowest value starting with 1
 dummy <- sample(11:15, 10, replace = TRUE)
-recode_to(dummy, 1)
+recode_to(dummy, lowest = 1)
 
 # lowest value starting with 1, highest with 3
 # all others set to NA
 dummy <- sample(11:15, 10, replace = TRUE)
-recode_to(dummy, 1, 3)
+recode_to(dummy, lowest = 1, highest = 3)
 
-# create list of variables
+# recode multiple variables at once
 data(efc)
-dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
-# check original distribution of categories
-lapply(dummy, table)
-# renumber from 1 to 0
-lapply(recode_to(dummy), table)
+recode_to(efc, c82cop1, c83cop2, c84cop3)
+
+library(dplyr)
+efc \%>\%
+  select(c82cop1, c83cop2, c84cop3) \%>\%
+  mutate(
+    c82new = recode_to(c83cop2, lowest = 5),
+    c83new = recode_to(c84cop3, lowest = 3)
+  ) \%>\%
+  head()
+
 
 }
 \seealso{

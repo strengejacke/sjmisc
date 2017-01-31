@@ -2,15 +2,16 @@
 % Please edit documentation in R/replace_na.R
 \name{replace_na}
 \alias{replace_na}
-\alias{replace_na<-}
 \title{Replace NA with specific values}
 \usage{
-replace_na(x, value, na.label = NULL, tagged.na = NULL)
-
-replace_na(x, na.label = NULL, tagged.na = NULL) <- value
+replace_na(x, ..., value, na.label = NULL, tagged.na = NULL)
 }
 \arguments{
 \item{x}{A vector or data frame.}
+
+\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
+a data frame (and no vector) and only selected variables
+from \code{x} should be processed. See 'Examples'.}
 
 \item{value}{Value that will replace the \code{\link{NA}}'s.}
 
@@ -22,7 +23,11 @@ that will be replaced by \code{value}. Herewith it is possible
 to replace only specific \code{NA} values of \code{x}.}
 }
 \value{
-\code{x}, where \code{NA}'s are replaced with \code{value}.
+\code{x}, where \code{NA}'s are replaced with \code{value}. If \code{x}
+          is a data frame, the complete data frame \code{x} will be returned,
+          with replaced NA's for variables specified in \code{...};
+          if \code{...} is not specified, applies to all variables in the
+          data frame.
 }
 \description{
 This function replaces (tagged) NA's of a variable, data frame
@@ -45,19 +50,23 @@ Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 \examples{
 data(efc)
 table(efc$e42dep, useNA = "always")
-table(replace_na(efc$e42dep, 99), useNA = "always")
+table(replace_na(efc$e42dep, value = 99), useNA = "always")
 
 # the original labels
-get_labels(replace_na(efc$e42dep, 99))
+get_labels(replace_na(efc$e42dep, value = 99))
 # NA becomes "99", and is labelled as "former NA"
-get_labels(replace_na(efc$e42dep, 99, na.label = "former NA"),
+get_labels(replace_na(efc$e42dep, value = 99, na.label = "former NA"),
            include.values = "p")
 
-dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
+dummy <- data.frame(
+  v1 = efc$c82cop1,
+  v2 = efc$c83cop2,
+  v3 = efc$c84cop3
+)
 # show original distribution
 lapply(dummy, table, useNA = "always")
 # show variables, NA's replaced with 99
-lapply(replace_na(dummy, 99), table, useNA = "always")
+lapply(replace_na(dummy, v2, v3, value = 99), table, useNA = "always")
 
 library(haven)
 x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
@@ -68,22 +77,22 @@ x
 get_na(x)
 
 # replace only the NA, which is tagged as NA(c)
-replace_na(x, 2, tagged.na = "c")
-get_na(replace_na(x, 2, tagged.na = "c"))
+replace_na(x, value = 2, tagged.na = "c")
+get_na(replace_na(x, value = 2, tagged.na = "c"))
 
 table(x)
-table(replace_na(x, 2, tagged.na = "c"))
+table(replace_na(x, value = 2, tagged.na = "c"))
 
 # tagged NA also works for non-labelled class
 # init vector
 x <- c(1, 2, 3, 4)
 # set values 2 and 3 as NA, will automatically become
 # tagged NAs by 'set_na()'.
-set_na(x) <- c(2, 3)
+x <- set_na(x, value = c(2, 3))
 # see result
 x
 # now replace only NA tagged with 2 with value 5
-replace_na(x, 5, tagged.na = "2")
+replace_na(x, value = 5, tagged.na = "2")
 
 }
 \seealso{

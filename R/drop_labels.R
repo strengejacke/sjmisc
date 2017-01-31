@@ -36,6 +36,6 @@ drop_labels_helper <- function(x, drop.na) {
   # remove labels with no values in data
   tidy.labels <- tidy.labels[get_values(x, drop.na = drop.na) %in% names(table(x))]
   # set labels
-  set_labels(x, drop.na = drop.na) <- tidy.labels
+  x <- set_labels(x, labels = tidy.labels, drop.na = drop.na)
   return(x)
 }

@@ -52,8 +52,9 @@
 #' frq(x)
 #'
 #' # create parially labelled vector
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency",
-#'                               `9` = "missing value"))
+#' x <- set_labels(efc$e42dep,
+#'                 labels = c(`1` = "independent", `4` = "severe dependency",
+#'                            `9` = "missing value"))
 #'
 #' # only copy existing value labels
 #' to_factor(x)
@@ -136,7 +137,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   x <- factor(x, exclude = c(NA_character_, "NaN"))
 
   # set back value labels
-  x <- suppressMessages(set_labels(x, lab.switch, force.labels = TRUE, force.values = FALSE))
+  x <- suppressMessages(set_labels(x, labels = lab.switch, force.labels = TRUE, force.values = FALSE))
   # set back variable labels
   x <- set_label(x, varlab)
   # change reference level?

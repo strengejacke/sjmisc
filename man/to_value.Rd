@@ -61,14 +61,14 @@ table(to_value(dummy))
 
 # for numeric factor levels, value labels will be used, if present
 dummy1 <- factor(c("3", "4", "6"))
-set_labels(dummy1) <- c("first", "2nd", "3rd")
+dummy1 <- set_labels(dummy1, labels = c("first", "2nd", "3rd"))
 dummy1
 to_value(dummy1)
 
 # for non-numeric factor levels, these will be used.
 # value labels will be ignored
 dummy2 <- factor(c("D", "F", "H"))
-set_labels(dummy2) <- c("first", "2nd", "3rd")
+dummy2 <- set_labels(dummy2, labels = c("first", "2nd", "3rd"))
 dummy2
 to_value(dummy2)
 

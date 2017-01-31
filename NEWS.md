@@ -3,11 +3,12 @@
 ## New functions
 
 * `center()` and `std()` are moving from package `sjstats` to `sjmisc`.
+* `add_columns()` to bind columns of first data frame at the end of all data frames.
 
 ## Changes to functions
 
 * `frq()` now has the same argument-structure as `flat_table()`.
-* Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`, `count_na()`, `rec()`, `dicho()`, `split_var()`, `drop_labels()`, `fill_labels()`, `group_var()`, `group_labels()`, `ref_lvl()`.
+* Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`, `count_na()`, `rec()`, `dicho()`, `split_var()`, `drop_labels()`, `fill_labels()`, `group_var()`, `group_labels()`, `ref_lvl()`, `recode_to()`, `replace_na()`, `set_na()` and `set_labels()`..
 
 # sjmisc 2.2.1
 

@@ -133,7 +133,7 @@ get_labels(c1)
 # create vector
 x <- c(1, 2, 3, 2, 4, NA)
 # add less labels than values
-x <- set_labels(x, c("yes", "maybe", "no"), force.values = FALSE)
+x <- set_labels(x, labels = c("yes", "maybe", "no"), force.values = FALSE)
 # get labels for labelled values only
 get_labels(x)
 # get labels for all values
@@ -152,7 +152,10 @@ get_labels(x, include.values = "n", drop.na = FALSE)
 
 # create vector with unused labels
 data(efc)
-set_labels(efc$e42dep) <- c("independent" = 1, "dependent" = 4, "not used" = 5)
+efc$e42dep <- set_labels(
+  efc$e42dep,
+  labels = c("independent" = 1, "dependent" = 4, "not used" = 5)
+)
 get_labels(efc$e42dep)
 get_labels(efc$e42dep, drop.unused = TRUE)
 get_labels(efc$e42dep, include.non.labelled = TRUE, drop.unused = TRUE)

@@ -1,7 +1,7 @@
 #' @title Recode variable categories into new values
 #' @name recode_to
 #'
-#' @description Recodes (or "renumbers") the categories of \code{var} into new category values, beginning
+#' @description Recodes (or "renumbers") the categories of variables into new category values, beginning
 #'                with the lowest value specified by \code{lowest}. Useful if you want
 #'                to recode dummy variables with 1/2 coding to 0/1 coding, or recoding scales from
 #'                1-4 to 0-3 etc.
@@ -9,15 +9,17 @@
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
 #'            for setting \code{\link{NA}} values.
 #'
-#' @param x Variable (vector), \code{data.frame} or \code{list} of variables that should be recoded.
 #' @param lowest Indicating the lowest category value for recoding. Default is 0, so the new
 #'          variable starts with value 0.
-#' @param highest If specified and larger than \code{lowest}, all category values larger than
+#' @param highest If specified and greater than \code{lowest}, all category values larger than
 #'          \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this argument is ignored
 #'          and no NA's will be produced.
-#' @return A new variable with recoded category values, where \code{lowest} indicates the lowest
-#'           value; or a data frame or list of variables where variables have
-#'           been recoded as described.
+#'
+#' @inheritParams to_factor
+#' @inheritParams rec
+#'
+#' @return \code{x} with recoded category values, where \code{lowest} indicates the lowest
+#'           value;  If \code{x} is a data frame, only the recoded variables will be returned.
 #'
 #' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
 #'         or \code{\link{set_labels}}) are preserved.
@@ -34,39 +36,67 @@
 #'
 #' # lowest value starting with 1
 #' dummy <- sample(11:15, 10, replace = TRUE)
-#' recode_to(dummy, 1)
+#' recode_to(dummy, lowest = 1)
 #'
 #' # lowest value starting with 1, highest with 3
 #' # all others set to NA
 #' dummy <- sample(11:15, 10, replace = TRUE)
-#' recode_to(dummy, 1, 3)
+#' recode_to(dummy, lowest = 1, highest = 3)
 #'
-#' # create list of variables
+#' # recode multiple variables at once
 #' data(efc)
-#' dummy <- list(efc$c82cop1, efc$c83cop2, efc$c84cop3)
-#' # check original distribution of categories
-#' lapply(dummy, table)
-#' # renumber from 1 to 0
-#' lapply(recode_to(dummy), table)
+#' recode_to(efc, c82cop1, c83cop2, c84cop3)
+#'
+#' library(dplyr)
+#' efc %>%
+#'   select(c82cop1, c83cop2, c84cop3) %>%
+#'   mutate(
+#'     c82new = recode_to(c83cop2, lowest = 5),
+#'     c83new = recode_to(c84cop3, lowest = 3)
+#'   ) %>%
+#'   head()
+#'
 #'
 #' @export
-recode_to <- function(x, lowest = 0, highest = -1) {
-  UseMethod("recode_to")
-}
+recode_to <- function(x, ..., lowest = 0, highest = -1, suffix = "_r0") {
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-#' @export
-recode_to.data.frame <- function(x, lowest = 0, highest = -1) {
-  tibble::as_tibble(lapply(x, FUN = rec_to_helper, lowest, highest))
-}
+  # get variable names
+  .vars <- dot_names(.dots)
 
-#' @export
-recode_to.list <- function(x, lowest = 0, highest = -1) {
-  lapply(x, FUN = rec_to_helper, lowest, highest)
-}
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
 
-#' @export
-recode_to.default <- function(x, lowest = 0, highest = -1) {
-  rec_to_helper(x, lowest, highest)
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- rec_to_helper(
+        x = .dat[[i]],
+        lowest = lowest,
+        highest = highest
+      )
+    }
+
+    # coerce to tibble and select only recoded variables
+    x <- tibble::as_tibble(x[.vars])
+
+    # add suffix to recoded variables?
+    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
+      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
+    }
+  } else {
+    x <- rec_to_helper(
+      x = .dat,
+      lowest = lowest,
+      highest = highest
+    )
+  }
+
+  x
 }
 
 
@@ -76,25 +106,32 @@ rec_to_helper <- function(x, lowest, highest) {
                         attr.only = TRUE,
                         include.values = NULL,
                         include.non.labelled = TRUE)
+
   # retrieve variable label
   var_lab <- get_label(x)
+
   # check if factor
   if (is.factor(x)) {
     # try to convert to numeric
     x <- as.numeric(as.character(x))
   }
+
   # retrieve lowest category
   minval <- min(x, na.rm = TRUE)
+
   # check substraction difference between current lowest value
   # and requested lowest value
   downsize <- minval - lowest
   x <- sapply(x, function(y) y - downsize)
+
   # check for highest range
   # set NA to all values out of range
   if (highest > lowest) x[x > highest] <- NA
+
   # set back labels, if we have any
-  if (!is.null(val_lab)) x <- suppressWarnings(set_labels(x, val_lab))
-  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, var_lab))
+  if (!is.null(val_lab)) x <- suppressWarnings(set_labels(x, labels = val_lab))
+  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, lab = var_lab))
+
   # return recoded x
   return(x)
 }

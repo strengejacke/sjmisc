@@ -37,28 +37,32 @@
 #' data(efc)
 #' str(efc$e42dep)
 #'
-#' x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
+#' x <- set_labels(
+#'   efc$e42dep,
+#'   labels = c("independent" = 1, "severe dependency" = 4)
+#' )
 #' table(x)
 #' get_values(x)
 #' str(x)
 #'
 #' # zap all labelled values
-#' x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 #' table(zap_labels(x))
 #' get_values(zap_labels(x))
 #' str(zap_labels(x))
 #'
 #' # zap all unlabelled values
-#' x <- set_labels(efc$e42dep, c("independent" = 1, "severe dependency" = 4))
 #' table(zap_unlabelled(x))
 #' get_values(zap_unlabelled(x))
 #' str(zap_unlabelled(x))
 #'
 #' # in a pipe-workflow
 #' library(dplyr)
-#' set_labels(efc$e42dep) <-  c("independent" = 1, "severe dependency" = 4)
 #' efc %>%
 #'   select(c172code, e42dep) %>%
+#'   set_labels(
+#'     e42dep,
+#'     labels = c("independent" = 1, "severe dependency" = 4)
+#'   ) %>%
 #'   zap_labels()
 #'
 #' # ------------------------
@@ -72,7 +76,7 @@
 #' # recode carers age into groups of width 5
 #' x <- rec(efc$c160age, recodes = rp$pattern)
 #' # add value labels to new vector
-#' set_labels(x) <- rp$labels
+#' x <- set_labels(x, labels = rp$labels)
 #'
 #' # watch result. due to recode-pattern, we have age groups with
 #' # no observations (zero-counts)
@@ -296,7 +300,7 @@ zap_inf <- function(x, ...) {
 
 
 zap_labels_helper <- function(x) {
-  x <- set_na(x, get_values(x, drop.na = T))
+  x <- set_na(x, value = get_values(x, drop.na = T))
   # auto-detect variable label attribute
   attr.string <- getVarLabelAttribute(x)
   # remove label attributes
@@ -307,7 +311,7 @@ zap_labels_helper <- function(x) {
 
 zap_unlabelled_helper <- function(x) {
   vals <- get_values(x)
-  x <- set_na(x, stats::na.omit(unique(x)[!unique(x) %in% vals]))
+  x <- set_na(x, value = stats::na.omit(unique(x)[!unique(x) %in% vals]))
   if (haven::is.labelled(x)) class(x) <- NULL
   return(x)
 }
@@ -316,6 +320,5 @@ zap_na_tags_helper <- function(x) {
   # convert all NA, including tagged NA, into regular NA
   x[is.na(x)] <- NA
   # "remove" labels from tagged NA values
-  set_labels(x) <- get_labels(x, attr.only = T, include.values = "n", drop.na = T)
-  return(x)
+  set_labels(x, labels = get_labels(x, attr.only = T, include.values = "n", drop.na = T))
 }

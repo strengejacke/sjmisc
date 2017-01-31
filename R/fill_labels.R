@@ -47,7 +47,12 @@ fill_labels_helper <- function(x) {
       # add NA
       if (!is.null(current.na)) all.val.switch <- c(all.val.switch, current.na)
       # then set labels
-      x <- set_labels(x, all.val.switch, force.labels = T, force.values = T)
+      x <- set_labels(
+        x,
+        labels = all.val.switch,
+        force.labels = T,
+        force.values = T
+      )
     }
   }
   return(x)

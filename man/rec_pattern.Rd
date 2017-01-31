@@ -41,7 +41,7 @@ table(rec(efc$c160age, recodes = rp$pattern), exclude = NULL)
 # recode carers age into groups of width 5
 x <- rec(efc$c160age, recodes = rp$pattern)
 # add value labels to new vector
-set_labels(x) <- rp$labels
+x <- set_labels(x, labels = rp$labels)
 # watch result
 frq(x)
 

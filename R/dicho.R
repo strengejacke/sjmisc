@@ -137,8 +137,8 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
 
   if (!as.num) x <- as.factor(x)
   # set back variable labels
-  if (!is.null(varlab)) x <- suppressWarnings(set_label(x, varlab))
+  if (!is.null(varlab)) x <- suppressWarnings(set_label(x, lab = varlab))
   # set value labels
-  if (!is.null(val.labels)) x <- suppressWarnings(set_labels(x, val.labels))
+  if (!is.null(val.labels)) x <- suppressWarnings(set_labels(x, labels = val.labels))
   return(x)
 }

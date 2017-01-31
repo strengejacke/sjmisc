@@ -74,7 +74,7 @@ str(to_character(efc$e17age))
 
 # factor with non-numeric levels, non-prefixed and prefixed
 x <- factor(c("a", "b", "c"))
-set_labels(x) <- c("ape", "bear", "cat")
+x <- set_labels(x, labels = c("ape", "bear", "cat"))
 
 to_character(x, prefix = FALSE)
 to_character(x, prefix = TRUE)
@@ -83,7 +83,8 @@ to_character(x, prefix = TRUE)
 # create vector
 x <- c(1, 2, 3, 2, 4, NA)
 # add less labels than values
-x <- set_labels(x, c("yes", "maybe", "no"),
+x <- set_labels(x,
+                labels = c("yes", "maybe", "no"),
                 force.labels = FALSE,
                 force.values = FALSE)
 # convert to character w/o non-labelled values

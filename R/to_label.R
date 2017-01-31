@@ -58,14 +58,15 @@
 #'
 #' # factor with non-numeric levels, prefixed
 #' x <- factor(c("a", "b", "c"))
-#' set_labels(x) <- c("ape", "bear", "cat")
+#' x <- set_labels(x, labels = c("ape", "bear", "cat"))
 #' to_label(x, prefix = TRUE)
 #'
 #'
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
 #' # add less labels than values
-#' x <- set_labels(x, c("yes", "maybe", "no"),
+#' x <- set_labels(x,
+#'                 labels = c("yes", "maybe", "no"),
 #'                 force.labels = FALSE,
 #'                 force.values = FALSE)
 #' # convert to label w/o non-labelled values
@@ -89,13 +90,16 @@
 #'
 #' # convert labelled character to factor
 #' dummy <- c("M", "F", "F", "X")
-#' set_labels(dummy) <- c(`M` = "Male", `F` = "Female", `X` = "Refused")
+#' dummy <- set_labels(
+#'   dummy,
+#'   labels = c(`M` = "Male", `F` = "Female", `X` = "Refused")
+#' )
 #' get_labels(dummy,, "p")
 #' to_label(dummy)
 #'
 #' # drop unused factor levels, but preserve variable label
 #' x <- factor(c("a", "b", "c"), levels = c("a", "b", "c", "d"))
-#' set_labels(x) <- c("ape", "bear", "cat")
+#' x <- set_labels(x, labels = c("ape", "bear", "cat"))
 #' set_label(x) <- "A factor!"
 #' x
 #' to_label(x, drop.levels = TRUE)
@@ -252,7 +256,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #'
 #' # factor with non-numeric levels, non-prefixed and prefixed
 #' x <- factor(c("a", "b", "c"))
-#' set_labels(x) <- c("ape", "bear", "cat")
+#' x <- set_labels(x, labels = c("ape", "bear", "cat"))
 #'
 #' to_character(x, prefix = FALSE)
 #' to_character(x, prefix = TRUE)
@@ -261,7 +265,8 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
 #' # add less labels than values
-#' x <- set_labels(x, c("yes", "maybe", "no"),
+#' x <- set_labels(x,
+#'                 labels = c("yes", "maybe", "no"),
 #'                 force.labels = FALSE,
 #'                 force.values = FALSE)
 #' # convert to character w/o non-labelled values

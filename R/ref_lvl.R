@@ -113,7 +113,7 @@ ref_lvl_helper <- function(x, value) {
     # so we first need the "order" function to have numeric values from
     # 1 to length(x) - and a second "order" call to get the correct order
     # of these values.
-    set_labels(x) <- val.labs[order(order(neword))]
+    x <- set_labels(x, labels = val.labs[order(order(neword))])
   }
   return(x)
 }

@@ -58,8 +58,8 @@ frq(efc$e42dep)
 
 # manually set value and variable labels
 dummy <- sample(1:4, 40, replace = TRUE)
-dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
-dummy <- set_label(dummy, "Dummy-variable")
+dummy <- set_labels(dummy, labels = c("very low", "low", "mid", "hi"))
+dummy <- set_label(dummy, lab = "Dummy-variable")
 
 # or use:
 # set_label(dummy) <- "Dummy-variable"

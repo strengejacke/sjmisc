@@ -160,7 +160,7 @@ frq_helper <- function(x, sort.frq, weight.by) {
     mydat <- suppressMessages(dplyr::full_join(dat, dat2))
     # replace NA with 0, for proper percentages, i.e.
     # missing values don't appear (zero counts)
-    suppressMessages(replace_na(mydat$frq) <- 0)
+    mydat$frq <- suppressMessages(replace_na(mydat$frq, value = 0))
   } else {
     # weight data?
     if (!is.null(weight.by)) {
@@ -207,7 +207,7 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # "rename" NA values
   # -------------------------------------
   if (!is.null(mydat$label)) mydat$label[is.na(mydat$label)] <- "NA"
-  suppressMessages(replace_na(mydat$val) <- max(to_value(mydat$val), na.rm = T) + 1)
+  mydat$val <- suppressMessages(replace_na(mydat$val, value = max(to_value(mydat$val), na.rm = T) + 1))
   # save original order
   reihe <- to_value(mydat$val, start.at = 1, keep.labels = F)
   # sort for x-axis

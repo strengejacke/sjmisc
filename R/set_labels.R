@@ -1,6 +1,5 @@
 #' @title Add value labels to variables
 #' @name set_labels
-#' @usage set_labels(x, labels, force.labels = FALSE, force.values = TRUE, drop.na = TRUE)
 #'
 #' @description This function adds labels as attribute (named \code{"labels"})
 #'                to a variable or vector \code{x}, resp. to a set of variables in a
@@ -13,8 +12,6 @@
 #'            \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
 #'            add additional value labels without replacing the existing ones.
 #'
-#' @param x Variable (vector), \code{list} of variables or a \code{data.frame}
-#'          where value label attributes should be added. Replaces former value labels.
 #' @param labels (Named) character vector of labels that will be added to \code{x} as
 #'          \code{"labels"} or \code{"value.labels"} attribute.
 #'          \itemize{
@@ -26,7 +23,6 @@
 #'            \item if \code{labels} is a vector and \code{x} is a data frame, \code{labels} will be applied to each column of \code{x}.
 #'            }
 #'          Use \code{labels = ""} to remove labels-attribute from \code{x}.
-#' @param value See \code{labels}.
 #' @param force.labels Logical; if \code{TRUE}, all \code{labels} are added as value label
 #'          attribute, even if \code{x} has less unique values then length of \code{labels}
 #'          or if \code{x} has a smaller range then length of \code{labels}. See 'Examples'.
@@ -39,8 +35,14 @@
 #'          (see \code{\link[haven]{tagged_na}}) should be removed (\code{drop.na = TRUE},
 #'          the default) or preserved (\code{drop.na = FALSE}).
 #'          See \code{\link{get_na}} for more details on tagged NA values.
+#'
+#' @inheritParams to_factor
+#'
 #' @return \code{x} with value label attributes; or with removed label-attributes if
-#'            \code{labels = ""}.
+#'           \code{labels = ""}. If \code{x} is a data frame, the complete data
+#'           frame \code{x} will be returned, with removed or added to variables
+#'           specified in \code{...}; if \code{...} is not specified, applies
+#'           to all variables in the data frame.
 #'
 #' @details See 'Details' in \code{\link{get_labels}}.
 #'
@@ -56,44 +58,41 @@
 #' dummy <- sample(1:4, 40, replace = TRUE)
 #' frq(dummy)
 #'
-#' dummy <- set_labels(dummy, c("very low", "low", "mid", "hi"))
+#' dummy <- set_labels(dummy, labels = c("very low", "low", "mid", "hi"))
 #' frq(dummy)
 #'
 #' # assign labels with named vector
 #' dummy <- sample(1:4, 40, replace = TRUE)
-#' set_labels(dummy) <- c("very low" = 1, "very high" = 4)
+#' dummy <- set_labels(dummy, labels = c("very low" = 1, "very high" = 4))
 #' frq(dummy)
 #'
 #' # force using all labels, even if not all labels
 #' # have associated values in vector
 #' x <- c(2, 2, 3, 3, 2)
 #' # only two value labels
-#' x <- set_labels(x, c("1", "2", "3"))
+#' x <- set_labels(x, labels = c("1", "2", "3"))
 #' x
 #' frq(x)
 #'
-#' # or use:
-#' # set_labels(x) <- c("1", "2", "3")
-#'
 #' # all three value labels
-#' x <- set_labels(x, c("1", "2", "3"), force.labels = TRUE)
+#' x <- set_labels(x, labels = c("1", "2", "3"), force.labels = TRUE)
 #' x
 #' frq(x)
 #'
 #' # create vector
 #' x <- c(1, 2, 3, 2, 4, NA)
 #' # add less labels than values
-#' x <- set_labels(x, c("yes", "maybe", "no"), force.values = FALSE)
+#' x <- set_labels(x, labels = c("yes", "maybe", "no"), force.values = FALSE)
 #' x
 #' # add all necessary labels
-#' x <- set_labels(x, c("yes", "maybe", "no"), force.values = TRUE)
+#' x <- set_labels(x, labels = c("yes", "maybe", "no"), force.values = TRUE)
 #' x
 #'
 #' # set labels and missings
 #' x <- c(1, 1, 1, 2, 2, -2, 3, 3, 3, 3, 3, 9)
-#' x <- set_labels(x, c("Refused", "One", "Two", "Three", "Missing"))
+#' x <- set_labels(x, labels = c("Refused", "One", "Two", "Three", "Missing"))
 #' x
-#' set_na(x, c(-2, 9))
+#' set_na(x, value = c(-2, 9))
 #'
 #'
 #' library(haven)
@@ -104,9 +103,9 @@
 #' x
 #' get_na(x)
 #' # lose value labels from tagged NA by default, if not specified
-#' set_labels(x, c("New Three" = 3))
+#' set_labels(x, labels = c("New Three" = 3))
 #' # do not drop na
-#' set_labels(x, c("New Three" = 3), drop.na = FALSE)
+#' set_labels(x, labels = c("New Three" = 3), drop.na = FALSE)
 #'
 #'
 #' # set labels via named vector,
@@ -114,9 +113,12 @@
 #' data(efc)
 #' get_labels(efc$e42dep)
 #'
-#' x <- set_labels(efc$e42dep, c(`independent` = 1,
-#'                               `severe dependency` = 2,
-#'                               `missing value` = 9))
+#' x <- set_labels(
+#'   efc$e42dep,
+#'   labels = c(`independent` = 1,
+#'              `severe dependency` = 2,
+#'              `missing value` = 9)
+#'   )
 #' get_labels(x, include.values = "p")
 #' get_labels(x, include.values = "p", include.non.labelled = TRUE)
 #'
@@ -125,30 +127,69 @@
 #' x <- c(1, 2, 3, 4)
 #' # set 2 and 3 as missing, which will automatically set as
 #' # tagged NA by 'set_na()'
-#' set_na(x) <- c(2, 3)
+#' x <- set_na(x, value = c(2, 3))
 #' x
 #' # set label via named vector just for tagged NA(3)
-#' set_labels(x, c(`New Value` = tagged_na("3")))
+#' set_labels(x, labels = c(`New Value` = tagged_na("3")))
 #'
 #' # setting same value labels to multiple vectors
-#' # create a set of dummy variables
-#' dummy1 <- sample(1:4, 40, replace = TRUE)
-#' dummy2 <- sample(1:4, 40, replace = TRUE)
-#' dummy3 <- sample(1:4, 40, replace = TRUE)
-#' # put them in list-object
-#' dummies <- list(dummy1, dummy2, dummy3)
-#' # and set same value labels for all three dummies
-#' dummies <- set_labels(dummies, c("very low", "low", "mid", "hi"))
+#' dummies <- data.frame(
+#'   dummy1 = sample(1:4, 40, replace = TRUE),
+#'   dummy2 = sample(1:4, 40, replace = TRUE),
+#'   dummy3 = sample(1:4, 40, replace = TRUE)
+#' )
+#'
+#' # and set same value labels for two of three variables
+#' dummies <- set_labels(
+#'   dummies, dummy1, dummy2,
+#'   labels = c("very low", "low", "mid", "hi")
+#' )
 #' # see result...
 #' get_labels(dummies)
 #'
 #' @export
-set_labels <- function(x,
+set_labels <- function(x, ...,
                        labels,
                        force.labels = FALSE,
                        force.values = TRUE,
                        drop.na = TRUE) {
-  return(set_labels_helper(x, labels, force.labels, force.values, drop.na))
+
+  # evaluate arguments, generate data
+  .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
+
+  # get variable names
+  .vars <- dot_names(.dots)
+
+  # if user only provided a data frame, get all variable names
+  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+
+  # if we have any dot names, we definitely have a data frame
+  if (!is.null(.vars)) {
+
+    # iterate variables of data frame
+    for (i in .vars) {
+      x[[i]] <- set_labels_helper(
+        x = .dat[[i]],
+        labels = labels,
+        force.labels = force.labels,
+        force.values = force.values,
+        drop.na = drop.na
+      )
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- set_labels_helper(
+      x = .dat,
+      labels = labels,
+      force.labels = force.labels,
+      force.values = force.values,
+      drop.na = drop.na
+    )
+  }
+
+  x
 }
 
 
@@ -389,17 +430,4 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
       attr(x, attr.string) <- c(attr(x, attr.string, exact = T), current.na)
   }
   return(x)
-}
-
-#' @rdname set_labels
-#' @usage set_labels(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE) <- value
-#' @export
-`set_labels<-` <- function(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE, value) {
-  UseMethod("set_labels<-")
-}
-
-#' @export
-`set_labels<-.default` <- function(x, force.labels = FALSE, force.values = TRUE, drop.na = TRUE, value) {
-  x <- set_labels(x, labels = value, force.labels = force.labels, force.values = force.values, drop.na = drop.na)
-  x
 }

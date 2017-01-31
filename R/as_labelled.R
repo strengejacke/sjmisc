@@ -31,7 +31,8 @@
 #' str(x)
 #'
 #' data(efc)
-#' x <- set_labels(efc$e42dep, c(`1` = "independent", `4` = "severe dependency"))
+#' x <- set_labels(efc$e42dep,
+#'                 labels = c(`1` = "independent", `4` = "severe dependency"))
 #' x1 <- as_labelled(x, add.labels = FALSE)
 #' x2 <- as_labelled(x, add.labels = TRUE)
 #'
@@ -75,13 +76,13 @@ as_labelled_helper <- function(x, add.labels, add.class) {
       vallabel <- as.character(unique(stats::na.omit(x)))
     }
     # set value labels
-    x <- suppressWarnings(set_labels(x, vallabel, force.labels = T, force.values = T))
+    x <- suppressWarnings(set_labels(x, labels = vallabel, force.labels = T, force.values = T))
   }
   # fill up missing attributes
   if (add.labels) x <- fill_labels(x)
   # reset missings
   xna <- get_na(x)
-  if (!sjmisc::is_empty(xna)) x <- set_na(x, xna)
+  if (!sjmisc::is_empty(xna)) x <- set_na(x, value = xna)
   # get former class attributes
   xc <- class(x)
   if (add.class)
