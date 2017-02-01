@@ -3,6 +3,7 @@
 ## General
 
 * Added package-vignettes.
+* Functions were largely revised to work seamlessly within the tidyverse. This may break existing code, but in the long run, consistent api-design makes working with the package more intuitive. See `vignette("design_philosophy", "sjmisc")` for more details.
 
 ## New functions
 
