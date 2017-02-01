@@ -8,6 +8,7 @@ Basically, this package covers three domains of functionality:
 * hence, this package also includes functions to make working with labelled data easier
 * frequently applied recoding and variable transformation tasks, also with support for labelled data
 
+The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-worklflow to manipulate data frames, or to create new variables with `mutate()`. See `vignette("design_philosophy", "sjmisc")` for more details.
 
 ## Installation
 
