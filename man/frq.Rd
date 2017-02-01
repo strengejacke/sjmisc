@@ -12,7 +12,10 @@ frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables
-from \code{x} should be processed. See 'Examples'.}
+from \code{x} should be processed. You may also use functions like
+\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+The latter must be stated as formula (i.e. beginning with \code{~}).
+See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{sort.frq}{Determines whether categories should be sorted
 according to their frequencies or not. Default is \code{"none"}, so

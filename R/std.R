@@ -42,10 +42,7 @@ std <- function(x, ..., include.fac = TRUE, suffix = "_z") {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  std_and_center(x, .dat, .vars, include.fac, standardize = TRUE, suffix)
+  std_and_center(x, .dat, include.fac, standardize = TRUE, suffix)
 }
 
 
@@ -56,21 +53,15 @@ center <- function(x, ..., include.fac = TRUE, suffix = "_c") {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  std_and_center(x, .dat, .vars, include.fac, standardize = FALSE, suffix)
+  std_and_center(x, .dat, include.fac, standardize = FALSE, suffix)
 }
 
 
-std_and_center <- function(x, .dat, .vars, include.fac, standardize, suffix) {
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
+std_and_center <- function(x, .dat, include.fac, standardize, suffix) {
+  if (is.data.frame(x)) {
 
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       x[[i]] <- std_helper(
         x = .dat[[i]],
         include.fac = include.fac,
@@ -79,7 +70,7 @@ std_and_center <- function(x, .dat, .vars, include.fac, standardize, suffix) {
     }
 
     # coerce to tibble and select only recoded variables
-    x <- tibble::as_tibble(x[.vars])
+    x <- tibble::as_tibble(x[colnames(.dat)])
 
     # add suffix to recoded variables?
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {

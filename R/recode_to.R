@@ -63,17 +63,10 @@ recode_to <- function(x, ..., lowest = 0, highest = -1, suffix = "_r0") {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
+  if (is.data.frame(x)) {
 
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       x[[i]] <- rec_to_helper(
         x = .dat[[i]],
         lowest = lowest,
@@ -82,7 +75,7 @@ recode_to <- function(x, ..., lowest = 0, highest = -1, suffix = "_r0") {
     }
 
     # coerce to tibble and select only recoded variables
-    x <- tibble::as_tibble(x[.vars])
+    x <- tibble::as_tibble(x[colnames(.dat)])
 
     # add suffix to recoded variables?
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {

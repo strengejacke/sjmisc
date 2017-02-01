@@ -12,7 +12,10 @@ descr(x, ...)
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables
-from \code{x} should be processed. See 'Examples'.}
+from \code{x} should be processed. You may also use functions like
+\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+The latter must be stated as formula (i.e. beginning with \code{~}).
+See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 }
 \value{
 A data frame with basic descriptive statistics, derived from the

@@ -1,17 +1,32 @@
 # evaluates arguments
+#' @importFrom dplyr select_
+#' @importFrom stats as.formula
 get_dot_data <- function(data, dots) {
-  # any dots?
-  if (length(dots) > 0)
-    # get variable names
-    vars <- dot_names(dots)
-  else
-    vars <- NULL
-
   # check if data is a data frame
-  if (is.data.frame(data) && !is.null(vars))
-    x <- data[, vars, drop = FALSE]
-  else
+  if (is.data.frame(data) && length(dots) > 0) {
+    # find functions
+    funs <- lapply(dots, function(x) as.character(x)[1] == "~")
+
+    # extract only variables of dot-argument
+    vars <- as.character(dots[!unlist(funs)])
+
+    # extract only functions of dot-argument
+    if (!all(funs == FALSE))
+      funs <- stats::as.formula(dots[[which(unlist(funs))]])
+    else
+      funs <- NULL
+
+    # we need to evaluate functions and variables separately
+    x <- dplyr::select_(data, .dots = vars)
+
+    # now check if we also have functions in dot-argument, and
+    # select those variables as well
+    if (!is.null(funs))
+      x <- dplyr::bind_cols(x, dplyr::select_(data, .dots = funs))
+  } else {
     x <- data
+  }
+
   x
 }
 

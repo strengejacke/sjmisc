@@ -106,21 +106,16 @@ add_labels <- function(x, ..., value) {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
+  if (is.data.frame(x)) {
 
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       x[[i]] <- add_labels_helper(.dat[[i]], value)
     }
+
     # coerce to tibble
     x <- tibble::as_tibble(x)
+
   } else {
     x <- add_labels_helper(.dat, value)
   }

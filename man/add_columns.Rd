@@ -4,12 +4,16 @@
 \alias{add_columns}
 \title{Add columns to a data frame}
 \usage{
-add_columns(data, ...)
+add_columns(data, ..., replace = TRUE)
 }
 \arguments{
 \item{data}{A data frame. Will be bound after data frames specified in \code{...}.}
 
 \item{...}{More data frames to combine.}
+
+\item{replace}{Logical, if \code{TRUE} (default), columns in \code{...} with
+identical names in \code{data} will replace the columns in \code{data}.
+The order of columns after replacing is preserved.}
 }
 \value{
 A data frame, where columns of \code{data} are appended after columns
@@ -19,6 +23,15 @@ A data frame, where columns of \code{data} are appended after columns
 This function combines two or more data frames, but unlike
              \code{\link{cbind}} or \code{\link[dplyr]{bind_cols}}, this function
              binds \code{data} as last columns of a data frame.
+}
+\note{
+By default, columns in \code{data} with identical names like columns in one of
+      the data frames in \code{...} will be dropped (i.e. variables with identical
+      names in \code{...} will replace existing variables in \code{data}).
+      Use \code{replace = FALSE} to keep all columns. Identical column names
+      will then be repaired (see \code{\link[tibble]{repair_names}}). When
+      replacing columns, replaced columns are not added to the end of the
+      data frame. Rather, the original order of columns will be preserved.
 }
 \examples{
 data(efc)
@@ -30,13 +43,27 @@ head(bind_cols(d1, d2))
 add_columns(d1, d2)
 
 # use case: we take the original data frame, select specific
-# variables and do some transformations or  recodings
+# variables and do some transformations or recodings
 # (standardization in this example) and add the new, transformed
 # variables *to the end* of the original data frame
 efc \%>\%
   select(e17age, c160age) \%>\%
   std() \%>\%
   add_columns(efc)
+
+# new variables with same name will overwrite old variables
+# in "efc". order of columns is not changed.
+efc \%>\%
+  select(e16sex, e42dep) \%>\%
+  to_factor() \%>\%
+  add_columns(efc)
+
+# keep both old and new variables, automatically
+# rename variables with identical name
+efc \%>\%
+  select(e16sex, e42dep) \%>\%
+  to_factor() \%>\%
+  add_columns(efc, replace = FALSE)
 
 }
 

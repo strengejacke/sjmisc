@@ -74,7 +74,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<p>The design of functions in this package follows, where appropriate, the <em>tidyverse-approach</em>, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.</p>
+<p>Basically, this package covers two domains of functionality:</p>
+<ul>
+<li>Reading and writing data between R and other statistical software packages like <em>SPSS</em>, <em>SAS</em> or <em>Stata</em> and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.</li>
+<li>Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.</li>
+</ul>
+<p>This vignette focusses on the second bullet point and gives an overview of data wrangling functions in this package.</p>
+<div id="the-design-of-data-transformation-functions" class="section level1">
+<h1>The design of data transformation functions</h1>
+<p>The design of data transformation functions in this package follows, where appropriate, the <em>tidyverse-approach</em>, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.</p>
 <div id="the-data-argument" class="section level2">
 <h2>The data-argument</h2>
 <p>A major difference to dplyr-functions like <code>select()</code> or <code>filter()</code> is that the data-argument (the first argument of each function), may either be a <em>data frame</em> or a <em>vector</em>. The returned object for each function <em>equals the type of the data-argument</em>:</p>
@@ -108,6 +116,46 @@ x &lt;-<span class="st"> </span><span class="kw">rec</span>(efc$e42dep, <span cl
 ## 10        2
 ## # ... with 898 more rows</code></pre></div>
 <p>This design-choice is mainly due to compatibility- and convenience-reasons. It does not affect the usual “tidyverse-workflow” or when using pipe-chains.</p>
+</div>
+<div id="the--ellipses-argument" class="section level2">
+<h2>The …-ellipses-argument</h2>
+<p>The selection of variables specified in the <code>...</code>-ellipses-argument is powered by dplyr’s <code>select()</code>. This means, you can use existing functions like <code>:</code> to select a range of variables, or also use dplyr’s <code>select_helpers</code>, like <code>contains()</code> or <code>one_of()</code>. However, <code>select_helpers</code> must begin with a <code>~</code>-sign.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># select all variables with &quot;cop&quot; in their names, and also</span>
+<span class="co"># the range from c161sex to c175empl</span>
+<span class="kw">rec</span>(efc, ~<span class="kw">contains</span>(<span class="st">&quot;cop&quot;</span>), c161sex:c175empl, <span class="dt">recodes =</span> <span class="st">&quot;0,1=0; else=1&quot;</span>)
+## # A tibble: 908 × 12
+##    c161sex_r c172code_r c175empl_r c82cop1_r c83cop2_r c84cop3_r c85cop4_r
+##        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1          1          1          0         1         1         1         1
+## 2          1          1          0         1         1         1         1
+## 3          0          0          0         1         1         0         1
+## 4          0          1          0         1         0         1         0
+## 5          1          1          0         1         1         0         1
+## 6          0          1          0         1         1         1         1
+## 7          1          1          0         1         1         1         0
+## 8          1          1          0         1         1         1         0
+## 9          1         NA          0         1         1         1         1
+## 10         1          1          0         1         1         0         1
+## # ... with 898 more rows, and 5 more variables: c86cop5_r &lt;dbl&gt;,
+## #   c87cop6_r &lt;dbl&gt;, c88cop7_r &lt;dbl&gt;, c89cop8_r &lt;dbl&gt;, c90cop9_r &lt;dbl&gt;
+
+<span class="co"># center all variables with &quot;age&quot; in name, variable c12hour</span>
+<span class="co"># and all variables from column 19 to 21</span>
+<span class="kw">center</span>(efc, c12hour, ~<span class="kw">contains</span>(<span class="st">&quot;age&quot;</span>), <span class="dv">19</span>:<span class="dv">21</span>)
+## # A tibble: 908 × 6
+##     c12hour_c barthtot_c  neg_c_7_c pos_v_4_c    e17age_c  c160age_c
+##         &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+## 1  -26.399113  10.453001  0.1502242 -0.476731   3.8787879  2.5371809
+## 2  105.600887  10.453001  8.1502242 -1.476731   8.8787879  0.5371809
+## 3   27.600887 -29.546999 -0.8497758  0.523269   2.8787879 26.5371809
+## 4  125.600887 -64.546999 -1.8497758  2.523269 -12.1212121 15.5371809
+## 5  125.600887 -39.546999  0.1502242  2.523269   4.8787879 -6.4628191
+## 6  -26.399113  -4.546999  7.1502242 -3.476731   5.8787879  2.5371809
+## 7  118.600887 -59.546999  3.1502242  0.523269  -5.1212121  7.5371809
+## 8   67.600887 -29.546999 -0.8497758  1.523269   7.8787879 13.5371809
+## 9  -14.399113 -49.546999  3.1502242  0.523269  -0.1212121  5.5371809
+## 10  -2.399113 -64.546999 -1.8497758  0.523269   3.8787879 -4.4628191
+## # ... with 898 more rows</code></pre></div>
 </div>
 <div id="the-function-types" class="section level2">
 <h2>The function-types</h2>
@@ -157,7 +205,7 @@ x &lt;-<span class="st"> </span><span class="kw">rec</span>(efc$e42dep, <span cl
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">rec</span>(c82cop1, c83cop2, <span class="dt">recodes =</span> <span class="st">&quot;1,2=0; 3:4=2&quot;</span>) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">add_columns</span>(efc)
-## # A tibble: 908 × 28
+## # A tibble: 908 × 26
 ##    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 ##      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
 ## 1       16        2      2     83      3       3       2       2       2
@@ -170,12 +218,11 @@ x &lt;-<span class="st"> </span><span class="kw">rec</span>(efc$e42dep, <span cl
 ## 8      110        4      2     87      4       3       2       2       1
 ## 9       28        2      2     79      4       3       2       3       2
 ## 10      40        2      2     83      4       3       2       1       2
-## # ... with 898 more rows, and 19 more variables: c86cop5 &lt;dbl&gt;,
+## # ... with 898 more rows, and 17 more variables: c86cop5 &lt;dbl&gt;,
 ## #   c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;,
 ## #   c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;,
 ## #   barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,
-## #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;,
-## #   c82cop1_r &lt;dbl&gt;, c83cop2_r &lt;dbl&gt;</code></pre></div>
+## #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;</code></pre></div>
 </div>
 </div>
 <div id="sjmisc-and-dplyr" class="section level2">
@@ -213,6 +260,7 @@ efc %&gt;%<span class="st"> </span>
 ## 4       4       1             2             0
 ## 5       3       2             2             0
 ## 6       2       2             0             0</code></pre></div>
+</div>
 </div>
 
 

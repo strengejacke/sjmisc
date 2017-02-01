@@ -74,18 +74,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<p>Basically, this package covers two domains of functionality:</p>
-<ul>
-<li>Reading and writing data between R and other statistical software packages like <em>SPSS</em>, <em>SAS</em> or <em>Stata</em> and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.</li>
-<li>Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.</li>
-</ul>
+<p>This vignette shows a small example how functions to work with labelled data can be implemented in a typical data visualization workflow.</p>
 <div id="labelled-data" class="section level1">
 <h1>Labelled Data</h1>
 <p>In software like SPSS, it is common to have value and variable labels as variable attributes. Variable values, even if categorical, are mostly numeric. In R, however, you may use labels as values directly:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;low&quot;</span>, <span class="st">&quot;high&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;high&quot;</span>, <span class="st">&quot;low&quot;</span>))</code></pre></div>
 <pre><code>## [1] low  high mid  high low 
 ## Levels: high low mid</code></pre>
-<p>Reading SPSS-data (from haven, foreign or sjmisc), keeps the numeric values for variables and adds the value and variable labels as attributes. See following example from the sample-dataset efc, which is part of the sjmisc-package:</p>
+<p>Reading SPSS-data (from haven, foreign or sjmisc), keeps the numeric values for variables and adds the value and variable labels as attributes. See following example from the sample-dataset efc, which is part of the <strong>sjmisc</strong>-package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sjmisc)
 <span class="kw">data</span>(efc)
 <span class="kw">str</span>(efc$e42dep)</code></pre></div>
@@ -136,7 +132,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="another-example" class="section level2">
 <h2>Another example</h2>
 <p>Converting <code>labelled</code>-class vectors into factors usually drops label attributes (e.g. using <code>as_factor()</code>) or replaces values with the associated labels (like <code>to_label()</code> does). If you want to convert a labelled vector into a numeric factor, but keep the label attributes (including variable labels), use <code>to_factor()</code>.</p>
-<p>Functions like <code>lm()</code> simply copy the label-attributes and store these information in the returned object; see following example from the <code>sjPlot</code>-package:</p>
+<p>Functions like <code>lm()</code> simply copy the label-attributes and store these information in the returned object; see following example from the <strong>sjPlot</strong>-package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sjPlot)
 <span class="kw">data</span>(efc)
 <span class="co"># make education categorical</span>
@@ -327,28 +323,26 @@ R<sup>2</sup> / adj. R<sup>2</sup>
 ##  $ e17age : atomic  74 68 80 72 94 79 67 80 76 88 ...
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;elder' age&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;e17age&quot;
-##   ..- attr(*, &quot;labels&quot;)= Named chr  &quot;Always&quot; &quot;Always&quot; &quot;Never&quot; &quot;Never&quot; ...
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;c83cop2.4&quot; &quot;c84cop3.4&quot; &quot;c83cop2.1&quot; &quot;c84cop3.1&quot; ...
 ##  $ e42dep : atomic  4 4 1 3 3 4 3 4 2 4 ...
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;elder's dependency&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;e42dep&quot;
-##   ..- attr(*, &quot;labels&quot;)= Named chr  &quot;Always&quot; &quot;Always&quot; &quot;Never&quot; &quot;Never&quot; ...
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;c83cop2.4&quot; &quot;c84cop3.4&quot; &quot;c83cop2.1&quot; &quot;c84cop3.1&quot; ...
+##   ..- attr(*, &quot;labels&quot;)= Named num  1 2 3 4
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;independent&quot; &quot;slightly dependent&quot; &quot;moderately dependent&quot; &quot;severely dependent&quot;
 ##  $ c82cop1: atomic  4 3 3 4 3 3 4 2 2 3 ...
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;do you feel you cope well as caregiver?&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c82cop1&quot;
-##   ..- attr(*, &quot;labels&quot;)= Named chr  &quot;Always&quot; &quot;Always&quot; &quot;Never&quot; &quot;Never&quot; ...
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;c83cop2.4&quot; &quot;c84cop3.4&quot; &quot;c83cop2.1&quot; &quot;c84cop3.1&quot; ...
+##   ..- attr(*, &quot;labels&quot;)= Named num  1 2 3 4
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;never&quot; &quot;sometimes&quot; &quot;often&quot; &quot;always&quot;
 ##  $ c83cop2: atomic  2 4 2 2 2 2 1 3 2 2 ...
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;do you find caregiving too demanding?&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c83cop2&quot;
-##   ..- attr(*, &quot;labels&quot;)= Named chr  &quot;Always&quot; &quot;Always&quot; &quot;Never&quot; &quot;Never&quot; ...
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;c83cop2.4&quot; &quot;c84cop3.4&quot; &quot;c83cop2.1&quot; &quot;c84cop3.1&quot; ...
+##   ..- attr(*, &quot;labels&quot;)= Named num  1 2 3 4
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;Never&quot; &quot;Sometimes&quot; &quot;Often&quot; &quot;Always&quot;
 ##  $ c84cop3: atomic  4 4 1 1 1 4 2 4 2 4 ...
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;does caregiving cause difficulties in your relationship with your friends?&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c84cop3&quot;
-##   ..- attr(*, &quot;labels&quot;)= Named chr  &quot;Always&quot; &quot;Always&quot; &quot;Never&quot; &quot;Never&quot; ...
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;c83cop2.4&quot; &quot;c84cop3.4&quot; &quot;c83cop2.1&quot; &quot;c84cop3.1&quot; ...</code></pre>
+##   ..- attr(*, &quot;labels&quot;)= Named num  1 2 3 4
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;Never&quot; &quot;Sometimes&quot; &quot;Often&quot; &quot;Always&quot;</code></pre>
 </div>
 </div>
 <div id="conclusion" class="section level1">

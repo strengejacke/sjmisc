@@ -9,7 +9,16 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The design of functions in this package follows, where appropriate, the _tidyverse-approach_, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.
+Basically, this package covers two domains of functionality:
+
+  * Reading and writing data between R and other statistical software packages like _SPSS_, _SAS_ or _Stata_ and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
+  * Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
+
+This vignette focusses on the second bullet point and gives an overview of data wrangling functions in this package.
+
+# The design of data transformation functions
+
+The design of data transformation functions in this package follows, where appropriate, the _tidyverse-approach_, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.
 
 ## The data-argument
 
@@ -31,6 +40,23 @@ rec(efc, e42dep, recodes = "1,2=1; 3,4=2")
 ```
 
 This design-choice is mainly due to compatibility- and convenience-reasons. It does not affect the usual "tidyverse-workflow" or when using pipe-chains.
+
+## The ...-ellipses-argument
+
+The selection of variables specified in the `...`-ellipses-argument is powered by dplyr's `select()`. This means, you can use existing functions like `:` to select a range of variables, or also use dplyr's `select_helpers`, like `contains()` or `one_of()`. However, `select_helpers` must begin with a `~`-sign.
+
+```{r collapse=TRUE, echo=FALSE, message=FALSE}
+library(dplyr)
+```
+```{r collapse=TRUE}
+# select all variables with "cop" in their names, and also
+# the range from c161sex to c175empl
+rec(efc, ~contains("cop"), c161sex:c175empl, recodes = "0,1=0; else=1")
+
+# center all variables with "age" in name, variable c12hour
+# and all variables from column 19 to 21
+center(efc, c12hour, ~contains("age"), 19:21)
+```
 
 ## The function-types
 
@@ -54,9 +80,6 @@ rec(efc, c82cop1, c83cop2, recodes = "1,2=0; 3:4=2")
 
 These variables usually get a suffix, so you can bind these variables as new columns to a data frame, for instance with `add_columns()`. The function `add_columns()` is useful if you want to bind/add columns within a pipe-chain _to the end_ of a data frame.
 
-```{r collapse=TRUE, echo=FALSE, message=FALSE}
-library(dplyr)
-```
 ```{r collapse=TRUE}
 efc %>% 
   rec(c82cop1, c83cop2, recodes = "1,2=0; 3:4=2") %>% 

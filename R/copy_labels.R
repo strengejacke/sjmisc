@@ -56,13 +56,15 @@ copy_labels <- function(df_new, df_origin = NULL) {
       # labels from variables that appear in the new (subsetted) data frame
       df_new <- set_label(df_new, lab = get_label(df_origin[, cn]))
       # same for value labels
-      df_new <- set_labels(
+      df_new <- suppressMessages(set_labels(
         df_new,
-        labels = get_labels(df_origin[, cn],
-                            attr.only = TRUE,
-                            include.values = "n",
-                            include.non.labelled = FALSE)
+        labels = get_labels(
+          df_origin[, cn],
+          attr.only = TRUE,
+          include.values = "n",
+          include.non.labelled = FALSE
         )
+      ))
     } else {
       warning("both `df_origin` and `df_new` must be of class `data.frame`.", call. = F)
     }

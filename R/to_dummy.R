@@ -51,18 +51,11 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
+  if (is.data.frame(x)) {
 
     # iterate variables of data frame
     x <- dplyr::bind_cols(
-      purrr::map(.vars, ~ to_dummy_helper(
+      purrr::map(colnames(.dat), ~ to_dummy_helper(
         x = .dat[[.x]], varname = .x, suffix = suffix
       ))
     )

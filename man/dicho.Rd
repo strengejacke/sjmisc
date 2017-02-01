@@ -12,7 +12,10 @@ dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables
-from \code{x} should be processed. See 'Examples'.}
+from \code{x} should be processed. You may also use functions like
+\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+The latter must be stated as formula (i.e. beginning with \code{~}).
+See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{dich.by}{Indicates the split criterion where a variable is dichotomized.
 Must be one of the following values (may be abbreviated):

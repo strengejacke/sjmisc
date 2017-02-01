@@ -1,25 +1,34 @@
 ---
-title: "Introduction into the sjmisc-Package"
+title: "Labelled Data and the sjmisc-Package"
 author: "Daniel Lüdecke"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction into the sjmisc-Package}
+  %\VignetteIndexEntry{Labelled Data and the sjmisc-Package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+Basically, this package covers two domains of functionality:
+
+  * Reading and writing data between R and other statistical software packages like _SPSS_, _SAS_ or _Stata_ and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
+  * Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
+
+This vignette focusses on the first bullet point and gives an overview of functions to work with labelled data.
+
+# Labelled Data
+
 _Labelled data_ (or labelled vectors) is a common data structure in other statistical environments to store meta-information about variables, like variable names, value labels or multiple defined missing values.
 
-_Labelled data_ not only extends **R**'s capabilities to deal with proper value _and_ variable labels, but also facilitates the representation of different types of missing values, like in other statistical software packages. Typically, in R, multiple declared missings cannot be represented in a similar way, like in 'SPSS' or 'SAS', with the regular missing values. However, the **haven** package introduced `tagged_na` values, which can do this. Tagged NA's work exactly like regular R missing values except that they store one additional byte of information: a tag, which is usually a letter ("a" to "z") or also may be a character number ("0" to "9"). This allows to indicate different missings.
+Labelled data not only extends **R**'s capabilities to deal with proper value _and_ variable labels, but also facilitates the representation of different types of missing values, like in other statistical software packages. Typically, in R, multiple declared missings cannot be represented in a similar way, like in 'SPSS' or 'SAS', with the regular missing values. However, the **haven**-package introduced `tagged_na` values, which can do this. Tagged NA's work exactly like regular R missing values except that they store one additional byte of information: a tag, which is usually a letter ("a" to "z") or also may be a character number ("0" to "9"). This allows to indicate different missings.
 
-Labelled data supported by the **sjmisc**-package does not require vectors of class `labelled`. The `labelled` class, implemented by the packages **haven** and **labelled**, may cause troubles with other packages (e.g. with the **effects**-package), thus it's only intended as being an intermediate data structure that should be converted to common R classes. However, coercing a `labelled` vector to other classes (like factor or numeric) typically means that meta information like value and variable label attributes are lost. Actually, there is no need to drop these attributes for non-`labelled`-class vectors. Functions like `lm()` simply copy these attributes to the data that is included in the returned object. Packages like **sjPlot** support labelled data for easily annotated data visualization. The **sjmisc**-package supports working with _labelled data_ and offers functions to benefit from these features.
+Functions of **sjmisc** do not necessarily require vectors of class `labelled`. The `labelled` class, implemented by the packages **haven** and **labelled**, may cause troubles with other packages, thus it's only intended as being an intermediate data structure that should be converted to common R classes. However, coercing a `labelled` vector to other classes (like factor or numeric) typically means that meta information like value and variable label attributes are lost. Actually, there is no need to drop these attributes for non-`labelled`-class vectors. Functions like `lm()` simply copy these attributes to the data that is included in the returned object. Packages like **sjPlot** support labelled data for easily annotated data visualization. **sjmisc** supports working with _labelled data_ and offers functions to benefit from these features.
 
 ## Labelled Data in haven and labelled
 
 The **labelled**-package is intended to support `labelled` metadata structures, thus the data structure of labelled vectors in **haven** and **labelled** is the same.
 
-Labelled data in this format stores information about value labels, variable names and multiple defined missing values. However, _variable names_ are only part of this information if data was imported with one of `haven`s read-functions. Adding a variable label attribute is (at least up to version 1.0.0) not possible via the `labelled`-constructor method.
+Labelled data in this format stores information about value labels, variable names and multiple defined missing values. However, _variable names_ are only part of this information if data was imported with one of **haven**'s read-functions. Adding a variable label attribute is (at least up to version 1.0.0) not possible via the `labelled`-constructor method.
 
 ```{r collapse=TRUE}
 library(haven)
@@ -55,7 +64,7 @@ str(x)
 
 ## Labelled Data in foreign
 
-The **foreign**-package stores value labels as `value.labels` attribute, while variable labels are stored as attribute of the data frame returned by the `read.spss()`-method. If you use `sjmisc::read_spss()`, variable labels are added as attribute to each variable.
+The **foreign**-package stores value labels as `value.labels` attribute, while variable labels are stored as attribute of the data frame returned by the `read.spss()`-method.
 
 ```{r eval=FALSE, collapse=TRUE}
 library(foreign)
@@ -77,7 +86,7 @@ attr(efc, "variable.labels")['e16sex']
 
 ## Labelled Data in sjmisc
 
-The **sjmisc**-package supports both label attributes in **haven**-style (`label` and `labels`) and **foreign**-style (`value.labels` and `variable.label`). Unlike **haven**, you can also have factors with label attributes; you're not restricted to the `labelled` class for vectors when working with **sjmisc** and labelled data.
+**sjmisc** supports both label attributes in **haven**-style (`label` and `labels`) and **foreign**-style (`value.labels` and `variable.label`). You're not restricted to the `labelled` class for vectors when working with **sjmisc** and labelled data. Hence, you can have vectors of common R classes and still use information like variable or value labels.
 
 ```{r message=FALSE, collapse=TRUE}
 library(sjmisc)

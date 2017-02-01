@@ -11,7 +11,10 @@ to_factor(x, ..., add.non.labelled = FALSE, ref.lvl = NULL)
 
 \item{...}{Optional, unquoted names of variables. Required, if \code{x} is
 a data frame (and no vector) and only selected variables
-from \code{x} should be processed. See 'Examples'.}
+from \code{x} should be processed. You may also use functions like
+\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+The latter must be stated as formula (i.e. beginning with \code{~}).
+See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{add.non.labelled}{Logical, if \code{TRUE}, non-labelled values also
 get value labels.}
@@ -87,6 +90,10 @@ table(x)
 # easily coerce specific variables in a data frame to factor
 # and keep other variables, with their class preserved
 to_factor(efc, e42dep, e16sex, c172code)
+
+# use select-helpers from dplyr-package
+library(dplyr)
+to_factor(efc, ~contains("cop"), c161sex:c175empl)
 
 
 }

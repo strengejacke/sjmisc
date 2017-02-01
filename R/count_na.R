@@ -40,30 +40,20 @@ count_na <- function(x, ...) {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
   # return values
   dataframes <- list()
 
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
-
+  if (is.data.frame(x)) {
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       # print freq
       dummy <- count_na_helper(.dat[[i]])
       cat(sprintf("# %s\n\n", get_label(.dat[[i]], def.value = i)))
       print(dummy)
       cat("\n\n")
-
       # save data frame for return value
       dataframes[[length(dataframes) + 1]] <- dummy
     }
-
     # return list
     invisible(dataframes)
   } else {

@@ -2,10 +2,10 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 2.2.1
+Version: 2.2.1.9000
 Date: 2017-01-09
-Author: Daniel LÃ¼decke <d.luedecke@uke.de>
-Maintainer: Daniel LÃ¼decke <d.luedecke@uke.de>
+Author: Daniel Lüdecke <d.luedecke@uke.de>
+Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
     for people coming from other statistical software packages like 'SPSS', and/
     or who are new to R), supporting following common tasks when working with

@@ -158,24 +158,35 @@ set_labels <- function(x, ...,
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
-
-    # iterate variables of data frame
-    for (i in .vars) {
-      x[[i]] <- set_labels_helper(
-        x = .dat[[i]],
-        labels = labels,
-        force.labels = force.labels,
-        force.values = force.values,
-        drop.na = drop.na
-      )
+  # special handling for data frames
+  if (is.data.frame(x)) {
+    # check if we have one label per variable
+    if (length(labels) == ncol(.dat)) {
+      # get column names
+      cn <- colnames(.dat)
+      # iterate all columns by number
+      for (i in seq_len(ncol(.dat))) {
+        x[[cn[i]]] <- set_labels_helper(
+          x = .dat[[cn[i]]],
+          labels = labels[[i]],
+          force.labels = force.labels,
+          force.values = force.values,
+          drop.na = drop.na,
+          var.name = cn[i]
+        )
+      }
+    } else {
+      # iterate variables of data frame
+      for (i in colnames(.dat)) {
+        x[[i]] <- set_labels_helper(
+          x = .dat[[i]],
+          labels = labels,
+          force.labels = force.labels,
+          force.values = force.values,
+          drop.na = drop.na,
+          var.name = i
+        )
+      }
     }
     # coerce to tibble
     x <- tibble::as_tibble(x)
@@ -185,7 +196,8 @@ set_labels <- function(x, ...,
       labels = labels,
       force.labels = force.labels,
       force.values = force.values,
-      drop.na = drop.na
+      drop.na = drop.na,
+      var.name = NULL
     )
   }
 
@@ -193,83 +205,11 @@ set_labels <- function(x, ...,
 }
 
 
-set_labels_helper <- function(x, labels, force.labels, force.values, drop.na) {
+#' @importFrom stats na.omit
+set_labels_helper <- function(x, labels, force.labels, force.values, drop.na, var.name) {
   # any valid labels? if not, return vector
   if (is.null(labels) || length(labels) == 0) return(x)
 
-  # convert single vector
-  if (!is.list(x) && (is.vector(x) || is.atomic(x))) {
-    return(set_values_vector(x, labels, NULL, force.labels, force.values, drop.na))
-  } else if (is.data.frame(x) || is.list(x)) {
-    # get length of data frame or list, i.e.
-    # determine number of variables
-    if (is.data.frame(x))
-      nvars <- ncol(x)
-    else
-      nvars <- length(x)
-    for (i in seq_len(nvars)) {
-      # list of labels makes sense if multiple variable
-      # should be labelled with different labels
-      if (is.list(labels)) {
-        # check for valid length of supplied label-list
-        if (i <= length(labels)) {
-          x[[i]] <- set_values_vector(x[[i]], labels[[i]], colnames(x)[i],
-                                      force.labels, force.values, drop.na)
-        }
-      } else if (is.vector(labels)) {
-        # user supplied only one vector of labels.
-        # so each variable gets the same labels
-        x[[i]] <- set_values_vector(x[[i]], labels, colnames(x)[i], force.labels,
-                                    force.values, drop.na)
-      } else {
-        warning("`labels` must be a list of same length as `ncol(x)` or a vector.", call. = TRUE)
-      }
-    }
-    return(x)
-  }
-}
-
-
-#' @importFrom stats na.omit
-get_value_range <- function(x) {
-  # check if var is a factor
-  if (is.factor(x)) {
-    # check if we have numeric levels
-    if (!is_num_fac(x)) {
-      # retrieve levels. since levels are numeric, we
-      # have minimum and maximum values
-      minval <- 1
-      maxval <- nlevels(x)
-    } else {
-      # levels are not numeric. we need to convert them
-      # first to retrieve minimum level, as numeric
-      minval <- min(as.numeric(levels(x)), na.rm = T)
-
-      # check range, add minimum, so we have max
-      maxval <- diff(range(as.numeric(levels(x)))) + minval
-    }
-  } else if (is.character(x)) {
-    # if we have a character vector, we don't have
-    # min and max values. instead, we count the
-    # amount of unique string values
-    minval <- 1
-    maxval <- length(unique(stats::na.omit(x)))
-  } else {
-    # retrieve values
-    minval <- min(x, na.rm = TRUE)
-    maxval <- max(x, na.rm = TRUE)
-  }
-  # determine value range
-  valrange <- maxval - minval + 1
-  # return all
-  return(list(minval = minval,
-              maxval = maxval,
-              valrange = valrange))
-}
-
-
-#' @importFrom stats na.omit
-set_values_vector <- function(x, labels, var.name, force.labels, force.values, drop.na) {
   # valid vector?
   if (is.null(x)) {
     warning("can't add value labels to NULL vectors.", call. = T)
@@ -312,8 +252,9 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
       valrange <- vr$valrange
       minval <- vr$minval
       maxval <- vr$maxval
+
       # check for unlisting
-      if (is.list(labels)) labels <- unlist(labels)
+      if (is.list(labels)) labels <- labels[[1]]
 
       # determine amount of labels and unique values
       lablen <- length(labels)
@@ -430,4 +371,42 @@ set_values_vector <- function(x, labels, var.name, force.labels, force.values, d
       attr(x, attr.string) <- c(attr(x, attr.string, exact = T), current.na)
   }
   return(x)
+}
+
+
+#' @importFrom stats na.omit
+get_value_range <- function(x) {
+  # check if var is a factor
+  if (is.factor(x)) {
+    # check if we have numeric levels
+    if (!is_num_fac(x)) {
+      # retrieve levels. since levels are numeric, we
+      # have minimum and maximum values
+      minval <- 1
+      maxval <- nlevels(x)
+    } else {
+      # levels are not numeric. we need to convert them
+      # first to retrieve minimum level, as numeric
+      minval <- min(as.numeric(levels(x)), na.rm = T)
+
+      # check range, add minimum, so we have max
+      maxval <- diff(range(as.numeric(levels(x)))) + minval
+    }
+  } else if (is.character(x)) {
+    # if we have a character vector, we don't have
+    # min and max values. instead, we count the
+    # amount of unique string values
+    minval <- 1
+    maxval <- length(unique(stats::na.omit(x)))
+  } else {
+    # retrieve values
+    minval <- min(x, na.rm = TRUE)
+    maxval <- max(x, na.rm = TRUE)
+  }
+  # determine value range
+  valrange <- maxval - minval + 1
+  # return all
+  return(list(minval = minval,
+              maxval = maxval,
+              valrange = valrange))
 }

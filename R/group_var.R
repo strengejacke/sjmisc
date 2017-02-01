@@ -102,16 +102,10 @@ group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FAL
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
+  if (is.data.frame(x)) {
 
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
-
-    for (i in .vars) {
+    # iterate variables of data frame
+    for (i in colnames(.dat)) {
       x[[i]] <- g_v_helper(
         x = .dat[[i]],
         groupsize = groupsize,
@@ -122,7 +116,7 @@ group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FAL
     }
 
     # coerce to tibble and select only recoded variables
-    x <- tibble::as_tibble(x[.vars])
+    x <- tibble::as_tibble(x[colnames(.dat)])
 
     # add suffix to recoded variables?
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
@@ -164,15 +158,7 @@ group_labels <- function(x, ..., groupsize = 5, right.interval = FALSE, groupcou
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
-
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
-
+  if (is.data.frame(x)) {
     # iterate variables of data frame
     return(
       purrr::map(.dat, ~ g_l_helper(

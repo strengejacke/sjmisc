@@ -14,7 +14,7 @@
 
 <meta name="date" content="2017-02-01" />
 
-<title>Introduction into the sjmisc-Package</title>
+<title>Labelled Data and the sjmisc-Package</title>
 
 
 
@@ -68,19 +68,27 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 
-<h1 class="title toc-ignore">Introduction into the sjmisc-Package</h1>
+<h1 class="title toc-ignore">Labelled Data and the sjmisc-Package</h1>
 <h4 class="author"><em>Daniel Lüdecke</em></h4>
 <h4 class="date"><em>2017-02-01</em></h4>
 
 
 
+<p>Basically, this package covers two domains of functionality:</p>
+<ul>
+<li>Reading and writing data between R and other statistical software packages like <em>SPSS</em>, <em>SAS</em> or <em>Stata</em> and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.</li>
+<li>Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.</li>
+</ul>
+<p>This vignette focusses on the first bullet point and gives an overview of functions to work with labelled data.</p>
+<div id="labelled-data" class="section level1">
+<h1>Labelled Data</h1>
 <p><em>Labelled data</em> (or labelled vectors) is a common data structure in other statistical environments to store meta-information about variables, like variable names, value labels or multiple defined missing values.</p>
-<p><em>Labelled data</em> not only extends <strong>R</strong>‘s capabilities to deal with proper value <em>and</em> variable labels, but also facilitates the representation of different types of missing values, like in other statistical software packages. Typically, in R, multiple declared missings cannot be represented in a similar way, like in ’SPSS’ or ‘SAS’, with the regular missing values. However, the <strong>haven</strong> package introduced <code>tagged_na</code> values, which can do this. Tagged NA’s work exactly like regular R missing values except that they store one additional byte of information: a tag, which is usually a letter (“a” to “z”) or also may be a character number (“0” to “9”). This allows to indicate different missings.</p>
-<p>Labelled data supported by the <strong>sjmisc</strong>-package does not require vectors of class <code>labelled</code>. The <code>labelled</code> class, implemented by the packages <strong>haven</strong> and <strong>labelled</strong>, may cause troubles with other packages (e.g. with the <strong>effects</strong>-package), thus it’s only intended as being an intermediate data structure that should be converted to common R classes. However, coercing a <code>labelled</code> vector to other classes (like factor or numeric) typically means that meta information like value and variable label attributes are lost. Actually, there is no need to drop these attributes for non-<code>labelled</code>-class vectors. Functions like <code>lm()</code> simply copy these attributes to the data that is included in the returned object. Packages like <strong>sjPlot</strong> support labelled data for easily annotated data visualization. The <strong>sjmisc</strong>-package supports working with <em>labelled data</em> and offers functions to benefit from these features.</p>
+<p>Labelled data not only extends <strong>R</strong>‘s capabilities to deal with proper value <em>and</em> variable labels, but also facilitates the representation of different types of missing values, like in other statistical software packages. Typically, in R, multiple declared missings cannot be represented in a similar way, like in ’SPSS’ or ‘SAS’, with the regular missing values. However, the <strong>haven</strong>-package introduced <code>tagged_na</code> values, which can do this. Tagged NA’s work exactly like regular R missing values except that they store one additional byte of information: a tag, which is usually a letter (“a” to “z”) or also may be a character number (“0” to “9”). This allows to indicate different missings.</p>
+<p>Functions of <strong>sjmisc</strong> do not necessarily require vectors of class <code>labelled</code>. The <code>labelled</code> class, implemented by the packages <strong>haven</strong> and <strong>labelled</strong>, may cause troubles with other packages, thus it’s only intended as being an intermediate data structure that should be converted to common R classes. However, coercing a <code>labelled</code> vector to other classes (like factor or numeric) typically means that meta information like value and variable label attributes are lost. Actually, there is no need to drop these attributes for non-<code>labelled</code>-class vectors. Functions like <code>lm()</code> simply copy these attributes to the data that is included in the returned object. Packages like <strong>sjPlot</strong> support labelled data for easily annotated data visualization. <strong>sjmisc</strong> supports working with <em>labelled data</em> and offers functions to benefit from these features.</p>
 <div id="labelled-data-in-haven-and-labelled" class="section level2">
 <h2>Labelled Data in haven and labelled</h2>
 <p>The <strong>labelled</strong>-package is intended to support <code>labelled</code> metadata structures, thus the data structure of labelled vectors in <strong>haven</strong> and <strong>labelled</strong> is the same.</p>
-<p>Labelled data in this format stores information about value labels, variable names and multiple defined missing values. However, <em>variable names</em> are only part of this information if data was imported with one of <code>haven</code>s read-functions. Adding a variable label attribute is (at least up to version 1.0.0) not possible via the <code>labelled</code>-constructor method.</p>
+<p>Labelled data in this format stores information about value labels, variable names and multiple defined missing values. However, <em>variable names</em> are only part of this information if data was imported with one of <strong>haven</strong>’s read-functions. Adding a variable label attribute is (at least up to version 1.0.0) not possible via the <code>labelled</code>-constructor method.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(haven)
 ## 
 ## Attache Paket: 'haven'
@@ -128,7 +136,7 @@ x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</sp
 </div>
 <div id="labelled-data-in-foreign" class="section level2">
 <h2>Labelled Data in foreign</h2>
-<p>The <strong>foreign</strong>-package stores value labels as <code>value.labels</code> attribute, while variable labels are stored as attribute of the data frame returned by the <code>read.spss()</code>-method. If you use <code>sjmisc::read_spss()</code>, variable labels are added as attribute to each variable.</p>
+<p>The <strong>foreign</strong>-package stores value labels as <code>value.labels</code> attribute, while variable labels are stored as attribute of the data frame returned by the <code>read.spss()</code>-method.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(foreign)
 efc &lt;-<span class="st"> </span><span class="kw">read.spss</span>(<span class="st">&quot;sample_dataset.sav&quot;</span>, 
                  <span class="dt">to.data.frame =</span> <span class="ot">TRUE</span>, 
@@ -147,7 +155,7 @@ efc &lt;-<span class="st"> </span><span class="kw">read.spss</span>(<span class=
 </div>
 <div id="labelled-data-in-sjmisc" class="section level2">
 <h2>Labelled Data in sjmisc</h2>
-<p>The <strong>sjmisc</strong>-package supports both label attributes in <strong>haven</strong>-style (<code>label</code> and <code>labels</code>) and <strong>foreign</strong>-style (<code>value.labels</code> and <code>variable.label</code>). Unlike <strong>haven</strong>, you can also have factors with label attributes; you’re not restricted to the <code>labelled</code> class for vectors when working with <strong>sjmisc</strong> and labelled data.</p>
+<p><strong>sjmisc</strong> supports both label attributes in <strong>haven</strong>-style (<code>label</code> and <code>labels</code>) and <strong>foreign</strong>-style (<code>value.labels</code> and <code>variable.label</code>). You’re not restricted to the <code>labelled</code> class for vectors when working with <strong>sjmisc</strong> and labelled data. Hence, you can have vectors of common R classes and still use information like variable or value labels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(sjmisc)
 <span class="co"># sjmisc-sample data, an atomic vector with label attributes</span>
 <span class="kw">data</span>(efc)
@@ -156,6 +164,7 @@ efc &lt;-<span class="st"> </span><span class="kw">read.spss</span>(<span class=
 ##  - attr(*, &quot;label&quot;)= chr &quot;elder's gender&quot;
 ##  - attr(*, &quot;labels&quot;)= Named num [1:2] 1 2
 ##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;male&quot; &quot;female&quot;</code></pre></div>
+</div>
 </div>
 <div id="value-labels" class="section level1">
 <h1>Value Labels</h1>
@@ -218,7 +227,7 @@ x &lt;-<span class="st"> </span><span class="kw">labelled</span>(
 <span class="co"># return new labelled vector</span>
 x &lt;-<span class="st"> </span><span class="kw">set_labels</span>(x, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;very low&quot;</span>, <span class="st">&quot;low&quot;</span>, <span class="st">&quot;mid&quot;</span>, <span class="st">&quot;hi&quot;</span>))
 x
-##  [1] 3 1 4 3 4 2 4 3 3 1 1 1 4 1 3 4 3 1 4 3
+##  [1] 2 3 1 2 3 1 4 1 4 3 4 2 3 2 2 4 1 2 2 4
 ## attr(,&quot;labels&quot;)
 ## very low      low      mid       hi 
 ##        1        2        3        4</code></pre></div>
@@ -342,13 +351,13 @@ testit &lt;-<span class="st"> </span>function(x) <span class="kw">get_label</spa
 <span class="co"># return new vector</span>
 x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x, <span class="dt">lab =</span> <span class="st">&quot;Dummy-variable&quot;</span>)
 <span class="kw">str</span>(x)
-##  atomic [1:10] 1 1 3 3 1 3 1 1 2 1
+##  atomic [1:10] 1 4 3 4 3 1 2 3 4 4
 ##  - attr(*, &quot;label&quot;)= chr &quot;Dummy-variable&quot;
 
 <span class="co"># label existing vector</span>
 <span class="kw">set_label</span>(x) &lt;-<span class="st"> &quot;Another Dummy-variable&quot;</span>
 <span class="kw">str</span>(x)
-##  atomic [1:10] 1 1 3 3 1 3 1 1 2 1
+##  atomic [1:10] 1 4 3 4 3 1 2 3 4 4
 ##  - attr(*, &quot;label&quot;)= chr &quot;Another Dummy-variable&quot;</code></pre></div>
 <p><code>set_label()</code> can also set variable labels for a data frame. In this case, the variable attributes get an additional <code>name</code> attribute with the vector’s name. This makes it easier to see which label belongs to which vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
@@ -362,13 +371,13 @@ x &lt;-<span class="st"> </span><span class="kw">set_label</span>(x, <span class
 
 <span class="kw">str</span>(x)
 ## 'data.frame':    10 obs. of  3 variables:
-##  $ a: atomic  2 1 1 1 3 4 2 2 3 1
+##  $ a: atomic  4 2 1 3 4 1 4 3 3 1
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable A&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;a&quot;
-##  $ b: atomic  4 2 3 2 4 3 4 4 1 3
+##  $ b: atomic  3 2 1 4 2 3 3 3 1 2
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable B&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;b&quot;
-##  $ c: atomic  4 1 1 3 3 1 1 2 2 1
+##  $ c: atomic  3 4 3 4 4 2 4 4 3 4
 ##   ..- attr(*, &quot;label&quot;)= Named chr &quot;Variable C&quot;
 ##   .. ..- attr(*, &quot;names&quot;)= chr &quot;c&quot;
 
@@ -390,11 +399,11 @@ x %&gt;%<span class="st"> </span>
   ) %&gt;%<span class="st"> </span>
 <span class="st">  </span><span class="kw">str</span>()
 ## 'data.frame':    10 obs. of  3 variables:
-##  $ a: atomic  3 3 1 4 3 3 2 3 1 3
+##  $ a: atomic  4 1 4 4 1 3 3 4 3 3
 ##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable A&quot;
-##  $ b: atomic  1 1 3 1 4 3 3 2 1 1
+##  $ b: atomic  1 3 4 3 1 3 4 4 4 2
 ##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable B&quot;
-##  $ c: atomic  3 1 4 1 1 3 4 2 2 4
+##  $ c: atomic  1 3 1 2 3 2 4 3 2 2
 ##   ..- attr(*, &quot;label&quot;)= chr &quot;Variable C&quot;</code></pre></div>
 </div>
 </div>
@@ -408,16 +417,16 @@ x %&gt;%<span class="st"> </span>
 <span class="kw">table</span>(x)
 ## x
 ##  1  2  3  4  5  6  7  8 
-## 18 13 10 11 10 20  7 11
+## 13 10 15 14 14 15  4 15
 
 <span class="co"># set value 1 and 8 as tagged missings</span>
 x &lt;-<span class="st"> </span><span class="kw">set_na</span>(x, <span class="dt">value =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">8</span>), <span class="dt">as.tag =</span> <span class="ot">TRUE</span>)
 x
-##   [1]  4 NA NA  4 NA NA  5 NA NA NA  2  4 NA  6 NA NA NA  2 NA  2  5  2 NA
-##  [24]  5 NA  5  4  6  2  6  4  5  6  7  6  2  4  6 NA  5  6  7 NA  6  6  2
-##  [47]  5  3  6  3  4  3  5 NA  7 NA  2  3  7 NA NA  7  6  4  6  6  2  3  3
-##  [70] NA  2  2  6  6  6  5  5 NA  3  2  6  4  7 NA  6 NA  4  3  3  4  6  3
-##  [93]  7 NA NA NA  6 NA  2 NA
+##   [1]  6  6 NA  2  6 NA  5  6  5  6  2  5 NA NA  4  4  2 NA NA NA  5  4  6
+##  [24]  3 NA NA  4  7  5  7  6  4  3  2  6  2  3  5  6  5  3  3 NA NA  3  2
+##  [47]  3  2  5  5  3  4  6 NA  4 NA NA  4 NA NA  5  3 NA  5  3  3  2  3  4
+##  [70]  4  4 NA  6 NA  3  7  6  4  3 NA NA  4 NA  3  5 NA  6 NA  6 NA  2  5
+##  [93] NA NA  5  2  6  4 NA  7
 ## attr(,&quot;labels&quot;)
 ##  1  8 
 ## NA NA
@@ -426,20 +435,20 @@ x
 <span class="kw">table</span>(x, <span class="dt">useNA =</span> <span class="st">&quot;always&quot;</span>)
 ## x
 ##    2    3    4    5    6    7 &lt;NA&gt; 
-##   13   10   11   10   20    7   29
+##   10   15   14   14   15    4   28
 
 <span class="co"># now let's see, which NA's were &quot;1&quot; and which were &quot;8&quot;</span>
 <span class="kw">print_tagged_na</span>(x)
-##   [1]     4 NA(1) NA(8)     4 NA(8) NA(1)     5 NA(1) NA(1) NA(1)     2
-##  [12]     4 NA(1)     6 NA(1) NA(1) NA(1)     2 NA(8)     2     5     2
-##  [23] NA(1)     5 NA(8)     5     4     6     2     6     4     5     6
-##  [34]     7     6     2     4     6 NA(1)     5     6     7 NA(8)     6
-##  [45]     6     2     5     3     6     3     4     3     5 NA(8)     7
-##  [56] NA(1)     2     3     7 NA(8) NA(8)     7     6     4     6     6
-##  [67]     2     3     3 NA(1)     2     2     6     6     6     5     5
-##  [78] NA(1)     3     2     6     4     7 NA(1)     6 NA(1)     4     3
-##  [89]     3     4     6     3     7 NA(8) NA(1) NA(1)     6 NA(8)     2
-## [100] NA(8)
+##   [1]     6     6 NA(1)     2     6 NA(8)     5     6     5     6     2
+##  [12]     5 NA(8) NA(8)     4     4     2 NA(1) NA(8) NA(8)     5     4
+##  [23]     6     3 NA(1) NA(8)     4     7     5     7     6     4     3
+##  [34]     2     6     2     3     5     6     5     3     3 NA(8) NA(8)
+##  [45]     3     2     3     2     5     5     3     4     6 NA(1)     4
+##  [56] NA(1) NA(8)     4 NA(1) NA(8)     5     3 NA(1)     5     3     3
+##  [67]     2     3     4     4     4 NA(1)     6 NA(1)     3     7     6
+##  [78]     4     3 NA(8) NA(8)     4 NA(1)     3     5 NA(8)     6 NA(8)
+##  [89]     6 NA(1)     2     5 NA(1) NA(8)     5     2     6     4 NA(1)
+## [100]     7
 
 x &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>))
 x

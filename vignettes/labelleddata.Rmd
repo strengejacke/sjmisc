@@ -9,10 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Basically, this package covers two domains of functionality:
-
-  * Reading and writing data between R and other statistical software packages like _SPSS_, _SAS_ or _Stata_ and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
-  * Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
+This vignette shows a small example how functions to work with labelled data can be implemented in a typical data visualization workflow.
 
 # Labelled Data
 
@@ -22,7 +19,7 @@ In software like SPSS, it is common to have value and variable labels as variabl
 factor(c("low", "high", "mid", "high", "low"))
 ```
 
-Reading SPSS-data (from haven, foreign or sjmisc), keeps the numeric values for variables and adds the value and variable labels as attributes. See following example from the sample-dataset efc, which is part of the sjmisc-package:
+Reading SPSS-data (from haven, foreign or sjmisc), keeps the numeric values for variables and adds the value and variable labels as attributes. See following example from the sample-dataset efc, which is part of the **sjmisc**-package:
 
 ```{r}
 library(sjmisc)
@@ -82,7 +79,7 @@ barplot(
 
 Converting `labelled`-class vectors into factors usually drops label attributes (e.g. using `as_factor()`) or replaces values with the associated labels (like `to_label()` does). If you want to convert a labelled vector into a numeric factor, but keep the label attributes (including variable labels), use `to_factor()`.
 
-Functions like `lm()` simply copy the label-attributes and store these information in the returned object; see following example from the `sjPlot`-package:
+Functions like `lm()` simply copy the label-attributes and store these information in the returned object; see following example from the **sjPlot**-package:
 
 ```{r collapse=TRUE}
 library(sjPlot)

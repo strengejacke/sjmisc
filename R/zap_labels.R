@@ -118,16 +118,10 @@ zap_labels <- function(x, ...) {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
+  if (is.data.frame(x)) {
 
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       x[[i]] <- zap_labels_helper(.dat[[i]])
     }
     # coerce to tibble
@@ -148,16 +142,10 @@ zap_unlabelled <- function(x, ...) {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
+  if (is.data.frame(x)) {
 
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       x[[i]] <- zap_unlabelled_helper(.dat[[i]])
     }
     # coerce to tibble
@@ -209,16 +197,10 @@ zap_na_tags <- function(x, ...) {
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
+  if (is.data.frame(x)) {
 
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       x[[i]] <- zap_na_tags_helper(.dat[[i]])
     }
     # coerce to tibble
@@ -272,17 +254,12 @@ zap_na_tags <- function(x, ...) {
 zap_inf <- function(x, ...) {
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
+  .dat <- get_dot_data(x, .dots)
 
-  # get variable names
-  .vars <- dot_names(.dots)
+  if (is.data.frame(x)) {
 
-  # if user only provided a data frame, get all variable names
-  if (is.null(.vars) && is.data.frame(x)) .vars <- colnames(x)
-
-  # if we have any dot names, we definitely have a data frame
-  if (!is.null(.vars)) {
     # iterate variables of data frame
-    for (i in .vars) {
+    for (i in colnames(.dat)) {
       # convert NaN and Inf to missing
       x[[i]][is.nan(x[[i]])] <- NA
       x[[i]][is.infinite(x[[i]])] <- NA
