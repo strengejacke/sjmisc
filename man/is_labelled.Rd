@@ -16,4 +16,3 @@ Logical, \code{TRUE} if \code{x} inherits from class \code{labelled},
 \description{
 This function checks whether \code{x} is of class \code{labelled}.
 }
-

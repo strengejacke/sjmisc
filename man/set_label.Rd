@@ -116,4 +116,3 @@ The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data ini
            more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
            to get variable labels.
 }
-

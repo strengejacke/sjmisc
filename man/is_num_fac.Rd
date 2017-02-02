@@ -31,4 +31,3 @@ f3 <- factor(c("Justus", "Bob", "Peter"))
 is_num_fac(f3)
 
 }
-

@@ -125,4 +125,3 @@ set_na(tmp, value = c("Refused", "No answer"))
            \code{\link{get_na}} to get values of missing values in
            labelled vectors.
 }
-

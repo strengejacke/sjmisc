@@ -30,4 +30,3 @@ sjt.df(efc, alternateRowColor = TRUE)}
 
 }
 \keyword{data}
-

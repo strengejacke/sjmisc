@@ -66,6 +66,7 @@ as_labelled.default <- function(x, add.labels = FALSE, add.class = FALSE) {
 as_labelled_helper <- function(x, add.labels, add.class) {
   # check if we have any value label attributes
   vallabel <- get_labels(x, attr.only = T)
+
   # nothing?
   if (is.null(vallabel)) {
     # factor levels as labels?
@@ -78,11 +79,14 @@ as_labelled_helper <- function(x, add.labels, add.class) {
     # set value labels
     x <- suppressWarnings(set_labels(x, labels = vallabel, force.labels = T, force.values = T))
   }
+
   # fill up missing attributes
   if (add.labels) x <- fill_labels(x)
+
   # reset missings
   xna <- get_na(x)
   if (!sjmisc::is_empty(xna)) x <- set_na(x, value = xna)
+
   # get former class attributes
   xc <- class(x)
   if (add.class)
@@ -125,7 +129,7 @@ as_labelled_helper <- function(x, add.labels, add.class) {
 #' @export
 lbl_df <- function(x) {
   # add class attribute, if necessary
-  if (!"lbl_df" %in% class(x))
-    class(x) <- c("lbl_df", class(x))
+  if (!"lbl_df" %in% class(x)) class(x) <- c("lbl_df", class(x))
+
   x
 }

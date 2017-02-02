@@ -119,7 +119,6 @@ to_label <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.label
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- to_label_helper(.dat[[i]], add.non.labelled, prefix, var.label, drop.na, drop.levels)

@@ -82,4 +82,3 @@ str_pos("We are Sex Pistols!", "postils", part.dist.match = 1)}
 \seealso{
 \code{\link{group_str}}
 }
-

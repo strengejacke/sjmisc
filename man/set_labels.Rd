@@ -170,4 +170,3 @@ See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online docume
            \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
            add additional value labels without replacing the existing ones.
 }
-

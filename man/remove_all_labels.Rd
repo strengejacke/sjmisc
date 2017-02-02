@@ -30,4 +30,3 @@ str(remove_all_labels(efc))
            on working with labelled data, and \code{\link{copy_labels}} for
            adding label attributes (subsetted) data frames.
 }
-

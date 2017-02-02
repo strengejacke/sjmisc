@@ -167,4 +167,3 @@ rec(efc, ~contains("cop"), c161sex:c175empl, recodes = "0,1=0; else=1")
            for re-shifting value ranges and \code{\link{ref_lvl}} to change the
            reference level of (numeric) factors.
 }
-

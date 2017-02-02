@@ -30,4 +30,3 @@ dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
 var_rename(dummy, a = "first.col", c = "3rd.col")
 
 }
-

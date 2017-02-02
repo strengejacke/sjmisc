@@ -114,4 +114,3 @@ to_character(x, add.non.labelled = TRUE, drop.na = FALSE)
 to_character(efc, e42dep, e16sex, c172code)
 
 }
-

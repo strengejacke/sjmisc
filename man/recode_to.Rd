@@ -89,4 +89,3 @@ efc \%>\%
 \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
            for setting \code{\link{NA}} values.
 }
-

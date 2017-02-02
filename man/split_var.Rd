@@ -104,4 +104,3 @@ table(split_var(efc$e42dep, groupcount = 2, inclusive = TRUE))
 \code{\link{group_var}} to group variables into equal ranged groups,
          or \code{\link{rec}} to recode variables.
 }
-

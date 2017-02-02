@@ -39,6 +39,7 @@
 #' str(mydf)
 #'
 #' @importFrom tibble as_tibble
+#' @importFrom dplyr bind_rows
 #' @export
 merge_df <- function(x1, x2, ..., id = NULL) {
   # retrieve list of parameters
@@ -86,11 +87,19 @@ merge_df <- function(x1, x2, ..., id = NULL) {
   tibble::as_tibble(x_final)
 }
 
+
 merge_df_helper <- function(x1, x2) {
   # check if both data frames have same column names
   # in case, someone forgets that rbind exists...
   if (isTRUE(all.equal(sort(colnames(x1)), sort(colnames(x2))))) {
-    return(rbind(x1, x2))
+    # bind rows
+    tmp <- dplyr::bind_rows(x1, x2)
+    # copy attributes
+    at <- lapply(x1, attributes)
+    # set back attributes
+    for (i in seq_len(length(at))) attributes(tmp[[i]]) <- at[[i]]
+    # return data
+    return(tmp)
   }
 
   # find matching columns in both data frames

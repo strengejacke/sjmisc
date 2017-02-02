@@ -77,7 +77,6 @@ to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- to_value_helper(.dat[[i]], start.at, keep.labels)

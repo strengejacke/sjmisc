@@ -45,4 +45,3 @@ count_na(dat, x)
 count_na(dat, x, y)
 
 }
-

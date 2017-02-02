@@ -114,7 +114,6 @@ set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- set_na_helper(
@@ -124,10 +123,8 @@ set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
         as.tag = as.tag
       )
     }
-
     # coerce to tibble
     x <- tibble::as_tibble(x)
-
   } else {
     x <- set_na_helper(
       x = .dat,

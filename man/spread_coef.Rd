@@ -100,4 +100,3 @@ efc \%>\%
   boot_ci(e42dep, c161sex, c172code)
 
 }
-

@@ -84,7 +84,7 @@ group_str <- function(strings,
   findInPairs <- function(curel) {
     elfound <- FALSE
     if (length(pairs) > 0) {
-      for (ll in 1:length(pairs)) {
+      for (ll in seq_len(length(pairs))) {
         pel <- pairs[[ll]]
         if (any(pel == curel)) elfound <- TRUE
       }
@@ -96,7 +96,7 @@ group_str <- function(strings,
   if (showProgressBar) pb <- utils::txtProgressBar(min = 0, max = ncol(m), style = 3)
 
   # iterate matrix
-  for (i in 1:nrow(m)) {
+  for (i in seq_len(nrow(m))) {
     # update progress bar
     if (showProgressBar) utils::setTxtProgressBar(pb, i)
 
@@ -106,7 +106,7 @@ group_str <- function(strings,
       # yet, so go on...
       pairvector <- c()
 
-      for (j in 1:ncol(m)) {
+      for (j in seq_len(ncol(m))) {
         # check if we found a pair's distance that
         # is within the maximum requested distance
         # i.e. which are "close" enough
@@ -115,7 +115,7 @@ group_str <- function(strings,
           # check if there's a better match for the
           # currently compared token
           foundBetterToken <- !strict
-          for (cnt in 1:nrow(m)) {
+          for (cnt in seq_len(nrow(m))) {
             if (strict) {
               if (m[cnt, j] > 0 && m[cnt, j] < m[i, j]) foundBetterToken <- TRUE
             } else {

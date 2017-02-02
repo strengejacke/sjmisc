@@ -35,4 +35,3 @@ get_note(x)
 x
 
 }
-

@@ -138,4 +138,3 @@ to_label(x, var.label = "New variable label!", drop.levels = TRUE)
 to_label(efc, e42dep, e16sex, c172code)
 
 }
-

@@ -45,4 +45,3 @@ str(efc.sub)
            on working with labelled data, and \code{\link{remove_all_labels}} for
            removing label attributes from data frames.
 }
-

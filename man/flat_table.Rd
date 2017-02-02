@@ -68,4 +68,3 @@ efc \%>\%
 \seealso{
 \code{\link{frq}} for simple frequency table of labelled vectors.
 }
-

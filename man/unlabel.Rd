@@ -40,4 +40,3 @@ This function is currently only used to avoid possible compatibility issues
 \seealso{
 \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
 }
-

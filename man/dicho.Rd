@@ -90,4 +90,3 @@ frq(dicho(efc, e42dep, var.label = "Dependency (dichotomized)",
           val.labels = c("lower", "higher")))
 
 }
-

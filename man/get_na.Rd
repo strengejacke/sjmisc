@@ -64,4 +64,3 @@ get_na(data.frame(x, y))
            to get values associated with labels; see \code{\link{set_na}} to
            replace specific values with \code{NA}.
 }
-

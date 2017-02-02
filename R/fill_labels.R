@@ -6,7 +6,6 @@ fill_labels <- function(x, ...) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- fill_labels_helper(.dat[[i]])

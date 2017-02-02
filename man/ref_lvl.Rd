@@ -59,4 +59,3 @@ ref_lvl(dat, c82cop1, c83cop2, value = 2) \%>\% str()
 \code{\link{to_factor}} to convert numeric vectors into factors;
            \code{\link{rec}} to recode variables.
 }
-

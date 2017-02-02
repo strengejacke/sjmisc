@@ -6,7 +6,6 @@ drop_labels <- function(x, ..., drop.na = TRUE) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- drop_labels_helper(.dat[[i]], drop.na = drop.na)

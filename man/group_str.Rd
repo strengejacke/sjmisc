@@ -68,4 +68,3 @@ frq(newstring)
 \seealso{
 \code{\link{str_pos}}
 }
-

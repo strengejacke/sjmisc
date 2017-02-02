@@ -52,14 +52,12 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     x <- dplyr::bind_cols(
       purrr::map(colnames(.dat), ~ to_dummy_helper(
         x = .dat[[.x]], varname = .x, suffix = suffix
       ))
     )
-
   } else {
     # remove "data frame name"
     dollar_pos <- regexpr("$", varname, fixed = T)[1]

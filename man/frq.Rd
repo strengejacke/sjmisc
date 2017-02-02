@@ -70,4 +70,3 @@ efc \%>\%
 \seealso{
 \code{\link{flat_table}} for labelled (proportional) tables.
 }
-

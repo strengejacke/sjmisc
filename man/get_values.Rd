@@ -59,4 +59,3 @@ get_values(data.frame(x, y))
 \code{\link{get_labels}} for getting value labels and \code{\link{get_na}}
            to get values for missing values.
 }
-

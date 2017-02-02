@@ -144,12 +144,15 @@ frq_helper <- function(x, sort.frq, weight.by) {
       dat$val <- as.numeric(dat$val)
     # weight data?
     if (!is.null(weight.by)) {
-      dat2 <- data.frame(
-        round(stats::xtabs(weights ~ x,
-                           data = data.frame(weights = weight.by, x = x),
-                           na.action = stats::na.pass,
-                           exclude = NULL), 0)
-      )
+      dat2 <- data.frame(round(
+        stats::xtabs(
+          weights ~ x,
+          data = data.frame(weights = weight.by, x = x),
+          na.action = stats::na.pass,
+          exclude = NULL
+        ),
+        0
+      ))
     } else {
       # create frequency table
       dat2 <- data.frame(table(x, useNA = "always"))
@@ -164,12 +167,15 @@ frq_helper <- function(x, sort.frq, weight.by) {
   } else {
     # weight data?
     if (!is.null(weight.by)) {
-      mydat <- data.frame(
-        round(stats::xtabs(weights ~ x,
-                           data = data.frame(weights = weight.by, x = x),
-                           na.action = stats::na.pass,
-                           exclude = NULL), 0)
-      )
+      mydat <- data.frame(round(
+        stats::xtabs(
+          weights ~ x,
+          data = data.frame(weights = weight.by, x = x),
+          na.action = stats::na.pass,
+          exclude = NULL
+        ),
+        0
+      ))
     } else {
       # if we have no labels, do simple frq table
       mydat <- data.frame(table(x, useNA = "always"))

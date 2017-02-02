@@ -47,4 +47,3 @@ remove_empty_cols(tmp)
 remove_empty_rows(tmp)
 
 }
-

@@ -81,4 +81,3 @@ str_contains("abc", c("a", "b", "e"), logic = "not")
 str_contains("abc", c("d", "e", "f"), logic = "not")
 
 }
-

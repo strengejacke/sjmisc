@@ -95,7 +95,6 @@ to_factor <- function(x, ..., add.non.labelled = FALSE, ref.lvl = NULL) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- to_fac_helper(.dat[[i]], add.non.labelled, ref.lvl)

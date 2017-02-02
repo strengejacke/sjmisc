@@ -2,8 +2,8 @@
 % Please edit documentation in R/add_labels.R, R/remove_labels.R
 \name{add_labels}
 \alias{add_labels}
-\alias{remove_labels}
 \alias{replace_labels}
+\alias{remove_labels}
 \title{Add, replace or remove value labels of variables}
 \usage{
 add_labels(x, ..., value)
@@ -119,4 +119,3 @@ get_na(remove_labels(x, value = tagged_na("c")))
            add value labels, replacing the existing ones (and removing non-specified
            value labels).
 }
-

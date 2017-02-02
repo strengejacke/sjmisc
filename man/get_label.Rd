@@ -80,4 +80,3 @@ See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online docume
            to get value labels; \code{\link{var_labels}} to set multiple variable
            labels at once.
 }
-

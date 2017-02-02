@@ -107,15 +107,12 @@ add_labels <- function(x, ..., value) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- add_labels_helper(.dat[[i]], value)
     }
-
     # coerce to tibble
     x <- tibble::as_tibble(x)
-
   } else {
     x <- add_labels_helper(.dat, value)
   }

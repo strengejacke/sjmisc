@@ -94,4 +94,3 @@ get_label(mydat$speed)
 lbl_df(mydat)
 
 }
-

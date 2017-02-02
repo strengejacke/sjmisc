@@ -119,7 +119,6 @@ zap_labels <- function(x, ...) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- zap_labels_helper(.dat[[i]])
@@ -143,7 +142,6 @@ zap_unlabelled <- function(x, ...) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- zap_unlabelled_helper(.dat[[i]])
@@ -198,7 +196,6 @@ zap_na_tags <- function(x, ...) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- zap_na_tags_helper(.dat[[i]])
@@ -257,7 +254,6 @@ zap_inf <- function(x, ...) {
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       # convert NaN and Inf to missing

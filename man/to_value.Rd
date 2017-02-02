@@ -87,4 +87,3 @@ efc$e17age <- as.factor(efc$e17age)
 to_value(efc, e16sex, e17age)
 
 }
-

@@ -71,4 +71,3 @@ is_nested(y, x)
 \references{
 Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
 }
-

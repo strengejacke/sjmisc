@@ -94,4 +94,3 @@ library(sjPlot)
 view_df(res)}
 
 }
-

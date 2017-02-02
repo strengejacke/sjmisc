@@ -56,4 +56,3 @@ is_empty(c("", "a"))
 is_empty(c("", "a"), first.only = FALSE)
 
 }
-

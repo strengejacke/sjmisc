@@ -102,4 +102,3 @@ to_factor(efc, ~contains("cop"), c161sex:c175empl)
            \code{\link{to_label}} to convert a value into a factor with labelled
            factor levels.
 }
-

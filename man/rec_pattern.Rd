@@ -52,4 +52,3 @@ frq(x)
 \code{\link{group_var}} for recoding variables into smaller groups, and
           \code{\link{group_labels}} to create the asssociated value labels.
 }
-

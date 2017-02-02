@@ -168,4 +168,3 @@ See \href{http://www.strengejacke.de/sjPlot/}{online documentation}
            \code{\link{get_values}} to retrieve the values associated
            with value labels.
 }
-
