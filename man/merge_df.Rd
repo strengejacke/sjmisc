@@ -24,16 +24,22 @@ Merges (full join) two (or more) data frames and preserve value and variable lab
 }
 \details{
 This function merges two data frames, where equal named columns
-           will be joined together. Value and variable labels are
-           preserved. If matching columns have different value
-           label attributes, attributes from first data frame will be
-           used.
+           will be joined together. Matching rows are not omitted, hence all
+           rows from the data frames are preserved. This means that \code{merge_df}
+           row-binds all data frames, even if these have different numbers of
+           columns. Non-matching columns will be column-bound and filled with
+           \code{NA}-values for rows in those data frames that do not have
+           this column.
+           \cr \cr
+           Value and variable labels are preserved. If matching columns have
+           different value label attributes, attributes from first data frame
+           will be used.
 }
 \examples{
 library(dplyr)
 data(efc)
 x1 <- efc \%>\% select(1:5) \%>\% slice(1:10)
-x2 <- efc \%>\% select(3:7) \%>\% slice(1:10)
+x2 <- efc \%>\% select(3:7) \%>\% slice(11:20)
 
 mydf <- merge_df(x1, x2)
 mydf
@@ -43,8 +49,8 @@ str(mydf)
 library(sjPlot)
 view_df(mydf)}
 
-x3 <- efc \%>\% select(5:9) \%>\% slice(1:10)
-x4 <- efc \%>\% select(11:14) \%>\% slice(1:10)
+x3 <- efc \%>\% select(5:9) \%>\% slice(21:30)
+x4 <- efc \%>\% select(11:14) \%>\% slice(31:40)
 
 mydf <- merge_df(x1, x2, x3, x4, id = "subsets")
 mydf

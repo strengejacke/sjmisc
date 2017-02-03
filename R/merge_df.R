@@ -12,16 +12,22 @@
 #' @return A full joined data frame.
 #'
 #' @details This function merges two data frames, where equal named columns
-#'            will be joined together. Value and variable labels are
-#'            preserved. If matching columns have different value
-#'            label attributes, attributes from first data frame will be
-#'            used.
+#'            will be joined together. Matching rows are not omitted, hence all
+#'            rows from the data frames are preserved. This means that \code{merge_df}
+#'            row-binds all data frames, even if these have different numbers of
+#'            columns. Non-matching columns will be column-bound and filled with
+#'            \code{NA}-values for rows in those data frames that do not have
+#'            this column.
+#'            \cr \cr
+#'            Value and variable labels are preserved. If matching columns have
+#'            different value label attributes, attributes from first data frame
+#'            will be used.
 #'
 #' @examples
 #' library(dplyr)
 #' data(efc)
 #' x1 <- efc %>% select(1:5) %>% slice(1:10)
-#' x2 <- efc %>% select(3:7) %>% slice(1:10)
+#' x2 <- efc %>% select(3:7) %>% slice(11:20)
 #'
 #' mydf <- merge_df(x1, x2)
 #' mydf
@@ -31,15 +37,15 @@
 #' library(sjPlot)
 #' view_df(mydf)}
 #'
-#' x3 <- efc %>% select(5:9) %>% slice(1:10)
-#' x4 <- efc %>% select(11:14) %>% slice(1:10)
+#' x3 <- efc %>% select(5:9) %>% slice(21:30)
+#' x4 <- efc %>% select(11:14) %>% slice(31:40)
 #'
 #' mydf <- merge_df(x1, x2, x3, x4, id = "subsets")
 #' mydf
 #' str(mydf)
 #'
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr bind_rows
+#' @importFrom dplyr bind_rows bind_cols
 #' @export
 merge_df <- function(x1, x2, ..., id = NULL) {
   # retrieve list of parameters
@@ -118,7 +124,12 @@ merge_df_helper <- function(x1, x2) {
 
   # x1_new has now all variables from x1, plus all variables
   # of x2 that also appear in x1
-  x1_new <- rbind(x1, tmp)
+  x1_new <- dplyr::bind_rows(x1, tmp)
+
+  # copy attributes
+  for (i in seq_len(ncol(x1))) {
+    attributes(x1_new[[i]]) <- attributes(x1[[i]])
+  }
 
   # which columns are still in x2 and have not been merged yet?
   # in certain cases, e.g. when we have no matching columns at all,
@@ -135,14 +146,16 @@ merge_df_helper <- function(x1, x2) {
 
   # append rows of x2. now we have a data frame of same length as merged
   # x1 and x2
-  tmp <- rbind(tmp, x2[, x2_remain])
+  tmp <- dplyr::bind_rows(tmp, x2[, x2_remain])
+
   # copy attributes
   for (i in seq_len(length(x2_remain))) {
     attributes(tmp[[i]]) <- attributes(x2[[x2_remain[i]]])
   }
 
   # final merge
-  x_final <- cbind(x1_new, tmp)
+  x_final <- dplyr::bind_cols(x1_new, tmp)
+
   # return merged df
   x_final
 }
