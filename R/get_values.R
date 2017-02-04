@@ -48,26 +48,26 @@
 #'
 #' @importFrom haven is_tagged_na na_tag
 #' @export
-get_values <- function(x, sort.val = FALSE, drop.na = FALSE) {
+get_values <- function(x, sort.val = TRUE, drop.na = FALSE) {
   UseMethod("get_values")
 }
 
 #' @export
-get_values.data.frame <- function(x, sort.val = FALSE, drop.na = FALSE) {
+get_values.data.frame <- function(x, sort.val = TRUE, drop.na = FALSE) {
   lapply(x, FUN = get_values_helper, sort.val, drop.na)
 }
 
 #' @export
-get_values.list <- function(x, sort.val = FALSE, drop.na = FALSE) {
+get_values.list <- function(x, sort.val = TRUE, drop.na = FALSE) {
   lapply(x, FUN = get_values_helper, sort.val, drop.na)
 }
 
 #' @export
-get_values.default <- function(x, sort.val = FALSE, drop.na = FALSE) {
+get_values.default <- function(x, sort.val = TRUE, drop.na = FALSE) {
   get_values_helper(x, sort.val, drop.na)
 }
 
-get_values_helper <- function(x, sort.val = FALSE, drop.na = FALSE) {
+get_values_helper <- function(x, sort.val = TRUE, drop.na = FALSE) {
   # haven or foreign?
   attr.string <- getValLabelAttribute(x)
   # nothing found? then leave...

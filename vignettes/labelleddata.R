@@ -1,3 +1,6 @@
+## ----echo = FALSE--------------------------------------------------------
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
 ## ------------------------------------------------------------------------
 factor(c("low", "high", "mid", "high", "low"))
 
@@ -39,7 +42,7 @@ data(efc)
 efc$c172code <- to_factor(efc$c172code)
 fit <- lm(barthtot ~ c160age + c12hour + c172code + c161sex, data = efc)
 
-## ----eval=FALSE, collapse=TRUE-------------------------------------------
+## ----eval=FALSE----------------------------------------------------------
 #  sjt.lm(fit, group.pred = TRUE)
 
 ## ------------------------------------------------------------------------

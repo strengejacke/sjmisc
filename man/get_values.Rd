@@ -4,7 +4,7 @@
 \alias{get_values}
 \title{Retrieve values of labelled variables}
 \usage{
-get_values(x, sort.val = FALSE, drop.na = FALSE)
+get_values(x, sort.val = TRUE, drop.na = FALSE)
 }
 \arguments{
 \item{x}{Variable (vector) with value label attributes; or a data frame or

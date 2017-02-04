@@ -9,6 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
 Basically, this package covers two domains of functionality:
 
   * Reading and writing data between R and other statistical software packages like _SPSS_, _SAS_ or _Stata_ and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
@@ -30,7 +34,7 @@ The **labelled**-package is intended to support `labelled` metadata structures, 
 
 Labelled data in this format stores information about value labels, variable names and multiple defined missing values. However, _variable names_ are only part of this information if data was imported with one of **haven**'s read-functions. Adding a variable label attribute is (at least up to version 1.0.0) not possible via the `labelled`-constructor method.
 
-```{r collapse=TRUE}
+```{r}
 library(haven)
 x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
@@ -41,7 +45,7 @@ print(x)
 
 A `labelled` vector can either be a numeric or character vector. Conversion to factors copies the value labels as factor levels, but drops the label attributes and missing information:
 
-```{r collapse=TRUE}
+```{r}
 is.na(x)
 
 as_factor(x)
@@ -54,7 +58,7 @@ is.na(as_factor(x))
 
 The **Hmisc**-package only supports variable labels. As additional information, it can also store a unit measure.
 
-```{r message=FALSE, collapse=TRUE}
+```{r message=FALSE}
 library(Hmisc)
 x <- c(1, 2, 3, 4)
 label(x) <- "Variable label"
@@ -66,7 +70,7 @@ str(x)
 
 The **foreign**-package stores value labels as `value.labels` attribute, while variable labels are stored as attribute of the data frame returned by the `read.spss()`-method.
 
-```{r eval=FALSE, collapse=TRUE}
+```{r eval=FALSE}
 library(foreign)
 efc <- read.spss("sample_dataset.sav", 
                  to.data.frame = TRUE, 
@@ -88,7 +92,7 @@ attr(efc, "variable.labels")['e16sex']
 
 **sjmisc** supports both label attributes in **haven**-style (`label` and `labels`) and **foreign**-style (`value.labels` and `variable.label`). You're not restricted to the `labelled` class for vectors when working with **sjmisc** and labelled data. Hence, you can have vectors of common R classes and still use information like variable or value labels.
 
-```{r message=FALSE, collapse=TRUE}
+```{r message=FALSE}
 library(sjmisc)
 # sjmisc-sample data, an atomic vector with label attributes
 data(efc)
@@ -100,29 +104,29 @@ str(efc$e16sex)
 ## Getting value labels
 
 The `get_labels()`-method is a generic method to return value labels of a vector or data frame.
-```{r collapse=TRUE}
+```{r}
 get_labels(efc$e42dep)
 ```
 
 You can prefix the value labels with the associated values or return them as named vector with the `include.values` argument.
-```{r collapse=TRUE}
+```{r}
 get_labels(efc$e42dep, include.values = "p")
 ```
 
 `get_labels()` also returns "labels" of factors, even if the factor has no label attributes.
-```{r collapse=TRUE}
+```{r}
 x <- factor(c("low", "mid", "low", "hi", "mid", "low"))
 get_labels(x)
 ```
 
 To ensure that labels are only returned for vectors with label-attribute, use the `attr.only` argument.
-```{r collapse=TRUE}
+```{r}
 x <- factor(c("low", "mid", "low", "hi", "mid", "low"))
 get_labels(x, attr.only = TRUE)
 ```
 
 If a vector has a label attribute, only these labels are returned. Non-labelled values are excluded from the output by default...
-```{r collapse=TRUE}
+```{r}
 # get labels, including tagged NA values
 x <- labelled(
   c(1:3, tagged_na("a", "c", "z"), 4:1),
@@ -133,13 +137,13 @@ get_labels(x)
 ```
 
 ... however, you can add non-labelled values to the return value as well, using the `include.non.labelled` argument.
-```{r collapse=TRUE}
+```{r}
 get_labels(x, include.non.labelled = TRUE)
 ```
 
 Tagged missing values can also be included in the output, using the `drop.na` argument.
 
-```{r collapse=TRUE}
+```{r}
 get_labels(x, include.values = "n", drop.na = FALSE)
 ```
 
@@ -147,21 +151,21 @@ get_labels(x, include.values = "n", drop.na = FALSE)
 ## Getting labelled values
 
 The `get_values()` method returns the values for labelled values (i.e. values that have an associated label). We still use the vector `x` from the above examples.
-```{r collapse=TRUE}
+```{r}
 print(x)
 
 get_values(x)
 ```
 
 With the `drop.na` argument you can omit those values from the return values that are defined as missing.
-```{r collapse=TRUE}
+```{r}
 get_values(x, drop.na = TRUE)
 ```
 
 ## Setting value labels
 
 With `set_labels()` you can add label attributes to any vector.
-```{r collapse=TRUE}
+```{r}
 x <- sample(1:4, 20, replace = TRUE)
 
 # return new labelled vector
@@ -170,14 +174,14 @@ x
 ```
 
 If more labels than values are given, only as many labels elements are used as values are present.
-```{r collapse=TRUE}
+```{r}
 x <- c(2, 2, 3, 3, 2)
 x <- set_labels(x, labels = c("a", "b", "c"))
 x
 ```
 
 However, you can force to use all labels, even for values that are not in the vector, using the `force.labels` argument.
-```{r collapse=TRUE}
+```{r}
 x <- c(2, 2, 3, 3, 2)
 x <- set_labels(
   x, 
@@ -188,14 +192,14 @@ x
 ```
 
 For vectors with more unique values than labels, additional labels for non-labelled values are added.
-```{r collapse=TRUE}
+```{r}
 x <- c(1, 2, 3, 2, 4, NA)
 x <- set_labels(x, labels = c("yes", "maybe", "no"))
 x
 ```
 
 Use `force.values` to add only those labels that have been passed as argument.
-```{r collapse=TRUE}
+```{r}
 x <- c(1, 2, 3, 2, 4, NA)
 x <- set_labels(
   x, 
@@ -206,7 +210,7 @@ x
 ```
 
 To add explicit labels for values (without adding more labels than wanted and without dropping labels for values that do not appear in the vector), use a named vector of labels as argument. The arguments `force.values` and `force.labels` are ignored when using named vectors.
-```{r collapse=TRUE}
+```{r}
 x <- c(1, 2, 3, 2, 4, 5)
 x <- set_labels(
   x, 
@@ -220,10 +224,10 @@ x
 
 You can use `set_labels()` within a pipe-workflow with _dplyr_.
 
-```{r collapse=TRUE, echo=FALSE, message=FALSE}
+```{r echo=FALSE, message=FALSE}
 library(dplyr)
 ```
-```{r collapse=TRUE}
+```{r}
 data(efc)
 
 efc %>% 
@@ -237,7 +241,7 @@ efc %>%
 ## Getting variable labels
 
 The `get_label()`-method returns the variable label of a vector or all variable labels from a data frame.
-```{r collapse=TRUE}
+```{r}
 get_label(efc$e42dep)
 
 get_label(efc, e42dep, e16sex, e15relat)
@@ -245,7 +249,7 @@ get_label(efc, e42dep, e16sex, e15relat)
 
 If a vector has no variable label, `NULL` is returned. However, `get_label()` also allows returning a standard value instead of `NULL`, in case the vector has no label attribute. This is useful to combine with `deparse(substitute())` in function calls, so - for instance - the name of the vector can be used as default value if no variable labels are present.
 
-```{r collapse=TRUE}
+```{r}
 dummy <- c(1, 2, 3)
 testit <- function(x) get_label(x, def.value = deparse(substitute(x)))
 # returns name of vector, if it has no variable label
@@ -256,7 +260,7 @@ testit(dummy)
 ## Setting variable labels
 
 The `set_label()` function adds the variable label attribute to a vector. You can either return a new vecor, or label an existing vector
-```{r collapse=TRUE}
+```{r}
 x <- sample(1:4, 10, replace = TRUE)
 
 # return new vector
@@ -269,7 +273,7 @@ str(x)
 ```
 
 `set_label()` can also set variable labels for a data frame. In this case, the variable attributes get an additional `name` attribute with the vector's name. This makes it easier to see which label belongs to which vector.
-```{r collapse=TRUE}
+```{r}
 x <- data.frame(
   a = sample(1:4, 10, replace = TRUE),
   b = sample(1:4, 10, replace = TRUE),
@@ -286,7 +290,7 @@ get_label(x)
 
 An alternative to `set_label()` is `var_labels()`, which also works within pipe-workflows. `var_labels()` requires names vectors as arguments to match the column names of the input, and set the associated variable labels.
 
-```{r collapse=TRUE}
+```{r}
 x <- data.frame(
   a = sample(1:4, 10, replace = TRUE),
   b = sample(1:4, 10, replace = TRUE),
@@ -308,7 +312,7 @@ x %>%
 
 `set_na()` converts values of a vector or of multiple vectors in a data frame into `NA`s. With `as.tag = TRUE`, `set_na()` creates tagged `NA` values, which means that these missing values get an information tag and a value label (which is, by default, the former value that was converted to NA). You can either return a new vector/data frame, or set `NA`s into an existing vector/data frame.
 
-```{r collapse=TRUE}
+```{r}
 x <- sample(1:8, 100, replace = TRUE)
 # show value distribution
 table(x)
@@ -334,12 +338,12 @@ x
 ## Getting missing values
 
 The `get_na()` function returns all tagged NA values. We still use the vector `x` from the previous example.
-```{r collapse=TRUE}
+```{r}
 get_na(x)
 ```
 
 To see the tags of the NA values, use the `as.tag` argument.
-```{r collapse=TRUE}
+```{r}
 get_na(x, as.tag = TRUE)
 ```
 
@@ -348,7 +352,7 @@ get_na(x, as.tag = TRUE)
 
 While `set_na()` allows you to replace values with (tagged) NA's, `replace_na()` allows you to replace either all NA values of a vector or specific tagged NA values with a non-NA value.
 
-```{r collapse=TRUE}
+```{r}
 str(efc$c84cop3)
 
 efc$c84cop3 <- set_na(efc$c84cop3, value = c(2, 3), as.tag = TRUE)
@@ -361,7 +365,7 @@ get_na(replace_na(efc$c84cop3, value = 2, na.label = "restored NA", tagged.na = 
 
 With `replace_labels()`, you can replace (change) value labels of labelled values. This can also be used to change the labels of tagged missing values. Make sure to know the missing tag, which can be accessed via `get_na()`.
 
-```{r collapse=TRUE}
+```{r}
 str(efc$c82cop1)
 
 efc$c82cop1 <- set_na(efc$c82cop1, value = c(2, 3), as.tag = TRUE)
@@ -378,13 +382,13 @@ get_na(efc$c82cop1, as.tag = TRUE)
 ## Converting labelled numeric into factor
 
 `to_label()` converts numeric labelled vectors into a factor and sets the former labels as factor levels.
-```{r collapse=TRUE}
+```{r}
 head(to_label(efc$c87cop6))
 ```
 
 By default, `to_label()` preserves all `NA` values, even if these are tagged NA's with value labels. Use `drop.na` to change this behaviour.
 
-```{r collapse=TRUE}
+```{r}
 efc$c83cop2 <- set_na(efc$c83cop2, value = 3, as.tag = TRUE)
 
 # "Often" is now a tagged NA
@@ -402,7 +406,7 @@ table(to_label(efc$c83cop2, drop.na = FALSE))
 ```
 
 `to_label()` only converts those values into factor levels, which have associated value labels. All other values are converted to `NA`. However, with the `add.non.labelled` argument additional factor levels for non-labelled values are created.
-```{r collapse=TRUE}
+```{r}
 x <- c(1, 2, 3, 2, 4, NA)
 x <- set_labels(
   x, 
@@ -420,7 +424,7 @@ to_label(x, add.non.labelled = T)
 
 `to_factor()` converts any numeric labelled vector into a factor with numeric levels, however, value and variable lables are preserved as attribute.
 
-```{r collapse=TRUE}
+```{r}
 str(to_factor(efc$e42dep))
 
 str(as.factor(efc$e42dep))
@@ -428,7 +432,7 @@ str(as.factor(efc$e42dep))
 
 You can also set a new reference level when converting to factor with the `ref.lvl` argument.
 
-```{r collapse=TRUE}
+```{r}
 get_labels(as.factor(efc$e42dep), include.values = "p")
 
 get_labels(to_factor(efc$e42dep), include.values = "p")

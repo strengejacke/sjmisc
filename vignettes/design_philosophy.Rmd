@@ -9,6 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
 Basically, this package covers two domains of functionality:
 
   * Reading and writing data between R and other statistical software packages like _SPSS_, _SAS_ or _Stata_ and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
@@ -27,7 +31,7 @@ A major difference to dplyr-functions like `select()` or `filter()` is that the 
   * If the data-argument is a vector, the function returns a vector.
   * If the data-argument is a data frame, the function returns a data frame.
 
-```{r collapse=TRUE}
+```{r}
 library(sjmisc)
 data(efc)
 
@@ -45,7 +49,7 @@ This design-choice is mainly due to compatibility- and convenience-reasons. It d
 
 The selection of variables specified in the `...`-ellipses-argument is powered by dplyr's `select()`. This means, you can use existing functions like `:` to select a range of variables, or also use dplyr's `select_helpers`, like `contains()` or `one_of()`. However, `select_helpers` must begin with a `~`-sign.
 
-```{r collapse=TRUE, echo=FALSE, message=FALSE}
+```{r echo=FALSE, message=FALSE}
 library(dplyr)
 ```
 ```{r collapse=TRUE}
@@ -66,7 +70,7 @@ There are two types of function designs:
 
 Functions like `to_factor()` or `add_labels()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument. The variables specified in the `...`-ellipses argument are converted, all other variables remain unchanged.
 
-```{r collapse=TRUE}
+```{r}
 to_factor(efc, e42dep, e16sex)
 ```
 
@@ -74,13 +78,13 @@ to_factor(efc, e42dep, e16sex)
 
 Functions like `rec()` or `dicho()`, which transform or recode variables, typically do _not_ return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the `...`-ellipses argument. The reason for this is to preserve the original variable and not overwriting it with completeley new values.
 
-```{r collapse=TRUE}
+```{r}
 rec(efc, c82cop1, c83cop2, recodes = "1,2=0; 3:4=2")
 ```
 
 These variables usually get a suffix, so you can bind these variables as new columns to a data frame, for instance with `add_columns()`. The function `add_columns()` is useful if you want to bind/add columns within a pipe-chain _to the end_ of a data frame.
 
-```{r collapse=TRUE}
+```{r}
 efc %>% 
   rec(c82cop1, c83cop2, recodes = "1,2=0; 3:4=2") %>% 
   add_columns(efc)
@@ -90,7 +94,7 @@ efc %>%
 
 The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-worklflow to manipulate data frames, or to create new variables with `mutate()`:
 
-```{r collapse=TRUE}
+```{r}
 efc %>% 
   select(c82cop1, c83cop2) %>% 
   rec(recodes = "1,2=0; 3:4=2")

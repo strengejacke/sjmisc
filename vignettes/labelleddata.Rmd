@@ -9,6 +9,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
 This vignette shows a small example how functions to work with labelled data can be implemented in a typical data visualization workflow.
 
 # Labelled Data
@@ -89,7 +93,7 @@ efc$c172code <- to_factor(efc$c172code)
 fit <- lm(barthtot ~ c160age + c12hour + c172code + c161sex, data = efc)
 ```
 
-```{r eval=FALSE, collapse=TRUE}
+```{r eval=FALSE}
 sjt.lm(fit, group.pred = TRUE)
 ```
 `r sjt.lm(fit,group.pred = TRUE, no.output=TRUE)$knitr`
