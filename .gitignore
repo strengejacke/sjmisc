@@ -40,3 +40,4 @@ $RECYCLE.BIN/
 .Rproj.user
 inst/doc
 revdep
+vignettes/*.html
