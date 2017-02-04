@@ -32,6 +32,12 @@
 #' head(bind_cols(d1, d2))
 #' add_columns(d1, d2)
 #'
+#' d1 <- efc[, 1:3]
+#' d2 <- efc[, 2:6]
+#'
+#' add_columns(d1, d2, replace = TRUE)
+#' add_columns(d1, d2, replace = FALSE)
+#'
 #' # use case: we take the original data frame, select specific
 #' # variables and do some transformations or recodings
 #' # (standardization in this example) and add the new, transformed
@@ -73,7 +79,18 @@ add_columns <- function(data, ..., replace = TRUE) {
   x <- dplyr::bind_cols(tmp, data)
 
   # restore order
-  if (replace) x <- x[, order(reihenfolge)]
+  if (replace) {
+    # check for correct length. if "data" had some double variables,
+    # but not all variable are doubles, add indices of regular values
+    if (ncol(x) > length(reihenfolge)) {
+      # get remaining indices
+      xl <- seq_len(ncol(x))[-seq_len(length(reihenfolge))]
+      # add to "reihefolge"
+      reihenfolge <- c(reihenfolge, xl)
+    }
+    # sort data frame
+    x <- x[, order(reihenfolge)]
+  }
 
   # repair names - might be necessary when not replacing variables
   if (!replace) x <- tibble::repair_names(x)

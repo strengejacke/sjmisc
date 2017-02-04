@@ -42,6 +42,12 @@ library(dplyr)
 head(bind_cols(d1, d2))
 add_columns(d1, d2)
 
+d1 <- efc[, 1:3]
+d2 <- efc[, 2:6]
+
+add_columns(d1, d2, replace = TRUE)
+add_columns(d1, d2, replace = FALSE)
+
 # use case: we take the original data frame, select specific
 # variables and do some transformations or recodings
 # (standardization in this example) and add the new, transformed
