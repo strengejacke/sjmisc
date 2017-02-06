@@ -2,10 +2,9 @@ sjmisc - Data Transformation and Labelled Data Utility Functions
 ------------------------------------------------------------------------------
 This package contains utility functions that are useful when carrying out data analysis, performing common recode and data transformation tasks or working with labelled data (especially intended for people coming from 'SPSS', 'SAS' or 'Stata' and/or who are new to R).
 
-Basically, this package covers three domains of functionality:
+Basically, this package covers two domains of functionality:
 
-* reading and writing data between other statistical packages (like 'SPSS') and R, based on the haven and foreign packages
-* hence, this package also includes functions to make working with labelled data easier
+* reading and writing data between other statistical packages (like 'SPSS') and R, based on the haven and foreign packages; hence, this package also includes functions to make working with labelled data easier
 * frequently applied recoding and variable transformation tasks, also with support for labelled data
 
 The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-worklflow to manipulate data frames, or to create new variables with `mutate()`. See `vignette("design_philosophy", "sjmisc")` for more details.

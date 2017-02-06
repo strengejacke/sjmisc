@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data Transformation and Labelled Data Utility Functions
-Version: 2.2.1.9000
-Date: 2017-01-09
+Version: 2.3.0
+Date: 2017-02-08
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions (especially intended
