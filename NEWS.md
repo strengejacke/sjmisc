@@ -22,6 +22,7 @@
 ## Bug fixes
 
 * `merge_df()` did not copy label attributes for data frame with identical variables (that were row-bound).
+* `to_value()` did not work for character vectors of class labelled, with empty values (which typically have no value label).
 
 # sjmisc 2.2.1
 
