@@ -4,7 +4,7 @@
 \alias{spread_coef}
 \title{Spread model coefficients of list-variables into columns}
 \usage{
-spread_coef(data, model.column, model.term, append = TRUE, ...)
+spread_coef(data, model.column, model.term, se, p.val, append = TRUE, ...)
 }
 \arguments{
 \item{data}{A (nested) data frame with a list-variable that contains fitted
@@ -17,6 +17,10 @@ fitted model objects.}
 term (including p-value) will be extracted from each model and
 added as new column.}
 
+\item{se}{Logical, if \code{TRUE}, standard errors for estimates will also be extracted.}
+
+\item{p.val}{Logical, if \code{TRUE}, p-values for estimates will also be extracted.}
+
 \item{append}{Logical, if \code{TRUE} (default), this function returns
 \code{data} with new columns for the model coefficients; else,
 a new data frame with model coefficients only are returned.}
@@ -26,15 +30,18 @@ a new data frame with model coefficients only are returned.}
 \value{
 A data frame with columns for each coefficient of the models
           that are stored in the list-variable of \code{data}; or, if
-          \code{model.term} is given, a data frame with two columns
-          (one for the term's estimate value and one for the related p-value).
+          \code{model.term} is given, a data frame with the term's estimate.
+          If \code{se = TRUE} or \code{p.val = TRUE}, the returned data frame
+          also contains columns for the coefficients' standard error and
+          p-value.
           If \code{append = TRUE}, the columns are appended to \code{data},
           i.e. \code{data} is also returned.
 }
 \description{
-This function extracts the coefficients of fitted model objects
-             from (nested) data frames, which are saved in a list-variable,
-             and spreads the coefficients into new colummns.
+This function extracts coefficients (and standard error and
+             p-values) of fitted model objects from (nested) data frames,
+             which are saved in a list-variable, and spreads the coefficients
+             into new colummns.
 }
 \details{
 This function requires a (nested) data frame (e.g. created by the
@@ -64,11 +71,13 @@ model.data <- efc \%>\%
     lm(neg_c_7 ~ c12hour + c172code, data = x)
   }))
 
-# spread coefficients, so we can easily access and compare
-# the coefficients over all models
+# spread coefficients, so we can easily access and compare the
+# coefficients over all models. arguments `se` and `p.val` default
+# to `FALSE`, when `model.term` is not specified
 spread_coef(model.data, models)
+spread_coef(model.data, models, se = TRUE)
 
-# select only specific model term
+# select only specific model term. `se` and `p.val` default to `TRUE`
 spread_coef(model.data, models, c12hour)
 
 # spread_coef can be used directly within a pipe-chain
@@ -95,7 +104,7 @@ efc \%>\%
     lm(neg_c_7 ~ e42dep + c161sex + c172code, data = x)
   })) \%>\%
   # spread model coefficient for all 100 models
-  spread_coef(models) \%>\%
+  spread_coef(models, se = FALSE, p.val = FALSE) \%>\%
   # compute the CI for all bootstrapped model coefficients
   boot_ci(e42dep, c161sex, c172code)
 

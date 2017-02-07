@@ -1,0 +1,144 @@
+---
+title: "Exploring Data Sets"
+author: "Daniel Lüdecke"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exploring Data Sets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the [tidyverse](http://tidyverse.org/) or related packages. The **sjmisc**-package fits into this workflow, especially when you work with [labelled data](labelleddata.html), because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.
+
+The examples are based on data from the EUROFAMCARE project, a survey on the situation of family carers of older people in Europe. The sample data set `efc` is part of this package. Let us see how the family carer's gender and subjective perception of negative impact of care as well as the cared-for person's dependency are associated with the family carer's quality of life.
+
+```{r message=FALSE}
+library(sjmisc)
+library(dplyr)
+data(efc)
+```
+
+## Print frequencies with labels
+
+The first thing that may be of interest is probably the distribution of gender. You can plot frequencies for labelled data with `frq()`. This function requires either a vector or data frame as input and prints the variable label as first line, followed by a frequency-table with values, labels, counts and percentages of the vector.
+
+```{r}
+frq(efc$c161sex)
+```
+
+## Find variables in a data frame
+
+Next, let’s look at the distribution of gender by the cared-for person's dependency. To compute cross tables, you can use `flat_table()`. It requires the data as first argument, followed by any number of variable names.
+
+But first, we need to know the name of the dependency-variable. This is where `find_var()` comes into play. It searches for variables in a data frame by
+
+1. variable names,
+2. variable labels, 
+3. value labels 
+4. or any combination of these. 
+
+By default, it looks for variable name and labels. The function also supports regex-patterns. By default, `find_var()` returns the column-indices, but you can also print a small "summary"" with the `as.varlab`-argument.
+
+```{r}
+# find all variables with "dependency" in name or label
+find_var(efc, "dependency", as.varlab = T)
+```
+
+Variable in column 5, named _e42dep_, is what we are looking for.
+
+## Print crosstables with labels
+
+Now we can look at the distribution of gender by dependency:
+
+```{r}
+flat_table(efc, e42dep, c161sex)
+```
+
+Since the distribution of male and female carers is skewed, let's see the proportions. To compute crosstables with row or column percentages, use the `margin`-argument:
+
+```{r}
+flat_table(efc, e42dep, c161sex, margin = "col")
+```
+
+## Recoding variables
+
+Next, we need the negatice impact of care (_neg_c_7) and want to create three groups: low, middle and high negative impact. We can easily recode and label vectors with `rec()`. This function does not only recode vectors, it also allows direct labelling of categories inside the recode-syntax (this is optional, you can also use the `val.labels`-argument). We now recode neg_c_7 into a new variable _burden_. The cut-points are a bit arbitrary, for the sake of demonstration.
+
+```{r}
+efc$burden <- rec(
+  efc$neg_c_7,
+  recodes = c("min:9=1 [low]; 10:12=2 [moderate]; 13:max=3 [high]; else=NA"),
+  var.label = "Subjective burden",
+  as.num = FALSE # we want a factor
+)
+# print frequencies
+frq(efc$burden)
+```
+
+You can see the variable _burden_ has a variable label ("Subjective burden"), which was set inside `rec()`, as well as three values with labels ("low", "moderate" and "high"). From the lowest value in `neg_c_7` to 9 were recoded into 1, values 10 to 12 into 2 and values 13 to the highest value in `neg_c_7` into 3. All remaining values are set to missing (`else=NA` – for details on the recode-syntax, see `?rec`).
+
+## Grouped data frames
+
+How is burden distributed by gender? We can group the data and print frequencies using `frq()` for this as well, as this function also accepts grouped data frames. Frequencies for grouped data frames first print the group-details (variable name and category), followed by the frequency table. Thanks to labelled data, the output is easy to understand.
+
+```{r}
+efc %>% 
+  select(burden, c161sex) %>% 
+  group_by(c161sex) %>% 
+  frq()
+```
+
+## Nested data frames
+
+Let's investigate the association between quality of life and burden across the different dependency categories, by fitting linear models for each category of _e42dep_. We can do this using _nested data frames_. `nest()` from the **tidyr**-package can create subsets of a data frame, based on grouping criteria, and create a new _list-variable_, where each element itself is a data frame (so it’s nested, because we have data frames inside a data frame).
+
+In the following example, we group the data by _e42dep_, and "nest"" the groups. Now we get a data frame with two columns: First, the grouping variable (_e42dep_) and second, the datasets (subsets) for each country as data frame, stored in the list-variable _data_. The data frames in the subsets (in _data_) all contain the selected variables `burden`, `c161sex` and `quol_4` (quality of life).
+
+```{r}
+# convert variable to labelled factor, because we then 
+# have the labels as factor levels in the output
+efc$e42dep <- to_label(efc$e42dep, drop.levels = T)
+efc %>%
+  select(e42dep, burden, c161sex, quol_5) %>%
+  group_by(e42dep) %>%
+  tidyr::nest()
+```
+
+## Get coefficients of nested models
+
+Using `map()` from the **purrr**-package, we can iterate this list and apply any function on each data frame in the list-variable "data". We want to apply the `lm()`-function to the list-variable, to run linear models for all "dependency-datasets". The results of these linear regressions are stored in another list-variable, _models_ (created with `mutate()`). To quickly access and look at the coefficients, we can use `spread_coef()`.
+
+```{r}
+efc %>%
+  select(e42dep, burden, c161sex, quol_5) %>%
+  group_by(e42dep) %>%
+  tidyr::nest() %>% 
+  na.omit() %>%       # remove nested group for NA
+  arrange(e42dep) %>% # arrange by order of levels
+  mutate(models = purrr::map(
+    data, ~ 
+    lm(quol_5 ~ burden + c161sex, data = .))
+  ) %>%
+  spread_coef(models)
+```
+
+We see that higher burden is associated with lower quality of life, for all dependency-groups. The `se` and `p.val`-arguments add standard errors and p-values to the output. `model.term` returns the statistics only for a specific term. If you specify a `model.term`, arguments `se` and `p.val` automatically default to `TRUE`.
+
+```{r}
+efc %>%
+  select(e42dep, burden, c161sex, quol_5) %>%
+  group_by(e42dep) %>%
+  tidyr::nest() %>% 
+  na.omit() %>%       # remove nested group for NA
+  arrange(e42dep) %>% # arrange by order of levels
+  mutate(models = purrr::map(
+    data, ~ 
+    lm(quol_5 ~ burden + c161sex, data = .))
+  ) %>%
+  spread_coef(models, burden3)
+```

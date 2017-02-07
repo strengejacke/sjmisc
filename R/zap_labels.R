@@ -278,14 +278,14 @@ zap_labels_helper <- function(x) {
   attr.string <- getVarLabelAttribute(x)
   # remove label attributes
   if (!is.null(attr.string)) attr(x, attr.string) <- NULL
-  if (haven::is.labelled(x)) class(x) <- NULL
+  if (is_labelled(x)) class(x) <- NULL
   return(x)
 }
 
 zap_unlabelled_helper <- function(x) {
   vals <- get_values(x)
   x <- set_na(x, value = stats::na.omit(unique(x)[!unique(x) %in% vals]))
-  if (haven::is.labelled(x)) class(x) <- NULL
+  if (is_labelled(x)) class(x) <- NULL
   return(x)
 }
 

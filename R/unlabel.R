@@ -36,14 +36,12 @@ unlabel <- function(x) {
   # vector should be converted
   if (is.data.frame(x)) {
     # create progress bar
-    pb <- utils::txtProgressBar(min = 0,
-                                max = ncol(x),
-                                style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = ncol(x), style = 3)
     # tell user...
     message("Converting labelled-classes. Please wait...\n")
     for (i in seq_len(ncol(x))) {
       # remove labelled class
-      if (haven::is.labelled(x[[i]])) x[[i]] <- unclass(x[[i]])
+      if (is_labelled(x[[i]])) x[[i]] <- unclass(x[[i]])
       # update progress bar
       utils::setTxtProgressBar(pb, i)
     }
@@ -52,7 +50,7 @@ unlabel <- function(x) {
     class(x) <- c("lbl_df", "data.frame")
   } else {
     # remove labelled class
-    if (haven::is.labelled(x)) x <- unclass(x)
+    if (is_labelled(x)) x <- unclass(x)
   }
   return(x)
 }

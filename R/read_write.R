@@ -262,48 +262,24 @@ write_sas <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 }
 
 
-#' @importFrom haven write_sav write_dta write_sas is.labelled
-#' @importFrom utils txtProgressBar setTxtProgressBar
+#' @importFrom haven write_sav write_dta write_sas
 write_data <- function(x, path, type, use.tagged.na, enc.to.utf8, version) {
-  # create progress bar
-  pb <- utils::txtProgressBar(min = 0, max = ncol(x), style = 3)
-  # tell user...
-  message(sprintf("Prepare writing %s file. Please wait...\n", type))
-  # check if variables should be converted to factors
+  # convert to labelled class
+  x <- as_labelled(x, add.labels = F, add.class = F)
+
+  # check for correct column names
   for (i in seq_len(ncol(x))) {
-    # get variable label
-    var.lab <- get_label(x[[i]])
-    # Encode to UTF-8
-    if (enc.to.utf8) {
-      # get value labels
-      val.lab <- get_labels(x[[i]], attr.only = F, include.values = "n")
-      # encode to UTF-8, if requested
-      if (!is.null(val.lab)) x[[i]] <- set_labels(x[[i]], labels = enc2utf8(val.lab))
-      if (!is.null(var.lab)) x[[i]] <- set_label(x[[i]], lab = enc2utf8(var.lab))
-    }
-    # convert variable to labelled factor, so it can be saved
-    x[[i]] <-
-      suppressWarnings(to_label(
-        x[[i]],
-        add.non.labelled = TRUE,
-        prefix = FALSE,
-        drop.na = !use.tagged.na
-      ))
-    # set back variable label
-    x[[i]] <- set_label(x[[i]], lab = var.lab, attr.string = "label")
     # check column name
     end.point <- colnames(x)[i]
     # if it ends with a dot, add a char. dot is invalid last char for SPSS
     if (substr(end.point, nchar(end.point), nchar(end.point)) == ".") {
       colnames(x)[i] <- paste0(end.point, i)
     }
-    # update progress bar
-    utils::setTxtProgressBar(pb, i)
   }
-  # hide pb
-  close(pb)
+
   # tell user
-  message(sprintf("Writing %s file to '%s'. Please wait...\n", type, path))
+  message(sprintf("Writing %s file to '%s'. Please wait...", type, path))
+
   if (type == "spss") {
     # write SPSS
     haven::write_sav(data = x, path = path)

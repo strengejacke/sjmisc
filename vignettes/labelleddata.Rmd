@@ -31,7 +31,7 @@ data(efc)
 str(efc$e42dep)
 ```
 
-While all plotting and table functions of the [sjPlot-package](http://cran.r-project.org/web/packages/sjPlot/index.html) make use of these attributes, many packages and/or functions do not consider these attributes, e.g. R base graphics:
+While all plotting and table functions of the [sjPlot-package](https://cran.r-project.org/package=sjPlot) make use of these attributes, many packages and/or functions do not consider these attributes, e.g. R base graphics:
 
 ```{r warning=FALSE, fig.height=6, fig.width=7}
 library(sjmisc)

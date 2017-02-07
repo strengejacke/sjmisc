@@ -4,6 +4,8 @@
 
 * Added package-vignettes.
 * Functions were largely revised to work seamlessly within the tidyverse. This may break existing code, but in the long run, consistent api-design makes working with the package more intuitive. See `vignette("design_philosophy", "sjmisc")` for more details.
+* `as_labelled()` only converts vectors into `labelled`-class if vector has label attributes. This ensures that data can be properly saved into other formats, e.g. with `write_spss()`.
+* The `write_*()`-functions have been revised and should now save data frame with any common classes of vectors (labelled, factor, numeric, atomic...).
 
 ## New functions
 
@@ -15,6 +17,7 @@
 * `frq()` now has the same argument-structure as `flat_table()`.
 * Following functions now follow a consistent tidyverse-approach, with the data being the first argument, followed by variable names: `add_labels()`, `replace_labels()`, `remove_labels()`, `count_na()`, `rec()`, `dicho()`, `split_var()`, `drop_labels()`, `fill_labels()`, `group_var()`, `group_labels()`, `ref_lvl()`, `recode_to()`, `replace_na()`, `set_na()` and `set_labels()`.
 * `get_values()` now sorts returned values by default, to be consistent with `get_labels()`.
+* `spread_coef()` gets arguments `se` and `p.val`, to define whether standard errors and p-values should be included in the return value or not.
 
 ## Bug fixes
 

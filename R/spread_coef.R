@@ -3,9 +3,10 @@ utils::globalVariables("term")
 #' @title Spread model coefficients of list-variables into columns
 #' @name spread_coef
 #'
-#' @description This function extracts the coefficients of fitted model objects
-#'              from (nested) data frames, which are saved in a list-variable,
-#'              and spreads the coefficients into new colummns.
+#' @description This function extracts coefficients (and standard error and
+#'              p-values) of fitted model objects from (nested) data frames,
+#'              which are saved in a list-variable, and spreads the coefficients
+#'              into new colummns.
 #'
 #' @param data A (nested) data frame with a list-variable that contains fitted
 #'          model objects (see 'Details').
@@ -14,6 +15,8 @@ utils::globalVariables("term")
 #' @param model.term Optional, name of a model term. If specified, only this model
 #'          term (including p-value) will be extracted from each model and
 #'          added as new column.
+#' @param se Logical, if \code{TRUE}, standard errors for estimates will also be extracted.
+#' @param p.val Logical, if \code{TRUE}, p-values for estimates will also be extracted.
 #' @param append Logical, if \code{TRUE} (default), this function returns
 #'          \code{data} with new columns for the model coefficients; else,
 #'          a new data frame with model coefficients only are returned.
@@ -21,8 +24,10 @@ utils::globalVariables("term")
 #'
 #' @return A data frame with columns for each coefficient of the models
 #'           that are stored in the list-variable of \code{data}; or, if
-#'           \code{model.term} is given, a data frame with two columns
-#'           (one for the term's estimate value and one for the related p-value).
+#'           \code{model.term} is given, a data frame with the term's estimate.
+#'           If \code{se = TRUE} or \code{p.val = TRUE}, the returned data frame
+#'           also contains columns for the coefficients' standard error and
+#'           p-value.
 #'           If \code{append = TRUE}, the columns are appended to \code{data},
 #'           i.e. \code{data} is also returned.
 #'
@@ -53,11 +58,13 @@ utils::globalVariables("term")
 #'     lm(neg_c_7 ~ c12hour + c172code, data = x)
 #'   }))
 #'
-#' # spread coefficients, so we can easily access and compare
-#' # the coefficients over all models
+#' # spread coefficients, so we can easily access and compare the
+#' # coefficients over all models. arguments `se` and `p.val` default
+#' # to `FALSE`, when `model.term` is not specified
 #' spread_coef(model.data, models)
+#' spread_coef(model.data, models, se = TRUE)
 #'
-#' # select only specific model term
+#' # select only specific model term. `se` and `p.val` default to `TRUE`
 #' spread_coef(model.data, models, c12hour)
 #'
 #' # spread_coef can be used directly within a pipe-chain
@@ -84,16 +91,16 @@ utils::globalVariables("term")
 #'     lm(neg_c_7 ~ e42dep + c161sex + c172code, data = x)
 #'   })) %>%
 #'   # spread model coefficient for all 100 models
-#'   spread_coef(models) %>%
+#'   spread_coef(models, se = FALSE, p.val = FALSE) %>%
 #'   # compute the CI for all bootstrapped model coefficients
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
 #' @importFrom broom tidy
-#' @importFrom dplyr select_ bind_cols "%>%"
+#' @importFrom dplyr select_ select one_of bind_cols "%>%"
 #' @importFrom tidyr spread_
 #' @importFrom purrr map_df
 #' @export
-spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
+spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE, ...) {
   # check if we have a data frame
   if (!is.data.frame(data))
     stop("`data` needs to be a data frame.", call. = FALSE)
@@ -106,9 +113,17 @@ spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
   if (!is.list(data[[model.column]]))
     stop(sprintf("%s needs to be a list-variable.", model.column), call. = FALSE)
 
+  # check for proper defaults, depending on return style
+  if (missing(se)) se <- !sjmisc::is_empty(model.term)
+  if (missing(p.val)) p.val <- !sjmisc::is_empty(model.term)
+
   # check if user just wants a specific model term
   # if yes, select this, and its p-value
   if (!sjmisc::is_empty(model.term)) {
+    # select variables for output
+    variables <- "estimate"
+    if (se) variables <- c(variables, "std.error")
+    if (p.val) variables <- c(variables, "p.value")
     # iterate list variable
     dat <-
       purrr::map_df(data[[model.column]], function(x) {
@@ -117,9 +132,9 @@ spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
           # filter term
           dplyr::filter(term == model.term) %>%
           # just select estimate and p-value
-          dplyr::select_("estimate", "p.value")
+          dplyr::select(dplyr::one_of(variables))
         # set colnames
-        colnames(tmp) <- c(model.term, "p.value")
+        colnames(tmp) <- c(model.term, variables[-1])
         tmp
       })
   } else {
@@ -127,11 +142,46 @@ spread_coef <- function(data, model.column, model.term, append = TRUE, ...) {
     dat <-
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        broom::tidy(x, effects = "fixed", ...) %>%
-          # just select term name and estimate value
+        tmp <- broom::tidy(x, effects = "fixed", ...)
+
+        # just select term name and estimate value
+        df1 <- tmp %>%
           dplyr::select_("term", "estimate") %>%
           # spread to columns
           tidyr::spread_(key_col = "term", value_col = "estimate")
+
+        # columns for each data frame
+        cols <- ncol(df1)
+
+        # standard error also requested?
+        if (se) {
+          # just select term name and estimate value
+          df2 <- tmp %>%
+            dplyr::select_("term", "std.error") %>%
+            # spread to columns
+            tidyr::spread_(key_col = "term", value_col = "std.error")
+          # fix column names
+          colnames(df2) <- sprintf("%s.se", colnames(df2))
+          # bind together
+          df1 <- dplyr::bind_cols(df1, df2)
+        }
+
+        # p-value also requested?
+        if (p.val) {
+          # just select term name and estimate value
+          df3 <- tmp %>%
+            dplyr::select_("term", "p.value") %>%
+            # spread to columns
+            tidyr::spread_(key_col = "term", value_col = "p.value")
+          # fix column names
+          colnames(df3) <- sprintf("%s.p", colnames(df3))
+          # bind together
+          df1 <- dplyr::bind_cols(df1, df3)
+        }
+
+        # return sorted data frame
+        df1[, unlist(lapply(1:cols, function(x) seq(from = 1, to = ncol(df1), by = cols) + x - 1))]
+
       })
   }
   # bind result to original data frame

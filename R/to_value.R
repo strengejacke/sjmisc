@@ -93,10 +93,16 @@ to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE) {
 
 to_value_helper <- function(x, start.at, keep.labels) {
   labels <- NULL
+
   # is already numeric?
   if (is.numeric(x)) return(x)
+
+  # save variable label
+  varlab <- get_label(x)
+
   # get labels
   labels <- get_labels(x, attr.only = T, include.values = "n")
+
   # is character?
   if (is.character(x)) {
     # has labels?
@@ -111,6 +117,7 @@ to_value_helper <- function(x, start.at, keep.labels) {
     # convert to factor
     x <- as.factor(x)
   }
+
   # check if we have numeric factor levels
   if (is_num_fac(x)) {
     # retrieve "value labels"
@@ -139,7 +146,12 @@ to_value_helper <- function(x, start.at, keep.labels) {
     # convert to numeric
     new_value <- as.numeric(as.character(x))
   }
-  # check if we should attach former labels as value labels
-  if (keep.labels) new_value <- set_labels(new_value, labels = labels, force.labels = T)
+
+  # check if we should set back former variable and value labels
+  if (keep.labels) {
+    new_value <- set_labels(new_value, labels = labels, force.labels = T)
+    new_value <- set_label(new_value, lab = varlab)
+  }
+
   return(new_value)
 }

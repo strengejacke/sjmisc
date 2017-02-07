@@ -51,7 +51,7 @@ remove_all_labels_helper <- function(x) {
   if (!is.null(attr.string)) attr(x, attr.string) <- NULL
   # unclass, if labelled. labelled class may throw
   # errors / warnings, when not havin label attributes
-  if (haven::is.labelled(x)) x <- unclass(x)
+  if (is_labelled(x)) x <- unclass(x)
   # return var
   return(x)
 }

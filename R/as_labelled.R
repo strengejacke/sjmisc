@@ -50,7 +50,7 @@ as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
 
 #' @export
 as_labelled.data.frame <- function(x, add.labels = FALSE, add.class = FALSE) {
-  tibble::as_tibble(lapply(x, FUN = as_labelled_helper, add.labels, add.class))
+  data.frame(lapply(x, FUN = as_labelled_helper, add.labels, add.class))
 }
 
 #' @export
@@ -64,21 +64,14 @@ as_labelled.default <- function(x, add.labels = FALSE, add.class = FALSE) {
 }
 
 as_labelled_helper <- function(x, add.labels, add.class) {
-  # check if we have any value label attributes
-  vallabel <- get_labels(x, attr.only = T)
+  # do nothing for labelled class
+  if (is_labelled(x)) return(x)
 
-  # nothing?
-  if (is.null(vallabel)) {
-    # factor levels as labels?
-    vallabel <- get_labels(x, attr.only = F)
-    # still nothing?
-    if (is.null(vallabel)) {
-      # get unique values
-      vallabel <- as.character(unique(stats::na.omit(x)))
-    }
-    # set value labels
-    x <- suppressWarnings(set_labels(x, labels = vallabel, force.labels = T, force.values = T))
-  }
+  # if factor, convert to numeric
+  if (is.factor(x)) x <- to_value(x, keep.labels = T)
+
+  # return atomics
+  if (is.null(get_labels(x, attr.only = T))) return(x)
 
   # fill up missing attributes
   if (add.labels) x <- fill_labels(x)
