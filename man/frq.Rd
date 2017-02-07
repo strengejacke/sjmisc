@@ -41,13 +41,17 @@ This function returns a frequency table of labelled vectors, as data frame.
 \examples{
 library(haven)
 # create labelled integer
-x <- labelled(c(1, 2, 1, 3, 4, 1),
-              c(Male = 1, Female = 2, Refused = 3, "N/A" = 4))
+x <- labelled(
+  c(1, 2, 1, 3, 4, 1),
+  c(Male = 1, Female = 2, Refused = 3, "N/A" = 4)
+)
 frq(x)
 
-x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
-              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+x <- labelled(
+  c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
+  c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+    "Refused" = tagged_na("a"), "Not home" = tagged_na("z"))
+)
 frq(x)
 
 # in a pipe
@@ -63,8 +67,14 @@ efc \%>\%
 # with grouped data frames, in a pipe
 efc \%>\%
   group_by(e16sex, c172code) \%>\%
-  select(e16sex, c172code, e42dep) \%>\%
-  frq()
+  frq(e16sex, c172code, e42dep)
+
+# with select-helpers: all variables from the COPE-Index
+# (which all have a "cop" in their name)
+frq(efc, ~contains("cop"))
+
+# all variables from column "c161sex" to column "c175empl"
+frq(efc, c161sex:c175empl)
 
 }
 \seealso{
