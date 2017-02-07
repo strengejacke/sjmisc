@@ -47,8 +47,14 @@
 #' # with grouped data frames, in a pipe
 #' efc %>%
 #'   group_by(e16sex, c172code) %>%
-#'   select(e16sex, c172code, e42dep) %>%
-#'   frq()
+#'   frq(e16sex, c172code, e42dep)
+#'
+#' # with select-helpers: all variables from the COPE-Index
+#' # (which all have a "cop" in their name)
+#' frq(efc, ~contains("cop"))
+#'
+#' # or...
+#' frq(efc, c161sex:c175empl)
 #'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
