@@ -42,9 +42,9 @@ word_wrap <- function(labels, wrap, linesep = NULL) {
     linesep <- sprintf("\\1%s", linesep)
   }
   # create regex pattern for line break
-  pattern <- c(paste('(.{1,', wrap, '})(\\s|$)', sep = ""))
+  pattern <- paste('(.{1,', wrap, '})(\\s|$)', sep = "")
   # iterate all labels
-  for (n in 1:length(labels)) {
+  for (n in seq_len(length(labels))) {
     # check if wrap exceeds lengths of labels
     if (wrap > 0 && nchar(labels[n]) > wrap) {
       # insert line breaks

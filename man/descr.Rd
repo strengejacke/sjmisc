@@ -4,7 +4,7 @@
 \alias{descr}
 \title{Basic descriptive statistics}
 \usage{
-descr(x, ...)
+descr(x, ..., max.length = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -16,10 +16,17 @@ from \code{x} should be processed. You may also use functions like
 \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
+
+\item{max.length}{Numeric, indicating the maximum length of variable labels
+in the output. If variable names are longer than \code{max.length},
+they will be shortened to the last whole word within the first
+\code{max.length} chars.}
 }
 \value{
 A data frame with basic descriptive statistics, derived from the
-        \code{\link[psych]{describe}}-function.
+        \code{\link[psych]{describe}}-function. The additional column
+        \code{NA.prc} informs about the percentage of missing values in
+        a variable.
 }
 \description{
 This function wraps the \code{\link[psych]{describe}}-function
@@ -43,9 +50,12 @@ efc \%>\%
   select(e16sex, e42dep, e15relat, c172code) \%>\%
   descr()
 
+# you can select variables also inside 'descr()'
 efc \%>\%
   group_by(e16sex, c172code) \%>\%
-  select(e16sex, c172code, e17age, c160age) \%>\%
-  descr()
+  descr(e16sex, c172code, e17age, c160age)
+
+# or even use select-helpers
+descr(efc, ~contains("cop"), max.length = 20)
 
 }

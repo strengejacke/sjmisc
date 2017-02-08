@@ -208,6 +208,7 @@ frq_helper <- function(x, sort.frq, weight.by) {
   if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
     ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
     mydat <- mydat[c(ord, valid.vals + 1), ]
+    # not needed here?
     labels <- labels[ord]
   }
   # raw percentages

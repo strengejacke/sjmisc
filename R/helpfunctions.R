@@ -137,3 +137,22 @@ getValLabelAttribute <- function(x) {
   }
   return(attr.string)
 }
+
+# shorten a string
+shorten_string <- function(s, max.length = NULL, abbr = "...") {
+  # check if labels should be truncated
+  if (!is.null(max.length)) {
+    # create pattern to find words uo to number of max.length chars in vector
+    pattern <- paste('(.{1,', max.length, '})(\\s|$)', sep = "")
+    # I *hate* regular expressions and will never understand them...
+    tmp <-
+      paste0(substr(s, 0, unlist(regexec(
+        abbr, sub(pattern, replacement = paste0("\\1", abbr), s), fixed = T
+      )) - 1), abbr)
+    # only replace strings that are longer than max.length
+    too.long <- nchar(s) > max.length
+    s[too.long] <- tmp[too.long]
+  }
+
+  s
+}
