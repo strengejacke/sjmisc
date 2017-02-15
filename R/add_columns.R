@@ -1,22 +1,38 @@
-#' @title Add columns to a data frame
+#' @title Add or replace data frame columns
 #' @name add_columns
 #'
-#' @description This function combines two or more data frames, but unlike
+#' @description \code{add_columns()} combines two or more data frames, but unlike
 #'              \code{\link{cbind}} or \code{\link[dplyr]{bind_cols}}, this function
 #'              binds \code{data} as last columns of a data frame.
+#'              \cr \cr
+#'              \code{replace_columns()} replaces all columns in \code{data} with
+#'              identically named columns in \code{...}, and adds remaining (non-duplicated)
+#'              columns from \code{...} to \code{data}.
 #'
-#' @param data A data frame. Will be bound after data frames specified in \code{...}.
-#' @param ... More data frames to combine.
+#' @param data A data frame. For \code{add_columns()}, will be bound after data
+#'          frames specified in \code{...}. For \code{replace_columns()}, duplicated
+#'          columns in \code{data} will be replaced by columns in \code{...}.
+#' @param ... More data frames to combine, resp. more data frames with columns that
+#'          should replace columns in \code{data}.
 #' @param replace Logical, if \code{TRUE} (default), columns in \code{...} with
 #'        identical names in \code{data} will replace the columns in \code{data}.
 #'        The order of columns after replacing is preserved.
+#' @param add.unique Logical, if \code{TRUE} (default), remaining columns in
+#'          \code{...} that did not replace any column in \code{data}, are
+#'          appended as new columns to \code{data}.
 #'
-#' @return A data frame, where columns of \code{data} are appended after columns
-#'         of \code{...}.
+#' @return For \code{add_columns()}, a data frame, where columns of \code{data}
+#'         are appended after columns of \code{...}.
+#'         \cr \cr
+#'         For \code{replace_columns()}, a data frame where columns in
+#'         \code{data} will be replaced by identically named columns
+#'         in \code{...}, and remaining columns from \code{...}
+#'         will be appended to \code{data} (if \code{add.unique = TRUE}).
 #'
-#' @note By default, columns in \code{data} with identical names like columns in one of
-#'       the data frames in \code{...} will be dropped (i.e. variables with identical
-#'       names in \code{...} will replace existing variables in \code{data}).
+#' @note For \code{add_columns()}, by default, columns in \code{data} with
+#'       identical names like columns in one of the data frames in \code{...}
+#'       will be dropped (i.e. variables with identical names in \code{...}
+#'       will replace existing variables in \code{data}).
 #'       Use \code{replace = FALSE} to keep all columns. Identical column names
 #'       will then be repaired (see \code{\link[tibble]{repair_names}}). When
 #'       replacing columns, replaced columns are not added to the end of the
@@ -61,6 +77,25 @@
 #'   to_factor() %>%
 #'   add_columns(efc, replace = FALSE)
 #'
+#' # create sample data frames
+#' d1 <- efc[, 1:10]
+#' d2 <- efc[, 2:3]
+#' d3 <- efc[, 7:8]
+#' d4 <- efc[, 10:12]
+#'
+#' # show original
+#' head(d1)
+#'
+#' # slightly change variables, to see effect
+#' d2 <- to_label(d2)
+#' d3 <- to_label(d3)
+#'
+#' # replace duplicated columns, append remaining
+#' replace_columns(d1, d2, d3, d4)
+#'
+#' # replace duplicated columns, omit remaining
+#' replace_columns(d1, d2, d3, d4, add.unique = FALSE)
+#'
 #' @importFrom dplyr bind_cols
 #' @importFrom tibble as_tibble repair_names
 #' @export
@@ -72,7 +107,7 @@ add_columns <- function(data, ..., replace = TRUE) {
   # keep order?
   reihenfolge <- c(which(!doubles), which(doubles))
 
-  # remove double column names, if requested
+  # remove duplicate column names, if requested
   if (replace && any(doubles)) tmp <- tmp[, !doubles]
 
   # bind all data
@@ -80,8 +115,8 @@ add_columns <- function(data, ..., replace = TRUE) {
 
   # restore order
   if (replace) {
-    # check for correct length. if "data" had some double variables,
-    # but not all variable are doubles, add indices of regular values
+    # check for correct length. if "data" had duplicated variables,
+    # but not all variable are duplicates, add indices of regular values
     if (ncol(x) > length(reihenfolge)) {
       # get remaining indices
       xl <- seq_len(ncol(x))[-seq_len(length(reihenfolge))]
@@ -94,6 +129,30 @@ add_columns <- function(data, ..., replace = TRUE) {
 
   # repair names - might be necessary when not replacing variables
   if (!replace) x <- tibble::repair_names(x)
+
+  # return a tibble
+  tibble::as_tibble(x)
+}
+
+
+#' @rdname add_columns
+#' @export
+replace_columns <- function(data, ..., add.unique = TRUE) {
+  # bind all data frames to one
+  tmp <- dplyr::bind_cols(...)
+
+  # check for identical column names
+  data.doubles <- colnames(data) %in% colnames(tmp)
+  tmp.doubles <- colnames(tmp) %in% colnames(data)
+
+  # replace duplicate variables in "data" with duplicates from "..."
+  data[, data.doubles] <- tmp[, tmp.doubles]
+
+  # add remaining columns that were not duplicates
+  if (add.unique)
+    x <- dplyr::bind_cols(data, tmp[, !tmp.doubles])
+  else
+    x <- data
 
   # return a tibble
   tibble::as_tibble(x)

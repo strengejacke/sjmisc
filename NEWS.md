@@ -1,5 +1,9 @@
 # sjmisc 2.3.0.9000
 
+## New functions
+
+* `replace_columns()` to replace variables in one data frame with variables from other data frames.
+
 ## Changes to functions
 
 * `descr()` gets a `max.length`-argument to shorten variable labels in the output to a specific number of chars.

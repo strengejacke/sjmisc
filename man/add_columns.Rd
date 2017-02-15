@@ -2,32 +2,52 @@
 % Please edit documentation in R/add_columns.R
 \name{add_columns}
 \alias{add_columns}
-\title{Add columns to a data frame}
+\alias{replace_columns}
+\title{Add or replace data frame columns}
 \usage{
 add_columns(data, ..., replace = TRUE)
+
+replace_columns(data, ..., add.unique = TRUE)
 }
 \arguments{
-\item{data}{A data frame. Will be bound after data frames specified in \code{...}.}
+\item{data}{A data frame. For \code{add_columns()}, will be bound after data
+frames specified in \code{...}. For \code{replace_columns()}, duplicated
+columns in \code{data} will be replaced by columns in \code{...}.}
 
-\item{...}{More data frames to combine.}
+\item{...}{More data frames to combine, resp. more data frames with columns that
+should replace columns in \code{data}.}
 
 \item{replace}{Logical, if \code{TRUE} (default), columns in \code{...} with
 identical names in \code{data} will replace the columns in \code{data}.
 The order of columns after replacing is preserved.}
+
+\item{add.unique}{Logical, if \code{TRUE} (default), remaining columns in
+\code{...} that did not replace any column in \code{data}, are
+appended as new columns to \code{data}.}
 }
 \value{
-A data frame, where columns of \code{data} are appended after columns
-        of \code{...}.
+For \code{add_columns()}, a data frame, where columns of \code{data}
+        are appended after columns of \code{...}.
+        \cr \cr
+        For \code{replace_columns()}, a data frame where columns in
+        \code{data} will be replaced by identically named columns
+        in \code{...}, and remaining columns from \code{...}
+        will be appended to \code{data} (if \code{add.unique = TRUE}).
 }
 \description{
-This function combines two or more data frames, but unlike
+\code{add_columns()} combines two or more data frames, but unlike
              \code{\link{cbind}} or \code{\link[dplyr]{bind_cols}}, this function
              binds \code{data} as last columns of a data frame.
+             \cr \cr
+             \code{replace_columns()} replaces all columns in \code{data} with
+             identically named columns in \code{...}, and adds remaining (non-duplicated)
+             columns from \code{...} to \code{data}.
 }
 \note{
-By default, columns in \code{data} with identical names like columns in one of
-      the data frames in \code{...} will be dropped (i.e. variables with identical
-      names in \code{...} will replace existing variables in \code{data}).
+For \code{add_columns()}, by default, columns in \code{data} with
+      identical names like columns in one of the data frames in \code{...}
+      will be dropped (i.e. variables with identical names in \code{...}
+      will replace existing variables in \code{data}).
       Use \code{replace = FALSE} to keep all columns. Identical column names
       will then be repaired (see \code{\link[tibble]{repair_names}}). When
       replacing columns, replaced columns are not added to the end of the
@@ -70,5 +90,24 @@ efc \%>\%
   select(e16sex, e42dep) \%>\%
   to_factor() \%>\%
   add_columns(efc, replace = FALSE)
+
+# create sample data frames
+d1 <- efc[, 1:10]
+d2 <- efc[, 2:3]
+d3 <- efc[, 7:8]
+d4 <- efc[, 10:12]
+
+# show original
+head(d1)
+
+# slightly change variables, to see effect
+d2 <- to_label(d2)
+d3 <- to_label(d3)
+
+# replace duplicated columns, append remaining
+replace_columns(d1, d2, d3, d4)
+
+# replace duplicated columns, omit remaining
+replace_columns(d1, d2, d3, d4, add.unique = FALSE)
 
 }

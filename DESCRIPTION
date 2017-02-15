@@ -40,5 +40,5 @@ Suggests:
     rmarkdown
 URL: https://github.com/sjPlot/sjmisc
 BugReports: https://github.com/sjPlot/sjmisc/issues
-RoxygenNote: 6.0.0
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr
