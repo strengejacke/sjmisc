@@ -1,5 +1,7 @@
 Version 2.3.0.9000
 ------------------------------------------------------------------------------
+General:
+* Re-exports `magrittr::%>%` (Bob Rudis said more packages should do so).
 
 New functions:
 * `replace_columns()` to replace variables in one data frame with variables from other data frames.

@@ -76,7 +76,6 @@ dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
                     var2 = sample(1:10, 100, replace = TRUE),
                     var3 = sample(1:6, 100, replace = TRUE))
 # set value 2 and 4 as missings
-library(dplyr)
 dummy \%>\% set_na(value = c(2, 4)) \%>\% head()
 dummy \%>\% set_na(value = c(2, 4), as.tag = TRUE) \%>\% get_na()
 dummy \%>\% set_na(value = c(2, 4), as.tag = TRUE) \%>\% get_values()

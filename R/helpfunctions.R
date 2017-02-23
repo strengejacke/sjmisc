@@ -1,3 +1,8 @@
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+
 # evaluates arguments
 #' @importFrom dplyr select_
 #' @importFrom stats as.formula

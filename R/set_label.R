@@ -84,7 +84,6 @@
 #'
 #' # use 'var_labels()' to set labels within a pipe-workflow, and
 #' # when you need "tidyverse-consistent" api.
-#' library(dplyr)
 #' # Set variable labels for data frame
 #' dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
 #'                     b = sample(1:4, 10, replace = TRUE),

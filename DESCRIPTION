@@ -25,6 +25,7 @@ Imports:
     broom (>= 0.4.1),
     dplyr (>= 0.5.0),
     haven (>= 1.0.0),
+    magrittr,
     psych,
     purrr,
     stringdist (>= 0.9.4),

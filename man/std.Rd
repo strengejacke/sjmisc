@@ -51,7 +51,6 @@ A vector with standardized or centered variables. If \code{x} is a
         data frame (see 'Examples').
 }
 \examples{
-library(dplyr)
 data(efc)
 std(efc$c160age) \%>\% head()
 std(efc, e17age, c160age) \%>\% head()
@@ -64,6 +63,7 @@ std(efc$e17age) # returns a vector
 std(efc, e17age) # returns a tibble
 
 # works with mutate()
+library(dplyr)
 efc \%>\%
   select(e17age, neg_c_7) \%>\%
   mutate(age_std = std(e17age), burden = center(neg_c_7)) \%>\%
