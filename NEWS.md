@@ -12,6 +12,7 @@
 
 * `descr()` gets a `max.length`-argument to shorten variable labels in the output to a specific number of chars.
 * `descr()` now also reports the percentage of missing values.
+* `set_na()` no longer gives a warning when trying to replace values with `NA` for vectors that completely contained `NA`s.
 
 # sjmisc 2.3.0
 

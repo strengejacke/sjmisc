@@ -139,6 +139,9 @@ set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag
 set_na_helper <- function(x, value, drop.levels, as.tag) {
+  # check if values has only NA's
+  if (sum(is.na(x)) == length(x)) return(x)
+
   # get label attribute
   attr.string <- getValLabelAttribute(x)
 
@@ -150,12 +153,19 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
   # no tagged NA's for date values
   if (inherits(x, "Date")) as.tag <- F
 
+  # get value labels
+  val.lab <-
+    get_labels(
+      x,
+      attr.only = TRUE,
+      include.values = "n",
+      include.non.labelled = FALSE,
+      drop.na = TRUE
+    )
+
   # if value is a character vector, user may have defined a value label.
   # find value of associated label then
   if (is.character(value)) {
-    # get value labels
-    val.lab <- get_labels(x, attr.only = TRUE, include.values = "n",
-                          include.non.labelled = FALSE, drop.na = TRUE)
     # get value labels that match the values which should be set to NA
     val.match <- val.lab[val.lab %in% value]
     # now get values for this vector
@@ -217,7 +227,9 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
   # remove unused value labels
   removers <- which(get_values(x) %in% value)
   if (!is.null(removers) && !sjmisc::is_empty(removers, first.only = T)) {
-    x <- remove_labels(x, value = removers)
+    vl <- as.numeric(names(val.lab))
+    names(vl) <- unname(val.lab)
+    attr(x, attr.string) <- vl[-removers]
   }
 
   # if we have a factor, check if we have unused levels now due to NA

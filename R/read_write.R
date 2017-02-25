@@ -191,6 +191,18 @@ atomic_to_fac <- function(data.spss, attr.string) {
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
   data <- haven::read_sas(data_file = path, catalog_file = path.cat, encoding = enc)
+
+  # find all-NA values
+  len <- nrow(data)
+  all_missings <- names(which(unlist(lapply(data, function(x) sum(is.na(x)) == len)) == TRUE))
+
+  # do we have any "all-missing-variables"?
+  if (!sjmisc::is_empty(all_missings)) {
+    message(sprintf("Following %i variables have only missing values:", length(all_missings)))
+    cat(paste(all_missings, collapse = ", "))
+    cat("\n")
+  }
+
   # convert to sjPlot
   data <- unlabel(data)
   # convert atomic values to factors
@@ -205,6 +217,18 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
 read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
   # read data file
   data <- haven::read_dta(file = path, encoding = enc)
+
+  # find all-NA values
+  len <- nrow(data)
+  all_missings <- names(which(unlist(lapply(data, function(x) sum(is.na(x)) == len)) == TRUE))
+
+  # do we have any "all-missing-variables"?
+  if (!sjmisc::is_empty(all_missings)) {
+    message(sprintf("Following %i variables have only missing values:", length(all_missings)))
+    cat(paste(all_missings, collapse = ", "))
+    cat("\n")
+  }
+
   # convert to sjPlot
   data <- unlabel(data)
   # convert atomic values to factors
