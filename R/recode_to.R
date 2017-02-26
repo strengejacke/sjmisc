@@ -123,7 +123,7 @@ rec_to_helper <- function(x, lowest, highest) {
 
   # set back labels, if we have any
   if (!is.null(val_lab)) x <- suppressWarnings(set_labels(x, labels = val_lab))
-  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, lab = var_lab))
+  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, label = var_lab))
 
   # return recoded x
   return(x)

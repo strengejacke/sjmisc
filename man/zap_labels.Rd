@@ -99,7 +99,7 @@ rp
 # sample data
 data(efc)
 # recode carers age into groups of width 5
-x <- rec(efc$c160age, recodes = rp$pattern)
+x <- rec(efc$c160age, rec = rp$pattern)
 # add value labels to new vector
 x <- set_labels(x, labels = rp$labels)
 

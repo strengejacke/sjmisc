@@ -111,15 +111,15 @@ read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
           max.range.end <- max(na.range[!is.infinite(na.range)], na.rm = T)
           # we start with range up to highest value
           if (any(na.range == Inf) && min.range.start <= max(x, na.rm = TRUE)) {
-            x <- set_na(x, value = sort(stats::na.omit(unique(x[x >= min.range.start]))), as.tag = TRUE)
+            x <- set_na(x, na = sort(stats::na.omit(unique(x[x >= min.range.start]))), as.tag = TRUE)
           }
           # we start with range up to highest value
           if (any(na.range == -Inf) && max.range.end >= min(x, na.rm = TRUE)) {
-            x <- set_na(x, value = sort(stats::na.omit(unique(x[x <= max.range.end]))), as.tag = TRUE)
+            x <- set_na(x, na = sort(stats::na.omit(unique(x[x <= max.range.end]))), as.tag = TRUE)
           }
           # here we have no infinite value range
           if (!any(is.infinite(na.range))) {
-            x <- set_na(x, value = sort(stats::na.omit(unique(c(
+            x <- set_na(x, na = sort(stats::na.omit(unique(c(
               na.range[!is.infinite(na.range)], x[x >= min.range.start & x <= max.range.end]
             )))), as.tag = TRUE)
           }

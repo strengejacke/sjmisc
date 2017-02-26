@@ -95,7 +95,7 @@ ref_lvl_helper <- function(x, value) {
   # for the recoding
   rec.pattern <- paste0(sprintf("%i=%i;", neword, vals), collapse = "")
   # recode now
-  x <- rec(x, recodes = rec.pattern, as.num = FALSE)
+  x <- rec(x, rec = rec.pattern, as.num = FALSE)
   # set back labels
   if (!is.null(var.lab) && !sjmisc::is_empty(var.lab)) {
     set_label(x) <- var.lab

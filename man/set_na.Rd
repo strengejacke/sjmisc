@@ -4,7 +4,7 @@
 \alias{set_na}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, ..., value, drop.levels = TRUE, as.tag = FALSE)
+set_na(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -16,7 +16,7 @@ from \code{x} should be processed. You may also use functions like
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{value}{Numeric vector with values that should be replaced with NA values,
+\item{na}{Numeric vector with values that should be replaced with NA values,
 or a character vector if values of factors or character vectors should be
 replaced. For labelled vectors, may also be the name of a value label. In
 this case, the associated values for the value labels in each vector
@@ -28,9 +28,11 @@ been replaced with \code{NA} are dropped. See 'Examples'.}
 \item{as.tag}{Logical, if \code{TRUE}, values in \code{x} will be replaced
 by \code{tagged_na}, else by usual \code{NA} values. Use a named
 vector to assign the value label to the tagged NA value (see 'Examples').}
+
+\item{value}{Deprecated. Please use \code{na} instead.}
 }
 \value{
-\code{x}, with all elements of \code{value} being replaced by \code{NA}.
+\code{x}, with all elements of \code{na} being replaced by \code{NA}.
           If \code{x} is a data frame, the complete data frame \code{x} will
           be returned, with NA's set for variables specified in \code{...};
           if \code{...} is not specified, applies to all variables in the
@@ -40,7 +42,7 @@ vector to assign the value label to the tagged NA value (see 'Examples').}
 This function replaces specific values of variables with \code{NA}.
 }
 \details{
-\code{set_na()} converts all values defined in \code{value} with
+\code{set_na()} converts all values defined in \code{na} with
            a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
            Tagged \code{NA}s work exactly like regular R missing values
            except that they store one additional byte of information: a tag,
@@ -60,15 +62,15 @@ dummy <- sample(1:8, 100, replace = TRUE)
 # show value distribution
 table(dummy)
 # set value 1 and 8 as missings
-dummy <- set_na(dummy, value = c(1, 8))
+dummy <- set_na(dummy, na = c(1, 8))
 # show value distribution, including missings
 table(dummy, useNA = "always")
 
 # add named vector as further missing value
-set_na(dummy, value = c("Refused" = 5), as.tag = TRUE)
+set_na(dummy, na = c("Refused" = 5), as.tag = TRUE)
 # see different missing types
 library(haven)
-print_tagged_na(set_na(dummy, value = c("Refused" = 5), as.tag = TRUE))
+print_tagged_na(set_na(dummy, na = c("Refused" = 5), as.tag = TRUE))
 
 
 # create sample data frame
@@ -76,9 +78,9 @@ dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
                     var2 = sample(1:10, 100, replace = TRUE),
                     var3 = sample(1:6, 100, replace = TRUE))
 # set value 2 and 4 as missings
-dummy \%>\% set_na(value = c(2, 4)) \%>\% head()
-dummy \%>\% set_na(value = c(2, 4), as.tag = TRUE) \%>\% get_na()
-dummy \%>\% set_na(value = c(2, 4), as.tag = TRUE) \%>\% get_values()
+dummy \%>\% set_na(na = c(2, 4)) \%>\% head()
+dummy \%>\% set_na(na = c(2, 4), as.tag = TRUE) \%>\% get_na()
+dummy \%>\% set_na(na = c(2, 4), as.tag = TRUE) \%>\% get_values()
 
 data(efc)
 dummy <- data.frame(
@@ -89,13 +91,13 @@ dummy <- data.frame(
 # check original distribution of categories
 lapply(dummy, table, useNA = "always")
 # set 3 to NA for two variables
-lapply(set_na(dummy, var1, var3, value = 3), table, useNA = "always")
+lapply(set_na(dummy, var1, var3, na = 3), table, useNA = "always")
 
 # drop unused factor levels when being set to NA
 x <- factor(c("a", "b", "c"))
 x
-set_na(x, value = "b", as.tag = TRUE)
-set_na(x, value = "b", drop.levels = FALSE, as.tag = TRUE)
+set_na(x, na = "b", as.tag = TRUE)
+set_na(x, na = "b", drop.levels = FALSE, as.tag = TRUE)
 
 # set_na() can also remove a missing by defining the value label
 # of the value that should be replaced with NA. This is in particular
@@ -108,12 +110,12 @@ x2 <- set_labels(x2, labels = c("Refused" = 6, "No answer" = 7))
 
 tmp <- data.frame(x1, x2)
 get_labels(tmp)
-get_labels(set_na(tmp, value = "No answer"))
-get_labels(set_na(tmp, value = c("Refused", "No answer")))
+get_labels(set_na(tmp, na = "No answer"))
+get_labels(set_na(tmp, na = c("Refused", "No answer")))
 
 # show values
 tmp
-set_na(tmp, value = c("Refused", "No answer"))
+set_na(tmp, na = c("Refused", "No answer"))
 
 
 }

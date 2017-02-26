@@ -56,7 +56,7 @@ copy_labels <- function(df_new, df_origin = NULL) {
 
       # get var-labels of original data frame, and select only those
       # labels from variables that appear in the new (subsetted) data frame
-      df_new <- set_label(df_new, lab = get_label(df_origin[, cn]))
+      df_new <- set_label(df_new, label = get_label(df_origin[, cn]))
 
       # same for value labels
       df_new <- suppressMessages(set_labels(

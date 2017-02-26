@@ -126,7 +126,7 @@ split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclu
   # to numeric?
   if (as.num) retval <- to_value(retval)
   # set back variable and value labels
-  retval <- suppressWarnings(set_label(retval, lab = var_lab))
+  retval <- suppressWarnings(set_label(retval, label = var_lab))
   retval <- suppressWarnings(set_labels(retval, labels = val_lab))
   # return value
   return(retval)

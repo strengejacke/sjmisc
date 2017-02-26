@@ -153,7 +153,7 @@ to_value_helper <- function(x, start.at, keep.labels) {
   # check if we should set back former variable and value labels
   if (keep.labels) {
     new_value <- set_labels(new_value, labels = labels, force.labels = T)
-    new_value <- set_label(new_value, lab = varlab)
+    new_value <- set_label(new_value, label = varlab)
   }
 
   return(new_value)

@@ -74,7 +74,7 @@
 #' # sample data
 #' data(efc)
 #' # recode carers age into groups of width 5
-#' x <- rec(efc$c160age, recodes = rp$pattern)
+#' x <- rec(efc$c160age, rec = rp$pattern)
 #' # add value labels to new vector
 #' x <- set_labels(x, labels = rp$labels)
 #'
@@ -273,7 +273,7 @@ zap_inf <- function(x, ...) {
 
 
 zap_labels_helper <- function(x) {
-  x <- set_na(x, value = get_values(x, drop.na = T))
+  x <- set_na(x, na = get_values(x, drop.na = T))
   # auto-detect variable label attribute
   attr.string <- getVarLabelAttribute(x)
   # remove label attributes
@@ -284,7 +284,7 @@ zap_labels_helper <- function(x) {
 
 zap_unlabelled_helper <- function(x) {
   vals <- get_values(x)
-  x <- set_na(x, value = stats::na.omit(unique(x)[!unique(x) %in% vals]))
+  x <- set_na(x, na = stats::na.omit(unique(x)[!unique(x) %in% vals]))
   if (is_labelled(x)) class(x) <- NULL
   return(x)
 }

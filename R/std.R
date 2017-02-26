@@ -107,5 +107,5 @@ std_helper <- function(x, include.fac, standardize) {
   # and fill in values in original vector
   x[!is.na(x)] <- tmp
   # add back label
-  set_label(x, lab)
+  set_label(x, label = lab)
 }

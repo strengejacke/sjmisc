@@ -92,7 +92,7 @@
 #' x <- c(1, 1, 1, 2, 2, -2, 3, 3, 3, 3, 3, 9)
 #' x <- set_labels(x, labels = c("Refused", "One", "Two", "Three", "Missing"))
 #' x
-#' set_na(x, value = c(-2, 9))
+#' set_na(x, na = c(-2, 9))
 #'
 #'
 #' library(haven)
@@ -127,7 +127,7 @@
 #' x <- c(1, 2, 3, 4)
 #' # set 2 and 3 as missing, which will automatically set as
 #' # tagged NA by 'set_na()'
-#' x <- set_na(x, value = c(2, 3))
+#' x <- set_na(x, na = c(2, 3))
 #' x
 #' # set label via named vector just for tagged NA(3)
 #' set_labels(x, labels = c(`New Value` = tagged_na("3")))

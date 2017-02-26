@@ -4,8 +4,8 @@
 \alias{rec}
 \title{Recode variables}
 \usage{
-rec(x, ..., recodes, as.num = TRUE, var.label = NULL, val.labels = NULL,
-  suffix = "_r")
+rec(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
+  suffix = "_r", recodes)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -17,7 +17,7 @@ from \code{x} should be processed. You may also use functions like
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{recodes}{String with recode pairs of old and new values. See
+\item{rec}{String with recode pairs of old and new values. See
 'Details' for examples. \code{\link{rec_pattern}} is a convenient
 function to create recode strings for grouping variables.}
 
@@ -47,6 +47,8 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{recodes}{Deprecated. Use \code{rec} instead.}
 }
 \value{
 \code{x} with recoded categories. If \code{x} is a data frame, only
@@ -57,9 +59,9 @@ Recodes the categories / values of a variable \code{x} into new
                category values.
 }
 \details{
-The \code{recodes} string has following syntax:
+The \code{rec} string has following syntax:
           \describe{
-           \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{recodes = "1=1; 2=4; 3=2; 4=3"}}
+           \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{rec = "1=1; 2=4; 3=2; 4=3"}}
            \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
            \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
            \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
@@ -73,7 +75,7 @@ The \code{recodes} string has following syntax:
 \note{
 Please note following behaviours of the function:
       \itemize{
-        \item the \code{"else"}-token should always be the last argument in the \code{recodes}-string.
+        \item the \code{"else"}-token should always be the last argument in the \code{rec}-string.
         \item Non-matching values will be set to \code{NA}, unless captured by the \code{"else"}-token.
         \item Tagged NA values (see \code{\link[haven]{tagged_na}}) and their value labels will be preserved when copying NA values to the recoded vector with \code{"else=copy"}.
         \item Variable label attributes (see, for instance, \code{\link{get_label}}) are preserved (unless changed via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
@@ -85,10 +87,10 @@ data(efc)
 table(efc$e42dep, useNA = "always")
 
 # replace NA with 5
-table(rec(efc$e42dep, recodes = "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
+table(rec(efc$e42dep, rec = "1=1;2=2;3=3;4=4;NA=5"), useNA = "always")
 
 # recode 1 to 2 into 1 and 3 to 4 into 2
-table(rec(efc$e42dep, recodes = "1,2=1; 3,4=2"), useNA = "always")
+table(rec(efc$e42dep, rec = "1,2=1; 3,4=2"), useNA = "always")
 
 # or:
 # rec(efc$e42dep) <- "1,2=1; 3,4=2"
@@ -98,52 +100,52 @@ table(rec(efc$e42dep, recodes = "1,2=1; 3,4=2"), useNA = "always")
 library(dplyr)
 efc \%>\%
   select(e42dep) \%>\%
-  rec(recodes = "1,2=1; 3,4=2",
+  rec(rec = "1,2=1; 3,4=2",
       val.labels = c("low dependency", "high dependency")) \%>\%
   str()
 
 # works with mutate
 efc \%>\%
   select(e42dep, e17age) \%>\%
-  mutate(dependency_rev = rec(e42dep, recodes = "rev")) \%>\%
+  mutate(dependency_rev = rec(e42dep, rec = "rev")) \%>\%
   head()
 
 # recode 1 to 3 into 4 into 2
-table(rec(efc$e42dep, recodes = "min:3=1; 4=2"), useNA = "always")
+table(rec(efc$e42dep, rec = "min:3=1; 4=2"), useNA = "always")
 
 # recode 2 to 1 and all others into 2
-table(rec(efc$e42dep, recodes = "2=1; else=2"), useNA = "always")
+table(rec(efc$e42dep, rec = "2=1; else=2"), useNA = "always")
 
 # reverse value order
-table(rec(efc$e42dep, recodes = "rev"), useNA = "always")
+table(rec(efc$e42dep, rec = "rev"), useNA = "always")
 
 # recode only selected values, copy remaining
 table(efc$e15relat)
-table(rec(efc$e15relat, recodes = "1,2,4=1; else=copy"))
+table(rec(efc$e15relat, rec = "1,2,4=1; else=copy"))
 
 # recode variables with same category in a data frame
 head(efc[, 6:9])
-head(rec(efc[, 6:9], recodes = "1=10;2=20;3=30;4=40"))
+head(rec(efc[, 6:9], rec = "1=10;2=20;3=30;4=40"))
 
 # recode multiple variables and set value labels via recode-syntax
 dummy <- rec(efc, c160age, e17age,
-             recodes = "15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]")
+             rec = "15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]")
 frq(dummy)
 
 # recode variables with same value-range
 lapply(
-  rec(efc, c82cop1, c83cop2, c84cop3, recodes = "1,2=1; NA=9; else=copy"),
+  rec(efc, c82cop1, c83cop2, c84cop3, rec = "1,2=1; NA=9; else=copy"),
   table,
   useNA = "always"
 )
 
 # recode character vector
 dummy <- c("M", "F", "F", "X")
-rec(dummy, recodes = "M=Male; F=Female; X=Refused")
+rec(dummy, rec = "M=Male; F=Female; X=Refused")
 
 # recode non-numeric factors
 data(iris)
-table(rec(iris, Species, recodes = "setosa=huhu; else=copy"))
+table(rec(iris, Species, rec = "setosa=huhu; else=copy"))
 
 # preserve tagged NAs
 library(haven)
@@ -153,11 +155,11 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 # get current value labels
 x
 # recode 2 into 5; Values of tagged NAs are preserved
-rec(x, recodes = "2=5;else=copy")
-na_tag(rec(x, recodes = "2=5;else=copy"))
+rec(x, rec = "2=5;else=copy")
+na_tag(rec(x, rec = "2=5;else=copy"))
 
 # use select-helpers from dplyr-package
-rec(efc, ~contains("cop"), c161sex:c175empl, recodes = "0,1=0; else=1")
+rec(efc, ~contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
 
 
 }

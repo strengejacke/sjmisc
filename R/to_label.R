@@ -200,7 +200,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
   # drop unused levels?
   if (drop.levels) x <- droplevels(x)
   # set back variable labels
-  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, var_lab))
+  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, label = var_lab))
   # return as factor
   return(x)
 }

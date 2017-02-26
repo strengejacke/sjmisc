@@ -9,7 +9,7 @@
 #'            \code{\link{get_na}} to get values of missing values in
 #'            labelled vectors.
 #'
-#' @param value Numeric vector with values that should be replaced with NA values,
+#' @param na Numeric vector with values that should be replaced with NA values,
 #'        or a character vector if values of factors or character vectors should be
 #'        replaced. For labelled vectors, may also be the name of a value label. In
 #'        this case, the associated values for the value labels in each vector
@@ -19,10 +19,11 @@
 #' @param as.tag Logical, if \code{TRUE}, values in \code{x} will be replaced
 #'          by \code{tagged_na}, else by usual \code{NA} values. Use a named
 #'          vector to assign the value label to the tagged NA value (see 'Examples').
+#' @param value Deprecated. Please use \code{na} instead.
 #'
 #' @inheritParams to_factor
 #'
-#' @return \code{x}, with all elements of \code{value} being replaced by \code{NA}.
+#' @return \code{x}, with all elements of \code{na} being replaced by \code{NA}.
 #'           If \code{x} is a data frame, the complete data frame \code{x} will
 #'           be returned, with NA's set for variables specified in \code{...};
 #'           if \code{...} is not specified, applies to all variables in the
@@ -33,7 +34,7 @@
 #'         attributes (see, for instance, \code{\link{get_labels}} or
 #'         \code{\link{set_labels}}) are preserved.
 #'
-#' @details \code{set_na()} converts all values defined in \code{value} with
+#' @details \code{set_na()} converts all values defined in \code{na} with
 #'            a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
 #'            Tagged \code{NA}s work exactly like regular R missing values
 #'            except that they store one additional byte of information: a tag,
@@ -47,15 +48,15 @@
 #' # show value distribution
 #' table(dummy)
 #' # set value 1 and 8 as missings
-#' dummy <- set_na(dummy, value = c(1, 8))
+#' dummy <- set_na(dummy, na = c(1, 8))
 #' # show value distribution, including missings
 #' table(dummy, useNA = "always")
 #'
 #' # add named vector as further missing value
-#' set_na(dummy, value = c("Refused" = 5), as.tag = TRUE)
+#' set_na(dummy, na = c("Refused" = 5), as.tag = TRUE)
 #' # see different missing types
 #' library(haven)
-#' print_tagged_na(set_na(dummy, value = c("Refused" = 5), as.tag = TRUE))
+#' print_tagged_na(set_na(dummy, na = c("Refused" = 5), as.tag = TRUE))
 #'
 #'
 #' # create sample data frame
@@ -63,9 +64,9 @@
 #'                     var2 = sample(1:10, 100, replace = TRUE),
 #'                     var3 = sample(1:6, 100, replace = TRUE))
 #' # set value 2 and 4 as missings
-#' dummy %>% set_na(value = c(2, 4)) %>% head()
-#' dummy %>% set_na(value = c(2, 4), as.tag = TRUE) %>% get_na()
-#' dummy %>% set_na(value = c(2, 4), as.tag = TRUE) %>% get_values()
+#' dummy %>% set_na(na = c(2, 4)) %>% head()
+#' dummy %>% set_na(na = c(2, 4), as.tag = TRUE) %>% get_na()
+#' dummy %>% set_na(na = c(2, 4), as.tag = TRUE) %>% get_values()
 #'
 #' data(efc)
 #' dummy <- data.frame(
@@ -76,13 +77,13 @@
 #' # check original distribution of categories
 #' lapply(dummy, table, useNA = "always")
 #' # set 3 to NA for two variables
-#' lapply(set_na(dummy, var1, var3, value = 3), table, useNA = "always")
+#' lapply(set_na(dummy, var1, var3, na = 3), table, useNA = "always")
 #'
 #' # drop unused factor levels when being set to NA
 #' x <- factor(c("a", "b", "c"))
 #' x
-#' set_na(x, value = "b", as.tag = TRUE)
-#' set_na(x, value = "b", drop.levels = FALSE, as.tag = TRUE)
+#' set_na(x, na = "b", as.tag = TRUE)
+#' set_na(x, na = "b", drop.levels = FALSE, as.tag = TRUE)
 #'
 #' # set_na() can also remove a missing by defining the value label
 #' # of the value that should be replaced with NA. This is in particular
@@ -95,16 +96,23 @@
 #'
 #' tmp <- data.frame(x1, x2)
 #' get_labels(tmp)
-#' get_labels(set_na(tmp, value = "No answer"))
-#' get_labels(set_na(tmp, value = c("Refused", "No answer")))
+#' get_labels(set_na(tmp, na = "No answer"))
+#' get_labels(set_na(tmp, na = c("Refused", "No answer")))
 #'
 #' # show values
 #' tmp
-#' set_na(tmp, value = c("Refused", "No answer"))
+#' set_na(tmp, na = c("Refused", "No answer"))
 #'
 #'
 #' @export
-set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
+set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value) {
+
+  # check deprecated arguments
+  if (!missing(value)) {
+    message("Argument `value` is deprecated. Please use `na` instead.")
+    na <- value
+  }
+
   # check for valid value
   if (is.null(value) || is.na(value)) return(x)
 
@@ -117,7 +125,7 @@ set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
     for (i in colnames(.dat)) {
       x[[i]] <- set_na_helper(
         x = .dat[[i]],
-        value = value,
+        value = na,
         drop.levels = drop.levels,
         as.tag = as.tag
       )
@@ -127,7 +135,7 @@ set_na <- function(x, ..., value, drop.levels = TRUE, as.tag = FALSE) {
   } else {
     x <- set_na_helper(
       x = .dat,
-      value = value,
+      value = na,
       drop.levels = drop.levels,
       as.tag = as.tag
     )

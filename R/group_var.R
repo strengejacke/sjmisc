@@ -146,7 +146,7 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   # convert to numeric?
   if (as.num) x <- as.numeric(as.character(x))
   # set back variable labels
-  if (!is.null(varlab)) x <- set_label(x, varlab)
+  if (!is.null(varlab)) x <- set_label(x, label = varlab)
   return(x)
 }
 
@@ -214,7 +214,7 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
     retval[i] <- c(paste(lower, "-", upper, sep = ""))
   }
   # set back variable labels
-  if (!is.null(varlab)) retval <- set_label(retval, varlab)
+  if (!is.null(varlab)) retval <- set_label(retval, label = varlab)
   return(retval)
 }
 

@@ -6,7 +6,7 @@
 \alias{var_labels}
 \title{Add variable label(s) to variables}
 \usage{
-set_label(x, lab, attr.string = NULL)
+set_label(x, label, attr.string = NULL, lab)
 
 set_label(x, attr.string = NULL) <- value
 
@@ -17,18 +17,20 @@ var_labels(x, ...)
 labels should be added as attribute. For \code{var_labels()}, \code{x}
 must be a data frame only.}
 
-\item{lab}{If \code{x} is a vector (single variable), use a single character string with
+\item{label}{If \code{x} is a vector (single variable), use a single character string with
 the variable label for \code{x}. If \code{x} is a data frame, use a
 vector with character labels of same length as \code{ncol(x)}.
-Use \code{lab = ""} to remove labels-attribute from \code{x}, resp.
-set any value of vector \code{lab} to \code{""} to remove specific variable
+Use \code{label = ""} to remove labels-attribute from \code{x}, resp.
+set any value of vector \code{label} to \code{""} to remove specific variable
 label attributes from a data frame's variable.}
 
 \item{attr.string}{Attribute string for the variable label. \strong{Note:}
 Usually, this argument should be ignored. It is only used internally
 for the \code{\link{write_spss}} and \code{\link{write_stata}} functions.}
 
-\item{value}{See \code{lab}.}
+\item{lab}{Deprecated. Please use \code{label} instead.}
+
+\item{value}{See \code{label}.}
 
 \item{...}{Pairs of named vectors, where the name equals the variable name,
 which should be labelled, and the value is the new variable label.}
@@ -36,7 +38,7 @@ which should be labelled, and the value is the new variable label.}
 \value{
 \code{x}, with variable label attribute(s), which contains the
           variable name(s); or with removed label-attribute if
-          \code{lab = ""}.
+          \code{label = ""}.
 }
 \description{
 This function adds variable labels as attribute
@@ -59,7 +61,7 @@ frq(efc$e42dep)
 # manually set value and variable labels
 dummy <- sample(1:4, 40, replace = TRUE)
 dummy <- set_labels(dummy, labels = c("very low", "low", "mid", "hi"))
-dummy <- set_label(dummy, lab = "Dummy-variable")
+dummy <- set_label(dummy, label = "Dummy-variable")
 
 # or use:
 # set_label(dummy) <- "Dummy-variable"
