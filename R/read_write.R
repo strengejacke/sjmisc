@@ -288,6 +288,9 @@ write_sas <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
 
 #' @importFrom haven write_sav write_dta write_sas
 write_data <- function(x, path, type, use.tagged.na, enc.to.utf8, version) {
+  # convert to labelled class
+  x <- as_labelled(x, add.labels = F, add.class = F)
+
   # check for correct column names
   for (i in seq_len(ncol(x))) {
     # check column name
