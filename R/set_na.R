@@ -114,7 +114,7 @@ set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value) {
   }
 
   # check for valid value
-  if (is.null(value) || is.na(value)) return(x)
+  if (is.null(na) || is.na(na)) return(x)
 
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`

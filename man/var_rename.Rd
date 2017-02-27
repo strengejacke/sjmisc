@@ -11,8 +11,8 @@ var_rename(x, ...)
 labels should be added as attribute. For \code{var_labels()}, \code{x}
 must be a data frame only.}
 
-\item{...}{Pairs of named vectors, where the name equals the variable name,
-which should be labelled, and the value is the new variable label.}
+\item{...}{Pairs of named vectors, where the name equals the column name that
+should be renamed, and the value is the new column name.}
 }
 \value{
 \code{x}, with new column names for those variables specified in \code{...}.

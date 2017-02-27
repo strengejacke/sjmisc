@@ -38,10 +38,6 @@
 #' @note See 'Note' in \code{\link{get_labels}}
 #'
 #' @examples
-#' # sample data set, imported from SPSS.
-#' data(efc)
-#' frq(efc$e42dep)
-#'
 #' # manually set value and variable labels
 #' dummy <- sample(1:4, 40, replace = TRUE)
 #' dummy <- set_labels(dummy, labels = c("very low", "low", "mid", "hi"))
