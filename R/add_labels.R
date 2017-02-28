@@ -123,21 +123,23 @@ add_labels <- function(x, ..., value) {
 #' @importFrom haven is_tagged_na na_tag
 add_labels_helper <- function(x, value) {
   # get current labels of `x`
-  current.labels <- get_labels(x,
-                               attr.only = T,
-                               include.values = "n",
-                               include.non.labelled = F,
-                               drop.na = TRUE)
+  current.labels <- get_labels(
+    x,
+    attr.only = T,
+    include.values = "n",
+    include.non.labelled = F,
+    drop.na = TRUE
+  )
 
   # get current NA values
   current.na <- get_na(x)
 
   # if we had already labels, append new ones
   if (!is.null(current.labels)) {
-    # remove double values labels
+    # remove multiple value labels
     doubles <- names(current.labels) %in% as.character(value)
 
-    # switch value and names attribute, since get_labels
+    # switch value and names attribute, since get_labels()
     # returns the values as names, and the value labels
     # as "vector content"
     val.switch <- as.numeric(names(current.labels))
@@ -145,10 +147,13 @@ add_labels_helper <- function(x, value) {
 
     # update all labels
     all.labels <- c(val.switch[!doubles], value)
+
     # tell user
     if (any(doubles)) {
-      message(sprintf("label '%s' was replaced with new value label.\n",
-                      current.labels[doubles]))
+      message(sprintf(
+        "label '%s' was replaced with new value label.\n",
+        current.labels[doubles]
+      ))
     }
   } else {
     all.labels <- value
@@ -160,11 +165,16 @@ add_labels_helper <- function(x, value) {
     value_tag <- haven::na_tag(value)[haven::is_tagged_na(value)]
     cna_tag <- haven::na_tag(current.na)
 
-    # find matches (replaced NA)
+    # find matches (replaced NA), i.e. see if 'x' has any
+    # tagged NA values that match the tagged NA specified in 'value'
     doubles <- na.omit(match(value_tag, cna_tag))
+
+    # tell user if we found any tagged NA, and that these will be replaced
     if (any(doubles)) {
-      message(sprintf("tagged NA '%s' was replaced with new value label.\n",
-                      names(current.na)[doubles]))
+      message(sprintf(
+        "tagged NA '%s' was replaced with new value label.\n",
+        names(current.na)[doubles]
+      ))
     }
 
     # remove multiple tagged NA
@@ -177,9 +187,8 @@ add_labels_helper <- function(x, value) {
   # add NA
   if (!is.null(current.na)) all.labels <- c(all.labels, current.na)
 
-  # set back labels
-  x <- set_labels(x, labels = all.labels)
-  return(x)
+  # set back labels and return
+  set_labels(x, labels = all.labels)
 }
 
 

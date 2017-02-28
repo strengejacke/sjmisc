@@ -77,6 +77,13 @@ descr_helper <- function(dd, max.length) {
   var.name <- colnames(dd)
   if (is.null(var.name)) var.name <- NA
 
+  # check if we have a single vector, because purrr would return
+  # a result for each *value*, instead one result for the complete vector
+  if (!is.data.frame(dd))
+    dv <- as.data.frame(dd)
+  else
+    dv <- dd
+
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
   x <- tibble::as_tibble(psych::describe(dd)) %>%
@@ -84,7 +91,7 @@ descr_helper <- function(dd, max.length) {
     dplyr::select_("-vars", "-mad") %>%
     dplyr::mutate(
       label = unname(get_label(dd, def.value = var.name)),
-      NA.prc = purrr::map_dbl(dd, ~ 100 * sum(is.na(.x)) / length(.x))
+      NA.prc = purrr::map_dbl(dv, ~ 100 * sum(is.na(.x)) / length(.x))
     ) %>%
     var_rename(median = "md")
 

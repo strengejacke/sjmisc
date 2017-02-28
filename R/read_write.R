@@ -258,40 +258,35 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'
 #' @param x A data frame that should be saved as file.
 #' @param path File path of the output file.
-#' @param use.tagged.na Logical, if \code{TRUE}, \code{\link[haven]{tagged_na}}
-#'          values are converted to their values, i.e. values of tagged NA's are
-#'          converted to factor levels. If \code{FALSE} (default), tagged NA's
-#'          are converted to regular NA's.
 #' @param version File version to use. Supports versions 8-14.
 #'
+#' @inheritParams to_label
+#'
 #' @export
-write_spss <- function(x, path) {
-  # convert to labelled class
-  x <- as_labelled(x, add.labels = F, add.class = F)
-
-  write_data(x = x, path = path, type = "spss", version = 14)
+write_spss <- function(x, path, drop.na = FALSE) {
+  write_data(x = x, path = path, type = "spss", version = 14, drop.na = drop.na)
 }
 
 
 #' @rdname write_spss
 #' @export
-write_stata <- function(x, path, version = 14) {
-  # convert data to labelled
-  x <- to_label(x)
-
-  write_data(x = x, path = path, type = "stata", version = version)
+write_stata <- function(x, path, drop.na = FALSE, version = 14) {
+  write_data(x = x, path = path, type = "stata", version = version, drop.na = drop.na)
 }
 
 
 #' @rdname write_spss
 #' @export
-write_sas <- function(x, path) {
-  write_data(x = x, path = path, type = "sas", version = 14)
+write_sas <- function(x, path, drop.na = FALSE) {
+  write_data(x = x, path = path, type = "sas", version = 14, drop.na = drop.na)
 }
 
 
 #' @importFrom haven write_sav write_dta write_sas
-write_data <- function(x, path, type, version) {
+write_data <- function(x, path, type, version, drop.na) {
+  # convert data to labelled
+  x <- to_label(x, add.non.labelled = T, drop.na = drop.na)
+
   # check for correct column names
   for (i in seq_len(ncol(x))) {
     # check column name

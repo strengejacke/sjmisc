@@ -14,6 +14,10 @@
 * `descr()` now also reports the percentage of missing values.
 * `set_na()` no longer gives a warning when trying to replace values with `NA` for vectors that completely contained `NA`s.
 
+## Bug fixes
+* `descr()` now also works on single vectors as data argument.
+* Fixed bugs with `write_*()`-functions.
+
 # sjmisc 2.3.0
 
 ## General

@@ -50,7 +50,9 @@ copy_labels <- function(df_new, df_origin = NULL) {
       # check for valid colnames, i.e. if all column
       # names really match the original column names.
       if (sum(cn %in% colnames(df_origin) == F) > 0) {
-        # if not, return only matching colnames
+        # if not, return only matching colnames, because
+        # we only copy attributes from variables that also
+        # exist in the new data frame (of course)
         cn <- cn[cn %in% colnames(df_origin)]
       }
 
