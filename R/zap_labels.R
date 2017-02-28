@@ -290,6 +290,8 @@ zap_unlabelled_helper <- function(x) {
 }
 
 zap_na_tags_helper <- function(x) {
+  # check if values has only NA's
+  if (sum(is.na(x)) == length(x)) return(x)
   # convert all NA, including tagged NA, into regular NA
   x[is.na(x)] <- NA
   # "remove" labels from tagged NA values

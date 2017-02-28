@@ -262,35 +262,36 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'          values are converted to their values, i.e. values of tagged NA's are
 #'          converted to factor levels. If \code{FALSE} (default), tagged NA's
 #'          are converted to regular NA's.
-#' @param enc.to.utf8 Logical, if \code{TRUE}, character encoding of variable and
-#'          value labels will be converted to UTF-8.
 #' @param version File version to use. Supports versions 8-14.
 #'
 #' @export
-write_spss <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "spss", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = 14)
+write_spss <- function(x, path) {
+  # convert to labelled class
+  x <- as_labelled(x, add.labels = F, add.class = F)
+
+  write_data(x = x, path = path, type = "spss", version = 14)
 }
 
 
 #' @rdname write_spss
 #' @export
-write_stata <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE, version = 14) {
-  write_data(x = x, path = path, type = "stata", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = version)
+write_stata <- function(x, path, version = 14) {
+  # convert data to labelled
+  x <- to_label(x)
+
+  write_data(x = x, path = path, type = "stata", version = version)
 }
 
 
 #' @rdname write_spss
 #' @export
-write_sas <- function(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE) {
-  write_data(x = x, path = path, type = "sas", use.tagged.na = use.tagged.na, enc.to.utf8 = enc.to.utf8, version = 14)
+write_sas <- function(x, path) {
+  write_data(x = x, path = path, type = "sas", version = 14)
 }
 
 
 #' @importFrom haven write_sav write_dta write_sas
-write_data <- function(x, path, type, use.tagged.na, enc.to.utf8, version) {
-  # convert to labelled class
-  x <- as_labelled(x, add.labels = F, add.class = F)
-
+write_data <- function(x, path, type, version) {
   # check for correct column names
   for (i in seq_len(ncol(x))) {
     # check column name

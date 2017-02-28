@@ -6,12 +6,11 @@
 \alias{write_sas}
 \title{Write data to other statistical software packages}
 \usage{
-write_spss(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE)
+write_spss(x, path, use.tagged.na = FALSE)
 
-write_stata(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE,
-  version = 14)
+write_stata(x, path, use.tagged.na = FALSE, version = 14)
 
-write_sas(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE)
+write_sas(x, path, use.tagged.na = FALSE)
 }
 \arguments{
 \item{x}{A data frame that should be saved as file.}
@@ -22,9 +21,6 @@ write_sas(x, path, use.tagged.na = FALSE, enc.to.utf8 = FALSE)
 values are converted to their values, i.e. values of tagged NA's are
 converted to factor levels. If \code{FALSE} (default), tagged NA's
 are converted to regular NA's.}
-
-\item{enc.to.utf8}{Logical, if \code{TRUE}, character encoding of variable and
-value labels will be converted to UTF-8.}
 
 \item{version}{File version to use. Supports versions 8-14.}
 }
