@@ -109,7 +109,7 @@ set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value) {
 
   # check deprecated arguments
   if (!missing(value)) {
-    # message("Argument `value` is deprecated. Please use `na` instead.")
+    message("Argument `value` is deprecated. Please use `na` instead.")
     na <- value
   }
 

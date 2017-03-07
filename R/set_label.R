@@ -94,7 +94,7 @@ set_label <- function(x, label, attr.string = NULL, lab) {
 
   # check deprecated arguments
   if (!missing(lab)) {
-    # message("Argument `lab` is deprecated. Please use `label` instead.")
+    message("Argument `lab` is deprecated. Please use `label` instead.")
     label <- lab
   }
 

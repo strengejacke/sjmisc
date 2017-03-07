@@ -149,7 +149,7 @@ rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
 
   # check deprecated arguments
   if (!missing(recodes)) {
-    # message("Argument `recodes` is deprecated. Please use `rec` instead.")
+    message("Argument `recodes` is deprecated. Please use `rec` instead.")
     rec <- recodes
   }
 
