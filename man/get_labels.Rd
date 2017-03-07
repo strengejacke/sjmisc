@@ -80,10 +80,7 @@ This function works with vectors that have value and variable
        Most functions of the \CRANpkg{sjPlot} package make use of value and variable
        labels to automatically label axes, legend or title labels in plots
        (\code{sjp.}-functions) respectively column or row headers in table
-       outputs (\code{sjt.}-functions). See
-       \href{http://www.strengejacke.de/sjPlot/datainit/}{this} and
-       \href{http://www.strengejacke.de/sjPlot/labelleddata/}{this}
-       online manual for more details.
+       outputs (\code{sjt.}-functions).
 }
 \examples{
 # import SPSS data set
@@ -162,7 +159,7 @@ get_labels(efc$e42dep, include.non.labelled = TRUE, drop.unused = TRUE)
 
 }
 \seealso{
-See \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}
            for more details; \code{\link{set_labels}} to manually set value
            labels, \code{\link{get_label}} to get variable labels and
            \code{\link{get_values}} to retrieve the values associated

@@ -108,8 +108,7 @@ dummy \%>\%
 
 }
 \seealso{
-The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
-           \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
-           more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
+See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}
+           for more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
            to get variable labels.
 }

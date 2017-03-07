@@ -26,7 +26,7 @@ str(remove_all_labels(efc))
 
 }
 \seealso{
-\href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-           on working with labelled data, and \code{\link{copy_labels}} for
-           adding label attributes (subsetted) data frames.
+See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package},
+           and \code{\link{copy_labels}} for adding label attributes
+           (subsetted) data frames.
 }

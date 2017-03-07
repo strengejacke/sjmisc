@@ -20,9 +20,6 @@
 #'          Default value is 0. See 'Details' for more information.
 #' @param show.pbar Logical; f \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 #'          Default in \code{FALSE}, hence the bar is hidden.
-#' @param searchString Deprecated, please use \code{search.string} instead.
-#' @param findTerm Deprecated, please use \code{find.term} instead.
-#' @param showProgressBar Deprecated, please use \code{show.pbar} instead.
 #'
 #' @return A numeric vector with index position of elements in \code{search.string} that
 #'           partially match or are similar to \code{find.term}. Returns \code{-1} if no
@@ -68,28 +65,9 @@ str_pos <- function(search.string,
                     find.term,
                     maxdist = 2,
                     part.dist.match = 0,
-                    show.pbar = FALSE,
-                    searchString,
-                    findTerm,
-                    showProgressBar) {
+                    show.pbar = FALSE) {
   # init return value
   indices <- c()
-
-  # check deprecated arguments
-  if (!missing(searchString) && !is.null(searchString)) {
-    search.string <- searchString
-    warning("Argument `searchString` is deprecated. Please use `search.string` instead.", call. = F)
-  }
-  # check deprecated arguments
-  if (!missing(findTerm) && !is.null(findTerm)) {
-    find.term <- findTerm
-    warning("Argument `findTerm` is deprecated. Please use `find.term` instead.", call. = F)
-  }
-  # check deprecated arguments
-  if (!missing(showProgressBar) && !is.null(showProgressBar)) {
-    show.pbar <- showProgressBar
-    warning("Argument `showProgressBar` is deprecated. Please use `show.pbar` instead.", call. = F)
-  }
 
   # find element indices from partial matching of string and find term
   pos <- as.numeric(grep(find.term, search.string, ignore.case = T))

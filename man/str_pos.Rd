@@ -5,7 +5,7 @@
 \title{Find partial matching and close distance elements in strings}
 \usage{
 str_pos(search.string, find.term, maxdist = 2, part.dist.match = 0,
-  show.pbar = FALSE, searchString, findTerm, showProgressBar)
+  show.pbar = FALSE)
 }
 \arguments{
 \item{search.string}{Character vector with string elements.}
@@ -26,12 +26,6 @@ Default value is 0. See 'Details' for more information.}
 
 \item{show.pbar}{Logical; f \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 Default in \code{FALSE}, hence the bar is hidden.}
-
-\item{searchString}{Deprecated, please use \code{search.string} instead.}
-
-\item{findTerm}{Deprecated, please use \code{find.term} instead.}
-
-\item{showProgressBar}{Deprecated, please use \code{show.pbar} instead.}
 }
 \value{
 A numeric vector with index position of elements in \code{search.string} that

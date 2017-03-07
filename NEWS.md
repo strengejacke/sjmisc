@@ -1,4 +1,4 @@
-# sjmisc 2.3.0.9000
+# sjmisc 2.3.1
 
 ## General
 
@@ -15,6 +15,7 @@
 * `set_na()` no longer gives a warning when trying to replace values with `NA` for vectors that completely contained `NA`s.
 
 ## Bug fixes
+
 * `descr()` now also works on single vectors as data argument.
 * Fixed bugs with `write_*()`-functions.
 

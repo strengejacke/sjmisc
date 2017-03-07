@@ -8,11 +8,10 @@
 #'                \code{tbl} class attributes will be removed from data frames, and
 #'                a \code{\link{lbl_df}} class attribute will be added. See 'Note'.
 #'
-#' @seealso \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
+#' @param x A data frame, which contains \code{\link[haven]{labelled}} class
+#'          vectors or a single vector of class \code{labelled}.
 #'
-#' @param x data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
-#'          of class \code{labelled}.
-#' @return a data frame or single vector (depending on \code{x}) with common object classes.
+#' @return A data frame or single vector (depending on \code{x}) with common object classes.
 #'
 #' @note This function is currently only used to avoid possible compatibility issues
 #'         with \code{\link[haven]{labelled}} class vectors and \code{tbl_df} resp.

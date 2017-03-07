@@ -7,9 +7,8 @@
 #'                is intended for use within pipe-workflows and has a tidyverse-consistent
 #'                syntax (see 'Examples').
 #'
-#' @seealso The sjPlot manual on \href{http://www.strengejacke.de/sjPlot/datainit/}{data initialization} or
-#'            \href{http://www.strengejacke.de/sjPlot/view_spss/}{inspecting (SPSS imported) data frames} for
-#'            more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
+#' @seealso See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}
+#'            for more details; \code{\link{set_labels}} to manually set value labels or \code{\link{get_label}}
 #'            to get variable labels.
 #'
 #' @param x Variable (vector), list of variables or a data frame where variables
@@ -95,7 +94,7 @@ set_label <- function(x, label, attr.string = NULL, lab) {
 
   # check deprecated arguments
   if (!missing(lab)) {
-    message("Argument `lab` is deprecated. Please use `label` instead.")
+    # message("Argument `lab` is deprecated. Please use `label` instead.")
     label <- lab
   }
 

@@ -165,7 +165,7 @@ get_labels(dummies)
 
 }
 \seealso{
-See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}
            for more details; \code{\link{set_label}} to manually set variable labels or
            \code{\link{get_label}} to get variable labels; \code{\link{add_labels}} to
            add additional value labels without replacing the existing ones.

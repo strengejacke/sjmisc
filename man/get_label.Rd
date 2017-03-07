@@ -74,7 +74,7 @@ get_label(list(efc$e42dep, efc$e16sex, efc$e15relat))
 
 }
 \seealso{
-See package vignettes or \href{http://www.strengejacke.de/sjPlot/}{online documentation}
+See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}
            for more details; \code{\link{set_label}} to manually set variable labels or \code{\link{get_labels}}
            to get value labels; \code{\link{var_labels}} to set multiple variable
            labels at once.

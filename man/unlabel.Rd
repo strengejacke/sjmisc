@@ -7,11 +7,11 @@
 unlabel(x)
 }
 \arguments{
-\item{x}{data frame, which contains \code{\link[haven]{labelled}} class vectors or a single vector
-of class \code{labelled}.}
+\item{x}{A data frame, which contains \code{\link[haven]{labelled}} class
+vectors or a single vector of class \code{labelled}.}
 }
 \value{
-a data frame or single vector (depending on \code{x}) with common object classes.
+A data frame or single vector (depending on \code{x}) with common object classes.
 }
 \description{
 This function converts \code{\link[haven]{labelled}} class vectors
@@ -36,7 +36,4 @@ This function is currently only used to avoid possible compatibility issues
         \code{\link[tibble]{tibble-package}} for details).
         \cr \cr
         Data frames will be converted into labelled data frames (see \code{\link{lbl_df}}).
-}
-\seealso{
-\href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
 }

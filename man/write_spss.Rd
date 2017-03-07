@@ -34,10 +34,3 @@ You don't need to take care whether variables have been imported with
         created new variables. These functions do all necessary data preparation
         to write a properly labelled data file.
 }
-\seealso{
-\itemize{
-           \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-           \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-           \item \code{\link{read_spss}}
-           }
-}

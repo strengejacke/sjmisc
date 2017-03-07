@@ -7,9 +7,9 @@
 #'                \code{\link{read_spss}}) or manually adding label attributes
 #'                with \code{\link{set_labels}}.
 #'
-#' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-#'            on working with labelled data, and \code{\link{copy_labels}} for
-#'            adding label attributes (subsetted) data frames.
+#' @seealso See vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package},
+#'            and \code{\link{copy_labels}} for adding label attributes
+#'            (subsetted) data frames.
 #'
 #' @param x Vector or \code{data.frame} with variable and/or value label attributes
 #' @return \code{x} with removed value and variable label attributes.

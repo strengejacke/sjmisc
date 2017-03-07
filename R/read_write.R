@@ -4,12 +4,7 @@
 #' @description Import data from SPSS, SAS or Stata, including NA's, value and variable
 #'   labels.
 #'
-#' @seealso \itemize{
-#'  \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'  \item \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual: working with labelled data}
-#'  \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'  \item \code{\link{write_spss}}
-#'  }
+#' @seealso Vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}.
 #'
 #' @param path File path to the data file.
 #' @param atomic.to.fac Logical, if \code{TRUE}, categorical variables imported
@@ -243,12 +238,6 @@ read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
 #'
 #' @description These functions write the content of a data frame to an SPSS, SAS or
 #'                Stata-file.
-#'
-#' @seealso \itemize{
-#'            \item \href{http://www.strengejacke.de/sjPlot/datainit/}{sjPlot manual: data initialization}
-#'            \item \href{http://www.strengejacke.de/sjPlot/view_spss/}{sjPlot manual: inspecting (SPSS imported) data frames}
-#'            \item \code{\link{read_spss}}
-#'            }
 #'
 #' @note You don't need to take care whether variables have been imported with
 #'         the \code{read_*} function from this package or from \pkg{haven}
