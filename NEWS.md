@@ -5,6 +5,7 @@
 * Argument `value` in `set_na()` is deprecated. Please use `na` instead.
 * Argument `recodes` in `rec()` is deprecated. Please use `rec` instead.
 * Argument `lab` in `set_label()` is deprecated. Please use `label` instead.
+* Argument `value` in `add_labels()` and `replace_labels()` is deprecated. Please use `labels` instead.
 
 # sjmisc 2.3.1
 

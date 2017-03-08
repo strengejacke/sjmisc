@@ -126,6 +126,6 @@ rec_to_helper <- function(x, lowest, highest) {
   if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, label = var_lab))
 
   # return recoded x
-  return(x)
+  x
 }
 

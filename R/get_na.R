@@ -75,16 +75,22 @@ get_na.default <- function(x, as.tag = FALSE) {
 get_na_helper <- function(x, as.tag) {
   # haven or foreign?
   attr.string <- getValLabelAttribute(x)
+
   # have any attribute?
   if (is.null(attr.string)) return(NULL)
+
   # get values
   values <- attr(x, attr.string, exact = T)
+
   # any labelled?
   if (is.null(values)) return(NULL)
+
   # get NA
   nas <- values[haven::is_tagged_na(values)]
+
   # if we have no *tagged* NA, return NULL
   if (length(nas) == 0) nas <- NULL
+
   # print as tag?
   if (as.tag && !is.null(nas)) {
     # save names
@@ -94,6 +100,7 @@ get_na_helper <- function(x, as.tag) {
     # set back names
     names(nas) <- nn
   }
+
   # return missing values
-  return(nas)
+  nas
 }

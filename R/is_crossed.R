@@ -60,7 +60,7 @@ is_crossed <- function(f1, f2) {
   tab <- table(f1, f2)
   # for crossed factors, we should have no zeros in any rows
   # (i.e. each level of f1 also contains any level of f2)
-  return(!any(apply(tab, 1, function(x) any(x == 0)) == TRUE))
+  !any(apply(tab, 1, function(x) any(x == 0)) == TRUE)
 }
 
 #' @rdname is_crossed
@@ -79,5 +79,6 @@ is_nested <- function(f1, f2) {
     nested <- !any(apply(tab, 2, function(x) sum(x != 0) > 1))
     if (nested) message("'f2' is nested within 'f1'")
   }
-  return(nested)
+
+  nested
 }

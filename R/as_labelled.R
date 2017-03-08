@@ -87,7 +87,7 @@ as_labelled_helper <- function(x, add.labels, add.class) {
   else
     class(x) <- "labelled"
 
-  return(x)
+  x
 }
 
 

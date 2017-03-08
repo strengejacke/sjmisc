@@ -155,5 +155,6 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
   } else {
     message("`x` has no missings.")
   }
-  return(x)
+
+  x
 }

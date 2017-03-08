@@ -27,7 +27,7 @@
 #'
 #' @export
 get_note <- function(x) {
-  return(attr(x, "note", exact = TRUE))
+  attr(x, "note", exact = TRUE)
 }
 
 

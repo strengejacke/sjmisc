@@ -74,5 +74,6 @@ copy_labels <- function(df_new, df_origin = NULL) {
       warning("both `df_origin` and `df_new` must be of class `data.frame`.", call. = F)
     }
   }
-  return(df_new)
+
+  df_new
 }

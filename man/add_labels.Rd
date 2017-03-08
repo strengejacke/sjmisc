@@ -6,9 +6,9 @@
 \alias{remove_labels}
 \title{Add, replace or remove value labels of variables}
 \usage{
-add_labels(x, ..., value)
+add_labels(x, ..., labels, value)
 
-replace_labels(x, ..., value)
+replace_labels(x, ..., labels, value)
 
 remove_labels(x, ..., value)
 }
@@ -22,7 +22,7 @@ from \code{x} should be processed. You may also use functions like
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{value}{\describe{
+\item{labels}{\describe{
 \item{For \code{add_labels()}}{A named (numeric) vector of labels
 that will be added to \code{x} as label attribute.}
 \item{For \code{remove_labels()}}{Either a numeric vector, indicating
@@ -31,6 +31,8 @@ a character vector with names of label attributes that should be
 removed; or a \code{\link[haven]{tagged_na}} to remove the labels
 from specific NA values.}
 }}
+
+\item{value}{Deprecated. Please use \code{labels} instead.}
 }
 \value{
 \code{x} with additional or removed value labels. If \code{x}
@@ -43,10 +45,10 @@ from specific NA values.}
 These functions add, replace or remove value labels to or from variables.
 }
 \details{
-\code{add_labels()} adds \code{value} to the existing value
+\code{add_labels()} adds \code{labels} to the existing value
          labels of \code{x}, however, unlike \code{\link{set_labels}}, it
          does \emph{not} remove labels that were \emph{not} specified in
-         \code{value}. \code{add_labels()} also replaces existing
+         \code{labels}. \code{add_labels()} also replaces existing
          value labels, but preserves the remaining labels.
          \cr \cr
          \code{remove_labels()} is the counterpart to \code{add_labels()}.
@@ -61,7 +63,7 @@ These functions add, replace or remove value labels to or from variables.
 data(efc)
 get_labels(efc$e42dep)
 
-x <- add_labels(efc$e42dep, value = c(`nothing` = 5))
+x <- add_labels(efc$e42dep, labels = c(`nothing` = 5))
 get_labels(x)
 
 library(dplyr)
@@ -69,17 +71,17 @@ x <- efc \%>\%
   # select three variables
   dplyr::select(e42dep, c172code, c161sex) \%>\%
   # only add new label to two of those
-  add_labels(e42dep, c172code, value = c(`nothing` = 5))
+  add_labels(e42dep, c172code, labels = c(`nothing` = 5))
 # see data frame, with selected variables having new labels
 get_labels(x)
 
-x <- add_labels(efc$e42dep, value = c(`nothing` = 5, `zero value` = 0))
+x <- add_labels(efc$e42dep, labels = c(`nothing` = 5, `zero value` = 0))
 get_labels(x, include.values = "p")
 
 # replace old value labels
 x <- add_labels(
   efc$e42dep,
-  value = c(`not so dependent` = 4, `lorem ipsum` = 5)
+  labels = c(`not so dependent` = 4, `lorem ipsum` = 5)
 )
 get_labels(x, include.values = "p")
 
@@ -92,7 +94,7 @@ x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
 x
 # tagged NA(c) has currently the value label "First", will be
 # replaced by "Second" now.
-replace_labels(x, value = c("Second" = tagged_na("c")))
+replace_labels(x, labels = c("Second" = tagged_na("c")))
 
 
 # ----------------------

@@ -23,5 +23,5 @@
 #' @export
 is_num_fac <- function(x) {
   # check if we have numeric levels
-  return(!anyNA(suppressWarnings(as.numeric(levels(x)))))
+  !anyNA(suppressWarnings(as.numeric(levels(x))))
 }

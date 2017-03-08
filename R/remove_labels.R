@@ -75,5 +75,5 @@ remove_labels_helper <- function(x, value) {
     x <- set_labels(x, labels = compl.lab)
   }
 
-  return(x)
+  x
 }

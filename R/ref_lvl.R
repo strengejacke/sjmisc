@@ -75,31 +75,41 @@ ref_lvl_helper <- function(x, value) {
     warning("`x` needs to be a factor with numeric factor levels.", call. = F)
     return(x)
   }
+
   # get values from factor
   vals <- as.numeric(levels(x))
+
   # check if ref-lvl exists in values
   if (!value %in% vals) {
     warning("`x` has no factor level indicated by the reference level `value`.", call. = F)
     return(x)
   }
+
   # get value labels
   val.labs <- get_labels(x)
+
   # get variable label
   var.lab <- get_label(x)
+
   # find position of reference level
   refpos <- which(vals == value)
+
   # new order of factor levels, if reference level
   # is on first position
   neword <- c(vals[refpos], vals[-refpos])
+
   # now recode variable. therefore, we need a string pattern
   # for the recoding
   rec.pattern <- paste0(sprintf("%i=%i;", neword, vals), collapse = "")
+
   # recode now
   x <- rec(x, rec = rec.pattern, as.num = FALSE)
+
   # set back labels
   if (!is.null(var.lab) && !sjmisc::is_empty(var.lab)) {
     set_label(x) <- var.lab
   }
+
   if (!is.null(val.labs)) {
     # we need "order" twice here, because "neword" refers to the actual
     # values of "x", so "neword" might have negative values, or zero.
@@ -108,5 +118,6 @@ ref_lvl_helper <- function(x, value) {
     # of these values.
     x <- set_labels(x, labels = val.labs[order(order(neword))])
   }
-  return(x)
+
+  x
 }

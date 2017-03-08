@@ -51,5 +51,6 @@ unlabel <- function(x) {
     # remove labelled class
     if (is_labelled(x)) x <- unclass(x)
   }
-  return(x)
+
+  x
 }

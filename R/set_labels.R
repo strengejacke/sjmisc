@@ -370,7 +370,8 @@ set_labels_helper <- function(x, labels, force.labels, force.values, drop.na, va
     if (!drop.na && !is.null(current.na) && length(current.na) > 0)
       attr(x, attr.string) <- c(attr(x, attr.string, exact = T), current.na)
   }
-  return(x)
+
+  x
 }
 
 

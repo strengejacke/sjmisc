@@ -139,15 +139,20 @@ group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FAL
 g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   # do we have labels?
   varlab <- get_label(x)
+
   # group variable
   x <- group_helper(x, groupsize, right.interval, groupcount)
+
   # set new levels of grouped variable
   levels(x) <- seq_len(nlevels(x))
+
   # convert to numeric?
   if (as.num) x <- as.numeric(as.character(x))
+
   # set back variable labels
   if (!is.null(varlab)) x <- set_label(x, label = varlab)
-  return(x)
+
+  x
 }
 
 
@@ -215,7 +220,8 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
   }
   # set back variable labels
   if (!is.null(varlab)) retval <- set_label(retval, label = varlab)
-  return(retval)
+
+  retval
 }
 
 
@@ -239,7 +245,10 @@ group_helper <- function(x, groupsize, right.interval, groupcount) {
   }
   # Einteilung der Variablen in Gruppen. Dabei werden unbenutzte
   # Faktoren gleich entfernt
-  x <- droplevels(cut(x, breaks = c(seq(minval, max(x, na.rm = TRUE) + multip * groupsize, by = groupsize)),
-                      right = right.interval))
-  return(x)
+  x <-
+    droplevels(cut(x, breaks = c(
+      seq(minval, max(x, na.rm = TRUE) + multip * groupsize, by = groupsize)
+    ), right = right.interval))
+
+  x
 }

@@ -274,19 +274,22 @@ zap_inf <- function(x, ...) {
 
 zap_labels_helper <- function(x) {
   x <- set_na(x, na = get_values(x, drop.na = T))
+
   # auto-detect variable label attribute
   attr.string <- getVarLabelAttribute(x)
+
   # remove label attributes
   if (!is.null(attr.string)) attr(x, attr.string) <- NULL
   if (is_labelled(x)) class(x) <- NULL
-  return(x)
+
+  x
 }
 
 zap_unlabelled_helper <- function(x) {
   vals <- get_values(x)
   x <- set_na(x, na = stats::na.omit(unique(x)[!unique(x) %in% vals]))
   if (is_labelled(x)) class(x) <- NULL
-  return(x)
+  x
 }
 
 zap_na_tags_helper <- function(x) {

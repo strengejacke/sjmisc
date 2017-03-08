@@ -140,6 +140,7 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
       mydat <- dplyr::bind_cols(mydat, add_cols)
     }
   }
+
   # return results
-  return(mydat)
+  mydat
 }

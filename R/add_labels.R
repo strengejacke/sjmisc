@@ -8,7 +8,7 @@
 #'            add value labels, replacing the existing ones (and removing non-specified
 #'            value labels).
 #'
-#' @param value \describe{
+#' @param labels \describe{
 #'          \item{For \code{add_labels()}}{A named (numeric) vector of labels
 #'          that will be added to \code{x} as label attribute.}
 #'          \item{For \code{remove_labels()}}{Either a numeric vector, indicating
@@ -17,6 +17,7 @@
 #'          removed; or a \code{\link[haven]{tagged_na}} to remove the labels
 #'          from specific NA values.}
 #'          }
+#' @param value Deprecated. Please use \code{labels} instead.
 #'
 #' @inheritParams to_factor
 #'
@@ -26,10 +27,10 @@
 #'           if \code{...} is not specified, applies to all variables in the
 #'           data frame.
 #'
-#' @details \code{add_labels()} adds \code{value} to the existing value
+#' @details \code{add_labels()} adds \code{labels} to the existing value
 #'          labels of \code{x}, however, unlike \code{\link{set_labels}}, it
 #'          does \emph{not} remove labels that were \emph{not} specified in
-#'          \code{value}. \code{add_labels()} also replaces existing
+#'          \code{labels}. \code{add_labels()} also replaces existing
 #'          value labels, but preserves the remaining labels.
 #'          \cr \cr
 #'          \code{remove_labels()} is the counterpart to \code{add_labels()}.
@@ -44,7 +45,7 @@
 #' data(efc)
 #' get_labels(efc$e42dep)
 #'
-#' x <- add_labels(efc$e42dep, value = c(`nothing` = 5))
+#' x <- add_labels(efc$e42dep, labels = c(`nothing` = 5))
 #' get_labels(x)
 #'
 #' library(dplyr)
@@ -52,17 +53,17 @@
 #'   # select three variables
 #'   dplyr::select(e42dep, c172code, c161sex) %>%
 #'   # only add new label to two of those
-#'   add_labels(e42dep, c172code, value = c(`nothing` = 5))
+#'   add_labels(e42dep, c172code, labels = c(`nothing` = 5))
 #' # see data frame, with selected variables having new labels
 #' get_labels(x)
 #'
-#' x <- add_labels(efc$e42dep, value = c(`nothing` = 5, `zero value` = 0))
+#' x <- add_labels(efc$e42dep, labels = c(`nothing` = 5, `zero value` = 0))
 #' get_labels(x, include.values = "p")
 #'
 #' # replace old value labels
 #' x <- add_labels(
 #'   efc$e42dep,
-#'   value = c(`not so dependent` = 4, `lorem ipsum` = 5)
+#'   labels = c(`not so dependent` = 4, `lorem ipsum` = 5)
 #' )
 #' get_labels(x, include.values = "p")
 #'
@@ -75,7 +76,7 @@
 #' x
 #' # tagged NA(c) has currently the value label "First", will be
 #' # replaced by "Second" now.
-#' replace_labels(x, value = c("Second" = tagged_na("c")))
+#' replace_labels(x, labels = c("Second" = tagged_na("c")))
 #'
 #'
 #' # ----------------------
@@ -97,10 +98,18 @@
 #'
 #' @importFrom tibble as_tibble
 #' @export
-add_labels <- function(x, ..., value) {
+add_labels <- function(x, ..., labels, value) {
+
+  # check deprecated arguments
+  if (!missing(value)) {
+    message("Argument `value` is deprecated. Please use `labels` instead.")
+    labels <- value
+  }
+
+
   # check for valid value. value must be a named vector
-  if (is.null(value)) stop("`value` is NULL.", call. = F)
-  if (is.null(names(value))) stop("`value` must be a named vector.", call. = F)
+  if (is.null(labels)) stop("`labels` is NULL.", call. = F)
+  if (is.null(names(labels))) stop("`labels` must be a named vector.", call. = F)
 
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
@@ -109,12 +118,12 @@ add_labels <- function(x, ..., value) {
   if (is.data.frame(x)) {
     # iterate variables of data frame
     for (i in colnames(.dat)) {
-      x[[i]] <- add_labels_helper(.dat[[i]], value)
+      x[[i]] <- add_labels_helper(.dat[[i]], value = labels)
     }
     # coerce to tibble
     x <- tibble::as_tibble(x)
   } else {
-    x <- add_labels_helper(.dat, value)
+    x <- add_labels_helper(.dat, value = labels)
   }
 
   x
@@ -194,6 +203,6 @@ add_labels_helper <- function(x, value) {
 
 #' @rdname add_labels
 #' @export
-replace_labels <- function(x, ..., value) {
-  add_labels(x = x, ..., value = value)
+replace_labels <- function(x, ..., labels, value) {
+  add_labels(x = x, ..., labels = labels, value = value)
 }

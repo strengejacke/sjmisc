@@ -48,5 +48,6 @@ fill_labels_helper <- function(x) {
       )
     }
   }
-  return(x)
+
+  x
 }

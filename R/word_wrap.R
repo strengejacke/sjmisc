@@ -62,5 +62,6 @@ word_wrap <- function(labels, wrap, linesep = NULL) {
       }
     }
   }
-  return(labels)
+
+  labels
 }

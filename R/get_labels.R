@@ -284,5 +284,5 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
   }
 
   # return them
-  return(labels)
+  labels
 }

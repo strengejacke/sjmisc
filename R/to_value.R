@@ -156,5 +156,5 @@ to_value_helper <- function(x, start.at, keep.labels) {
     new_value <- set_label(new_value, label = varlab)
   }
 
-  return(new_value)
+  new_value
 }

@@ -40,7 +40,7 @@ dot_names <- function(dots) unname(unlist(lapply(dots, as.character)))
 
 is_float <- function(x) is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
 
-is_foreign <- function(x) return(!is.null(x) && x == "value.labels")
+is_foreign <- function(x) !is.null(x) && x == "value.labels"
 
 is_completely_labelled <- function(x) {
   # get label attribute, which may differ depending on the package
@@ -66,6 +66,7 @@ is_completely_labelled <- function(x) {
     # values and labels match or not
     return(length(valid.vals) == length(lab) && !anyNA(match(values, valid.vals)))
   }
+
   return(TRUE)
 }
 
@@ -106,7 +107,8 @@ getVarLabelAttribute <- function(x) {
     opt <- getOption("value_labels")
     if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }
-  return(attr.string)
+
+  attr.string
 }
 
 
@@ -140,7 +142,8 @@ getValLabelAttribute <- function(x) {
     opt <- getOption("value_labels")
     if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
   }
-  return(attr.string)
+
+  attr.string
 }
 
 # shorten a string
