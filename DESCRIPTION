@@ -39,7 +39,7 @@ Suggests:
     sjstats (>= 0.7.0),
     knitr,
     rmarkdown
-URL: https://github.com/sjPlot/sjmisc
-BugReports: https://github.com/sjPlot/sjmisc/issues
+URL: https://github.com/strengejacke/sjmisc
+BugReports: https://github.com/strengejacke/sjmisc/issues
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr

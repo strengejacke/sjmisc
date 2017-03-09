@@ -17,7 +17,7 @@ To install the latest development snapshot (see latest changes below), type foll
 
 ```r
 library(devtools)
-devtools::install_github("sjPlot/sjmisc")
+devtools::install_github("strengejacke/sjmisc")
 ```
 
 ### Officiale, stable release

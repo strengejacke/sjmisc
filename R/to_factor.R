@@ -140,7 +140,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   # set back variable labels
   x <- set_label(x, label = varlab)
   # change reference level?
-  if (!is.null(ref.lvl)) x <- ref_lvl(x, value = ref.lvl)
+  if (!is.null(ref.lvl)) x <- ref_lvl(x, lvl = ref.lvl)
 
   x
 }

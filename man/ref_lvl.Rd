@@ -4,7 +4,7 @@
 \alias{ref_lvl}
 \title{Change reference level of (numeric) factors}
 \usage{
-ref_lvl(x, ..., value = NULL)
+ref_lvl(x, ..., lvl = NULL, value)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -16,7 +16,9 @@ from \code{x} should be processed. You may also use functions like
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{value}{Numeric, the new reference level.}
+\item{lvl}{Numeric, the new reference level.}
+
+\item{value}{Deprecated. Use \code{lvl} instead.}
 }
 \value{
 \code{x} with new reference level. If \code{x}
@@ -33,7 +35,7 @@ Unlike \code{\link[stats]{relevel}}, this function a) only accepts
            numeric factors and b) changes the reference level by recoding
            the factor's values using the \code{\link{rec}} function. Hence,
            all values from lowest up to the reference level indicated by
-           \code{value} are recoded, with \code{value} starting as lowest
+           \code{lvl} are recoded, with \code{lvl} starting as lowest
            factor value. See 'Examples'.
 }
 \examples{
@@ -42,7 +44,7 @@ x <- to_factor(efc$e42dep)
 str(x)
 frq(x)
 
-x <- ref_lvl(x, value = 3)
+x <- ref_lvl(x, lvl = 3)
 str(x)
 frq(x)
 
@@ -51,8 +53,8 @@ dat <- efc \%>\%
   select(c82cop1, c83cop2, c84cop3) \%>\%
   to_factor()
 
-str(dat)
-ref_lvl(dat, c82cop1, c83cop2, value = 2) \%>\% str()
+frq(dat)
+ref_lvl(dat, c82cop1, c83cop2, lvl = 2) \%>\% frq()
 
 }
 \seealso{

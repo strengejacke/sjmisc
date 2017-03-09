@@ -5,6 +5,10 @@ General:
 * Argument `recodes` in `rec()` is deprecated. Please use `rec` instead.
 * Argument `lab` in `set_label()` is deprecated. Please use `label` instead.
 * Argument `value` in `add_labels()` and `replace_labels()` is deprecated. Please use `labels` instead.
+* Argument `value` in `ref_lvl()` is deprecated. Please use `lvl` instead.
+
+New functions:
+* `%nin%` as complement to `%in%`.
 
 Version 2.3.1
 ------------------------------------------------------------------------------

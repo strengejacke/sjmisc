@@ -93,10 +93,9 @@ efc$c172code <- to_factor(efc$c172code)
 fit <- lm(barthtot ~ c160age + c12hour + c172code + c161sex, data = efc)
 ```
 
-```{r eval=FALSE}
+```{r}
 sjt.lm(fit, group.pred = TRUE)
 ```
-`r sjt.lm(fit,group.pred = TRUE, no.output=TRUE)$knitr`
 
 Looking at `str(fit$frame)` shows us that both variable and value label attributes are still there. Packages like **sjPlot** make use of this feature and automatically label the table output (like seen above).
 

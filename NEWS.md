@@ -6,6 +6,11 @@
 * Argument `recodes` in `rec()` is deprecated. Please use `rec` instead.
 * Argument `lab` in `set_label()` is deprecated. Please use `label` instead.
 * Argument `value` in `add_labels()` and `replace_labels()` is deprecated. Please use `labels` instead.
+* Argument `value` in `ref_lvl()` is deprecated. Please use `lvl` instead.
+
+## New functions
+
+* `%nin%` as complement to `%in%`.
 
 # sjmisc 2.3.1
 
@@ -161,4 +166,4 @@
 ## Bug fixes
 * `rec()` did not recode values, when these were the first element of a multi-line string of the `recodes` argument.
 * `is_empty()` returned `NA` instead of `TRUE` for empty character vectors.
-* Fixed bug with erroneous assignment of value labels to subset data when using `copy_labels()` ([#20](https://github.com/sjPlot/sjmisc/issues/20))
+* Fixed bug with erroneous assignment of value labels to subset data when using `copy_labels()` ([#20](https://github.com/strengejacke/sjmisc/issues/20))

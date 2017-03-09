@@ -6,7 +6,9 @@
 #' @seealso \code{\link{to_factor}} to convert numeric vectors into factors;
 #'            \code{\link{rec}} to recode variables.
 #'
-#' @param value Numeric, the new reference level.
+#' @param lvl Numeric, the new reference level.
+#' @param value Deprecated. Use \code{lvl} instead.
+#'
 #' @inheritParams to_factor
 #'
 #' @return \code{x} with new reference level. If \code{x}
@@ -19,7 +21,7 @@
 #'            numeric factors and b) changes the reference level by recoding
 #'            the factor's values using the \code{\link{rec}} function. Hence,
 #'            all values from lowest up to the reference level indicated by
-#'            \code{value} are recoded, with \code{value} starting as lowest
+#'            \code{lvl} are recoded, with \code{lvl} starting as lowest
 #'            factor value. See 'Examples'.
 #'
 #' @examples
@@ -28,7 +30,7 @@
 #' str(x)
 #' frq(x)
 #'
-#' x <- ref_lvl(x, value = 3)
+#' x <- ref_lvl(x, lvl = 3)
 #' str(x)
 #' frq(x)
 #'
@@ -37,11 +39,17 @@
 #'   select(c82cop1, c83cop2, c84cop3) %>%
 #'   to_factor()
 #'
-#' str(dat)
-#' ref_lvl(dat, c82cop1, c83cop2, value = 2) %>% str()
+#' frq(dat)
+#' ref_lvl(dat, c82cop1, c83cop2, lvl = 2) %>% frq()
 #'
 #' @export
-ref_lvl <- function(x, ..., value = NULL) {
+ref_lvl <- function(x, ..., lvl = NULL, value) {
+  # check deprecated arguments
+  if (!missing(lvl)) {
+    message("Argument `value` is deprecated. Please use `lvl` instead.")
+    lvl <- recodes
+  }
+
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
@@ -50,12 +58,12 @@ ref_lvl <- function(x, ..., value = NULL) {
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
-      x[[i]] <- ref_lvl_helper(.dat[[i]], value)
+      x[[i]] <- ref_lvl_helper(.dat[[i]], value = lvl)
     }
     # coerce to tibble
     x <- tibble::as_tibble(x)
   } else {
-    x <- ref_lvl_helper(.dat, value)
+    x <- ref_lvl_helper(.dat, value = lvl)
   }
 
   x
