@@ -10,7 +10,14 @@
 
 ## New functions
 
+* `row_sums()` as wrapper of `rowSums()` to compute row sums, but works within pipe-workflow and with select-helpers for variables.
+* `row_means()` as wrapper of `sjstats::mean_n()` to compute row means, but works within pipe-workflow and with select-helpers for variables.
 * `%nin%` as complement to `%in%`.
+
+## Bug fixes
+
+* `remove_empty_cols()` returned an empty data frame, when input data frame had no empty columns.
+* `remove_empty_rows()` returned an empty data frame, when input data frame had no empty rows.
 
 # sjmisc 2.3.1
 

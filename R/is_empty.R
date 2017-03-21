@@ -123,13 +123,25 @@ empty_rows <- function(x) {
 #' @importFrom tibble as_tibble
 #' @export
 remove_empty_cols <- function(x) {
-  tibble::as_tibble(x[, -empty_cols(x)])
+  # check if we have any empty columns at all
+  ec <- empty_cols(x)
+  # if yes, removing works, else an empty df would be returned
+  if (!is_empty(ec))
+    tibble::as_tibble(x[, -ec])
+  else
+    tibble::as_tibble(x)
 }
 
 #' @rdname empty_cols
 #' @importFrom tibble as_tibble
 #' @export
 remove_empty_rows <- function(x) {
-  tibble::as_tibble(x[-empty_rows(x), ])
+  # check if we have any empty rows at all
+  er <- empty_rows(x)
+  # if yes, removing works, else an empty df would be returned
+  if (!is_empty(er))
+    tibble::as_tibble(x[, -er])
+  else
+    tibble::as_tibble(x)
 }
 
