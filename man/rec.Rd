@@ -31,7 +31,7 @@ If empty, variable label attributes will be removed.}
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set. Value labels
-can also be directly defined in the \code{recodes}-syntax, see
+can also be directly defined in the \code{rec}-syntax, see
 'Details'.}
 
 \item{suffix}{String value, will be appended to variable (column) names of

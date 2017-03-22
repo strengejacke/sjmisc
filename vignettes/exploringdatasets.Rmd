@@ -72,7 +72,7 @@ Next, we need the negatice impact of care (_neg_c_7) and want to create three gr
 ```{r}
 efc$burden <- rec(
   efc$neg_c_7,
-  recodes = c("min:9=1 [low]; 10:12=2 [moderate]; 13:max=3 [high]; else=NA"),
+  rec = c("min:9=1 [low]; 10:12=2 [moderate]; 13:max=3 [high]; else=NA"),
   var.label = "Subjective burden",
   as.num = FALSE # we want a factor
 )

@@ -45,9 +45,9 @@
 #' @export
 ref_lvl <- function(x, ..., lvl = NULL, value) {
   # check deprecated arguments
-  if (!missing(lvl)) {
+  if (!missing(value)) {
     message("Argument `value` is deprecated. Please use `lvl` instead.")
-    lvl <- recodes
+    lvl <- value
   }
 
   # evaluate arguments, generate data

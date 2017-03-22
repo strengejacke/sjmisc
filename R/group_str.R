@@ -88,7 +88,7 @@ group_str <- function(strings,
     if (showProgressBar) utils::setTxtProgressBar(pb, i)
 
     # check if current element is already grouped
-    if (!findInPairs(rownames(m)[i])) {
+    if (!findInPairs(rownames(m)[i], pairs)) {
       # current row element has not been grouped
       # yet, so go on...
       pairvector <- c()
@@ -120,7 +120,7 @@ group_str <- function(strings,
             # check if we already found a string value
             # within this column. if not, add string values
             # to "close" pairs of this column
-            if (!any(pairvector == token) && !findInPairs(token)) pairvector <- c(pairvector, token)
+            if (!any(pairvector == token) && !findInPairs(token, pairs)) pairvector <- c(pairvector, token)
           }
         }
       }
@@ -160,7 +160,7 @@ group_str <- function(strings,
 
 # helper function that finds elements in
 # final list of grouped elements
-findInPairs <- function(curel) {
+findInPairs <- function(curel, pairs) {
   elfound <- FALSE
   if (length(pairs) > 0) {
     for (ll in seq_len(length(pairs))) {

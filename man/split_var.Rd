@@ -24,7 +24,7 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 \item{val.labels}{Optional character vector, to set value label attributes
 of recoded variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set. Value labels
-can also be directly defined in the \code{recodes}-syntax, see
+can also be directly defined in the \code{rec}-syntax, see
 'Details'.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
