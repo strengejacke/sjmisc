@@ -4,7 +4,7 @@ magrittr::`%>%`
 
 
 # evaluates arguments
-#' @importFrom dplyr select_
+#' @importFrom dplyr select_ bind_cols
 #' @importFrom stats as.formula
 get_dot_data <- function(data, dots) {
   # check if data is a data frame
