@@ -18,6 +18,7 @@
 
 * `remove_empty_cols()` returned an empty data frame, when input data frame had no empty columns.
 * `remove_empty_rows()` returned an empty data frame, when input data frame had no empty rows.
+* `add_columns()` and `repair_columns()` in some cases coerced data frames of class `data.frame` with only one column into a vector, which gave an error when binding columns.
 
 # sjmisc 2.3.1
 
