@@ -24,9 +24,9 @@ value label will also be converted to labels (as is). See 'Examples'.}
 or character values will be prefixed with their associated values. See 'Examples'.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-returned variable (see \code{\link{set_label}}). If \code{NULL}
-(default), variable label attribute of \code{x} will be used (if present).
-If empty, variable label attributes will be removed.}
+returned variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
+If \code{NULL} (default), variable label attribute of \code{x} will
+be used (if present). If empty, variable label attributes will be removed.}
 
 \item{drop.na}{Logical, if \code{TRUE}, tagged \code{NA} values with value labels
 will be converted to regular NA's. Else, tagged \code{NA} values will be replaced

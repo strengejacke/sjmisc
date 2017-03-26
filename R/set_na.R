@@ -31,16 +31,16 @@
 #'
 #' @note Labels from values that are replaced with NA and no longer used will be
 #'         removed from \code{x}, however, other value and variable label
-#'         attributes (see, for instance, \code{\link{get_labels}} or
-#'         \code{\link{set_labels}}) are preserved.
+#'         attributes are preserved. For more details on labelled data,
+#'         see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}.
 #'
 #' @details \code{set_na()} converts all values defined in \code{na} with
-#'            a related \code{NA} or tagged NA values (see \code{\link[haven]{tagged_na}}).
+#'            a related \code{NA} or tagged NA value (see \code{\link[haven]{tagged_na}}).
 #'            Tagged \code{NA}s work exactly like regular R missing values
 #'            except that they store one additional byte of information: a tag,
 #'            which is usually a letter ("a" to "z") or character number ("0" to "9").
 #'            \cr \cr
-#'            Furthermore, see 'Details' in \code{\link{get_na}}.
+#'            Furthermore, see also 'Details' in \code{\link{get_na}}.
 #'
 #' @examples
 #' # create random variable

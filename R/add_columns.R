@@ -146,7 +146,7 @@ replace_columns <- function(data, ..., add.unique = TRUE) {
   tmp.doubles <- colnames(tmp) %in% colnames(data)
 
   # replace duplicate variables in "data" with duplicates from "..."
-  data[, data.doubles] <- tmp[, tmp.doubles]
+  data[, data.doubles, drop = FALSE] <- tmp[, tmp.doubles, drop = FALSE]
 
   # add remaining columns that were not duplicates
   if (add.unique)

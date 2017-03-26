@@ -22,15 +22,15 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
 \item{val.labels}{Optional character vector, to set value label attributes
-of recoded variable (see \code{\link{set_labels}}).
+of recoded variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
 If \code{NULL} (default), no value labels will be set. Value labels
 can also be directly defined in the \code{rec}-syntax, see
 'Details'.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-returned variable (see \code{\link{set_label}}). If \code{NULL}
-(default), variable label attribute of \code{x} will be used (if present).
-If empty, variable label attributes will be removed.}
+returned variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
+If \code{NULL} (default), variable label attribute of \code{x} will
+be used (if present). If empty, variable label attributes will be removed.}
 
 \item{inclusive}{Logical; if \code{TRUE}, cut point value are included in
 the preceeding group. This may be necessary if cutting a vector into
@@ -61,7 +61,7 @@ Recode numeric variables into equal sized groups, i.e. a
                specific cut points.
 }
 \details{
-\code{split_var} splits a variable into equal sized groups, where the
+\code{split_var()} splits a variable into equal sized groups, where the
            amount of groups depends on the \code{groupcount}-argument. Thus,
            this functions \code{\link{cut}s} a variable into groups at the
            specified \code{\link[stats]{quantile}s}.
@@ -71,7 +71,7 @@ Recode numeric variables into equal sized groups, i.e. a
            (e.g., from 1-5, 6-10, 11-15 etc.).
 }
 \note{
-In case a vector has only few different unique values, splitting into
+In case a vector has only few number of unique values, splitting into
         equal sized groups may fail. In this case, use the \code{inclusive}-argument
         to shift a value at the cut point into the lower, preceeding group to
         get equal sized groups. See 'Examples'.

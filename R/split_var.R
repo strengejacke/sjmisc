@@ -21,7 +21,7 @@
 #' @return A grouped variable with equal sized groups. If \code{x} is a data
 #'         frame, only the grouped variables will be returned.
 #'
-#' @details \code{split_var} splits a variable into equal sized groups, where the
+#' @details \code{split_var()} splits a variable into equal sized groups, where the
 #'            amount of groups depends on the \code{groupcount}-argument. Thus,
 #'            this functions \code{\link{cut}s} a variable into groups at the
 #'            specified \code{\link[stats]{quantile}s}.
@@ -30,7 +30,7 @@
 #'            groups, where groups have the same value range
 #'            (e.g., from 1-5, 6-10, 11-15 etc.).
 #'
-#' @note In case a vector has only few different unique values, splitting into
+#' @note In case a vector has only few number of unique values, splitting into
 #'         equal sized groups may fail. In this case, use the \code{inclusive}-argument
 #'         to shift a value at the cut point into the lower, preceeding group to
 #'         get equal sized groups. See 'Examples'.
