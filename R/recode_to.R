@@ -58,12 +58,15 @@
 #'
 #'
 #' @export
-recode_to <- function(x, ..., lowest = 0, highest = -1, suffix = "_r0") {
+recode_to <- function(x, ..., lowest = 0, highest = -1, append = FALSE, suffix = "_r0") {
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
+
+    # remember original data, if user wants to bind columns
+    orix <- tibble::as_tibble(x)
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
@@ -81,6 +84,9 @@ recode_to <- function(x, ..., lowest = 0, highest = -1, suffix = "_r0") {
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
       colnames(x) <- sprintf("%s%s", colnames(x), suffix)
     }
+
+    # combine data
+    if (append) x <- dplyr::bind_cols(orix, x)
   } else {
     x <- rec_to_helper(
       x = .dat,

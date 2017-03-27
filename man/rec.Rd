@@ -5,7 +5,7 @@
 \title{Recode variables}
 \usage{
 rec(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
-  suffix = "_r", recodes)
+  append = FALSE, suffix = "_r", recodes)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -34,6 +34,10 @@ If \code{NULL} (default), no value labels will be set. Value labels
 can also be directly defined in the \code{rec}-syntax, see
 'Details'.}
 
+\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\code{x} including the recoded variables as new columns is returned;
+if \code{FALSE} (the default), only the recoded variables are returned.}
+
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data
 frame, this argument will be ignored. The default value to suffix
@@ -51,7 +55,9 @@ column names in a data frame depends on the function call:
 \item{recodes}{Deprecated. Use \code{rec} instead.}
 }
 \value{
-\code{x} with recoded categories. If \code{x} is a data frame, only
+\code{x} with recoded categories. If \code{x} is a data frame,
+        for \code{append = TRUE}, \code{x} including the recoded variables
+        as new columns is returned; if \code{append = FALSE}, only
         the recoded variables will be returned.
 }
 \description{

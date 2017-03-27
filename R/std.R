@@ -37,28 +37,31 @@
 #'   head()
 #'
 #' @export
-std <- function(x, ..., include.fac = TRUE, suffix = "_z") {
+std <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z") {
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  std_and_center(x, .dat, include.fac, standardize = TRUE, suffix)
+  std_and_center(x, .dat, include.fac, append, standardize = TRUE, suffix)
 }
 
 
 #' @rdname std
 #' @export
-center <- function(x, ..., include.fac = TRUE, suffix = "_c") {
+center <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_c") {
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
-  std_and_center(x, .dat, include.fac, standardize = FALSE, suffix)
+  std_and_center(x, .dat, include.fac, append, standardize = FALSE, suffix)
 }
 
 
-std_and_center <- function(x, .dat, include.fac, standardize, suffix) {
+std_and_center <- function(x, .dat, include.fac, append, standardize, suffix) {
   if (is.data.frame(x)) {
+
+    # remember original data, if user wants to bind columns
+    orix <- tibble::as_tibble(x)
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
@@ -75,7 +78,10 @@ std_and_center <- function(x, .dat, include.fac, standardize, suffix) {
     # add suffix to recoded variables?
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
       colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-    }
+
+      }
+    # combine data
+    if (append) x <- dplyr::bind_cols(orix, x)
   } else {
     x <- std_helper(
       x = .dat,

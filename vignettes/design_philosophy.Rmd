@@ -68,7 +68,7 @@ There are two types of function designs:
 
 ### coercing/converting functions
 
-Functions like `to_factor()` or `add_labels()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument. The variables specified in the `...`-ellipses argument are converted, all other variables remain unchanged.
+Functions like `to_factor()` or `add_labels()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument _withour any new variables_. The variables specified in the `...`-ellipses argument are converted (overwritten), all other variables remain unchanged.
 
 ```{r}
 to_factor(efc, e42dep, e16sex)
@@ -76,9 +76,13 @@ to_factor(efc, e42dep, e16sex)
 
 ### transformation/recoding functions
 
-Functions like `rec()` or `dicho()`, which transform or recode variables, typically do _not_ return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the `...`-ellipses argument. The reason for this is to preserve the original variable and not overwriting it with completeley new values.
+Functions like `rec()` or `dicho()`, which transform or recode variables, by default _only_ return _the transformed or recoded variables_ as data frame (excluding the original data). To return _the complete data frame_ that was given as first argument, including the transformed and recoded variables specified in the `...`-ellipses argument as new columns, use argument `append = TRUE`.
 
 ```{r}
+# complete data, including new columns
+rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = TRUE)
+
+# only new columns
 rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2")
 ```
 
@@ -86,7 +90,7 @@ These variables usually get a suffix, so you can bind these variables as new col
 
 ```{r}
 efc %>% 
-  rec(c82cop1, c83cop2, rec = "1,2=0; 3:4=2") %>% 
+  rec(c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = FALSE) %>% 
   add_columns(efc)
 ```
 

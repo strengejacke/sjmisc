@@ -4,7 +4,8 @@
 \alias{recode_to}
 \title{Recode variable categories into new values}
 \usage{
-recode_to(x, ..., lowest = 0, highest = -1, suffix = "_r0")
+recode_to(x, ..., lowest = 0, highest = -1, append = FALSE,
+  suffix = "_r0")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -22,6 +23,10 @@ variable starts with value 0.}
 \item{highest}{If specified and greater than \code{lowest}, all category values larger than
 \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this argument is ignored
 and no NA's will be produced.}
+
+\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\code{x} including the recoded variables as new columns is returned;
+if \code{FALSE} (the default), only the recoded variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data

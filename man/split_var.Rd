@@ -5,7 +5,7 @@
 \title{Split numeric variables into smaller groups}
 \usage{
 split_var(x, ..., groupcount, as.num = FALSE, val.labels = NULL,
-  var.label = NULL, inclusive = FALSE, suffix = "_g")
+  var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -37,6 +37,10 @@ the preceeding group. This may be necessary if cutting a vector into
 groups does not define proper ("equal sized") group sizes.
 See 'Note' and 'Examples'.}
 
+\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\code{x} including the recoded variables as new columns is returned;
+if \code{FALSE} (the default), only the recoded variables are returned.}
+
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data
 frame, this argument will be ignored. The default value to suffix
@@ -52,8 +56,10 @@ column names in a data frame depends on the function call:
 }}
 }
 \value{
-A grouped variable with equal sized groups. If \code{x} is a data
-        frame, only the grouped variables will be returned.
+A grouped variable with equal sized groups. If \code{x} is a data frame,
+        for \code{append = TRUE}, \code{x} including the grouped variables
+        as new columns is returned; if \code{append = FALSE}, only
+        the grouped variables will be returned.
 }
 \description{
 Recode numeric variables into equal sized groups, i.e. a

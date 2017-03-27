@@ -21,6 +21,9 @@
 #'          If \code{NULL} (default), no value labels will be set. Value labels
 #'          can also be directly defined in the \code{rec}-syntax, see
 #'          'Details'.
+#' @param append Logical, if \code{TRUE} and \code{x} is a data frame,
+#'          \code{x} including the recoded variables as new columns is returned;
+#'          if \code{FALSE} (the default), only the recoded variables are returned.
 #' @param suffix String value, will be appended to variable (column) names of
 #'           \code{x}, if \code{x} is a data frame. If \code{x} is not a data
 #'           frame, this argument will be ignored. The default value to suffix
@@ -38,7 +41,9 @@
 #'
 #' @inheritParams to_factor
 #'
-#' @return \code{x} with recoded categories. If \code{x} is a data frame, only
+#' @return \code{x} with recoded categories. If \code{x} is a data frame,
+#'         for \code{append = TRUE}, \code{x} including the recoded variables
+#'         as new columns is returned; if \code{append = FALSE}, only
 #'         the recoded variables will be returned.
 #'
 #' @details  The \code{rec} string has following syntax:
@@ -144,7 +149,7 @@
 #'
 #'
 #' @export
-rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, suffix = "_r", recodes) {
+rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_r", recodes) {
 
   # check deprecated arguments
   if (!missing(recodes)) {
@@ -157,6 +162,9 @@ rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
+
+    # remember original data, if user wants to bind columns
+    orix <- tibble::as_tibble(x)
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
@@ -176,6 +184,9 @@ rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
       colnames(x) <- sprintf("%s%s", colnames(x), suffix)
     }
+
+    # combine data
+    if (append) x <- dplyr::bind_cols(orix, x)
   } else {
     x <- rec_helper(
       x = .dat,

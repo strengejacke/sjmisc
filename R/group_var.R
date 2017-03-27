@@ -97,12 +97,15 @@
 #' @importFrom purrr map
 #' @export
 group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FALSE,
-                      groupcount = 30, suffix = "_gr") {
+                      groupcount = 30, append = FALSE, suffix = "_gr") {
   # evaluate arguments, generate data
   .dots <- match.call(expand.dots = FALSE)$`...`
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
+
+    # remember original data, if user wants to bind columns
+    orix <- tibble::as_tibble(x)
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
@@ -122,6 +125,9 @@ group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FAL
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
       colnames(x) <- sprintf("%s%s", colnames(x), suffix)
     }
+
+    # combine data
+    if (append) x <- dplyr::bind_cols(orix, x)
   } else {
     x <- g_v_helper(
       x = .dat,

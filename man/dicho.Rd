@@ -5,7 +5,7 @@
 \title{Dichotomize variables}
 \usage{
 dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
-  val.labels = NULL, suffix = "_d")
+  val.labels = NULL, append = FALSE, suffix = "_d")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -35,6 +35,10 @@ be used (if present). If empty, variable label attributes will be removed.}
 \item{val.labels}{Optional character vector (of length two), to set value label
 attributes of dichotomized variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
+
+\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\code{x} including the recoded variables as new columns is returned;
+if \code{FALSE} (the default), only the recoded variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data

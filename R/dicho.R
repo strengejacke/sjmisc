@@ -52,7 +52,7 @@
 #'           val.labels = c("lower", "higher")))
 #'
 #' @export
-dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, suffix = "_d") {
+dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_d") {
   # check for correct dichotome types
   if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
     stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)
@@ -63,6 +63,9 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
   .dat <- get_dot_data(x, .dots)
 
   if (is.data.frame(x)) {
+
+    # remember original data, if user wants to bind columns
+    orix <- tibble::as_tibble(x)
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
@@ -82,6 +85,9 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
       colnames(x) <- sprintf("%s%s", colnames(x), suffix)
     }
+
+    # combine data
+    if (append) x <- dplyr::bind_cols(orix, x)
   } else {
     x <- dicho_helper(
       x = .dat,

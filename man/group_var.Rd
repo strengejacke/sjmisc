@@ -6,7 +6,7 @@
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
 group_var(x, ..., groupsize = 5, as.num = TRUE, right.interval = FALSE,
-  groupcount = 30, suffix = "_gr")
+  groupcount = 30, append = FALSE, suffix = "_gr")
 
 group_labels(x, ..., groupsize = 5, right.interval = FALSE,
   groupcount = 30)
@@ -36,6 +36,10 @@ bound of \code{groupsize}. See 'Details'.}
 \item{groupcount}{Sets the maximum number of groups that are defined when auto-grouping is on
 (\code{groupsize="auto"}). Default is 30. If \code{groupsize} is not set to \code{"auto"},
 this argument will be ignored.}
+
+\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\code{x} including the recoded variables as new columns is returned;
+if \code{FALSE} (the default), only the recoded variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data

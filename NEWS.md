@@ -14,6 +14,10 @@
 * `row_means()` as wrapper of `sjstats::mean_n()` to compute row means, but works within pipe-workflow and with select-helpers for variables.
 * `%nin%` as complement to `%in%`.
 
+## Changes to functions
+
+* Functions `rec()`, `dicho()`, `center()`, `std()`, `recode_to()` and `group_var()` get a `append`-argument, to optionally return the original data including the transformed variables as new columns.
+
 ## Bug fixes
 
 * `remove_empty_cols()` returned an empty data frame, when input data frame had no empty columns.
