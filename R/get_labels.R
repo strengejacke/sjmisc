@@ -182,9 +182,11 @@ get_labels.default <- function(x, attr.only = FALSE, include.values = NULL,
 get_labels_helper <- function(x, attr.only, include.values, include.non.labelled, drop.na, drop.unused) {
   labels <- NULL
   add_vals <- NULL
+
   # get label attribute, which may differ depending on the package
   # used for reading the data
   attr.string <- getValLabelAttribute(x)
+
   # if variable has no label attribute, use factor levels as labels
   if (is.null(attr.string)) {
     # only use factor level if explicitly chosen by user
@@ -209,6 +211,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
     if (!is.null(lab) && length(lab) > 0) {
       # sort labels
       lab <- lab[order(lab)]
+
       # retrieve values associated with labels. for character vectors
       # or factors with character levels, these values are character values,
       # else, they are numeric values
@@ -216,18 +219,23 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
         values <- unname(lab)
       else
         values <- as.numeric(unname(lab))
+
       # retrieve label values in correct order
       labels <- names(lab)
+
       # do we have any tagged NAs? If so, get tagged NAs
       # and annotate them properly
       if (any(haven::is_tagged_na(values))) {
-        values[haven::is_tagged_na(values)] <- paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
+        values[haven::is_tagged_na(values)] <-
+          paste0("NA(", haven::na_tag(values[haven::is_tagged_na(values)]), ")")
       }
+
       # do we want to include non-labelled values as well? if yes,
       # find all values in variable that have no label attributes
       if (include.non.labelled) {
         # get values of variable
         valid.vals <- sort(unique(stats::na.omit(as.vector(x))))
+
         # check if we have different amount values than labels
         # or, if we have same amount of values and labels, whether
         # values and labels match or not
@@ -239,14 +247,15 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
           labels <- c(labels, as.character(add_vals))
           # fix value prefix
           new_vals <- c(as.character(values), as.character(add_vals))
+
           # check if values are numeric or not. if not,
           # make sure it's character, so we can order
           # consistently
-          if (suppressWarnings(anyNA(as.numeric(values)))) {
+          if (suppressWarnings(anyNA(as.numeric(values))))
             orderpart <- as.character(values)
-          } else {
+          else
             orderpart <- as.numeric(values)
-          }
+
           # sort values and labels
           labels <- labels[order(c(orderpart, add_vals))]
           new_vals <- new_vals[order(c(orderpart, add_vals))]
@@ -262,6 +271,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
             include.values == "as.name" || include.values == "n") {
           names(labels) <- values
         }
+
         # here we include values as prefix of labels
         if (include.values == "as.prefix" || include.values == "p") {
           if (is.numeric(values))
@@ -272,6 +282,7 @@ get_labels_helper <- function(x, attr.only, include.values, include.non.labelled
       }
     }
   }
+
   # foreign? then reverse order
   if (is_foreign(attr.string)) labels <- rev(labels)
 
