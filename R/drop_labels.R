@@ -32,6 +32,9 @@ drop_labels_helper <- function(x, drop.na) {
   # remove labels with no values in data
   tidy.labels <- tidy.labels[get_values(x, drop.na = drop.na) %in% names(table(x))]
 
+  # check if tidy labels is empty - then remove everything
+  if (sjmisc::is_empty(tidy.labels)) tidy.labels <- ""
+
   # set labels
   set_labels(x, labels = tidy.labels, drop.na = drop.na)
 }
