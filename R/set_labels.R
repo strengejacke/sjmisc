@@ -161,7 +161,7 @@ set_labels <- function(x, ...,
   # special handling for data frames
   if (is.data.frame(x)) {
     # check if we have one label per variable
-    if (length(labels) == ncol(.dat)) {
+    if (is.list(labels) && length(labels) == ncol(.dat)) {
       # get column names
       cn <- colnames(.dat)
       # iterate all columns by number
