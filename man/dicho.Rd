@@ -37,8 +37,8 @@ attributes of dichotomized variable (see \code{\link{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 
 \item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
-\code{x} including the recoded variables as new columns is returned;
-if \code{FALSE} (the default), only the recoded variables are returned.}
+\code{x} including the new variables as additional columns is returned;
+if \code{FALSE} (the default), only the new variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data

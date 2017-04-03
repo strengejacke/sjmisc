@@ -5,9 +5,9 @@
 \alias{row_means}
 \title{Row sums and means for data frames}
 \usage{
-row_sums(x, ..., na.rm = TRUE)
+row_sums(x, ..., na.rm = TRUE, var = "rowsums", append = FALSE)
 
-row_means(x, ..., n)
+row_means(x, ..., n, var = "rowmeans", append = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -22,6 +22,8 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 \item{na.rm}{Logical, \code{TRUE} if missing values should be omitted from
 the calculations.}
 
+\item{var}{Name of new the variable with the row sums or means.}
+
 \item{n}{May either be
 \itemize{
   \item a numeric value that indicates the amount of valid values per row to calculate the row mean;
@@ -30,15 +32,17 @@ the calculations.}
 If a row's sum of valid values is less than \code{n}, \code{NA} will be returned as row mean value.}
 }
 \value{
-For \code{row_sums()}, a vector with row sums from \code{x}; for
-        \code{row_means()}, a vector with row means from \code{x}.
+For \code{row_sums()}, a tibble with one variable: the row sums from
+        \code{x}; for \code{row_means()}, a tibble with one variable: row
+        means from \code{x}.
 }
 \description{
 \code{row_sums()} simply wraps \code{\link{rowSums}}, while
              \code{row_means()} simply wraps \code{\link[sjstats]{mean_n}},
              however, the argument-structure of both functions is designed
              to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables.
+             for selecting variables, the default for \code{na.rm} is \code{TRUE},
+             and the return value is always a tibble (with one variable).
 }
 \details{
 For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If
@@ -68,5 +72,11 @@ row_means(dat, n = 4)
 row_means(dat, c1:c4, n = 4)
 # at least 40\% non-missing
 row_means(dat, c1:c4, n = .4)
+
+# create sum-score of COPE-Index, and append to data
+efc \%>\%
+  select(c82cop1:c90cop9) \%>\%
+  row_sums() \%>\%
+  add_columns(efc)
 
 }

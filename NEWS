@@ -8,12 +8,13 @@ General:
 * Argument `value` in `ref_lvl()` is deprecated. Please use `lvl` instead.
 
 New functions:
-* `row_sums()` as wrapper of `rowSums()` to compute row sums, but works within pipe-workflow and with select-helpers for variables.
-* `row_means()` as wrapper of `sjstats::mean_n()` to compute row means, but works within pipe-workflow and with select-helpers for variables.
+* `row_sums()` as wrapper of `rowSums()` to compute row sums, but works within pipe-workflow and with select-helpers for variables, and always returns a tibble.
+* `row_means()` as wrapper of `sjstats::mean_n()` to compute row means, but works within pipe-workflow and with select-helpers for variables, and always returns a tibble.
 * `%nin%` as complement to `%in%`.
 
 Changes to functions:
 * Functions `rec()`, `dicho()`, `center()`, `std()`, `recode_to()` and `group_var()` get a `append`-argument, to optionally return the original data including the transformed variables as new columns.
+* `var_labels()` and `var_rename()` now give a warning if specified variables to rename or relabel do not exist in the data frame. Non-matching variables are removed.
 
 Bug fixes:
 * `remove_empty_cols()` returned an empty data frame, when input data frame had no empty columns.

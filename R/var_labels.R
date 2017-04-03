@@ -9,6 +9,21 @@ var_labels <- function(x, ...) {
   # get new labels
   labels <- unname(unlist(.dots))
 
+  # non-matching column names
+  non.vars <- which(vars %nin% colnames(x))
+
+  # check if all variables exist in data frame
+  if (!sjmisc::is_empty(non.vars)) {
+    # tell user
+    warning(sprintf(
+      "Following elements are no valid column names in `x`: %s",
+      paste(vars[non.vars], collapse = ",")
+    ),
+    call. = F)
+    # remove invalid names
+    vars <- vars[-non.vars]
+  }
+
   # set label for all variables
   for (i in seq_len(length(vars))) {
     attr(x[[vars[i]]], "label") <- labels[i]
@@ -49,6 +64,24 @@ var_rename <- function(x, ...) {
   old_names <- names(unlist(.dots))
   # get new variable names
   new_names <- unname(unlist(.dots))
+
+
+  # non-matching column names
+  non.match <- which(old_names %nin% colnames(x))
+
+  # check if all variables exist in data frame
+  if (!sjmisc::is_empty(non.match)) {
+    # tell user
+    warning(sprintf(
+      "Following elements are no valid column names in `x`: %s",
+      paste(old_names[non.match], collapse = ",")
+    ),
+    call. = F)
+    # remove invalid names
+    old_names <- old_names[-non.match]
+    new_names <- new_names[-non.match]
+  }
+
 
   # find column indices of variables that should be renamed
   name_pos <- match(old_names, colnames(x))
