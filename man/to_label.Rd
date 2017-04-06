@@ -10,14 +10,14 @@ to_label(x, ..., add.non.labelled = FALSE, prefix = FALSE,
 \arguments{
 \item{x}{A vector or data frame.}
 
-\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
-a data frame (and no vector) and only selected variables
-from \code{x} should be processed. You may also use functions like
-\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+\item{...}{Optional, unquoted names of variables that should be selected for
+further processing. Required, if \code{x} is a data frame (and no
+vector) and only selected variables from \code{x} should be processed.
+You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{add.non.labelled}{logical, if \code{TRUE}, values without associated
+\item{add.non.labelled}{Logical, if \code{TRUE}, values without associated
 value label will also be converted to labels (as is). See 'Examples'.}
 
 \item{prefix}{Logical, if \code{TRUE}, the value labels used as factor levels
@@ -37,14 +37,14 @@ dropped (i.e. \code{\link{droplevels}} will be applied before returning
 the result).}
 }
 \value{
-A factor variable with the associated value labels as factor levels. If \code{x}
+A factor with the associated value labels as factor levels. If \code{x}
           is a data frame, the complete data frame \code{x} will be returned,
           where variables specified in \code{...} are coerced to factors;
           if \code{...} is not specified, applies to all variables in the
           data frame.
 }
 \description{
-This function converts (replaces) variable values (also of factors
+This function converts (replaces) values of a variable (also of factors
                or character vectors) with their associated value labels. Might
                be helpful for factor variables.
                For instance, if you have a Gender variable with 0/1 value, and associated

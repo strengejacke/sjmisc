@@ -9,10 +9,10 @@ to_value(x, ..., start.at = NULL, keep.labels = TRUE)
 \arguments{
 \item{x}{A vector or data frame.}
 
-\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
-a data frame (and no vector) and only selected variables
-from \code{x} should be processed. You may also use functions like
-\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+\item{...}{Optional, unquoted names of variables that should be selected for
+further processing. Required, if \code{x} is a data frame (and no
+vector) and only selected variables from \code{x} should be processed.
+You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
@@ -29,11 +29,13 @@ if present. See 'Examples' and \code{\link{set_labels}} for more details.}
 \value{
 A numeric variable with values ranging either from \code{start.at} to
           \code{start.at} + length of factor levels, or to the corresponding
-          factor levels (if these were numeric). Or a data frame with numeric
-          variables, if \code{x} was a data frame.
+          factor levels (if these were numeric). If \code{x} is a data frame,
+          the complete data frame \code{x} will be returned, where variables
+          specified in \code{...} are coerced to numeric; if \code{...} is
+          not specified, applies to all variables in the data frame.
 }
 \description{
-This function converts (replaces) factor values with the
+This function converts (replaces) factor levels with the
 related factor level index number, thus the factor is converted to
 a numeric variable.
 }

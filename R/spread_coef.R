@@ -120,10 +120,37 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
   # check if user just wants a specific model term
   # if yes, select this, and its p-value
   if (!sjmisc::is_empty(model.term)) {
+    # validate model term, i.e. check if coefficient exists in models
+    tmp <- broom::tidy(data[[model.column]][[1]], effects = "fixed")
+
+    # if term is no valid coefficient name, tell user, and make
+    # suggestions of possibly meant correct terms
+    if (model.term %nin% tmp$term) {
+
+      pos <- str_pos(search.string = tmp$term, find.term = model.term, part.dist.match = 1)
+
+      if (pos != -1) {
+        pos_str <-
+          sprintf(" Did you mean (one of) `%s`?", paste(tmp$term[pos], collapse = ","))
+      } else {
+        pos_str <- ""
+      }
+
+      stop(
+        sprintf(
+          "`%s` is no valid model term.%s",
+          model.term,
+          pos_str
+        ),
+        call. = F
+      )
+    }
+
     # select variables for output
     variables <- "estimate"
     if (se) variables <- c(variables, "std.error")
     if (p.val) variables <- c(variables, "p.value")
+
     # iterate list variable
     dat <-
       purrr::map_df(data[[model.column]], function(x) {

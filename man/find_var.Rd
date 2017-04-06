@@ -6,7 +6,7 @@
 \usage{
 find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
   "name_value", "label_value", "name", "label", "value", "all"),
-  as.df = FALSE, as.varlab = FALSE)
+  as.df = FALSE, as.varlab = FALSE, fuzzy = FALSE)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -45,6 +45,11 @@ is returned (instead of their column indices).}
 \item{as.varlab}{Logical, if \code{TRUE}, not only column indices, but also
 variables labels of matching variables are returned (as
 data frame).}
+
+\item{fuzzy}{Logical, if \code{TRUE}, "fuzzy matching" (partial and
+close distance matching) will be used to find \code{pattern}
+in \code{data} if no exact match was found. \code{\link{str_pos}}
+is used for fuzzy matching.}
 }
 \value{
 A named vector with column indices of found variables (variable names

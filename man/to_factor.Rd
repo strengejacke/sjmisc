@@ -9,10 +9,10 @@ to_factor(x, ..., add.non.labelled = FALSE, ref.lvl = NULL)
 \arguments{
 \item{x}{A vector or data frame.}
 
-\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
-a data frame (and no vector) and only selected variables
-from \code{x} should be processed. You may also use functions like
-\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+\item{...}{Optional, unquoted names of variables that should be selected for
+further processing. Required, if \code{x} is a data frame (and no
+vector) and only selected variables from \code{x} should be processed.
+You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
@@ -26,10 +26,10 @@ will become the reference level. See \code{\link{ref_lvl}} for
 details.}
 }
 \value{
-A factor variable, including variable and value labels. If \code{x}
+A factor, including variable and value labels. If \code{x}
           is a data frame, the complete data frame \code{x} will be returned,
           where variables specified in \code{...} are coerced
-          to factor variables (including variable and value labels);
+          to factors (including variable and value labels);
           if \code{...} is not specified, applies to all variables in the
           data frame.
 }
@@ -98,7 +98,7 @@ to_factor(efc, ~contains("cop"), c161sex:c175empl)
 
 }
 \seealso{
-\code{\link{to_value}} to convert a factor into a numeric value and
-           \code{\link{to_label}} to convert a value into a factor with labelled
+\code{\link{to_value}} to convert a factor into a numeric vector and
+           \code{\link{to_label}} to convert a vector into a factor with labelled
            factor levels.
 }

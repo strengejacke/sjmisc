@@ -12,10 +12,10 @@ row_means(x, ..., n, var = "rowmeans", append = FALSE)
 \arguments{
 \item{x}{A vector or data frame.}
 
-\item{...}{Optional, unquoted names of variables. Required, if \code{x} is
-a data frame (and no vector) and only selected variables
-from \code{x} should be processed. You may also use functions like
-\code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+\item{...}{Optional, unquoted names of variables that should be selected for
+further processing. Required, if \code{x} is a data frame (and no
+vector) and only selected variables from \code{x} should be processed.
+You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
@@ -23,6 +23,10 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 the calculations.}
 
 \item{var}{Name of new the variable with the row sums or means.}
+
+\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\code{x} including the new variables as additional columns is returned;
+if \code{FALSE} (the default), only the new variables are returned.}
 
 \item{n}{May either be
 \itemize{
@@ -33,7 +37,7 @@ If a row's sum of valid values is less than \code{n}, \code{NA} will be returned
 }
 \value{
 For \code{row_sums()}, a tibble with one variable: the row sums from
-        \code{x}; for \code{row_means()}, a tibble with one variable: row
+        \code{x}; for \code{row_means()}, a tibble with one variable: the row
         means from \code{x}.
 }
 \description{

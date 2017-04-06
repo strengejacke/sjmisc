@@ -97,13 +97,15 @@ str_pos <- function(search.string,
       # starting from first char of search.string until end
       # and try to find similar matches
       steps <- nchar(sst) - ftlength + 1
-      for (pi in seq_len(steps)) {
-        # retrieve substring
-        sust <- trim(substr(sst, pi, pi + ftlength - 1))
+      if (steps > 0) {
+        for (pi in seq_len(steps)) {
+          # retrieve substring
+          sust <- trim(substr(sst, pi, pi + ftlength - 1))
 
-        # find element indices from similar substrings
-        pos <- which(stringdist::stringdist(tolower(find.term), tolower(sust)) <= maxdist)
-        if (length(pos) > 0) indices <- c(indices, ssl)
+          # find element indices from similar substrings
+          pos <- which(stringdist::stringdist(tolower(find.term), tolower(sust)) <= maxdist)
+          if (length(pos) > 0) indices <- c(indices, ssl)
+        }
       }
       if (part.dist.match > 1) {
 

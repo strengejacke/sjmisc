@@ -17,10 +17,12 @@
 #' @param na.rm Logical, \code{TRUE} if missing values should be omitted from
 #'          the calculations.
 #' @param var Name of new the variable with the row sums or means.
+#'
 #' @inheritParams to_factor
+#' @inheritParams rec
 #'
 #' @return For \code{row_sums()}, a tibble with one variable: the row sums from
-#'         \code{x}; for \code{row_means()}, a tibble with one variable: row
+#'         \code{x}; for \code{row_means()}, a tibble with one variable: the row
 #'         means from \code{x}.
 #'
 #' @details For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If

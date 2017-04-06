@@ -1,14 +1,14 @@
 #' @title Convert variable into factor with associated value labels
 #' @name to_label
 #'
-#' @description This function converts (replaces) variable values (also of factors
+#' @description This function converts (replaces) values of a variable (also of factors
 #'                or character vectors) with their associated value labels. Might
 #'                be helpful for factor variables.
 #'                For instance, if you have a Gender variable with 0/1 value, and associated
 #'                labels are male/female, this function would convert all 0 to male and
 #'                all 1 to female and returns the new variable as factor.
 #'
-#' @param add.non.labelled logical, if \code{TRUE}, values without associated
+#' @param add.non.labelled Logical, if \code{TRUE}, values without associated
 #'          value label will also be converted to labels (as is). See 'Examples'.
 #' @param prefix Logical, if \code{TRUE}, the value labels used as factor levels
 #'          or character values will be prefixed with their associated values. See 'Examples'.
@@ -22,7 +22,7 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return A factor variable with the associated value labels as factor levels. If \code{x}
+#' @return A factor with the associated value labels as factor levels. If \code{x}
 #'           is a data frame, the complete data frame \code{x} will be returned,
 #'           where variables specified in \code{...} are coerced to factors;
 #'           if \code{...} is not specified, applies to all variables in the

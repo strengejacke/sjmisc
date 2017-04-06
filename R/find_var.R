@@ -36,6 +36,10 @@
 #' @param as.varlab Logical, if \code{TRUE}, not only column indices, but also
 #'                variables labels of matching variables are returned (as
 #'                data frame).
+#' @param fuzzy Logical, if \code{TRUE}, "fuzzy matching" (partial and
+#'          close distance matching) will be used to find \code{pattern}
+#'          in \code{data} if no exact match was found. \code{\link{str_pos}}
+#'          is used for fuzzy matching.
 #'
 #' @return A named vector with column indices of found variables (variable names
 #'           are used as names-attribute); if \code{as.df = TRUE}, a tibble
@@ -85,7 +89,8 @@ find_var <- function(data,
                      ignore.case = TRUE,
                      search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
                      as.df = FALSE,
-                     as.varlab = FALSE) {
+                     as.varlab = FALSE,
+                     fuzzy = FALSE) {
   # check valid args
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame.", call. = F)
@@ -103,6 +108,11 @@ find_var <- function(data,
       pos1 <- which(stringr::str_detect(colnames(data), pattern))
     else
       pos1 <- which(stringr::str_detect(colnames(data), stringr::coll(pattern, ignore_case = ignore.case)))
+
+    # if nothing found, find in near distance
+    if (sjmisc::is_empty(pos1) && fuzzy && !inherits(pattern, "regex")) {
+      pos1 <- str_pos(search.string = colnames(data), find.term = pattern, part.dist.match = 1)
+    }
   }
 
 
@@ -116,6 +126,11 @@ find_var <- function(data,
       pos2 <- which(stringr::str_detect(labels, pattern))
     else
       pos2 <- which(stringr::str_detect(labels, stringr::coll(pattern, ignore_case = ignore.case)))
+
+    # if nothing found, find in near distance
+    if (sjmisc::is_empty(pos2) && fuzzy && !inherits(pattern, "regex")) {
+      pos2 <- str_pos(search.string = labels, find.term = pattern, part.dist.match = 1)
+    }
   }
 
   # search for pattern in value labels
@@ -132,10 +147,19 @@ find_var <- function(data,
         any(stringr::str_detect(x, stringr::coll(pattern, ignore_case = ignore.case)))
       })))
     }
+
+    # if nothing found, find in near distance
+    if (sjmisc::is_empty(pos3) && fuzzy && !inherits(pattern, "regex")) {
+      pos3 <- which(unlist(lapply(labels, function(x) {
+        str_pos(search.string = x, find.term = pattern, part.dist.match = 1)
+      })))
+    }
   }
 
-  # get unqiue variable indices
+  # get unique variable indices
   pos <- unique(c(pos1, pos2, pos3))
+  # remove -1
+  pos <- pos[which(pos != -1)]
 
   # return data frame?
   if (as.df) {

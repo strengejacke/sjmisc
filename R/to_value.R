@@ -1,7 +1,7 @@
 #' @title Convert factors to numeric variables
 #' @name to_value
 #'
-#' @description This function converts (replaces) factor values with the
+#' @description This function converts (replaces) factor levels with the
 #' related factor level index number, thus the factor is converted to
 #' a numeric variable.
 #'
@@ -16,8 +16,10 @@
 #'
 #' @return A numeric variable with values ranging either from \code{start.at} to
 #'           \code{start.at} + length of factor levels, or to the corresponding
-#'           factor levels (if these were numeric). Or a data frame with numeric
-#'           variables, if \code{x} was a data frame.
+#'           factor levels (if these were numeric). If \code{x} is a data frame,
+#'           the complete data frame \code{x} will be returned, where variables
+#'           specified in \code{...} are coerced to numeric; if \code{...} is
+#'           not specified, applies to all variables in the data frame.
 #'
 #' @inheritParams to_factor
 #'
