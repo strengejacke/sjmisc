@@ -1,3 +1,10 @@
+# sjmisc 2.4.0.9000
+
+## Bug fixes
+
+* `add_columns()` and `replace_columns()` crahed R when no data frame was specified in `...`-ellipses argument.
+
+
 # sjmisc 2.4.0
 
 ## General
