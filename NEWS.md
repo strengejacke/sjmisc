@@ -2,7 +2,7 @@
 
 ## Bug fixes
 
-* `add_columns()` and `replace_columns()` crahed R when no data frame was specified in `...`-ellipses argument.
+* `add_columns()` and `replace_columns()` crashed R when no data frame was specified in `...`-ellipses argument.
 
 
 # sjmisc 2.4.0

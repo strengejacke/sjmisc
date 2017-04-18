@@ -1,5 +1,5 @@
-sjmisc - Data Transformation and Labelled Data Utility Functions
-------------------------------------------------------------------------------
+# sjmisc - Data Transformation and Labelled Data Utility Functions <img src="man/figures/logo.png" align="right" />
+
 This package contains utility functions that are useful when carrying out data analysis, performing common recode and data transformation tasks or working with labelled data (especially intended for people coming from 'SPSS', 'SAS' or 'Stata' and/or who are new to R).
 
 Basically, this package covers two domains of functionality:
