@@ -1,5 +1,9 @@
 # sjmisc 2.4.0.9000
 
+## New functions
+
+* `row_count()` to count specific values in a data frame per observation.
+
 ## Bug fixes
 
 * `add_columns()` and `replace_columns()` crashed R when no data frame was specified in `...`-ellipses argument.
