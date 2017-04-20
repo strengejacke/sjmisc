@@ -242,16 +242,24 @@ frq_helper <- function(x, sort.frq, weight.by) {
 get_grouped_title <- function(x, grps, i, sep = "\n") {
   # prepare title for group
   var.name <- colnames(grps)[1]
+
+  # find position of value labels for current group
+  lab.pos <- which(get_values(x[[var.name]]) == grps[[var.name]][i])
+
   t1 <- get_label(x[[var.name]], def.value = var.name)
-  t2 <- get_labels(x[[var.name]])[grps[[var.name]][i]]
+  t2 <- get_labels(x[[var.name]])[lab.pos]
   title <- sprintf("%s: %s", t1, t2)
 
   # do we have another groupng variable?
   if (length(attr(x, "vars", exact = T)) > 1) {
     # prepare title for group
     var.name <- colnames(grps)[2]
+
+    # find position of value labels for current group
+    lab.pos <- which(get_values(x[[var.name]]) == grps[[var.name]][i])
+
     t1 <- get_label(x[[var.name]], def.value = var.name)
-    t2 <- get_labels(x[[var.name]])[grps[[var.name]][i]]
+    t2 <- get_labels(x[[var.name]])[lab.pos]
     title <- sprintf("%s%s%s: %s", title, sep, t1, t2)
   }
 

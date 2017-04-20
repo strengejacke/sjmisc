@@ -3,7 +3,7 @@
 ## Bug fixes
 
 * `add_columns()` and `replace_columns()` crashed R when no data frame was specified in `...`-ellipses argument.
-
+* `descr()` and `frq()` used wrong variable labels when processing grouped data frames for specific situations, where the grouping variable had no sequences values.
 
 # sjmisc 2.4.0
 
