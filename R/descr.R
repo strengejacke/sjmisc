@@ -86,7 +86,7 @@ descr_helper <- function(dd, max.length) {
 
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
-  x <- tibble::as_tibble(psych::describe(dd)) %>%
+  x <- tibble::as_tibble(psych::describe(dd, fast = FALSE)) %>%
     tibble::rownames_to_column(var = "variable") %>%
     dplyr::select_("-vars", "-mad") %>%
     dplyr::mutate(
