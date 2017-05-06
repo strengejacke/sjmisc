@@ -14,7 +14,6 @@ descr(x, ..., max.length = NULL)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{max.length}{Numeric, indicating the maximum length of variable labels
@@ -56,6 +55,6 @@ efc \%>\%
   descr(e16sex, c172code, e17age, c160age)
 
 # or even use select-helpers
-descr(efc, ~contains("cop"), max.length = 20)
+descr(efc, contains("cop"), max.length = 20)
 
 }

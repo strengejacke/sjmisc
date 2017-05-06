@@ -64,11 +64,9 @@
 #' @export
 split_var <- function(x, ..., groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g") {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
-
     # remember original data, if user wants to bind columns
     orix <- tibble::as_tibble(x)
 

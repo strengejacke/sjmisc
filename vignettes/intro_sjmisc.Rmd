@@ -353,9 +353,10 @@ get_na(x, as.tag = TRUE)
 While `set_na()` allows you to replace values with (tagged) NA's, `replace_na()` allows you to replace either all NA values of a vector or specific tagged NA values with a non-NA value.
 
 ```{r}
+data(efc)
 str(efc$c84cop3)
 
-efc$c84cop3 <- set_na(efc$c84cop3, value = c(2, 3), as.tag = TRUE)
+efc$c84cop3 <- set_na(efc$c84cop3, na = c(2, 3), as.tag = TRUE)
 get_na(efc$c84cop3)
 
 get_na(replace_na(efc$c84cop3, value = 2, na.label = "restored NA", tagged.na = "2"))

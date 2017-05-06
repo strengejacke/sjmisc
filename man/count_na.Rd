@@ -13,7 +13,6 @@ count_na(x, ...)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 }
 \value{
@@ -44,8 +43,10 @@ y <- labelled(
   label = c("Agreement" = 1, "Disagreement" = 4, "An E" = tagged_na("e"),
             "A D" = tagged_na("d"), "The eff" = tagged_na("f"))
 )
+
 # create data frame
-dat <- tibble::data_frame(x, y)
+library(tibble)
+dat <- tibble(x, y)
 
 # possible count()-function calls
 count_na(dat)

@@ -13,7 +13,6 @@ to_dummy(x, ..., var.name = "name", suffix = c("numeric", "label"))
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{var.name}{Indicates how the new dummy variables are named. Use

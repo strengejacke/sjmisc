@@ -39,8 +39,7 @@
 #' @export
 std <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z") {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   std_and_center(x, .dat, include.fac, append, standardize = TRUE, suffix)
 }
@@ -50,8 +49,7 @@ std <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z") {
 #' @export
 center <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_c") {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   std_and_center(x, .dat, include.fac, append, standardize = FALSE, suffix)
 }

@@ -14,7 +14,6 @@ frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{sort.frq}{Determines whether categories should be sorted
@@ -71,7 +70,7 @@ efc \%>\%
 
 # with select-helpers: all variables from the COPE-Index
 # (which all have a "cop" in their name)
-frq(efc, ~contains("cop"))
+frq(efc, contains("cop"))
 
 # all variables from column "c161sex" to column "c175empl"
 frq(efc, c161sex:c175empl)

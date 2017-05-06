@@ -37,7 +37,7 @@
 #' efc %>% row_sums(c82cop1:c90cop9)
 #'
 #' library(dplyr)
-#' row_sums(efc, ~contains("cop"))
+#' row_sums(efc, contains("cop"))
 #'
 #' dat <- data.frame(
 #'   c1 = c(1,2,NA,4),
@@ -63,8 +63,7 @@
 #' @export
 row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = FALSE) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
 
   # remember original data, if user wants to bind columns
@@ -92,8 +91,7 @@ row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = FALSE) {
 #' @export
 row_means <- function(x, ..., n, var = "rowmeans", append = FALSE) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   # remember original data, if user wants to bind columns
   orix <- tibble::as_tibble(x)

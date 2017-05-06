@@ -16,7 +16,6 @@ row_means(x, ..., n, var = "rowmeans", append = FALSE)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{na.rm}{Logical, \code{TRUE} if missing values should be omitted from
@@ -61,7 +60,7 @@ data(efc)
 efc \%>\% row_sums(c82cop1:c90cop9)
 
 library(dplyr)
-row_sums(efc, ~contains("cop"))
+row_sums(efc, contains("cop"))
 
 dat <- data.frame(
   c1 = c(1,2,NA,4),

@@ -1,13 +1,19 @@
 # sjmisc 2.4.0.9000
 
+## General
+
+* **sjmisc** now uses dplyr's [tidyeval-approach](http://dplyr.tidyverse.org/articles/programming.html) to evaluate arguments. This means that the select-helper-functions (like `one_of()` or `contains()`) no longer need to be prefixed with a `~` when used as argument within **sjmisc**-functions.
+
 ## New functions
 
 * `row_count()` to count specific values in a data frame per observation.
+* `col_count()` to count specific values in a data frame per variable.
 
 ## Bug fixes
 
 * `add_columns()` and `replace_columns()` crashed R when no data frame was specified in `...`-ellipses argument.
 * `descr()` and `frq()` used wrong variable labels when processing grouped data frames for specific situations, where the grouping variable had no sequences values.
+* `descr()` did not work for large data frames, because internally, because `psych::describe()` switched to fast mode by default then (removing columns from the output).
 
 # sjmisc 2.4.0
 

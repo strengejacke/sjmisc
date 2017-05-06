@@ -55,7 +55,7 @@
 #'
 #' # with select-helpers: all variables from the COPE-Index
 #' # (which all have a "cop" in their name)
-#' frq(efc, ~contains("cop"))
+#' frq(efc, contains("cop"))
 #'
 #' # all variables from column "c161sex" to column "c175empl"
 #' frq(efc, c161sex:c175empl)
@@ -66,7 +66,7 @@
 frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 
   # get dot data
-  x <- get_dot_data(x, match.call(expand.dots = FALSE)$`...`)
+  x <- get_dot_data(x, dplyr::quos(...))
 
   # match args
   sort.frq <- match.arg(sort.frq)
@@ -269,7 +269,7 @@ get_grouped_title <- function(x, grps, i, sep = "\n") {
 
 
 #' @importFrom tidyr nest
-#' @importFrom dplyr select_ filter
+#' @importFrom dplyr filter
 #' @importFrom stats complete.cases
 get_grouped_data <- function(x) {
   # nest data frame
@@ -277,7 +277,7 @@ get_grouped_data <- function(x) {
 
   # remove NA category
   cc <- grps %>%
-    dplyr::select_("-data") %>%
+    dplyr::select(-.data$data) %>%
     stats::complete.cases()
   # select only complete cases
   grps <- grps %>% dplyr::filter(cc)

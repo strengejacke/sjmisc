@@ -1,5 +1,3 @@
-utils::globalVariables("term")
-
 #' @title Spread model coefficients of list-variables into columns
 #' @name spread_coef
 #'
@@ -94,9 +92,10 @@ utils::globalVariables("term")
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
 #' @importFrom broom tidy
-#' @importFrom dplyr select_ select one_of bind_cols "%>%"
+#' @importFrom dplyr select one_of bind_cols "%>%"
 #' @importFrom tidyr spread_
 #' @importFrom purrr map_df
+#' @importFrom rlang .data
 #' @export
 spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE, ...) {
   # check if we have a data frame
@@ -155,7 +154,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         # tidy model. for mixed effects, return fixed effects only
         tmp <- broom::tidy(x, effects = "fixed", ...) %>%
           # filter term
-          dplyr::filter(term == model.term) %>%
+          dplyr::filter(.data$term == model.term) %>%
           # just select estimate and p-value
           dplyr::select(dplyr::one_of(variables))
         # set colnames
@@ -171,7 +170,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
 
         # just select term name and estimate value
         df1 <- tmp %>%
-          dplyr::select_("term", "estimate") %>%
+          dplyr::select(.data$term, .data$estimate) %>%
           # spread to columns
           tidyr::spread_(key_col = "term", value_col = "estimate")
 
@@ -182,7 +181,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         if (se) {
           # just select term name and estimate value
           df2 <- tmp %>%
-            dplyr::select_("term", "std.error") %>%
+            dplyr::select(.data$term, .data$std.error) %>%
             # spread to columns
             tidyr::spread_(key_col = "term", value_col = "std.error")
           # fix column names
@@ -195,7 +194,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         if (p.val) {
           # just select term name and estimate value
           df3 <- tmp %>%
-            dplyr::select_("term", "p.value") %>%
+            dplyr::select(.data$term, .data$p.value) %>%
             # spread to columns
             tidyr::spread_(key_col = "term", value_col = "p.value")
           # fix column names

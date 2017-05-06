@@ -2,8 +2,7 @@
 #' @export
 drop_labels <- function(x, ..., drop.na = TRUE) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame

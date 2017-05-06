@@ -89,11 +89,9 @@ replace_na <- function(x, ..., value, na.label = NULL, tagged.na = NULL) {
   if (is.null(value) || is.na(value)) return(x)
 
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
-
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       x[[i]] <- replace_na_helper(

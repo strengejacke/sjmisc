@@ -2,9 +2,12 @@
 % Please edit documentation in R/row_count.R
 \name{row_count}
 \alias{row_count}
-\title{Count row indices}
+\alias{col_count}
+\title{Count row or column indices}
 \usage{
 row_count(x, ..., count, var = "rowcount", append = FALSE)
+
+col_count(x, ..., count, var = "colcount", append = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -13,13 +16,12 @@ row_count(x, ..., count, var = "rowcount", append = FALSE)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{count}{The value for which the row sum should be computed. May be a numeric
-value, a character string (for factors or character vectors), \code{NA},
-\code{Inf} or \code{NULL} to count missing or infinite values, or
-null-values.}
+\item{count}{The value for which the row or column sum should be computed. May
+be a numeric value, a character string (for factors or character vectors),
+\code{NA}, \code{Inf} or \code{NULL} to count missing or infinite values,
+or null-values.}
 
 \item{var}{Name of new the variable with the row or column counts.}
 
@@ -28,9 +30,11 @@ null-values.}
 if \code{FALSE} (the default), only the new variables are returned.}
 }
 \value{
-A tibble with one variable: the sum of \code{count} appearing in each
-        row of \code{x}. If \code{append = TRUE}, \code{x} including this
-        variable will be returned.
+For \code{row_sumes()}, a tibble with one variable: the sum of \code{count}
+        appearing in each row of \code{x}; for \code{col_count()}, a tibble with
+        one row and the same number of variables as in \code{x}: each variable
+        holds the sum of \code{count} appearing in each variable of \code{x}.
+        If \code{append = TRUE}, \code{x} including this variable will be returned.
 }
 \description{
 \code{row_count()} mimics base R's \code{rowSums()}, with sums
@@ -39,6 +43,10 @@ A tibble with one variable: the sum of \code{count} appearing in each
              is designed to work nicely within a pipe-workflow and allows select-helpers
              for selecting variables and the return value is always a tibble
              (with one variable).
+             \cr \cr
+             \code{col_count()} does the same for columns. The return value is
+             a data frame with one row (the column counts) and the same number
+             of columns as \code{x}.
 }
 \examples{
 library(dplyr)
@@ -56,5 +64,9 @@ dat <- tribble(
 row_count(dat, count = 1)
 row_count(dat, count = NA)
 row_count(dat, c1:c3, count = 2, append = TRUE)
+
+col_count(dat, count = 1)
+col_count(dat, count = NA)
+col_count(dat, c1:c3, count = 2, append = TRUE)
 
 }

@@ -41,7 +41,7 @@
 #'   descr(e16sex, c172code, e17age, c160age)
 #'
 #' # or even use select-helpers
-#' descr(efc, ~contains("cop"), max.length = 20)
+#' descr(efc, contains("cop"), max.length = 20)
 #'
 #' @importFrom tibble as_tibble rownames_to_column
 #' @importFrom dplyr select mutate
@@ -50,7 +50,7 @@
 descr <- function(x, ..., max.length = NULL) {
 
   # get dot data
-  dd <- get_dot_data(x, match.call(expand.dots = FALSE)$`...`)
+  dd <- get_dot_data(x, dplyr::quos(...))
 
   # do we have a grouped data frame?
   if (inherits(dd, "grouped_df")) {
@@ -84,11 +84,12 @@ descr_helper <- function(dd, max.length) {
   else
     dv <- dd
 
+
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
   x <- tibble::as_tibble(psych::describe(dd, fast = FALSE)) %>%
     tibble::rownames_to_column(var = "variable") %>%
-    dplyr::select_("-vars", "-mad") %>%
+    dplyr::select(-.data$vars, -.data$mad) %>%
     dplyr::mutate(
       label = unname(get_label(dd, def.value = var.name)),
       NA.prc = purrr::map_dbl(dv, ~ 100 * sum(is.na(.x)) / length(.x))

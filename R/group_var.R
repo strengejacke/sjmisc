@@ -99,8 +99,7 @@
 group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FALSE,
                       groupcount = 30, append = FALSE, suffix = "_gr") {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
 
@@ -166,8 +165,7 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
 #' @export
 group_labels <- function(x, ..., groupsize = 5, right.interval = FALSE, groupcount = 30) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame

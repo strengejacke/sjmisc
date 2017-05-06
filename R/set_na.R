@@ -117,8 +117,7 @@ set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value) {
   if (is.null(na) || is.na(na)) return(x)
 
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame

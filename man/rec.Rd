@@ -14,7 +14,6 @@ rec(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-The latter must be stated as formula (i.e. beginning with \code{~}).
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{rec}{String with recode pairs of old and new values. See
@@ -164,7 +163,7 @@ rec(x, rec = "2=5;else=copy")
 na_tag(rec(x, rec = "2=5;else=copy"))
 
 # use select-helpers from dplyr-package
-rec(efc, ~contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
+rec(efc, contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
 
 
 }

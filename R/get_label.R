@@ -68,7 +68,7 @@
 #' @export
 get_label <- function(x, ..., def.value = NULL) {
   # evaluate arguments, generate data
-  x <- get_dot_data(x, match.call(expand.dots = FALSE)$`...`)
+  x <- get_dot_data(x, dplyr::quos(...))
   # auto-detect variable label attribute
   attr.string <- getVarLabelAttribute(x)
   # do we have a df?

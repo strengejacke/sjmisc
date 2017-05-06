@@ -115,8 +115,7 @@
 #' @export
 zap_labels <- function(x, ...) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame
@@ -138,8 +137,7 @@ zap_labels <- function(x, ...) {
 #' @export
 zap_unlabelled <- function(x, ...) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame
@@ -192,8 +190,7 @@ zap_unlabelled <- function(x, ...) {
 #' @export
 zap_na_tags <- function(x, ...) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame
@@ -250,8 +247,7 @@ zap_na_tags <- function(x, ...) {
 #' @export
 zap_inf <- function(x, ...) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame

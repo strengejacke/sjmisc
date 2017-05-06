@@ -47,7 +47,7 @@ This design-choice is mainly due to compatibility- and convenience-reasons. It d
 
 ## The ...-ellipses-argument
 
-The selection of variables specified in the `...`-ellipses-argument is powered by dplyr's `select()`. This means, you can use existing functions like `:` to select a range of variables, or also use dplyr's `select_helpers`, like `contains()` or `one_of()`. However, `select_helpers` must begin with a `~`-sign.
+The selection of variables specified in the `...`-ellipses-argument is powered by dplyr's `select()`. This means, you can use existing functions like `:` to select a range of variables, or also use dplyr's `select_helpers`, like `contains()` or `one_of()`.
 
 ```{r echo=FALSE, message=FALSE}
 library(dplyr)
@@ -55,11 +55,11 @@ library(dplyr)
 ```{r collapse=TRUE}
 # select all variables with "cop" in their names, and also
 # the range from c161sex to c175empl
-rec(efc, ~contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
+rec(efc, contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
 
 # center all variables with "age" in name, variable c12hour
 # and all variables from column 19 to 21
-center(efc, c12hour, ~contains("age"), 19:21)
+center(efc, c12hour, contains("age"), 19:21)
 ```
 
 ## The function-types

@@ -112,8 +112,7 @@ add_labels <- function(x, ..., labels, value) {
   if (is.null(names(labels))) stop("`labels` must be a named vector.", call. = F)
 
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame

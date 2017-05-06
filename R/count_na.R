@@ -1,5 +1,3 @@
-utils::globalVariables("label")
-
 #' @title Frequency table of tagged NA values
 #' @name count_na
 #'
@@ -31,8 +29,10 @@ utils::globalVariables("label")
 #'   label = c("Agreement" = 1, "Disagreement" = 4, "An E" = tagged_na("e"),
 #'             "A D" = tagged_na("d"), "The eff" = tagged_na("f"))
 #' )
+#'
 #' # create data frame
-#' dat <- tibble::data_frame(x, y)
+#' library(tibble)
+#' dat <- tibble(x, y)
 #'
 #' # possible count()-function calls
 #' count_na(dat)
@@ -41,13 +41,12 @@ utils::globalVariables("label")
 #' count_na(dat, x, y)
 #'
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr select_ filter
+#' @importFrom dplyr select filter
 #' @importFrom haven is_tagged_na na_tag
 #' @export
 count_na <- function(x, ...) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   # return values
   dataframes <- list()
@@ -82,6 +81,7 @@ count_na <- function(x, ...) {
   }
 }
 
+
 count_na_helper <- function(x) {
   # check if x has any tagged NA values
   if (sum(haven::is_tagged_na(x)) < 1) {
@@ -100,9 +100,10 @@ count_na_helper <- function(x) {
   for (i in seq_len(length(nav))) {
     values[values == nav[i]] <- nav.labels[i]
   }
+
   # now compute frequency, and return a proper data frame
   frq_helper(values, sort.frq = "none", weight.by = NULL) %>%
-    dplyr::select_("-val") %>%
-    dplyr::filter(label != "NA")
+    dplyr::select(-.data$val) %>%
+    dplyr::filter(.data$label != "NA")
 }
 

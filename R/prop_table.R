@@ -75,7 +75,7 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
   if (marge == 0) marge <- NULL
 
   # get dot data
-  dd <- get_dot_data(data, match.call(expand.dots = FALSE)$`...`)
+  dd <- get_dot_data(data, dplyr::quos(...))
 
   # do we have a grouped data frame?
   if (inherits(dd, "grouped_df")) {

@@ -145,7 +145,7 @@
 #' na_tag(rec(x, rec = "2=5;else=copy"))
 #'
 #' # use select-helpers from dplyr-package
-#' rec(efc, ~contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
+#' rec(efc, contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
 #'
 #'
 #' @export
@@ -158,8 +158,7 @@ rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
   }
 
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
 

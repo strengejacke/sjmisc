@@ -24,11 +24,12 @@ Depends:
     utils
 Imports:
     broom (>= 0.4.2),
-    dplyr (>= 0.5.0),
+    dplyr (>= 0.5.0.9004),
     haven (>= 1.0.0),
     magrittr,
     psych,
     purrr,
+    rlang,
     stringdist (>= 0.9.4),
     stringr (>= 1.2.0),
     tibble (>= 1.3.0),
@@ -37,7 +38,8 @@ Suggests:
     Hmisc,
     mice,
     sjPlot,
-    sjstats (>= 0.9.0),
+    sjstats (>= 0.10.0),
+    tidyverse,
     knitr,
     rmarkdown
 URL: https://github.com/strengejacke/sjmisc

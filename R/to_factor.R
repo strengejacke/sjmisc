@@ -13,7 +13,6 @@
 #'          further processing. Required, if \code{x} is a data frame (and no
 #'          vector) and only selected variables from \code{x} should be processed.
 #'          You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
-#'          The latter must be stated as formula (i.e. beginning with \code{~}).
 #'          See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.
 #' @param add.non.labelled Logical, if \code{TRUE}, non-labelled values also
 #'          get value labels.
@@ -84,15 +83,14 @@
 #'
 #' # use select-helpers from dplyr-package
 #' library(dplyr)
-#' to_factor(efc, ~contains("cop"), c161sex:c175empl)
+#' to_factor(efc, contains("cop"), c161sex:c175empl)
 #'
 #'
 #' @importFrom tibble as_tibble
 #' @export
 to_factor <- function(x, ..., add.non.labelled = FALSE, ref.lvl = NULL) {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame

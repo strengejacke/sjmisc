@@ -60,8 +60,7 @@
 #' @export
 recode_to <- function(x, ..., lowest = 0, highest = -1, append = FALSE, suffix = "_r0") {
   # evaluate arguments, generate data
-  .dots <- match.call(expand.dots = FALSE)$`...`
-  .dat <- get_dot_data(x, .dots)
+  .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
 
