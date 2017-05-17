@@ -9,6 +9,10 @@
 * `row_count()` to count specific values in a data frame per observation.
 * `col_count()` to count specific values in a data frame per variable.
 
+## Changes to functions
+
+* The output for `frq()` now always includes a `NA`-row, but no longer prints a value for the `NA`-row.
+
 ## Bug fixes
 
 * `add_columns()` and `replace_columns()` crashed R when no data frame was specified in `...`-ellipses argument.
