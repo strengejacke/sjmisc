@@ -12,6 +12,7 @@
 ## Changes to functions
 
 * The output for `frq()` now always includes a `NA`-row, but no longer prints a value for the `NA`-row.
+* `merge_imputations()` gets a `summary`-argument to plot a graphical summary of the quality of the merging process.
 
 ## Bug fixes
 

@@ -4,7 +4,8 @@
 \alias{merge_imputations}
 \title{Merges multiple imputed data frames into a single data frame}
 \usage{
-merge_imputations(dat, imp, ori = NULL)
+merge_imputations(dat, imp, ori = NULL, summary = c("none", "dens", "hist",
+  "sd"), filter = NULL)
 }
 \arguments{
 \item{dat}{The data frame that was imputed and used as argument in the
@@ -16,10 +17,40 @@ from \code{dat}.}
 \item{ori}{Optional, if \code{ori} is specified, the imputed variables are
 appended to this data frame; else, a new data frame with the imputed
 variables is returned.}
+
+\item{summary}{After merging multiple imputed data, \code{summary} displays
+a graphical summary of the "quality" of the merged values, compared
+to the origuinal imputed values.
+\describe{
+  \item{\code{"dens"}}{
+    Creates a density plot, which shows the distribution of the mean
+    of the imputed values for each variable at each observation. The
+    larger the areas overlap, the better is the fit of the merged
+    value compared to the imputed value.
+  }
+  \item{\code{"hist"}}{
+    Similar to \code{summary = "dens"}, however, mean and merged
+    values are shown as histogram. Bins should have almost equal
+    height for both groups (mean and merged).
+  }
+  \item{\code{"sd"}}{
+    Creates a dot plot, where data points indicate the standard
+    deviation for all imputed values (y-axis) at each merged
+    value (x-axis) for all imputed variables. The higher the
+    standard deviation, the less precise is the imputation, and
+    hence the merged value.
+  }
+}}
+
+\item{filter}{A character vector with variable names that should be plotted.
+All non-defined variables will not be shown in the plot.}
 }
 \value{
-A data frame with imputed variables; or \code{ori} with
+A data frame with (merged) imputed variables; or \code{ori} with
         appended imputed variables, if \code{ori} was specified.
+        If \code{summary} is included, returns a list with the data frame
+        with (merged) imputed variables, and the data frame that was used
+        for plotting the summary.
 }
 \description{
 This function merges multiple imputed data frames from
