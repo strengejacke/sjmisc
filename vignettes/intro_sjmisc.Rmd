@@ -259,7 +259,7 @@ testit(dummy)
 
 ## Setting variable labels
 
-The `set_label()` function adds the variable label attribute to a vector. You can either return a new vecor, or label an existing vector
+The `set_label()` function adds the variable label attribute to a vector. You can either return a new vector, or label an existing vector
 ```{r}
 x <- sample(1:4, 10, replace = TRUE)
 
@@ -288,7 +288,7 @@ str(x)
 get_label(x)
 ```                     
 
-An alternative to `set_label()` is `var_labels()`, which also works within pipe-workflows. `var_labels()` requires names vectors as arguments to match the column names of the input, and set the associated variable labels.
+An alternative to `set_label()` is `var_labels()`, which also works within pipe-workflows. `var_labels()` requires named vectors as arguments to match the column names of the input, and set the associated variable labels.
 
 ```{r}
 x <- data.frame(
@@ -357,9 +357,29 @@ data(efc)
 str(efc$c84cop3)
 
 efc$c84cop3 <- set_na(efc$c84cop3, na = c(2, 3), as.tag = TRUE)
-get_na(efc$c84cop3)
+get_na(efc$c84cop3, as.tag = TRUE)
 
-get_na(replace_na(efc$c84cop3, value = 2, na.label = "restored NA", tagged.na = "2"))
+# this would replace all NA's into "2"
+dummy <- replace_na(efc$c84cop3, value = 2)
+
+# labels of former tagged NA's are preserved
+get_labels(dummy, drop.na = FALSE, include.values = "p")
+get_na(dummy, as.tag = TRUE)
+
+# No more NA values
+frq(dummy)
+
+
+# In this example, the tagged NA(2) is replaced with value 2
+# the new value label for value 2 is "restored NA"
+dummy <- replace_na(efc$c84cop3, value = 2, na.label = "restored NA", tagged.na = "2")
+
+# Only one tagged NA remains
+get_labels(dummy, drop.na = FALSE, include.values = "p")
+get_na(dummy, as.tag = TRUE)
+
+# Some NA values remain
+frq(dummy)
 ```
 
 ## Replacing values labels

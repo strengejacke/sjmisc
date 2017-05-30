@@ -10,7 +10,7 @@ add_labels(x, ..., labels, value)
 
 replace_labels(x, ..., labels, value)
 
-remove_labels(x, ..., value)
+remove_labels(x, ..., labels, value)
 }
 \arguments{
 \item{x}{A vector or data frame.}

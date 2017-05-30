@@ -143,13 +143,13 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
       x[which(haven::na_tag(x) == haven::na_tag(tagged.na))] <- value
 
       # remove label
-      x <- suppressMessages(remove_labels(x, value = tagged.na))
+      x <- suppressMessages(remove_labels(x, labels = tagged.na))
     } else {
       x[is.na(x)] <- value
     }
 
     # add NA label
-    if (!is.null(na.label)) x <- add_labels(x, value = na.vec)
+    if (!is.null(na.label)) x <- add_labels(x, labels = na.vec)
   } else {
     message("`x` has no missings.")
   }
