@@ -1,6 +1,8 @@
 #' @rdname add_labels
 #' @export
 remove_labels <- function(x, ..., labels, value) {
+  .Deprecated("remove_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::remove_labels() instead.")
+
   # check deprecated arguments
   if (!missing(value)) {
     message("Argument `value` is deprecated. Please use `labels` instead.")

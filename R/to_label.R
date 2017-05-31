@@ -28,8 +28,7 @@
 #'           if \code{...} is not specified, applies to all variables in the
 #'           data frame.
 #'
-#' @note Value label attributes (see \code{\link{get_labels}})
-#'       will be removed when converting variables to factors.
+#' @note Value label attributes will be removed when converting variables to factors.
 #'
 #' @details See 'Details' in \code{\link{get_na}}.
 #'
@@ -138,15 +137,17 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
     iv <- "p"
   else
     iv <- 0
+
   # retrieve variable label
   if (is.null(var.label))
-    var_lab <- get_label(x)
+    var_lab <- sjlabelled::get_label(x)
   else
     var_lab <- var.label
+
   # keep missings?
   if (!drop.na) {
     # get NA
-    current.na <- get_na(x)
+    current.na <- sjlabelled::get_na(x)
     # any NA?
     if (!is.null(current.na)) {
       # we have to set all NA labels at once, else NA loses tag
@@ -164,17 +165,29 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
     # those into regular NA's, because else saving would not work
     x[is.na(x)] <- NA
   }
+
   # get value labels
-  vl <- get_labels(x, attr.only = TRUE, include.values = iv,
-                   include.non.labelled = add.non.labelled,
-                   drop.na = drop.na)
+  vl <-
+    sjlabelled::get_labels(
+      x,
+      attr.only = TRUE,
+      include.values = iv,
+      include.non.labelled = add.non.labelled,
+      drop.na = drop.na
+    )
+
   # check if we have any labels, else
   # return variable "as is"
   if (!is.null(vl)) {
     # get associated values for value labels
-    vnn <- get_labels(x, attr.only = TRUE, include.values = "n",
-                      include.non.labelled = add.non.labelled,
-                      drop.na = drop.na)
+    vnn <-
+      sjlabelled::get_labels(
+        x,
+        attr.only = TRUE,
+        include.values = "n",
+        include.non.labelled = add.non.labelled,
+        drop.na = drop.na
+      )
 
     # convert to numeric
     vn <- suppressWarnings(as.numeric(names(vnn)))
@@ -198,8 +211,10 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
   }
   # drop unused levels?
   if (drop.levels) x <- droplevels(x)
+
   # set back variable labels
-  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, label = var_lab))
+  if (!is.null(var_lab)) x <- suppressWarnings(sjlabelled::set_label(x, label = var_lab))
+
   # return as factor
   return(x)
 }
@@ -224,8 +239,6 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #'           to character variables;
 #'           if \code{...} is not specified, applies to all variables in the
 #'           data frame.
-#'
-#' @details See 'Details' in \code{\link{get_na}}.
 #'
 #' @examples
 #' data(efc)

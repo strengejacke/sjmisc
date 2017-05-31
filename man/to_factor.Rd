@@ -40,7 +40,6 @@ This function converts a variable into a factor, but preserves
 \code{to_factor} converts numeric values into a factor with numeric
            levels. \code{\link{to_label}}, however, converts a vector into
            a factor and uses value labels as factor levels.
-           Furthermore, see 'Details' in \code{\link{get_na}}.
 }
 \note{
 This function is intended for use with vectors that have value and variable
@@ -50,7 +49,7 @@ This function is intended for use with vectors that have value and variable
        Adding label attributes is automatically done by importing data sets
        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
        Else, value and variable labels can be manually added to vectors
-       with \code{\link{set_labels}} and \code{\link{set_label}}.
+       with \code{\link[sjlabelled]{set_labels}} and \code{\link[sjlabelled]{set_label}}.
 }
 \examples{
 data(efc)

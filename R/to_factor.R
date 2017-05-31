@@ -36,12 +36,11 @@
 #'        Adding label attributes is automatically done by importing data sets
 #'        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
 #'        Else, value and variable labels can be manually added to vectors
-#'        with \code{\link{set_labels}} and \code{\link{set_label}}.
+#'        with \code{\link[sjlabelled]{set_labels}} and \code{\link[sjlabelled]{set_label}}.
 #'
 #' @details \code{to_factor} converts numeric values into a factor with numeric
 #'            levels. \code{\link{to_label}}, however, converts a vector into
 #'            a factor and uses value labels as factor levels.
-#'            Furthermore, see 'Details' in \code{\link{get_na}}.
 #'
 #' @examples
 #' data(efc)
@@ -112,9 +111,16 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   if (is.factor(x)) return(x)
 
   # retrieve value labels
-  lab <- get_labels(x, attr.only = TRUE, include.values = "n", include.non.labelled = add.non.labelled)
+  lab <-
+    sjlabelled::get_labels(
+      x,
+      attr.only = TRUE,
+      include.values = "n",
+      include.non.labelled = add.non.labelled
+    )
+
   # retrieve variable labels
-  varlab <- get_label(x)
+  varlab <- sjlabelled::get_label(x)
 
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
@@ -134,9 +140,11 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   x <- factor(x, exclude = c(NA_character_, "NaN"))
 
   # set back value labels
-  x <- suppressMessages(set_labels(x, labels = lab.switch, force.labels = TRUE, force.values = FALSE))
+  x <- suppressMessages(sjlabelled::set_labels(x, labels = lab.switch, force.labels = TRUE, force.values = FALSE))
+
   # set back variable labels
-  x <- set_label(x, label = varlab)
+  x <- sjlabelled::set_label(x, label = varlab)
+
   # change reference level?
   if (!is.null(ref.lvl)) x <- ref_lvl(x, lvl = ref.lvl)
 

@@ -102,7 +102,7 @@ to_value_helper <- function(x, start.at, keep.labels) {
   varlab <- get_label(x)
 
   # get labels
-  labels <- get_labels(x, attr.only = T, include.values = "n")
+  labels <- sjlabelled::get_labels(x, attr.only = T, include.values = "n")
 
   # is character?
   if (is.character(x)) {
@@ -153,8 +153,8 @@ to_value_helper <- function(x, start.at, keep.labels) {
 
   # check if we should set back former variable and value labels
   if (keep.labels) {
-    new_value <- set_labels(new_value, labels = labels, force.labels = T)
-    new_value <- set_label(new_value, label = varlab)
+    new_value <- sjlabelled::set_labels(new_value, labels = labels, force.labels = T)
+    new_value <- sjlabelled::set_label(new_value, label = varlab)
   }
 
   new_value

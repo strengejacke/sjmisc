@@ -101,15 +101,20 @@ std_helper <- function(x, include.fac, standardize) {
     else
       return(x)
   }
+
   # remove missings
   tmp <- stats::na.omit(x)
+
   # save value label, if any
-  lab <- get_label(x)
+  lab <- sjlabelled::get_label(x)
+
   # now center and standardize
   tmp <- tmp - mean(tmp)
   if (standardize) tmp <- tmp / stats::sd(tmp)
+
   # and fill in values in original vector
   x[!is.na(x)] <- tmp
+
   # add back label
-  set_label(x, label = lab)
+  sjlabelled::set_label(x, label = lab)
 }

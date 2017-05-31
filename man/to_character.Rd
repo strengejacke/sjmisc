@@ -49,9 +49,6 @@ This function converts (replaces) variable values (also of factors
                them as character vector. This is just a convenient wrapper for
                \code{as.character(to_label(x))}.
 }
-\details{
-See 'Details' in \code{\link{get_na}}.
-}
 \note{
 Value and variable label attributes (see, for instance, \code{\link{get_labels}}
         or \code{\link{set_labels}}) will be removed  when converting variables to factors.

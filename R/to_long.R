@@ -48,33 +48,55 @@
 #' tidyr::gather(mydat, "time", "score", score_t1, score_t2, score_t3)
 #'
 #' # gather multiple columns. both time and speed are gathered.
-#' to_long(mydat, "time", c("score", "speed"),
-#'         c("score_t1", "score_t2", "score_t3"),
-#'         c("speed_t1", "speed_t2", "speed_t3"))
+#' to_long(
+#'   data = mydat,
+#'   keys = "time",
+#'   values = c("score", "speed"),
+#'   c("score_t1", "score_t2", "score_t3"),
+#'   c("speed_t1", "speed_t2", "speed_t3")
+#' )
 #'
 #' # gather multiple columns, use numeric key-value
-#' to_long(mydat, "time", c("score", "speed"),
-#'         c("score_t1", "score_t2", "score_t3"),
-#'         c("speed_t1", "speed_t2", "speed_t3"),
-#'         recode.key = TRUE)
+#' to_long(
+#'   data = mydat,
+#'   keys = "time",
+#'   values = c("score", "speed"),
+#'   c("score_t1", "score_t2", "score_t3"),
+#'   c("speed_t1", "speed_t2", "speed_t3"),
+#'   recode.key = TRUE
+#' )
 #'
 #' # gather multiple columns by colum names and colum indices
-#' to_long(mydat, "time", c("score", "speed"),
-#'         c("score_t1", "score_t2", "score_t3"),
-#'         c(6:8),
-#'         recode.key = TRUE)
+#' to_long(
+#'   data = mydat,
+#'   keys = "time",
+#'   values = c("score", "speed"),
+#'   c("score_t1", "score_t2", "score_t3"),
+#'   6:8,
+#'   recode.key = TRUE
+#' )
 #'
-#' # gather multiple columns, use separate key-column for each value-vector
-#' to_long(mydat, c("time_score", "time_speed"), c("score", "speed"),
-#'         c("score_t1", "score_t2", "score_t3"),
-#'         c("speed_t1", "speed_t2", "speed_t3"))
+#' # gather multiple columns, use separate key-columns
+#' # for each value-vector
+#' to_long(
+#'   data = mydat,
+#'   keys = c("time_score", "time_speed"),
+#'   values = c("score", "speed"),
+#'   c("score_t1", "score_t2", "score_t3"),
+#'   c("speed_t1", "speed_t2", "speed_t3")
+#' )
 #'
 #' # gather multiple columns, label columns
-#' mydat <- to_long(mydat, "time", c("score", "speed"),
-#'                  c("score_t1", "score_t2", "score_t3"),
-#'                  c("speed_t1", "speed_t2", "speed_t3"),
-#'                  labels = c("Test Score", "Time needed to finish"))
+#' mydat <- to_long(
+#'   data = mydat,
+#'   keys = "time",
+#'   values = c("score", "speed"),
+#'   c("score_t1", "score_t2", "score_t3"),
+#'   c("speed_t1", "speed_t2", "speed_t3"),
+#'   labels = c("Test Score", "Time needed to finish")
+#' )
 #'
+#' library(sjlabelled)
 #' str(mydat$score)
 #' get_label(mydat$speed)
 #' lbl_df(mydat)
@@ -87,18 +109,22 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
   data_cols <- eval(substitute(list(...)))
   # init output
   dummy <- list()
+
   # if we have just one key value, repeat it to required length
   if (length(keys) < length(data_cols))
     keys <- rep(keys, times = length(data_cols))
+
   # check for correct length
   if (length(values) < length(data_cols)) {
     stop("`values` must be of same length as column groups to gather.", call. = F)
   }
+
   # check for correct length
   if (!is.null(labels) && length(labels) < length(data_cols)) {
     warning("`labels` must be of same length as `values`. Dropping variable labels for gathered columns.")
     labels <- NULL
   }
+
   # check for numeric indices, and get column names then
   for (i in seq_len(length(data_cols))) {
     # check if all values are numeric
@@ -107,8 +133,10 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
       data_cols[[i]] <- colnames(data)[data_cols[[i]]]
     }
   }
+
   # get all columns that should be gathered
   all_data_cols <- unlist(data_cols)
+
   # iterate each column group
   for (i in seq_len(length(data_cols))) {
     # which of all column groups should be gathered in this step,
@@ -123,12 +151,14 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
       tmp[[keys[i]]] <- sort(to_value(tmp[[keys[i]]], keep.labels = FALSE))
     # set variable label
     if (!is.null(labels))
-      set_label(tmp[[values[i]]]) <- labels[i]
+      sjlabelled::set_label(tmp[[values[i]]]) <- labels[i]
     # add output to list
     dummy[[length(dummy) + 1]] <- tmp
   }
+
   # we have at least one gathered data frame
   mydat <- dummy[[1]]
+
   # if we have multiple column groups to gather, go on here
   if (length(dummy) > 1) {
     # iterate remaining groups

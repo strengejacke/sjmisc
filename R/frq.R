@@ -63,6 +63,7 @@
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @importFrom tibble add_row
+#' @importFrom sjlabelled get_label get_labels get_values
 #' @export
 frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 
@@ -134,10 +135,10 @@ frq_helper <- function(x, sort.frq, weight.by) {
   }
 
   # get value labels (if any)
-  labels <- get_labels(x, attr.only = T, include.values = "n", include.non.labelled = T)
+  labels <- sjlabelled::get_labels(x, attr.only = T, include.values = "n", include.non.labelled = T)
 
   # get variable label (if any)
-  varlab <- get_label(x)
+  varlab <- sjlabelled::get_label(x)
 
   # do we have a labelled vector?
   if (!is.null(labels)) {
@@ -258,10 +259,10 @@ get_grouped_title <- function(x, grps, i, sep = "\n") {
   var.name <- colnames(grps)[1]
 
   # find position of value labels for current group
-  lab.pos <- which(get_values(x[[var.name]]) == grps[[var.name]][i])
+  lab.pos <- which(sjlabelled::get_values(x[[var.name]]) == grps[[var.name]][i])
 
-  t1 <- get_label(x[[var.name]], def.value = var.name)
-  t2 <- get_labels(x[[var.name]])[lab.pos]
+  t1 <- sjlabelled::get_label(x[[var.name]], def.value = var.name)
+  t2 <- sjlabelled::get_labels(x[[var.name]])[lab.pos]
   title <- sprintf("%s: %s", t1, t2)
 
   # do we have another groupng variable?
@@ -270,10 +271,10 @@ get_grouped_title <- function(x, grps, i, sep = "\n") {
     var.name <- colnames(grps)[2]
 
     # find position of value labels for current group
-    lab.pos <- which(get_values(x[[var.name]]) == grps[[var.name]][i])
+    lab.pos <- which(sjlabelled::get_values(x[[var.name]]) == grps[[var.name]][i])
 
-    t1 <- get_label(x[[var.name]], def.value = var.name)
-    t2 <- get_labels(x[[var.name]])[lab.pos]
+    t1 <- sjlabelled::get_label(x[[var.name]], def.value = var.name)
+    t2 <- sjlabelled::get_labels(x[[var.name]])[lab.pos]
     title <- sprintf("%s%s%s: %s", title, sep, t1, t2)
   }
 

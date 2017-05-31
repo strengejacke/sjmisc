@@ -62,33 +62,55 @@ mydat <- data.frame(age = c(20, 30, 40),
 tidyr::gather(mydat, "time", "score", score_t1, score_t2, score_t3)
 
 # gather multiple columns. both time and speed are gathered.
-to_long(mydat, "time", c("score", "speed"),
-        c("score_t1", "score_t2", "score_t3"),
-        c("speed_t1", "speed_t2", "speed_t3"))
+to_long(
+  data = mydat,
+  keys = "time",
+  values = c("score", "speed"),
+  c("score_t1", "score_t2", "score_t3"),
+  c("speed_t1", "speed_t2", "speed_t3")
+)
 
 # gather multiple columns, use numeric key-value
-to_long(mydat, "time", c("score", "speed"),
-        c("score_t1", "score_t2", "score_t3"),
-        c("speed_t1", "speed_t2", "speed_t3"),
-        recode.key = TRUE)
+to_long(
+  data = mydat,
+  keys = "time",
+  values = c("score", "speed"),
+  c("score_t1", "score_t2", "score_t3"),
+  c("speed_t1", "speed_t2", "speed_t3"),
+  recode.key = TRUE
+)
 
 # gather multiple columns by colum names and colum indices
-to_long(mydat, "time", c("score", "speed"),
-        c("score_t1", "score_t2", "score_t3"),
-        c(6:8),
-        recode.key = TRUE)
+to_long(
+  data = mydat,
+  keys = "time",
+  values = c("score", "speed"),
+  c("score_t1", "score_t2", "score_t3"),
+  6:8,
+  recode.key = TRUE
+)
 
-# gather multiple columns, use separate key-column for each value-vector
-to_long(mydat, c("time_score", "time_speed"), c("score", "speed"),
-        c("score_t1", "score_t2", "score_t3"),
-        c("speed_t1", "speed_t2", "speed_t3"))
+# gather multiple columns, use separate key-columns
+# for each value-vector
+to_long(
+  data = mydat,
+  keys = c("time_score", "time_speed"),
+  values = c("score", "speed"),
+  c("score_t1", "score_t2", "score_t3"),
+  c("speed_t1", "speed_t2", "speed_t3")
+)
 
 # gather multiple columns, label columns
-mydat <- to_long(mydat, "time", c("score", "speed"),
-                 c("score_t1", "score_t2", "score_t3"),
-                 c("speed_t1", "speed_t2", "speed_t3"),
-                 labels = c("Test Score", "Time needed to finish"))
+mydat <- to_long(
+  data = mydat,
+  keys = "time",
+  values = c("score", "speed"),
+  c("score_t1", "score_t2", "score_t3"),
+  c("speed_t1", "speed_t2", "speed_t3"),
+  labels = c("Test Score", "Time needed to finish")
+)
 
+library(sjlabelled)
 str(mydat$score)
 get_label(mydat$speed)
 lbl_df(mydat)

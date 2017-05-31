@@ -9,7 +9,7 @@
 #' @param pattern Character string to be matched in \code{data}. May also be a
 #'          character vector of length > 1 (see 'Examples'). \code{pattern} is
 #'          searched for in column names and variable label attributes of
-#'          \code{data} (see \code{\link{get_label}}). \code{pattern} might also
+#'          \code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern} might also
 #'          be a regular-expression object, as returned by \code{\link[stringr]{regex}},
 #'          or any of \pkg{stringr}'s supported \code{\link[stringr]{modifiers}}.
 #' @param ignore.case Logical, whether matching should be case sensitive or not.
@@ -48,7 +48,7 @@
 #'
 #' @details This function searches for \code{pattern} in \code{data}'s column names
 #'            and - for labelled data - in all variable and value labels of \code{data}'s
-#'            variables (see \code{\link{get_label}} for details on variable labels and
+#'            variables (see \code{\link[sjlabelled]{get_label}} for details on variable labels and
 #'            labelled data). Search is performed using the
 #'            \code{\link[stringr]{str_detect}} functions; hence, regular
 #'            expressions are supported as well, by simply using
@@ -68,6 +68,7 @@
 #' find_var(efc, "cop", as.varlab = TRUE)
 #'
 #' # find variables with "dependency" in names and variable labels
+#' library(sjlabelled)
 #' find_var(efc, "dependency")
 #' get_label(efc$e42dep)
 #'
@@ -83,6 +84,7 @@
 #'
 #' @importFrom stringr regex coll
 #' @importFrom tibble as_tibble
+#' @importFrom sjlabelled get_labels
 #' @export
 find_var <- function(data,
                      pattern,
@@ -119,7 +121,7 @@ find_var <- function(data,
   # search for pattern in variable labels
   if (search %in% c("label", "name_label", "label_value", "all")) {
     # get labels and variable names
-    labels <- get_label(data)
+    labels <- sjlabelled::get_label(data)
 
     # check labels
     if (inherits(pattern, "regex"))
@@ -135,7 +137,7 @@ find_var <- function(data,
 
   # search for pattern in value labels
   if (search %in% c("value", "name_value", "label_value", "all")) {
-    labels <- get_labels(data, attr.only = F)
+    labels <- sjlabelled::get_labels(data, attr.only = F)
 
     # check value labels with regex
     if (inherits(pattern, "regex")) {
@@ -171,7 +173,7 @@ find_var <- function(data,
     return(tibble::tibble(
       col.nr = pos,
       var.name = colnames(data)[pos],
-      var.label = get_label(data[, pos], def.value = colnames(data)[pos])
+      var.label = sjlabelled::get_label(data[, pos], def.value = colnames(data)[pos])
     ))
   }
 

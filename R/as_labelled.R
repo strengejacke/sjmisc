@@ -45,6 +45,7 @@
 #' @importFrom stats na.omit
 #' @export
 as_labelled <- function(x, add.labels = FALSE, add.class = FALSE) {
+  .Deprecated("as_labelled", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::as_labelled() instead.")
   UseMethod("as_labelled")
 }
 

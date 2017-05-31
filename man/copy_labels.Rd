@@ -40,8 +40,3 @@ efc.sub <- copy_labels(efc.sub)
 str(efc.sub)
 
 }
-\seealso{
-\href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-           on working with labelled data, and \code{\link{remove_all_labels}} for
-           removing label attributes from data frames.
-}

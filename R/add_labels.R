@@ -99,6 +99,7 @@
 #' @importFrom tibble as_tibble
 #' @export
 add_labels <- function(x, ..., labels, value) {
+  .Deprecated("add_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::add_labels() instead.")
 
   # check deprecated arguments
   if (!missing(value)) {

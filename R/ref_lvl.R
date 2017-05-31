@@ -92,10 +92,10 @@ ref_lvl_helper <- function(x, value) {
   }
 
   # get value labels
-  val.labs <- get_labels(x)
+  val.labs <- sjlabelled::get_labels(x)
 
   # get variable label
-  var.lab <- get_label(x)
+  var.lab <- sjlabelled::get_label(x)
 
   # find position of reference level
   refpos <- which(vals == value)
@@ -113,7 +113,7 @@ ref_lvl_helper <- function(x, value) {
 
   # set back labels
   if (!is.null(var.lab) && !sjmisc::is_empty(var.lab)) {
-    set_label(x) <- var.lab
+    sjlabelled::set_label(x) <- var.lab
   }
 
   if (!is.null(val.labs)) {
@@ -122,7 +122,7 @@ ref_lvl_helper <- function(x, value) {
     # so we first need the "order" function to have numeric values from
     # 1 to length(x) - and a second "order" call to get the correct order
     # of these values.
-    x <- set_labels(x, labels = val.labs[order(order(neword))])
+    x <- sjlabelled::set_labels(x, labels = val.labs[order(order(neword))])
   }
 
   x

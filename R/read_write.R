@@ -51,6 +51,7 @@
 #' @importFrom haven read_spss read_sas read_dta
 #' @export
 read_spss <- function(path, atomic.to.fac = FALSE, tag.na = FALSE) {
+  .Deprecated("read_spss", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::read_spss() instead.")
   # read data file
   data.spss <- haven::read_spss(file = path, user_na = tag.na)
   # prepare tagged NA?

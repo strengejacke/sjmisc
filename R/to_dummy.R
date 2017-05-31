@@ -77,13 +77,14 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
 
 to_dummy_helper <- function(x, varname, suffix) {
   # check whether we have labels
-  labels <- get_labels(x, attr.only = F, include.values = "n", include.non.labelled = T)
+  labels <- sjlabelled::get_labels(x, attr.only = F, include.values = "n", include.non.labelled = T)
   # get resp. set variable label for new dummy variables
   # get variable label
-  label <- get_label(x, def.value = varname)
+  label <- sjlabelled::get_label(x, def.value = varname)
 
   # get unique values
   values <- sort(unique(x))
+
   # find which labels / categories were
   # actually used
   if (is.null(names(labels))) {
@@ -102,8 +103,10 @@ to_dummy_helper <- function(x, varname, suffix) {
     # copy only used labels
     labels <- labels[label.names %in% values]
   }
+
   # return value
   mydf <- data.frame()
+
   # create all dummy variables
   for (i in seq_len(length(values))) {
     # create dummy var
@@ -113,19 +116,22 @@ to_dummy_helper <- function(x, varname, suffix) {
     # copy dummy level
     dummy[which(x == values[i])] <- 1
     # set variable name
-    set_label(dummy) <- sprintf("%s: %s", label, labels[i])
+    sjlabelled::set_label(dummy) <- sprintf("%s: %s", label, labels[i])
     # bind to df
     if (nrow(mydf) == 0)
       mydf <- data.frame(dummy)
     else
       mydf <- cbind(mydf, dummy)
   }
+
   # prepare col.names
   col.nam <- rep(varname, ncol(mydf))
+
   if (suffix == "numeric")
     col.nam <- sprintf("%s_%i", col.nam, labels.nr)
   else
     col.nam <- sprintf("%s_%s", col.nam, labels)
+
   colnames(mydf) <- col.nam
 
   mydf

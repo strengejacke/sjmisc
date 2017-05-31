@@ -3,6 +3,7 @@
 ## General
 
 * **sjmisc** now uses dplyr's [tidyeval-approach](http://dplyr.tidyverse.org/articles/programming.html) to evaluate arguments. This means that the select-helper-functions (like `one_of()` or `contains()`) no longer need to be prefixed with a `~` when used as argument within **sjmisc**-functions.
+* All labelled-data functions will are now deprecated and will become defunct in future package versions. The labelled-data functions have been moved into a separate package, *sjlabelled*.
 
 ## New functions
 

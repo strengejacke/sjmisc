@@ -12,7 +12,7 @@
 #'            \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
 #'            }
 #' @param val.labels Optional character vector (of length two), to set value label
-#'          attributes of dichotomized variable (see \code{\link{set_labels}}).
+#'          attributes of dichotomized variable (see \code{\link[sjlabelled]{set_labels}}).
 #'          If \code{NULL} (default), no value labels will be set.
 #'
 #' @inheritParams to_factor
@@ -105,7 +105,7 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
   # do we have labels? if not, try to
   # automatically get variable labels
   if (is.null(var.label))
-    varlab <- get_label(x)
+    varlab <- sjlabelled::get_label(x)
   else
     varlab <- var.label
 
@@ -135,9 +135,9 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
 
   if (!as.num) x <- as.factor(x)
   # set back variable labels
-  if (!is.null(varlab)) x <- suppressWarnings(set_label(x, label = varlab))
+  if (!is.null(varlab)) x <- suppressWarnings(sjlabelled::set_label(x, label = varlab))
   # set value labels
-  if (!is.null(val.labels)) x <- suppressWarnings(set_labels(x, labels = val.labels))
+  if (!is.null(val.labels)) x <- suppressWarnings(sjlabelled::set_labels(x, labels = val.labels))
 
   x
 }

@@ -109,31 +109,40 @@ split_var <- function(x, ..., groupcount, as.num = FALSE, val.labels = NULL, var
 split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclusive) {
   # retrieve variable label
   if (is.null(var.label))
-    var_lab <- get_label(x)
+    var_lab <- sjlabelled::get_label(x)
   else
     var_lab <- var.label
+
   # do we have any value labels?
   val_lab <- val.labels
+
   # amount of "cuts" is groupcount - 1
   zaehler <- seq_len(groupcount - 1)
+
   # prepare division
   nenner <- rep(groupcount, length(zaehler))
+
   # get quantiles
   qu_prob <- zaehler / nenner
+
   # get quantile values
   grp_cuts <- stats::quantile(x, qu_prob, na.rm = TRUE)
+
   # cut variables into groups
   retval <- cut(x,
                 c(0, grp_cuts, max(x, na.rm = T)),
                 include.lowest = !inclusive,
                 right = inclusive)
+
   # rename factor levels
   levels(retval) <- seq_len(groupcount)
+
   # to numeric?
   if (as.num) retval <- to_value(retval)
+
   # set back variable and value labels
-  retval <- suppressWarnings(set_label(retval, label = var_lab))
-  retval <- suppressWarnings(set_labels(retval, labels = val_lab))
+  retval <- suppressWarnings(sjlabelled::set_label(retval, label = var_lab))
+  retval <- suppressWarnings(sjlabelled::set_labels(retval, labels = val_lab))
 
   # return value
   retval

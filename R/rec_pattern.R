@@ -14,7 +14,7 @@
 #' @return A list with two values:
 #'           \describe{
 #'            \item{\code{pattern}}{string pattern that can be used as \code{rec} argument for the \code{\link{rec}}-function.}
-#'            \item{\code{labels}}{the associated values labels that can be used with \code{\link{set_labels}}.}
+#'            \item{\code{labels}}{the associated values labels that can be used with \code{\link[sjlabelled]{set_labels}}.}
 #'           }
 #'
 #' @seealso \code{\link{group_var}} for recoding variables into smaller groups, and

@@ -5,7 +5,7 @@
 \alias{efc}
 \title{Sample dataset from the EUROFAMCARE project}
 \description{
-A SPSS sample data set, imported with the \code{\link[sjmisc]{read_spss}} function.
+A SPSS sample data set, imported with the \code{\link[sjlabelled]{read_spss}} function.
 }
 \examples{
 # Attach EFC-data
@@ -16,17 +16,5 @@ str(efc)
 
 # show first rows
 head(efc)
-
-# show variables
-\dontrun{
-library(sjPlot)
-view_df(efc)
-
-# show variable labels
-get_label(efc)
-
-# plot efc-data frame summary
-sjt.df(efc, alternateRowColor = TRUE)}
-
 }
 \keyword{data}

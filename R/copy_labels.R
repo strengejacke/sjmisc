@@ -7,10 +7,6 @@
 #'                labels back to subsetted data frames that have been subsetted, for instance,
 #'                with \code{\link{subset}}.
 #'
-#' @seealso \href{http://www.strengejacke.de/sjPlot/labelleddata/}{sjPlot-manual}
-#'            on working with labelled data, and \code{\link{remove_all_labels}} for
-#'            removing label attributes from data frames.
-#'
 #' @param df_new The new, subsetted data frame.
 #' @param df_origin The original data frame where the subset (\code{df_new}) stems from;
 #'          use \code{NULL}, if value and variable labels from \code{df_new} should be removed.
@@ -34,6 +30,7 @@
 #'
 #' @export
 copy_labels <- function(df_new, df_origin = NULL) {
+  .Deprecated("copy_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::copy_labels() instead.")
   # check if old df is NULL. if so, we remove all labels
   # from the data frame.
   if (is.null(df_origin)) {

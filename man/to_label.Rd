@@ -54,8 +54,7 @@ This function converts (replaces) values of a variable (also of factors
 See 'Details' in \code{\link{get_na}}.
 }
 \note{
-Value label attributes (see \code{\link{get_labels}})
-      will be removed when converting variables to factors.
+Value label attributes will be removed when converting variables to factors.
 }
 \examples{
 data(efc)

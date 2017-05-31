@@ -82,7 +82,7 @@ Please note following behaviours of the function:
         \item the \code{"else"}-token should always be the last argument in the \code{rec}-string.
         \item Non-matching values will be set to \code{NA}, unless captured by the \code{"else"}-token.
         \item Tagged NA values (see \code{\link[haven]{tagged_na}}) and their value labels will be preserved when copying NA values to the recoded vector with \code{"else=copy"}.
-        \item Variable label attributes (see, for instance, \code{\link{get_label}}) are preserved (unless changed via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
+        \item Variable label attributes (see, for instance, \code{\link[sjlabelled]{get_label}}) are preserved (unless changed via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
         \item If \code{x} is a data frame, all variables should have the same categories resp. value range (else, see second bullet, \code{NA}s are produced).
       }
 }

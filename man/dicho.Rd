@@ -32,7 +32,7 @@ If \code{NULL} (default), variable label attribute of \code{x} will
 be used (if present). If empty, variable label attributes will be removed.}
 
 \item{val.labels}{Optional character vector (of length two), to set value label
-attributes of dichotomized variable (see \code{\link{set_labels}}).
+attributes of dichotomized variable (see \code{\link[sjlabelled]{set_labels}}).
 If \code{NULL} (default), no value labels will be set.}
 
 \item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,

@@ -21,8 +21,7 @@
 #' @return \code{x} with recoded category values, where \code{lowest} indicates the lowest
 #'           value;  If \code{x} is a data frame, only the recoded variables will be returned.
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are preserved.
+#' @note Value and variable label attributes are preserved.
 #'
 #' @examples
 #' # recode 1-4 to 0-3
@@ -98,15 +97,18 @@ recode_to <- function(x, ..., lowest = 0, highest = -1, append = FALSE, suffix =
 }
 
 
+#' @importFrom sjlabelled set_label set_labels
 rec_to_helper <- function(x, lowest, highest) {
   # retrieve value labels
-  val_lab <- get_labels(x,
-                        attr.only = TRUE,
-                        include.values = NULL,
-                        include.non.labelled = TRUE)
+  val_lab <- sjlabelled::get_labels(
+    x,
+    attr.only = TRUE,
+    include.values = NULL,
+    include.non.labelled = TRUE
+  )
 
   # retrieve variable label
-  var_lab <- get_label(x)
+  var_lab <- sjlabelled::get_label(x)
 
   # check if factor
   if (is.factor(x)) {
@@ -127,8 +129,8 @@ rec_to_helper <- function(x, lowest, highest) {
   if (highest > lowest) x[x > highest] <- NA
 
   # set back labels, if we have any
-  if (!is.null(val_lab)) x <- suppressWarnings(set_labels(x, labels = val_lab))
-  if (!is.null(var_lab)) x <- suppressWarnings(set_label(x, label = var_lab))
+  if (!is.null(val_lab)) x <- suppressWarnings(sjlabelled::set_labels(x, labels = val_lab))
+  if (!is.null(var_lab)) x <- suppressWarnings(sjlabelled::set_label(x, label = var_lab))
 
   # return recoded x
   x

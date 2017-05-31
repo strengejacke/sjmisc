@@ -3,7 +3,7 @@
 #' @name efc
 #' @keywords data
 #'
-#' @description A SPSS sample data set, imported with the \code{\link[sjmisc]{read_spss}} function.
+#' @description A SPSS sample data set, imported with the \code{\link[sjlabelled]{read_spss}} function.
 #'
 #' @examples
 #' # Attach EFC-data
@@ -14,17 +14,5 @@
 #'
 #' # show first rows
 #' head(efc)
-#'
-#' # show variables
-#' \dontrun{
-#' library(sjPlot)
-#' view_df(efc)
-#'
-#' # show variable labels
-#' get_label(efc)
-#'
-#' # plot efc-data frame summary
-#' sjt.df(efc, alternateRowColor = TRUE)}
-#'
 NULL
 

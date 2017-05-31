@@ -91,7 +91,7 @@ If \code{groupsize} is set to a specific value, the variable is recoded
            range), use the \code{\link{split_var}} function!
 }
 \note{
-Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
+Variable label attributes (see, for instance, \code{\link[sjlabelled]{set_label}}) are preserved.
       Usually you should use the same values for \code{groupsize} and
       \code{right.interval} in \code{group_label()} as used in the
       \code{group_var} function if you want matching labels for the related
@@ -109,6 +109,7 @@ print(age.grpvar)
 
 # histogram with EUROFAMCARE sample dataset
 # variable not grouped
+library(sjlabelled)
 data(efc)
 hist(efc$e17age, main = get_label(efc$e17age))
 

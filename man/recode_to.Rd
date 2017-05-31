@@ -52,8 +52,7 @@ Recodes (or "renumbers") the categories of variables into new category values, b
                1-4 to 0-3 etc.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) are preserved.
+Value and variable label attributes are preserved.
 }
 \examples{
 # recode 1-4 to 0-3

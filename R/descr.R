@@ -91,7 +91,7 @@ descr_helper <- function(dd, max.length) {
     tibble::rownames_to_column(var = "variable") %>%
     dplyr::select(-.data$vars, -.data$mad) %>%
     dplyr::mutate(
-      label = unname(get_label(dd, def.value = var.name)),
+      label = unname(sjlabelled::get_label(dd, def.value = var.name)),
       NA.prc = purrr::map_dbl(dv, ~ 100 * sum(is.na(.x)) / length(.x))
     ) %>%
     var_rename(median = "md")

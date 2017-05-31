@@ -2,12 +2,15 @@
 #' @export
 print.lbl_df <- function(x, ..., n = NULL, width = NULL) {
   # get labels
-  dlab <- get_label(x)
+  dlab <- sjlabelled::get_label(x)
+
   # if x of class tbl_df?
   if (!"tbl_df" %in% class(x))
     x <- tibble::as_tibble(x)
+
   # get df matrix
   dmat <- tibble::trunc_mat(x, n = n, width = width)
+
   # set labels, if we have any
   if (!is.null(dlab)) {
     # iterate all columns
@@ -17,6 +20,7 @@ print.lbl_df <- function(x, ..., n = NULL, width = NULL) {
       dmat[[1]][[i]][1] <- dlab[i]
     }
   }
+
   # use dplyr-print method now
   print(dmat, ..., n = n, width = width)
 }

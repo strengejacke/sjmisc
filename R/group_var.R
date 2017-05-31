@@ -31,7 +31,7 @@
 #'           \item For \code{group_label}, a string vector or a list of string vectors containing labels based on the grouped categories of \code{x}, formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
 #'         }
 #'
-#' @note Variable label attributes (see, for instance, \code{\link{set_label}}) are preserved.
+#' @note Variable label attributes (see, for instance, \code{\link[sjlabelled]{set_label}}) are preserved.
 #'       Usually you should use the same values for \code{groupsize} and
 #'       \code{right.interval} in \code{group_label()} as used in the
 #'       \code{group_var} function if you want matching labels for the related
@@ -72,6 +72,7 @@
 #'
 #' # histogram with EUROFAMCARE sample dataset
 #' # variable not grouped
+#' library(sjlabelled)
 #' data(efc)
 #' hist(efc$e17age, main = get_label(efc$e17age))
 #'
@@ -143,7 +144,7 @@ group_var <- function(x, ..., groupsize = 5, as.num = TRUE, right.interval = FAL
 
 g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   # do we have labels?
-  varlab <- get_label(x)
+  varlab <- sjlabelled::get_label(x)
 
   # group variable
   x <- group_helper(x, groupsize, right.interval, groupcount)
@@ -155,7 +156,7 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   if (as.num) x <- as.numeric(as.character(x))
 
   # set back variable labels
-  if (!is.null(varlab)) x <- set_label(x, label = varlab)
+  if (!is.null(varlab)) x <- sjlabelled::set_label(x, label = varlab)
 
   x
 }
@@ -192,13 +193,17 @@ group_labels <- function(x, ..., groupsize = 5, right.interval = FALSE, groupcou
 
 g_l_helper <- function(x, groupsize, right.interval, groupcount) {
   # do we have labels?
-  varlab <- get_label(x)
+  varlab <- sjlabelled::get_label(x)
+
   # group variable
   x <- group_helper(x, groupsize, right.interval, groupcount)
+
   # Gruppen holen
   lvl <- levels(x)
+
   # rückgabewert init
   retval <- rep(c(""), length(lvl))
+
   # alle Gruppierungen durchgehen
   for (i in seq_len(length(lvl))) {
     # Länge jedes Labels der Gruppeneinteilungen auslesen
@@ -212,6 +217,7 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
     lower <- as.numeric(subs[[1]][1])
     # Obergrenze als Zahlenwert
     upper <- as.numeric(subs[[1]][2])
+
     # Prüfen, welche Intervallgrenze ein-
     # und welche ausgeschlossen werden soll
     if (right.interval) {
@@ -222,8 +228,9 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
     # Rückgabe des Strings
     retval[i] <- c(paste(lower, "-", upper, sep = ""))
   }
+
   # set back variable labels
-  if (!is.null(varlab)) retval <- set_label(retval, label = varlab)
+  if (!is.null(varlab)) retval <- sjlabelled::set_label(retval, label = varlab)
 
   retval
 }
