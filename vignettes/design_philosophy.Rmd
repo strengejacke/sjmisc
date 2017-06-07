@@ -68,7 +68,7 @@ There are two types of function designs:
 
 ### coercing/converting functions
 
-Functions like `to_factor()` or `add_labels()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument _without any new variables_. The variables specified in the `...`-ellipses argument are converted (overwritten), all other variables remain unchanged.
+Functions like `to_factor()` or `to_label()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument _without any new variables_. The variables specified in the `...`-ellipses argument are converted (overwritten), all other variables remain unchanged.
 
 ```{r}
 to_factor(efc, e42dep, e16sex)

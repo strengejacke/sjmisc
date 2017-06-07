@@ -21,6 +21,7 @@
 #'
 #' @export
 remove_all_labels <- function(x) {
+  .Deprecated("remove_all_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::remove_all_labels() instead.")
   UseMethod("remove_all_labels")
 }
 

@@ -132,5 +132,6 @@ str_pos <- function(search.string,
 
   # return result
   if (length(indices) > 0) return(sort(unique(indices)))
-  return(-1)
+
+  -1
 }

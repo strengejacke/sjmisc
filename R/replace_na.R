@@ -117,6 +117,8 @@ replace_na <- function(x, ..., value, na.label = NULL, tagged.na = NULL) {
   x
 }
 
+
+#' @importFrom sjlabelled remove_labels add_labels
 replace_na_helper <- function(x, value, na.label, tagged.na) {
   # create named vector, for labelleing
   if (!is.null(na.label)) {
@@ -143,13 +145,13 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
       x[which(haven::na_tag(x) == haven::na_tag(tagged.na))] <- value
 
       # remove label
-      x <- suppressMessages(remove_labels(x, labels = tagged.na))
+      x <- suppressMessages(sjlabelled::remove_labels(x, labels = tagged.na))
     } else {
       x[is.na(x)] <- value
     }
 
     # add NA label
-    if (!is.null(na.label)) x <- add_labels(x, labels = na.vec)
+    if (!is.null(na.label)) x <- sjlabelled::add_labels(x, labels = na.vec)
   } else {
     message("`x` has no missings.")
   }

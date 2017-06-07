@@ -3,16 +3,12 @@
 \alias{sjmisc-package}
 \alias{sjmisc}
 \docType{package}
-\title{Data Transformation and Labelled Data Utility Functions}
+\title{Data and Variable Transformation Functions}
 \description{
 
 \strong{Purpose of this package}
 
-Collection of miscellaneous utility functions (especially intended for people coming from other statistical software packages like 'SPSS', and/or who are new to R), supporting following common tasks when working with data:
-\itemize{
-  \item Reading and writing data between R and other statistical software packages like 'SPSS', 'SAS' or 'Stata' and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
-  \item Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
-}
+Collection of miscellaneous utility functions, supporting data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data, and all integrate seamlessly into a 'tidyverse'-workflow.
 
 \strong{Design philosophy - consistent api}
 
@@ -24,7 +20,7 @@ There are two types of function designs:
     Functions like \code{rec()} or \code{dicho()}, which transform or recode variables, typically do \emph{not} return the complete data frame that was given as first argument, but only the transformed and recoded variables specified in the \code{...}-ellipses argument. The variables usually get a suffix, so you can bind these variables as new columns to a data frame.
   }
   \item{\emph{coercing/converting functions}}{
-    Functions like \code{to_factor()} or \code{add_labels()}, which convert variables into other types or add additional information like variable or value labels as attribute, typically return the complete data frame that was given as first argument. The variables specified in the \code{...}-ellipses argument are converted, all other variables remain unchanged.
+    Functions like \code{to_factor()} or \code{to_label()}, which convert variables into other types or add additional information like variable or value labels as attribute, typically return the complete data frame that was given as first argument. The variables specified in the \code{...}-ellipses argument are converted, all other variables remain unchanged.
   }
 }
 }

@@ -9,6 +9,7 @@
 
 * `row_count()` to count specific values in a data frame per observation.
 * `col_count()` to count specific values in a data frame per variable.
+* `str_start()` and `str_end()` to find starting and end indices of patterns inside strings.
 
 ## Changes to functions
 

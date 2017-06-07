@@ -31,6 +31,8 @@
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 unlabel <- function(x) {
+  .Deprecated("unlabel", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::unlabel() instead.")
+
   # check if complete data frame or only single
   # vector should be converted
   if (is.data.frame(x)) {

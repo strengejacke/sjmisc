@@ -149,6 +149,7 @@
 #' @export
 get_labels <- function(x, attr.only = FALSE, include.values = NULL,
                        include.non.labelled = FALSE, drop.na = TRUE, drop.unused = FALSE) {
+  .Deprecated("get_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::get_labels() instead.")
   UseMethod("get_labels")
 }
 

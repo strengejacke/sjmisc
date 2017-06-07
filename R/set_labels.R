@@ -154,6 +154,8 @@ set_labels <- function(x, ...,
                        force.values = TRUE,
                        drop.na = TRUE) {
 
+  .Deprecated("set_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::set_labels() instead.")
+
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

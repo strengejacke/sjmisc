@@ -27,6 +27,7 @@
 #'
 #' @export
 get_note <- function(x) {
+  .Deprecated("get_note", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::get_note() instead.")
   attr(x, "note", exact = TRUE)
 }
 
@@ -57,7 +58,9 @@ get_note <- function(x) {
 #'
 #' @export
 set_note <- function(x, value = NULL) {
-  if (is.null(value) || sjmisc::is_empty(value)) {
+  .Deprecated("set_note", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::set_note() instead.")
+
+    if (is.null(value) || sjmisc::is_empty(value)) {
     attr(x, "note") <- NULL
   } else {
     attr(x, "note") <- value

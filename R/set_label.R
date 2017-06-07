@@ -91,6 +91,7 @@
 #'
 #' @export
 set_label <- function(x, label, attr.string = NULL, lab) {
+  .Deprecated("set_label", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::set_label() instead.")
 
   # check deprecated arguments
   if (!missing(lab)) {

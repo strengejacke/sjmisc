@@ -1,6 +1,8 @@
 #' @rdname zap_labels
 #' @export
 fill_labels <- function(x, ...) {
+  .Deprecated("fill_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::fill_labels() instead.")
+
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

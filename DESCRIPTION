@@ -1,22 +1,16 @@
 Package: sjmisc
 Type: Package
 Encoding: UTF-8
-Title: Data Transformation and Labelled Data Utility Functions
+Title: Data and Variable Transformation Functions
 Version: 2.4.0.9000
 Date: 2017-04-06
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
-Description: Collection of miscellaneous utility functions (especially intended
-    for people coming from other statistical software packages like 'SPSS', and/
-    or who are new to R), supporting following common tasks when working with
-    data : 1) Reading and writing data between R and other statistical software
-    packages like 'SPSS', 'SAS' or 'Stata' and working with labelled data; this
-    includes easy ways to get and set label attributes, to convert labelled
-    vectors into factors (and vice versa), or to deal with multiple declared
-    missing values etc. 2) Data transformation tasks like recoding,
-    dichotomizing or grouping variables, setting and replacing missing values.
-    The data transformation functions also support labelled data, and all integrate
-    seamlessly into a 'tidyverse'-workflow.
+Description: Collection of miscellaneous utility functions, supporting data 
+    transformation tasks like recoding, dichotomizing or grouping variables, 
+    setting and replacing missing values. The data transformation functions 
+    also support labelled data, and all integrate seamlessly into a 
+    'tidyverse'-workflow.
 License: GPL-3
 Depends:
     R (>= 3.2),

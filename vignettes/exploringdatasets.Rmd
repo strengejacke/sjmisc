@@ -10,10 +10,10 @@ vignette: >
 ---
 
 ```{r echo = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, comment = "#>")
 ```
 
-Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the [tidyverse](http://tidyverse.org/) or related packages. The **sjmisc**-package fits into this workflow, especially when you work with [labelled data](labelleddata.html), because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.
+Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the [tidyverse](http://tidyverse.org/) or related packages. The **sjmisc**-package fits into this workflow, especially when you work with [labelled data](https://cran.r-project.org/package=sjlabelled), because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.
 
 The examples are based on data from the EUROFAMCARE project, a survey on the situation of family carers of older people in Europe. The sample data set `efc` is part of this package. Let us see how the family carer's gender and subjective perception of negative impact of care as well as the cared-for person's dependency are associated with the family carer's quality of life.
 

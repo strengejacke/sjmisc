@@ -49,6 +49,7 @@
 #' @importFrom haven is_tagged_na na_tag
 #' @export
 get_values <- function(x, sort.val = TRUE, drop.na = FALSE) {
+  .Deprecated("get_values", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::get_values() instead.")
   UseMethod("get_values")
 }
 

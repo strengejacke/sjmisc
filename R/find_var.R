@@ -82,7 +82,7 @@
 #' library(sjPlot)
 #' view_df(res)}
 #'
-#' @importFrom stringr regex coll
+#' @importFrom stringr regex coll str_detect
 #' @importFrom tibble as_tibble
 #' @importFrom sjlabelled get_labels
 #' @export

@@ -186,6 +186,7 @@ atomic_to_fac <- function(data.spss, attr.string) {
 #' @rdname read_spss
 #' @export
 read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
+  .Deprecated("read_sas", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::read_sas() instead.")
   # read data file
   data <- haven::read_sas(data_file = path, catalog_file = path.cat, encoding = enc)
 
@@ -214,6 +215,7 @@ read_sas <- function(path, path.cat = NULL, atomic.to.fac = FALSE, enc = NULL) {
 #' @rdname read_spss
 #' @export
 read_stata <- function(path, atomic.to.fac = FALSE, enc = NULL) {
+  .Deprecated("read_stata", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::read_stata() instead.")
   # read data file
   data <- haven::read_dta(file = path, encoding = enc)
 

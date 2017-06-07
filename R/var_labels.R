@@ -1,6 +1,8 @@
 #' @rdname set_label
 #' @export
 var_labels <- function(x, ...) {
+  .Deprecated("var_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::var_labels() instead.")
+
   # get dots
   .dots <- match.call(expand.dots = FALSE)$`...`
 

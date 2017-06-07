@@ -114,6 +114,8 @@
 #' @importFrom stats na.omit
 #' @export
 zap_labels <- function(x, ...) {
+  .Deprecated("zap_labels", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::zap_labels() instead.")
+
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -136,6 +138,7 @@ zap_labels <- function(x, ...) {
 #' @importFrom stats na.omit
 #' @export
 zap_unlabelled <- function(x, ...) {
+  .Deprecated("zap_unlabelled", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::zap_unlabelled() instead.")
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -189,6 +192,8 @@ zap_unlabelled <- function(x, ...) {
 #' @importFrom stats na.omit
 #' @export
 zap_na_tags <- function(x, ...) {
+  .Deprecated("zap_na_tags", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::zap_na_tags() instead.")
+
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -246,6 +251,8 @@ zap_na_tags <- function(x, ...) {
 #' @importFrom tibble as_tibble
 #' @export
 zap_inf <- function(x, ...) {
+  .Deprecated("zap_inf", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::zap_inf() instead.")
+
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

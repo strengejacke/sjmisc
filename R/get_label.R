@@ -67,6 +67,8 @@
 #'
 #' @export
 get_label <- function(x, ..., def.value = NULL) {
+  .Deprecated("get_label", package = "sjlabelled", msg = "This function will be removed in future versions of sjmisc and has been moved to package 'sjlabelled'. Please use sjlabelled::get_label() instead.")
+
   # evaluate arguments, generate data
   x <- get_dot_data(x, dplyr::quos(...))
   # auto-detect variable label attribute
