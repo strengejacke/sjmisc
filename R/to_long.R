@@ -103,12 +103,11 @@
 #'
 #' @importFrom tidyr gather_
 #' @importFrom dplyr bind_cols
+#' @importFrom purrr map
 #' @export
 to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) {
   # get variable names for gather columns
-  data_cols <- eval(substitute(list(...)))
-  # init output
-  dummy <- list()
+  data_cols <- list(...)
 
   # if we have just one key value, repeat it to required length
   if (length(keys) < length(data_cols))
@@ -137,24 +136,29 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
   # get all columns that should be gathered
   all_data_cols <- unlist(data_cols)
 
+
   # iterate each column group
-  for (i in seq_len(length(data_cols))) {
+  dummy <- purrr::map(seq_len(length(data_cols)), function(i) {
     # which of all column groups should be gathered in this step,
     # which not?
     remove_cols <- all_data_cols[!all_data_cols %in% data_cols[[i]]]
+
     # remove those columns that should not be gathered
     tmp <- data[, -match(remove_cols, colnames(data))]
     # gather data frame
     tmp <- suppressWarnings(tidyr::gather_(tmp, keys[i], values[i], data_cols[[i]]))
+
     # need to recode key-value?
     if (recode.key)
       tmp[[keys[i]]] <- sort(to_value(tmp[[keys[i]]], keep.labels = FALSE))
+
     # set variable label
     if (!is.null(labels))
       sjlabelled::set_label(tmp[[values[i]]]) <- labels[i]
-    # add output to list
-    dummy[[length(dummy) + 1]] <- tmp
-  }
+
+    tmp
+  })
+
 
   # we have at least one gathered data frame
   mydat <- dummy[[1]]
