@@ -84,7 +84,7 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
     # now plot everything
     for (i in seq_len(nrow(grps))) {
       # copy back labels to grouped data frame
-      tmp <- copy_labels(grps$data[[i]], dd)
+      tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
       # print title for grouping
       cat(sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n")))
       # print frequencies

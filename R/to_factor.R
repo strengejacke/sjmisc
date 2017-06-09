@@ -140,7 +140,15 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
   x <- factor(x, exclude = c(NA_character_, "NaN"))
 
   # set back value labels
-  x <- suppressMessages(sjlabelled::set_labels(x, labels = lab.switch, force.labels = TRUE, force.values = FALSE))
+  x <-
+    suppressMessages(
+      sjlabelled::set_labels(
+        x,
+        labels = lab.switch,
+        force.labels = TRUE,
+        force.values = FALSE
+      )
+    )
 
   # set back variable labels
   x <- sjlabelled::set_label(x, label = varlab)

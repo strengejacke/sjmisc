@@ -56,6 +56,7 @@
 #' set_na(dummy, na = c("Refused" = 5), as.tag = TRUE)
 #' # see different missing types
 #' library(haven)
+#' library(sjlabelled)
 #' print_tagged_na(set_na(dummy, na = c("Refused" = 5), as.tag = TRUE))
 #'
 #'
@@ -182,7 +183,7 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
       # if we have no NA, coercing to numeric worked. Now get these
       # NA values and remove value labels from vector
       if (!anyNA(na.values)) {
-        x <- suppressWarnings(sjlabelled::remove_labels(x, value = value))
+        x <- suppressWarnings(sjlabelled::remove_labels(x, labels = value))
         value <- na.values
       }
     }

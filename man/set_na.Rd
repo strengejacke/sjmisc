@@ -69,6 +69,7 @@ table(dummy, useNA = "always")
 set_na(dummy, na = c("Refused" = 5), as.tag = TRUE)
 # see different missing types
 library(haven)
+library(sjlabelled)
 print_tagged_na(set_na(dummy, na = c("Refused" = 5), as.tag = TRUE))
 
 

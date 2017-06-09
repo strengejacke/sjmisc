@@ -97,7 +97,7 @@ merge_df <- function(x1, x2, ..., id = NULL) {
 merge_df_helper <- function(x1, x2) {
   # check if both data frames have same column names
   # in case, someone forgets that rbind exists...
-  if (all.equal(sort(colnames(x1)), sort(colnames(x2)))) {
+  if (isTRUE(all.equal(sort(colnames(x1)), sort(colnames(x2))))) {
     # bind rows
     tmp <- dplyr::bind_rows(x1, x2)
     # copy attributes

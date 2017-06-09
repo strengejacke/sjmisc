@@ -63,7 +63,7 @@
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @importFrom tibble add_row
-#' @importFrom sjlabelled get_label get_labels get_values
+#' @importFrom sjlabelled get_label get_labels get_values copy_labels
 #' @export
 frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 
@@ -84,7 +84,7 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
     # now plot everything
     for (i in seq_len(nrow(grps))) {
       # copy back labels to grouped data frame
-      tmp <- copy_labels(grps$data[[i]], x)
+      tmp <- sjlabelled::copy_labels(grps$data[[i]], x)
 
       # print title for grouping
       cat(sprintf("\nGrouped by:\n%s\n\n", get_grouped_title(x, grps, i, sep = "\n")))

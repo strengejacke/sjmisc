@@ -202,7 +202,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
       # set new levels
       levels(x) <- c(vl, remain_labels)
       # remove attributes
-      x <- remove_all_labels(x)
+      x <- sjlabelled::remove_all_labels(x)
     } else {
       for (i in seq_len(length(vl))) x[x == vn[i]] <- vl[i]
       # to factor
@@ -216,7 +216,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
   if (!is.null(var_lab)) x <- suppressWarnings(sjlabelled::set_label(x, label = var_lab))
 
   # return as factor
-  return(x)
+  x
 }
 
 

@@ -146,7 +146,7 @@ to_value_helper <- function(x, start.at, keep.labels) {
     # determine highest category value
     end <- start.at + l - 1
     # replace labels with numeric values
-    levels(x) <- c(start.at:end)
+    levels(x) <- start.at:end
     # convert to numeric
     new_value <- as.numeric(as.character(x))
   }
