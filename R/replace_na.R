@@ -24,8 +24,7 @@
 #'           if \code{...} is not specified, applies to all variables in the
 #'           data frame.
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) are preserved.
+#' @note Value and variable label attributes are preserved.
 #'
 #' @details While regular \code{NA} values can only be \emph{completely} replaced with
 #'            a single value, \code{\link[haven]{tagged_na}} allows to differentiate
@@ -37,6 +36,7 @@
 #'            other NA values are preserved.
 #'
 #' @examples
+#' library(sjlabelled)
 #' data(efc)
 #' table(efc$e42dep, useNA = "always")
 #' table(replace_na(efc$e42dep, value = 99), useNA = "always")

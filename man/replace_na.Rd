@@ -46,10 +46,10 @@ While regular \code{NA} values can only be \emph{completely} replaced with
            other NA values are preserved.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) are preserved.
+Value and variable label attributes are preserved.
 }
 \examples{
+library(sjlabelled)
 data(efc)
 table(efc$e42dep, useNA = "always")
 table(replace_na(efc$e42dep, value = 99), useNA = "always")

@@ -99,7 +99,7 @@ to_value_helper <- function(x, start.at, keep.labels) {
   if (is.numeric(x)) return(x)
 
   # save variable label
-  varlab <- get_label(x)
+  varlab <- sjlabelled::get_label(x)
 
   # get labels
   labels <- sjlabelled::get_labels(x, attr.only = T, include.values = "n")

@@ -7,9 +7,7 @@
 var_rename(x, ...)
 }
 \arguments{
-\item{x}{Variable (vector), list of variables or a data frame where variables
-labels should be added as attribute. For \code{var_labels()}, \code{x}
-must be a data frame only.}
+\item{x}{A data frame.}
 
 \item{...}{Pairs of named vectors, where the name equals the column name that
 should be renamed, and the value is the new column name.}

@@ -57,6 +57,7 @@ See 'Details' in \code{\link{get_na}}.
 Value label attributes will be removed when converting variables to factors.
 }
 \examples{
+library(sjlabelled)
 data(efc)
 print(get_labels(efc)['c161sex'])
 head(efc$c161sex)

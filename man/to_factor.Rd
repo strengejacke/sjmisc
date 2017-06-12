@@ -52,6 +52,7 @@ This function is intended for use with vectors that have value and variable
        with \code{\link[sjlabelled]{set_labels}} and \code{\link[sjlabelled]{set_label}}.
 }
 \examples{
+library(sjlabelled)
 data(efc)
 # normal factor conversion, loses value attributes
 x <- as.factor(efc$e42dep)

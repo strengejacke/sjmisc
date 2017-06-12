@@ -33,6 +33,7 @@
 #' @details See 'Details' in \code{\link{get_na}}.
 #'
 #' @examples
+#' library(sjlabelled)
 #' data(efc)
 #' print(get_labels(efc)['c161sex'])
 #' head(efc$c161sex)
@@ -241,6 +242,7 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #'           data frame.
 #'
 #' @examples
+#' library(sjlabelled)
 #' data(efc)
 #' print(get_labels(efc)['c161sex'])
 #' head(efc$c161sex)

@@ -41,7 +41,9 @@
 #'            model's coefficients in an own \emph{column}.
 #'
 #' @examples
-#' library(tidyverse)
+#' library(dplyr)
+#' library(tidyr)
+#' library(purrr)
 #' data(efc)
 #'
 #' # create nested data frame, grouped by dependency (e42dep)

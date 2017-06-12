@@ -43,6 +43,7 @@
 #'            a factor and uses value labels as factor levels.
 #'
 #' @examples
+#' library(sjlabelled)
 #' data(efc)
 #' # normal factor conversion, loses value attributes
 #' x <- as.factor(efc$e42dep)
