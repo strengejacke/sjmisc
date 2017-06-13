@@ -21,7 +21,7 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return For \code{row_sumes()}, a tibble with one variable: the sum of \code{count}
+#' @return For \code{row_count()}, a tibble with one variable: the sum of \code{count}
 #'         appearing in each row of \code{x}; for \code{col_count()}, a tibble with
 #'         one row and the same number of variables as in \code{x}: each variable
 #'         holds the sum of \code{count} appearing in each variable of \code{x}.
