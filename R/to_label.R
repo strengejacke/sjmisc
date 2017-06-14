@@ -29,8 +29,8 @@
 #'           data frame.
 #'
 #' @note Value label attributes will be removed when converting variables to factors.
-#'
-#' @details See 'Details' in \code{\link{get_na}}.
+#'       This function is kept for backwards-compatibility. It is preferred to
+#'       use \code{\link[sjlabelled]{as_label}}.
 #'
 #' @examples
 #' library(sjlabelled)

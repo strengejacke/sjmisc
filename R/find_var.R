@@ -85,6 +85,7 @@
 #' @importFrom stringr regex coll str_detect
 #' @importFrom tibble as_tibble
 #' @importFrom sjlabelled get_labels
+#' @importFrom purrr map_lgl
 #' @export
 find_var <- function(data,
                      pattern,
@@ -141,20 +142,25 @@ find_var <- function(data,
 
     # check value labels with regex
     if (inherits(pattern, "regex")) {
-      pos3 <- which(unlist(lapply(labels, function(x) {
-        any(stringr::str_detect(x, pattern))
-      })))
+      pos3 <- which(purrr::map_lgl(labels, ~ any(stringr::str_detect(.x, pattern))))
     } else {
-      pos3 <- which(unlist(lapply(labels, function(x) {
-        any(stringr::str_detect(x, stringr::coll(pattern, ignore_case = ignore.case)))
-      })))
+      pos3 <-
+        which(purrr::map_lgl(labels, ~ any(stringr::str_detect(
+          .x, stringr::coll(pattern, ignore_case = ignore.case)
+        ))))
     }
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos3) && fuzzy && !inherits(pattern, "regex")) {
-      pos3 <- which(unlist(lapply(labels, function(x) {
-        str_pos(search.string = x, find.term = pattern, part.dist.match = 1)
-      })))
+      pos3 <-
+        which(purrr::map_lgl(
+          labels,
+          ~ str_pos(
+            search.string = .x,
+            find.term = pattern,
+            part.dist.match = 1
+          )
+        ))
     }
   }
 

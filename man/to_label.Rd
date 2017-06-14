@@ -50,11 +50,10 @@ This function converts (replaces) values of a variable (also of factors
                labels are male/female, this function would convert all 0 to male and
                all 1 to female and returns the new variable as factor.
 }
-\details{
-See 'Details' in \code{\link{get_na}}.
-}
 \note{
 Value label attributes will be removed when converting variables to factors.
+      This function is kept for backwards-compatibility. It is preferred to
+      use \code{\link[sjlabelled]{as_label}}.
 }
 \examples{
 library(sjlabelled)

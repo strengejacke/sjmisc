@@ -93,10 +93,13 @@ count_na_helper <- function(x) {
   # get NA as tagged NA
   nav <- haven::na_tag(sjlabelled::get_na(x, as.tag = F))
   nav.labels <- names(sjlabelled::get_na(x, as.tag = T))
+
   # get values from x, including different NA tags
   values <- haven::na_tag(x)
+
   # only keep missing values
   values <- values[values %in% nav]
+
   # replace NA tag with label
   for (i in seq_len(length(nav))) {
     values[values == nav[i]] <- nav.labels[i]

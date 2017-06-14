@@ -38,6 +38,10 @@ This function converts (replaces) factor levels with the
 related factor level index number, thus the factor is converted to
 a numeric variable.
 }
+\note{
+This function is kept for backwards-compatibility. It is preferred to
+      use \code{\link[sjlabelled]{as_numeric}}.
+}
 \examples{
 data(efc)
 test <- to_label(efc$e42dep)
@@ -63,6 +67,7 @@ to_value(dummy)
 dummy <- factor(c("D", "F", "H"))
 table(to_value(dummy))
 
+library(sjlabelled)
 # for numeric factor levels, value labels will be used, if present
 dummy1 <- factor(c("3", "4", "6"))
 dummy1 <- set_labels(dummy1, labels = c("first", "2nd", "3rd"))

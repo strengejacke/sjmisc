@@ -143,7 +143,13 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # do we have a labelled vector?
   if (!is.null(labels)) {
     # add rownames and values as columns
-    dat <- data.frame(n = names(labels), v = as.character(labels), stringsAsFactors = FALSE)
+    dat <-
+      data.frame(
+        n = names(labels),
+        v = as.character(labels),
+        stringsAsFactors = FALSE
+      )
+
     colnames(dat) <- c("val", "label")
 
     # character vectors need to be converted with to_value
