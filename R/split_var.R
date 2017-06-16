@@ -8,11 +8,12 @@
 #' @seealso \code{\link{group_var}} to group variables into equal ranged groups,
 #'          or \code{\link{rec}} to recode variables.
 #'
-#' @param groupcount The new number of groups that \code{x} should be split into.
+#' @param n The new number of groups that \code{x} should be split into.
 #' @param inclusive Logical; if \code{TRUE}, cut point value are included in
 #'          the preceeding group. This may be necessary if cutting a vector into
 #'          groups does not define proper ("equal sized") group sizes.
 #'          See 'Note' and 'Examples'.
+#' @param groupcount Deprecated. Use \code{n} instead.
 #'
 #' @inheritParams to_factor
 #' @inheritParams group_var
@@ -43,26 +44,44 @@
 #' table(efc$neg_c_7)
 #'
 #' # split into 3 groups
-#' table(split_var(efc$neg_c_7, groupcount = 3))
+#' table(split_var(efc$neg_c_7, n = 3))
 #'
 #' # split multiple variables into 3 groups
-#' split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3)
-#' frq(split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3))
+#' split_var(efc, neg_c_7, pos_v_4, e17age, n = 3)
+#' frq(split_var(efc, neg_c_7, pos_v_4, e17age, n = 3))
 #'
 #' # original
 #' table(efc$e42dep)
 #'
 #' # two groups, non-inclusive cut-point
 #' # vector split leads to unequal group sizes
-#' table(split_var(efc$e42dep, groupcount = 2))
+#' table(split_var(efc$e42dep, n = 2))
 #'
 #' # two groups, inclusive cut-point
 #' # group sizes are equal
-#' table(split_var(efc$e42dep, groupcount = 2, inclusive = TRUE))
+#' table(split_var(efc$e42dep, n = 2, inclusive = TRUE))
+#'
+#' # Unlike dplyr's ntile(), split_var() never splits a value
+#' # into two different categories, i.e. you always get a clean
+#' # separation of original categories
+#' library(dplyr)
+#'
+#' x <- dplyr::ntile(efc$neg_c_7, n = 3)
+#' table(efc$neg_c_7, x)
+#'
+#' x <- split_var(efc$neg_c_7, n = 3)
+#' table(efc$neg_c_7, x)
 #'
 #' @importFrom stats quantile
 #' @export
-split_var <- function(x, ..., groupcount, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g") {
+split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g", groupcount) {
+
+  # check deprecated arguments
+  if (!missing(groupcount)) {
+    message("Argument `groupcount` is deprecated. Please use `n` instead.")
+    n <- groupcount
+  }
+
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -74,7 +93,7 @@ split_var <- function(x, ..., groupcount, as.num = FALSE, val.labels = NULL, var
     for (i in colnames(.dat)) {
       x[[i]] <- split_var_helper(
         x = .dat[[i]],
-        groupcount = groupcount,
+        groupcount = n,
         as.num = as.num,
         var.label = var.label,
         val.labels = val.labels,
@@ -95,7 +114,7 @@ split_var <- function(x, ..., groupcount, as.num = FALSE, val.labels = NULL, var
   } else {
     x <- split_var_helper(
       x = .dat,
-      groupcount = groupcount,
+      groupcount = n,
       as.num = as.num,
       var.label = var.label,
       val.labels = val.labels,
@@ -128,11 +147,16 @@ split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclu
   # get quantile values
   grp_cuts <- stats::quantile(x, qu_prob, na.rm = TRUE)
 
+  # create breaks. need to check if these are non-unique
+  breaks <- unique(c(0, grp_cuts, max(x, na.rm = T)))
+
   # cut variables into groups
-  retval <- cut(x,
-                c(0, grp_cuts, max(x, na.rm = T)),
-                include.lowest = !inclusive,
-                right = inclusive)
+  retval <- cut(
+    x = x,
+    breaks = breaks,
+    include.lowest = !inclusive,
+    right = inclusive
+  )
 
   # rename factor levels
   levels(retval) <- seq_len(groupcount)

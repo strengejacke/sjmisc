@@ -3,6 +3,16 @@
 ## General
 * All labelled-data functions were removed and are now in package *sjlabelled*.
 
+## New functions
+
+* `all_na()` to check whether a vector only consists of NA values.
+
+## Changes to functions
+
+* Argument `groupcount` in `split_var()`, `group_var()` and `group_labels()` is now named `n`.
+* Argument `groupsize` in `group_var()` and `group_labels()` is now named `size`.
+
+
 # sjmisc 2.5.0
 
 ## General

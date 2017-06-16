@@ -49,7 +49,8 @@ For \code{add_columns()}, by default, columns in \code{data} with
       will be dropped (i.e. variables with identical names in \code{...}
       will replace existing variables in \code{data}).
       Use \code{replace = FALSE} to keep all columns. Identical column names
-      will then be repaired (see \code{\link[tibble]{repair_names}}). When
+      will then be renamed, to ensure unique column names (which happens
+      by default when using \code{\link[dplyr]{bind_cols}}). When
       replacing columns, replaced columns are not added to the end of the
       data frame. Rather, the original order of columns will be preserved.
 }

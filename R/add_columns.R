@@ -34,7 +34,8 @@
 #'       will be dropped (i.e. variables with identical names in \code{...}
 #'       will replace existing variables in \code{data}).
 #'       Use \code{replace = FALSE} to keep all columns. Identical column names
-#'       will then be repaired (see \code{\link[tibble]{repair_names}}). When
+#'       will then be renamed, to ensure unique column names (which happens
+#'       by default when using \code{\link[dplyr]{bind_cols}}). When
 #'       replacing columns, replaced columns are not added to the end of the
 #'       data frame. Rather, the original order of columns will be preserved.
 
@@ -97,7 +98,7 @@
 #' replace_columns(d1, d2, d3, d4, add.unique = FALSE)
 #'
 #' @importFrom dplyr bind_cols
-#' @importFrom tibble as_tibble repair_names
+#' @importFrom tibble as_tibble
 #' @export
 add_columns <- function(data, ..., replace = TRUE) {
   # evaluate dots
@@ -135,9 +136,6 @@ add_columns <- function(data, ..., replace = TRUE) {
     # sort data frame
     x <- x[, order(reihenfolge)]
   }
-
-  # repair names - might be necessary when not replacing variables
-  if (!replace) x <- tibble::repair_names(x)
 
   # return a tibble
   tibble::as_tibble(x)

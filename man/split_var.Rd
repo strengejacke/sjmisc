@@ -4,8 +4,8 @@
 \alias{split_var}
 \title{Split numeric variables into smaller groups}
 \usage{
-split_var(x, ..., groupcount, as.num = FALSE, val.labels = NULL,
-  var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g")
+split_var(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL,
+  inclusive = FALSE, append = FALSE, suffix = "_g", groupcount)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -16,7 +16,7 @@ vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{groupcount}{The new number of groups that \code{x} should be split into.}
+\item{n}{The new number of groups that \code{x} should be split into.}
 
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
@@ -53,6 +53,8 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{groupcount}{Deprecated. Use \code{n} instead.}
 }
 \value{
 A grouped variable with equal sized groups. If \code{x} is a data frame,
@@ -87,22 +89,33 @@ data(efc)
 table(efc$neg_c_7)
 
 # split into 3 groups
-table(split_var(efc$neg_c_7, groupcount = 3))
+table(split_var(efc$neg_c_7, n = 3))
 
 # split multiple variables into 3 groups
-split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3)
-frq(split_var(efc, neg_c_7, pos_v_4, e17age, groupcount = 3))
+split_var(efc, neg_c_7, pos_v_4, e17age, n = 3)
+frq(split_var(efc, neg_c_7, pos_v_4, e17age, n = 3))
 
 # original
 table(efc$e42dep)
 
 # two groups, non-inclusive cut-point
 # vector split leads to unequal group sizes
-table(split_var(efc$e42dep, groupcount = 2))
+table(split_var(efc$e42dep, n = 2))
 
 # two groups, inclusive cut-point
 # group sizes are equal
-table(split_var(efc$e42dep, groupcount = 2, inclusive = TRUE))
+table(split_var(efc$e42dep, n = 2, inclusive = TRUE))
+
+# Unlike dplyr's ntile(), split_var() never splits a value
+# into two different categories, i.e. you always get a clean
+# separation of original categories
+library(dplyr)
+
+x <- dplyr::ntile(efc$neg_c_7, n = 3)
+table(efc$neg_c_7, x)
+
+x <- split_var(efc$neg_c_7, n = 3)
+table(efc$neg_c_7, x)
 
 }
 \seealso{
