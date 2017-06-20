@@ -1,3 +1,4 @@
+#' @importFrom purrr walk
 #' @export
 print.sjmisc.frq <- function(x, ...) {
   purrr::walk(x, function(dat) {
