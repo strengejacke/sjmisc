@@ -11,6 +11,7 @@
 
 * Argument `groupcount` in `split_var()`, `group_var()` and `group_labels()` is now named `n`.
 * Argument `groupsize` in `group_var()` and `group_labels()` is now named `size`.
+* `frq()` gets a revised print-method, which does not print the result to console when captured in an object (i.e., `x <- frq(x)` no longer prints the result).
 
 
 # sjmisc 2.5.0

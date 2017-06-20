@@ -86,13 +86,9 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
       # copy back labels to grouped data frame
       tmp <- sjlabelled::copy_labels(grps$data[[i]], x)
 
-      # print title for grouping
-      cat(sprintf("\nGrouped by:\n%s\n\n", get_grouped_title(x, grps, i, sep = "\n")))
-
       # print frequencies
       dummy <- frq_helper(x = tmp[[1]], sort.frq = sort.frq, weight.by = weight.by)
-      print(dummy)
-      cat("\n")
+      attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
 
       # save data frame for return value
       dataframes[[length(dataframes) + 1]] <- dummy
@@ -104,16 +100,15 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
     for (i in seq_len(ncol(x))) {
       # print frequencies
       dummy <- frq_helper(x = x[[i]], sort.frq = sort.frq, weight.by = weight.by)
-      print(dummy)
-      cat("\n\n")
-
       # save data frame for return value
       dataframes[[length(dataframes) + 1]] <- dummy
     }
   }
 
-  # return list of df
-  invisible(dataframes)
+  # add class-attr for print-method()
+  class(dataframes) <- c("sjmisc.frq", "list")
+
+  dataframes
 }
 
 
@@ -254,8 +249,6 @@ frq_helper <- function(x, sort.frq, weight.by) {
   # add variable label as attribute, for print-method
   attr(mydat, "label") <- varlab
 
-  # return results
-  class(mydat) <- c("sjmisc.frq", "data.frame")
   mydat
 }
 
