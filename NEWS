@@ -5,6 +5,7 @@ General:
 
 New functions:
 * `all_na()` to check whether a vector only consists of NA values.
+* `rotate_df()` to rotate data frames (switch columns and rows).
 
 Changes to functions:
 * Argument `groupcount` in `split_var()`, `group_var()` and `group_labels()` is now named `n`.

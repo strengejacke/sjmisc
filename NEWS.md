@@ -6,6 +6,7 @@
 ## New functions
 
 * `all_na()` to check whether a vector only consists of NA values.
+* `rotate_df()` to rotate data frames (switch columns and rows).
 
 ## Changes to functions
 
