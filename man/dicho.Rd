@@ -27,7 +27,7 @@ Must be one of the following values (may be abbreviated):
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-returned variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
+returned variable (see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}).
 If \code{NULL} (default), variable label attribute of \code{x} will
 be used (if present). If empty, variable label attributes will be removed.}
 
@@ -61,6 +61,11 @@ column names in a data frame depends on the function call:
 Dichotomizes variables into dummy variables (0/1). Dichotomization is
                either done by median, mean or a specific value (see \code{dich.by}).
 }
+\details{
+\code{dicho()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+         In this case, dichotomization is applied to the subsets of variables
+         in \code{x}. See 'Examples'.
+}
 \note{
 Variable label attributes are preserved (unless changed via
       \code{var.label}-argument).
@@ -91,5 +96,25 @@ dicho(efc, c12hour, e17age, c160age)
 # dichotomize and set labels
 frq(dicho(efc, e42dep, var.label = "Dependency (dichotomized)",
           val.labels = c("lower", "higher")))
+
+# works also with gouped data frames
+mtcars \%>\%
+  dicho(disp) \%>\%
+  table()
+
+mtcars \%>\%
+  group_by(cyl) \%>\%
+  dicho(disp) \%>\%
+  table()
+
+# dichotomizing grouped data frames leads to different
+# results for a dichotomized variable, because the split
+# value is different for each group.
+# compare:
+mtcars \%>\%
+  group_by(cyl) \%>\%
+  summarise(median = median(disp))
+
+median(mtcars$disp)
 
 }

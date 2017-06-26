@@ -47,6 +47,12 @@ A vector with standardized or centered variables. If \code{x} is a
 \code{std()} computes a z-transformation (standardized and centered)
              on the input. \code{center()} centers the input.
 }
+\details{
+\code{std()} and \code{center()} also work on grouped data frames
+         (see \code{\link[dplyr]{group_by}}). In this case, standardization
+         or centering is applied to the subsets of variables in \code{x}.
+         See 'Examples'.
+}
 \note{
 \code{std()} and \code{center()} only return a vector, if \code{x} is
         a vector. If \code{x} is a data frame and only one variable is specified
@@ -71,5 +77,12 @@ efc \%>\%
   select(e17age, neg_c_7) \%>\%
   mutate(age_std = std(e17age), burden = center(neg_c_7)) \%>\%
   head()
+
+# works also with gouped data frames
+mtcars \%>\% std(disp)
+
+mtcars \%>\%
+  group_by(cyl) \%>\%
+  std(disp)
 
 }

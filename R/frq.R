@@ -293,6 +293,7 @@ get_grouped_data <- function(x) {
   cc <- grps %>%
     dplyr::select(-.data$data) %>%
     stats::complete.cases()
+
   # select only complete cases
   grps <- grps %>% dplyr::filter(cc)
 
@@ -301,6 +302,7 @@ get_grouped_data <- function(x) {
     reihe <- order(grps[[1]])
   else
     reihe <- order(grps[[1]], grps[[2]])
+
   grps <- grps[reihe, ]
 
   grps

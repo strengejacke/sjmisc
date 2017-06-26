@@ -17,6 +17,11 @@
 #'         in the \code{...}-ellipses argument, both functions do return a
 #'         data frame (see 'Examples').
 #'
+#' @details \code{std()} and \code{center()} also work on grouped data frames
+#'          (see \code{\link[dplyr]{group_by}}). In this case, standardization
+#'          or centering is applied to the subsets of variables in \code{x}.
+#'          See 'Examples'.
+#'
 #' @examples
 #' data(efc)
 #' std(efc$c160age) %>% head()
@@ -35,6 +40,13 @@
 #'   select(e17age, neg_c_7) %>%
 #'   mutate(age_std = std(e17age), burden = center(neg_c_7)) %>%
 #'   head()
+#'
+#' # works also with gouped data frames
+#' mtcars %>% std(disp)
+#'
+#' mtcars %>%
+#'   group_by(cyl) %>%
+#'   std(disp)
 #'
 #' @export
 std <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z") {
@@ -61,13 +73,45 @@ std_and_center <- function(x, .dat, include.fac, append, standardize, suffix) {
     # remember original data, if user wants to bind columns
     orix <- tibble::as_tibble(x)
 
-    # iterate variables of data frame
-    for (i in colnames(.dat)) {
-      x[[i]] <- std_helper(
-        x = .dat[[i]],
-        include.fac = include.fac,
-        standardize = standardize
-      )
+    # do we have a grouped data frame?
+    if (inherits(.dat, "grouped_df")) {
+
+      # get grouped data, as nested data frame
+      grps <- get_grouped_data(.dat)
+
+      # iterate all groups
+      for (i in seq_len(nrow(grps))) {
+        # get data from each single group
+        group <- grps$data[[i]]
+
+        # now iterate all variables of interest
+        for (j in colnames(group)) {
+          group[[j]] <- std_helper(
+            x = group[[j]],
+            include.fac = include.fac,
+            standardize = standardize
+          )
+        }
+
+        # write back data
+        grps$data[[i]] <- group
+      }
+
+      # unnest data frame
+      x <- tidyr::unnest(grps)
+
+      # remove grouping column
+      .dat <- .dat[colnames(.dat) %nin% dplyr::group_vars(.dat)]
+
+    } else {
+      # iterate variables of data frame
+      for (i in colnames(.dat)) {
+        x[[i]] <- std_helper(
+          x = .dat[[i]],
+          include.fac = include.fac,
+          standardize = standardize
+        )
+      }
     }
 
     # coerce to tibble and select only recoded variables

@@ -27,7 +27,7 @@ can also be directly defined in the \code{rec}-syntax, see
 'Details'.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-returned variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
+returned variable (see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}).
 If \code{NULL} (default), variable label attribute of \code{x} will
 be used (if present). If empty, variable label attributes will be removed.}
 
@@ -76,6 +76,10 @@ Recode numeric variables into equal sized groups, i.e. a
            By contrast, \code{\link{group_var}} recodes a variable into
            groups, where groups have the same value range
            (e.g., from 1-5, 6-10, 11-15 etc.).
+           \cr \cr
+           \code{split_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+           In this case, splitting is applied to the subsets of variables
+           in \code{x}. See 'Examples'.
 }
 \note{
 In case a vector has only few number of unique values, splitting into
@@ -116,6 +120,16 @@ table(efc$neg_c_7, x)
 
 x <- split_var(efc$neg_c_7, n = 3)
 table(efc$neg_c_7, x)
+
+# works also with gouped data frames
+mtcars \%>\%
+  split_var(disp, n = 3) \%>\%
+  table()
+
+mtcars \%>\%
+  group_by(cyl) \%>\%
+  split_var(disp, n = 3) \%>\%
+  table()
 
 }
 \seealso{

@@ -7,7 +7,7 @@ get_dot_data <- function(x, qs) {
   if (sjmisc::is_empty(qs))
     x
   else
-    dplyr::select(x, !!!qs)
+    suppressMessages(dplyr::select(x, !!!qs))
 }
 
 # return names of objects passed as ellipses argument
@@ -17,81 +17,13 @@ is_float <- function(x) is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
 
 is_foreign <- function(x) !is.null(x) && x == "value.labels"
 
-is_completely_labelled <- function(x) {
-  # get label attribute, which may differ depending on the package
-  # used for reading the data
-  attr.string <- getValLabelAttribute(x)
-  # if variable has no label attribute, use factor levels as labels
-  if (is.null(attr.string)) return(TRUE)
-  # retrieve named labels
-  lab <- attr(x, attr.string, exact = T)
-  lab <- lab[!haven::is_tagged_na(lab)]
-  if (!is.null(lab) && length(lab) > 0) {
-    # get values of variable
-    valid.vals <- sort(unique(stats::na.omit(as.vector(x))))
-    # retrieve values associated with labels. for character vectors
-    # or factors with character levels, these values are character values,
-    # else, they are numeric values
-    if (is.character(x) || (is.factor(x) && !is_num_fac(x)))
-      values <- unname(lab)
-    else
-      values <- as.numeric(unname(lab))
-    # check if we have different amount values than labels
-    # or, if we have same amount of values and labels, whether
-    # values and labels match or not
-    return(length(valid.vals) == length(lab) && !anyNA(match(values, valid.vals)))
-  }
-
-  return(TRUE)
-}
-
-# auto-detect attribute style for variable labels.
-# either haven style ("label") or foreign style
-# ("variable.label")
-getVarLabelAttribute <- function(x) {
-  attr.string <- NULL
-  # check if x is data frame. if yes, retrieve one "example" variable
-  if (is.data.frame(x) || is.list(x)) {
-    # define length for loop
-    if (is.data.frame(x))
-      counter <- ncol(x)
-    else
-      counter <- length(x)
-    # we need to check all variables until first variable
-    # that has any attributes at all - SPSS variables without
-    # labels would return NULL, so if -e.g.- first variable
-    # of data set has no label attribute, but second had, this
-    # function would stop after first attribute and return NULL
-    for (i in seq_len(counter)) {
-      # retrieve attribute names
-      an <- names(attributes(x[[i]]))
-      # check for label attributes
-      if (any(an == "label") || any(an == "variable.label")) {
-        x <- x[[i]]
-        break
-      }
-    }
-  }
-  # check if vector has label attribute
-  if (!is.null(attr(x, "label", exact = T))) attr.string <- "label"
-  # check if vector has variable label attribute
-  if (!is.null(attr(x, "variable.label", exact = T))) attr.string <- "variable.label"
-  # not found any label yet?
-  if (is.null(attr.string)) {
-    # check value_labels option
-    opt <- getOption("value_labels")
-    if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
-  }
-
-  attr.string
-}
-
 
 # auto-detect attribute style for value labels.
 # either haven style ("labels") or foreign style
 # ("value.labels")
 getValLabelAttribute <- function(x) {
   attr.string <- NULL
+
   # check if x is data frame. if yes, just retrieve one "example" variable
   if (is.data.frame(x)) {
     # find first variable with labels or value.labels attribute
@@ -111,12 +43,9 @@ getValLabelAttribute <- function(x) {
     # check if vector has value.labels attribute
     if (!is.null(attr(x, "value.labels", exact = T))) attr.string <- "value.labels"
   }
+
   # not found any label yet?
-  if (is.null(attr.string)) {
-    # check value_labels option
-    opt <- getOption("value_labels")
-    if (!is.null(opt)) attr.string <- ifelse(opt == "haven", "label", "variable.label")
-  }
+  if (is.null(attr.string)) attr.string <- "labels"
 
   attr.string
 }
@@ -127,11 +56,13 @@ shorten_string <- function(s, max.length = NULL, abbr = "...") {
   if (!is.null(max.length)) {
     # create pattern to find words uo to number of max.length chars in vector
     pattern <- paste('(.{1,', max.length, '})(\\s|$)', sep = "")
+
     # I *hate* regular expressions and will never understand them...
     tmp <-
       paste0(substr(s, 0, unlist(regexec(
         abbr, sub(pattern, replacement = paste0("\\1", abbr), s), fixed = T
       )) - 1), abbr)
+
     # only replace strings that are longer than max.length
     too.long <- nchar(s) > max.length
     s[too.long] <- tmp[too.long]

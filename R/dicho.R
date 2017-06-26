@@ -24,6 +24,10 @@
 #' @note Variable label attributes are preserved (unless changed via
 #'       \code{var.label}-argument).
 #'
+#' @details \code{dicho()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+#'          In this case, dichotomization is applied to the subsets of variables
+#'          in \code{x}. See 'Examples'.
+#'
 #' @examples
 #' data(efc)
 #' summary(efc$c12hour)
@@ -51,6 +55,28 @@
 #' frq(dicho(efc, e42dep, var.label = "Dependency (dichotomized)",
 #'           val.labels = c("lower", "higher")))
 #'
+#' # works also with gouped data frames
+#' mtcars %>%
+#'   dicho(disp) %>%
+#'   table()
+#'
+#' mtcars %>%
+#'   group_by(cyl) %>%
+#'   dicho(disp) %>%
+#'   table()
+#'
+#' # dichotomizing grouped data frames leads to different
+#' # results for a dichotomized variable, because the split
+#' # value is different for each group.
+#' # compare:
+#' mtcars %>%
+#'   group_by(cyl) %>%
+#'   summarise(median = median(disp))
+#'
+#' median(mtcars$disp)
+#'
+#' @importFrom dplyr group_vars
+#' @importFrom tidyr unnest
 #' @export
 dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_d") {
   # check for correct dichotome types
@@ -66,15 +92,49 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
     # remember original data, if user wants to bind columns
     orix <- tibble::as_tibble(x)
 
-    # iterate variables of data frame
-    for (i in colnames(.dat)) {
-      x[[i]] <- dicho_helper(
-        x = .dat[[i]],
-        dich.by = dich.by,
-        as.num = as.num,
-        var.label = var.label,
-        val.labels = val.labels
-      )
+    # do we have a grouped data frame?
+    if (inherits(.dat, "grouped_df")) {
+
+      # get grouped data, as nested data frame
+      grps <- get_grouped_data(.dat)
+
+      # iterate all groups
+      for (i in seq_len(nrow(grps))) {
+        # get data from each single group
+        group <- grps$data[[i]]
+
+        # now iterate all variables of interest
+        for (j in colnames(group)) {
+          group[[j]] <- dicho_helper(
+            x = group[[j]],
+            dich.by = dich.by,
+            as.num = as.num,
+            var.label = var.label,
+            val.labels = val.labels
+          )
+        }
+
+        # write back data
+        grps$data[[i]] <- group
+      }
+
+      # unnest data frame
+      x <- tidyr::unnest(grps)
+
+      # remove grouping column
+      .dat <- .dat[colnames(.dat) %nin% dplyr::group_vars(.dat)]
+
+    } else {
+      # iterate variables of data frame
+      for (i in colnames(.dat)) {
+        x[[i]] <- dicho_helper(
+          x = .dat[[i]],
+          dich.by = dich.by,
+          as.num = as.num,
+          var.label = var.label,
+          val.labels = val.labels
+        )
+      }
     }
 
     # coerce to tibble and select only recoded variables

@@ -93,6 +93,10 @@ If \code{size} is set to a specific value, the variable is recoded
            If you want to split a variable into a certain amount of equal
            sized groups (instead of having groups where values have all the same
            range), use the \code{\link{split_var}} function!
+           \cr \cr
+           \code{group_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+           In this case, grouping is applied to the subsets of variables
+           in \code{x}. See 'Examples'.
 }
 \note{
 Variable label attributes (see, for instance, \code{\link[sjlabelled]{set_label}}) are preserved.
@@ -135,6 +139,16 @@ dummy <- round(runif(200, 50, 80))
 group_labels(dummy)
 # labels with grouping startint at upper bound
 group_labels(dummy, right.interval = TRUE)
+
+# works also with gouped data frames
+mtcars \%>\%
+  group_var(disp, size = 4) \%>\%
+  table()
+
+mtcars \%>\%
+  group_by(cyl) \%>\%
+  group_var(disp, size = 4) \%>\%
+  table()
 
 }
 \seealso{

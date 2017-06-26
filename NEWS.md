@@ -5,11 +5,13 @@
 
 ## New functions
 
+* `remove_var()` as pipe-friendly function to remove variables from data frames.
 * `all_na()` to check whether a vector only consists of NA values.
 * `rotate_df()` to rotate data frames (switch columns and rows).
 
 ## Changes to functions
 
+* Following functions now also work on grouped data frames: `dicho()`, `split_var()`, `group_var()`, `std()` and `center()`.
 * Argument `groupcount` in `split_var()`, `group_var()` and `group_labels()` is now named `n`.
 * Argument `groupsize` in `group_var()` and `group_labels()` is now named `size`.
 * `frq()` gets a revised print-method, which does not print the result to console when captured in an object (i.e., `x <- frq(x)` no longer prints the result).

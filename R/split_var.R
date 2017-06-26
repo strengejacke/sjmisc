@@ -32,6 +32,10 @@
 #'            By contrast, \code{\link{group_var}} recodes a variable into
 #'            groups, where groups have the same value range
 #'            (e.g., from 1-5, 6-10, 11-15 etc.).
+#'            \cr \cr
+#'            \code{split_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+#'            In this case, splitting is applied to the subsets of variables
+#'            in \code{x}. See 'Examples'.
 #'
 #' @note In case a vector has only few number of unique values, splitting into
 #'         equal sized groups may fail. In this case, use the \code{inclusive}-argument
@@ -72,6 +76,16 @@
 #' x <- split_var(efc$neg_c_7, n = 3)
 #' table(efc$neg_c_7, x)
 #'
+#' # works also with gouped data frames
+#' mtcars %>%
+#'   split_var(disp, n = 3) %>%
+#'   table()
+#'
+#' mtcars %>%
+#'   group_by(cyl) %>%
+#'   split_var(disp, n = 3) %>%
+#'   table()
+#'
 #' @importFrom stats quantile
 #' @export
 split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g", groupcount) {
@@ -89,18 +103,52 @@ split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = 
     # remember original data, if user wants to bind columns
     orix <- tibble::as_tibble(x)
 
-    # iterate variables of data frame
-    for (i in colnames(.dat)) {
-      x[[i]] <- split_var_helper(
-        x = .dat[[i]],
-        groupcount = n,
-        as.num = as.num,
-        var.label = var.label,
-        val.labels = val.labels,
-        inclusive = inclusive
-      )
-    }
+    # do we have a grouped data frame?
+    if (inherits(.dat, "grouped_df")) {
 
+      # get grouped data, as nested data frame
+      grps <- get_grouped_data(.dat)
+
+      # iterate all groups
+      for (i in seq_len(nrow(grps))) {
+        # get data from each single group
+        group <- grps$data[[i]]
+
+        # now iterate all variables of interest
+        for (j in colnames(group)) {
+          group[[j]] <- split_var_helper(
+            x = group[[j]],
+            groupcount = n,
+            as.num = as.num,
+            var.label = var.label,
+            val.labels = val.labels,
+            inclusive = inclusive
+          )
+        }
+
+        # write back data
+        grps$data[[i]] <- group
+      }
+
+      # unnest data frame
+      x <- tidyr::unnest(grps)
+
+      # remove grouping column
+      .dat <- .dat[colnames(.dat) %nin% dplyr::group_vars(.dat)]
+
+    } else {
+      # iterate variables of data frame
+      for (i in colnames(.dat)) {
+        x[[i]] <- split_var_helper(
+          x = .dat[[i]],
+          groupcount = n,
+          as.num = as.num,
+          var.label = var.label,
+          val.labels = val.labels,
+          inclusive = inclusive
+        )
+      }
+    }
     # coerce to tibble and select only recoded variables
     x <- tibble::as_tibble(x[colnames(.dat)])
 

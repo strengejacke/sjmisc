@@ -61,6 +61,11 @@
 #'            If you want to split a variable into a certain amount of equal
 #'            sized groups (instead of having groups where values have all the same
 #'            range), use the \code{\link{split_var}} function!
+#'            \cr \cr
+#'            \code{group_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+#'            In this case, grouping is applied to the subsets of variables
+#'            in \code{x}. See 'Examples'.
+#'
 #'
 #' @examples
 #' age <- abs(round(rnorm(100, 65, 20)))
@@ -97,6 +102,16 @@
 #' # labels with grouping startint at upper bound
 #' group_labels(dummy, right.interval = TRUE)
 #'
+#' # works also with gouped data frames
+#' mtcars %>%
+#'   group_var(disp, size = 4) %>%
+#'   table()
+#'
+#' mtcars %>%
+#'   group_by(cyl) %>%
+#'   group_var(disp, size = 4) %>%
+#'   table()
+#'
 #' @importFrom purrr map
 #' @export
 group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
@@ -122,15 +137,49 @@ group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
     # remember original data, if user wants to bind columns
     orix <- tibble::as_tibble(x)
 
-    # iterate variables of data frame
-    for (i in colnames(.dat)) {
-      x[[i]] <- g_v_helper(
-        x = .dat[[i]],
-        groupsize = size,
-        as.num = as.num,
-        right.interval = right.interval,
-        groupcount = n
-      )
+    # do we have a grouped data frame?
+    if (inherits(.dat, "grouped_df")) {
+
+      # get grouped data, as nested data frame
+      grps <- get_grouped_data(.dat)
+
+      # iterate all groups
+      for (i in seq_len(nrow(grps))) {
+        # get data from each single group
+        group <- grps$data[[i]]
+
+        # now iterate all variables of interest
+        for (j in colnames(group)) {
+          group[[j]] <- g_v_helper(
+            x = group[[j]],
+            groupsize = size,
+            as.num = as.num,
+            right.interval = right.interval,
+            groupcount = n
+          )
+        }
+
+        # write back data
+        grps$data[[i]] <- group
+      }
+
+      # unnest data frame
+      x <- tidyr::unnest(grps)
+
+      # remove grouping column
+      .dat <- .dat[colnames(.dat) %nin% dplyr::group_vars(.dat)]
+
+    } else {
+      # iterate variables of data frame
+      for (i in colnames(.dat)) {
+        x[[i]] <- g_v_helper(
+          x = .dat[[i]],
+          groupsize = size,
+          as.num = as.num,
+          right.interval = right.interval,
+          groupcount = n
+        )
+      }
     }
 
     # coerce to tibble and select only recoded variables

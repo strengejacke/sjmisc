@@ -23,7 +23,7 @@ value label will also be converted to labels (as is). See 'Examples'.}
 or character values will be prefixed with their associated values. See 'Examples'.}
 
 \item{var.label}{Optional string, to set variable label attribute for the
-returned variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
+returned variable (see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}).
 If \code{NULL} (default), variable label attribute of \code{x} will
 be used (if present). If empty, variable label attributes will be removed.}
 
