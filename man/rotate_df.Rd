@@ -30,8 +30,8 @@ library(purrr)
 
 dat <- mtcars[1:3, 1:4]
 tmp <- purrr::map(dat, function(x) {
-  sdev <- stats::sd(x, na.rm = T)
-  ulsdev <- mean(x, na.rm = T) + c(-sdev, sdev)
+  sdev <- stats::sd(x, na.rm = TRUE)
+  ulsdev <- mean(x, na.rm = TRUE) + c(-sdev, sdev)
   names(ulsdev) <- c("lower_sd", "upper_sd")
   ulsdev
 })
@@ -39,8 +39,8 @@ tmp
 rotate_df(tmp)
 
 tmp <- purrr::map_df(dat, function(x) {
-  sdev <- stats::sd(x, na.rm = T)
-  ulsdev <- mean(x, na.rm = T) + c(-sdev, sdev)
+  sdev <- stats::sd(x, na.rm = TRUE)
+  ulsdev <- mean(x, na.rm = TRUE) + c(-sdev, sdev)
   names(ulsdev) <- c("lower_sd", "upper_sd")
   ulsdev
 })
