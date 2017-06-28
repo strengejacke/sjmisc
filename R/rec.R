@@ -17,7 +17,7 @@
 #'          If \code{NULL} (default), variable label attribute of \code{x} will
 #'          be used (if present). If empty, variable label attributes will be removed.
 #' @param val.labels Optional character vector, to set value label attributes
-#'          of recoded variable (see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}).
+#'          of recoded variable (see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}).
 #'          If \code{NULL} (default), no value labels will be set. Value labels
 #'          can also be directly defined in the \code{rec}-syntax, see
 #'          'Details'.

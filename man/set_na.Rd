@@ -53,7 +53,7 @@ This function replaces specific values of variables with \code{NA}.
 Labels from values that are replaced with NA and no longer used will be
         removed from \code{x}, however, other value and variable label
         attributes are preserved. For more details on labelled data,
-        see vignette \href{../doc/intro_sjmisc.html}{Labelled Data and the sjmisc-Package}.
+        see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}.
 }
 \examples{
 # create random variable
