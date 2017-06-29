@@ -19,7 +19,6 @@
 #' @param as.tag Logical, if \code{TRUE}, values in \code{x} will be replaced
 #'          by \code{tagged_na}, else by usual \code{NA} values. Use a named
 #'          vector to assign the value label to the tagged NA value (see 'Examples').
-#' @param value Deprecated. Please use \code{na} instead.
 #'
 #' @inheritParams to_factor
 #'
@@ -106,13 +105,7 @@
 #'
 #'
 #' @export
-set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value) {
-  # check deprecated arguments
-  if (!missing(value)) {
-    message("Argument `value` is deprecated. Please use `na` instead.")
-    na <- value
-  }
-
+set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE) {
   # check for valid value
   if (is.null(na) || is.na(na)) return(x)
 

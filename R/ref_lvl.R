@@ -7,7 +7,6 @@
 #'            \code{\link{rec}} to recode variables.
 #'
 #' @param lvl Numeric, the new reference level.
-#' @param value Deprecated. Use \code{lvl} instead.
 #'
 #' @inheritParams to_factor
 #'
@@ -43,12 +42,7 @@
 #' ref_lvl(dat, c82cop1, c83cop2, lvl = 2) %>% frq()
 #'
 #' @export
-ref_lvl <- function(x, ..., lvl = NULL, value) {
-  # check deprecated arguments
-  if (!missing(value)) {
-    message("Argument `value` is deprecated. Please use `lvl` instead.")
-    lvl <- value
-  }
+ref_lvl <- function(x, ..., lvl = NULL) {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
@@ -73,10 +67,12 @@ ref_lvl_helper <- function(x, value) {
     warning("`x` is NULL.", call. = F)
     return(x)
   }
+
   if (!is.factor(x)) {
     warning("`x` needs to be a factor.", call. = F)
     return(x)
   }
+
   if (!is_num_fac(x)) {
     warning("`x` needs to be a factor with numeric factor levels.", call. = F)
     return(x)

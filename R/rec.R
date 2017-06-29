@@ -37,7 +37,6 @@
 #'             \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
 #'             \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 #'           }
-#' @param recodes Deprecated. Use \code{rec} instead.
 #'
 #' @inheritParams to_factor
 #'
@@ -149,13 +148,7 @@
 #'
 #'
 #' @export
-rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_r", recodes) {
-
-  # check deprecated arguments
-  if (!missing(recodes)) {
-    message("Argument `recodes` is deprecated. Please use `rec` instead.")
-    rec <- recodes
-  }
+rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_r") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
@@ -208,8 +201,10 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
     var_lab <- sjlabelled::get_label(x)
   else
     var_lab <- var.label
+
   # do we have any value labels?
   val_lab <- val.labels
+
   # remember if NA's have been recoded...
   na_recoded <- FALSE
 
@@ -253,12 +248,16 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
   # do we have special recode-token?
   if (recodes == "rev") {
+
     # retrieve unique valus, sorted
     ov <- sort(unique(stats::na.omit(as.vector(x))))
+
     # new values should be reversed order
     nv <- rev(ov)
+
     # create recodes-string
     recodes <- paste(sprintf("%i=%i", ov, nv), collapse = ";")
+
     # when we simply reverse values, we can keep value labels
     if (is.null(val_lab)) {
       val_lab <-
@@ -308,21 +307,26 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   # prepare and clean recode string
   # retrieve each single recode command
   rec_string <- unlist(strsplit(recodes, ";", fixed = TRUE))
+
   # remove spaces
   rec_string <- gsub(" ", "", rec_string, fixed = TRUE)
+
   # remove line breaks
   rec_string <- gsub("\n", "", rec_string, fixed = F)
   rec_string <- gsub("\r", "", rec_string, fixed = F)
+
   # replace min and max placeholders
   rec_string <- gsub("min", as.character(min_val), rec_string, fixed = TRUE)
   rec_string <- gsub("lo", as.character(min_val), rec_string, fixed = TRUE)
   rec_string <- gsub("max", as.character(max_val), rec_string, fixed = TRUE)
   rec_string <- gsub("hi", as.character(max_val), rec_string, fixed = TRUE)
+
   # retrieve all recode-pairs, i.e. all old-value = new-value assignments
   rec_pairs <- strsplit(rec_string, "=", fixed = TRUE)
 
   # check for correct syntax
   correct_syntax <- unlist(lapply(rec_pairs, function(r) if (length(r) != 2) r else NULL))
+
   # found any errors in syntax?
   if (!is.null(correct_syntax)) {
     stop(sprintf("?Syntax error in argument \"%s\"", paste(correct_syntax, collapse = "=")), call. = F)
@@ -432,17 +436,22 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
       }
     }
   }
+
   # replace remaining -Inf with NA
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
+
   # add back NA labels
   if (!is.null(current.na) && length(current.na) > 0) {
     # add named missings
     val_lab <- c(val_lab, current.na)
   }
+
   # set back variable and value labels
   new_var <- suppressWarnings(sjlabelled::set_label(x = new_var, label = var_lab))
   new_var <- suppressWarnings(sjlabelled::set_labels(x = new_var, labels = val_lab))
+
   # return result as factor?
   if (!as.num) new_var <- to_factor(new_var)
-  return(new_var)
+
+  new_var
 }

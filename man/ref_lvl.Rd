@@ -4,7 +4,7 @@
 \alias{ref_lvl}
 \title{Change reference level of (numeric) factors}
 \usage{
-ref_lvl(x, ..., lvl = NULL, value)
+ref_lvl(x, ..., lvl = NULL)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -16,8 +16,6 @@ You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_he
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{lvl}{Numeric, the new reference level.}
-
-\item{value}{Deprecated. Use \code{lvl} instead.}
 }
 \value{
 \code{x} with new reference level. If \code{x}

@@ -5,7 +5,7 @@
 \title{Recode variables}
 \usage{
 rec(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
-  append = FALSE, suffix = "_r", recodes)
+  append = FALSE, suffix = "_r")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -50,8 +50,6 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
-
-\item{recodes}{Deprecated. Use \code{rec} instead.}
 }
 \value{
 \code{x} with recoded categories. If \code{x} is a data frame,

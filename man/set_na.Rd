@@ -4,7 +4,7 @@
 \alias{set_na}
 \title{Replace specific values in vector with NA}
 \usage{
-set_na(x, ..., na, drop.levels = TRUE, as.tag = FALSE, value)
+set_na(x, ..., na, drop.levels = TRUE, as.tag = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -27,8 +27,6 @@ been replaced with \code{NA} are dropped. See 'Examples'.}
 \item{as.tag}{Logical, if \code{TRUE}, values in \code{x} will be replaced
 by \code{tagged_na}, else by usual \code{NA} values. Use a named
 vector to assign the value label to the tagged NA value (see 'Examples').}
-
-\item{value}{Deprecated. Please use \code{na} instead.}
 }
 \value{
 \code{x}, with all elements of \code{na} being replaced by \code{NA}.
