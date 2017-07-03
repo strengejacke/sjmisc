@@ -145,6 +145,9 @@ lapply(
 dummy <- c("M", "F", "F", "X")
 rec(dummy, rec = "M=Male; F=Female; X=Refused")
 
+# recode numeric to character
+rec(efc$e42dep, rec = "1=first;2=2nd;3=third;else=hi")
+
 # recode non-numeric factors
 data(iris)
 table(rec(iris, Species, rec = "setosa=huhu; else=copy"))

@@ -128,6 +128,9 @@
 #' dummy <- c("M", "F", "F", "X")
 #' rec(dummy, rec = "M=Male; F=Female; X=Refused")
 #'
+#' # recode numeric to character
+#' rec(efc$e42dep, rec = "1=first;2=2nd;3=third;else=hi")
+#'
 #' # recode non-numeric factors
 #' data(iris)
 #' table(rec(iris, Species, rec = "setosa=huhu; else=copy"))
@@ -316,10 +319,10 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   rec_string <- gsub("\r", "", rec_string, fixed = F)
 
   # replace min and max placeholders
-  rec_string <- gsub("min", as.character(min_val), rec_string, fixed = TRUE)
-  rec_string <- gsub("lo", as.character(min_val), rec_string, fixed = TRUE)
-  rec_string <- gsub("max", as.character(max_val), rec_string, fixed = TRUE)
-  rec_string <- gsub("hi", as.character(max_val), rec_string, fixed = TRUE)
+  rec_string <- gsub("(min)\\b", as.character(min_val), rec_string, perl = TRUE)
+  rec_string <- gsub("(lo)\\b", as.character(min_val), rec_string, perl = TRUE)
+  rec_string <- gsub("(max)\\b", as.character(max_val), rec_string, perl = TRUE)
+  rec_string <- gsub("(hi)\\b", as.character(max_val), rec_string, perl = TRUE)
 
   # retrieve all recode-pairs, i.e. all old-value = new-value assignments
   rec_pairs <- strsplit(rec_string, "=", fixed = TRUE)
