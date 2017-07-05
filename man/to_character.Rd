@@ -50,8 +50,8 @@ This function converts (replaces) variable values (also of factors
                \code{as.character(to_label(x))}.
 }
 \note{
-Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-        or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+Value labels will be removed when converting variables to factors,
+      variable labels, however, are preserved.
 }
 \examples{
 library(sjlabelled)

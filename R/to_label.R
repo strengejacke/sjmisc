@@ -231,8 +231,8 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #'
 #' @inheritParams to_label
 #'
-#' @note Value and variable label attributes (see, for instance, \code{\link{get_labels}}
-#'         or \code{\link{set_labels}}) will be removed  when converting variables to factors.
+#' @note Value labels will be removed when converting variables to factors,
+#'       variable labels, however, are preserved.
 #'
 #' @return A character vector with the associated value labels as values. If \code{x}
 #'           is a data frame, the complete data frame \code{x} will be returned,
@@ -303,6 +303,9 @@ to_character <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.l
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
+  # get variable labels
+  vl <- sjlabelled::get_label(x)
+
   if (is.data.frame(x)) {
 
     # iterate variables of data frame
@@ -314,6 +317,9 @@ to_character <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.l
   } else {
     x <- as.character(to_label_helper(.dat, add.non.labelled, prefix, var.label, drop.na, drop.levels))
   }
+
+  # set back variable labels, if any
+  if (!is.null(vl)) x <- sjlabelled::set_label(x, vl)
 
   x
 }
