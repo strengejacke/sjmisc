@@ -103,6 +103,9 @@ descr_helper <- function(dd, max.length) {
   # sort columns a bit
   x <- x[, c(1, 13, 2, 14, 3, 4, 12, 5, 6, 7, 8, 9, 10, 11)]
 
+  # add type-column
+  x <- tibble::add_column(x, type = var_type(dv), .after = 1)
+
   # add own class for print-method
   class(x) <- c("sjmisc.descr", "data.frame")
   x

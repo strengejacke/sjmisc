@@ -5,6 +5,7 @@ General:
 
 New functions:
 * `remove_var()` as pipe-friendly function to remove variables from data frames.
+* `var_type()` as pipe-friendly function to determine the type of variables.
 * `all_na()` to check whether a vector only consists of NA values.
 * `rotate_df()` to rotate data frames (switch columns and rows).
 
@@ -13,6 +14,10 @@ Changes to functions:
 * Argument `groupcount` in `split_var()`, `group_var()` and `group_labels()` is now named `n`.
 * Argument `groupsize` in `group_var()` and `group_labels()` is now named `size`.
 * `frq()` gets a revised print-method, which does not print the result to console when captured in an object (i.e., `x <- frq(x)` no longer prints the result).
+* `frq()` no longer prints (redundant) labels for factors w/o value label attributes.
+* `frq()` adds information about the variable type in the table caption (only for variables with variable labels).
+* `frq()` adds information about groups when printing grouped, non-labelled variables.
+* `descr()` now also prints information about the variable type.
 * `to_character()` now preserves variable labels.
 
 Version 2.5.0

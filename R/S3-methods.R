@@ -9,8 +9,10 @@ print.sjmisc.frq <- function(x, ...) {
 
     # get variable label
     lab <- attr(dat, "label", exact = T)
+    vt <- attr(dat, "vartype", exact = T)
+
     # print label
-    if (!is.null(lab)) cat(sprintf("# %s\n\n", lab))
+    if (!is.null(lab)) cat(sprintf("# %s <%s>\n\n", lab, vt))
 
     # print frq-table
     print.data.frame(dat, ..., row.names = FALSE)
