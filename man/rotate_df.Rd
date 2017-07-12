@@ -36,6 +36,7 @@ tmp <- purrr::map(dat, function(x) {
   ulsdev
 })
 tmp
+as.data.frame(tmp)
 rotate_df(tmp)
 
 tmp <- purrr::map_df(dat, function(x) {

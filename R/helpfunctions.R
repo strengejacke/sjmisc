@@ -2,6 +2,12 @@
 #' @export
 magrittr::`%>%`
 
+
+#' @importFrom tibble glimpse
+#' @export
+tibble::glimpse
+
+
 #' @importFrom dplyr quos select
 get_dot_data <- function(x, qs) {
   if (sjmisc::is_empty(qs))
@@ -10,12 +16,10 @@ get_dot_data <- function(x, qs) {
     suppressMessages(dplyr::select(x, !!!qs))
 }
 
-# return names of objects passed as ellipses argument
-dot_names <- function(dots) unname(unlist(lapply(dots, as.character)))
+
 
 is_float <- function(x) is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
 
-is_foreign <- function(x) !is.null(x) && x == "value.labels"
 
 
 # auto-detect attribute style for value labels.
@@ -48,25 +52,4 @@ getValLabelAttribute <- function(x) {
   if (is.null(attr.string)) attr.string <- "labels"
 
   attr.string
-}
-
-# shorten a string
-shorten_string <- function(s, max.length = NULL, abbr = "...") {
-  # check if labels should be truncated
-  if (!is.null(max.length)) {
-    # create pattern to find words uo to number of max.length chars in vector
-    pattern <- paste('(.{1,', max.length, '})(\\s|$)', sep = "")
-
-    # I *hate* regular expressions and will never understand them...
-    tmp <-
-      paste0(substr(s, 0, unlist(regexec(
-        abbr, sub(pattern, replacement = paste0("\\1", abbr), s), fixed = T
-      )) - 1), abbr)
-
-    # only replace strings that are longer than max.length
-    too.long <- nchar(s) > max.length
-    s[too.long] <- tmp[too.long]
-  }
-
-  s
 }

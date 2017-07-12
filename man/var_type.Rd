@@ -4,7 +4,7 @@
 \alias{var_type}
 \title{Determine variable type}
 \usage{
-var_type(x, ...)
+var_type(x, ..., abbr = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -14,6 +14,10 @@ further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
+
+\item{abbr}{Logical, if \code{TRUE}, returns a shortened, abbreviated value
+for the variable type (as returned by \code{\link[tibble]{type_sum}}).
+If \code{FALSE} (default), a longer "description" is returned.}
 }
 \value{
 The variable type of \code{x}, as character.
@@ -37,7 +41,4 @@ var_type(to_factor(efc$e42dep))
 library(dplyr)
 var_type(efc, contains("cop"))
 
-}
-\seealso{
-\code{\link[tibble]{type_sum}}
 }

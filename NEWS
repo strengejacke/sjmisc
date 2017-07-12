@@ -8,6 +8,7 @@ New functions:
 * `var_type()` as pipe-friendly function to determine the type of variables.
 * `all_na()` to check whether a vector only consists of NA values.
 * `rotate_df()` to rotate data frames (switch columns and rows).
+* `shorten_string()`, to shorten strings to a certain maxium number of chars.
 
 Changes to functions:
 * Following functions now also work on grouped data frames: `dicho()`, `split_var()`, `group_var()`, `std()` and `center()`.

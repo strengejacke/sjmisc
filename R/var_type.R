@@ -6,7 +6,9 @@
 #'              return value is not truncated, and \code{var_type()} works
 #'              on data frames and within pipe-chains.
 #'
-#' @seealso \code{\link[tibble]{type_sum}}
+#' @param abbr Logical, if \code{TRUE}, returns a shortened, abbreviated value
+#'        for the variable type (as returned by \code{\link[tibble]{type_sum}}).
+#'        If \code{FALSE} (default), a longer "description" is returned.
 #'
 #' @inheritParams to_factor
 #'
@@ -30,27 +32,31 @@
 #' @importFrom dplyr case_when
 #' @importFrom purrr map_chr
 #' @export
-var_type <- function(x, ...) {
+var_type <- function(x, ..., abbr = FALSE) {
 
   # get dot data
   x <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x))
-    purrr::map_chr(x, ~ get_vt(.x))
+    purrr::map_chr(x, ~ get_vt(.x, abbr = abbr))
   else
-    get_vt(x)
+    get_vt(x, abbr = abbr)
 }
 
 
-get_vt <- function(x) {
+get_vt <- function(x, abbr) {
   vt <- tibble::type_sum(x)
 
-  dplyr::case_when(
-    vt == "ord" ~ "ordinal",
-    vt == "fctr" ~ "categorical",
-    vt == "dbl" ~ "numeric",
-    vt == "int" ~ "integer",
-    vt == "chr" ~ "character",
-    TRUE ~ vt
-  )
+  if (!abbr) {
+    vt <- dplyr::case_when(
+      vt == "ord" ~ "ordinal",
+      vt == "fctr" ~ "categorical",
+      vt == "dbl" ~ "numeric",
+      vt == "int" ~ "integer",
+      vt == "chr" ~ "character",
+      TRUE ~ vt
+    )
+  }
+
+  vt
 }
