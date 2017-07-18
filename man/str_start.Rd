@@ -24,7 +24,9 @@ A numeric vector with index of start/end position(s) of \code{pattern}
          in \code{x}.
 }
 \description{
-Find
+\code{str_start()} finds the beginning position of \code{pattern}
+  in each element of \code{x}, while \code{str_end()} finds the stopping position
+  of \code{pattern} in each element of \code{x}.
 }
 \examples{
 path <- "this/is/my/fileofinterest.csv"
@@ -36,5 +38,17 @@ str_end(path, "//")
 
 x <- c("my_friend_likes me", "your_friend likes_you")
 str_start(x, "_")
+
+# pattern "likes" starts at position 11 in first, and
+# position 13 in second string
+str_start(x, "likes")
+
+# pattern "likes" ends at position 15 in first, and
+# position 17 in second string
+str_end(x, "likes")
+
+x <- c("I like to move it, move it", "You like to move it")
+str_start(x, "move")
+str_end(x, "move")
 
 }
