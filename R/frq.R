@@ -317,7 +317,7 @@ get_grouped_data <- function(x) {
   else
     reihe <- order(grps[[1]], grps[[2]])
 
-  grps <- grps[reihe, ]
+  grps <- grps[reihe, , drop = FALSE]
 
   grps
 }
