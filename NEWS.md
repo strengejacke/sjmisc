@@ -1,4 +1,4 @@
-# sjmisc 2.5.0.9000
+# sjmisc 2.6.0
 
 ## General
 * All labelled-data functions were removed and are now in package *sjlabelled*.

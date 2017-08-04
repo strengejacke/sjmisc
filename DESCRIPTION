@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.5.0.9000
-Date: 2017-06-13
+Version: 2.6.0
+Date: 2017-08-05
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -34,8 +34,8 @@ Suggests:
     graphics,
     Hmisc,
     mice,
-    sjPlot,
-    sjstats (>= 0.10.2),
+    sjPlot (>= 2.3.2),
+    sjstats (>= 0.10.3),
     knitr,
     rmarkdown
 URL: https://github.com/strengejacke/sjmisc
