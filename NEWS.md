@@ -1,3 +1,8 @@
+# sjmisc 2.6.1
+
+## Bug fixes
+* `frq()` did not correctly calculate valid and cumulative percentages when using weights.
+
 # sjmisc 2.6.0
 
 ## General
