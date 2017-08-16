@@ -232,7 +232,7 @@ frq_helper <- function(x, sort.frq, weight.by) {
   mydat$raw.prc <- mydat$frq / sum(mydat$frq)
 
   # compute valud and cumulative percentages
-  mydat$valid.prc <- c(mydat$frq[seq_len(valid.vals)] / length(stats::na.omit(x)), NA)
+  mydat$valid.prc <- c(mydat$frq[seq_len(valid.vals)] / sum(mydat$frq[seq_len(valid.vals)]), NA)
   mydat$cum.prc <- c(cumsum(mydat$valid.prc[seq_len(valid.vals)]), NA)
 
   # proper rounding
