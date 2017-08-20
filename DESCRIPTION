@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.6.0.9000
-Date: 2017-08-16
+Version: 2.6.1
+Date: 2017-08-21
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -28,7 +28,7 @@ Imports:
     stringdist (>= 0.9.4),
     stringr (>= 1.2.0),
     tibble (>= 1.3.3),
-    tidyr (>= 0.6.2)
+    tidyr (>= 0.7.0)
 Suggests:
     ggplot2,
     graphics,

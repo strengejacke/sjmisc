@@ -1,6 +1,11 @@
 # sjmisc 2.6.1
 
+## General
+
+* Fixed issue with latest tidyr-update on CRAN.
+
 ## Bug fixes
+
 * `frq()` did not correctly calculate valid and cumulative percentages when using weights.
 
 # sjmisc 2.6.0

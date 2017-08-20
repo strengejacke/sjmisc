@@ -203,7 +203,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
     } else {
       analyse <- analyse %>%
         purrr::map_df(~.x) %>%
-        tidyr::gather(key = "value",value = "xpos", 1:2)
+        tidyr::gather(key = "value", value = "xpos", 1:2)
 
       if (!is.null(filter))
         analyse <- analyse %>% dplyr::filter(.data$grp %in% filter)
