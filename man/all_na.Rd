@@ -2,7 +2,7 @@
 % Please edit documentation in R/all_na.R
 \name{all_na}
 \alias{all_na}
-\title{Check if vector only ha NA values}
+\title{Check if vector only has NA values}
 \usage{
 all_na(x)
 }

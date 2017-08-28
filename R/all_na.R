@@ -1,4 +1,4 @@
-#' @title Check if vector only ha NA values
+#' @title Check if vector only has NA values
 #' @name all_na
 #'
 #' @description Check if all values in a vector are \code{NA}.

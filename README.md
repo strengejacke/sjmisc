@@ -35,8 +35,9 @@ install.packages("sjmisc")
 
 ## References, documentation and examples
 
-- [Documentation and examples](http://www.strengejacke.de/sjPlot/)
+A cheatsheet can be downloaded [from here](http://strengejacke.de/sjPlot/sjmisc-cheatsheet.pdf) (PDF) or from the [RStudio cheatsheet collection](https://www.rstudio.com/resources/cheatsheets/).
 
+For more examples, see package vignettes (`browseVignettes("sjmisc")`).
 
 ## Citation
 
