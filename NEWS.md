@@ -1,3 +1,9 @@
+# sjmisc 2.6.2
+
+## Changes to functions
+
+* Arguments `as.df` and `as.varlab` in function `find_var()` are now deprecated. Please use `out` instead.
+
 # sjmisc 2.6.1
 
 ## General

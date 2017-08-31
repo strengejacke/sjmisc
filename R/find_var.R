@@ -31,20 +31,29 @@
 #'            \item{\code{"all"}}{Searches for \code{pattern} in
 #'                  variable names, variable and value labels.}
 #'          }
-#' @param as.df Logical, if \code{TRUE}, a data frame with matching variables
-#'                is returned (instead of their column indices).
-#' @param as.varlab Logical, if \code{TRUE}, not only column indices, but also
-#'                variables labels of matching variables are returned (as
-#'                data frame).
+#' @param out Output (return) format of the search results. May be abbreviated
+#'          and must be one of:
+#'          \describe{
+#'            \item{\code{"table"}}{A tabular overview (as data frame) with
+#'              column indices, variable names and labels of matching variables.
+#'            }
+#'            \item{\code{"df"}}{A data frame with all matching variables.}
+#'            \item{\code{"index"}}{
+#'              A named vector with column indices of all matching variables.
+#'            }
+#'          }
 #' @param fuzzy Logical, if \code{TRUE}, "fuzzy matching" (partial and
 #'          close distance matching) will be used to find \code{pattern}
 #'          in \code{data} if no exact match was found. \code{\link{str_pos}}
 #'          is used for fuzzy matching.
+#' @param as.df Deprecated, use \code{out = "df"} instead.
+#' @param as.varlab Deprecated, use \code{out = "table" instead.}
 #'
-#' @return A named vector with column indices of found variables (variable names
-#'           are used as names-attribute); if \code{as.df = TRUE}, a tibble
-#'           with found variables; or, if \code{as.varlab = TRUE}, a tibble
-#'           with three columns: column number, variable name and variable label.
+#' @return By default (i.e. \code{out = "table"}, returns a tibble with three
+#'         columns: column number, variable name and variable label. If
+#'         \code{out = "index"}, returns a named vector with column indices
+#'         of matching variables (variable names are used as names-attribute);
+#'         if \code{out = "df"}, returns the matching variables as tibble.
 #'
 #' @details This function searches for \code{pattern} in \code{data}'s column names
 #'            and - for labelled data - in all variable and value labels of \code{data}'s
@@ -61,11 +70,10 @@
 #' find_var(efc, "cop")
 #'
 #' # return tibble with matching variables
-#' find_var(efc, "cop", as.df = TRUE)
+#' find_var(efc, "cop", out = "df")
 #'
-#' # or return "summary"-tibble with matching variables
-#' # and their variable labels
-#' find_var(efc, "cop", as.varlab = TRUE)
+#' # or return column numbers
+#' find_var(efc, "cop", out = "index")
 #'
 #' # find variables with "dependency" in names and variable labels
 #' library(sjlabelled)
@@ -73,7 +81,7 @@
 #' get_label(efc$e42dep)
 #'
 #' # find variables with "level" in names and value labels
-#' res <- find_var(efc, "level", search = "name_value", as.df = TRUE)
+#' res <- find_var(efc, "level", search = "name_value", out = "df")
 #' res
 #' get_labels(res, attr.only = FALSE)
 #'
@@ -91,9 +99,10 @@ find_var <- function(data,
                      pattern,
                      ignore.case = TRUE,
                      search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
-                     as.df = FALSE,
-                     as.varlab = FALSE,
-                     fuzzy = FALSE) {
+                     out = c("table", "df", "index"),
+                     fuzzy = FALSE,
+                     as.df,
+                     as.varlab) {
   # check valid args
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame.", call. = F)
@@ -101,6 +110,19 @@ find_var <- function(data,
 
   # match args
   search <- match.arg(search)
+  out <- match.arg(out)
+
+  # check deprecated
+  if (!missing(as.df)) {
+    message("`as.df` is deprecated. Please use `out = \"df\" instead.")
+    out <- "df"
+  }
+
+  if (!missing(as.varlab)) {
+    message("`as.varlab` is deprecated. Please use `out = \"table\" instead.")
+    out <- "table"
+  }
+
 
   pos1 <- pos2 <- pos3 <- c()
 
@@ -170,12 +192,12 @@ find_var <- function(data,
   pos <- pos[which(pos != -1)]
 
   # return data frame?
-  if (as.df) {
+  if (out == "df") {
     return(tibble::as_tibble(data[, pos]))
   }
 
   # return variable labels?
-  if (as.varlab) {
+  if (out == "table") {
     return(tibble::tibble(
       col.nr = pos,
       var.name = colnames(data)[pos],

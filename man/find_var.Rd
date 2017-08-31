@@ -6,7 +6,7 @@
 \usage{
 find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
   "name_value", "label_value", "name", "label", "value", "all"),
-  as.df = FALSE, as.varlab = FALSE, fuzzy = FALSE)
+  out = c("table", "df", "index"), fuzzy = FALSE, as.df, as.varlab)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -39,23 +39,33 @@ Use one of following options:
         variable names, variable and value labels.}
 }}
 
-\item{as.df}{Logical, if \code{TRUE}, a data frame with matching variables
-is returned (instead of their column indices).}
-
-\item{as.varlab}{Logical, if \code{TRUE}, not only column indices, but also
-variables labels of matching variables are returned (as
-data frame).}
+\item{out}{Output (return) format of the search results. May be abbreviated
+and must be one of:
+\describe{
+  \item{\code{"table"}}{A tabular overview (as data frame) with
+    column indices, variable names and labels of matching variables.
+  }
+  \item{\code{"df"}}{A data frame with all matching variables.}
+  \item{\code{"index"}}{
+    A named vector with column indices of all matching variables.
+  }
+}}
 
 \item{fuzzy}{Logical, if \code{TRUE}, "fuzzy matching" (partial and
 close distance matching) will be used to find \code{pattern}
 in \code{data} if no exact match was found. \code{\link{str_pos}}
 is used for fuzzy matching.}
+
+\item{as.df}{Deprecated, use \code{out = "df"} instead.}
+
+\item{as.varlab}{Deprecated, use \code{out = "table" instead.}}
 }
 \value{
-A named vector with column indices of found variables (variable names
-          are used as names-attribute); if \code{as.df = TRUE}, a tibble
-          with found variables; or, if \code{as.varlab = TRUE}, a tibble
-          with three columns: column number, variable name and variable label.
+By default (i.e. \code{out = "table"}, returns a tibble with three
+        columns: column number, variable name and variable label. If
+        \code{out = "index"}, returns a named vector with column indices
+        of matching variables (variable names are used as names-attribute);
+        if \code{out = "df"}, returns the matching variables as tibble.
 }
 \description{
 This functions finds variables in a data frame, which variable
@@ -78,11 +88,10 @@ data(efc)
 find_var(efc, "cop")
 
 # return tibble with matching variables
-find_var(efc, "cop", as.df = TRUE)
+find_var(efc, "cop", out = "df")
 
-# or return "summary"-tibble with matching variables
-# and their variable labels
-find_var(efc, "cop", as.varlab = TRUE)
+# or return column numbers
+find_var(efc, "cop", out = "index")
 
 # find variables with "dependency" in names and variable labels
 library(sjlabelled)
@@ -90,7 +99,7 @@ find_var(efc, "dependency")
 get_label(efc$e42dep)
 
 # find variables with "level" in names and value labels
-res <- find_var(efc, "level", search = "name_value", as.df = TRUE)
+res <- find_var(efc, "level", search = "name_value", out = "df")
 res
 get_labels(res, attr.only = FALSE)
 
