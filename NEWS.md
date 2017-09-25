@@ -4,6 +4,10 @@
 
 * Arguments `as.df` and `as.varlab` in function `find_var()` are now deprecated. Please use `out` instead.
 
+## Bug fixes
+
+* Fixed bug for `as_label()`, when `x` was a character vector and argument `drop.levels` was `TRUE`.
+
 # sjmisc 2.6.1
 
 ## General
