@@ -3,10 +3,11 @@
 ## Changes to functions
 
 * Arguments `as.df` and `as.varlab` in function `find_var()` are now deprecated. Please use `out` instead.
+* `rotate_df()` preserves attributes.
 
 ## Bug fixes
 
-* Fixed bug for `as_label()`, when `x` was a character vector and argument `drop.levels` was `TRUE`.
+* Fixed bug for `to_label()`, when `x` was a character vector and argument `drop.levels` was `TRUE`.
 
 # sjmisc 2.6.1
 

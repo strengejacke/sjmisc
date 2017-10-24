@@ -51,8 +51,10 @@
 #' @importFrom dplyr select
 #' @export
 rotate_df <- function(x, rn = NULL, cn = FALSE) {
+
   # check if first column has column names
   # that should be used for rotated df
+
   if (cn) {
     cnames <- x[[1]]
     x <- dplyr::select(x, -1)
@@ -60,7 +62,12 @@ rotate_df <- function(x, rn = NULL, cn = FALSE) {
     cnames <- NULL
 
 
+  # copy attributes
+  a <- attributes(x)
+
+
   # rotate data frame for 90°
+
   x <- x %>%
     as.data.frame() %>%
     t() %>%
@@ -68,6 +75,7 @@ rotate_df <- function(x, rn = NULL, cn = FALSE) {
 
 
   # add column names, if requested
+
   if (!is.null(cnames)) {
     # check if we have correct length of column names
     if (length(cnames) != ncol(x))
@@ -79,6 +87,13 @@ rotate_df <- function(x, rn = NULL, cn = FALSE) {
 
   # add rownames as column, if requested
   if (!is.null(rn)) x <- tibble::rownames_to_column(x, var = rn)
+
+
+  # add back attributes. therefore, delete the common attributes, like class etc.
+  # and then add attributes to our final df
+
+  a[c("names", "row.names", "class", "dim", "dimnames")] <- NULL
+  attributes(x) <- c(attributes(x), a)
 
   x
 }
