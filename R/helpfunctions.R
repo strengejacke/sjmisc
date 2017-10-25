@@ -17,11 +17,6 @@ get_dot_data <- function(x, qs) {
 }
 
 
-
-is_float <- function(x) is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
-
-
-
 # auto-detect attribute style for value labels.
 # either haven style ("labels") or foreign style
 # ("value.labels")

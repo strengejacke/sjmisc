@@ -4,6 +4,7 @@
 
 * Arguments `as.df` and `as.varlab` in function `find_var()` are now deprecated. Please use `out` instead.
 * `rotate_df()` preserves attributes.
+* `is_float()` is now exported as function.
 
 ## Bug fixes
 
