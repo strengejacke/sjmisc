@@ -42,11 +42,11 @@ But first, we need to know the name of the dependency-variable. This is where `f
 3. value labels 
 4. or any combination of these. 
 
-By default, it looks for variable name and labels. The function also supports regex-patterns. By default, `find_var()` returns the column-indices, but you can also print a small "summary"" with the `as.varlab`-argument.
+By default, it looks for variable name and labels. The function also supports regex-patterns. By default, `find_var()` returns the column-indices, but you can also print a small "summary"" with the `out`-argument.
 
 ```{r}
 # find all variables with "dependency" in name or label
-find_var(efc, "dependency", as.varlab = T)
+find_var(efc, "dependency", out = "table")
 ```
 
 Variable in column 5, named _e42dep_, is what we are looking for.

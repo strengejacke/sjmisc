@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.6.1.9000
-Date: 2017-10-05
+Version: 2.6.2
+Date: 2017-10-26
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
