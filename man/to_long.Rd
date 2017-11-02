@@ -113,6 +113,5 @@ mydat <- to_long(
 library(sjlabelled)
 str(mydat$score)
 get_label(mydat$speed)
-lbl_df(mydat)
 
 }

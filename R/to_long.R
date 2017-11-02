@@ -99,7 +99,6 @@
 #' library(sjlabelled)
 #' str(mydat$score)
 #' get_label(mydat$speed)
-#' lbl_df(mydat)
 #'
 #' @importFrom tidyr gather_
 #' @importFrom dplyr bind_cols

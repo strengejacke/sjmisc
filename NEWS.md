@@ -1,3 +1,9 @@
+# sjmisc 2.6.3
+
+## General
+
+* Revised examples that used removed methods from other packages.
+
 # sjmisc 2.6.2
 
 ## Changes to functions
