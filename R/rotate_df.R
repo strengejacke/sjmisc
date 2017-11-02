@@ -92,7 +92,8 @@ rotate_df <- function(x, rn = NULL, cn = FALSE) {
   # add back attributes. therefore, delete the common attributes, like class etc.
   # and then add attributes to our final df
 
-  a[c("names", "row.names", "class", "dim", "dimnames")] <- NULL
+  # a[c("names", "row.names", "class", "dim", "dimnames")] <- NULL
+  a[names(a) %in% names(attributes(x))] <- NULL
   attributes(x) <- c(attributes(x), a)
 
   x
