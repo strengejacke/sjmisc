@@ -50,6 +50,7 @@
 #'            \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{rec = "1=1; 2=4; 3=2; 4=3"}}
 #'            \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
 #'            \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
+#'            \item{value range for doubles}{for double vectors (with floating points), all values within the specified range are recoded; e.g. \code{1:2.5=1;2.6:3=2} recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)}
 #'            \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
 #'            \item{\code{"else"}}{all other values, which have not been specified yet, are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
 #'            \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
@@ -76,10 +77,6 @@
 #'
 #' # recode 1 to 2 into 1 and 3 to 4 into 2
 #' table(rec(efc$e42dep, rec = "1,2=1; 3,4=2"), useNA = "always")
-#'
-#' # or:
-#' # rec(efc$e42dep) <- "1,2=1; 3,4=2"
-#' # table(efc$e42dep, useNA = "always")
 #'
 #' # keep value labels. variable label is automatically preserved
 #' library(dplyr)
@@ -134,6 +131,9 @@
 #' # recode non-numeric factors
 #' data(iris)
 #' table(rec(iris, Species, rec = "setosa=huhu; else=copy"))
+#'
+#' # recode floating points
+#' table(rec(iris, Sepal.Length, rec = "lo:5=1;5.01:6.5=2;6.501:max=3"))
 #'
 #' # preserve tagged NAs
 #' library(haven)
@@ -244,6 +244,11 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
       as.num <- FALSE
     }
   }
+
+
+  # is vector a double with decimals?
+  with_dec <- is_float(x)
+
 
   # retrieve min and max values
   min_val <- min(x, na.rm = T)
@@ -390,8 +395,12 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
         if (is.na(from) || is.na(to)) {
           stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = F)
         }
-        # add range to vector of old values
-        old_val <- c(old_val, seq(from, to))
+        # for floating point range, we keep the range
+        if (with_dec)
+          old_val <- ovs
+        else
+          # add range to vector of old values
+          old_val <- c(old_val, seq(from, to))
       } else {
         # can new value be converted to numeric?
         ovn <- suppressWarnings(as.numeric(ovs))
@@ -433,6 +442,15 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
         # remember that we have recoded NA's. Might be
         # important for else-token above.
         na_recoded <- TRUE
+      } else if (is.character(old_val[k]) && with_dec) {
+        # this value indicates a range of values to be recoded, because
+        # we have found a colon. now copy from and to values from range
+        from <- suppressWarnings(as.numeric(unlist(strsplit(old_val[k], ":", fixed = T))[1]))
+        to <- suppressWarnings(as.numeric(unlist(strsplit(old_val[k], ":", fixed = T))[2]))
+        # if old_val is a character, we assume we have a double with decimal
+        # points and want to recode a range
+        new_var[which(x >= from & x <= to)] <- new_val
+
       } else {
         # else we have numeric values, which should be replaced
         new_var[which(x == old_val[k])] <- new_val

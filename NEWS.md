@@ -3,6 +3,7 @@
 ## General
 
 * Revised examples that used removed methods from other packages.
+* `rec()` now also recodes doubles with floating points, if a range of values is specified.
 
 # sjmisc 2.6.2
 
