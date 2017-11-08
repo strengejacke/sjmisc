@@ -299,19 +299,21 @@ get_title_part <- function(x, grps, level, i) {
 #' @importFrom tidyr nest
 #' @importFrom dplyr filter
 #' @importFrom stats complete.cases
+#' @importFrom rlang .data
 get_grouped_data <- function(x) {
   # nest data frame
   grps <- tidyr::nest(x)
 
-  # remove NA category
+  # remove NA category for grouped data
   cc <- grps %>%
     dplyr::select(-.data$data) %>%
     stats::complete.cases()
 
   # select only complete cases
-  grps <- grps %>% dplyr::filter(cc)
+  grps <- dplyr::filter(grps, !! cc)
 
   # arrange data
+
   if (length(attr(x, "vars", exact = T)) == 1)
     reihe <- order(grps[[1]])
   else

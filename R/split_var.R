@@ -106,16 +106,23 @@ split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = 
     # do we have a grouped data frame?
     if (inherits(.dat, "grouped_df")) {
 
-      # get grouped data, as nested data frame
-      grps <- get_grouped_data(.dat)
+      # get grouping indices and variables
+      grps <- dplyr::group_indices(.dat)
+      grp.vars <- dplyr::group_vars(.dat)
+
+      # names of grouping variables
+      vars <- colnames(.dat)[colnames(.dat) %nin% grp.vars]
+      .dat <- dplyr::ungroup(.dat)
 
       # iterate all groups
-      for (i in seq_len(nrow(grps))) {
-        # get data from each single group
-        group <- grps$data[[i]]
+      for (i in unique(grps)) {
+
+        # slice cases for each group
+        keep <- which(grps == i)
+        group <- dplyr::slice(.dat, !! keep)
 
         # now iterate all variables of interest
-        for (j in colnames(group)) {
+        for (j in vars) {
           group[[j]] <- split_var_helper(
             x = group[[j]],
             groupcount = n,
@@ -127,15 +134,11 @@ split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = 
         }
 
         # write back data
-        grps$data[[i]] <- group
+        .dat[keep, ] <- group
       }
 
-      # unnest data frame
-      x <- tidyr::unnest(grps)
-
       # remove grouping column
-      .dat <- .dat[colnames(.dat) %nin% dplyr::group_vars(.dat)]
-
+      x <- tibble::as_tibble(.dat[colnames(.dat) %nin% grp.vars])
     } else {
       # iterate variables of data frame
       for (i in colnames(.dat)) {
@@ -148,14 +151,14 @@ split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = 
           inclusive = inclusive
         )
       }
+
+      # coerce to tibble and select only recoded variables
+      x <- tibble::as_tibble(x[colnames(.dat)])
     }
-    # coerce to tibble and select only recoded variables
-    x <- tibble::as_tibble(x[colnames(.dat)])
 
     # add suffix to recoded variables?
-    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
+    if (!is.null(suffix) && !sjmisc::is_empty(suffix))
       colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-    }
 
     # combine data
     if (append) x <- dplyr::bind_cols(orix, x)

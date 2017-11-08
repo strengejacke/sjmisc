@@ -5,6 +5,10 @@
 * Revised examples that used removed methods from other packages.
 * `rec()` now also recodes doubles with floating points, if a range of values is specified.
 
+## Bug fixes
+
+* `center()`, `std()`, `dicho()`, `split_var()` and `group_var()` did not work correctly for grouped data frames.
+
 # sjmisc 2.6.2
 
 ## Changes to functions
