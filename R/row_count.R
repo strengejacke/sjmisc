@@ -48,6 +48,7 @@
 #' col_count(dat, count = NA)
 #' col_count(dat, c1:c3, count = 2, append = TRUE)
 #'
+#' @importFrom dplyr quos bind_cols
 #' @importFrom tibble as_tibble
 #' @export
 row_count <- function(x, ..., count, var = "rowcount", append = FALSE) {
@@ -85,6 +86,7 @@ row_count <- function(x, ..., count, var = "rowcount", append = FALSE) {
 
 #' @rdname row_count
 #' @importFrom purrr map_df
+#' @importFrom dplyr quos bind_rows
 #' @export
 col_count <- function(x, ..., count, var = "colcount", append = FALSE) {
   # evaluate arguments, generate data
