@@ -87,80 +87,19 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
-  if (is.data.frame(x)) {
-
-    # remember original data, if user wants to bind columns
-    orix <- tibble::as_tibble(x)
-
-    # do we have a grouped data frame?
-    if (inherits(.dat, "grouped_df")) {
-
-      # get grouping indices and variables
-      grps <- dplyr::group_indices(.dat)
-      grp.vars <- dplyr::group_vars(.dat)
-
-      # names of grouping variables
-      vars <- colnames(.dat)[colnames(.dat) %nin% grp.vars]
-      .dat <- dplyr::ungroup(.dat)
-
-      # iterate all groups
-      for (i in unique(grps)) {
-
-        # slice cases for each group
-        keep <- which(grps == i)
-        group <- dplyr::slice(.dat, !! keep)
-
-        # now iterate all variables of interest
-        for (j in vars) {
-          group[[j]] <- dicho_helper(
-            x = group[[j]],
-            dich.by = dich.by,
-            as.num = as.num,
-            var.label = var.label,
-            val.labels = val.labels
-          )
-        }
-
-        # write back data
-        .dat[keep, ] <- group
-      }
-
-      # remove grouping column
-      x <- tibble::as_tibble(.dat[colnames(.dat) %nin% grp.vars])
-    } else {
-      # iterate variables of data frame
-      for (i in colnames(.dat)) {
-        x[[i]] <- dicho_helper(
-          x = .dat[[i]],
-          dich.by = dich.by,
-          as.num = as.num,
-          var.label = var.label,
-          val.labels = val.labels
-        )
-      }
-
-      # coerce to tibble and select only recoded variables
-      x <- tibble::as_tibble(x[colnames(.dat)])
-    }
-
-    # add suffix to recoded variables?
-    if (!is.null(suffix) && !sjmisc::is_empty(suffix))
-      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-
-    # combine data
-    if (append) x <- dplyr::bind_cols(orix, x)
-  } else {
-    x <- dicho_helper(
-      x = .dat,
-      dich.by = dich.by,
-      as.num = as.num,
-      var.label = var.label,
-      val.labels = val.labels
-    )
-  }
-
-  x
+  recode_fun(
+    x = x,
+    .dat = .dat,
+    fun = get("dicho_helper", asNamespace("sjmisc")),
+    suffix = suffix,
+    append = append,
+    dich.by = dich.by,
+    as.num = as.num,
+    var.label = var.label,
+    val.labels = val.labels
+  )
 }
+
 
 #' @importFrom stats median
 dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
@@ -202,4 +141,67 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
   if (!is.null(val.labels)) x <- suppressWarnings(sjlabelled::set_labels(x, labels = val.labels))
 
   x
+}
+
+
+
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr group_indices group_vars slice ungroup bind_cols
+recode_fun <- function(x, .dat, fun, suffix, append, ...) {
+  if (is.data.frame(x)) {
+
+    # remember original data, if user wants to bind columns
+    orix <- tibble::as_tibble(x)
+
+    # do we have a grouped data frame?
+    if (inherits(.dat, "grouped_df")) {
+
+      # get grouping indices and variables
+      grps <- dplyr::group_indices(.dat)
+      grp.vars <- dplyr::group_vars(.dat)
+
+      # names of grouping variables
+      vars <- colnames(.dat)[colnames(.dat) %nin% grp.vars]
+      .dat <- dplyr::ungroup(.dat)
+
+      # iterate all groups
+      for (i in unique(grps)) {
+
+        # slice cases for each group
+        keep <- which(grps == i)
+        group <- dplyr::slice(.dat, !! keep)
+
+        # now iterate all variables of interest
+        for (j in vars) {
+          group[[j]] <- fun(x = group[[j]], ...)
+        }
+
+        # write back data
+        .dat[keep, ] <- group
+      }
+
+      # remove grouping column
+      x <- tibble::as_tibble(.dat[colnames(.dat) %nin% grp.vars])
+    } else {
+      # iterate variables of data frame
+      for (i in colnames(.dat)) {
+        x[[i]] <- fun(x = .dat[[i]], ...)
+      }
+
+      # coerce to tibble and select only recoded variables
+      x <- tibble::as_tibble(x[colnames(.dat)])
+    }
+
+    # add suffix to recoded variables?
+    if (!is.null(suffix) && !sjmisc::is_empty(suffix))
+      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
+
+    # combine data
+    if (append) x <- dplyr::bind_cols(orix, x)
+  } else {
+    x <- fun(x = .dat, ...)
+  }
+
+  x
+
 }

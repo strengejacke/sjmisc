@@ -99,83 +99,23 @@ split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
-  if (is.data.frame(x)) {
-    # remember original data, if user wants to bind columns
-    orix <- tibble::as_tibble(x)
-
-    # do we have a grouped data frame?
-    if (inherits(.dat, "grouped_df")) {
-
-      # get grouping indices and variables
-      grps <- dplyr::group_indices(.dat)
-      grp.vars <- dplyr::group_vars(.dat)
-
-      # names of grouping variables
-      vars <- colnames(.dat)[colnames(.dat) %nin% grp.vars]
-      .dat <- dplyr::ungroup(.dat)
-
-      # iterate all groups
-      for (i in unique(grps)) {
-
-        # slice cases for each group
-        keep <- which(grps == i)
-        group <- dplyr::slice(.dat, !! keep)
-
-        # now iterate all variables of interest
-        for (j in vars) {
-          group[[j]] <- split_var_helper(
-            x = group[[j]],
-            groupcount = n,
-            as.num = as.num,
-            var.label = var.label,
-            val.labels = val.labels,
-            inclusive = inclusive
-          )
-        }
-
-        # write back data
-        .dat[keep, ] <- group
-      }
-
-      # remove grouping column
-      x <- tibble::as_tibble(.dat[colnames(.dat) %nin% grp.vars])
-    } else {
-      # iterate variables of data frame
-      for (i in colnames(.dat)) {
-        x[[i]] <- split_var_helper(
-          x = .dat[[i]],
-          groupcount = n,
-          as.num = as.num,
-          var.label = var.label,
-          val.labels = val.labels,
-          inclusive = inclusive
-        )
-      }
-
-      # coerce to tibble and select only recoded variables
-      x <- tibble::as_tibble(x[colnames(.dat)])
-    }
-
-    # add suffix to recoded variables?
-    if (!is.null(suffix) && !sjmisc::is_empty(suffix))
-      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-
-    # combine data
-    if (append) x <- dplyr::bind_cols(orix, x)
-  } else {
-    x <- split_var_helper(
-      x = .dat,
-      groupcount = n,
-      as.num = as.num,
-      var.label = var.label,
-      val.labels = val.labels,
-      inclusive = inclusive
-    )
-  }
-
-  x
+  recode_fun(
+    x = x,
+    .dat = .dat,
+    fun = get("split_var_helper", asNamespace("sjmisc")),
+    suffix = suffix,
+    append = append,
+    groupcount = n,
+    as.num = as.num,
+    var.label = var.label,
+    val.labels = val.labels,
+    inclusive = inclusive
+  )
 }
 
+
+#' @importFrom stats quantile
+#' @importFrom sjlabelled get_label set_label set_labels
 split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclusive) {
   # retrieve variable label
   if (is.null(var.label))
