@@ -47,7 +47,7 @@ This design-choice is mainly due to compatibility- and convenience-reasons. It d
 
 ## The ...-ellipses-argument
 
-The selection of variables specified in the `...`-ellipses-argument is powered by dplyr's `select()`. This means, you can use existing functions like `:` to select a range of variables, or also use dplyr's `select_helpers`, like `contains()` or `one_of()`.
+The selection of variables specified in the `...`-ellipses-argument is powered by dplyr's `select()` and tidyselect's `select_helpers()`. This means, you can use existing functions like `:` to select a range of variables, or also use tidyselect's `select_helpers`, like `contains()` or `one_of()`.
 
 ```{r echo=FALSE, message=FALSE}
 library(dplyr)

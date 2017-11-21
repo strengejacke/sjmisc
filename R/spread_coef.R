@@ -94,7 +94,8 @@
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
 #' @importFrom broom tidy
-#' @importFrom dplyr select one_of bind_cols "%>%"
+#' @importFrom dplyr select bind_cols "%>%"
+#' @importFrom tidyselect one_of
 #' @importFrom tidyr spread_
 #' @importFrom purrr map_df
 #' @importFrom rlang .data
@@ -158,7 +159,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
           # filter term
           dplyr::filter(.data$term == model.term) %>%
           # just select estimate and p-value
-          dplyr::select(dplyr::one_of(variables))
+          dplyr::select(tidyselect::one_of(variables))
         # set colnames
         colnames(tmp) <- c(model.term, variables[-1])
         tmp

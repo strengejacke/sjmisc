@@ -4,6 +4,7 @@
 
 * Revised examples that used removed methods from other packages.
 * `rec()` now also recodes doubles with floating points, if a range of values is specified.
+* Use select-helpers from package *tidyselect*, instead of *dplyr*.
 
 ## Bug fixes
 

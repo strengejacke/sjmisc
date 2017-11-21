@@ -14,7 +14,7 @@
 #'        variables is returned.
 #' @param summary After merging multiple imputed data, \code{summary} displays
 #'          a graphical summary of the "quality" of the merged values, compared
-#'          to the origuinal imputed values.
+#'          to the original imputed values.
 #'          \describe{
 #'            \item{\code{"dens"}}{
 #'              Creates a density plot, which shows the distribution of the mean
@@ -42,8 +42,8 @@
 #' @return A data frame with (merged) imputed variables; or \code{ori} with
 #'         appended imputed variables, if \code{ori} was specified.
 #'         If \code{summary} is included, returns a list with the data frame
-#'         with (merged) imputed variables, and the data frame that was used
-#'         for plotting the summary.
+#'         \code{data} with (merged) imputed variables and some other summary
+#'         information, which are required for the plot-output.
 #'
 #' @details This method merges multiple imputations of variables into a single
 #'          variable by computing the (rounded) mean of all imputed values
@@ -81,10 +81,7 @@
 #' # show summary of quality of merging imputations
 #' merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
 #'
-#' @importFrom purrr map_df
-#' @importFrom dplyr n_distinct
-#' @importFrom tidyr gather
-#' @importFrom rlang .data
+#' @importFrom dplyr bind_cols
 #' @export
 merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", "hist", "sd"), filter = NULL) {
 
@@ -105,27 +102,36 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
   if (!is.null(ori) && !is.data.frame(ori))
     stop("`ori` must be data frame.", call. = F)
 
+
   # create return value
   imputed.dat <- data.frame()
   analyse <- list()
 
+
   # iterate all variables of data frame that has missing values
   for (i in seq_len(ncol(dat))) {
+
     # check if current variable was imputed or not
     if (!sjmisc::is_empty(imp$method[i])) {
+
       # copy indices of missing values from original variable
       miss_inc <- which(is.na(dat[[i]]))
 
+
       # create a new data frame from all imputation steps, where only the
       # imputations of the current variables are in
+
       miss_inc_dat <- as.data.frame(lapply(seq_len(imp$m), function(x) {
         mice::complete(imp, action = x)[[i]]
       }), stringsAsFactors = F)
 
+
       # convert imputed variable to numeric. needed to perform row means.
       miss_inc_dat <- to_value(miss_inc_dat)
+
       # copy original variable with missings to a new dummy vector
       x <- dat[[i]]
+
 
       # now compute the row means for this variable from all imputed variables
       # (which are in the data frame miss_inc_dat). This mean value represents
@@ -133,16 +139,20 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
       # value into the variable with missings, thus replacing the missings
       # in the original variable with the most likely imputed value. For numeric
       # integer values, this mean is rounded.
+
       if (is_float(x))
         x[miss_inc] <- rowMeans(miss_inc_dat[miss_inc, ])
       else
         x[miss_inc] <- round(rowMeans(miss_inc_dat[miss_inc, ]))
 
+
       # analyse quality of merged values, by saving mean and standard deviation
       # for each merged value to a separate list. the mean and sd refer to
       # all imputed values for a case
+
       analyse.mw <- apply(miss_inc_dat[miss_inc, ], 1, mean)
       analyse.sd <- apply(miss_inc_dat[miss_inc, ], 1, sd)
+
       merge_result <- list(
         merged = x[miss_inc],
         mean = analyse.mw,
@@ -150,18 +160,23 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
         grp = rep(colnames(dat[i]), length.out = length(miss_inc))
       )
 
+
       # and add to final list
       analyse[[length(analyse) + 1]] <- merge_result
       names(analyse)[length(analyse)] <- colnames(dat[i])
 
+
       # append the imputed variable to the original data frame and preserve
       # the non-imputed variable with missing values as well
+
       if (ncol(imputed.dat) == 0)
         imputed.dat <- data.frame(x)
       else
         imputed.dat <- cbind(imputed.dat, x)
 
+
       # give meaningful column-/variable name.
+
       if (is.null(ori))
         colnames(imputed.dat)[ncol(imputed.dat)] <- sprintf("%s", colnames(dat)[i])
       else
@@ -172,75 +187,15 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
   # user wants summary of quality-analysis of merged value
   if (summary != "none") {
 
-    # check if ggplot is installed
-    if (!requireNamespace("ggplot2", quietly = TRUE)) {
-      stop("Package `ggplot2` needed for to plot summaries. Please install it.", call. = FALSE)
-    }
-
-    if (summary == "sd") {
-      analyse <- analyse %>% purrr::map_df(~.x)
-
-      if (!is.null(filter))
-        analyse <- analyse %>% dplyr::filter(.data$grp %in% filter)
-
-      p <- ggplot2::ggplot(
-          data = analyse,
-          mapping = ggplot2::aes_string(x = "merged", y = "sd")
-        ) +
-        ggplot2::geom_point() +
-        ggplot2::facet_wrap(
-          facets = ~grp,
-          scales = "free",
-          ncol = ceiling(sqrt(dplyr::n_distinct(analyse$grp)))
-        ) +
-        ggplot2::theme_bw() +
-        ggplot2::labs(
-          x = NULL,
-          y = NULL,
-          fill = NULL,
-          title = "Standard Deviation of imputed values for each merged value"
-        )
-    } else {
-      analyse <- analyse %>%
-        purrr::map_df(~.x) %>%
-        tidyr::gather(key = "value", value = "xpos", 1:2)
-
-      if (!is.null(filter))
-        analyse <- analyse %>% dplyr::filter(.data$grp %in% filter)
-
-      p <- ggplot2::ggplot(
-          data = analyse,
-          mapping = ggplot2::aes_string(x = "xpos", fill = "value")
-        ) +
-        ggplot2::facet_wrap(
-          facets = ~grp,
-          scales = "free",
-          ncol = ceiling(sqrt(dplyr::n_distinct(analyse$grp)))
-        ) +
-        ggplot2::theme_bw() +
-        ggplot2::labs(
-          x = NULL,
-          y = NULL,
-          fill = NULL,
-          title = "Comparison between mean of imputed values and final merged values"
-        )
-
-      # check type of summary diagram
-      if (summary == "dens")
-        p <- p + ggplot2::geom_density(alpha = .2)
-      else
-        p <- p + ggplot2::geom_histogram(position = "dodge")
-    }
-
-    graphics::plot(p)
+    # bind data
+    if (is.null(ori))
+      data <- imputed.dat
+    else
+      data <- dplyr::bind_cols(ori, imputed.dat)
 
     # return merged data and summary data
-    if (is.null(ori))
-      # return imputed variables
-      return(list(data = imputed.dat, summary = analyse))
-    else
-      # return data frame with appended imputed variables
-      return(list(data = cbind(ori, imputed.dat), summary = analyse))
+    impret <- list(data = data, summary = analyse, sum.type = summary, filter = filter)
+    return(structure(class = "sj_merge.imp", impret))
   }
 
   if (is.null(ori))
@@ -248,5 +203,5 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
     imputed.dat
   else
     # return data frame with appended imputed variables
-    cbind(ori, imputed.dat)
+    dplyr::bind_cols(ori, imputed.dat)
 }

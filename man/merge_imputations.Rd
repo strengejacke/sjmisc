@@ -20,7 +20,7 @@ variables is returned.}
 
 \item{summary}{After merging multiple imputed data, \code{summary} displays
 a graphical summary of the "quality" of the merged values, compared
-to the origuinal imputed values.
+to the original imputed values.
 \describe{
   \item{\code{"dens"}}{
     Creates a density plot, which shows the distribution of the mean
@@ -49,8 +49,8 @@ All non-defined variables will not be shown in the plot.}
 A data frame with (merged) imputed variables; or \code{ori} with
         appended imputed variables, if \code{ori} was specified.
         If \code{summary} is included, returns a list with the data frame
-        with (merged) imputed variables, and the data frame that was used
-        for plotting the summary.
+        \code{data} with (merged) imputed variables and some other summary
+        information, which are required for the plot-output.
 }
 \description{
 This function merges multiple imputed data frames from
