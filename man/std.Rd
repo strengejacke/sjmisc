@@ -5,9 +5,9 @@
 \alias{center}
 \title{Standardize and center variables}
 \usage{
-std(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z")
+std(x, ..., include.fac = FALSE, append = FALSE, suffix = "_z")
 
-center(x, ..., include.fac = TRUE, append = FALSE, suffix = "_c")
+center(x, ..., include.fac = FALSE, append = FALSE, suffix = "_c")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -84,5 +84,11 @@ mtcars \%>\% std(disp)
 mtcars \%>\%
   group_by(cyl) \%>\%
   std(disp)
+
+data(iris)
+# also standardize factors
+std(iris, include.fac = TRUE)
+# don't standardize factors
+std(iris, include.fac = FALSE)
 
 }

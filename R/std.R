@@ -48,9 +48,15 @@
 #'   group_by(cyl) %>%
 #'   std(disp)
 #'
+#' data(iris)
+#' # also standardize factors
+#' std(iris, include.fac = TRUE)
+#' # don't standardize factors
+#' std(iris, include.fac = FALSE)
+#'
 #' @importFrom dplyr quos
 #' @export
-std <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z") {
+std <- function(x, ..., include.fac = FALSE, append = FALSE, suffix = "_z") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -60,7 +66,7 @@ std <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_z") {
 
 #' @rdname std
 #' @export
-center <- function(x, ..., include.fac = TRUE, append = FALSE, suffix = "_c") {
+center <- function(x, ..., include.fac = FALSE, append = FALSE, suffix = "_c") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -91,6 +97,9 @@ std_helper <- function(x, include.fac, standardize) {
     else
       return(x)
   }
+
+  # non-numeric are preserved.
+  if (!is.numeric(x)) return(x)
 
   # remove missings
   tmp <- stats::na.omit(x)
