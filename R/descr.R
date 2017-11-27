@@ -47,6 +47,8 @@
 #' @importFrom dplyr select mutate
 #' @importFrom psych describe
 #' @importFrom sjlabelled copy_labels
+#' @importFrom crayon blue red italic
+#' @importFrom cli cat_line
 #' @export
 descr <- function(x, ..., max.length = NULL) {
 
@@ -55,14 +57,21 @@ descr <- function(x, ..., max.length = NULL) {
 
   # do we have a grouped data frame?
   if (inherits(dd, "grouped_df")) {
+
     # get grouped data
     grps <- get_grouped_data(dd)
+
     # now plot everything
     for (i in seq_len(nrow(grps))) {
+
       # copy back labels to grouped data frame
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
+
       # print title for grouping
-      cat(sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n")))
+      cli::cat_line(crayon::red(crayon::italic(
+        sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n"))
+      )))
+
       # print frequencies
       print(descr_helper(tmp, max.length))
       cat("\n")

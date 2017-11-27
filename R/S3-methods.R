@@ -1,25 +1,30 @@
 #' @importFrom purrr walk
+#' @importFrom crayon blue red italic
+#' @importFrom cli cat_line
 #' @export
 print.sjmisc.frq <- function(x, ...) {
   purrr::walk(x, function(dat) {
+
     # get grouping title label
     grp <- attr(dat, "group", exact = T)
+
     # print title for grouping
-    if (!is.null(grp)) cat(sprintf("Grouped by:\n%s\n\n", grp))
+    if (!is.null(grp))
+      cli::cat_line(crayon::red(crayon::italic(sprintf("Grouped by:\n%s\n", grp))))
 
     # get variable label
     lab <- attr(dat, "label", exact = T)
     vt <- attr(dat, "vartype", exact = T)
 
     # print label
-    if (!is.null(lab)) cat(sprintf("# %s <%s>\n", lab, vt))
+    if (!is.null(lab)) cli::cat_line(crayon::blue(sprintf("# %s <%s>", lab, vt)))
 
     # add Total N
-    cat(sprintf(
-      "# Total N = %i (valid N = %i)\n\n",
+    cli::cat_line(crayon::blue(sprintf(
+      "# Total N = %i (valid N = %i)\n",
       sum(dat$frq, na.rm = TRUE),
       sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE)
-    ))
+    )))
 
     # print frq-table
     print.data.frame(dat, ..., row.names = FALSE, quote = FALSE)
@@ -28,9 +33,12 @@ print.sjmisc.frq <- function(x, ...) {
   })
 }
 
+
+#' @importFrom crayon blue
+#' @importFrom cli cat_line
 #' @export
 print.sjmisc.descr <- function(x, ...) {
-  cat("## Basic descriptive statistics\n\n")
+  cli::cat_line(crayon::blue("## Basic descriptive statistics\n"))
   # round values
   x[, c(4:6, 8, 12:14)] <- round(x[, c(4:6, 8, 12:14)], 2)
   # print frq-table

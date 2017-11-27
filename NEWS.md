@@ -4,6 +4,7 @@
 
 * Revised examples that used removed methods from other packages.
 * Use select-helpers from package *tidyselect*, instead of *dplyr*.
+* Beautiful colored output for `frq()`, `descr()` and `flat_table()`.
 
 ## Changes to functions
 

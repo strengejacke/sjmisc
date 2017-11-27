@@ -54,6 +54,8 @@
 #'
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
+#' @importFrom crayon red italic
+#' @importFrom cli cat_line
 #' @export
 flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
 
@@ -79,14 +81,21 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
 
   # do we have a grouped data frame?
   if (inherits(dd, "grouped_df")) {
+
     # get grouped data
     grps <- get_grouped_data(dd)
+
     # now plot everything
     for (i in seq_len(nrow(grps))) {
+
       # copy back labels to grouped data frame
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
+
       # print title for grouping
-      cat(sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n")))
+      cli::cat_line(crayon::red(crayon::italic(
+        sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n"))
+      )))
+
       # print frequencies
       print(com_ft(tmp, show.values, no.prop.table, marge, digits))
       cat("\n")
