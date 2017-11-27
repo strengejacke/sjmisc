@@ -13,7 +13,6 @@
 #'          the preceeding group. This may be necessary if cutting a vector into
 #'          groups does not define proper ("equal sized") group sizes.
 #'          See 'Note' and 'Examples'.
-#' @param groupcount Deprecated. Use \code{n} instead.
 #'
 #' @inheritParams to_factor
 #' @inheritParams group_var
@@ -88,13 +87,7 @@
 #'
 #' @importFrom stats quantile
 #' @export
-split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g", groupcount) {
-
-  # check deprecated arguments
-  if (!missing(groupcount)) {
-    message("Argument `groupcount` is deprecated. Please use `n` instead.")
-    n <- groupcount
-  }
+split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))

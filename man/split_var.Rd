@@ -5,7 +5,7 @@
 \title{Split numeric variables into smaller groups}
 \usage{
 split_var(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL,
-  inclusive = FALSE, append = FALSE, suffix = "_g", groupcount)
+  inclusive = FALSE, append = FALSE, suffix = "_g")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -53,8 +53,6 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
-
-\item{groupcount}{Deprecated. Use \code{n} instead.}
 }
 \value{
 A grouped variable with equal sized groups. If \code{x} is a data frame,

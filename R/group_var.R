@@ -22,8 +22,6 @@
 #' @param n Sets the maximum number of groups that are defined when auto-grouping is on
 #'          (\code{size = "auto"}). Default is 30. If \code{size} is not set to \code{"auto"},
 #'          this argument will be ignored.
-#' @param groupsize Deprecated. Use \code{size} instead.
-#' @param groupcount Deprecated. Use \code{n} instead.
 #'
 #' @inheritParams to_factor
 #' @inheritParams rec
@@ -115,19 +113,7 @@
 #' @importFrom purrr map
 #' @export
 group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
-                      n = 30, append = FALSE, suffix = "_gr", groupsize, groupcount) {
-
-  # check deprecated arguments
-  if (!missing(groupcount)) {
-    message("Argument `groupcount` is deprecated. Please use `n` instead.")
-    n <- groupcount
-  }
-
-  if (!missing(groupsize)) {
-    message("Argument `groupsize` is deprecated. Please use `size` instead.")
-    size <- groupsize
-  }
-
+                      n = 30, append = FALSE, suffix = "_gr") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
@@ -170,18 +156,7 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
 #' @importFrom purrr map
 #' @importFrom dplyr quos
 #' @export
-group_labels <- function(x, ..., size = 5, right.interval = FALSE, n = 30, groupsize, groupcount) {
-  # check deprecated arguments
-  if (!missing(groupcount)) {
-    message("Argument `groupcount` is deprecated. Please use `n` instead.")
-    n <- groupcount
-  }
-
-  if (!missing(groupsize)) {
-    message("Argument `groupsize` is deprecated. Please use `size` instead.")
-    size <- groupsize
-  }
-
+group_labels <- function(x, ..., size = 5, right.interval = FALSE, n = 30) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

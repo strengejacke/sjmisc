@@ -6,10 +6,9 @@
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
 group_var(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
-  n = 30, append = FALSE, suffix = "_gr", groupsize, groupcount)
+  n = 30, append = FALSE, suffix = "_gr")
 
-group_labels(x, ..., size = 5, right.interval = FALSE, n = 30, groupsize,
-  groupcount)
+group_labels(x, ..., size = 5, right.interval = FALSE, n = 30)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -53,10 +52,6 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
-
-\item{groupsize}{Deprecated. Use \code{size} instead.}
-
-\item{groupcount}{Deprecated. Use \code{n} instead.}
 }
 \value{
 \itemize{

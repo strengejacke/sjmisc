@@ -4,7 +4,14 @@
 #'              on the input. \code{center()} centers the input.
 #'
 #' @param include.fac Logical, if \code{TRUE}, factors will be converted to numeric
-#'          vectors and also standardized or centered.
+#'   vectors and also standardized or centered.
+#' @param robust Character vector, indicating the method applied when
+#'   standardizing variables with \code{std()}. By default, standardization is
+#'   achieved by dividing the centered variables by their standard deviation
+#'   (\code{robust = "sd"}). However, for skewed distributions, the median
+#'   absolute deviation (MAD, \code{robust = "mad"}) or Gini's mean difference
+#'   (\code{robust = "gmd"}) might be more robust measures of dispersion. For
+#'   the latter option, \CRANpkg{sjstats} needs to be installed.
 #'
 #' @inheritParams to_factor
 #' @inheritParams rec
@@ -56,11 +63,14 @@
 #'
 #' @importFrom dplyr quos
 #' @export
-std <- function(x, ..., include.fac = FALSE, append = FALSE, suffix = "_z") {
+std <- function(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE, append = FALSE, suffix = "_z") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
-  std_and_center(x, .dat, include.fac, append, standardize = TRUE, suffix)
+  # match arguments
+  robust <- match.arg(robust)
+
+  std_and_center(x, .dat, include.fac, append, standardize = TRUE, robust = robust, suffix)
 }
 
 
@@ -70,11 +80,11 @@ center <- function(x, ..., include.fac = FALSE, append = FALSE, suffix = "_c") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
-  std_and_center(x, .dat, include.fac, append, standardize = FALSE, suffix)
+  std_and_center(x, .dat, include.fac, append, standardize = FALSE, robust = NULL, suffix)
 }
 
 
-std_and_center <- function(x, .dat, include.fac, append, standardize, suffix) {
+std_and_center <- function(x, .dat, include.fac, append, standardize, robust, suffix) {
   recode_fun(
     x = x,
     .dat = .dat,
@@ -82,14 +92,15 @@ std_and_center <- function(x, .dat, include.fac, append, standardize, suffix) {
     suffix = suffix,
     append = append,
     include.fac = include.fac,
-    standardize = standardize
+    standardize = standardize,
+    robust = robust
   )
 }
 
 
-#' @importFrom stats sd na.omit
+#' @importFrom stats sd na.omit mad
 #' @importFrom sjlabelled get_label set_label
-std_helper <- function(x, include.fac, standardize) {
+std_helper <- function(x, include.fac, standardize, robust) {
   # check whether factors should also be standardized
   if (is.factor(x)) {
     if (include.fac)
@@ -109,7 +120,19 @@ std_helper <- function(x, include.fac, standardize) {
 
   # now center and standardize
   tmp <- tmp - mean(tmp)
-  if (standardize) tmp <- tmp / stats::sd(tmp)
+
+
+  # standardization can be achieved by std. dev., MAD or Gini's MD
+
+  if (standardize) {
+    if (robust == "mad")
+      tmp <- tmp / stats::mad(tmp)
+    else if (robust == "gmd" && requireNamespace("sjstats", quietly = TRUE))
+      tmp <- tmp / sjstats::gmd(tmp)
+    else
+      tmp <- tmp / stats::sd(tmp)
+  }
+
 
   # and fill in values in original vector
   x[!is.na(x)] <- tmp

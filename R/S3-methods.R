@@ -12,10 +12,17 @@ print.sjmisc.frq <- function(x, ...) {
     vt <- attr(dat, "vartype", exact = T)
 
     # print label
-    if (!is.null(lab)) cat(sprintf("# %s <%s>\n\n", lab, vt))
+    if (!is.null(lab)) cat(sprintf("# %s <%s>\n", lab, vt))
+
+    # add Total N
+    cat(sprintf(
+      "# Total N = %i (valid N = %i)\n\n",
+      sum(dat$frq, na.rm = TRUE),
+      sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE)
+    ))
 
     # print frq-table
-    print.data.frame(dat, ..., row.names = FALSE)
+    print.data.frame(dat, ..., row.names = FALSE, quote = FALSE)
 
     cat("\n\n")
   })

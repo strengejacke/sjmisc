@@ -3,13 +3,19 @@
 ## General
 
 * Revised examples that used removed methods from other packages.
+* Use select-helpers from package *tidyselect*, instead of *dplyr*.
+
+## Changes to functions
+
 * `rec()` now also recodes doubles with floating points, if a range of values is specified.
 * `std()` and `center()` now use `include.fac = FALSE` as default option.
-* Use select-helpers from package *tidyselect*, instead of *dplyr*.
+* `std()` gets a `robust`-argument, to divide variables either by standard deviation, or - in case of asymmetrically distributed variables - median absolute deviation or Gini's mean difference.
+* `frq()` now shows total and valid N in output.
 
 ## Bug fixes
 
 * `center()`, `std()`, `dicho()`, `split_var()` and `group_var()` did not work correctly for grouped data frames.
+* `frq()` did not print multiple variables when applied on grouped data frames.
 
 # sjmisc 2.6.2
 

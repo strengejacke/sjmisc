@@ -3,7 +3,7 @@ Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
 Version: 2.6.2.9000
-Date: 2017-10-26
+Date: 2017-11-24
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -36,7 +36,7 @@ Suggests:
     Hmisc,
     mice,
     sjPlot (>= 2.4.0),
-    sjstats (>= 0.12.0),
+    sjstats (>= 0.13.0),
     knitr,
     rmarkdown
 URL: https://github.com/strengejacke/sjmisc
