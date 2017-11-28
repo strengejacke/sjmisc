@@ -54,7 +54,7 @@
 #'
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
-#' @importFrom crayon red italic
+#' @importFrom crayon cyan italic
 #' @importFrom cli cat_line
 #' @export
 flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
@@ -84,6 +84,7 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
 
     # get grouped data
     grps <- get_grouped_data(dd)
+    cat("\n")
 
     # now plot everything
     for (i in seq_len(nrow(grps))) {
@@ -92,7 +93,7 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
       # print title for grouping
-      cli::cat_line(crayon::red(crayon::italic(
+      cli::cat_line(crayon::cyan(crayon::italic(
         sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n"))
       )))
 

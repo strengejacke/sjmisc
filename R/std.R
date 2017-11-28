@@ -48,7 +48,7 @@
 #'   mutate(age_std = std(e17age), burden = center(neg_c_7)) %>%
 #'   head()
 #'
-#' # works also with gouped data frames
+#' # works also with grouped data frames
 #' mtcars %>% std(disp)
 #'
 #' mtcars %>%

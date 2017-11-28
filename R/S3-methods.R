@@ -1,8 +1,9 @@
 #' @importFrom purrr walk
-#' @importFrom crayon blue red italic
+#' @importFrom crayon blue cyan italic
 #' @importFrom cli cat_line
 #' @export
 print.sjmisc.frq <- function(x, ...) {
+  cat("\n")
   purrr::walk(x, function(dat) {
 
     # get grouping title label
@@ -10,7 +11,7 @@ print.sjmisc.frq <- function(x, ...) {
 
     # print title for grouping
     if (!is.null(grp))
-      cli::cat_line(crayon::red(crayon::italic(sprintf("Grouped by:\n%s\n", grp))))
+      cli::cat_line(crayon::cyan(crayon::italic(sprintf("Grouped by:\n%s\n", grp))))
 
     # get variable label
     lab <- attr(dat, "label", exact = T)
@@ -38,6 +39,7 @@ print.sjmisc.frq <- function(x, ...) {
 #' @importFrom cli cat_line
 #' @export
 print.sjmisc.descr <- function(x, ...) {
+  cat("\n")
   cli::cat_line(crayon::blue("## Basic descriptive statistics\n"))
   # round values
   x[, c(4:6, 8, 12:14)] <- round(x[, c(4:6, 8, 12:14)], 2)

@@ -47,7 +47,7 @@
 #' @importFrom dplyr select mutate
 #' @importFrom psych describe
 #' @importFrom sjlabelled copy_labels
-#' @importFrom crayon blue red italic
+#' @importFrom crayon blue cyan italic
 #' @importFrom cli cat_line
 #' @export
 descr <- function(x, ..., max.length = NULL) {
@@ -68,8 +68,8 @@ descr <- function(x, ..., max.length = NULL) {
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
       # print title for grouping
-      cli::cat_line(crayon::red(crayon::italic(
-        sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n"))
+      cli::cat_line(crayon::cyan(crayon::italic(
+        sprintf("\nGrouped by:\n%s", get_grouped_title(dd, grps, i, sep = "\n"))
       )))
 
       # print frequencies
