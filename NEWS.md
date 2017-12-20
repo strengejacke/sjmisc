@@ -1,3 +1,9 @@
+# sjmisc 2.6.4
+
+## General
+
+* The `print()`-method for `descr()` now accepts a `digits`-argument, to specify the rounding of the output.
+
 # sjmisc 2.6.3
 
 ## General

@@ -39,10 +39,18 @@ print.sjmisc.frq <- function(x, ...) {
 #' @importFrom cli cat_line
 #' @export
 print.sjmisc.descr <- function(x, ...) {
+
+  digits <- 2
+
+  # do we have digits argument?
+  add.args <- lapply(match.call(expand.dots = F)$`...`, function(x) x)
+  if ("digits" %in% names(add.args)) digits <- eval(add.args[["digits"]])
+
+
   cat("\n")
   cli::cat_line(crayon::blue("## Basic descriptive statistics\n"))
   # round values
-  x[, c(4:6, 8, 12:14)] <- round(x[, c(4:6, 8, 12:14)], 2)
+  x[, c(5:10, 14:15)] <- round(x[, c(5:10, 14:15)], digits = digits)
   # print frq-table
   print.data.frame(x, ..., row.names = FALSE)
 }
