@@ -29,6 +29,7 @@
 #'           data frame.
 #'
 #' @note Value label attributes will be removed when converting variables to factors.
+#'       \cr \cr
 #'       This function is kept for backwards-compatibility. It is preferred to
 #'       use \code{\link[sjlabelled]{as_label}}.
 #'
@@ -233,6 +234,9 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #'
 #' @note Value labels will be removed when converting variables to factors,
 #'       variable labels, however, are preserved.
+#'       \cr \cr
+#'       This function is kept for backwards-compatibility. It is preferred to
+#'       use \code{\link[sjlabelled]{as_character}}.
 #'
 #' @return A character vector with the associated value labels as values. If \code{x}
 #'           is a data frame, the complete data frame \code{x} will be returned,

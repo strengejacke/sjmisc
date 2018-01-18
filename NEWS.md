@@ -3,6 +3,7 @@
 ## General
 
 * The `print()`-method for `descr()` now accepts a `digits`-argument, to specify the rounding of the output.
+* Cross refences from `dplyr::select_helpers` were updated to `tidyselect::select_helpers`.
 
 # sjmisc 2.6.3
 

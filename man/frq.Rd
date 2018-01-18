@@ -13,7 +13,8 @@ frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
 \item{...}{Optional, unquoted names of variables that should be selected for
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
-You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+You may also use functions like \code{:} or tidyselect's
+\code{\link[tidyselect]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{sort.frq}{Determines whether categories should be sorted

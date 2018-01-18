@@ -12,7 +12,8 @@ to_factor(x, ..., add.non.labelled = FALSE, ref.lvl = NULL)
 \item{...}{Optional, unquoted names of variables that should be selected for
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
-You may also use functions like \code{:} or dplyr's \code{\link[dplyr]{select_helpers}}.
+You may also use functions like \code{:} or tidyselect's
+\code{\link[tidyselect]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{add.non.labelled}{Logical, if \code{TRUE}, non-labelled values also
@@ -50,6 +51,9 @@ This function is intended for use with vectors that have value and variable
        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
        Else, value and variable labels can be manually added to vectors
        with \code{\link[sjlabelled]{set_labels}} and \code{\link[sjlabelled]{set_label}}.
+       \cr \cr
+       This function is kept for backwards-compatibility. It is preferred to
+       use \code{\link[sjlabelled]{as_factor}}.
 }
 \examples{
 library(sjlabelled)
