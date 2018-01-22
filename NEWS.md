@@ -5,6 +5,10 @@
 * The `print()`-method for `descr()` now accepts a `digits`-argument, to specify the rounding of the output.
 * Cross refences from `dplyr::select_helpers` were updated to `tidyselect::select_helpers`.
 
+## Changes to functions
+
+* `frq()` now prints variable names for non-labelled data, and adds variable names in braces for labelled data.
+
 # sjmisc 2.6.3
 
 ## General

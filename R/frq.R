@@ -91,7 +91,14 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
         tmp <- sjlabelled::copy_labels(grps$data[[i]][j], x)
 
         # print frequencies
-        dummy <- frq_helper(x = tmp[[1]], sort.frq = sort.frq, weight.by = weight.by)
+        dummy <-
+          frq_helper(
+            x = tmp[[1]],
+            sort.frq = sort.frq,
+            weight.by = weight.by,
+            cn = colnames(tmp)[1]
+          )
+
         attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
 
         # save data frame for return value
@@ -106,7 +113,14 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 
     for (i in seq_len(ncol(x))) {
       # print frequencies
-      dummy <- frq_helper(x = x[[i]], sort.frq = sort.frq, weight.by = weight.by)
+      dummy <-
+        frq_helper(
+          x = x[[i]],
+          sort.frq = sort.frq,
+          weight.by = weight.by,
+          cn = colnames(x)[i]
+        )
+
       # save data frame for return value
       dataframes[[length(dataframes) + 1]] <- dummy
     }
@@ -119,7 +133,7 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL) {
 }
 
 
-frq_helper <- function(x, sort.frq, weight.by) {
+frq_helper <- function(x, sort.frq, weight.by, cn) {
   # remember type
   vartype <- var_type(x)
 
@@ -144,6 +158,12 @@ frq_helper <- function(x, sort.frq, weight.by) {
 
   # get variable label (if any)
   varlab <- sjlabelled::get_label(x)
+
+  # if we don't have variable label, use column name
+  if (sjmisc::is_empty(varlab) && !sjmisc::is_empty(cn))
+    varlab <- cn
+  else if (!sjmisc::is_empty(varlab) && !sjmisc::is_empty(cn))
+    varlab <- sprintf("%s (%s)", varlab, cn)
 
   # do we have a labelled vector?
   if (!is.null(labels)) {
