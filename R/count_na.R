@@ -55,7 +55,7 @@ count_na <- function(x, ...) {
     # iterate variables of data frame
     for (i in colnames(.dat)) {
       # print freq
-      dummy <- count_na_helper(.dat[[i]])
+      dummy <- count_na_helper(.dat[[i]], cn = i)
       cat(sprintf("# %s\n\n", sjlabelled::get_label(.dat[[i]], def.value = i)))
       print(dummy)
       cat("\n\n")
@@ -66,7 +66,7 @@ count_na <- function(x, ...) {
     invisible(dataframes)
   } else {
     # get counts
-    dummy <- count_na_helper(.dat)
+    dummy <- count_na_helper(.dat, cn = names(.dat))
 
     # check if we have variable label and print, if yes
     vl <- sjlabelled::get_label(.dat)
@@ -83,7 +83,7 @@ count_na <- function(x, ...) {
 
 
 #' @importFrom sjlabelled get_na
-count_na_helper <- function(x) {
+count_na_helper <- function(x, cn) {
   # check if x has any tagged NA values
   if (sum(haven::is_tagged_na(x)) < 1) {
     message("`x` has no tagged NA values.")
@@ -106,7 +106,7 @@ count_na_helper <- function(x) {
   }
 
   # now compute frequency, and return a proper data frame
-  frq_helper(values, sort.frq = "none", weight.by = NULL) %>%
+  frq_helper(values, sort.frq = "none", weight.by = NULL, cn = cn) %>%
     dplyr::select(-.data$val) %>%
     dplyr::filter(.data$label != "NA")
 }
