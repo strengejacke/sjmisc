@@ -2,13 +2,13 @@
 
 ## General
 
-* *Breaking changes*: The `append`-argument in recode and transformation functions like `rec()`, `dicho()`, `split_var()`, `group_var()`, `center()`, `std()`, `recode_to()`, `recode_to()`, `row_sums()`, `col_count()` and `row_means()` now defaults to `TRUE`.
+* *Breaking changes*: The `append`-argument in recode and transformation functions like `rec()`, `dicho()`, `split_var()`, `group_var()`, `center()`, `std()`, `recode_to()`, `row_sums()`, `row_count()`, `col_count()` and `row_means()` now defaults to `TRUE`.
 * The `print()`-method for `descr()` now accepts a `digits`-argument, to specify the rounding of the output.
 * Cross refences from `dplyr::select_helpers` were updated to `tidyselect::select_helpers`.
 
 ## Changes to functions
 
-* `frq()` now prints variable names for non-labelled data, and adds variable names in braces for labelled data.
+* `frq()` now prints variable names for non-labelled data, adds variable names in braces for labelled data and omits the _label_ column for non-labelled data.
 
 # sjmisc 2.6.3
 

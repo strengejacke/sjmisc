@@ -23,13 +23,14 @@ Imports:
     dplyr (>= 0.7.1),
     haven (>= 1.0.0),
     magrittr,
+    pillar,
     psych,
     purrr,
     rlang,
     sjlabelled (>= 1.0.5),
     stringdist (>= 0.9.4),
     stringr (>= 1.2.0),
-    tibble (>= 1.3.3),
+    tibble (>= 1.4.1),
     tidyr (>= 0.7.0),
     tidyselect
 Suggests:

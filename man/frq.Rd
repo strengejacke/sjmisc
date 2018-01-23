@@ -76,6 +76,11 @@ frq(efc, contains("cop"))
 # all variables from column "c161sex" to column "c175empl"
 frq(efc, c161sex:c175empl)
 
+# for non-labelled data, variable name is printed,
+# and "label" column is removed from output
+data(iris)
+frq(iris, Species)
+
 }
 \seealso{
 \code{\link{flat_table}} for labelled (proportional) tables.

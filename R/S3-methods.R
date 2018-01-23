@@ -1,6 +1,8 @@
 #' @importFrom purrr walk
 #' @importFrom crayon blue cyan italic
 #' @importFrom cli cat_line
+#' @importFrom dplyr select n_distinct
+#' @importFrom rlang .data
 #' @export
 print.sjmisc.frq <- function(x, ...) {
   cat("\n")
@@ -26,6 +28,10 @@ print.sjmisc.frq <- function(x, ...) {
       sum(dat$frq, na.rm = TRUE),
       sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE)
     )))
+
+    # don't print labels, if all are "none"
+    if (dplyr::n_distinct(dat$label) == 1 && unique(dat$label) == "<none>")
+      dat <- dplyr::select(dat, -.data$label)
 
     # print frq-table
     print.data.frame(dat, ..., row.names = FALSE, quote = FALSE)

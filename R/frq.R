@@ -60,6 +60,11 @@
 #' # all variables from column "c161sex" to column "c175empl"
 #' frq(efc, c161sex:c175empl)
 #'
+#' # for non-labelled data, variable name is printed,
+#' # and "label" column is removed from output
+#' data(iris)
+#' frq(iris, Species)
+#'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @importFrom tibble add_row
