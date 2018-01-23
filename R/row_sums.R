@@ -21,9 +21,10 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return For \code{row_sums()}, a tibble with one variable: the row sums from
-#'         \code{x}; for \code{row_means()}, a tibble with one variable: the row
-#'         means from \code{x}.
+#' @return For \code{row_sums()}, a tibble with a new variable: the row sums from
+#'         \code{x}; for \code{row_means()}, a tibble with a new variable: the row
+#'         means from \code{x}. If \code{append = FALSE}, only the new variable
+#'         with row sums resp. row means is returned.
 #'
 #' @details For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If
 #'          a \emph{row} in \code{x} has at least \code{n} non-missing values, the
@@ -34,10 +35,10 @@
 #'
 #' @examples
 #' data(efc)
-#' efc %>% row_sums(c82cop1:c90cop9)
+#' efc %>% row_sums(c82cop1:c90cop9, append = FALSE)
 #'
 #' library(dplyr)
-#' row_sums(efc, contains("cop"))
+#' row_sums(efc, contains("cop"), append = FALSE)
 #'
 #' dat <- data.frame(
 #'   c1 = c(1,2,NA,4),
@@ -56,12 +57,11 @@
 #' # create sum-score of COPE-Index, and append to data
 #' efc %>%
 #'   select(c82cop1:c90cop9) %>%
-#'   row_sums() %>%
-#'   add_columns(efc)
+#'   row_sums()
 #'
 #' @importFrom tibble as_tibble
 #' @export
-row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = FALSE) {
+row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -89,7 +89,7 @@ row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = FALSE) {
 
 #' @rdname row_sums
 #' @export
-row_means <- function(x, ..., n, var = "rowmeans", append = FALSE) {
+row_means <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

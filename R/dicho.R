@@ -49,20 +49,24 @@
 #'   head()
 #'
 #' # dichtomize several variables in a data frame
-#' dicho(efc, c12hour, e17age, c160age)
+#' dicho(efc, c12hour, e17age, c160age, append = FALSE)
 #'
 #' # dichotomize and set labels
-#' frq(dicho(efc, e42dep, var.label = "Dependency (dichotomized)",
-#'           val.labels = c("lower", "higher")))
+#' frq(dicho(
+#'   efc, e42dep,
+#'   var.label = "Dependency (dichotomized)",
+#'   val.labels = c("lower", "higher"),
+#'   append = FALSE
+#' ))
 #'
 #' # works also with gouped data frames
 #' mtcars %>%
-#'   dicho(disp) %>%
+#'   dicho(disp, append = FALSE) %>%
 #'   table()
 #'
 #' mtcars %>%
 #'   group_by(cyl) %>%
-#'   dicho(disp) %>%
+#'   dicho(disp, append = FALSE) %>%
 #'   table()
 #'
 #' # dichotomizing grouped data frames leads to different
@@ -78,7 +82,7 @@
 #' @importFrom dplyr group_vars
 #' @importFrom tidyr unnest
 #' @export
-dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_d") {
+dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
   # check for correct dichotome types
   if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
     stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)

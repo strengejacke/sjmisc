@@ -40,18 +40,18 @@
 #'    NA,   3,  NA,   2
 #' )
 #'
-#' row_count(dat, count = 1)
-#' row_count(dat, count = NA)
+#' row_count(dat, count = 1, append = FALSE)
+#' row_count(dat, count = NA, append = FALSE)
 #' row_count(dat, c1:c3, count = 2, append = TRUE)
 #'
-#' col_count(dat, count = 1)
-#' col_count(dat, count = NA)
+#' col_count(dat, count = 1, append = FALSE)
+#' col_count(dat, count = NA, append = FALSE)
 #' col_count(dat, c1:c3, count = 2, append = TRUE)
 #'
 #' @importFrom dplyr quos bind_cols
 #' @importFrom tibble as_tibble
 #' @export
-row_count <- function(x, ..., count, var = "rowcount", append = FALSE) {
+row_count <- function(x, ..., count, var = "rowcount", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -88,7 +88,7 @@ row_count <- function(x, ..., count, var = "rowcount", append = FALSE) {
 #' @importFrom purrr map_df
 #' @importFrom dplyr quos bind_rows
 #' @export
-col_count <- function(x, ..., count, var = "colcount", append = FALSE) {
+col_count <- function(x, ..., count, var = "colcount", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

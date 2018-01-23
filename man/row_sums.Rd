@@ -5,9 +5,9 @@
 \alias{row_means}
 \title{Row sums and means for data frames}
 \usage{
-row_sums(x, ..., na.rm = TRUE, var = "rowsums", append = FALSE)
+row_sums(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE)
 
-row_means(x, ..., n, var = "rowmeans", append = FALSE)
+row_means(x, ..., n, var = "rowmeans", append = TRUE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -24,9 +24,9 @@ the calculations.}
 
 \item{var}{Name of new the variable with the row sums or means.}
 
-\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\item{append}{Logical, if \code{TRUE} (the default) and \code{x} is a data frame,
 \code{x} including the new variables as additional columns is returned;
-if \code{FALSE} (the default), only the new variables are returned.}
+if \code{FALSE}, only the new variables are returned.}
 
 \item{n}{May either be
 \itemize{
@@ -36,9 +36,10 @@ if \code{FALSE} (the default), only the new variables are returned.}
 If a row's sum of valid values is less than \code{n}, \code{NA} will be returned as row mean value.}
 }
 \value{
-For \code{row_sums()}, a tibble with one variable: the row sums from
-        \code{x}; for \code{row_means()}, a tibble with one variable: the row
-        means from \code{x}.
+For \code{row_sums()}, a tibble with a new variable: the row sums from
+        \code{x}; for \code{row_means()}, a tibble with a new variable: the row
+        means from \code{x}. If \code{append = FALSE}, only the new variable
+        with row sums resp. row means is returned.
 }
 \description{
 \code{row_sums()} simply wraps \code{\link{rowSums}}, while
@@ -58,10 +59,10 @@ For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If
 }
 \examples{
 data(efc)
-efc \%>\% row_sums(c82cop1:c90cop9)
+efc \%>\% row_sums(c82cop1:c90cop9, append = FALSE)
 
 library(dplyr)
-row_sums(efc, contains("cop"))
+row_sums(efc, contains("cop"), append = FALSE)
 
 dat <- data.frame(
   c1 = c(1,2,NA,4),
@@ -80,7 +81,6 @@ row_means(dat, c1:c4, n = .4)
 # create sum-score of COPE-Index, and append to data
 efc \%>\%
   select(c82cop1:c90cop9) \%>\%
-  row_sums() \%>\%
-  add_columns(efc)
+  row_sums()
 
 }

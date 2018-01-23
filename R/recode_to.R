@@ -44,7 +44,7 @@
 #'
 #' # recode multiple variables at once
 #' data(efc)
-#' recode_to(efc, c82cop1, c83cop2, c84cop3)
+#' recode_to(efc, c82cop1, c83cop2, c84cop3, append = FALSE)
 #'
 #' library(dplyr)
 #' efc %>%
@@ -57,7 +57,7 @@
 #'
 #'
 #' @export
-recode_to <- function(x, ..., lowest = 0, highest = -1, append = FALSE, suffix = "_r0") {
+recode_to <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

@@ -32,10 +32,10 @@
 #' @examples
 #' data(efc)
 #' std(efc$c160age) %>% head()
-#' std(efc, e17age, c160age) %>% head()
+#' std(efc, e17age, c160age, append = FALSE) %>% head()
 #'
 #' center(efc$c160age) %>% head()
-#' center(efc, e17age, c160age) %>% head()
+#' center(efc, e17age, c160age, append = FALSE) %>% head()
 #'
 #' # NOTE!
 #' std(efc$e17age) # returns a vector
@@ -57,13 +57,13 @@
 #'
 #' data(iris)
 #' # also standardize factors
-#' std(iris, include.fac = TRUE)
+#' std(iris, include.fac = TRUE, append = FALSE)
 #' # don't standardize factors
-#' std(iris, include.fac = FALSE)
+#' std(iris, include.fac = FALSE, append = FALSE)
 #'
 #' @importFrom dplyr quos
 #' @export
-std <- function(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE, append = FALSE, suffix = "_z") {
+std <- function(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -76,7 +76,7 @@ std <- function(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE, app
 
 #' @rdname std
 #' @export
-center <- function(x, ..., include.fac = FALSE, append = FALSE, suffix = "_c") {
+center <- function(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 

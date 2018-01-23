@@ -50,8 +50,8 @@
 #' table(split_var(efc$neg_c_7, n = 3))
 #'
 #' # split multiple variables into 3 groups
-#' split_var(efc, neg_c_7, pos_v_4, e17age, n = 3)
-#' frq(split_var(efc, neg_c_7, pos_v_4, e17age, n = 3))
+#' split_var(efc, neg_c_7, pos_v_4, e17age, n = 3, append = FALSE)
+#' frq(split_var(efc, neg_c_7, pos_v_4, e17age, n = 3, append = FALSE))
 #'
 #' # original
 #' table(efc$e42dep)
@@ -77,17 +77,17 @@
 #'
 #' # works also with gouped data frames
 #' mtcars %>%
-#'   split_var(disp, n = 3) %>%
+#'   split_var(disp, n = 3, append = FALSE) %>%
 #'   table()
 #'
 #' mtcars %>%
 #'   group_by(cyl) %>%
-#'   split_var(disp, n = 3) %>%
+#'   split_var(disp, n = 3, append = FALSE) %>%
 #'   table()
 #'
 #' @importFrom stats quantile
 #' @export
-split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = FALSE, suffix = "_g") {
+split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = TRUE, suffix = "_g") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))

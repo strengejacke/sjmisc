@@ -4,7 +4,7 @@
 \alias{recode_to}
 \title{Recode variable categories into new values}
 \usage{
-recode_to(x, ..., lowest = 0, highest = -1, append = FALSE,
+recode_to(x, ..., lowest = 0, highest = -1, append = TRUE,
   suffix = "_r0")
 }
 \arguments{
@@ -24,9 +24,9 @@ variable starts with value 0.}
 \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this argument is ignored
 and no NA's will be produced.}
 
-\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\item{append}{Logical, if \code{TRUE} (the default) and \code{x} is a data frame,
 \code{x} including the new variables as additional columns is returned;
-if \code{FALSE} (the default), only the new variables are returned.}
+if \code{FALSE}, only the new variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data
@@ -76,7 +76,7 @@ recode_to(dummy, lowest = 1, highest = 3)
 
 # recode multiple variables at once
 data(efc)
-recode_to(efc, c82cop1, c83cop2, c84cop3)
+recode_to(efc, c82cop1, c83cop2, c84cop3, append = FALSE)
 
 library(dplyr)
 efc \%>\%

@@ -21,9 +21,9 @@
 #'          If \code{NULL} (default), no value labels will be set. Value labels
 #'          can also be directly defined in the \code{rec}-syntax, see
 #'          'Details'.
-#' @param append Logical, if \code{TRUE} and \code{x} is a data frame,
+#' @param append Logical, if \code{TRUE} (the default) and \code{x} is a data frame,
 #'          \code{x} including the new variables as additional columns is returned;
-#'          if \code{FALSE} (the default), only the new variables are returned.
+#'          if \code{FALSE}, only the new variables are returned.
 #' @param suffix String value, will be appended to variable (column) names of
 #'           \code{x}, if \code{x} is a data frame. If \code{x} is not a data
 #'           frame, this argument will be ignored. The default value to suffix
@@ -110,13 +110,20 @@
 #' head(rec(efc[, 6:9], rec = "1=10;2=20;3=30;4=40"))
 #'
 #' # recode multiple variables and set value labels via recode-syntax
-#' dummy <- rec(efc, c160age, e17age,
-#'              rec = "15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]")
+#' dummy <- rec(
+#'   efc, c160age, e17age,
+#'   rec = "15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]",
+#'   append = FALSE
+#' )
 #' frq(dummy)
 #'
 #' # recode variables with same value-range
 #' lapply(
-#'   rec(efc, c82cop1, c83cop2, c84cop3, rec = "1,2=1; NA=9; else=copy"),
+#'   rec(
+#'     efc, c82cop1, c83cop2, c84cop3,
+#'     rec = "1,2=1; NA=9; else=copy",
+#'     append = FALSE
+#'   ),
 #'   table,
 #'   useNA = "always"
 #' )
@@ -130,10 +137,12 @@
 #'
 #' # recode non-numeric factors
 #' data(iris)
-#' table(rec(iris, Species, rec = "setosa=huhu; else=copy"))
+#' table(rec(iris, Species, rec = "setosa=huhu; else=copy", append = FALSE))
 #'
 #' # recode floating points
-#' table(rec(iris, Sepal.Length, rec = "lo:5=1;5.01:6.5=2;6.501:max=3"))
+#' table(rec(
+#'   iris, Sepal.Length, rec = "lo:5=1;5.01:6.5=2;6.501:max=3", append = FALSE
+#' ))
 #'
 #' # preserve tagged NAs
 #' library(haven)
@@ -147,11 +156,15 @@
 #' na_tag(rec(x, rec = "2=5;else=copy"))
 #'
 #' # use select-helpers from dplyr-package
-#' rec(efc, contains("cop"), c161sex:c175empl, rec = "0,1=0; else=1")
+#' rec(
+#'   efc, contains("cop"), c161sex:c175empl,
+#'   rec = "0,1=0; else=1",
+#'   append = FALSE
+#' )
 #'
 #'
 #' @export
-rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = FALSE, suffix = "_r") {
+rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))

@@ -102,18 +102,17 @@
 #'
 #' # works also with gouped data frames
 #' mtcars %>%
-#'   group_var(disp, size = 4) %>%
+#'   group_var(disp, size = 4, append = FALSE) %>%
 #'   table()
 #'
 #' mtcars %>%
 #'   group_by(cyl) %>%
-#'   group_var(disp, size = 4) %>%
+#'   group_var(disp, size = 4, append = FALSE) %>%
 #'   table()
 #'
 #' @importFrom purrr map
 #' @export
-group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
-                      n = 30, append = FALSE, suffix = "_gr") {
+group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE, n = 30, append = TRUE, suffix = "_gr") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))

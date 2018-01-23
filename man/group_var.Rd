@@ -6,7 +6,7 @@
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
 group_var(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
-  n = 30, append = FALSE, suffix = "_gr")
+  n = 30, append = TRUE, suffix = "_gr")
 
 group_labels(x, ..., size = 5, right.interval = FALSE, n = 30)
 }
@@ -36,9 +36,9 @@ bound of \code{size}. See 'Details'.}
 (\code{size = "auto"}). Default is 30. If \code{size} is not set to \code{"auto"},
 this argument will be ignored.}
 
-\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\item{append}{Logical, if \code{TRUE} (the default) and \code{x} is a data frame,
 \code{x} including the new variables as additional columns is returned;
-if \code{FALSE} (the default), only the new variables are returned.}
+if \code{FALSE}, only the new variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data
@@ -138,12 +138,12 @@ group_labels(dummy, right.interval = TRUE)
 
 # works also with gouped data frames
 mtcars \%>\%
-  group_var(disp, size = 4) \%>\%
+  group_var(disp, size = 4, append = FALSE) \%>\%
   table()
 
 mtcars \%>\%
   group_by(cyl) \%>\%
-  group_var(disp, size = 4) \%>\%
+  group_var(disp, size = 4, append = FALSE) \%>\%
   table()
 
 }

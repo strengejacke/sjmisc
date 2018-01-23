@@ -6,9 +6,9 @@
 \title{Standardize and center variables}
 \usage{
 std(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE,
-  append = FALSE, suffix = "_z")
+  append = TRUE, suffix = "_z")
 
-center(x, ..., include.fac = FALSE, append = FALSE, suffix = "_c")
+center(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -31,9 +31,9 @@ the latter option, \CRANpkg{sjstats} needs to be installed.}
 \item{include.fac}{Logical, if \code{TRUE}, factors will be converted to numeric
 vectors and also standardized or centered.}
 
-\item{append}{Logical, if \code{TRUE} and \code{x} is a data frame,
+\item{append}{Logical, if \code{TRUE} (the default) and \code{x} is a data frame,
 \code{x} including the new variables as additional columns is returned;
-if \code{FALSE} (the default), only the new variables are returned.}
+if \code{FALSE}, only the new variables are returned.}
 
 \item{suffix}{String value, will be appended to variable (column) names of
 \code{x}, if \code{x} is a data frame. If \code{x} is not a data
@@ -72,10 +72,10 @@ A vector with standardized or centered variables. If \code{x} is a
 \examples{
 data(efc)
 std(efc$c160age) \%>\% head()
-std(efc, e17age, c160age) \%>\% head()
+std(efc, e17age, c160age, append = FALSE) \%>\% head()
 
 center(efc$c160age) \%>\% head()
-center(efc, e17age, c160age) \%>\% head()
+center(efc, e17age, c160age, append = FALSE) \%>\% head()
 
 # NOTE!
 std(efc$e17age) # returns a vector
@@ -97,8 +97,8 @@ mtcars \%>\%
 
 data(iris)
 # also standardize factors
-std(iris, include.fac = TRUE)
+std(iris, include.fac = TRUE, append = FALSE)
 # don't standardize factors
-std(iris, include.fac = FALSE)
+std(iris, include.fac = FALSE, append = FALSE)
 
 }
