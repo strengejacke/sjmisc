@@ -72,7 +72,7 @@ is_empty <- function(x, first.only = TRUE) {
       zero_len <- length(x) == 0
     }
   }
-  return(is.null(x) || zero_len || is.na(x))
+  return(is.null(x) || zero_len || all(is.na(x)))
 }
 
 

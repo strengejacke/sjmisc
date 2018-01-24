@@ -10,6 +10,10 @@
 
 * `frq()` now prints variable names for non-labelled data, adds variable names in braces for labelled data and omits the _label_ column for non-labelled data.
 
+## Bug fixes
+
+* `is_empty()` returned `TRUE` for single vectors with `NA` being the first element.
+
 # sjmisc 2.6.3
 
 ## General
