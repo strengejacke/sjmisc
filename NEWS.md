@@ -9,6 +9,7 @@
 ## Changes to functions
 
 * `frq()` now prints variable names for non-labelled data, adds variable names in braces for labelled data and omits the _label_ column for non-labelled data.
+* `descr()` gets an `out`-argument, to print output to console, or as HTML table in the viewer or web browser.
 
 ## Bug fixes
 
