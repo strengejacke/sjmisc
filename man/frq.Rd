@@ -4,7 +4,8 @@
 \alias{frq}
 \title{Frequencies of labelled variables}
 \usage{
-frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL)
+frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL,
+  auto.grp = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -25,6 +26,11 @@ categories are not sorted by frequency. Use \code{"asc"} or
 \item{weight.by}{Vector of weights that will be applied to weight all observations.
 Must be a vector of same length as the input vector. Default is
 \code{NULL}, so no weights are used.}
+
+\item{auto.grp}{Numeric value, indicating the minimum amount of unique
+values in a variable, at which automatic grouping into smaller  units
+is done (see \code{\link{group_var}}). Default value for \code{auto.group}
+is \code{NULL}, i.e. auto-grouping is off.}
 }
 \value{
 A list of data frames with values, value labels, frequencies, raw, valid and
