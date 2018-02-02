@@ -92,7 +92,7 @@ is_empty <- function(x, first.only = TRUE) {
 #'           missing values.
 #'           \cr \cr
 #'           For \code{remove_empty_cols} and \code{remove_empty_rows}, a
-#'           \code{\link[tibble]{tibble}} with "empty" columns or rows removed.
+#'           data frame with "empty" columns or rows removed.
 #'
 #' @examples
 #' tmp <- data.frame(a = c(1, 2, 3, NA, 5),
@@ -120,28 +120,28 @@ empty_rows <- function(x) {
 }
 
 #' @rdname empty_cols
-#' @importFrom tibble as_tibble
+#' @importFrom dplyr select
 #' @export
 remove_empty_cols <- function(x) {
   # check if we have any empty columns at all
   ec <- empty_cols(x)
   # if yes, removing works, else an empty df would be returned
   if (!is_empty(ec))
-    tibble::as_tibble(x[, -ec])
+    dplyr::select(x, !! -ec)
   else
-    tibble::as_tibble(x)
+    x
 }
 
 #' @rdname empty_cols
-#' @importFrom tibble as_tibble
+#' @importFrom dplyr slice
 #' @export
 remove_empty_rows <- function(x) {
   # check if we have any empty rows at all
   er <- empty_rows(x)
   # if yes, removing works, else an empty df would be returned
   if (!is_empty(er))
-    tibble::as_tibble(x[, -er])
+    dplyr::slice(x, !! -er)
   else
-    tibble::as_tibble(x)
+    x
 }
 

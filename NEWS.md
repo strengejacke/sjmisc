@@ -13,6 +13,7 @@
 ## Bug fixes
 
 * `is_empty()` returned `TRUE` for single vectors with `NA` being the first element.
+* Fix issue where due to a bug during code cleanup, `remove_empty_rows()` did no longer remove empty rows, but columns.
 
 # sjmisc 2.6.3
 

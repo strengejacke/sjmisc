@@ -10,6 +10,9 @@
 #'          in the output. If variable names are longer than \code{max.length},
 #'          they will be shortened to the last whole word within the first
 #'          \code{max.length} chars.
+#' @param out Character vector, indicating whether the results should be printed
+#'        to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
+#'        (\code{out = "viewer"}) or browser (\code{out = "browser"}).
 #'
 #' @inheritParams to_factor
 #'
@@ -47,13 +50,16 @@
 #' @importFrom dplyr select mutate
 #' @importFrom psych describe
 #' @importFrom sjlabelled copy_labels
-#' @importFrom crayon blue cyan italic
-#' @importFrom cli cat_line
 #' @export
-descr <- function(x, ..., max.length = NULL) {
+descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")) {
+
+  out <- match.arg(out)
 
   # get dot data
   dd <- get_dot_data(x, dplyr::quos(...))
+
+  # return values
+  dataframes <- list()
 
   # do we have a grouped data frame?
   if (inherits(dd, "grouped_df")) {
@@ -67,18 +73,33 @@ descr <- function(x, ..., max.length = NULL) {
       # copy back labels to grouped data frame
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
-      # print title for grouping
-      cli::cat_line(crayon::cyan(crayon::italic(
-        sprintf("\nGrouped by:\n%s", get_grouped_title(dd, grps, i, sep = "\n"))
-      )))
+      dummy <- descr_helper(tmp, max.length)
+      attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
 
-      # print frequencies
-      print(descr_helper(tmp, max.length))
-      cat("\n")
+      # save data frame for return value
+      dataframes[[length(dataframes) + 1]] <- dummy
     }
+
+    # add class-attr for print-method()
+    if (out == "txt")
+      class(dataframes) <- c("sjmisc_grpdescr", "list")
+    else
+      class(dataframes) <- c("sjt_grpdescr", "list")
+
   } else {
-    descr_helper(dd, max.length)
+    dataframes <- descr_helper(dd, max.length)
+
+    # add class-attr for print-method()
+    if (out == "txt")
+      class(dataframes) <- c("sjmisc_descr", class(dataframes))
+    else
+      class(dataframes) <- c("sjt_descr", class(dataframes))
   }
+
+  # save how to print output
+  attr(dataframes, "print") <- out
+
+  dataframes
 }
 
 
@@ -113,9 +134,5 @@ descr_helper <- function(dd, max.length) {
   x <- x[, c(1, 13, 2, 14, 3, 4, 12, 5, 6, 7, 8, 9, 10, 11)]
 
   # add type-column
-  x <- tibble::add_column(x, type = var_type(dv), .after = 1)
-
-  # add own class for print-method
-  class(x) <- c("sjmisc.descr", "data.frame")
-  x
+  tibble::add_column(x, type = var_type(dv), .after = 1)
 }

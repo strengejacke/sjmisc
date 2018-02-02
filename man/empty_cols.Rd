@@ -24,7 +24,7 @@ For \code{empty_cols} and \code{empty_rows}, a numeric (named) vector
           missing values.
           \cr \cr
           For \code{remove_empty_cols} and \code{remove_empty_rows}, a
-          \code{\link[tibble]{tibble}} with "empty" columns or rows removed.
+          data frame with "empty" columns or rows removed.
 }
 \description{
 These functions check which rows or columns of a data frame completely
