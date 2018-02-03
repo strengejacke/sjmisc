@@ -67,7 +67,7 @@ flat_table(efc, e42dep, c161sex, margin = "col")
 
 ## Recoding variables
 
-Next, we need the negatice impact of care (_neg_c_7) and want to create three groups: low, middle and high negative impact. We can easily recode and label vectors with `rec()`. This function does not only recode vectors, it also allows direct labelling of categories inside the recode-syntax (this is optional, you can also use the `val.labels`-argument). We now recode neg_c_7 into a new variable _burden_. The cut-points are a bit arbitrary, for the sake of demonstration.
+Next, we need the negatice impact of care (*neg_c_7*) and want to create three groups: low, middle and high negative impact. We can easily recode and label vectors with `rec()`. This function does not only recode vectors, it also allows direct labelling of categories inside the recode-syntax (this is optional, you can also use the `val.labels`-argument). We now recode neg_c_7 into a new variable _burden_. The cut-points are a bit arbitrary, for the sake of demonstration.
 
 ```{r}
 efc$burden <- rec(
