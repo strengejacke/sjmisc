@@ -55,6 +55,11 @@ descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")
 
   out <- match.arg(out)
 
+  if (out != "txt" && !requireNamespace("sjPlot", quietly = TRUE)) {
+    message("Package `sjPlot` needs to be loaded to print HTML tables.")
+    out <- "txt"
+  }
+
   # get dot data
   dd <- get_dot_data(x, dplyr::quos(...))
 
