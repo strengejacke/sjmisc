@@ -5,7 +5,7 @@
 \title{Frequencies of labelled variables}
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL,
-  auto.grp = NULL)
+  auto.grp = NULL, out = c("txt", "viewer", "browser"))
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -31,6 +31,10 @@ Must be a vector of same length as the input vector. Default is
 values in a variable, at which automatic grouping into smaller  units
 is done (see \code{\link{group_var}}). Default value for \code{auto.group}
 is \code{NULL}, i.e. auto-grouping is off.}
+
+\item{out}{Character vector, indicating whether the results should be printed
+to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
+(\code{out = "viewer"}) or browser (\code{out = "browser"}).}
 }
 \value{
 A list of data frames with values, value labels, frequencies, raw, valid and
@@ -86,6 +90,10 @@ frq(efc, c161sex:c175empl)
 # and "label" column is removed from output
 data(iris)
 frq(iris, Species)
+
+# group variables with large range
+frq(efc, c160age)
+frq(efc, c160age, auto.grp = 5)
 
 }
 \seealso{

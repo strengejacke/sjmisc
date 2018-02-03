@@ -69,12 +69,23 @@
 #' data(iris)
 #' frq(iris, Species)
 #'
+#' # group variables with large range
+#' frq(efc, c160age)
+#' frq(efc, c160age, auto.grp = 5)
+#'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join
 #' @importFrom tibble add_row
 #' @importFrom sjlabelled get_label get_labels get_values copy_labels
 #' @export
-frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL, auto.grp = NULL) {
+frq <- function(x,
+                ...,
+                sort.frq = c("none", "asc", "desc"),
+                weight.by = NULL,
+                auto.grp = NULL,
+                out = c("txt", "viewer", "browser")) {
+
+  out <- match.arg(out)
 
   # get dot data
   x <- get_dot_data(x, dplyr::quos(...))
@@ -138,7 +149,13 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL, a
   }
 
   # add class-attr for print-method()
-  class(dataframes) <- c("sjmisc_frq", "list")
+  if (out == "txt")
+    class(dataframes) <- c("sjmisc_frq", "list")
+  else
+    class(dataframes) <- c("sjt_frq", "list")
+
+  # save how to print output
+  attr(dataframes, "print") <- out
 
   dataframes
 }

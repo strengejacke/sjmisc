@@ -1,4 +1,4 @@
-# sjmisc 2.6.4
+# sjmisc 2.7.0
 
 ## General
 
@@ -11,6 +11,7 @@
 * `frq()` now prints variable names for non-labelled data, adds variable names in braces for labelled data and omits the _label_ column for non-labelled data.
 * `frq()` now prints mean and standard deviation in the header line of the output.
 * `frq()` now gets a `auto.grp`-argument to automatically group variables with many unique values.
+* `frq()` gets an `out`-argument, to print output to console, or as HTML table in the viewer or web browser.
 * `descr()` gets an `out`-argument, to print output to console, or as HTML table in the viewer or web browser.
 
 ## Bug fixes
