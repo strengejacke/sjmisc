@@ -103,6 +103,11 @@ descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")
 }
 
 
+#' @importFrom tibble add_column as_tibble rownames_to_column
+#' @importFrom psych describe
+#' @importFrom dplyr select mutate
+#' @importFrom sjlabelled get_label
+#' @importFrom purrr map_dbl
 descr_helper <- function(dd, max.length) {
   # get default variable name
   var.name <- colnames(dd)

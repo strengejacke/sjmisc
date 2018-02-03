@@ -4,7 +4,7 @@
 #' @importFrom dplyr select n_distinct
 #' @importFrom rlang .data
 #' @export
-print.sjmisc.frq <- function(x, ...) {
+print.sjmisc_frq <- function(x, ...) {
   cat("\n")
   purrr::walk(x, function(dat) {
 

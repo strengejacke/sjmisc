@@ -138,7 +138,7 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL, a
   }
 
   # add class-attr for print-method()
-  class(dataframes) <- c("sjmisc.frq", "list")
+  class(dataframes) <- c("sjmisc_frq", "list")
 
   dataframes
 }
@@ -148,7 +148,6 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL, a
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
 #' @importFrom tibble add_row
-#' @importFrom sjstats wtd_sd
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   # remember type
   vartype <- var_type(x)
@@ -166,7 +165,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
       valid.prc = NA,
       cum.perc = NA
     )
-    return(structure(class = "sjmisc.frq", list(mydat = mydat)))
+    return(structure(class = "sjmisc_frq", list(mydat = mydat)))
   }
 
 
@@ -175,7 +174,10 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   xnum <- sjlabelled::as_numeric(x, keep.labels = FALSE)
   if (!is.null(weight.by)) {
     mean.value <- stats::weighted.mean(stats::na.omit(xnum), w = weight.by)
-    sd.value <- sjstats::wtd_sd(stats::na.omit(xnum), weights = weight.by)
+    if (requireNamespace("sjstats", quietly = TRUE))
+      sd.value <- sjstats::wtd_sd(stats::na.omit(xnum), weights = weight.by)
+    else
+      sd.value <- NA
   } else {
     mean.value <- mean(xnum, na.rm = TRUE)
     sd.value <- stats::sd(xnum, na.rm = TRUE)
