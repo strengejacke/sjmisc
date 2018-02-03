@@ -2,27 +2,41 @@
 % Please edit documentation in R/is_float.R
 \name{is_float}
 \alias{is_float}
-\title{Check if a variable is of (non-integer) double type}
+\alias{is_whole}
+\title{Check if a variable is of (non-integer) double type or a whole number}
 \usage{
 is_float(x)
+
+is_whole(x)
 }
 \arguments{
 \item{x}{A value, vector or data frame.}
 }
 \value{
-\code{TRUE} if \code{x} is a floating value (non-integer double),
-   \code{FALSE} otherwise.
+For \code{is_float()}, \code{TRUE} if \code{x} is a floating value
+  (non-integer double), \code{FALSE} otherwise (also returns \code{FALSE}
+  for character vectors and factors). For \code{is_whole()}, \code{TRUE}
+  if \code{x} is a vector with whole numbers only, \code{FALSE} otherwise
+  (returns \code{TRUE} for character vectors and factors).
 }
 \description{
-This function checks whether an input vector or value is a
+\code{is_float()} checks whether an input vector or value is a
    numeric non-integer (double), depending on fractional parts of the value(s).
+   \code{is_whole()} does the opposite and checks whether an input vector
+   is a whole number (without fractional parts).
 }
 \examples{
+data(mtcars)
+data(iris)
+
 is.double(4)
 is_float(4)
-
 is_float(4.2)
-
 is_float(iris)
+
+is_whole(4)
+is_whole(4.2)
+is_whole(mtcars)
+
 
 }

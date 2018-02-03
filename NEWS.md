@@ -6,11 +6,17 @@
 * The `print()`-method for `descr()` now accepts a `digits`-argument, to specify the rounding of the output.
 * Cross refences from `dplyr::select_helpers` were updated to `tidyselect::select_helpers`.
 
+## New functions
+
+* `is_whole()` as counterpart to `is_float()`.
+
 ## Changes to functions
 
 * `frq()` now prints variable names for non-labelled data, adds variable names in braces for labelled data and omits the _label_ column for non-labelled data.
 * `frq()` now prints mean and standard deviation in the header line of the output.
 * `frq()` now gets a `auto.grp`-argument to automatically group variables with many unique values.
+* `frq()` now gets a `show.strings`-argument to omit string variables (character vectors) from being printed as frequency table.
+* `frq()` now gets a `grp.strings`-argument to group similar string values in the frequency table.
 * `frq()` gets an `out`-argument, to print output to console, or as HTML table in the viewer or web browser.
 * `descr()` gets an `out`-argument, to print output to console, or as HTML table in the viewer or web browser.
 

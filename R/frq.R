@@ -14,6 +14,15 @@
 #'   values in a variable, at which automatic grouping into smaller  units
 #'   is done (see \code{\link{group_var}}). Default value for \code{auto.group}
 #'   is \code{NULL}, i.e. auto-grouping is off.
+#' @param show.strings Logical, if \code{TRUE}, frequency tables for character
+#'   vectors will not be printed. This is useful when printing frequency tables
+#'   of all variables from a data frame, and due to computational reasons
+#'   character vectors should not be printed.
+#' @param grp.strings Numeric, if not \code{NULL}, groups string values in
+#'   character vectors, based on their similarity. The similarity is estimated
+#'   with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
+#'   on grouping, and that function's \code{maxdist}-argument to get more
+#'   details on the distance of strings to be treated as equal.
 #'
 #' @inheritParams descr
 #'
@@ -73,16 +82,32 @@
 #' frq(efc, c160age)
 #' frq(efc, c160age, auto.grp = 5)
 #'
+#' # group string values
+#' \dontrun{
+#' dummy <- efc %>% dplyr::select(3)
+#' dummy$words <- sample(
+#'   c("Hello", "Helo", "Hole", "Apple", "Ape",
+#'     "New", "Old", "System", "Systemic"),
+#'   size = nrow(dummy),
+#'   replace = TRUE
+#' )
+#'
+#' frq(dummy)
+#' frq(dummy, grp.strings = 2)}
+#'
 #' @importFrom stats na.omit
-#' @importFrom dplyr full_join
-#' @importFrom tibble add_row
+#' @importFrom dplyr full_join select_if
+#' @importFrom tibble add_row as_tibble
 #' @importFrom sjlabelled get_label get_labels get_values copy_labels
+#' @importFrom purrr map_if
 #' @export
 frq <- function(x,
                 ...,
                 sort.frq = c("none", "asc", "desc"),
                 weight.by = NULL,
                 auto.grp = NULL,
+                show.strings = TRUE,
+                grp.strings = NULL,
                 out = c("txt", "viewer", "browser")) {
 
   out <- match.arg(out)
@@ -95,6 +120,27 @@ frq <- function(x,
 
   # return values
   dataframes <- list()
+
+
+  # remove strings from output, if requested
+  # and check if there are any variables left to print
+
+  if (!show.strings)
+    x <- dplyr::select_if(x, no_character)
+
+  if (sjmisc::is_empty(x)) return(NULL)
+
+
+  # group strings
+
+  if (!is.null(grp.strings)) {
+    x <- x %>%
+      purrr::map_if(is.character, ~ group_str(
+        strings = .x, maxdist = grp.strings, remove.empty = FALSE)
+      ) %>%
+      tibble::as_tibble()
+  }
+
 
   # do we have a grouped data frame?
   if (inherits(x, "grouped_df")) {
@@ -415,3 +461,6 @@ get_grouped_data <- function(x) {
 
   grps
 }
+
+
+no_character <- function(x) !is.character(x)
