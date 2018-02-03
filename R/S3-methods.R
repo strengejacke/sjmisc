@@ -24,9 +24,11 @@ print.sjmisc.frq <- function(x, ...) {
 
     # add Total N
     cli::cat_line(crayon::blue(sprintf(
-      "# Total N = %i (valid N = %i)\n",
+      "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n",
       sum(dat$frq, na.rm = TRUE),
-      sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE)
+      sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE),
+      attr(dat, "mean", exact = T),
+      attr(dat, "sd", exact = T)
     )))
 
     # don't print labels, if all are "none"

@@ -145,9 +145,10 @@ frq <- function(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL, a
 
 
 #' @importFrom dplyr n_distinct full_join
-#' @importFrom stats na.omit xtabs na.pass
-#' @importFrom sjlabelled get_labels get_label
+#' @importFrom stats na.omit xtabs na.pass sd weighted.mean
+#' @importFrom sjlabelled get_labels get_label as_numeric
 #' @importFrom tibble add_row
+#' @importFrom sjstats wtd_sd
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   # remember type
   vartype <- var_type(x)
@@ -168,8 +169,25 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
     return(structure(class = "sjmisc.frq", list(mydat = mydat)))
   }
 
+
+  # save descriptive statistics
+
+  xnum <- sjlabelled::as_numeric(x, keep.labels = FALSE)
+  if (!is.null(weight.by)) {
+    mean.value <- stats::weighted.mean(stats::na.omit(xnum), w = weight.by)
+    sd.value <- sjstats::wtd_sd(stats::na.omit(xnum), weights = weight.by)
+  } else {
+    mean.value <- mean(xnum, na.rm = TRUE)
+    sd.value <- stats::sd(xnum, na.rm = TRUE)
+  }
+
+
   # get variable label (if any)
   varlab <- sjlabelled::get_label(x)
+
+
+  # numeric variables with many distinct values may
+  # be grouped for better overview
 
   if (!is.null(auto.grp) && dplyr::n_distinct(x, na.rm = TRUE) >= auto.grp) {
     gl <- group_labels(x, size = "auto", n = auto.grp)
@@ -179,14 +197,17 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
     attr(x, "labels") <- gv
   }
 
+
   # get value labels (if any)
   labels <- sjlabelled::get_labels(x, attr.only = T, include.values = "n", include.non.labelled = T)
+
 
   # if we don't have variable label, use column name
   if (sjmisc::is_empty(varlab) && !sjmisc::is_empty(cn))
     varlab <- cn
   else if (!sjmisc::is_empty(varlab) && !sjmisc::is_empty(cn))
     varlab <- sprintf("%s (%s)", varlab, cn)
+
 
   # do we have a labelled vector?
   if (!is.null(labels)) {
@@ -302,6 +323,8 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   # add variable label and type as attribute, for print-method
   attr(mydat, "label") <- varlab
   attr(mydat, "vartype") <- vartype
+  attr(mydat, "mean") <- mean.value
+  attr(mydat, "sd") <- sd.value
 
   mydat
 }
