@@ -121,6 +121,21 @@ frq <- function(x,
   # get dot data
   x <- get_dot_data(x, dplyr::quos(...))
 
+
+  # remove empty columns
+
+  rem.col <- empty_cols(x)
+
+  if (!sjmisc::is_empty(rem.col)) {
+    rem.vars <- colnames(x)[rem.col]
+    x <- remove_empty_cols(x)
+
+    message(sprintf("Following %i variables have only missing values and are not shown:", length(rem.vars)))
+    cat(paste(sprintf("%s [%i]", rem.vars, rem.col), collapse = ", "))
+    cat("\n")
+  }
+
+
   # match args
   sort.frq <- match.arg(sort.frq)
 

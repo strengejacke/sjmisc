@@ -1,3 +1,11 @@
+# sjmisc 2.7.1
+
+## Bug fixes
+
+* `frq()` now removes empty columns before computing frequencies, because applying `frq()` on empty vectors caused an error.
+* `empty_cols()` and `empty_rows()` (and hence, `remove_empty_cols()` and `remove_empty_rows()`) caused an error for data frames with only one column resp. row, or if `x` was a vector and no data frame.
+
+
 # sjmisc 2.7.0
 
 ## General

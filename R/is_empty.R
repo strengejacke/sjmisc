@@ -110,14 +110,22 @@ is_empty <- function(x, first.only = TRUE) {
 #'
 #' @export
 empty_cols <- function(x) {
-  which(colSums(is.na(x)) == nrow(x))
+  if (!is.matrix(x) || !is.data.frame(x) || ncol(x) < 2)
+    vector("numeric")
+  else
+    which(colSums(is.na(x)) == nrow(x))
 }
+
 
 #' @rdname empty_cols
 #' @export
 empty_rows <- function(x) {
-  which(rowSums(is.na(x)) == ncol(x))
+  if (!is.matrix(x) || !is.data.frame(x) || nrow(x) < 2)
+    vector("numeric")
+  else
+    which(rowSums(is.na(x)) == ncol(x))
 }
+
 
 #' @rdname empty_cols
 #' @importFrom dplyr select
@@ -126,11 +134,12 @@ remove_empty_cols <- function(x) {
   # check if we have any empty columns at all
   ec <- empty_cols(x)
   # if yes, removing works, else an empty df would be returned
-  if (!is_empty(ec))
+  if (!sjmisc::is_empty(ec))
     dplyr::select(x, !! -ec)
   else
     x
 }
+
 
 #' @rdname empty_cols
 #' @importFrom dplyr slice
@@ -139,7 +148,7 @@ remove_empty_rows <- function(x) {
   # check if we have any empty rows at all
   er <- empty_rows(x)
   # if yes, removing works, else an empty df would be returned
-  if (!is_empty(er))
+  if (!sjmisc::is_empty(er))
     dplyr::slice(x, !! -er)
   else
     x
