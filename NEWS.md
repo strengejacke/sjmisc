@@ -1,5 +1,14 @@
 # sjmisc 2.7.1
 
+## New functions
+
+The recoding and transformation functions get scoped variants, allowing to select variables bases on logical conditions described in a function:
+
+* `rec_if()` as scoped variant of `rec()`.
+* `dicho_if()` as scoped variant of `dicho()`.
+* `center_if()` as scoped variant of `center()`.
+* `std_if()` as scoped variant of `std()`.
+
 ## Bug fixes
 
 * `frq()` now removes empty columns before computing frequencies, because applying `frq()` on empty vectors caused an error.

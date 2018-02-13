@@ -44,8 +44,9 @@ This function is kept for backwards-compatibility. It is preferred to
       use \code{\link[sjlabelled]{as_numeric}}.
 }
 \examples{
+library(sjlabelled)
 data(efc)
-test <- to_label(efc$e42dep)
+test <- as_label(efc$e42dep)
 table(test)
 
 table(to_value(test))

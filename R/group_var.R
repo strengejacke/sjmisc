@@ -230,7 +230,7 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
 group_helper <- function(x, groupsize, right.interval, groupcount) {
   # check if factor. factors need conversion
   # to numeric before grouped
-  if (is.factor(x)) x <- to_value(x, keep.labels = FALSE)
+  if (is.factor(x)) x <- sjlabelled::as_numeric(x, keep.labels = FALSE)
 
   # minimum range. will be changed when autogrouping
   minval <- 0

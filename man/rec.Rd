@@ -2,10 +2,14 @@
 % Please edit documentation in R/rec.R
 \name{rec}
 \alias{rec}
+\alias{rec_if}
 \title{Recode variables}
 \usage{
 rec(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
   append = TRUE, suffix = "_r")
+
+rec_if(x, predicate, rec, as.num = TRUE, var.label = NULL,
+  val.labels = NULL, append = TRUE, suffix = "_r")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -17,9 +21,9 @@ You may also use functions like \code{:} or tidyselect's
 \code{\link[tidyselect]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{rec}{String with recode pairs of old and new values. See
-'Details' for examples. \code{\link{rec_pattern}} is a convenient
-function to create recode strings for grouping variables.}
+\item{rec}{String with recode pairs of old and new values. See 'Details'
+for examples. \code{\link{rec_pattern}} is a convenient function to
+create recode strings for grouping variables.}
 
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
@@ -51,40 +55,47 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
 \code{x} with recoded categories. If \code{x} is a data frame,
-        for \code{append = TRUE}, \code{x} including the recoded variables
-        as new columns is returned; if \code{append = FALSE}, only
-        the recoded variables will be returned.
+  for \code{append = TRUE}, \code{x} including the recoded variables
+  as new columns is returned; if \code{append = FALSE}, only
+  the recoded variables will be returned.
 }
 \description{
-Recodes values of variables
+\code{rec()} recodes values of variables, where variable
+  selection is based on variable names or column position, or on
+  select helpers (see documentation on \code{...}). \code{rec_if()} is a
+  scoped variant of \code{rec()}, where recoding will be applied only
+  to those variable that match the logical condition of \code{predicate}.
 }
 \details{
 The \code{rec} string has following syntax:
-          \describe{
-           \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{rec = "1=1; 2=4; 3=2; 4=3"}}
-           \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
-           \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
-           \item{value range for doubles}{for double vectors (with floating points), all values within the specified range are recoded; e.g. \code{1:2.5=1;2.6:3=2} recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)}
-           \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
-           \item{\code{"else"}}{all other values, which have not been specified yet, are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
-           \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
-           \item{\code{NA}'s}{\code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA into 1, and all values from 3 to 5 into NA in the new variable)}
-           \item{\code{"rev"}}{\code{"rev"} is a special token that reverses the value order (see 'Examples')}
-           \item{direct value labelling}{value labels for new values can be assigned inside the recode pattern by writing the value label in square brackets after defining the new value in a recode pair, e.g. \code{"15:30=1 [young aged]; 31:55=2 [middle aged]; 56:max=3 [old aged]"}. See 'Examples'.}
-          }
+  \describe{
+    \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{rec = "1=1; 2=4; 3=2; 4=3"}}
+    \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
+    \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
+    \item{value range for doubles}{for double vectors (with floating points), all values within the specified range are recoded; e.g. \code{1:2.5=1;2.6:3=2} recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)}
+    \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
+    \item{\code{"else"}}{all other values, which have not been specified yet, are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
+    \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}
+    \item{\code{NA}'s}{\code{\link{NA}} values are allowed both as old and new value, e.g. \code{"NA=1; 3:5=NA"} (recodes all NA into 1, and all values from 3 to 5 into NA in the new variable)}
+    \item{\code{"rev"}}{\code{"rev"} is a special token that reverses the value order (see 'Examples')}
+    \item{direct value labelling}{value labels for new values can be assigned inside the recode pattern by writing the value label in square brackets after defining the new value in a recode pair, e.g. \code{"15:30=1 [young aged]; 31:55=2 [middle aged]; 56:max=3 [old aged]"}. See 'Examples'.}
+  }
 }
 \note{
 Please note following behaviours of the function:
-      \itemize{
-        \item the \code{"else"}-token should always be the last argument in the \code{rec}-string.
-        \item Non-matching values will be set to \code{NA}, unless captured by the \code{"else"}-token.
-        \item Tagged NA values (see \code{\link[haven]{tagged_na}}) and their value labels will be preserved when copying NA values to the recoded vector with \code{"else=copy"}.
-        \item Variable label attributes (see, for instance, \code{\link[sjlabelled]{get_label}}) are preserved (unless changed via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
-        \item If \code{x} is a data frame, all variables should have the same categories resp. value range (else, see second bullet, \code{NA}s are produced).
-      }
+  \itemize{
+    \item the \code{"else"}-token should always be the last argument in the \code{rec}-string.
+    \item Non-matching values will be set to \code{NA}, unless captured by the \code{"else"}-token.
+    \item Tagged NA values (see \code{\link[haven]{tagged_na}}) and their value labels will be preserved when copying NA values to the recoded vector with \code{"else=copy"}.
+    \item Variable label attributes (see, for instance, \code{\link[sjlabelled]{get_label}}) are preserved (unless changed via \code{var.label}-argument), however, value label attributes are removed (except for \code{"rev"}, where present value labels will be automatically reversed as well). Use \code{val.labels}-argument to add labels for recoded values.
+    \item If \code{x} is a data frame, all variables should have the same categories resp. value range (else, see second bullet, \code{NA}s are produced).
+  }
 }
 \examples{
 data(efc)
@@ -179,6 +190,10 @@ rec(
   rec = "0,1=0; else=1",
   append = FALSE
 )
+
+# recode only variables that have a value range from 1-4
+p <- function(x) min(x, na.rm = T) > 0 && max(x, na.rm = T) < 5
+rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
 
 
 }

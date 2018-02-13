@@ -310,7 +310,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
     # character vectors need to be converted with to_value
     # to avoid NAs, but only if character is non-numeric
     if (is.character(dat$val) && anyNA(suppressWarnings(as.numeric(dat$val))))
-      dat$val <- to_value(dat$val, keep.labels = F)
+      dat$val <- sjlabelled::as_numeric(dat$val, keep.labels = F)
     else
       dat$val <- as.numeric(dat$val)
 
@@ -330,7 +330,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
       dat2 <- data.frame(table(x, useNA = "always"))
     }
     colnames(dat2) <- c("val", "frq")
-    dat2$val <- to_value(dat2$val, keep.labels = F)
+    dat2$val <- sjlabelled::as_numeric(dat2$val, keep.labels = F)
 
     # join frq table and label columns
     mydat <- suppressMessages(dplyr::full_join(dat, dat2))
@@ -363,7 +363,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
 
   # need numeric
   if (is.factor(x) || is.character(x)) {
-    x <- to_value(x, keep.labels = F)
+    x <- sjlabelled::as_numeric(x, keep.labels = F)
   }
 
   # check if we have any NA-values - if not, add row for NA's
@@ -401,7 +401,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   if (!is.null(mydat$label)) mydat$label[is.na(mydat$label)] <- "NA"
 
   # save original order
-  reihe <- to_value(mydat$val, start.at = 1, keep.labels = F)
+  reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
 
   # sort
   if (sort.frq == "none") mydat <- mydat[order(reihe), ]

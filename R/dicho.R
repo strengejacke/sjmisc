@@ -2,31 +2,36 @@
 #' @name dicho
 #'
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is
-#'                either done by median, mean or a specific value (see \code{dich.by}).
+#'    either done by median, mean or a specific value (see \code{dich.by}).
+#'    \code{dicho_if()} is a scoped variant of \code{dicho()}, where recoding
+#'    will be applied only to those variable that match the logical condition
+#'    of \code{predicate}.
 #'
 #' @param dich.by Indicates the split criterion where a variable is dichotomized.
-#'          Must be one of the following values (may be abbreviated):
-#'          \describe{
-#'            \item{\code{"median"} or \code{"md"}}{by default, \code{x} is split into two groups at the median.}
-#'            \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
-#'            \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
-#'            }
+#'    Must be one of the following values (may be abbreviated):
+#'    \describe{
+#'      \item{\code{"median"} or \code{"md"}}{by default, \code{x} is split into two groups at the median.}
+#'      \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
+#'      \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
+#'    }
 #' @param val.labels Optional character vector (of length two), to set value label
-#'          attributes of dichotomized variable (see \code{\link[sjlabelled]{set_labels}}).
-#'          If \code{NULL} (default), no value labels will be set.
+#'    attributes of dichotomized variable (see \code{\link[sjlabelled]{set_labels}}).
+#'    If \code{NULL} (default), no value labels will be set.
 #'
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return \code{x}, dichotomized. If \code{x} is a data frame, only
-#'         the dichotomized variables will be returned.
+#' @return \code{x}, dichotomized. If \code{x} is a data frame,
+#'   for \code{append = TRUE}, \code{x} including the dichotomized. variables
+#'   as new columns is returned; if \code{append = FALSE}, only
+#'   the dichotomized variables will be returned.
 #'
 #' @note Variable label attributes are preserved (unless changed via
 #'       \code{var.label}-argument).
 #'
 #' @details \code{dicho()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
-#'          In this case, dichotomization is applied to the subsets of variables
-#'          in \code{x}. See 'Examples'.
+#'   In this case, dichotomization is applied to the subsets of variables
+#'   in \code{x}. See 'Examples'.
 #'
 #' @examples
 #' data(efc)
@@ -79,10 +84,15 @@
 #'
 #' median(mtcars$disp)
 #'
+#' # dichotomize only variables with more than 10 unique values
+#' p <- function(x) dplyr::n_distinct(x) > 10
+#' dicho_if(efc, predicate = p, append = FALSE)
+#'
 #' @importFrom dplyr group_vars
 #' @importFrom tidyr unnest
 #' @export
 dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
+
   # check for correct dichotome types
   if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
     stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)
@@ -105,6 +115,46 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
 }
 
 
+#' @importFrom dplyr select_if
+#' @rdname dicho
+#' @export
+dicho_if <- function(x, predicate, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
+
+  # check for correct dichotome types
+  if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
+    stop("argument `dich.by` must either be `median`, `mean` or a numerical value." , call. = FALSE)
+  }
+
+  # select variables that match logical conditions
+  .dat <- dplyr::select_if(x, .predicate = predicate)
+
+
+  # if no variable matches the condition specified
+  # in predicate, return original data
+
+  if (sjmisc::is_empty(.dat)) {
+    if (append)
+      return(x)
+    else
+      return(.dat)
+  }
+
+
+  recode_fun(
+    x = x,
+    .dat = .dat,
+    fun = get("dicho_helper", asNamespace("sjmisc")),
+    suffix = suffix,
+    append = append,
+    dich.by = dich.by,
+    as.num = as.num,
+    var.label = var.label,
+    val.labels = val.labels
+  )
+}
+
+
+#' @importFrom sjlabelled as_numeric get_label set_label set_labels
 #' @importFrom stats median
 dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
   # do we have labels? if not, try to
@@ -124,7 +174,7 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
     } else {
       # convert non-numeric factor to numeric
       # factor levels are replaced by numeric values
-      x <- to_value(x, keep.labels = FALSE)
+      x <- sjlabelled::as_numeric(x, keep.labels = FALSE)
       message("Trying to dichotomize non-numeric factor.")
     }
   }

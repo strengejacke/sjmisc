@@ -127,7 +127,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
 
       # convert imputed variable to numeric. needed to perform row means.
-      miss_inc_dat <- to_value(miss_inc_dat)
+      miss_inc_dat <- sjlabelled::as_numeric(miss_inc_dat)
 
       # copy original variable with missings to a new dummy vector
       x <- dat[[i]]

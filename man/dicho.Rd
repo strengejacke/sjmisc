@@ -2,10 +2,14 @@
 % Please edit documentation in R/dicho.R
 \name{dicho}
 \alias{dicho}
+\alias{dicho_if}
 \title{Dichotomize variables}
 \usage{
 dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
   val.labels = NULL, append = TRUE, suffix = "_d")
+
+dicho_if(x, predicate, dich.by = "median", as.num = FALSE,
+  var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -23,7 +27,7 @@ Must be one of the following values (may be abbreviated):
   \item{\code{"median"} or \code{"md"}}{by default, \code{x} is split into two groups at the median.}
   \item{\code{"mean"} or \code{"m"}}{splits \code{x} into two groups at the mean of \code{x}.}
   \item{numeric value}{splits \code{x} into two groups at the specific value. Note that the value is inclusive, i.e. \code{dich.by = 10} will split \code{x} into one group with values from lowest to 10 and another group with values greater than 10.}
-  }}
+}}
 
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
@@ -53,19 +57,27 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
-\code{x}, dichotomized. If \code{x} is a data frame, only
-        the dichotomized variables will be returned.
+\code{x}, dichotomized. If \code{x} is a data frame,
+  for \code{append = TRUE}, \code{x} including the dichotomized. variables
+  as new columns is returned; if \code{append = FALSE}, only
+  the dichotomized variables will be returned.
 }
 \description{
 Dichotomizes variables into dummy variables (0/1). Dichotomization is
-               either done by median, mean or a specific value (see \code{dich.by}).
+   either done by median, mean or a specific value (see \code{dich.by}).
+   \code{dicho_if()} is a scoped variant of \code{dicho()}, where recoding
+   will be applied only to those variable that match the logical condition
+   of \code{predicate}.
 }
 \details{
 \code{dicho()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
-         In this case, dichotomization is applied to the subsets of variables
-         in \code{x}. See 'Examples'.
+  In this case, dichotomization is applied to the subsets of variables
+  in \code{x}. See 'Examples'.
 }
 \note{
 Variable label attributes are preserved (unless changed via
@@ -121,5 +133,9 @@ mtcars \%>\%
   summarise(median = median(disp))
 
 median(mtcars$disp)
+
+# dichotomize only variables with more than 10 unique values
+p <- function(x) dplyr::n_distinct(x) > 10
+dicho_if(efc, predicate = p, append = FALSE)
 
 }

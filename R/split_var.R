@@ -146,7 +146,7 @@ split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclu
   levels(retval) <- seq_len(groupcount)
 
   # to numeric?
-  if (as.num) retval <- to_value(retval)
+  if (as.num) retval <- sjlabelled::as_numeric(retval)
 
   # set back variable and value labels
   retval <- suppressWarnings(sjlabelled::set_label(retval, label = var_lab))

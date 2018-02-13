@@ -4,47 +4,45 @@
 #' @description This function converts a variable into a factor, but preserves
 #'                variable and value label attributes. See 'Examples'.
 #'
-#' @seealso \code{\link{to_value}} to convert a factor into a numeric vector and
-#'            \code{\link{to_label}} to convert a vector into a factor with labelled
-#'            factor levels.
+#' @seealso \code{\link[sjlabelled]{as_numeric}} to convert a factor into a
+#'   numeric vector and \code{\link[sjlabelled]{as_label}} to convert a vector
+#'   into a factor with labelled factor levels.
 #'
 #' @param x A vector or data frame.
 #' @param ... Optional, unquoted names of variables that should be selected for
-#'          further processing. Required, if \code{x} is a data frame (and no
-#'          vector) and only selected variables from \code{x} should be processed.
-#'          You may also use functions like \code{:} or tidyselect's
-#'          \code{\link[tidyselect]{select_helpers}}.
-#'          See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.
+#'   further processing. Required, if \code{x} is a data frame (and no
+#'   vector) and only selected variables from \code{x} should be processed.
+#'   You may also use functions like \code{:} or tidyselect's
+#'   \code{\link[tidyselect]{select_helpers}}.
+#'   See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.
 #' @param add.non.labelled Logical, if \code{TRUE}, non-labelled values also
-#'          get value labels.
+#'   get value labels.
 #' @param ref.lvl Numeric, specifies the reference level for the new factor. Use
-#'          this parameter if a different factor level than the lowest value
-#'          should be used as reference level. If \code{NULL}, lowest value
-#'          will become the reference level. See \code{\link{ref_lvl}} for
-#'          details.
+#'   this parameter if a different factor level than the lowest value should be
+#'   used as reference level. If \code{NULL}, lowest value will become the
+#'   reference level. See \code{\link{ref_lvl}} for details.
 #'
-#' @return A factor, including variable and value labels. If \code{x}
-#'           is a data frame, the complete data frame \code{x} will be returned,
-#'           where variables specified in \code{...} are coerced
-#'           to factors (including variable and value labels);
-#'           if \code{...} is not specified, applies to all variables in the
-#'           data frame.
+#' @return A factor, including variable and value labels. If \code{x} is a
+#'   data frame, the complete data frame \code{x} will be returned, where
+#'   variables specified in \code{...} are coerced to factors (including
+#'   variable and value labels); if \code{...} is not specified, applies to
+#'   all variables in the data frame.
 #'
 #' @note This function is intended for use with vectors that have value and variable
-#'        label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts
-#'        a variable into a factor and preserves the value and variable label attributes.
-#'        \cr \cr
-#'        Adding label attributes is automatically done by importing data sets
-#'        with one of the \code{read_*}-functions, like \code{\link{read_spss}}.
-#'        Else, value and variable labels can be manually added to vectors
-#'        with \code{\link[sjlabelled]{set_labels}} and \code{\link[sjlabelled]{set_label}}.
-#'        \cr \cr
-#'        This function is kept for backwards-compatibility. It is preferred to
-#'        use \code{\link[sjlabelled]{as_factor}}.
+#'   label attributes. Unlike \code{\link{as.factor}}, \code{to_factor} converts
+#'   a variable into a factor and preserves the value and variable label attributes.
+#'   \cr \cr
+#'   Adding label attributes is automatically done by importing data sets
+#'   with one of the \code{read_*}-functions, like \code{\link[sjlabelled]{read_spss}}.
+#'   Else, value and variable labels can be manually added to vectors
+#'   with \code{\link[sjlabelled]{set_labels}} and \code{\link[sjlabelled]{set_label}}.
+#'   \cr \cr
+#'   This function is kept for backwards-compatibility. It is preferred to
+#'   use \code{\link[sjlabelled]{as_factor}}.
 #'
 #' @details \code{to_factor} converts numeric values into a factor with numeric
-#'            levels. \code{\link{to_label}}, however, converts a vector into
-#'            a factor and uses value labels as factor levels.
+#'   levels. \code{\link[sjlabelled]{as_label}}, however, converts a vector into
+#'   a factor and uses value labels as factor levels.
 #'
 #' @examples
 #' library(sjlabelled)

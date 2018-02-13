@@ -101,9 +101,10 @@ d4 <- efc[, 10:12]
 # show original
 head(d1)
 
+library(sjlabelled)
 # slightly change variables, to see effect
-d2 <- to_label(d2)
-d3 <- to_label(d3)
+d2 <- as_label(d2)
+d3 <- as_label(d3)
 
 # replace duplicated columns, append remaining
 replace_columns(d1, d2, d3, d4)

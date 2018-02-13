@@ -107,10 +107,11 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
 }
 
 
+#' @importFrom sjlabelled as_label
 com_ft <- function(dd, show.values, no.prop.table, marge, digits) {
   # select variables, convert to label and create ftable-pbject
   x <- dd %>%
-    to_label(add.non.labelled = TRUE, prefix = show.values) %>%
+    sjlabelled::as_label(add.non.labelled = TRUE, prefix = show.values) %>%
     stats::ftable()
 
   # if required, compute table margins

@@ -149,7 +149,7 @@ to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) 
 
     # need to recode key-value?
     if (recode.key)
-      tmp[[keys[i]]] <- sort(to_value(tmp[[keys[i]]], keep.labels = FALSE))
+      tmp[[keys[i]]] <- sort(sjlabelled::as_numeric(tmp[[keys[i]]], keep.labels = FALSE))
 
     # set variable label
     if (!is.null(labels))
