@@ -2,13 +2,20 @@
 % Please edit documentation in R/group_var.R
 \name{group_var}
 \alias{group_var}
+\alias{group_var_if}
 \alias{group_labels}
+\alias{group_labels_if}
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
 group_var(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
   n = 30, append = TRUE, suffix = "_gr")
 
+group_var_if(x, predicate, size = 5, as.num = TRUE,
+  right.interval = FALSE, n = 30, append = TRUE, suffix = "_gr")
+
 group_labels(x, ..., size = 5, right.interval = FALSE, n = 30)
+
+group_labels_if(x, predicate, size = 5, right.interval = FALSE, n = 30)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -22,10 +29,9 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{size}{Numeric; group-size, i.e. the range for grouping. By default,
 for each 5 categories of \code{x} a new group is defined, i.e. \code{size = 5}.
-Use \code{size = "auto"} to automatically resize a variable into
-a maximum of 30 groups (which is the ggplot-default grouping when
-plotting histograms). Use \code{n} to determine the amount
-of groups.}
+Use \code{size = "auto"} to automatically resize a variable into a maximum
+of 30 groups (which is the ggplot-default grouping when plotting
+histograms). Use \code{n} to determine the amount of groups.}
 
 \item{as.num}{Logical, if \code{TRUE}, return value will be numeric, not a factor.}
 
@@ -53,53 +59,59 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
 \itemize{
-          \item For \code{group_var}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}). If \code{x} is a data frame, only the grouped variables will be returned.
-          \item For \code{group_label}, a string vector or a list of string vectors containing labels based on the grouped categories of \code{x}, formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
-        }
+    \item For \code{group_var()}, a grouped variable, either as numeric or as factor (see paramter \code{as.num}). If \code{x} is a data frame, only the grouped variables will be returned.
+    \item For \code{group_labels()}, a string vector or a list of string vectors containing labels based on the grouped categories of \code{x}, formatted as "from lower bound to upper bound", e.g. \code{"10-19"  "20-29"  "30-39"} etc. See 'Examples'.
+  }
 }
 \description{
 Recode numeric variables into equal ranged, grouped factors,
-               i.e. a variable is cut into a smaller number of groups,
-               where each group has the same value range, and create the
-               related value labels.
+  i.e. a variable is cut into a smaller number of groups, where each group
+  has the same value range. \code{group_labels()} creates the related value
+  labels. \code{group_var_if()} and \code{group_labels_if()} are scoped
+  variants of \code{group_var()} and \code{group_labels()}, where grouping
+  will be applied only to those variable that match the logical condition
+  of \code{predicate}.
 }
 \details{
 If \code{size} is set to a specific value, the variable is recoded
-           into several groups, where each group has a maximum range of \code{size}.
-           Hence, the amount of groups differ depending on the range of \code{x}.
-           \cr \cr
-           If \code{size = "auto"}, the variable is recoded into a maximum of
-           \code{n} groups. Hence, independent from the range of
-           \code{x}, always the same amount of groups are created, so the range
-           within each group differs (depending on \code{x}'s range).
-           \cr \cr
-           \code{right.interval} determins which boundary values to include when
-           grouping is done. If \code{TRUE}, grouping starts with the \strong{lower
-           bound} of \code{size}. For example, having a variable ranging from
-           50 to 80, groups cover the ranges from  50-54, 55-59, 60-64 etc.
-           If \code{FALSE} (default), grouping starts with the \code{upper bound}
-           of \code{size}. In this case, groups cover the ranges from
-           46-50, 51-55, 56-60, 61-65 etc. \strong{Note:} This will cover
-           a range from 46-50 as first group, even if values from 46 to 49
-           are not present. See 'Examples'.
-           \cr \cr
-           If you want to split a variable into a certain amount of equal
-           sized groups (instead of having groups where values have all the same
-           range), use the \code{\link{split_var}} function!
-           \cr \cr
-           \code{group_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
-           In this case, grouping is applied to the subsets of variables
-           in \code{x}. See 'Examples'.
+  into several groups, where each group has a maximum range of \code{size}.
+  Hence, the amount of groups differ depending on the range of \code{x}.
+  \cr \cr
+  If \code{size = "auto"}, the variable is recoded into a maximum of
+  \code{n} groups. Hence, independent from the range of
+  \code{x}, always the same amount of groups are created, so the range
+  within each group differs (depending on \code{x}'s range).
+  \cr \cr
+  \code{right.interval} determins which boundary values to include when
+  grouping is done. If \code{TRUE}, grouping starts with the \strong{lower
+  bound} of \code{size}. For example, having a variable ranging from
+  50 to 80, groups cover the ranges from  50-54, 55-59, 60-64 etc.
+  If \code{FALSE} (default), grouping starts with the \code{upper bound}
+  of \code{size}. In this case, groups cover the ranges from
+  46-50, 51-55, 56-60, 61-65 etc. \strong{Note:} This will cover
+  a range from 46-50 as first group, even if values from 46 to 49
+  are not present. See 'Examples'.
+  \cr \cr
+  If you want to split a variable into a certain amount of equal
+  sized groups (instead of having groups where values have all the same
+  range), use the \code{\link{split_var}} function!
+  \cr \cr
+  \code{group_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
+  In this case, grouping is applied to the subsets of variables
+  in \code{x}. See 'Examples'.
 }
 \note{
-Variable label attributes (see, for instance, \code{\link[sjlabelled]{set_label}}) are preserved.
-      Usually you should use the same values for \code{size} and
-      \code{right.interval} in \code{group_label()} as used in the
-      \code{group_var} function if you want matching labels for the related
-      recoded variable.
+Variable label attributes (see, for instance,
+  \code{\link[sjlabelled]{set_label}}) are preserved. Usually you should use
+  the same values for \code{size} and \code{right.interval} in
+  \code{group_labels()} as used in the \code{group_var} function if you want
+  matching labels for the related recoded variable.
 }
 \examples{
 age <- abs(round(rnorm(100, 65, 20)))
@@ -148,8 +160,8 @@ mtcars \%>\%
 
 }
 \seealso{
-\code{\link{split_var}} to split variables into
-         equal sized groups, \code{\link{group_str}} for grouping string vectors
-         or \code{\link{rec_pattern}} and \code{\link{rec}} for another
-         convenbient way of recoding variables into smaller groups.
+\code{\link{split_var}} to split variables into equal sized groups,
+  \code{\link{group_str}} for grouping string vectors or
+  \code{\link{rec_pattern}} and \code{\link{rec}} for another convenient
+  way of recoding variables into smaller groups.
 }

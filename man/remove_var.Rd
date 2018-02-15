@@ -2,9 +2,12 @@
 % Please edit documentation in R/remove_vars.R
 \name{remove_var}
 \alias{remove_var}
+\alias{remove_cols}
 \title{Remove variables from a data frame}
 \usage{
 remove_var(x, ...)
+
+remove_cols(x, ...)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -19,7 +22,8 @@ You may also use functions like \code{:} or tidyselect's
 }
 \description{
 This function removes variables from a data frame, and is
-             intended to use within a pipe-workflow.
+  intended to use within a pipe-workflow. \code{remove_cols()} is an
+  alias for \code{remove_var()}.
 }
 \examples{
 mtcars \%>\% remove_var("disp", "cyl")

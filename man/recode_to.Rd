@@ -2,9 +2,13 @@
 % Please edit documentation in R/recode_to.R
 \name{recode_to}
 \alias{recode_to}
+\alias{recode_to_if}
 \title{Recode variable categories into new values}
 \usage{
 recode_to(x, ..., lowest = 0, highest = -1, append = TRUE,
+  suffix = "_r0")
+
+recode_to_if(x, predicate, lowest = 0, highest = -1, append = TRUE,
   suffix = "_r0")
 }
 \arguments{
@@ -41,16 +45,24 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
-\code{x} with recoded category values, where \code{lowest} indicates the lowest
-          value;  If \code{x} is a data frame, only the recoded variables will be returned.
+\code{x} with recoded category values, where \code{lowest} indicates
+  the lowest value;  If \code{x} is a data frame, for \code{append = TRUE},
+  \code{x} including the recoded variables as new columns is returned; if
+  \code{append = FALSE}, only the recoded variables will be returned.
 }
 \description{
-Recodes (or "renumbers") the categories of variables into new category values, beginning
-               with the lowest value specified by \code{lowest}. Useful if you want
-               to recode dummy variables with 1/2 coding to 0/1 coding, or recoding scales from
-               1-4 to 0-3 etc.
+Recodes (or "renumbers") the categories of variables into new
+  category values, beginning with the lowest value specified by \code{lowest}.
+  Useful when recoding dummy variables with 1/2 values to 0/1 values,  or
+  recoding scales from 1-4 to 0-3 etc.
+  \code{recode_to_if()} is a scoped variant of \code{recode_to()}, where
+  recoding will be applied only to those variable that match the
+  logical condition of \code{predicate}.
 }
 \note{
 Value and variable label attributes are preserved.

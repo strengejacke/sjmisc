@@ -7,11 +7,11 @@
 \alias{center_if}
 \title{Standardize and center variables}
 \usage{
-std(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE,
+std(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE,
   append = TRUE, suffix = "_z")
 
-std_if(x, predicate, robust = c("sd", "gmd", "mad"), include.fac = FALSE,
-  append = TRUE, suffix = "_z")
+std_if(x, predicate, robust = c("sd", "2sd", "gmd", "mad"),
+  include.fac = FALSE, append = TRUE, suffix = "_z")
 
 center(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c")
 
@@ -33,7 +33,10 @@ achieved by dividing the centered variables by their standard deviation
 (\code{robust = "sd"}). However, for skewed distributions, the median
 absolute deviation (MAD, \code{robust = "mad"}) or Gini's mean difference
 (\code{robust = "gmd"}) might be more robust measures of dispersion. For
-the latter option, \CRANpkg{sjstats} needs to be installed.}
+the latter option, \CRANpkg{sjstats} needs to be installed.
+\code{robust = "2sd"} divides the centered variables by two standard
+deviations, following a suggestion by \emph{Gelman (2008)}, so the
+rescaled input is comparable to binary variables.}
 
 \item{include.fac}{Logical, if \code{TRUE}, factors will be converted to numeric
 vectors and also standardized or centered.}
@@ -60,10 +63,10 @@ column names in a data frame depends on the function call:
 variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
-A vector with standardized or centered variables. If \code{x} is a
-  for \code{append = TRUE}, \code{x} including the transformed variables
-  as new columns is returned; if \code{append = FALSE}, only the transformed
-  variables will be returned.
+If \code{x} is a vector, returns a vector with standardized or
+  centered variables. If \code{x} is a data frame, for \code{append = TRUE},
+  \code{x} including the transformed variables as new columns is returned;
+  if \code{append = FALSE}, only the transformed variables will be returned.
 }
 \description{
 \code{std()} computes a z-transformation (standardized and centered)
@@ -74,15 +77,20 @@ A vector with standardized or centered variables. If \code{x} is a
 }
 \details{
 \code{std()} and \code{center()} also work on grouped data frames
-   (see \code{\link[dplyr]{group_by}}). In this case, standardization
-   or centering is applied to the subsets of variables in \code{x}.
-   See 'Examples'.
+  (see \code{\link[dplyr]{group_by}}). In this case, standardization
+  or centering is applied to the subsets of variables in \code{x}.
+  See 'Examples'.
+  \cr \cr
+  For more complicated models with many predictors, Gelman and Hill (2007)
+  suggest leaving binary inputs as is and only standardize continuous predictors
+  by dividing by two standard deviations. This ensures a rough comparability
+  in the coefficients.
 }
 \note{
 \code{std()} and \code{center()} only return a vector, if \code{x} is
-   a vector. If \code{x} is a data frame and only one variable is specified
-   in the \code{...}-ellipses argument, both functions do return a
-   data frame (see 'Examples').
+  a vector. If \code{x} is a data frame and only one variable is specified
+  in the \code{...}-ellipses argument, both functions do return a
+  data frame (see 'Examples').
 }
 \examples{
 data(efc)
@@ -106,6 +114,7 @@ efc \%>\%
 # works also with grouped data frames
 mtcars \%>\% std(disp)
 
+# compare new column "disp_z" w/ output above
 mtcars \%>\%
   group_by(cyl) \%>\%
   std(disp)
@@ -120,4 +129,12 @@ std(iris, include.fac = FALSE, append = FALSE)
 p <- function(x) dplyr::n_distinct(x) > 10
 std_if(efc, predicate = p, append = FALSE)
 
+}
+\references{
+Gelman A (2008) Scaling regression inputs by dividing by two
+  standard deviations. \emph{Statistics in Medicine 27: 2865–2873.}
+  \url{http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf}
+  \cr \cr
+  Gelman A, Hill J (2007) Data Analysis Using Regression and Multilevel/Hierarchical
+  Models. Cambdridge, Cambdrige University Press: 55-57
 }

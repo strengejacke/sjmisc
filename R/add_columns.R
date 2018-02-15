@@ -2,43 +2,46 @@
 #' @name add_columns
 #'
 #' @description \code{add_columns()} combines two or more data frames, but unlike
-#'              \code{\link{cbind}} or \code{\link[dplyr]{bind_cols}}, this function
-#'              binds \code{data} as last columns of a data frame.
-#'              \cr \cr
-#'              \code{replace_columns()} replaces all columns in \code{data} with
-#'              identically named columns in \code{...}, and adds remaining (non-duplicated)
-#'              columns from \code{...} to \code{data}.
+#'   \code{\link{cbind}} or \code{\link[dplyr]{bind_cols}}, this function
+#'   binds \code{data} as last columns of a data frame (i.e., behind columns
+#'   specified in \code{...}). This can be useful in a "pipe"-workflow, where
+#'   a data frame returned by a previous function should be appended
+#'   \emph{at the end} of another data frame that is processed in
+#'   \code{add_colums()}.
+#'   \cr \cr
+#'   \code{replace_columns()} replaces all columns in \code{data} with
+#'   identically named columns in \code{...}, and adds remaining (non-duplicated)
+#'   columns from \code{...} to \code{data}.
 #'
 #' @param data A data frame. For \code{add_columns()}, will be bound after data
-#'          frames specified in \code{...}. For \code{replace_columns()}, duplicated
-#'          columns in \code{data} will be replaced by columns in \code{...}.
-#' @param ... More data frames to combine, resp. more data frames with columns that
-#'          should replace columns in \code{data}.
+#'   frames specified in \code{...}. For \code{replace_columns()}, duplicated
+#'   columns in \code{data} will be replaced by columns in \code{...}.
+#' @param ... More data frames to combine, resp. more data frames with columns
+#'   that should replace columns in \code{data}.
 #' @param replace Logical, if \code{TRUE} (default), columns in \code{...} with
-#'        identical names in \code{data} will replace the columns in \code{data}.
-#'        The order of columns after replacing is preserved.
+#'   identical names in \code{data} will replace the columns in \code{data}.
+#'   The order of columns after replacing is preserved.
 #' @param add.unique Logical, if \code{TRUE} (default), remaining columns in
-#'          \code{...} that did not replace any column in \code{data}, are
-#'          appended as new columns to \code{data}.
+#'   \code{...} that did not replace any column in \code{data}, are appended
+#'   as new columns to \code{data}.
 #'
 #' @return For \code{add_columns()}, a data frame, where columns of \code{data}
-#'         are appended after columns of \code{...}.
-#'         \cr \cr
-#'         For \code{replace_columns()}, a data frame where columns in
-#'         \code{data} will be replaced by identically named columns
-#'         in \code{...}, and remaining columns from \code{...}
-#'         will be appended to \code{data} (if \code{add.unique = TRUE}).
+#'   are appended after columns of \code{...}.
+#'   \cr \cr
+#'   For \code{replace_columns()}, a data frame where columns in \code{data}
+#'   will be replaced by identically named columns in \code{...}, and remaining
+#'   columns from \code{...} will be appended to \code{data} (if
+#'   \code{add.unique = TRUE}).
 #'
 #' @note For \code{add_columns()}, by default, columns in \code{data} with
-#'       identical names like columns in one of the data frames in \code{...}
-#'       will be dropped (i.e. variables with identical names in \code{...}
-#'       will replace existing variables in \code{data}).
-#'       Use \code{replace = FALSE} to keep all columns. Identical column names
-#'       will then be renamed, to ensure unique column names (which happens
-#'       by default when using \code{\link[dplyr]{bind_cols}}). When
-#'       replacing columns, replaced columns are not added to the end of the
-#'       data frame. Rather, the original order of columns will be preserved.
-
+#'   identical names like columns in one of the data frames in \code{...}
+#'   will be dropped (i.e. variables with identical names in \code{...} will
+#'   replace existing variables in \code{data}). Use \code{replace = FALSE} to
+#'   keep all columns. Identical column names will then be renamed, to ensure
+#'   unique column names (which happens by default when using
+#'   \code{\link[dplyr]{bind_cols}}). When replacing columns, replaced columns
+#'   are not added to the end of the data frame. Rather, the original order of
+#'   columns will be preserved.
 #'
 #' @examples
 #' data(efc)

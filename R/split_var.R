@@ -2,8 +2,10 @@
 #' @name split_var
 #'
 #' @description Recode numeric variables into equal sized groups, i.e. a
-#'                variable is cut into a smaller number of groups at
-#'                specific cut points.
+#'   variable is cut into a smaller number of groups at specific cut points.
+#'   \code{split_var_if()} is a scoped variant of \code{split_var()}, where
+#'   transformation will be applied only to those variable that match the
+#'   logical condition of \code{predicate}.
 #'
 #' @seealso \code{\link{group_var}} to group variables into equal ranged groups,
 #'          or \code{\link{rec}} to recode variables.
@@ -19,27 +21,26 @@
 #' @inheritParams rec
 #'
 #' @return A grouped variable with equal sized groups. If \code{x} is a data frame,
-#'         for \code{append = TRUE}, \code{x} including the grouped variables
-#'         as new columns is returned; if \code{append = FALSE}, only
-#'         the grouped variables will be returned.
+#'   for \code{append = TRUE}, \code{x} including the grouped variables as new
+#'   columns is returned; if \code{append = FALSE}, only the grouped variables
+#'   will be returned.
 #'
-#' @details \code{split_var()} splits a variable into equal sized groups, where the
-#'            amount of groups depends on the \code{groupcount}-argument. Thus,
-#'            this functions \code{\link{cut}s} a variable into groups at the
-#'            specified \code{\link[stats]{quantile}s}.
-#'            \cr \cr
-#'            By contrast, \code{\link{group_var}} recodes a variable into
-#'            groups, where groups have the same value range
-#'            (e.g., from 1-5, 6-10, 11-15 etc.).
-#'            \cr \cr
-#'            \code{split_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
-#'            In this case, splitting is applied to the subsets of variables
-#'            in \code{x}. See 'Examples'.
+#' @details \code{split_var()} splits a variable into equal sized groups, where
+#'   the amount of groups depends on the \code{groupcount}-argument. Thus, this
+#'   functions \code{\link{cut}s} a variable into groups at the specified
+#'   \code{\link[stats]{quantile}s}.
+#'   \cr \cr
+#'   By contrast, \code{\link{group_var}} recodes a variable into groups, where
+#'   groups have the same value range (e.g., from 1-5, 6-10, 11-15 etc.).
+#'   \cr \cr
+#'   \code{split_var()} also works on grouped data frames
+#'   (see \code{\link[dplyr]{group_by}}). In this case, splitting is applied to
+#'   the subsets of variables in \code{x}. See 'Examples'.
 #'
 #' @note In case a vector has only few number of unique values, splitting into
-#'         equal sized groups may fail. In this case, use the \code{inclusive}-argument
-#'         to shift a value at the cut point into the lower, preceeding group to
-#'         get equal sized groups. See 'Examples'.
+#'   equal sized groups may fail. In this case, use the \code{inclusive}-argument
+#'   to shift a value at the cut point into the lower, preceeding group to
+#'   get equal sized groups. See 'Examples'.
 #'
 #' @examples
 #' data(efc)
@@ -85,12 +86,46 @@
 #'   split_var(disp, n = 3, append = FALSE) %>%
 #'   table()
 #'
-#' @importFrom stats quantile
+#' @importFrom dplyr quos
 #' @export
 split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = TRUE, suffix = "_g") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
+
+  recode_fun(
+    x = x,
+    .dat = .dat,
+    fun = get("split_var_helper", asNamespace("sjmisc")),
+    suffix = suffix,
+    append = append,
+    groupcount = n,
+    as.num = as.num,
+    var.label = var.label,
+    val.labels = val.labels,
+    inclusive = inclusive
+  )
+}
+
+
+#' @rdname split_var
+#' @importFrom dplyr select_if
+#' @export
+split_var_if <- function(x, predicate, n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = TRUE, suffix = "_g") {
+
+  # select variables that match logical conditions
+  .dat <- dplyr::select_if(x, .predicate = predicate)
+
+  # if no variable matches the condition specified
+  # in predicate, return original data
+
+  if (sjmisc::is_empty(.dat)) {
+    if (append)
+      return(x)
+    else
+      return(.dat)
+  }
+
 
   recode_fun(
     x = x,

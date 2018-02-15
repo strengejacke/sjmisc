@@ -23,6 +23,7 @@ y <- c(1, NA, NA)
 all_na(x)
 all_na(y)
 all_na(data.frame(x, y))
+all_na(list(x, y))
 
 
 }

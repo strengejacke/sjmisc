@@ -2,12 +2,13 @@
 #' @name remove_var
 #'
 #' @description This function removes variables from a data frame, and is
-#'              intended to use within a pipe-workflow.
+#'   intended to use within a pipe-workflow. \code{remove_cols()} is an
+#'   alias for \code{remove_var()}.
 #'
 #' @param ... Character vector with variable names, or unquoted names
-#'          of variables that should be removed from the data frame.
-#'          You may also use functions like \code{:} or tidyselect's
-#'          \code{\link[tidyselect]{select_helpers}}.
+#'   of variables that should be removed from the data frame.
+#'   You may also use functions like \code{:} or tidyselect's
+#'   \code{\link[tidyselect]{select_helpers}}.
 #'
 #' @inheritParams to_factor
 #'
@@ -24,4 +25,11 @@
 remove_var <- function(x, ...) {
   vars_to_remove <- dplyr::select_vars(colnames(x), ...)
   tibble::as_tibble(x[colnames(x) %nin% vars_to_remove])
+}
+
+
+#' @rdname remove_var
+#' @export
+remove_cols <- function(x, ...) {
+  remove_var(x, ...)
 }

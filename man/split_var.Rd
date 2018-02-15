@@ -2,10 +2,14 @@
 % Please edit documentation in R/split_var.R
 \name{split_var}
 \alias{split_var}
+\alias{split_var_if}
 \title{Split numeric variables into smaller groups}
 \usage{
 split_var(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL,
   inclusive = FALSE, append = TRUE, suffix = "_g")
+
+split_var_if(x, predicate, n, as.num = FALSE, val.labels = NULL,
+  var.label = NULL, inclusive = FALSE, append = TRUE, suffix = "_g")
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -54,37 +58,41 @@ column names in a data frame depends on the function call:
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
 }}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
 A grouped variable with equal sized groups. If \code{x} is a data frame,
-        for \code{append = TRUE}, \code{x} including the grouped variables
-        as new columns is returned; if \code{append = FALSE}, only
-        the grouped variables will be returned.
+  for \code{append = TRUE}, \code{x} including the grouped variables as new
+  columns is returned; if \code{append = FALSE}, only the grouped variables
+  will be returned.
 }
 \description{
 Recode numeric variables into equal sized groups, i.e. a
-               variable is cut into a smaller number of groups at
-               specific cut points.
+  variable is cut into a smaller number of groups at specific cut points.
+  \code{split_var_if()} is a scoped variant of \code{split_var()}, where
+  transformation will be applied only to those variable that match the
+  logical condition of \code{predicate}.
 }
 \details{
-\code{split_var()} splits a variable into equal sized groups, where the
-           amount of groups depends on the \code{groupcount}-argument. Thus,
-           this functions \code{\link{cut}s} a variable into groups at the
-           specified \code{\link[stats]{quantile}s}.
-           \cr \cr
-           By contrast, \code{\link{group_var}} recodes a variable into
-           groups, where groups have the same value range
-           (e.g., from 1-5, 6-10, 11-15 etc.).
-           \cr \cr
-           \code{split_var()} also works on grouped data frames (see \code{\link[dplyr]{group_by}}).
-           In this case, splitting is applied to the subsets of variables
-           in \code{x}. See 'Examples'.
+\code{split_var()} splits a variable into equal sized groups, where
+  the amount of groups depends on the \code{groupcount}-argument. Thus, this
+  functions \code{\link{cut}s} a variable into groups at the specified
+  \code{\link[stats]{quantile}s}.
+  \cr \cr
+  By contrast, \code{\link{group_var}} recodes a variable into groups, where
+  groups have the same value range (e.g., from 1-5, 6-10, 11-15 etc.).
+  \cr \cr
+  \code{split_var()} also works on grouped data frames
+  (see \code{\link[dplyr]{group_by}}). In this case, splitting is applied to
+  the subsets of variables in \code{x}. See 'Examples'.
 }
 \note{
 In case a vector has only few number of unique values, splitting into
-        equal sized groups may fail. In this case, use the \code{inclusive}-argument
-        to shift a value at the cut point into the lower, preceeding group to
-        get equal sized groups. See 'Examples'.
+  equal sized groups may fail. In this case, use the \code{inclusive}-argument
+  to shift a value at the cut point into the lower, preceeding group to
+  get equal sized groups. See 'Examples'.
 }
 \examples{
 data(efc)

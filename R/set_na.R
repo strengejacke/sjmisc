@@ -4,42 +4,42 @@
 #' @description This function replaces specific values of variables with \code{NA}.
 #'
 #' @seealso \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
-#'            values, \code{\link{rec}} for general recoding of variables and
-#'            \code{\link{recode_to}} for re-shifting value ranges. See
-#'            \code{\link{get_na}} to get values of missing values in
-#'            labelled vectors.
+#'   values, \code{\link{rec}} for general recoding of variables and
+#'   \code{\link{recode_to}} for re-shifting value ranges. See
+#'   \code{\link{get_na}} to get values of missing values in
+#'   labelled vectors.
 #'
 #' @param na Numeric vector with values that should be replaced with NA values,
-#'        or a character vector if values of factors or character vectors should be
-#'        replaced. For labelled vectors, may also be the name of a value label. In
-#'        this case, the associated values for the value labels in each vector
-#'        will be replaced with NA (see 'Examples').
+#'   or a character vector if values of factors or character vectors should be
+#'   replaced. For labelled vectors, may also be the name of a value label. In
+#'   this case, the associated values for the value labels in each vector
+#'   will be replaced with NA (see 'Examples').
 #' @param drop.levels Logical, if \code{TRUE}, factor levels of values that have
-#'          been replaced with \code{NA} are dropped. See 'Examples'.
+#'   been replaced with \code{NA} are dropped. See 'Examples'.
 #' @param as.tag Logical, if \code{TRUE}, values in \code{x} will be replaced
-#'          by \code{tagged_na}, else by usual \code{NA} values. Use a named
-#'          vector to assign the value label to the tagged NA value (see 'Examples').
+#'   by \code{tagged_na}, else by usual \code{NA} values. Use a named
+#'   vector to assign the value label to the tagged NA value (see 'Examples').
 #'
 #' @inheritParams to_factor
 #'
-#' @return \code{x}, with all elements of \code{na} being replaced by \code{NA}.
-#'           If \code{x} is a data frame, the complete data frame \code{x} will
-#'           be returned, with NA's set for variables specified in \code{...};
-#'           if \code{...} is not specified, applies to all variables in the
-#'           data frame.
+#' @return \code{x}, with all values in \code{na} being replaced by \code{NA}.
+#'   If \code{x} is a data frame, the complete data frame \code{x} will
+#'   be returned, with NA's set for variables specified in \code{...};
+#'   if \code{...} is not specified, applies to all variables in the
+#'   data frame.
 #'
 #' @note Labels from values that are replaced with NA and no longer used will be
-#'         removed from \code{x}, however, other value and variable label
-#'         attributes are preserved. For more details on labelled data,
-#'         see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}.
+#'   removed from \code{x}, however, other value and variable label
+#'   attributes are preserved. For more details on labelled data,
+#'   see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}.
 #'
 #' @details \code{set_na()} converts all values defined in \code{na} with
-#'            a related \code{NA} or tagged NA value (see \code{\link[haven]{tagged_na}}).
-#'            Tagged \code{NA}s work exactly like regular R missing values
-#'            except that they store one additional byte of information: a tag,
-#'            which is usually a letter ("a" to "z") or character number ("0" to "9").
-#'            \cr \cr
-#'            Furthermore, see also 'Details' in \code{\link{get_na}}.
+#'   a related \code{NA} or tagged NA value (see \code{\link[haven]{tagged_na}}).
+#'   Tagged \code{NA}s work exactly like regular R missing values
+#'   except that they store one additional byte of information: a tag,
+#'   which is usually a letter ("a" to "z") or character number ("0" to "9").
+#'   \cr \cr
+#'   Furthermore, see also 'Details' in \code{\link{get_na}}.
 #'
 #' @examples
 #' # create random variable

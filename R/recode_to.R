@@ -1,10 +1,13 @@
 #' @title Recode variable categories into new values
 #' @name recode_to
 #'
-#' @description Recodes (or "renumbers") the categories of variables into new category values, beginning
-#'                with the lowest value specified by \code{lowest}. Useful if you want
-#'                to recode dummy variables with 1/2 coding to 0/1 coding, or recoding scales from
-#'                1-4 to 0-3 etc.
+#' @description Recodes (or "renumbers") the categories of variables into new
+#'   category values, beginning with the lowest value specified by \code{lowest}.
+#'   Useful when recoding dummy variables with 1/2 values to 0/1 values,  or
+#'   recoding scales from 1-4 to 0-3 etc.
+#'   \code{recode_to_if()} is a scoped variant of \code{recode_to()}, where
+#'   recoding will be applied only to those variable that match the
+#'   logical condition of \code{predicate}.
 #'
 #' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
 #'            for setting \code{\link{NA}} values.
@@ -18,8 +21,10 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return \code{x} with recoded category values, where \code{lowest} indicates the lowest
-#'           value;  If \code{x} is a data frame, only the recoded variables will be returned.
+#' @return \code{x} with recoded category values, where \code{lowest} indicates
+#'   the lowest value;  If \code{x} is a data frame, for \code{append = TRUE},
+#'   \code{x} including the recoded variables as new columns is returned; if
+#'   \code{append = FALSE}, only the recoded variables will be returned.
 #'
 #' @note Value and variable label attributes are preserved.
 #'
@@ -56,11 +61,55 @@
 #'   head()
 #'
 #'
+#' @importFrom dplyr quos bind_cols
 #' @export
 recode_to <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
+  rec_to_fun(
+    x = x,
+    .dat = .dat,
+    lowest = lowest,
+    highest = highest,
+    append = append,
+    suffix = suffix
+  )
+}
+
+
+#' @rdname recode_to
+#' @importFrom dplyr select_if
+#' @export
+recode_to_if <- function(x, predicate, lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
+
+  # select variables that match logical conditions
+  .dat <- dplyr::select_if(x, .predicate = predicate)
+
+  # if no variable matches the condition specified
+  # in predicate, return original data
+
+  if (sjmisc::is_empty(.dat)) {
+    if (append)
+      return(x)
+    else
+      return(.dat)
+  }
+
+  rec_to_fun(
+    x = x,
+    .dat = .dat,
+    lowest = lowest,
+    highest = highest,
+    append = append,
+    suffix = suffix
+  )
+}
+
+
+#' @importFrom dplyr bind_cols
+#' @importFrom tibble as_tibble
+rec_to_fun <- function(x, .dat, lowest, highest, append, suffix) {
   if (is.data.frame(x)) {
 
     # remember original data, if user wants to bind columns

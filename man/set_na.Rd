@@ -30,29 +30,29 @@ by \code{tagged_na}, else by usual \code{NA} values. Use a named
 vector to assign the value label to the tagged NA value (see 'Examples').}
 }
 \value{
-\code{x}, with all elements of \code{na} being replaced by \code{NA}.
-          If \code{x} is a data frame, the complete data frame \code{x} will
-          be returned, with NA's set for variables specified in \code{...};
-          if \code{...} is not specified, applies to all variables in the
-          data frame.
+\code{x}, with all values in \code{na} being replaced by \code{NA}.
+  If \code{x} is a data frame, the complete data frame \code{x} will
+  be returned, with NA's set for variables specified in \code{...};
+  if \code{...} is not specified, applies to all variables in the
+  data frame.
 }
 \description{
 This function replaces specific values of variables with \code{NA}.
 }
 \details{
 \code{set_na()} converts all values defined in \code{na} with
-           a related \code{NA} or tagged NA value (see \code{\link[haven]{tagged_na}}).
-           Tagged \code{NA}s work exactly like regular R missing values
-           except that they store one additional byte of information: a tag,
-           which is usually a letter ("a" to "z") or character number ("0" to "9").
-           \cr \cr
-           Furthermore, see also 'Details' in \code{\link{get_na}}.
+  a related \code{NA} or tagged NA value (see \code{\link[haven]{tagged_na}}).
+  Tagged \code{NA}s work exactly like regular R missing values
+  except that they store one additional byte of information: a tag,
+  which is usually a letter ("a" to "z") or character number ("0" to "9").
+  \cr \cr
+  Furthermore, see also 'Details' in \code{\link{get_na}}.
 }
 \note{
 Labels from values that are replaced with NA and no longer used will be
-        removed from \code{x}, however, other value and variable label
-        attributes are preserved. For more details on labelled data,
-        see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}.
+  removed from \code{x}, however, other value and variable label
+  attributes are preserved. For more details on labelled data,
+  see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}.
 }
 \examples{
 # create random variable
@@ -120,8 +120,8 @@ set_na(tmp, na = c("Refused", "No answer"))
 }
 \seealso{
 \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
-           values, \code{\link{rec}} for general recoding of variables and
-           \code{\link{recode_to}} for re-shifting value ranges. See
-           \code{\link{get_na}} to get values of missing values in
-           labelled vectors.
+  values, \code{\link{rec}} for general recoding of variables and
+  \code{\link{recode_to}} for re-shifting value ranges. See
+  \code{\link{get_na}} to get values of missing values in
+  labelled vectors.
 }

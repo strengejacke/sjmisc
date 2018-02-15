@@ -16,24 +16,40 @@
 #'   absolute deviation (MAD, \code{robust = "mad"}) or Gini's mean difference
 #'   (\code{robust = "gmd"}) might be more robust measures of dispersion. For
 #'   the latter option, \CRANpkg{sjstats} needs to be installed.
+#'   \code{robust = "2sd"} divides the centered variables by two standard
+#'   deviations, following a suggestion by \emph{Gelman (2008)}, so the
+#'   rescaled input is comparable to binary variables.
 #'
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return A vector with standardized or centered variables. If \code{x} is a
-#'   for \code{append = TRUE}, \code{x} including the transformed variables
-#'   as new columns is returned; if \code{append = FALSE}, only the transformed
-#'   variables will be returned.
+#' @return If \code{x} is a vector, returns a vector with standardized or
+#'   centered variables. If \code{x} is a data frame, for \code{append = TRUE},
+#'   \code{x} including the transformed variables as new columns is returned;
+#'   if \code{append = FALSE}, only the transformed variables will be returned.
 #'
 #' @note \code{std()} and \code{center()} only return a vector, if \code{x} is
-#'    a vector. If \code{x} is a data frame and only one variable is specified
-#'    in the \code{...}-ellipses argument, both functions do return a
-#'    data frame (see 'Examples').
+#'   a vector. If \code{x} is a data frame and only one variable is specified
+#'   in the \code{...}-ellipses argument, both functions do return a
+#'   data frame (see 'Examples').
 #'
 #' @details \code{std()} and \code{center()} also work on grouped data frames
-#'    (see \code{\link[dplyr]{group_by}}). In this case, standardization
-#'    or centering is applied to the subsets of variables in \code{x}.
-#'    See 'Examples'.
+#'   (see \code{\link[dplyr]{group_by}}). In this case, standardization
+#'   or centering is applied to the subsets of variables in \code{x}.
+#'   See 'Examples'.
+#'   \cr \cr
+#'   For more complicated models with many predictors, Gelman and Hill (2007)
+#'   suggest leaving binary inputs as is and only standardize continuous predictors
+#'   by dividing by two standard deviations. This ensures a rough comparability
+#'   in the coefficients.
+#'
+#' @references
+#'   Gelman A (2008) Scaling regression inputs by dividing by two
+#'   standard deviations. \emph{Statistics in Medicine 27: 2865–2873.}
+#'   \url{http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf}
+#'   \cr \cr
+#'   Gelman A, Hill J (2007) Data Analysis Using Regression and Multilevel/Hierarchical
+#'   Models. Cambdridge, Cambdrige University Press: 55-57
 #'
 #' @examples
 #' data(efc)
@@ -57,6 +73,7 @@
 #' # works also with grouped data frames
 #' mtcars %>% std(disp)
 #'
+#' # compare new column "disp_z" w/ output above
 #' mtcars %>%
 #'   group_by(cyl) %>%
 #'   std(disp)
@@ -73,7 +90,7 @@
 #'
 #' @importFrom dplyr quos
 #' @export
-std <- function(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
+std <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -87,7 +104,7 @@ std <- function(x, ..., robust = c("sd", "gmd", "mad"), include.fac = FALSE, app
 #' @importFrom dplyr select_if
 #' @rdname std
 #' @export
-std_if <- function(x, predicate, robust = c("sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
+std_if <- function(x, predicate, robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
 
   # select variables that match logical conditions
   .dat <- dplyr::select_if(x, .predicate = predicate)
@@ -186,6 +203,8 @@ std_helper <- function(x, include.fac, standardize, robust) {
       tmp <- tmp / stats::mad(tmp)
     else if (robust == "gmd" && requireNamespace("sjstats", quietly = TRUE))
       tmp <- tmp / sjstats::gmd(tmp)
+    else if (robust == "2sd")
+      tmp <- tmp / (2 * stats::sd(tmp))
     else
       tmp <- tmp / stats::sd(tmp)
   }

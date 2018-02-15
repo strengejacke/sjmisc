@@ -15,6 +15,7 @@
 #' all_na(x)
 #' all_na(y)
 #' all_na(data.frame(x, y))
+#' all_na(list(x, y))
 #'
 #'
 #' @importFrom tibble as_tibble
@@ -31,4 +32,9 @@ all_na.default <- function(x) {
 #' @export
 all_na.data.frame <- function(x) {
   tibble::as_tibble(lapply(x, function(v) sum(!is.na(v)) == 0))
+}
+
+#' @export
+all_na.list <- function(x) {
+  lapply(x, function(v) sum(!is.na(v)) == 0)
 }

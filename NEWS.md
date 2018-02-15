@@ -2,12 +2,20 @@
 
 ## New functions
 
-The recoding and transformation functions get scoped variants, allowing to select variables bases on logical conditions described in a function:
+The recoding and transformation functions get scoped variants, allowing to select variables based on logical conditions described in a function:
 
 * `rec_if()` as scoped variant of `rec()`.
 * `dicho_if()` as scoped variant of `dicho()`.
 * `center_if()` as scoped variant of `center()`.
 * `std_if()` as scoped variant of `std()`.
+* `split_var_if()` as scoped variant of `split_var()`.
+* `group_var_if()` and `group_label_if()` as scoped variant of `group_var()` and `group_label()`.
+* `recode_to_if()` as scoped variant of `recode_to()`.
+
+## Changes to functions
+
+* New function `remove_cols()` as alias for `remove_var()`.
+* `std()` gets a new robust-option, `robust = "2sd"`, which divides the centered variables by two standard deviations.
 
 ## Bug fixes
 
