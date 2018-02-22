@@ -256,12 +256,21 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   # save descriptive statistics
 
   xnum <- sjlabelled::as_numeric(x, keep.labels = FALSE)
+
   if (!is.null(weight.by)) {
-    mean.value <- stats::weighted.mean(stats::na.omit(xnum), w = weight.by)
+    # make sure, vector and weights have same length, so remove missing from weights
+
+    weight.by[is.na(xnum)] <- NA
+    xnum[is.na(weight.by)] <- NA
+    x[is.na(weight.by)] <- NA
+
+    mean.value <- stats::weighted.mean(stats::na.omit(xnum), w = stats::na.omit(weight.by))
+
     if (requireNamespace("sjstats", quietly = TRUE))
-      sd.value <- sjstats::wtd_sd(stats::na.omit(xnum), weights = weight.by)
+      sd.value <- sjstats::wtd_sd(stats::na.omit(xnum), weights = stats::na.omit(weight.by))
     else
       sd.value <- NA
+
   } else {
     mean.value <- mean(xnum, na.rm = TRUE)
     sd.value <- stats::sd(xnum, na.rm = TRUE)
@@ -285,7 +294,13 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
 
 
   # get value labels (if any)
-  labels <- sjlabelled::get_labels(x, attr.only = T, include.values = "n", include.non.labelled = T)
+  labels <-
+    sjlabelled::get_labels(
+      x,
+      attr.only = T,
+      include.values = "n",
+      include.non.labelled = T
+    )
 
 
   # if we don't have variable label, use column name
@@ -319,7 +334,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
       dat2 <- data.frame(round(
         stats::xtabs(
           weights ~ x,
-          data = data.frame(weights = weight.by, x = x),
+          data = data.frame(weights = stats::na.omit(weight.by), x = stats::na.omit(x)),
           na.action = stats::na.pass,
           exclude = NULL
         ),
@@ -329,6 +344,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
       # create frequency table
       dat2 <- data.frame(table(x, useNA = "always"))
     }
+
     colnames(dat2) <- c("val", "frq")
     dat2$val <- sjlabelled::as_numeric(dat2$val, keep.labels = F)
 
@@ -344,7 +360,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
       mydat <- data.frame(round(
         stats::xtabs(
           weights ~ x,
-          data = data.frame(weights = weight.by, x = x),
+          data = data.frame(weights = stats::na.omit(weight.by), x = stats::na.omit(x)),
           na.action = stats::na.pass,
           exclude = NULL
         ),
