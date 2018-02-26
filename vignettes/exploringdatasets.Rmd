@@ -67,7 +67,7 @@ flat_table(efc, e42dep, c161sex, margin = "col")
 
 ## Recoding variables
 
-Next, we need the negatice impact of care (*neg_c_7*) and want to create three groups: low, middle and high negative impact. We can easily recode and label vectors with `rec()`. This function does not only recode vectors, it also allows direct labelling of categories inside the recode-syntax (this is optional, you can also use the `val.labels`-argument). We now recode neg_c_7 into a new variable _burden_. The cut-points are a bit arbitrary, for the sake of demonstration.
+Next, we need the negatice impact of care (*neg_c_7*) and want to create three groups: low, middle and high negative impact. We can easily recode and label vectors with `rec()`. This function does not only recode vectors, it also allows direct labelling of categories inside the recode-syntax (this is optional, you can also use the `val.labels`-argument). We now recode *neg_c_7* into a new variable _burden_. The cut-points are a bit arbitrary, for the sake of demonstration.
 
 ```{r}
 efc$burden <- rec(
@@ -80,7 +80,7 @@ efc$burden <- rec(
 frq(efc$burden)
 ```
 
-You can see the variable _burden_ has a variable label ("Subjective burden"), which was set inside `rec()`, as well as three values with labels ("low", "moderate" and "high"). From the lowest value in `neg_c_7` to 9 were recoded into 1, values 10 to 12 into 2 and values 13 to the highest value in `neg_c_7` into 3. All remaining values are set to missing (`else=NA` – for details on the recode-syntax, see `?rec`).
+You can see the variable _burden_ has a variable label ("Subjective burden"), which was set inside `rec()`, as well as three values with labels ("low", "moderate" and "high"). From the lowest value in *neg_c_7* to 9 were recoded into 1, values 10 to 12 into 2 and values 13 to the highest value in *neg_c_7* into 3. All remaining values are set to missing (`else=NA` – for details on the recode-syntax, see `?rec`).
 
 ## Grouped data frames
 
@@ -97,7 +97,7 @@ efc %>%
 
 Let's investigate the association between quality of life and burden across the different dependency categories, by fitting linear models for each category of _e42dep_. We can do this using _nested data frames_. `nest()` from the **tidyr**-package can create subsets of a data frame, based on grouping criteria, and create a new _list-variable_, where each element itself is a data frame (so it’s nested, because we have data frames inside a data frame).
 
-In the following example, we group the data by _e42dep_, and "nest"" the groups. Now we get a data frame with two columns: First, the grouping variable (_e42dep_) and second, the datasets (subsets) for each country as data frame, stored in the list-variable _data_. The data frames in the subsets (in _data_) all contain the selected variables `burden`, `c161sex` and `quol_5` (quality of life).
+In the following example, we group the data by _e42dep_, and "nest" the groups. Now we get a data frame with two columns: First, the grouping variable (_e42dep_) and second, the datasets (subsets) for each country as data frame, stored in the list-variable _data_. The data frames in the subsets (in _data_) all contain the selected variables _burden_, _c161sex_ and *quol_5* (quality of life).
 
 ```{r}
 # convert variable to labelled factor, because we then 
