@@ -13,12 +13,7 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-Basically, this package covers two domains of functionality:
-
-  * Reading and writing data between R and other statistical software packages like _SPSS_, _SAS_ or _Stata_ and working with labelled data; this includes easy ways to get and set label attributes, to convert labelled vectors into factors (and vice versa), or to deal with multiple declared missing values etc.
-  * Data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
-
-This vignette focusses on the second bullet point and gives an overview of data wrangling functions in this package.
+Basically, this package complements the _dplyr_ package in that _sjmisc_ takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc. The data transformation functions also support labelled data.
 
 # The design of data transformation functions
 

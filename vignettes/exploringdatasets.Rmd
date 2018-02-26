@@ -97,7 +97,7 @@ efc %>%
 
 Let's investigate the association between quality of life and burden across the different dependency categories, by fitting linear models for each category of _e42dep_. We can do this using _nested data frames_. `nest()` from the **tidyr**-package can create subsets of a data frame, based on grouping criteria, and create a new _list-variable_, where each element itself is a data frame (so it’s nested, because we have data frames inside a data frame).
 
-In the following example, we group the data by _e42dep_, and "nest"" the groups. Now we get a data frame with two columns: First, the grouping variable (_e42dep_) and second, the datasets (subsets) for each country as data frame, stored in the list-variable _data_. The data frames in the subsets (in _data_) all contain the selected variables `burden`, `c161sex` and `quol_4` (quality of life).
+In the following example, we group the data by _e42dep_, and "nest"" the groups. Now we get a data frame with two columns: First, the grouping variable (_e42dep_) and second, the datasets (subsets) for each country as data frame, stored in the list-variable _data_. The data frames in the subsets (in _data_) all contain the selected variables `burden`, `c161sex` and `quol_5` (quality of life).
 
 ```{r}
 # convert variable to labelled factor, because we then 

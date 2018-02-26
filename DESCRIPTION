@@ -27,7 +27,7 @@ Imports:
     psych,
     purrr,
     rlang,
-    sjlabelled (>= 1.0.7),
+    sjlabelled (>= 1.0.8),
     stringdist (>= 0.9.4),
     stringr (>= 1.2.0),
     tibble (>= 1.4.1),

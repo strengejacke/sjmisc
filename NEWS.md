@@ -1,5 +1,9 @@
 # sjmisc 2.7.1
 
+## General
+
+* Fix typos and revise outdated paragraphs in vignettes.
+
 ## New functions
 
 The recoding and transformation functions get scoped variants, allowing to select variables based on logical conditions described in a function:
@@ -22,7 +26,6 @@ The recoding and transformation functions get scoped variants, allowing to selec
 * `frq()` now removes empty columns before computing frequencies, because applying `frq()` on empty vectors caused an error.
 * `empty_cols()` and `empty_rows()` (and hence, `remove_empty_cols()` and `remove_empty_rows()`) caused an error for data frames with only one column resp. row, or if `x` was a vector and no data frame.
 * `frq()` now removes missing values from input when weights are applied, to ensure that input and weights have same length.
-
 
 # sjmisc 2.7.0
 
