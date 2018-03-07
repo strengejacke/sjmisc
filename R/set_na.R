@@ -152,14 +152,9 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
   if (inherits(x, "Date")) as.tag <- F
 
   # get value labels
-  val.lab <-
-    sjlabelled::get_labels(
-      x,
-      attr.only = TRUE,
-      include.values = "n",
-      include.non.labelled = FALSE,
-      drop.na = TRUE
-    )
+  # get value labels
+  val.lab <- attr(x, "labels", exact = T)
+  val.lab <- val.lab[!haven::is_tagged_na(val.lab)]
 
   # if value is a character vector, user may have defined a value label.
   # find value of associated label then

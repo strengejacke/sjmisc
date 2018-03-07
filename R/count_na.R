@@ -41,8 +41,9 @@
 #' count_na(dat, x, y)
 #'
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr select filter
+#' @importFrom dplyr select filter quos
 #' @importFrom haven is_tagged_na na_tag
+#' @importFrom sjlabelled get_label
 #' @export
 count_na <- function(x, ...) {
   # evaluate arguments, generate data
@@ -83,6 +84,8 @@ count_na <- function(x, ...) {
 
 
 #' @importFrom sjlabelled get_na
+#' @importFrom haven is_tagged_na na_tag
+#' @importFrom dplyr select filter
 count_na_helper <- function(x, cn) {
   # check if x has any tagged NA values
   if (sum(haven::is_tagged_na(x)) < 1) {

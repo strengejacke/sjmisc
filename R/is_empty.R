@@ -110,7 +110,7 @@ is_empty <- function(x, first.only = TRUE) {
 #'
 #' @export
 empty_cols <- function(x) {
-  if (!is.matrix(x) || !is.data.frame(x) || ncol(x) < 2)
+  if ((!is.matrix(x) && !is.data.frame(x)) || ncol(x) < 2)
     vector("numeric")
   else
     which(colSums(is.na(x)) == nrow(x))
@@ -120,7 +120,7 @@ empty_cols <- function(x) {
 #' @rdname empty_cols
 #' @export
 empty_rows <- function(x) {
-  if (!is.matrix(x) || !is.data.frame(x) || nrow(x) < 2)
+  if ((!is.matrix(x) && !is.data.frame(x)) || nrow(x) < 2)
     vector("numeric")
   else
     which(rowSums(is.na(x)) == ncol(x))
