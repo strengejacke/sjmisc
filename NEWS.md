@@ -20,6 +20,7 @@ The recoding and transformation functions get scoped variants, allowing to selec
 
 * New function `remove_cols()` as alias for `remove_var()`.
 * `std()` gets a new robust-option, `robust = "2sd"`, which divides the centered variables by two standard deviations.
+* Slightly improve performance for `set_na()`.
 
 ## Bug fixes
 
