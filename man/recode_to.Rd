@@ -61,7 +61,7 @@ Recodes (or "renumbers") the categories of variables into new
   Useful when recoding dummy variables with 1/2 values to 0/1 values,  or
   recoding scales from 1-4 to 0-3 etc.
   \code{recode_to_if()} is a scoped variant of \code{recode_to()}, where
-  recoding will be applied only to those variable that match the
+  recoding will be applied only to those variables that match the
   logical condition of \code{predicate}.
 }
 \note{

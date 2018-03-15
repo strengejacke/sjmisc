@@ -4,7 +4,7 @@
 #' @description Dichotomizes variables into dummy variables (0/1). Dichotomization is
 #'    either done by median, mean or a specific value (see \code{dich.by}).
 #'    \code{dicho_if()} is a scoped variant of \code{dicho()}, where recoding
-#'    will be applied only to those variable that match the logical condition
+#'    will be applied only to those variables that match the logical condition
 #'    of \code{predicate}.
 #'
 #' @param dich.by Indicates the split criterion where a variable is dichotomized.

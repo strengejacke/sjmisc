@@ -70,7 +70,7 @@ variables for which \code{predicate} returns \code{TRUE} are selected.}
   selection is based on variable names or column position, or on
   select helpers (see documentation on \code{...}). \code{rec_if()} is a
   scoped variant of \code{rec()}, where recoding will be applied only
-  to those variable that match the logical condition of \code{predicate}.
+  to those variables that match the logical condition of \code{predicate}.
 }
 \details{
 The \code{rec} string has following syntax:

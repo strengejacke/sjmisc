@@ -75,7 +75,7 @@ Recode numeric variables into equal ranged, grouped factors,
   has the same value range. \code{group_labels()} creates the related value
   labels. \code{group_var_if()} and \code{group_labels_if()} are scoped
   variants of \code{group_var()} and \code{group_labels()}, where grouping
-  will be applied only to those variable that match the logical condition
+  will be applied only to those variables that match the logical condition
   of \code{predicate}.
 }
 \details{

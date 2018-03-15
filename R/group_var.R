@@ -6,7 +6,7 @@
 #'   has the same value range. \code{group_labels()} creates the related value
 #'   labels. \code{group_var_if()} and \code{group_labels_if()} are scoped
 #'   variants of \code{group_var()} and \code{group_labels()}, where grouping
-#'   will be applied only to those variable that match the logical condition
+#'   will be applied only to those variables that match the logical condition
 #'   of \code{predicate}.
 #'
 #' @seealso \code{\link{split_var}} to split variables into equal sized groups,

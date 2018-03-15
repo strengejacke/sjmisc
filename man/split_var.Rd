@@ -72,7 +72,7 @@ A grouped variable with equal sized groups. If \code{x} is a data frame,
 Recode numeric variables into equal sized groups, i.e. a
   variable is cut into a smaller number of groups at specific cut points.
   \code{split_var_if()} is a scoped variant of \code{split_var()}, where
-  transformation will be applied only to those variable that match the
+  transformation will be applied only to those variables that match the
   logical condition of \code{predicate}.
 }
 \details{

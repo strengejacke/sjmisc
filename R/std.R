@@ -4,7 +4,7 @@
 #' @description \code{std()} computes a z-transformation (standardized and centered)
 #'   on the input. \code{center()} centers the input. \code{std_if()} and
 #'   \code{center_if()} are scoped variants of \code{std()} and \code{center()},
-#'   where transformation will be applied only to those variable that match the
+#'   where transformation will be applied only to those variables that match the
 #'   logical condition of \code{predicate}.
 #'
 #' @param include.fac Logical, if \code{TRUE}, factors will be converted to numeric

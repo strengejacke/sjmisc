@@ -5,7 +5,7 @@
 #'   selection is based on variable names or column position, or on
 #'   select helpers (see documentation on \code{...}). \code{rec_if()} is a
 #'   scoped variant of \code{rec()}, where recoding will be applied only
-#'   to those variable that match the logical condition of \code{predicate}.
+#'   to those variables that match the logical condition of \code{predicate}.
 #'
 #' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
 #'            to replace \code{NA}'s with specific value, \code{\link{recode_to}}

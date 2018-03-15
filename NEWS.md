@@ -15,6 +15,7 @@ The recoding and transformation functions get scoped variants, allowing to selec
 * `split_var_if()` as scoped variant of `split_var()`.
 * `group_var_if()` and `group_label_if()` as scoped variant of `group_var()` and `group_label()`.
 * `recode_to_if()` as scoped variant of `recode_to()`.
+* `set_na_if()` as scoped variant of `set_na()`.
 
 ## Changes to functions
 

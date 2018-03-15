@@ -2,9 +2,12 @@
 % Please edit documentation in R/set_na.R
 \name{set_na}
 \alias{set_na}
+\alias{set_na_if}
 \title{Replace specific values in vector with NA}
 \usage{
 set_na(x, ..., na, drop.levels = TRUE, as.tag = FALSE)
+
+set_na_if(x, predicate, na, drop.levels = TRUE, as.tag = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -28,6 +31,9 @@ been replaced with \code{NA} are dropped. See 'Examples'.}
 \item{as.tag}{Logical, if \code{TRUE}, values in \code{x} will be replaced
 by \code{tagged_na}, else by usual \code{NA} values. Use a named
 vector to assign the value label to the tagged NA value (see 'Examples').}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
 \code{x}, with all values in \code{na} being replaced by \code{NA}.
@@ -38,6 +44,9 @@ vector to assign the value label to the tagged NA value (see 'Examples').}
 }
 \description{
 This function replaces specific values of variables with \code{NA}.
+   \code{set_na_if()} is a scoped variant of \code{set_na()}, where values
+   will be replaced only with NA's for those variables that match the logical
+   condition of \code{predicate}.
 }
 \details{
 \code{set_na()} converts all values defined in \code{na} with

@@ -2,6 +2,9 @@
 #' @name set_na
 #'
 #' @description This function replaces specific values of variables with \code{NA}.
+#'    \code{set_na_if()} is a scoped variant of \code{set_na()}, where values
+#'    will be replaced only with NA's for those variables that match the logical
+#'    condition of \code{predicate}.
 #'
 #' @seealso \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific
 #'   values, \code{\link{rec}} for general recoding of variables and
@@ -21,6 +24,7 @@
 #'   vector to assign the value label to the tagged NA value (see 'Examples').
 #'
 #' @inheritParams to_factor
+#' @inheritParams rec
 #'
 #' @return \code{x}, with all values in \code{na} being replaced by \code{NA}.
 #'   If \code{x} is a data frame, the complete data frame \code{x} will
@@ -135,6 +139,52 @@ set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE) {
 
   x
 }
+
+
+#' @importFrom dplyr select_if
+#' @rdname set_na
+#' @export
+set_na_if <- function(x, predicate, na, drop.levels = TRUE, as.tag = FALSE) {
+
+  # select variables that match logical conditions
+  .dat <- dplyr::select_if(x, .predicate = predicate)
+
+
+  # if no variable matches the condition specified
+  # in predicate, return original data
+
+  if (sjmisc::is_empty(.dat)) {
+    if (append)
+      return(x)
+    else
+      return(.dat)
+  }
+
+
+  if (is.data.frame(x)) {
+    # iterate variables of data frame
+    for (i in colnames(.dat)) {
+      x[[i]] <- set_na_helper(
+        x = .dat[[i]],
+        value = na,
+        drop.levels = drop.levels,
+        as.tag = as.tag
+      )
+    }
+    # coerce to tibble
+    x <- tibble::as_tibble(x)
+  } else {
+    x <- set_na_helper(
+      x = .dat,
+      value = na,
+      drop.levels = drop.levels,
+      as.tag = as.tag
+    )
+  }
+
+  x
+}
+
 
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag
