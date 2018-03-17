@@ -118,8 +118,10 @@ x2 <- set_labels(x2, labels = c("Refused" = 6, "No answer" = 7))
 
 tmp <- data.frame(x1, x2)
 get_labels(tmp)
+table(tmp, useNA = "always")
+
 get_labels(set_na(tmp, na = "No answer"))
-get_labels(set_na(tmp, na = c("Refused", "No answer")))
+table(set_na(tmp, na = "No answer"), useNA = "always")
 
 # show values
 tmp

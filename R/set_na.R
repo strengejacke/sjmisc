@@ -100,8 +100,10 @@
 #'
 #' tmp <- data.frame(x1, x2)
 #' get_labels(tmp)
+#' table(tmp, useNA = "always")
+#'
 #' get_labels(set_na(tmp, na = "No answer"))
-#' get_labels(set_na(tmp, na = c("Refused", "No answer")))
+#' table(set_na(tmp, na = "No answer"), useNA = "always")
 #'
 #' # show values
 #' tmp
@@ -209,7 +211,7 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
   # find value of associated label then
   if (is.character(value)) {
     # get value labels that match the values which should be set to NA
-    val.match <- val.lab[val.lab %in% value]
+    val.match <- val.lab[names(val.lab) %in% value]
     # now get values for this vector
     if (!sjmisc::is_empty(val.match) && !sjmisc::is_empty(names(val.match))) {
       # should be numeric, else we might have a factor
