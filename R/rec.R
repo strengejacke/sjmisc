@@ -169,7 +169,7 @@
 #' )
 #'
 #' # recode only variables that have a value range from 1-4
-#' p <- function(x) min(x, na.rm = T) > 0 && max(x, na.rm = T) < 5
+#' p <- function(x) min(x, na.rm = TRUE) > 0 && max(x, na.rm = TRUE) < 5
 #' rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
 #'
 #'
