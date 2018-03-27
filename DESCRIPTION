@@ -18,7 +18,6 @@ Depends:
     utils
 Imports:
     broom (>= 0.4.2),
-    cli,
     crayon,
     dplyr (>= 0.7.1),
     haven (>= 1.0.0),

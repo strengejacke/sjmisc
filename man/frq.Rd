@@ -59,6 +59,13 @@ This function returns a frequency table of labelled vectors, as data frame.
 \code{x} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
       with up to two grouping variables. Frequency tables are created for each
       subgroup then.
+      \cr \cr
+      The \code{print()}-method adds a table header with information on the
+      variable label, variable type, total and valid N, and mean and
+      standard deviations. Mean and SD are \emph{always} printed, even for
+      categorical vriables (factors) or character vectors. In this case,
+      values are coerced into numeric vector to calculate the summary
+      statistics.
 }
 \examples{
 library(haven)

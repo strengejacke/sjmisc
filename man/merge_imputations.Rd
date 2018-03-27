@@ -64,21 +64,20 @@ This method merges multiple imputations of variables into a single
          those values that have been imputed the most times.
          \cr \cr
          \code{imp} must be a \code{mids}-object, which is returned by the
-         \code{mice}-function of the \pkg{mice}-package. \code{merge_imputations} than
-         creates a data frame for each imputed variable, by combining all
+         \code{mice()}-function of the \pkg{mice}-package. \code{merge_imputations()}
+         than creates a data frame for each imputed variable, by combining all
          imputations (as returned by the \code{\link[mice]{complete}}-function)
          of each variable, and computing the row means of this data frame.
          The mean value is then rounded for integer values (and not for numerical
          values with fractional part), which corresponds to the most frequent
-         imputed value for a missing value. The original variable with missings
-         is then copied and missing values are replaced by the most frequent imputed
-         value.
+         imputed value (mode) for a missing value. Missings in the original variable
+         are replaced by the most frequent imputed value.
 }
 \note{
 Typically, further analyses are conducted on pooled results of multiple
       imputed data sets (see \code{\link[mice]{pool}}), however, sometimes
-      (in social sciences) it is also feasible to compute the mean of multiple
-      imputed variables (see \cite{Burns et al. 2011}).
+      (in social sciences) it is also feasible to compute the mean or mode
+      of multiple imputed variables (see \cite{Burns et al. 2011}).
 }
 \examples{
 library(mice)

@@ -1,6 +1,5 @@
 #' @importFrom purrr walk
 #' @importFrom crayon blue cyan italic
-#' @importFrom cli cat_line
 #' @importFrom dplyr select n_distinct
 #' @importFrom rlang .data
 #' @export
@@ -13,23 +12,23 @@ print.sjmisc_frq <- function(x, ...) {
 
     # print title for grouping
     if (!is.null(grp))
-      cli::cat_line(crayon::cyan(crayon::italic(sprintf("Grouped by:\n%s\n", grp))))
+      cat(crayon::cyan(crayon::italic(sprintf("Grouped by:\n%s\n", grp))), "\n")
 
     # get variable label
     lab <- attr(dat, "label", exact = T)
     vt <- attr(dat, "vartype", exact = T)
 
     # print label
-    if (!is.null(lab)) cli::cat_line(crayon::blue(sprintf("# %s <%s>", lab, vt)))
+    if (!is.null(lab)) cat(crayon::blue(sprintf("# %s <%s>", lab, vt)), "\n")
 
     # add Total N
-    cli::cat_line(crayon::blue(sprintf(
+    cat(crayon::blue(sprintf(
       "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n",
       sum(dat$frq, na.rm = TRUE),
       sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE),
       attr(dat, "mean", exact = T),
       attr(dat, "sd", exact = T)
-    )))
+    )), "\n")
 
     # don't print labels, if all are "none"
     if (dplyr::n_distinct(dat$label) == 1 && unique(dat$label) == "<none>")
@@ -44,11 +43,10 @@ print.sjmisc_frq <- function(x, ...) {
 
 
 #' @importFrom crayon blue
-#' @importFrom cli cat_line
 #' @export
 print.sjmisc_descr <- function(x, ...) {
   cat("\n")
-  cli::cat_line(crayon::blue("## Basic descriptive statistics\n"))
+  cat(crayon::blue("## Basic descriptive statistics\n\n"))
   print_descr_helper(x, ...)
 }
 
@@ -66,17 +64,16 @@ print_descr_helper <- function(x, ...) {
 }
 
 #' @importFrom crayon blue cyan italic
-#' @importFrom cli cat_line
 #' @export
 print.sjmisc_grpdescr <- function(x, ...) {
   cat("\n")
-  cli::cat_line(crayon::blue("## Basic descriptive statistics"))
+  cat(crayon::blue("## Basic descriptive statistics"), "\n")
 
   purrr::walk(x, function(.x) {
     # print title for grouping
-    cli::cat_line(crayon::cyan(crayon::italic(
+    cat(crayon::cyan(crayon::italic(
       sprintf("\nGrouped by:\n%s", attr(.x, "group", exact = TRUE))
-    )))
+    )), "\n")
 
     print_descr_helper(.x, ...)
   })
