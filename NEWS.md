@@ -1,3 +1,9 @@
+# sjmisc 2.7.2
+
+## New functions
+
+* `round_num()` to round only numeric values in a data frame.
+
 # sjmisc 2.7.1
 
 ## General
