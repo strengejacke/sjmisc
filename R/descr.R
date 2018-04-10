@@ -108,11 +108,11 @@ descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")
 }
 
 
-#' @importFrom tibble add_column as_tibble rownames_to_column
-#' @importFrom psych describe
-#' @importFrom dplyr select mutate
+#' @importFrom psych skew kurtosi
+#' @importFrom dplyr select_if mutate group_by summarise_all funs
+#' @importFrom tidyr gather
 #' @importFrom sjlabelled get_label
-#' @importFrom purrr map_dbl
+#' @importFrom stats var na.omit
 descr_helper <- function(dd, max.length) {
 
   # check if we have a single vector, because purrr would return
@@ -127,25 +127,42 @@ descr_helper <- function(dd, max.length) {
   var.name <- colnames(dd)
   if (is.null(var.name)) var.name <- NA
 
+  type <- var_type(dd)
+  labels <- unname(sjlabelled::get_label(dd, def.value = var.name))
+
+  dd <- to_value(dd, keep.labels = FALSE)
+
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
-  x <- dd %>%
-    psych::describe(fast = FALSE) %>%
-    tibble::as_tibble() %>%
-    tibble::rownames_to_column(var = "variable") %>%
-    dplyr::select(-.data$vars, -.data$mad) %>%
-    dplyr::mutate(
-      label = unname(sjlabelled::get_label(dd, def.value = var.name)),
-      NA.prc = purrr::map_dbl(dd, ~ 100 * sum(is.na(.x)) / length(.x))
-    ) %>%
-    var_rename(median = "md")
+  x <- suppressWarnings(
+    dd %>%
+      dplyr::select_if(is.numeric) %>%
+      tidyr::gather(key = "var", value = "val") %>%
+      dplyr::group_by(.data$var) %>%
+      dplyr::summarise_all(
+        dplyr::funs(
+          n = length(na.omit(.data$val)),
+          NA.prc = 100 * sum(is.na(.data$val)) / length(.data$val),
+          mean = mean(.data$val, na.rm = TRUE),
+          sd = sd(.data$val, na.rm = TRUE),
+          se = sqrt(stats::var(.data$val, na.rm = TRUE) / length(stats::na.omit(.data$val))),
+          md = median(.data$val, na.rm = TRUE),
+          trimmed = mean(.data$val, na.rm = TRUE, trim = .1),
+          min = min(.data$val, na.rm = TRUE),
+          max = max(.data$val, na.rm = TRUE),
+          range = diff(range(.data$val, na.rm = TRUE)),
+          skew = psych::skew(.data$val),
+          kurtosis = psych::kurtosi(.data$val)
+        )) %>%
+      dplyr::mutate(
+        type = type,
+        label = labels
+      )
+  )
 
   # check if labels should be truncated
   x$label <- shorten_string(x$label, max.length)
 
   # sort columns a bit
-  x <- x[, c(1, 13, 2, 14, 3, 4, 12, 5, 6, 7, 8, 9, 10, 11)]
-
-  # add type-column
-  tibble::add_column(x, type = var_type(dd), .after = 1)
+  x[, c(1, 14, 15, 2:13)]
 }

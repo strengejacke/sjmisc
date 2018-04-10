@@ -7,6 +7,7 @@
 ## General
 
 * Improved performance for `merge_df()`. Furthermore, `add_rows()` was added as alias for `merge_df()`.
+* Improved performance for `descr()`.
 
 ## Bug fixes
 
