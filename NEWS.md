@@ -8,6 +8,9 @@
 
 * Improved performance for `merge_df()`. Furthermore, `add_rows()` was added as alias for `merge_df()`.
 
+## Bug fixes
+
+* `descr()` does not work with character vectors, so these are being removed now.
 
 # sjmisc 2.7.1
 

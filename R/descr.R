@@ -114,26 +114,29 @@ descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")
 #' @importFrom sjlabelled get_label
 #' @importFrom purrr map_dbl
 descr_helper <- function(dd, max.length) {
-  # get default variable name
-  var.name <- colnames(dd)
-  if (is.null(var.name)) var.name <- NA
 
   # check if we have a single vector, because purrr would return
   # a result for each *value*, instead one result for the complete vector
   if (!is.data.frame(dd))
-    dv <- as.data.frame(dd)
-  else
-    dv <- dd
+    dd <- as.data.frame(dd)
 
+  ff <- function(x) is.numeric(x) | is.factor(x)
+  dd <- dplyr::select_if(dd, ff)
+
+  # get default variable name
+  var.name <- colnames(dd)
+  if (is.null(var.name)) var.name <- NA
 
   # call psych::describe and convert to tibble, remove some unnecessary
   # columns and and a variable label column
-  x <- tibble::as_tibble(psych::describe(dd, fast = FALSE)) %>%
+  x <- dd %>%
+    psych::describe(fast = FALSE) %>%
+    tibble::as_tibble() %>%
     tibble::rownames_to_column(var = "variable") %>%
     dplyr::select(-.data$vars, -.data$mad) %>%
     dplyr::mutate(
       label = unname(sjlabelled::get_label(dd, def.value = var.name)),
-      NA.prc = purrr::map_dbl(dv, ~ 100 * sum(is.na(.x)) / length(.x))
+      NA.prc = purrr::map_dbl(dd, ~ 100 * sum(is.na(.x)) / length(.x))
     ) %>%
     var_rename(median = "md")
 
@@ -144,5 +147,5 @@ descr_helper <- function(dd, max.length) {
   x <- x[, c(1, 13, 2, 14, 3, 4, 12, 5, 6, 7, 8, 9, 10, 11)]
 
   # add type-column
-  tibble::add_column(x, type = var_type(dv), .after = 1)
+  tibble::add_column(x, type = var_type(dd), .after = 1)
 }
