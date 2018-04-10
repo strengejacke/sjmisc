@@ -4,6 +4,11 @@
 
 * `round_num()` to round only numeric values in a data frame.
 
+## General
+
+* Improved performance for `merge_df()`. Furthermore, `add_rows()` was added as alias for `merge_df()`.
+
+
 # sjmisc 2.7.1
 
 ## General
