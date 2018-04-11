@@ -53,8 +53,8 @@ add_rows <- function(..., id = NULL) {
     purrr::flatten_chr()
 
   if (!is.null(id) && id %in% cnames) {
-    warning("Value of `id` already exists as column name. ID column was not created.", call. = F)
-    id <- NULL
+    id <- make.unique(c(cnames, id))[length(cnames) + 1]
+    warning(sprintf("Value of `id` already exists as column name. ID column was renamed to `%s`.", id), call. = F)
   }
 
   # bind all data frames

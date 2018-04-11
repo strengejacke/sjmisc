@@ -7,6 +7,7 @@
 ## General
 
 * Improved performance for `merge_df()`. Furthermore, `add_rows()` was added as alias for `merge_df()`.
+* `merge_df()` resp. `add_rows()` now create a unique `id`-name instead of dropping the ID-variable, in case `id` has the same name of any existing variables in the provides data frames.
 * Improved performance for `descr()`.
 
 ## Bug fixes
