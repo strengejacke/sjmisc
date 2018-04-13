@@ -48,10 +48,16 @@
 #' col_count(dat, count = NA, append = FALSE)
 #' col_count(dat, c1:c3, count = 2, append = TRUE)
 #'
+#' @export
+row_count <- function(x, ..., count, var = "rowcount", append = TRUE) {
+  UseMethod("row_count")
+}
+
+
 #' @importFrom dplyr quos bind_cols
 #' @importFrom tibble as_tibble
 #' @export
-row_count <- function(x, ..., count, var = "rowcount", append = TRUE) {
+row_count.default <- function(x, ..., count, var = "rowcount", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -60,14 +66,7 @@ row_count <- function(x, ..., count, var = "rowcount", append = TRUE) {
   orix <- tibble::as_tibble(x)
 
   if (is.data.frame(x)) {
-    if (is.na(count))
-      rc <- apply(.dat, 1, function(x) sum(is.na(x), na.rm = TRUE))
-    else if (is.infinite(count))
-      rc <- apply(.dat, 1, function(x) sum(is.infinite(x), na.rm = TRUE))
-    else if (is.null(count))
-      rc <- apply(.dat, 1, function(x) sum(is.null(x), na.rm = TRUE))
-    else
-      rc <- apply(.dat, 1, function(x) sum(x == count, na.rm = TRUE))
+    rc <- row.count(.dat, count)
   } else {
     stop("`x` must be a data frame.", call. = F)
   }
@@ -79,6 +78,27 @@ row_count <- function(x, ..., count, var = "rowcount", append = TRUE) {
 
   # combine data
   if (append) rc <- dplyr::bind_cols(orix, rc)
+
+  rc
+}
+
+
+#' @export
+row_count.mids <- function(x, ..., count, var = "rowcount", append = TRUE) {
+  rfun <- row.count
+  row_mids(x = x, ..., var = var, append = append, rfun = rfun, count = count)
+}
+
+
+row.count <- function(.dat, count) {
+  if (is.na(count))
+    rc <- apply(.dat, 1, function(x) sum(is.na(x), na.rm = TRUE))
+  else if (is.infinite(count))
+    rc <- apply(.dat, 1, function(x) sum(is.infinite(x), na.rm = TRUE))
+  else if (is.null(count))
+    rc <- apply(.dat, 1, function(x) sum(is.null(x), na.rm = TRUE))
+  else
+    rc <- apply(.dat, 1, function(x) sum(x == count, na.rm = TRUE))
 
   rc
 }

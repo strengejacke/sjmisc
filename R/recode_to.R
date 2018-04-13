@@ -61,9 +61,15 @@
 #'   head()
 #'
 #'
-#' @importFrom dplyr quos bind_cols
 #' @export
 recode_to <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
+  UseMethod("recode_to")
+}
+
+
+#' @importFrom dplyr quos
+#' @export
+recode_to.default <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -75,6 +81,37 @@ recode_to <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = 
     append = append,
     suffix = suffix
   )
+}
+
+
+#' @importFrom dplyr bind_cols select quos
+#' @importFrom purrr map
+#' @export
+recode_to.mids <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
+  vars <- dplyr::quos(...)
+  ndf <- prepare_mids_recode(x)
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  ndf$data <- purrr::map(
+    ndf$data,
+    function(.x) {
+      dat <- dplyr::select(.x, !!! vars)
+      dplyr::bind_cols(
+        .x,
+        rec_to_fun(
+          x = dat,
+          .dat = dat,
+          lowest = lowest,
+          highest = highest,
+          append = FALSE,
+          suffix = suffix
+        ))
+    }
+  )
+
+  final_mids_recode(ndf)
 }
 
 

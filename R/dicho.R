@@ -88,10 +88,16 @@
 #' p <- function(x) dplyr::n_distinct(x) > 10
 #' dicho_if(efc, predicate = p, append = FALSE)
 #'
+#' @export
+dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
+  UseMethod("dicho")
+}
+
+
 #' @importFrom dplyr group_vars
 #' @importFrom tidyr unnest
 #' @export
-dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
+dicho.default <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
 
   # check for correct dichotome types
   if (!is.numeric(dich.by) && !dich.by %in% c("median", "mean", "md", "m")) {
@@ -112,6 +118,40 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
     var.label = var.label,
     val.labels = val.labels
   )
+}
+
+
+#' @importFrom dplyr bind_cols select quos
+#' @importFrom purrr map
+#' @export
+dicho.mids <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
+  vars <- dplyr::quos(...)
+  ndf <- prepare_mids_recode(x)
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  ndf$data <- purrr::map(
+    ndf$data,
+    function(.x) {
+      dat <- dplyr::select(.x, !!! vars)
+      dplyr::bind_cols(
+        .x,
+        recode_fun(
+          x = dat,
+          .dat = dat,
+          fun = get("dicho_helper", asNamespace("sjmisc")),
+          suffix = suffix,
+          append = FALSE,
+          dich.by = dich.by,
+          as.num = as.num,
+          var.label = var.label,
+          val.labels = val.labels
+        ))
+    }
+  )
+
+  final_mids_recode(ndf)
 }
 
 
@@ -257,5 +297,4 @@ recode_fun <- function(x, .dat, fun, suffix, append, ...) {
   }
 
   x
-
 }

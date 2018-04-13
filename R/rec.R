@@ -175,6 +175,13 @@
 #'
 #' @export
 rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
+  UseMethod("rec")
+}
+
+
+#' @importFrom dplyr quos
+#' @export
+rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
@@ -189,6 +196,39 @@ rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
     append = append,
     suffix = suffix
   )
+}
+
+
+#' @importFrom dplyr bind_cols select quos
+#' @importFrom purrr map
+#' @export
+rec.mids <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
+  vars <- dplyr::quos(...)
+  ndf <- prepare_mids_recode(x)
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  ndf$data <- purrr::map(
+    ndf$data,
+    function(.x) {
+      dat <- dplyr::select(.x, !!! vars)
+      dplyr::bind_cols(
+        .x,
+        rec_core_fun(
+          x = dat,
+          .dat = dat,
+          rec = rec,
+          as.num = as.num,
+          var.label = var.label,
+          val.labels = val.labels,
+          append = FALSE,
+          suffix = suffix
+        ))
+    }
+  )
+
+  final_mids_recode(ndf)
 }
 
 

@@ -93,7 +93,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
   # check classes
   if (!inherits(imp, "mids"))
-    stop("`imp` must be a `mids`-object, as returned by the `mice`-function.", call. = F)
+    stop("`imp` must be a `mids`-object, as returned by the `mice()`-function.", call. = F)
 
   if (!is.data.frame(dat))
     stop("`dat` must be data frame.", call. = F)

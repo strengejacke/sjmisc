@@ -100,11 +100,58 @@
 #' str(mydat$score)
 #' get_label(mydat$speed)
 #'
-#' @importFrom tidyr gather_
-#' @importFrom dplyr bind_cols
-#' @importFrom purrr map
 #' @export
 to_long <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) {
+  UseMethod("to_long")
+}
+
+
+#' @export
+to_long.default <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) {
+  to_long_helper(
+    data = data,
+    keys = keys,
+    values = values,
+    ...,
+    labels = labels,
+    recode.key = recode.key
+  )
+}
+
+
+#' @export
+to_long.mids <- function(data, keys, values, ..., labels = NULL, recode.key = FALSE) {
+  ndf <- prepare_mids_recode(data)
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  ndf$data <- purrr::map(
+    ndf$data,
+    function(.x) {
+      dat <- to_long_helper(
+        data = .x,
+        keys = keys,
+        values = values,
+        ...,
+        labels = labels,
+        recode.key = recode.key
+      )
+
+      dat$.id <- 1:nrow(dat)
+      dat
+    }
+  )
+
+  final_mids_recode(ndf)
+}
+
+
+#' @importFrom tidyr gather
+#' @importFrom dplyr bind_cols
+#' @importFrom purrr map
+#' @importFrom sjlabelled as_numeric set_label
+to_long_helper <- function(data, keys, values, ..., labels, recode.key) {
   # get variable names for gather columns
   data_cols <- list(...)
 

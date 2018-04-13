@@ -59,12 +59,18 @@
 #'   select(c82cop1:c90cop9) %>%
 #'   row_sums()
 #'
-#' @importFrom tibble as_tibble
 #' @export
 row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
+  UseMethod("row_sums")
+}
+
+
+#' @importFrom dplyr quos bind_cols
+#' @importFrom tibble as_tibble
+#' @export
+row_sums.default <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
-
 
   # remember original data, if user wants to bind columns
   orix <- tibble::as_tibble(x)
@@ -87,9 +93,24 @@ row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
 }
 
 
+#' @export
+row_sums.mids <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
+  rfun <- rowSums
+  row_mids(x = x, ..., var = var, append = append, rfun = rfun)
+}
+
+
 #' @rdname row_sums
 #' @export
 row_means <- function(x, ..., n, var = "rowmeans", append = TRUE) {
+  UseMethod("row_means")
+}
+
+
+#' @importFrom dplyr quos bind_cols
+#' @importFrom tibble as_tibble
+#' @export
+row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -127,4 +148,75 @@ row_means <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   if (append) rm <- dplyr::bind_cols(orix, rm)
 
   rm
+}
+
+
+#' @export
+row_means.mids <- function(x, ..., na.rm = TRUE, var = "rowmeans", append = TRUE) {
+  rfun <- rowMeans
+  row_mids(x = x, ..., var = var, append = append, rfun = rfun)
+}
+
+
+#' @importFrom dplyr quos group_by select
+#' @importFrom tidyr nest unnest
+#' @importFrom purrr map
+row_mids <- function(x, ..., var, append, rfun, count = NULL) {
+  # check if suggested package is available
+  if (!requireNamespace("mice", quietly = TRUE))
+    stop("Package `mice` needed for this function to work. Please install it.", call. = FALSE)
+
+  # check classes
+  if (!inherits(x, "mids"))
+    stop("`x` must be a `mids`-object, as returned by the `mice()`-function.", call. = F)
+
+
+  # quote dots and convert mids into long-data.frame
+
+  vars <- dplyr::quos(...)
+  long <- mice::complete(x, action = "long", include = TRUE)
+
+
+  # group by imputation, so we can easily iterate each imputed dataset
+
+  ndf <- long %>%
+    dplyr::group_by(.data$.imp) %>%
+    tidyr::nest()
+
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  if (is.null(count)) {
+    ndf$data <- purrr::map(ndf$data, ~ mutate(
+      .x,
+      rowsums = .x %>%
+        dplyr::select(!!! vars) %>%
+        rfun()
+    ))
+  } else {
+    ndf$data <- purrr::map(ndf$data, ~ mutate(
+      .x,
+      rowsums = .x %>%
+        dplyr::select(!!! vars) %>%
+        rfun(count = count)
+    ))
+  }
+
+
+  # rename new variable
+
+  ndf$data <- purrr::map(ndf$data, function(.x) {
+    colnames(.x)[ncol(.x)] <- var
+    .x
+  })
+
+
+  # return mids-object. need to use "as.data.frame()",
+  # because "as.mids()" can't cope with tibbles
+
+  ndf %>%
+    tidyr::unnest() %>%
+    as.data.frame() %>%
+    mice::as.mids()
 }

@@ -10,6 +10,11 @@
 * `merge_df()` resp. `add_rows()` now create a unique `id`-name instead of dropping the ID-variable, in case `id` has the same name of any existing variables in the provides data frames.
 * Improved performance for `descr()`.
 
+## Support for `mids`-objects (package _mice_)
+
+Following functions now also work on `mids`-objects, as returned by the `mice()`-function:
+* `row_count()`, `row_sums()`, `row_means()`, `rec()`, `dicho()`, `center()`, `std()`, `recode_to()` and `to_long()`.
+
 ## Bug fixes
 
 * `descr()` does not work with character vectors, so these are being removed now.

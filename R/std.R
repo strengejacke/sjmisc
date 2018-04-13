@@ -88,9 +88,15 @@
 #' p <- function(x) dplyr::n_distinct(x) > 10
 #' std_if(efc, predicate = p, append = FALSE)
 #'
-#' @importFrom dplyr quos
 #' @export
 std <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
+  UseMethod("std")
+}
+
+
+#' @importFrom dplyr quos
+#' @export
+std.default <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -98,6 +104,39 @@ std <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FAL
   robust <- match.arg(robust)
 
   std_and_center(x, .dat, include.fac, append, standardize = TRUE, robust = robust, suffix)
+}
+
+
+#' @importFrom dplyr bind_cols select quos
+#' @importFrom purrr map
+#' @export
+std.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
+  vars <- dplyr::quos(...)
+  ndf <- prepare_mids_recode(x)
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  ndf$data <- purrr::map(
+    ndf$data,
+    function(.x) {
+      dat <- dplyr::select(.x, !!! vars)
+      dplyr::bind_cols(
+        .x,
+        std_and_center(
+          x = dat,
+          .dat = dat,
+          include.fac = include.fac,
+          append = FALSE,
+          standardize = TRUE,
+          robust = robust,
+          suffix, suffix
+        )
+      )
+    }
+  )
+
+  final_mids_recode(ndf)
 }
 
 
@@ -129,10 +168,50 @@ std_if <- function(x, predicate, robust = c("sd", "2sd", "gmd", "mad"), include.
 #' @rdname std
 #' @export
 center <- function(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c") {
+  UseMethod("center")
+}
+
+
+#' @importFrom dplyr quos
+#' @export
+center.default <- function(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c") {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
   std_and_center(x, .dat, include.fac, append, standardize = FALSE, robust = NULL, suffix)
+}
+
+
+#' @importFrom dplyr bind_cols select quos
+#' @importFrom purrr map
+#' @export
+center.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
+  vars <- dplyr::quos(...)
+  ndf <- prepare_mids_recode(x)
+
+  # select variable and compute rowsums. add this variable
+  # to each imputed
+
+  ndf$data <- purrr::map(
+    ndf$data,
+    function(.x) {
+      dat <- dplyr::select(.x, !!! vars)
+      dplyr::bind_cols(
+        .x,
+        std_and_center(
+          x = dat,
+          .dat = dat,
+          include.fac = include.fac,
+          append = FALSE,
+          standardize = FALSE,
+          robust = robust,
+          suffix, suffix
+        )
+      )
+    }
+  )
+
+  final_mids_recode(ndf)
 }
 
 
