@@ -96,7 +96,7 @@
 #' @importFrom broom tidy
 #' @importFrom dplyr select bind_cols "%>%"
 #' @importFrom tidyselect one_of
-#' @importFrom tidyr spread_
+#' @importFrom tidyr spread
 #' @importFrom purrr map_df
 #' @importFrom rlang .data
 #' @export
@@ -175,7 +175,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         df1 <- tmp %>%
           dplyr::select(.data$term, .data$estimate) %>%
           # spread to columns
-          tidyr::spread_(key_col = "term", value_col = "estimate")
+          tidyr::spread(key = .data$term, value = .data$estimate)
 
         # columns for each data frame
         cols <- ncol(df1)
@@ -186,7 +186,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
           df2 <- tmp %>%
             dplyr::select(.data$term, .data$std.error) %>%
             # spread to columns
-            tidyr::spread_(key_col = "term", value_col = "std.error")
+            tidyr::spread(key = .data$term, value = .data$std.error)
           # fix column names
           colnames(df2) <- sprintf("%s.se", colnames(df2))
           # bind together
@@ -199,7 +199,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
           df3 <- tmp %>%
             dplyr::select(.data$term, .data$p.value) %>%
             # spread to columns
-            tidyr::spread_(key_col = "term", value_col = "p.value")
+            tidyr::spread(key = .data$term, value = .data$p.value)
           # fix column names
           colnames(df3) <- sprintf("%s.p", colnames(df3))
           # bind together
