@@ -1,29 +1,26 @@
 #' @title Basic descriptive statistics
 #' @name descr
 #'
-#' @description This function wraps the \code{\link[psych]{describe}}-function
-#'              and prints a basic descriptive statistic, including variable labels.
+#' @description This function prints a basic descriptive statistic, including
+#'   variable labels.
 #'
 #' @param x A vector or a data frame. May also be a grouped data frame
-#'          (see 'Note' and 'Examples').
+#'    (see 'Note' and 'Examples').
 #' @param max.length Numeric, indicating the maximum length of variable labels
-#'          in the output. If variable names are longer than \code{max.length},
-#'          they will be shortened to the last whole word within the first
-#'          \code{max.length} chars.
+#'    in the output. If variable names are longer than \code{max.length},
+#'    they will be shortened to the last whole word within the first
+#'    \code{max.length} chars.
 #' @param out Character vector, indicating whether the results should be printed
-#'        to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
-#'        (\code{out = "viewer"}) or browser (\code{out = "browser"}).
+#'    to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
+#'    (\code{out = "viewer"}) or browser (\code{out = "browser"}).
 #'
 #' @inheritParams to_factor
 #'
-#' @return A data frame with basic descriptive statistics, derived from the
-#'         \code{\link[psych]{describe}}-function. The additional column
-#'         \code{NA.prc} informs about the percentage of missing values in
-#'         a variable.
+#' @return A data frame with basic descriptive statistics.
 #'
 #' @note \code{data} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
-#'       with up to two grouping variables. Descriptive tables are created for each
-#'       subgroup then.
+#'    with up to two grouping variables. Descriptive tables are created for each
+#'    subgroup then.
 #'
 #' @examples
 #' data(efc)
@@ -48,7 +45,6 @@
 #'
 #' @importFrom tibble as_tibble rownames_to_column
 #' @importFrom dplyr select mutate
-#' @importFrom psych describe
 #' @importFrom sjlabelled copy_labels
 #' @export
 descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")) {
@@ -108,11 +104,12 @@ descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")
 }
 
 
-#' @importFrom psych skew kurtosi
-#' @importFrom dplyr select_if mutate group_by summarise_all funs
+#' @importFrom dplyr select_if group_by summarise_all funs
 #' @importFrom tidyr gather
 #' @importFrom sjlabelled get_label
-#' @importFrom stats var na.omit
+#' @importFrom stats var na.omit sd median
+#' @importFrom tibble add_column
+#' @importFrom rlang .data
 descr_helper <- function(dd, max.length) {
 
   # check if we have a single vector, because purrr would return
@@ -132,8 +129,6 @@ descr_helper <- function(dd, max.length) {
 
   dd <- to_value(dd, keep.labels = FALSE)
 
-  # call psych::describe and convert to tibble, remove some unnecessary
-  # columns and and a variable label column
   x <- suppressWarnings(
     dd %>%
       dplyr::select_if(is.numeric) %>%
@@ -141,28 +136,47 @@ descr_helper <- function(dd, max.length) {
       dplyr::group_by(.data$var) %>%
       dplyr::summarise_all(
         dplyr::funs(
-          n = length(na.omit(.data$val)),
+          n = length(stats::na.omit(.data$val)),
           NA.prc = 100 * sum(is.na(.data$val)) / length(.data$val),
           mean = mean(.data$val, na.rm = TRUE),
-          sd = sd(.data$val, na.rm = TRUE),
+          sd = stats::sd(.data$val, na.rm = TRUE),
           se = sqrt(stats::var(.data$val, na.rm = TRUE) / length(stats::na.omit(.data$val))),
-          md = median(.data$val, na.rm = TRUE),
+          md = stats::median(.data$val, na.rm = TRUE),
           trimmed = mean(.data$val, na.rm = TRUE, trim = .1),
-          min = min(.data$val, na.rm = TRUE),
-          max = max(.data$val, na.rm = TRUE),
-          range = diff(range(.data$val, na.rm = TRUE)),
-          skew = psych::skew(.data$val),
-          kurtosis = psych::kurtosi(.data$val)
-        )) %>%
-      dplyr::mutate(
+          range = sprintf(
+            "%s (%s-%s)",
+            as.character(round(diff(range(.data$val, na.rm = TRUE)), 2)),
+            as.character(round(min(.data$val, na.rm = TRUE), 2)),
+            as.character(round(max(.data$val, na.rm = TRUE), 2))
+          ),
+          skew = sjmisc.skew(.data$val)
+        ))
+    )
+
+    # summarise_all() sorts variables, so restore order
+    x <- x[match(var.name, x$var), ] %>%
+      tibble::add_column(
         type = type,
-        label = labels
+        label = labels,
+        .after = 1
       )
-  )
 
   # check if labels should be truncated
   x$label <- shorten_string(x$label, max.length)
 
-  # sort columns a bit
-  x[, c(1, 14, 15, 2:13)]
+  x
+}
+
+
+sjmisc.skew <- function(x) {
+  if (any(ina <- is.na(x)))
+    x <- x[!ina]
+
+  n <- length(x)
+  x <- x - mean(x)
+
+  if (n < 3)
+    return(NA)
+
+  sqrt(n) * sum(x ^ 3) / (sum(x ^ 2) ^ (3 / 2)) * sqrt(n * (n - 1)) / (n - 2)
 }

@@ -58,7 +58,7 @@ print_descr_helper <- function(x, ...) {
   if ("digits" %in% names(add.args)) digits <- eval(add.args[["digits"]])
 
   # round values
-  x[, c(5:10, 14:15)] <- round(x[, c(5:10, 14:15)], digits = digits)
+  x[, c(5:10, 12)] <- round(x[, c(5:10, 12)], digits = digits)
   # print frq-table
   print.data.frame(x, ..., row.names = FALSE)
 }

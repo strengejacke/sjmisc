@@ -27,19 +27,16 @@ to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 (\code{out = "viewer"}) or browser (\code{out = "browser"}).}
 }
 \value{
-A data frame with basic descriptive statistics, derived from the
-        \code{\link[psych]{describe}}-function. The additional column
-        \code{NA.prc} informs about the percentage of missing values in
-        a variable.
+A data frame with basic descriptive statistics.
 }
 \description{
-This function wraps the \code{\link[psych]{describe}}-function
-             and prints a basic descriptive statistic, including variable labels.
+This function prints a basic descriptive statistic, including
+  variable labels.
 }
 \note{
 \code{data} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
-      with up to two grouping variables. Descriptive tables are created for each
-      subgroup then.
+   with up to two grouping variables. Descriptive tables are created for each
+   subgroup then.
 }
 \examples{
 data(efc)

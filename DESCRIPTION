@@ -23,7 +23,6 @@ Imports:
     haven (>= 1.0.0),
     magrittr,
     pillar,
-    psych,
     purrr,
     rlang,
     sjlabelled (>= 1.0.8),
