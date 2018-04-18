@@ -205,7 +205,7 @@ center.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.f
           append = FALSE,
           standardize = FALSE,
           robust = robust,
-          suffix, suffix
+          suffix = suffix
         )
       )
     }
