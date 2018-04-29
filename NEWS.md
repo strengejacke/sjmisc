@@ -15,6 +15,10 @@
 Following functions now also work on `mids`-objects, as returned by the `mice()`-function:
 * `row_count()`, `row_sums()`, `row_means()`, `rec()`, `dicho()`, `center()`, `std()`, `recode_to()` and `to_long()`.
 
+## Changes to functions
+
+* The `weight.by`-argument in `frq()` now should be a variable name from a variable in `x`, and no longer a separate vector.
+
 ## Bug fixes
 
 * `descr()` does not work with character vectors, so these are being removed now.
