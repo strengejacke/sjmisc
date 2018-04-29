@@ -104,7 +104,7 @@
 #'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join select_if select
-#' @importFrom tibble add_row as_tibble
+#' @importFrom tibble add_row as_tibble has_name
 #' @importFrom sjlabelled get_label get_labels get_values copy_labels
 #' @importFrom purrr map_if
 #' @importFrom rlang quo_name enquo
