@@ -138,8 +138,12 @@ frq <- function(x,
     x <- xw
   } else {
     w <- rlang::quo_name(rlang::enquo(weight.by))
-    if (!tibble::has_name(xw, w))
-      x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
+
+    if (!sjmisc::is_empty(w) && w != "NULL") {
+      if (!tibble::has_name(xw, w))
+        x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
+    } else
+      x <- xw
   }
 
 
