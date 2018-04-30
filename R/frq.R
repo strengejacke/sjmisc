@@ -89,6 +89,10 @@
 #' frq(efc, c160age)
 #' frq(efc, c160age, auto.grp = 5)
 #'
+#' # and with weights
+#' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
+#' frq(efc, c160age, auto.grp = 5, weight.by = weights)
+#'
 #' # group string values
 #' \dontrun{
 #' dummy <- efc %>% dplyr::select(3)
