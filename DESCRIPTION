@@ -3,7 +3,7 @@ Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
 Version: 2.7.1.9000
-Date: 2018-03-26
+Date: 2018-04-30
 Author: Daniel Lüdecke <d.luedecke@uke.de>
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -34,7 +34,6 @@ Imports:
 Suggests:
     ggplot2,
     graphics,
-    Hmisc,
     mice,
     sjPlot (>= 2.4.0),
     sjstats (>= 0.13.0),

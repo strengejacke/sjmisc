@@ -130,7 +130,7 @@ std.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac 
           append = FALSE,
           standardize = TRUE,
           robust = robust,
-          suffix, suffix
+          suffix = suffix
         )
       )
     }
