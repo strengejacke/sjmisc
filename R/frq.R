@@ -142,8 +142,10 @@ frq <- function(x,
     if (!sjmisc::is_empty(w) && w != "NULL") {
       if (!tibble::has_name(xw, w) && tibble::has_name(x, w))
         x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
-    } else
+    } else {
+      w <- NULL
       x <- xw
+    }
   }
 
 
