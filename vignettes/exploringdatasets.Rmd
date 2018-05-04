@@ -11,6 +11,7 @@ vignette: >
 
 ```{r echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, comment = "#>")
+suppressPackageStartupMessages(library(sjmisc))
 ```
 
 Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the [tidyverse](http://tidyverse.org/) or related packages. The **sjmisc**-package fits into this workflow, especially when you work with [labelled data](https://cran.r-project.org/package=sjlabelled), because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.

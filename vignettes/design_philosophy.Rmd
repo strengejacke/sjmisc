@@ -11,6 +11,7 @@ vignette: >
 
 ```{r echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+suppressPackageStartupMessages(library(sjmisc))
 ```
 
 Basically, this package complements the _dplyr_ package in that _sjmisc_ takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc. The data transformation functions also support labelled data.
