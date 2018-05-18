@@ -1,5 +1,7 @@
 # sjmisc - Data and Variable Transformation Functions <img src="man/figures/logo.png" align="right" />
 
+[![DOI](https://zenodo.org/badge/32622582.svg)](https://zenodo.org/badge/latestdoi/32622582)
+
 Collection of miscellaneous utility functions, supporting data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.
 
 The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-workflow to manipulate data frames, or to create new variables with `mutate()`. See `vignette("design_philosophy", "sjmisc")` for more details.
@@ -42,3 +44,5 @@ For more examples, see package vignettes (`browseVignettes("sjmisc")`).
 ## Citation
 
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
+
+[![DOI](https://zenodo.org/badge/32622582.svg)](https://zenodo.org/badge/latestdoi/32622582)
