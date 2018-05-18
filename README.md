@@ -41,6 +41,8 @@ A cheatsheet can be downloaded [from here](http://strengejacke.de/sjPlot/sjmisc-
 
 For more examples, see package vignettes (`browseVignettes("sjmisc")`).
 
+Please visit [https://strengejacke.github.io/sjmisc/](https://strengejacke.github.io/sjmisc/) for documentation and vignettes.
+
 ## Citation
 
 In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
