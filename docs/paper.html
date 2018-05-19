@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Citation and Authors • sjmisc</title>
+<title>Summary • sjmisc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,7 +28,7 @@
 
 
 
-<meta property="og:title" content="Citation and Authors" />
+<meta property="og:title" content="Summary" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -46,7 +46,7 @@
   </head>
 
   <body>
-    <div class="container template-citation-authors">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -112,30 +112,43 @@
 <div class="row">
   <div class="contents col-md-9">
     <div class="page-header">
-      <h1>Citation</h1>
+      <h1>Summary</h1>
     </div>
 
-    <p>LÃ¼decke D (2018).
-<em>sjmisc: Miscellaneous Data Management Tools (Version 2.7.2)</em>.
-doi: <a href="http://doi.org/10.5281/zenodo.1249192">10.5281/zenodo.1249192</a>, <a href="https://CRAN.R-project.org/package=sjmisc">https://CRAN.R-project.org/package=sjmisc</a>. 
-</p>
-    <pre>@Manual{,
-  title = {sjmisc: Miscellaneous Data Management Tools (Version 2.7.2)},
-  author = {Daniel Lüdecke},
-  year = {2018},
-  url = {https://CRAN.R-project.org/package=sjmisc},
-  doi = {10.5281/zenodo.1249192},
-}</pre>
-    <div class="page-header">
-      <h1>Authors</h1>
-    </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Daniel Lüdecke</strong>. Author, maintainer. <a href='https://orcid.org/0000-0002-8895-3206' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid' height='16'></a>
-        </p>
-      </li>
-    </ul>
+<hr>
+<p>title: ‘sjmisc - Data and Variable Transformation Functions’ tags:</p>
+<ul>
+<li>R</li>
+<li>data transformation</li>
+<li>data wrangling</li>
+<li>variable recoding authors:</li>
+<li>name: Daniel Lüdecke orcid: 0000-0002-8895-3206 affiliation: 1 affiliations:</li>
+<li>name: University Clinical Center Hamburg-Eppendorf index: 1 date: 18 May 2018 bibliography: paper.bib —</li>
+</ul>
+<div id="summary" class="section level1">
+
+<p>Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. There are typically two types of data transformation: arraning and reshaping data sets (like filtering observations or selecting variables, combining data sets etc.) and recoding and converting variables. Statistical software packages should provide convenient tools to fulfil these tasks.</p>
+<p>For the <em>R Project for Statistical Computing</em>, packages have been released recently that are known to be part of the <em>tidyverse</em>. Some of those packages focus on the transformation of data sets. Packages with special focus on transformation of <em>variables</em>, which fit into the workflow and design-philosophy of the tidyverse, are missing.</p>
+<p><code>sjmisc</code> is a package for the statistical progamming language <strong>R</strong>, which tries to fill this gap. Basically, this package complements the <code>dplyr</code> package [@wickham_dplyr_2016] in that <code>sjmisc</code> takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc.</p>
+<p>The data transformation functions in this package all support <em>labelled data</em> (or labelled vectors), which is a common data structure in other statistical environments to store meta-information about variables, like variable names, value labels or multiple defined missing values. Working with labelled data is featured by packages like <code>haven</code> [@haven] or <code>sjlabelled</code> [@daniel_ludecke_2018_1249216].</p>
+<div id="the-design-of-data-transformation-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-design-of-data-transformation-functions" class="anchor"></a>The design of data transformation functions</h2>
+<p>The design of data transformation functions in this package follows, where appropriate, the tidyverse-approach, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument. This design-philosophy makes it possible to combine functions from <code>sjimisc</code> and the “pipe-workflow”, i.e. to create chains of function calls connected with <code>magrittr</code>s pipe-operator.</p>
+</div>
+<div id="conversion-of-variable-types" class="section level2">
+<h2 class="hasAnchor">
+<a href="#conversion-of-variable-types" class="anchor"></a>Conversion of Variable Types</h2>
+<p>There are also functions that convert variable types, e.g. from factors to numeric (or vice versa). These functions mimic R base functions, but also share the previously mentioned advantages of supporting labelled data and integrating seamlessly into the well-known pipe-workflow from tidyverse-packages.</p>
+<p>The source code for <code>sjmisc</code> has been archived to Zenodo with the linked DOI: [@daniel_ludecke_2018_1249192]</p>
+</div>
+</div>
+<div id="references" class="section level1">
+<h1 class="hasAnchor">
+<a href="#references" class="anchor"></a>References</h1>
+</div>
+
 
   </div>
 
