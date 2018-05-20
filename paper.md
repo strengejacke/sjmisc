@@ -7,11 +7,11 @@ tags:
   - variable recoding
 authors:
   - name: Daniel Lüdecke
-  orcid: 0000-0002-8895-3206
-  affiliation: 1
+    orcid: 0000-0002-8895-3206
+    affiliation: 1
 affiliations:
   - name: University Clinical Center Hamburg-Eppendorf
-  index: 1
+    index: 1
 date: 18 May 2018
 bibliography: paper.bib
 ---
