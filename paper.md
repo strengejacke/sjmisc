@@ -18,7 +18,7 @@ bibliography: paper.bib
 
 # Summary
 
-Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. There are typically two types of data transformation: arraning and reshaping data sets (like filtering observations or selecting variables, combining data sets etc.) and recoding and converting variables. Statistical software packages should provide convenient tools to fulfil these tasks.
+Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. There are typically two types of data transformation: arranging and reshaping data sets (like filtering observations or selecting variables, combining data sets etc.) and recoding and converting variables. Statistical software packages should provide convenient tools to fulfil these tasks.
 
 For the _R Project for Statistical Computing_, packages have been released recently that are known to be part of the _tidyverse_. Some of those packages focus on the transformation of data sets. Packages with special focus on transformation of _variables_, which fit into the workflow and design-philosophy of the tidyverse, are missing.
 
