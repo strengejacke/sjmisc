@@ -28,7 +28,7 @@ The data transformation functions in this package all support _labelled data_ (o
 
 ## The design of data transformation functions
 
-The design of data transformation functions in this package follows, where appropriate, the tidyverse-approach, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument. This design-philosophy makes it possible to combine functions from ``sjimisc`` and the "pipe-workflow", i.e. to create chains of function calls connected with ``magrittr``s pipe-operator.
+The design of data transformation functions in this package follows, where appropriate, the tidyverse-approach, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument. This design-philosophy makes it possible to combine functions from ``sjmisc`` and the "pipe-workflow", i.e. to create chains of function calls connected with ``magrittr``s pipe-operator.
 
 ## Conversion of Variable Types
 
