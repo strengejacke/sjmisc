@@ -422,24 +422,30 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   if (!is.null(dir.label) && !sjmisc::is_empty(dir.label)) val_lab <- dir.label
 
   # remove possible direct labels from recode pattern
-  recodes <- gsub(pattern = "\\[([^\\[]*)\\]", replacement = "", x = recodes, perl = T)
+  recodes <- gsub(
+    pattern = "\\[([^\\[]*)\\]",
+    replacement = "",
+    x = recodes,
+    useBytes = TRUE,
+    perl = TRUE
+  )
 
   # prepare and clean recode string
   # retrieve each single recode command
   rec_string <- unlist(strsplit(recodes, ";", fixed = TRUE))
 
   # remove spaces
-  rec_string <- gsub(" ", "", rec_string, fixed = TRUE)
+  rec_string <- gsub(" ", "", rec_string, useBytes = TRUE, fixed = TRUE)
 
   # remove line breaks
-  rec_string <- gsub("\n", "", rec_string, fixed = F)
-  rec_string <- gsub("\r", "", rec_string, fixed = F)
+  rec_string <- gsub("\n", "", rec_string, useBytes = TRUE, fixed = F)
+  rec_string <- gsub("\r", "", rec_string, useBytes = TRUE, fixed = F)
 
   # replace min and max placeholders
-  rec_string <- gsub("(min)\\b", as.character(min_val), rec_string, perl = TRUE)
-  rec_string <- gsub("(lo)\\b", as.character(min_val), rec_string, perl = TRUE)
-  rec_string <- gsub("(max)\\b", as.character(max_val), rec_string, perl = TRUE)
-  rec_string <- gsub("(hi)\\b", as.character(max_val), rec_string, perl = TRUE)
+  rec_string <- gsub("(min)\\b", as.character(min_val), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(lo)\\b", as.character(min_val), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(max)\\b", as.character(max_val), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(hi)\\b", as.character(max_val), rec_string, useBytes = TRUE, perl = TRUE)
 
   # retrieve all recode-pairs, i.e. all old-value = new-value assignments
   rec_pairs <- strsplit(rec_string, "=", fixed = TRUE)
