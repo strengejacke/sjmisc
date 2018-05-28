@@ -1,3 +1,9 @@
+# sjmisc 2.7.3
+
+## Bug fixes
+
+* Fixed encoding issues in `rec()` with direct labelling for certain locales.
+
 # sjmisc 2.7.2
 
 ## New functions
