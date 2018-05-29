@@ -110,6 +110,7 @@ count_na_helper <- function(x, cn) {
 
   # now compute frequency, and return a proper data frame
   frq_helper(values, sort.frq = "none", weight.by = NULL, cn = cn, auto.grp = NULL) %>%
+    dplyr::mutate(label = .data$val) %>%
     dplyr::select(-.data$val) %>%
     dplyr::filter(.data$label != "NA")
 }

@@ -3,6 +3,7 @@
 ## Bug fixes
 
 * Fixed encoding issues in `rec()` with direct labelling for certain locales.
+* Fixed issue in `count_na()`, which did not print labels of tagged `NA` values since the last revision of `frq()`.
 
 # sjmisc 2.7.2
 
