@@ -1,5 +1,9 @@
 # sjmisc 2.7.3
 
+## New functions
+
+* `is_cross_classified()` to check whether two factors are partially crossed.
+
 ## Bug fixes
 
 * Fixed encoding issues in `rec()` with direct labelling for certain locales.

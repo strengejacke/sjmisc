@@ -3,11 +3,14 @@
 \name{is_crossed}
 \alias{is_crossed}
 \alias{is_nested}
+\alias{is_cross_classified}
 \title{Check whether two factors are crossed or nested}
 \usage{
 is_crossed(f1, f2)
 
 is_nested(f1, f2)
+
+is_cross_classified(f1, f2)
 }
 \arguments{
 \item{f1}{Numeric vector or \code{\link{factor}}.}
@@ -15,19 +18,23 @@ is_nested(f1, f2)
 \item{f2}{Numeric vector or \code{\link{factor}}.}
 }
 \value{
-Logical. For \code{is_crossed()}, \code{TRUE} if factors are crossed, \code{FALSE} otherwise.
-        For \code{nested()}, \code{TRUE} if factors are nested, \code{FALSE} otherwise.
+Logical. For \code{is_crossed()}, \code{TRUE} if factors are (fully)
+  crossed, \code{FALSE} otherwise. For \code{is_nested()}, \code{TRUE} if
+  factors are nested, \code{FALSE} otherwise. For \code{is_cross_classified()},
+  \code{TRUE}, if one factor level occurs in some, but not all levels of
+  another factor.
 }
 \description{
-These functions checks whether two factors are crossed or nested,
-               i.e. if each level of one factor occurs in combination
-               with each level of the other factor (\code{is_crossed()})
-               resp. if each category of the first factor co-occurs
-               with only one category of the other (\code{is_nested()}).
+These functions checks whether two factors are (fully) crossed
+  or nested, i.e. if each level of one factor occurs in combination with
+  each level of the other factor (\code{is_crossed()}) resp. if each
+  category of the first factor co-occurs with only one category of the
+  other (\code{is_nested()}). \code{is_cross_classified()} checks if one
+  factor level occurs in some, but not all levels of another factor.
 }
 \note{
 If factors are nested, a message is displayed to tell whether \code{f1}
-        is nested within \code{f2} or vice versa.
+  is nested within \code{f2} or vice versa.
 }
 \examples{
 # crossed factors, each category of
@@ -66,6 +73,12 @@ table(x, y)
 # check if nested
 is_nested(x, y)
 is_nested(y, x)
+
+# also not fully crossed
+is_crossed(x, y)
+
+# but partially crossed
+is_cross_classified(x, y)
 
 }
 \references{

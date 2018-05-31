@@ -1,19 +1,23 @@
 #' @title Check whether two factors are crossed or nested
 #' @name is_crossed
-#' @description These functions checks whether two factors are crossed or nested,
-#'                i.e. if each level of one factor occurs in combination
-#'                with each level of the other factor (\code{is_crossed()})
-#'                resp. if each category of the first factor co-occurs
-#'                with only one category of the other (\code{is_nested()}).
+#' @description These functions checks whether two factors are (fully) crossed
+#'   or nested, i.e. if each level of one factor occurs in combination with
+#'   each level of the other factor (\code{is_crossed()}) resp. if each
+#'   category of the first factor co-occurs with only one category of the
+#'   other (\code{is_nested()}). \code{is_cross_classified()} checks if one
+#'   factor level occurs in some, but not all levels of another factor.
 #'
 #' @param f1 Numeric vector or \code{\link{factor}}.
 #' @param f2 Numeric vector or \code{\link{factor}}.
 #'
-#' @return Logical. For \code{is_crossed()}, \code{TRUE} if factors are crossed, \code{FALSE} otherwise.
-#'         For \code{nested()}, \code{TRUE} if factors are nested, \code{FALSE} otherwise.
+#' @return Logical. For \code{is_crossed()}, \code{TRUE} if factors are (fully)
+#'   crossed, \code{FALSE} otherwise. For \code{is_nested()}, \code{TRUE} if
+#'   factors are nested, \code{FALSE} otherwise. For \code{is_cross_classified()},
+#'   \code{TRUE}, if one factor level occurs in some, but not all levels of
+#'   another factor.
 #'
 #' @note If factors are nested, a message is displayed to tell whether \code{f1}
-#'         is nested within \code{f2} or vice versa.
+#'   is nested within \code{f2} or vice versa.
 #'
 #' @references Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
 #'
@@ -55,6 +59,12 @@
 #' is_nested(x, y)
 #' is_nested(y, x)
 #'
+#' # also not fully crossed
+#' is_crossed(x, y)
+#'
+#' # but partially crossed
+#' is_cross_classified(x, y)
+#'
 #' @export
 is_crossed <- function(f1, f2) {
   tab <- table(f1, f2)
@@ -81,4 +91,11 @@ is_nested <- function(f1, f2) {
   }
 
   nested
+}
+
+
+#' @rdname is_crossed
+#' @export
+is_cross_classified <- function(f1, f2) {
+  suppressMessages(!is_nested(f1, f2) && !is_crossed(f1, f2))
 }
