@@ -106,9 +106,13 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
   imputed.dat <- data.frame()
   analyse <- list()
 
+  # make sure we have a valid range
+  merge.steps <- seq_len(ncol(dat))
+  if (length(merge.steps) > length(imp$method)) merge.steps <- 1:length(imp$method)
 
   # iterate all variables of data frame that has missing values
-  for (i in seq_len(ncol(dat))) {
+
+  for (i in merge.steps) {
 
     # check if current variable was imputed or not
     if (!sjmisc::is_empty(imp$method[i])) {
