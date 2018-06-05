@@ -16,7 +16,10 @@ You may also use functions like \code{:} or tidyselect's
 \code{\link[tidyselect]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{lvl}{Numeric, the new reference level.}
+\item{lvl}{Eiher numeric, indicating the new reference level, or a string,
+indicating the value label from the new reference level. If \code{x} is a
+factor with non-numeric factor levels, \code{relevel(x, ref = lvl)} is
+returned. See 'Examples'.}
 }
 \value{
 \code{x} with new reference level. If \code{x}
@@ -26,15 +29,17 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
           data frame.
 }
 \description{
-Changes the reference level of numeric factor. See 'Details'.
+Changes the reference level of (numeric) factor.
 }
 \details{
-Unlike \code{\link[stats]{relevel}}, this function a) only accepts
-           numeric factors and b) changes the reference level by recoding
-           the factor's values using the \code{\link{rec}} function. Hence,
-           all values from lowest up to the reference level indicated by
-           \code{lvl} are recoded, with \code{lvl} starting as lowest
-           factor value. See 'Examples'.
+Unlike \code{\link[stats]{relevel}}, this function behaves differently
+  for factor with numeric factor levels or for labelled data, i.e. factors
+  with value labels for the values. \code{ref_lvl()} changes the reference
+  level by recoding the factor's values using the \code{\link{rec}} function.
+  Hence, all values from lowest up to the reference level indicated by
+  \code{lvl} are recoded, with \code{lvl} starting as lowest factor value.
+  For factors with non-numeric factor levels, the function simply returns
+  \code{relevel(x, ref = lvl)}. See 'Examples'.
 }
 \examples{
 data(efc)
@@ -42,6 +47,8 @@ x <- to_factor(efc$e42dep)
 str(x)
 frq(x)
 
+# see column "val" in frq()-output, which indicates
+# how values/labels were recoded after using ref_lvl()
 x <- ref_lvl(x, lvl = 3)
 str(x)
 frq(x)
@@ -53,6 +60,18 @@ dat <- efc \%>\%
 
 frq(dat)
 ref_lvl(dat, c82cop1, c83cop2, lvl = 2) \%>\% frq()
+
+# compare numeric and string value for "lvl"-argument
+x <- to_factor(efc$e42dep)
+frq(x)
+ref_lvl(x, lvl = 2) \%>\% frq()
+ref_lvl(x, lvl = "slightly dependent") \%>\% frq()
+
+# factors with non-numeric factor levels
+data(iris)
+levels(iris$Species)
+levels(ref_lvl(iris$Species, lvl = 3))
+levels(ref_lvl(iris$Species, lvl = "versicolor"))
 
 }
 \seealso{

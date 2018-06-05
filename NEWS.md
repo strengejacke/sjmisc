@@ -4,6 +4,10 @@
 
 * `is_cross_classified()` to check whether two factors are partially crossed.
 
+## Changes to functions
+
+* `ref_lvl()` now also accepts value labels as value for the `lvl`-argument. Additionally, `ref_lvl()` now also works for factor with non-numeric factor levels and simply returns `relevel(x, ref = lvl)` in such cases.
+
 ## Bug fixes
 
 * Fixed encoding issues in `rec()` with direct labelling for certain locales.

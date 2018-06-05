@@ -1,12 +1,15 @@
 #' @title Change reference level of (numeric) factors
 #' @name ref_lvl
 #'
-#' @description Changes the reference level of numeric factor. See 'Details'.
+#' @description Changes the reference level of (numeric) factor.
 #'
 #' @seealso \code{\link{to_factor}} to convert numeric vectors into factors;
 #'            \code{\link{rec}} to recode variables.
 #'
-#' @param lvl Numeric, the new reference level.
+#' @param lvl Eiher numeric, indicating the new reference level, or a string,
+#'   indicating the value label from the new reference level. If \code{x} is a
+#'   factor with non-numeric factor levels, \code{relevel(x, ref = lvl)} is
+#'   returned. See 'Examples'.
 #'
 #' @inheritParams to_factor
 #'
@@ -16,12 +19,14 @@
 #'           if \code{...} is not specified, applies to all variables in the
 #'           data frame.
 #'
-#' @details Unlike \code{\link[stats]{relevel}}, this function a) only accepts
-#'            numeric factors and b) changes the reference level by recoding
-#'            the factor's values using the \code{\link{rec}} function. Hence,
-#'            all values from lowest up to the reference level indicated by
-#'            \code{lvl} are recoded, with \code{lvl} starting as lowest
-#'            factor value. See 'Examples'.
+#' @details Unlike \code{\link[stats]{relevel}}, this function behaves differently
+#'   for factor with numeric factor levels or for labelled data, i.e. factors
+#'   with value labels for the values. \code{ref_lvl()} changes the reference
+#'   level by recoding the factor's values using the \code{\link{rec}} function.
+#'   Hence, all values from lowest up to the reference level indicated by
+#'   \code{lvl} are recoded, with \code{lvl} starting as lowest factor value.
+#'   For factors with non-numeric factor levels, the function simply returns
+#'   \code{relevel(x, ref = lvl)}. See 'Examples'.
 #'
 #' @examples
 #' data(efc)
@@ -29,6 +34,8 @@
 #' str(x)
 #' frq(x)
 #'
+#' # see column "val" in frq()-output, which indicates
+#' # how values/labels were recoded after using ref_lvl()
 #' x <- ref_lvl(x, lvl = 3)
 #' str(x)
 #' frq(x)
@@ -41,6 +48,20 @@
 #' frq(dat)
 #' ref_lvl(dat, c82cop1, c83cop2, lvl = 2) %>% frq()
 #'
+#' # compare numeric and string value for "lvl"-argument
+#' x <- to_factor(efc$e42dep)
+#' frq(x)
+#' ref_lvl(x, lvl = 2) %>% frq()
+#' ref_lvl(x, lvl = "slightly dependent") %>% frq()
+#'
+#' # factors with non-numeric factor levels
+#' data(iris)
+#' levels(iris$Species)
+#' levels(ref_lvl(iris$Species, lvl = 3))
+#' levels(ref_lvl(iris$Species, lvl = "versicolor"))
+#'
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr quos
 #' @export
 ref_lvl <- function(x, ..., lvl = NULL) {
 
@@ -61,6 +82,8 @@ ref_lvl <- function(x, ..., lvl = NULL) {
   x
 }
 
+
+#' @importFrom sjlabelled get_values get_labels get_label set_label set_labels
 ref_lvl_helper <- function(x, value) {
   # check correct arguments
   if (is.null(x)) {
@@ -74,12 +97,23 @@ ref_lvl_helper <- function(x, value) {
   }
 
   if (!is_num_fac(x)) {
-    warning("`x` needs to be a factor with numeric factor levels.", call. = F)
-    return(x)
+    return(stats::relevel(x, ref = value))
   }
 
-  # get values from factor
-  vals <- as.numeric(levels(x))
+  if (is.numeric(value)) {
+    # get values from factor
+    vals <- as.numeric(levels(x))
+  } else {
+    # get value labels, check if we have a label instead of number as
+    lab.values <- sjlabelled::get_labels(
+      x,
+      attr.only = TRUE,
+      include.values = "n",
+      drop.na = TRUE
+    )
+    vals <- as.numeric(names(lab.values))
+    value <- as.numeric(names(lab.values[lab.values == value]))
+  }
 
   # check if ref-lvl exists in values
   if (!value %in% vals) {
