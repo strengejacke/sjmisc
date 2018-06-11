@@ -38,7 +38,8 @@ Suggests:
     sjPlot (>= 2.4.0),
     sjstats (>= 0.13.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 URL: https://github.com/strengejacke/sjmisc
 BugReports: https://github.com/strengejacke/sjmisc/issues
 RoxygenNote: 6.0.1
