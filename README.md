@@ -8,6 +8,10 @@ Data preparation is a common task in research, which usually takes the most amou
 
 The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-workflow to manipulate data frames, or to create new variables with `mutate()`. See `vignette("design_philosophy", "sjmisc")` for more details.
 
+## Contributing to the package
+
+Please follow [this guide](CONTRIBUNTING.md) if you like to contribute to this package.
+
 ## Installation
 
 ### Latest development build
