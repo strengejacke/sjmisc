@@ -7,7 +7,7 @@ tmp <- data.frame(a = c(1, 2, 3, NA, 5),
                   d = c(1, NA, 3, NA, 5))
 
 test_that("empty_cols", {
-  expect_equal(empty_cols(tmp), 3)
+  expect_equal(unname(empty_cols(tmp)), 3)
 })
 
 test_that("empty_rows", {
