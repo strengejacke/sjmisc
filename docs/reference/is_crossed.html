@@ -30,11 +30,12 @@
 
 <meta property="og:title" content="Check whether two factors are crossed or nested — is_crossed" />
 
-<meta property="og:description" content="These functions checks whether two factors are crossed or nested,
-               i.e. if each level of one factor occurs in combination
-               with each level of the other factor (is_crossed())
-               resp. if each category of the first factor co-occurs
-               with only one category of the other (is_nested())." />
+<meta property="og:description" content="These functions checks whether two factors are (fully) crossed
+  or nested, i.e. if each level of one factor occurs in combination with
+  each level of the other factor (is_crossed()) resp. if each
+  category of the first factor co-occurs with only one category of the
+  other (is_nested()). is_cross_classified() checks if one
+  factor level occurs in some, but not all levels of another factor." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -64,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -125,17 +126,20 @@
 
     <div class="ref-description">
     
-    <p>These functions checks whether two factors are crossed or nested,
-               i.e. if each level of one factor occurs in combination
-               with each level of the other factor (<code>is_crossed()</code>)
-               resp. if each category of the first factor co-occurs
-               with only one category of the other (<code>is_nested()</code>).</p>
+    <p>These functions checks whether two factors are (fully) crossed
+  or nested, i.e. if each level of one factor occurs in combination with
+  each level of the other factor (<code>is_crossed()</code>) resp. if each
+  category of the first factor co-occurs with only one category of the
+  other (<code>is_nested()</code>). <code>is_cross_classified()</code> checks if one
+  factor level occurs in some, but not all levels of another factor.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>is_crossed</span>(<span class='no'>f1</span>, <span class='no'>f2</span>)
 
-<span class='fu'>is_nested</span>(<span class='no'>f1</span>, <span class='no'>f2</span>)</pre>
+<span class='fu'>is_nested</span>(<span class='no'>f1</span>, <span class='no'>f2</span>)
+
+<span class='fu'>is_cross_classified</span>(<span class='no'>f1</span>, <span class='no'>f2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -152,13 +156,16 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Logical. For <code>is_crossed()</code>, <code>TRUE</code> if factors are crossed, <code>FALSE</code> otherwise.
-        For <code>nested()</code>, <code>TRUE</code> if factors are nested, <code>FALSE</code> otherwise.</p>
+    <p>Logical. For <code>is_crossed()</code>, <code>TRUE</code> if factors are (fully)
+  crossed, <code>FALSE</code> otherwise. For <code>is_nested()</code>, <code>TRUE</code> if
+  factors are nested, <code>FALSE</code> otherwise. For <code>is_cross_classified()</code>,
+  <code>TRUE</code>, if one factor level occurs in some, but not all levels of
+  another factor.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>If factors are nested, a message is displayed to tell whether <code>f1</code>
-        is nested within <code>f2</code> or vice versa.</p>
+  is nested within <code>f2</code> or vice versa.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -223,6 +230,10 @@
 #&gt;   8 0 0 1
 #&gt;   9 0 0 1</div><div class='input'><span class='co'># check if nested</span>
 <span class='fu'>is_nested</span>(<span class='no'>x</span>, <span class='no'>y</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_nested</span>(<span class='no'>y</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='co'># also not fully crossed</span>
+<span class='fu'>is_crossed</span>(<span class='no'>x</span>, <span class='no'>y</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='co'># but partially crossed</span>
+<span class='fu'>is_cross_classified</span>(<span class='no'>x</span>, <span class='no'>y</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

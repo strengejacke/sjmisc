@@ -26,7 +26,7 @@
 #'         4:1, tagged_na("f", "f", "d"),
 #'         1:3, tagged_na("f", "d", "d"),
 #'         1:4, tagged_na("f", "d", "f")),
-#'   label = c("Agreement" = 1, "Disagreement" = 4, "An E" = tagged_na("e"),
+#'   labels = c("Agreement" = 1, "Disagreement" = 4, "An E" = tagged_na("e"),
 #'             "A D" = tagged_na("d"), "The eff" = tagged_na("f"))
 #' )
 #'

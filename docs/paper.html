@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -128,14 +128,14 @@
 </ul>
 <div id="summary" class="section level1">
 
-<p>Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. There are typically two types of data transformation: arraning and reshaping data sets (like filtering observations or selecting variables, combining data sets etc.) and recoding and converting variables. Statistical software packages should provide convenient tools to fulfil these tasks.</p>
+<p>Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. There are typically two types of data transformation: arranging and reshaping data sets (like filtering observations or selecting variables, combining data sets etc.) and recoding and converting variables. Statistical software packages should provide convenient tools to fulfil these tasks.</p>
 <p>For the <em>R Project for Statistical Computing</em>, packages have been released recently that are known to be part of the <em>tidyverse</em>. Some of those packages focus on the transformation of data sets. Packages with special focus on transformation of <em>variables</em>, which fit into the workflow and design-philosophy of the tidyverse, are missing.</p>
 <p><code>sjmisc</code> is a package for the statistical progamming language <strong>R</strong>, which tries to fill this gap. Basically, this package complements the <code>dplyr</code> package [@wickham_dplyr_2016] in that <code>sjmisc</code> takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc.</p>
 <p>The data transformation functions in this package all support <em>labelled data</em> (or labelled vectors), which is a common data structure in other statistical environments to store meta-information about variables, like variable names, value labels or multiple defined missing values. Working with labelled data is featured by packages like <code>haven</code> [@haven] or <code>sjlabelled</code> [@daniel_ludecke_2018_1249216].</p>
 <div id="the-design-of-data-transformation-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-design-of-data-transformation-functions" class="anchor"></a>The design of data transformation functions</h2>
-<p>The design of data transformation functions in this package follows, where appropriate, the tidyverse-approach, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument. This design-philosophy makes it possible to combine functions from <code>sjimisc</code> and the “pipe-workflow”, i.e. to create chains of function calls connected with <code>magrittr</code>s pipe-operator.</p>
+<p>The design of data transformation functions in this package follows, where appropriate, the tidyverse-approach, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument. This design-philosophy makes it possible to combine functions from <code>sjmisc</code> and the “pipe-workflow”, i.e. to create chains of function calls connected with <code>magrittr</code>s pipe-operator.</p>
 </div>
 <div id="conversion-of-variable-types" class="section level2">
 <h2 class="hasAnchor">

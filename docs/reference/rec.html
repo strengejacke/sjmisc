@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -512,7 +512,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt;       NA       NA       NA </div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>na_tag</a></span>(<span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>))</div><div class='output co'>#&gt;  [1] NA  NA  NA  "a" "c" "z" NA  NA  NA  NA </div><div class='input'>
 <span class='co'># use select-helpers from dplyr-package</span>
 <span class='fu'>rec</span>(
-  <span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select_helpers.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='no'>c161sex</span>:<span class='no'>c175empl</span>,
+  <span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='no'>c161sex</span>:<span class='no'>c175empl</span>,
   <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"0,1=0; else=1"</span>,
   <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</div><div class='output co'>#&gt; # A tibble: 908 x 12

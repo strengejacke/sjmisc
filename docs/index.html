@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -91,8 +91,14 @@
 <a href="#sjmisc---data-and-variable-transformation-functions" class="anchor"></a>sjmisc - Data and Variable Transformation Functions <img src="reference/figures/logo.png" align="right">
 </h1></div>
 
-<p>Collection of miscellaneous utility functions, supporting data transformation tasks like recoding, dichotomizing or grouping variables, setting and replacing missing values. The data transformation functions also support labelled data.</p>
+<p>Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. Packages for data preparation have been released recently as part of the <em>tidyverse</em>, focussing on the transformation of data sets. Packages with special focus on transformation of <em>variables</em>, which fit into the workflow and design-philosophy of the tidyverse, are missing.</p>
+<p><strong>sjmisc</strong> tries to fill this gap. Basically, this package complements the <strong>dplyr</strong> package in that <strong>sjmisc</strong> takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc. A distinctive feature of <strong>sjmisc</strong> is the support for labelled data, which is especially useful for users who often work with data sets from othert statistical software packages like <em>SPSS</em> or <em>Stata</em>.</p>
 <p>The functions of <strong>sjmisc</strong> are designed to work together seamlessly with other packes from the tidyverse, like <strong>dplyr</strong>. For instance, you can use the functions from <strong>sjmisc</strong> both within a pipe-workflow to manipulate data frames, or to create new variables with <code>mutate()</code>. See <code><a href="articles/design_philosophy.html">vignette("design_philosophy", "sjmisc")</a></code> for more details.</p>
+<div id="contributing-to-the-package" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contributing-to-the-package" class="anchor"></a>Contributing to the package</h2>
+<p>Please follow <a href="CONTRIBUTING.html">this guide</a> if you like to contribute to this package.</p>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -100,8 +106,8 @@
 <h3 class="hasAnchor">
 <a href="#latest-development-build" class="anchor"></a>Latest development build</h3>
 <p>To install the latest development snapshot (see latest changes below), type following commands into the R console:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"strengejacke/sjmisc"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(devtools)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"strengejacke/sjmisc"</span>)</a></code></pre></div>
 <p>Please note the package dependencies when installing from GitHub. The GitHub version of this package may depend on latest GitHub versions of my other packages, so you may need to install those first, if you encounter any problems. Here’s the order for installing packages from GitHub:</p>
 <p><a href="https://github.com/strengejacke/sjlabelled">sjlabelled</a> → <a href="https://github.com/strengejacke/sjmisc">sjmisc</a> → <a href="https://github.com/strengejacke/sjstats">sjstats</a> → <a href="https://github.com/strengejacke/ggeffects">ggeffects</a> → <a href="https://github.com/strengejacke/sjPlot">sjPlot</a></p>
 </div>
@@ -110,7 +116,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <a href="#officiale-stable-release" class="anchor"></a>Officiale, stable release</h3>
 <p><a href="https://cran.r-project.org/package=sjmisc"><img src="http://www.r-pkg.org/badges/version/sjmisc" alt="CRAN_Status_Badge"></a>    <a href="http://cranlogs.r-pkg.org/"><img src="http://cranlogs.r-pkg.org/badges/sjmisc" alt="downloads"></a>    <a href="http://cranlogs.r-pkg.org/"><img src="http://cranlogs.r-pkg.org/badges/grand-total/sjmisc" alt="total"></a></p>
 <p>To install the latest stable release from CRAN, type following command into the R console:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"sjmisc"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"sjmisc"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="references-documentation-and-examples" class="section level2">

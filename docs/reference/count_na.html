@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -165,11 +165,10 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
              <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"c"</span>), <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>),
              <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"z"</span>))
 )
-<span class='fu'>count_na</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   3 &lt;none&gt;   25.00     25.00   66.67
-#&gt; 3   4 &lt;none&gt;   33.33     33.33  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+<span class='fu'>count_na</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;   frq    label raw.prc valid.prc cum.prc
+#&gt; 1   5    First   41.67     41.67   41.67
+#&gt; 2   3 Not home   25.00     25.00   66.67
+#&gt; 3   4  Refused   33.33     33.33  100.00
 #&gt; </div><div class='input'>
 <span class='no'>y</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/labelled'>labelled</a></span>(
   <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"e"</span>, <span class='st'>"d"</span>, <span class='st'>"f"</span>),
@@ -187,50 +186,44 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 <span class='co'># possible count()-function calls</span>
 <span class='fu'>count_na</span>(<span class='no'>dat</span>)</div><div class='output co'>#&gt; # x
 #&gt; 
-#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   3 &lt;none&gt;   25.00     25.00   66.67
-#&gt; 3   4 &lt;none&gt;   33.33     33.33  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+#&gt;   frq    label raw.prc valid.prc cum.prc
+#&gt; 1   5    First   41.67     41.67   41.67
+#&gt; 2   3 Not home   25.00     25.00   66.67
+#&gt; 3   4  Refused   33.33     33.33  100.00
 #&gt; 
 #&gt; 
 #&gt; # y
 #&gt; 
-#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   1 &lt;none&gt;    8.33      8.33   50.00
-#&gt; 3   6 &lt;none&gt;   50.00     50.00  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+#&gt;   frq   label raw.prc valid.prc cum.prc
+#&gt; 1   5     A D   41.67     41.67   41.67
+#&gt; 2   1    An E    8.33      8.33   50.00
+#&gt; 3   6 The eff   50.00     50.00  100.00
 #&gt; 
-#&gt; </div><div class='input'><span class='fu'>count_na</span>(<span class='no'>dat</span>$<span class='no'>x</span>)</div><div class='output co'>#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   3 &lt;none&gt;   25.00     25.00   66.67
-#&gt; 3   4 &lt;none&gt;   33.33     33.33  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+#&gt; </div><div class='input'><span class='fu'>count_na</span>(<span class='no'>dat</span>$<span class='no'>x</span>)</div><div class='output co'>#&gt;   frq    label raw.prc valid.prc cum.prc
+#&gt; 1   5    First   41.67     41.67   41.67
+#&gt; 2   3 Not home   25.00     25.00   66.67
+#&gt; 3   4  Refused   33.33     33.33  100.00
 #&gt; </div><div class='input'><span class='fu'>count_na</span>(<span class='no'>dat</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt; # x
 #&gt; 
-#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   3 &lt;none&gt;   25.00     25.00   66.67
-#&gt; 3   4 &lt;none&gt;   33.33     33.33  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+#&gt;   frq    label raw.prc valid.prc cum.prc
+#&gt; 1   5    First   41.67     41.67   41.67
+#&gt; 2   3 Not home   25.00     25.00   66.67
+#&gt; 3   4  Refused   33.33     33.33  100.00
 #&gt; 
 #&gt; </div><div class='input'><span class='fu'>count_na</span>(<span class='no'>dat</span>, <span class='no'>x</span>, <span class='no'>y</span>)</div><div class='output co'>#&gt; # x
 #&gt; 
-#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   3 &lt;none&gt;   25.00     25.00   66.67
-#&gt; 3   4 &lt;none&gt;   33.33     33.33  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+#&gt;   frq    label raw.prc valid.prc cum.prc
+#&gt; 1   5    First   41.67     41.67   41.67
+#&gt; 2   3 Not home   25.00     25.00   66.67
+#&gt; 3   4  Refused   33.33     33.33  100.00
 #&gt; 
 #&gt; 
 #&gt; # y
 #&gt; 
-#&gt;   frq  label raw.prc valid.prc cum.prc
-#&gt; 1   5 &lt;none&gt;   41.67     41.67   41.67
-#&gt; 2   1 &lt;none&gt;    8.33      8.33   50.00
-#&gt; 3   6 &lt;none&gt;   50.00     50.00  100.00
-#&gt; 4   0 &lt;none&gt;    0.00        NA      NA
+#&gt;   frq   label raw.prc valid.prc cum.prc
+#&gt; 1   5     A D   41.67     41.67   41.67
+#&gt; 2   1    An E    8.33      8.33   50.00
+#&gt; 3   6 The eff   50.00     50.00  100.00
 #&gt; 
 #&gt; </div><div class='input'>
 </div></pre>

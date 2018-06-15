@@ -30,7 +30,7 @@
 
 <meta property="og:title" content="Change reference level of (numeric) factors — ref_lvl" />
 
-<meta property="og:description" content="Changes the reference level of numeric factor. See 'Details'." />
+<meta property="og:description" content="Changes the reference level of (numeric) factor." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
 
     <div class="ref-description">
     
-    <p>Changes the reference level of numeric factor. See 'Details'.</p>
+    <p>Changes the reference level of (numeric) factor.</p>
     
     </div>
 
@@ -145,7 +145,10 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
     </tr>
     <tr>
       <th>lvl</th>
-      <td><p>Numeric, the new reference level.</p></td>
+      <td><p>Eiher numeric, indicating the new reference level, or a string,
+indicating the value label from the new reference level. If <code>x</code> is a
+factor with non-numeric factor levels, <code>relevel(x, ref = lvl)</code> is
+returned. See 'Examples'.</p></td>
     </tr>
     </table>
     
@@ -159,12 +162,14 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Unlike <code><a href='http://www.rdocumentation.org/packages/stats/topics/relevel'>relevel</a></code>, this function a) only accepts
-           numeric factors and b) changes the reference level by recoding
-           the factor's values using the <code><a href='rec.html'>rec</a></code> function. Hence,
-           all values from lowest up to the reference level indicated by
-           <code>lvl</code> are recoded, with <code>lvl</code> starting as lowest
-           factor value. See 'Examples'.</p>
+    <p>Unlike <code><a href='http://www.rdocumentation.org/packages/stats/topics/relevel'>relevel</a></code>, this function behaves differently
+  for factor with numeric factor levels or for labelled data, i.e. factors
+  with value labels for the values. <code>ref_lvl()</code> changes the reference
+  level by recoding the factor's values using the <code><a href='rec.html'>rec</a></code> function.
+  Hence, all values from lowest up to the reference level indicated by
+  <code>lvl</code> are recoded, with <code>lvl</code> starting as lowest factor value.
+  For factors with non-numeric factor levels, the function simply returns
+  <code>relevel(x, ref = lvl)</code>. See 'Examples'.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -190,6 +195,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 #&gt;   NA                   NA   7    0.77        NA      NA
 #&gt; 
 #&gt; </div><div class='input'>
+<span class='co'># see column "val" in frq()-output, which indicates</span>
+<span class='co'># how values/labels were recoded after using ref_lvl()</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>ref_lvl</span>(<span class='no'>x</span>, <span class='kw'>lvl</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'>str</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;  Factor w/ 4 levels "1","2","3","4": 1 1 1 4 4 4 4 4 4 4 ...
 #&gt;  - attr(*, "label")= chr "elder's dependency"
@@ -278,6 +285,45 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 #&gt;   NA        NA   6    0.66        NA      NA
 #&gt; 
 #&gt; </div><div class='input'>
+<span class='co'># compare numeric and string value for "lvl"-argument</span>
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='to_factor.html'>to_factor</a></span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)
+<span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; 
+#&gt; # elder's dependency (x) &lt;categorical&gt; 
+#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
+#&gt;  
+#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt;    1          independent  66    7.27      7.33    7.33
+#&gt;    2   slightly dependent 225   24.78     24.97   32.30
+#&gt;    3 moderately dependent 306   33.70     33.96   66.26
+#&gt;    4   severely dependent 304   33.48     33.74  100.00
+#&gt;   NA                   NA   7    0.77        NA      NA
+#&gt; 
+#&gt; </div><div class='input'><span class='fu'>ref_lvl</span>(<span class='no'>x</span>, <span class='kw'>lvl</span> <span class='kw'>=</span> <span class='fl'>2</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='frq.html'>frq</a></span>()</div><div class='output co'>#&gt; 
+#&gt; # elder's dependency (x) &lt;categorical&gt; 
+#&gt; # total N=908  valid N=901  mean=2.76  sd=1.16
+#&gt;  
+#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt;    1   slightly dependent 225   24.78     24.97   24.97
+#&gt;    2          independent  66    7.27      7.33   32.30
+#&gt;    3 moderately dependent 306   33.70     33.96   66.26
+#&gt;    4   severely dependent 304   33.48     33.74  100.00
+#&gt;   NA                   NA   7    0.77        NA      NA
+#&gt; 
+#&gt; </div><div class='input'><span class='fu'>ref_lvl</span>(<span class='no'>x</span>, <span class='kw'>lvl</span> <span class='kw'>=</span> <span class='st'>"slightly dependent"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='frq.html'>frq</a></span>()</div><div class='output co'>#&gt; 
+#&gt; # elder's dependency (x) &lt;categorical&gt; 
+#&gt; # total N=908  valid N=901  mean=2.76  sd=1.16
+#&gt;  
+#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt;    1   slightly dependent 225   24.78     24.97   24.97
+#&gt;    2          independent  66    7.27      7.33   32.30
+#&gt;    3 moderately dependent 306   33.70     33.96   66.26
+#&gt;    4   severely dependent 304   33.48     33.74  100.00
+#&gt;   NA                   NA   7    0.77        NA      NA
+#&gt; 
+#&gt; </div><div class='input'>
+<span class='co'># factors with non-numeric factor levels</span>
+<span class='fu'>data</span>(<span class='no'>iris</span>)
+<span class='fu'>levels</span>(<span class='no'>iris</span>$<span class='no'>Species</span>)</div><div class='output co'>#&gt; [1] "setosa"     "versicolor" "virginica" </div><div class='input'><span class='fu'>levels</span>(<span class='fu'>ref_lvl</span>(<span class='no'>iris</span>$<span class='no'>Species</span>, <span class='kw'>lvl</span> <span class='kw'>=</span> <span class='fl'>3</span>))</div><div class='output co'>#&gt; [1] "virginica"  "setosa"     "versicolor"</div><div class='input'><span class='fu'>levels</span>(<span class='fu'>ref_lvl</span>(<span class='no'>iris</span>$<span class='no'>Species</span>, <span class='kw'>lvl</span> <span class='kw'>=</span> <span class='st'>"versicolor"</span>))</div><div class='output co'>#&gt; [1] "versicolor" "setosa"     "virginica" </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

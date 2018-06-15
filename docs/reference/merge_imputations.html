@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
       </span>
     </div>
 
@@ -124,7 +124,7 @@
     <div class="ref-description">
     
     <p>This function merges multiple imputed data frames from
-               <code><a href='http://www.rdocumentation.org/packages/mice/topics/mids-class'>mids</a></code>-objects into a single data frame
+               <code><a href='http://stefvanbuuren.github.io/mice/reference/mids-class.html'>mids</a></code>-objects into a single data frame
                by computing the mean or selecting the most likely imputed value.</p>
     
     </div>
@@ -138,11 +138,11 @@
     <tr>
       <th>dat</th>
       <td><p>The data frame that was imputed and used as argument in the
-<code><a href='http://www.rdocumentation.org/packages/mice/topics/mice'>mice</a></code>-function call.</p></td>
+<code><a href='http://stefvanbuuren.github.io/mice/reference/mice.html'>mice</a></code>-function call.</p></td>
     </tr>
     <tr>
       <th>imp</th>
-      <td><p>The <code><a href='http://www.rdocumentation.org/packages/mice/topics/mids-class'>mids</a></code>-object with the imputed data frames
+      <td><p>The <code><a href='http://stefvanbuuren.github.io/mice/reference/mids-class.html'>mids</a></code>-object with the imputed data frames
 from <code>dat</code>.</p></td>
     </tr>
     <tr>
@@ -193,9 +193,9 @@ All non-defined variables will not be shown in the plot.</p></td>
          those values that have been imputed the most times.
          <br /> <br />
          <code>imp</code> must be a <code>mids</code>-object, which is returned by the
-         <code><a href='http://www.rdocumentation.org/packages/mice/topics/mice'>mice()</a></code>-function of the <span class="pkg">mice</span>-package. <code>merge_imputations()</code>
+         <code><a href='http://stefvanbuuren.github.io/mice/reference/mice.html'>mice()</a></code>-function of the <span class="pkg">mice</span>-package. <code>merge_imputations()</code>
          than creates a data frame for each imputed variable, by combining all
-         imputations (as returned by the <code><a href='http://www.rdocumentation.org/packages/mice/topics/complete'>complete</a></code>-function)
+         imputations (as returned by the <code><a href='http://stefvanbuuren.github.io/mice/reference/complete.html'>complete</a></code>-function)
          of each variable, and computing the row means of this data frame.
          The mean value is then rounded for integer values (and not for numerical
          values with fractional part), which corresponds to the most frequent
@@ -205,7 +205,7 @@ All non-defined variables will not be shown in the plot.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Typically, further analyses are conducted on pooled results of multiple
-      imputed data sets (see <code><a href='http://www.rdocumentation.org/packages/mice/topics/pool'>pool</a></code>), however, sometimes
+      imputed data sets (see <code><a href='http://stefvanbuuren.github.io/mice/reference/pool.html'>pool</a></code>), however, sometimes
       (in social sciences) it is also feasible to compute the mean or mode
       of multiple imputed variables (see <cite>Burns et al. 2011</cite>).</p>
     
@@ -215,7 +215,10 @@ All non-defined variables will not be shown in the plot.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mice</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='input'><span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/mice/topics/mice'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>mice</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: lattice</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘mice’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    cbind, rbind</span></div><div class='input'><span class='no'>imp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://stefvanbuuren.github.io/mice/reference/mice.html'>mice</a></span>(<span class='no'>nhanes</span>)</div><div class='output co'>#&gt; 
 #&gt;  iter imp variable
 #&gt;   1   1  bmi  hyp  chl
 #&gt;   1   2  bmi  hyp  chl
