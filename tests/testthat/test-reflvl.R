@@ -2,7 +2,7 @@ context("sjmisc, ref_lvl")
 
 library(sjmisc)
 data(iris)
-
+data(efc)
 
 test_that("ref_lvl", {
   x <- to_factor(efc$e42dep)
