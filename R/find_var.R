@@ -174,15 +174,16 @@ find_var <- function(data,
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos3) && fuzzy && !inherits(pattern, "regex")) {
-      pos3 <-
-        which(purrr::map_lgl(
-          labels,
-          ~ str_pos(
+      pos3 <- which(purrr::map_lgl(
+        labels,
+        function(.x) {
+          p <- str_pos(
             search.string = .x,
             find.term = pattern,
             part.dist.match = 1
           )
-        ))
+          p[1] != -1
+        }))
     }
   }
 

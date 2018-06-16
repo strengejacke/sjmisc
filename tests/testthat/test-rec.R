@@ -19,3 +19,10 @@ test_that("rec", {
   expect_is(rec(efc$c12hour, rec = "5=10;else=2", as.num = FALSE), "factor")
   expect_is(rec(efc$c172code, rec = "rev", as.num = TRUE), "numeric")
 })
+
+test_that("rec", {
+  x <- c(1,2,3,NA)
+  expect_equal(rec(x, rec = "1:3=NA;NA=1;else=2"), c(NA, NA, NA, 1))
+  expect_equal(rec(x, rec = "1=NA;NA=1;else=copy"), c(NA, 2, 3, 1))
+  expect_equal(rec(x, rec = "min=10;max=5;NA=9;else=copy"), c(10, 2, 5, 9))
+})
