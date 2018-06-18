@@ -1,5 +1,5 @@
 ---
-title: 'sjmisc - Data and Variable Transformation Functions'
+title: 'sjmisc: Data and Variable Transformation Functions'
 tags:
   - R
   - data transformation
@@ -34,6 +34,6 @@ The design of data transformation functions in this package follows, where appro
 
 There are also functions that convert variable types, e.g. from factors to numeric (or vice versa). These functions mimic R base functions, but also share the previously mentioned advantages of supporting labelled data and integrating seamlessly into the well-known pipe-workflow from tidyverse-packages.
 
-The source code for ``sjmisc`` has been archived to Zenodo with the linked DOI: [@daniel_ludecke_2018_1249192]
+The source code for ``sjmisc`` has been archived to Zenodo and linked with a DOI [see @daniel_ludecke_2018_1249192].
 
 # References
