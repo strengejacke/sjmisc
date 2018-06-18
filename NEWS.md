@@ -12,8 +12,8 @@
 
 * Fixed encoding issues in `rec()` with direct labelling for certain locales.
 * Fixed issue in `count_na()`, which did not print labels of tagged `NA` values since the last revision of `frq()`.
-* Fix issue in `merge_imputation()` for cases where original data frame had less columns than imputed data frames.
-* Fix issue in `find_var()` for fuzzy-matching in all elements (i.e. when `fuzzy = TRUE` and `search = "all"`).
+* Fixed issue in `merge_imputation()` for cases where original data frame had less columns than imputed data frames.
+* Fixed issue in `find_var()` for fuzzy-matching in all elements (i.e. when `fuzzy = TRUE` and `search = "all"`).
 
 # sjmisc 2.7.2
 
