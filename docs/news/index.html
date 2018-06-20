@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -32,6 +34,7 @@
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -58,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3</span>
       </span>
     </div>
 
@@ -118,8 +121,16 @@
 
     <div id="sjmisc-2-7-3" class="section level1">
 <h1 class="page-header">
-<a href="#sjmisc-2-7-3" class="anchor"></a>sjmisc 2.7.3<small> Unreleased </small>
+<a href="#sjmisc-2-7-3" class="anchor"></a>sjmisc 2.7.3<small> 2018-06-20 </small>
 </h1>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>A test-suite was added to the package.</li>
+<li>Updated reference in <code>CITATION</code> to the publication in the Journal of Open Source Software.</li>
+</ul>
+</div>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
@@ -142,7 +153,8 @@
 <ul>
 <li>Fixed encoding issues in <code><a href="../reference/rec.html">rec()</a></code> with direct labelling for certain locales.</li>
 <li>Fixed issue in <code><a href="../reference/count_na.html">count_na()</a></code>, which did not print labels of tagged <code>NA</code> values since the last revision of <code><a href="../reference/frq.html">frq()</a></code>.</li>
-<li>Fix issue in <code>merge_imputation()</code> for cases where original data frame had less columns than imputed data frames.</li>
+<li>Fixed issue in <code>merge_imputation()</code> for cases where original data frame had less columns than imputed data frames.</li>
+<li>Fixed issue in <code><a href="../reference/find_var.html">find_var()</a></code> for fuzzy-matching in all elements (i.e. when <code>fuzzy = TRUE</code> and <code>search = "all"</code>).</li>
 </ul>
 </div>
 </div>
@@ -158,9 +170,9 @@
 <code><a href="../reference/round_num.html">round_num()</a></code> to round only numeric values in a data frame.</li>
 </ul>
 </div>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
+<a href="#general-1" class="anchor"></a>General</h2>
 <ul>
 <li>Improved performance for <code><a href="../reference/add_rows.html">merge_df()</a></code>. Furthermore, <code><a href="../reference/add_rows.html">add_rows()</a></code> was added as alias for <code><a href="../reference/add_rows.html">merge_df()</a></code>.</li>
 <li>
@@ -197,9 +209,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-7-1" class="anchor"></a>sjmisc 2.7.1<small> 2018-03-25 </small>
 </h1>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h2>
+<a href="#general-2" class="anchor"></a>General</h2>
 <ul>
 <li>Fix typos and revise outdated paragraphs in vignettes.</li>
 </ul>
@@ -254,9 +266,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-7-0" class="anchor"></a>sjmisc 2.7.0<small> 2018-02-03 </small>
 </h1>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>General</h2>
+<a href="#general-3" class="anchor"></a>General</h2>
 <ul>
 <li>
 <em>Breaking changes</em>: The <code>append</code>-argument in recode and transformation functions like <code><a href="../reference/rec.html">rec()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/split_var.html">split_var()</a></code>, <code><a href="../reference/group_var.html">group_var()</a></code>, <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/recode_to.html">recode_to()</a></code>, <code><a href="../reference/row_sums.html">row_sums()</a></code>, <code><a href="../reference/row_count.html">row_count()</a></code>, <code><a href="../reference/row_count.html">col_count()</a></code> and <code><a href="../reference/row_sums.html">row_means()</a></code> now defaults to <code>TRUE</code>.</li>
@@ -306,9 +318,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-3" class="anchor"></a>sjmisc 2.6.3<small> 2017-11-27 </small>
 </h1>
-<div id="general-3" class="section level2">
+<div id="general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-3" class="anchor"></a>General</h2>
+<a href="#general-4" class="anchor"></a>General</h2>
 <ul>
 <li>Revised examples that used removed methods from other packages.</li>
 <li>Use select-helpers from package <em>tidyselect</em>, instead of <em>dplyr</em>.</li>
@@ -367,9 +379,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-1" class="anchor"></a>sjmisc 2.6.1<small> 2017-08-20 </small>
 </h1>
-<div id="general-4" class="section level2">
+<div id="general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-4" class="anchor"></a>General</h2>
+<a href="#general-5" class="anchor"></a>General</h2>
 <ul>
 <li>Fixed issue with latest tidyr-update on CRAN.</li>
 </ul>
@@ -387,9 +399,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-0" class="anchor"></a>sjmisc 2.6.0<small> 2017-08-05 </small>
 </h1>
-<div id="general-5" class="section level2">
+<div id="general-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-5" class="anchor"></a>General</h2>
+<a href="#general-6" class="anchor"></a>General</h2>
 <ul>
 <li>All labelled-data functions were removed and are now in package <em>sjlabelled</em>.</li>
 </ul>
@@ -436,9 +448,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-5-0" class="anchor"></a>sjmisc 2.5.0<small> 2017-06-12 </small>
 </h1>
-<div id="general-6" class="section level2">
+<div id="general-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-6" class="anchor"></a>General</h2>
+<a href="#general-7" class="anchor"></a>General</h2>
 <ul>
 <li>
 <strong>sjmisc</strong> now uses dplyr’s <a href="http://dplyr.tidyverse.org/articles/programming.html">tidyeval-approach</a> to evaluate arguments. This means that the select-helper-functions (like <code>one_of()</code> or <code>contains()</code>) no longer need to be prefixed with a <code>~</code> when used as argument within <strong>sjmisc</strong>-functions.</li>
@@ -483,9 +495,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-4-0" class="anchor"></a>sjmisc 2.4.0<small> 2017-04-07 </small>
 </h1>
-<div id="general-7" class="section level2">
+<div id="general-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-7" class="anchor"></a>General</h2>
+<a href="#general-8" class="anchor"></a>General</h2>
 <ul>
 <li>Argument <code>value</code> in <code><a href="../reference/set_na.html">set_na()</a></code> is deprecated. Please use <code>na</code> instead.</li>
 <li>Argument <code>recodes</code> in <code><a href="../reference/rec.html">rec()</a></code> is deprecated. Please use <code>rec</code> instead.</li>
@@ -536,9 +548,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-3-1" class="anchor"></a>sjmisc 2.3.1<small> 2017-03-06 </small>
 </h1>
-<div id="general-8" class="section level2">
+<div id="general-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-8" class="anchor"></a>General</h2>
+<a href="#general-9" class="anchor"></a>General</h2>
 <ul>
 <li>Re-exports <code>magrittr::%&gt;%</code> (Bob Rudis said more packages should do so).</li>
 </ul>
@@ -577,9 +589,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-3-0" class="anchor"></a>sjmisc 2.3.0<small> 2017-02-08 </small>
 </h1>
-<div id="general-9" class="section level2">
+<div id="general-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-9" class="anchor"></a>General</h2>
+<a href="#general-10" class="anchor"></a>General</h2>
 <ul>
 <li>Added package-vignettes.</li>
 <li>Functions were largely revised to work seamlessly within the tidyverse. This may break existing code, but in the long run, consistent api-design makes working with the package more intuitive. See <code><a href="../articles/design_philosophy.html">vignette("design_philosophy", "sjmisc")</a></code> for more details.</li>
@@ -736,9 +748,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-0-1" class="anchor"></a>sjmisc 2.0.1<small> 2016-10-31 </small>
 </h1>
-<div id="general-10" class="section level2">
+<div id="general-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-10" class="anchor"></a>General</h2>
+<a href="#general-11" class="anchor"></a>General</h2>
 <ul>
 <li>Removed package <code>coin</code> from Imports.</li>
 </ul>
@@ -766,9 +778,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-0-0" class="anchor"></a>sjmisc 2.0.0<small> 2016-09-25 </small>
 </h1>
-<div id="general-11" class="section level2">
+<div id="general-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-11" class="anchor"></a>General</h2>
+<a href="#general-12" class="anchor"></a>General</h2>
 <ul>
 <li>
 <strong>sjmisc</strong> now supports <em>tagged</em> <code>NA</code> values, a new structure for labelled missing values introduced by the <a href="https://cran.r-project.org/package=haven">haven-package</a>. This means that functions or arguments that are no longer useful, have been removed while other functions dealing with NA values have been largely revised.</li>
