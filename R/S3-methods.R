@@ -148,3 +148,25 @@ print.sj_merge.imp <- function(x, ...) {
 
   graphics::plot(p, ...)
 }
+
+
+#' @importFrom crayon red green cyan
+#' @export
+print.sj_has_na <- function(x, ...) {
+  cat(crayon::cyan("## Variables with missing or infinite values (in red)\n\n"))
+
+  s1 <- max(c(nchar(x$name), nchar("Name")))
+  s2 <- max(c(nchar(x$label), nchar("Variable Label")))
+
+  cat(crayon::blue(sprintf("   Column   %*s   %*s\n\n", s1, "Name", s2, "Variable Label")))
+
+  for (i in 1:nrow(x)) {
+    row <- sprintf("   %*i   %*s   %*s\n", 6, x[i, "col"], s1, x[i, "name"], s2, x[i, "label"])
+    if (isTRUE(x[i, "has.na"]))
+      cat(crayon::red(row))
+    else
+      cat(crayon::green(row))
+  }
+
+  cat("\n")
+}

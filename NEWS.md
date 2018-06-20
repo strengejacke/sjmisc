@@ -1,3 +1,9 @@
+# sjmisc 2.7.4
+
+## New functions
+
+* `has_na()` to check if variables in a data frame contain `NA`, `NaN` or `Inf` values.
+
 # sjmisc 2.7.3
 
 ## General
