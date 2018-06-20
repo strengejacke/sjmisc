@@ -1,6 +1,6 @@
 # sjmisc - Data and Variable Transformation Functions <img src="man/figures/logo.png" align="right" />
 
-[![DOI](https://zenodo.org/badge/32622582.svg)](https://zenodo.org/badge/latestdoi/32622582)
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00754/status.svg)](https://doi.org/10.21105/joss.00754)
 
 Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. Packages for data preparation have been released recently as part of the _tidyverse_, focussing on the transformation of data sets. Packages with special focus on transformation of _variables_, which fit into the workflow and design-philosophy of the tidyverse, are missing.
 
@@ -51,6 +51,9 @@ Please visit [https://strengejacke.github.io/sjmisc/](https://strengejacke.githu
 
 ## Citation
 
-In case you want / have to cite my package, please use `citation('sjmisc')` for citation information. 
+In case you want / have to cite my package, please cite as (see also `citation('sjmisc')`): 
 
-[![DOI](https://zenodo.org/badge/32622582.svg)](https://zenodo.org/badge/latestdoi/32622582)
+Lüdecke D (2018). sjmisc: Data and Variable Transformation Functions. _Journal of Open
+Source Software_, *3*(26), 754. doi: 10.21105/joss.00754
+
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.00754/status.svg)](https://doi.org/10.21105/joss.00754)

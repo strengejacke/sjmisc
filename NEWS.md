@@ -1,5 +1,10 @@
 # sjmisc 2.7.3
 
+## General
+
+* A test-suite was added to the package.
+* Updated reference in `CITATION` to the publication in the Journal of Open Source Software.
+
 ## New functions
 
 * `is_cross_classified()` to check whether two factors are partially crossed.

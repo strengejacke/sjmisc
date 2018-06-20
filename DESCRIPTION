@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.7.2.9000
-Date: 2018-05-04
+Version: 2.7.3
+Date: 2018-06-21
 Authors@R: person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206"))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -40,7 +40,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat
-URL: https://github.com/strengejacke/sjmisc
+URL: https://github.com/strengejacke/sjmisc, https://strengejacke.github.io/sjmisc
 BugReports: https://github.com/strengejacke/sjmisc/issues
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr

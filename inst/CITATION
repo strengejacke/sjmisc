@@ -1,9 +1,11 @@
-year <- sub("-.*", "", meta$Date)
-title <- sprintf("sjmisc: Miscellaneous Data Management Tools (Version %s)", meta$Version)
-
-bibentry(bibtype="manual",
-         title = title,
-         author = person("Daniel", "Lüdecke"),
-         year = year,
-         url = "https://CRAN.R-project.org/package=sjmisc",
-         doi = "10.5281/zenodo.1249192")
+bibentry(
+  bibtype = "article",
+	title = "sjmisc: Data and Variable Transformation Functions.",
+	volume = "3",
+	doi = "10.21105/joss.00754",
+	number = "26",
+	journal = "Journal of Open Source Software",
+	author = person("Daniel", "Lüdecke"),
+	year = "2018",
+	pages = "754"
+)
