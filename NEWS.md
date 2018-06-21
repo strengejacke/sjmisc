@@ -2,7 +2,7 @@
 
 ## New functions
 
-* `has_na()` to check if variables in a data frame contain `NA`, `NaN` or `Inf` values.
+* `has_na()` to check if variables or observations in a data frame contain `NA`, `NaN` or `Inf` values. Convenient shortcuts to this function are `complete_cases()`, `incomplete_cases()`, `complete_vars()` and `incomplete_vars()`.
 
 # sjmisc 2.7.3
 

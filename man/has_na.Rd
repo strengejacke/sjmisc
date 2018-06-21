@@ -2,9 +2,21 @@
 % Please edit documentation in R/has_na.R
 \name{has_na}
 \alias{has_na}
-\title{Check if variables have missing / infinite values}
+\alias{incomplete_cases}
+\alias{complete_cases}
+\alias{complete_vars}
+\alias{incomplete_vars}
+\title{Check if variables or cases have missing / infinite values}
 \usage{
-has_na(x, ..., out = c("table", "df", "index"))
+has_na(x, ..., by = c("col", "row"), out = c("table", "df", "index"))
+
+incomplete_cases(x, ...)
+
+complete_cases(x, ...)
+
+complete_vars(x, ...)
+
+incomplete_vars(x, ...)
 }
 \arguments{
 \item{x}{A data frame.}
@@ -16,21 +28,36 @@ You may also use functions like \code{:} or tidyselect's
 \code{\link[tidyselect]{select_helpers}}.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
+\item{by}{Whether to check column- or row-wise for missing and infinite values.
+If \code{by = "col"}, \code{has_na()} checks for \code{NA}/\code{NaN}/\code{Inf}
+in \emph{columns}; If \code{by = "row"}, \code{has_na()} checks each row for
+these values.}
+
 \item{out}{Output (return) format of the results. May be abbreviated.}
 }
 \value{
 If \code{x} is a vector, returns \code{TRUE} if \code{x} has any missing
   or infinite values. If \code{x} is a data frame, returns \code{TRUE} for
-  each variable that has any missing or infinite values. If \code{out = "table"},
-  results are returned as data frame, with column number, variable name and
+  each variable (if \code{by = "col"}) or observation (if \code{by = "row"})
+  that has any missing or infinite values. If \code{out = "table"}, results
+  are returned as data frame, with column number, variable name and
   label, and a logical vector indicating if a variable has missing values or
   not. However, it's printed in colors, with green rows indicating that a
   variable has no missings, while red rows indicate the presence of missings
   or infinite values. If \code{out = "index"}, a named vector is returned.
 }
 \description{
-This functions checks if variables in a data frame have \code{NA},
-  \code{NaN} or \code{Inf} values.
+This functions checks if variables or observations in a data
+  frame have \code{NA}, \code{NaN} or \code{Inf} values.
+}
+\note{
+\code{complete_cases()} and \code{incomplete_cases()} are convenient
+  shortcuts for \code{has_na(by = "row", out = "index")}, where the first
+  only returns case-id's for all complete cases, and the latter only for
+  non-complete cases. \cr \cr
+  \code{complete_vars()} and \code{incomplete_vars()} are convenient shortcuts
+  for \code{has_na(by = "col", out = "index")}, and again only return those
+  column-id's for variables which are (in-)complete.
 }
 \examples{
 data(efc)
@@ -40,5 +67,14 @@ has_na(efc)
 
 has_na(efc, e42dep, tot_sc_e, c161sex, out = "index")
 has_na(efc, out = "df")
+
+has_na(efc, by = "row")
+has_na(efc, e42dep, tot_sc_e, c161sex, by = "row", out = "index")
+has_na(efc, by = "row", out = "df")
+
+complete_cases(efc, e42dep, tot_sc_e, c161sex)
+incomplete_cases(efc, e42dep, tot_sc_e, c161sex)
+complete_vars(efc, e42dep, tot_sc_e, c161sex)
+incomplete_vars(efc, e42dep, tot_sc_e, c161sex)
 
 }

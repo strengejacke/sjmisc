@@ -33,7 +33,7 @@
 #' # zap NaN for complete data frame
 #' zap_inf(efc)
 #'
-#' @importFrom tibble as_tibble
+#' @importFrom dplyr quos
 #' @export
 zap_inf <- function(x, ...) {
   # evaluate arguments, generate data
@@ -46,8 +46,6 @@ zap_inf <- function(x, ...) {
       x[[i]][is.nan(x[[i]])] <- NA
       x[[i]][is.infinite(x[[i]])] <- NA
     }
-    # coerce to tibble
-    x <- tibble::as_tibble(x)
   } else {
     x[is.nan(x)] <- NA
     x[is.infinite(x)] <- NA
