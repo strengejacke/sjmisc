@@ -37,8 +37,15 @@ big_mark(c(1234567, "55443322"))
 # pre-defined width of character output
 big_mark(c(1234567, 55443322), width = 15)
 
-# convert scalar into percentage, as character
+# convert numbers into percentage, as character
 prcn(0.2389)
 prcn(c(0.2143887, 0.55443, 0.12345))
+
+dat <- data.frame(
+  a = c(.321, .121, .64543),
+  b = c("a", "b", "c"),
+  c = c(.435, .54352, .234432)
+)
+prcn(dat)
 
 }
