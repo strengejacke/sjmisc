@@ -24,7 +24,8 @@
 #' @return For \code{row_sums()}, a tibble with a new variable: the row sums from
 #'         \code{x}; for \code{row_means()}, a tibble with a new variable: the row
 #'         means from \code{x}. If \code{append = FALSE}, only the new variable
-#'         with row sums resp. row means is returned.
+#'         with row sums resp. row means is returned. \code{total_mean()} returns
+#'         the mean of all values from all specified columns in a data frame.
 #'
 #' @details For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If
 #'          a \emph{row} in \code{x} has at least \code{n} non-missing values, the
@@ -53,6 +54,9 @@
 #' row_means(dat, c1:c4, n = 4)
 #' # at least 40% non-missing
 #' row_means(dat, c1:c4, n = .4)
+#'
+#' # total mean of all values in the data frame
+#' total_mean(dat)
 #'
 #' # create sum-score of COPE-Index, and append to data
 #' efc %>%
@@ -104,6 +108,21 @@ row_sums.mids <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) 
 #' @export
 row_means <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   UseMethod("row_means")
+}
+
+
+#' @rdname row_sums
+#' @export
+total_mean <- function(x, ...) {
+  UseMethod("total_mean")
+}
+
+
+#' @export
+total_mean.data.frame <- function(x, ...) {
+  # evaluate arguments, generate data
+  .dat <- get_dot_data(x, dplyr::quos(...))
+  sum(colSums(.dat, na.rm = TRUE)) / sum(apply(.dat, 1:2, function(x) !is.na(x)))
 }
 
 

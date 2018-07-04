@@ -16,7 +16,9 @@
 #'   or a character vector if values of factors or character vectors should be
 #'   replaced. For labelled vectors, may also be the name of a value label. In
 #'   this case, the associated values for the value labels in each vector
-#'   will be replaced with NA (see 'Examples').
+#'   will be replaced with \code{NA}. \code{na} can also be a named vector.
+#'   If \code{as.tag = FALSE}, values will be replaced only in those variables
+#'   that are indicated by the value names (see 'Examples').
 #' @param drop.levels Logical, if \code{TRUE}, factor levels of values that have
 #'   been replaced with \code{NA} are dropped. See 'Examples'.
 #' @param as.tag Logical, if \code{TRUE}, values in \code{x} will be replaced
@@ -42,6 +44,20 @@
 #'   Tagged \code{NA}s work exactly like regular R missing values
 #'   except that they store one additional byte of information: a tag,
 #'   which is usually a letter ("a" to "z") or character number ("0" to "9").
+#'   \cr \cr
+#'   \strong{Different NA values for different variables}
+#'   \cr \cr
+#'   If \code{na} is a named vector \emph{and} \code{as.tag = FALSE}, the names
+#'   indicate variable names, and the associated values indicate those values
+#'   that should be replaced by \code{NA} in the related variable. For instance,
+#'   \code{set_na(x, na = c(v1 = 4, v2 = 3))} would replace all 4 in \code{v1}
+#'   with \code{NA} and all 3 in \code{v2} with \code{NA}.
+#'   \cr \cr
+#'   If \code{na} is a named list \emph{and} \code{as.tag = FALSE}, it is possible
+#'   to replace different multiple values by \code{NA} for different variables
+#'   separately. For example, \code{set_na(x, na = list(v1 = c(1, 4), v2 = 5:7))}
+#'   would replace all 1 and 4 in \code{v1} with \code{NA} and all 5 to 7 in
+#'   \code{v2} with \code{NA}.
 #'   \cr \cr
 #'   Furthermore, see also 'Details' in \code{\link{get_na}}.
 #'
@@ -82,6 +98,25 @@
 #' lapply(dummy, table, useNA = "always")
 #' # set 3 to NA for two variables
 #' lapply(set_na(dummy, var1, var3, na = 3), table, useNA = "always")
+#'
+#'
+#' # if 'na' is a named vector *and* 'as.tag = FALSE', different NA-values
+#' # can be specified for each variable
+#' set.seed(1)
+#' dummy <- data.frame(
+#'   var1 = sample(1:8, 10, replace = TRUE),
+#'   var2 = sample(1:10, 10, replace = TRUE),
+#'   var3 = sample(1:6, 10, replace = TRUE)
+#' )
+#' dummy
+#'
+#' # Replace "3" in var1 with NA, "5" in var2 and "6" in var3
+#' set_na(dummy, na = c(var1 = 3, var2 = 5, var3 = 6))
+#'
+#' # if 'na' is a named list *and* 'as.tag = FALSE', for each
+#' # variable different multiple NA-values can be specified
+#' set_na(dummy, na = list(var1 = 1:3, var2 = c(7, 8), var3 = 6))
+#'
 #'
 #' # drop unused factor levels when being set to NA
 #' x <- factor(c("a", "b", "c"))
@@ -125,7 +160,8 @@ set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE) {
         x = .dat[[i]],
         value = na,
         drop.levels = drop.levels,
-        as.tag = as.tag
+        as.tag = as.tag,
+        var.name = i
       )
     }
     # coerce to tibble
@@ -135,7 +171,8 @@ set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE) {
       x = .dat,
       value = na,
       drop.levels = drop.levels,
-      as.tag = as.tag
+      as.tag = as.tag,
+      var.name = NULL
     )
   }
 
@@ -170,7 +207,8 @@ set_na_if <- function(x, predicate, na, drop.levels = TRUE, as.tag = FALSE) {
         x = .dat[[i]],
         value = na,
         drop.levels = drop.levels,
-        as.tag = as.tag
+        as.tag = as.tag,
+        var.name = i
       )
     }
     # coerce to tibble
@@ -180,7 +218,8 @@ set_na_if <- function(x, predicate, na, drop.levels = TRUE, as.tag = FALSE) {
       x = .dat,
       value = na,
       drop.levels = drop.levels,
-      as.tag = as.tag
+      as.tag = as.tag,
+      var.name = NULL
     )
   }
 
@@ -188,12 +227,21 @@ set_na_if <- function(x, predicate, na, drop.levels = TRUE, as.tag = FALSE) {
 }
 
 
+#' @importFrom purrr map2
 #' @importFrom stats na.omit
 #' @importFrom haven tagged_na na_tag
 #' @importFrom sjlabelled get_values get_labels remove_labels
-set_na_helper <- function(x, value, drop.levels, as.tag) {
+set_na_helper <- function(x, value, drop.levels, as.tag, var.name) {
   # check if values has only NA's
   if (sum(is.na(x)) == length(x)) return(x)
+
+  if (is.list(value)) {
+    lnames <- purrr::map2(value, names(value), ~ rep(.y, length(.x))) %>%
+      unlist() %>%
+      unname()
+    value <- unlist(value)
+    names(value) <- lnames
+  }
 
   # check if value is a named vector
   na.names <- names(value)
@@ -261,8 +309,13 @@ set_na_helper <- function(x, value, drop.levels, as.tag) {
           names(attr(x, "labels")) <- c(ln, as.character(value[i]))
       }
     } else {
-      # find associated values in x and set them as tagged NA
-      x[x %in% value[i]] <- NA
+      if (!is.null(na.names) && !is.null(var.name)) {
+        if (na.names[i] == var.name)
+          x[x %in% value[i]] <- NA
+      } else {
+        # find associated values in x and set them as tagged NA
+        x[x %in% value[i]] <- NA
+      }
     }
   }
 

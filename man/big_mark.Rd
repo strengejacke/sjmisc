@@ -2,23 +2,30 @@
 % Please edit documentation in R/big_mark.R
 \name{big_mark}
 \alias{big_mark}
-\title{Formats large numbers with big marks}
+\alias{prcn}
+\title{Format numbers}
 \usage{
 big_mark(x, big.mark = ",", ...)
+
+prcn(x)
 }
 \arguments{
 \item{x}{A vector or data frame. All numeric inputs (including numeric character)
-vectors) will be prettified.}
+vectors) will be prettified. For \code{prcn()}, a number between
+0 and 1, or a vector or data frame with such numbers.}
 
 \item{big.mark}{Character, used as mark between every 3 decimals before the decimal point.}
 
 \item{...}{Other arguments passed down to the \code{\link{prettyNum}}-function.}
 }
 \value{
-A prettified \code{x} as character, with big marks.
+For \code{big_mark()}, a prettified \code{x} as character, with big marks.
+   For \code{prcn}, a character vector with a percentage number.
 }
 \description{
-Formats large numbers with big marks
+\code{big_mark()} formats large numbers with big marks, while
+   \code{prcn()} converts a numeric scalar between 0 and 1 into a character
+   vector, representing the percentage-value.
 }
 \examples{
 # simple big mark
@@ -29,5 +36,9 @@ big_mark(c(1234567, "55443322"))
 
 # pre-defined width of character output
 big_mark(c(1234567, 55443322), width = 15)
+
+# convert scalar into percentage, as character
+prcn(0.2389)
+prcn(c(0.2143887, 0.55443, 0.12345))
 
 }

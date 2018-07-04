@@ -3,11 +3,14 @@
 \name{row_sums}
 \alias{row_sums}
 \alias{row_means}
+\alias{total_mean}
 \title{Row sums and means for data frames}
 \usage{
 row_sums(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE)
 
 row_means(x, ..., n, var = "rowmeans", append = TRUE)
+
+total_mean(x, ...)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -39,7 +42,8 @@ If a row's sum of valid values is less than \code{n}, \code{NA} will be returned
 For \code{row_sums()}, a tibble with a new variable: the row sums from
         \code{x}; for \code{row_means()}, a tibble with a new variable: the row
         means from \code{x}. If \code{append = FALSE}, only the new variable
-        with row sums resp. row means is returned.
+        with row sums resp. row means is returned. \code{total_mean()} returns
+        the mean of all values from all specified columns in a data frame.
 }
 \description{
 \code{row_sums()} simply wraps \code{\link{rowSums}}, while
@@ -77,6 +81,9 @@ row_means(dat, n = 4)
 row_means(dat, c1:c4, n = 4)
 # at least 40\% non-missing
 row_means(dat, c1:c4, n = .4)
+
+# total mean of all values in the data frame
+total_mean(dat)
 
 # create sum-score of COPE-Index, and append to data
 efc \%>\%

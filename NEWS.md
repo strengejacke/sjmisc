@@ -3,6 +3,12 @@
 ## New functions
 
 * `has_na()` to check if variables or observations in a data frame contain `NA`, `NaN` or `Inf` values. Convenient shortcuts for this function are `complete_cases()`, `incomplete_cases()`, `complete_vars()` and `incomplete_vars()`.
+* `total_mean()` to compute the overall mean of all values from all columns in a data frame.
+* `prcn()` to convert numeric scalars between 0 and 1 into a character-percentage value.
+
+## Changes to functions
+
+* `set_na()` now also replaces different values per variable into `NA`.
 
 # sjmisc 2.7.3
 
