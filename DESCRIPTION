@@ -42,5 +42,5 @@ Suggests:
     testthat
 URL: https://github.com/strengejacke/sjmisc, https://strengejacke.github.io/sjmisc
 BugReports: https://github.com/strengejacke/sjmisc/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 VignetteBuilder: knitr

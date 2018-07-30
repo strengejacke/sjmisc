@@ -15,7 +15,8 @@ group_var_if(x, predicate, size = 5, as.num = TRUE,
 
 group_labels(x, ..., size = 5, right.interval = FALSE, n = 30)
 
-group_labels_if(x, predicate, size = 5, right.interval = FALSE, n = 30)
+group_labels_if(x, predicate, size = 5, right.interval = FALSE,
+  n = 30)
 }
 \arguments{
 \item{x}{A vector or data frame.}

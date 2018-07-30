@@ -15,7 +15,8 @@ std_if(x, predicate, robust = c("sd", "2sd", "gmd", "mad"),
 
 center(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c")
 
-center_if(x, predicate, include.fac = FALSE, append = TRUE, suffix = "_c")
+center_if(x, predicate, include.fac = FALSE, append = TRUE,
+  suffix = "_c")
 }
 \arguments{
 \item{x}{A vector or data frame.}

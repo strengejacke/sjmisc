@@ -5,7 +5,8 @@
 \title{Group near elements of string vectors}
 \usage{
 group_str(strings, maxdist = 2, method = "lv", strict = FALSE,
-  trim.whitespace = TRUE, remove.empty = TRUE, showProgressBar = FALSE)
+  trim.whitespace = TRUE, remove.empty = TRUE,
+  showProgressBar = FALSE)
 }
 \arguments{
 \item{strings}{Character vector with string elements.}

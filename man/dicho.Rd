@@ -9,7 +9,8 @@ dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
   val.labels = NULL, append = TRUE, suffix = "_d")
 
 dicho_if(x, predicate, dich.by = "median", as.num = FALSE,
-  var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d")
+  var.label = NULL, val.labels = NULL, append = TRUE,
+  suffix = "_d")
 }
 \arguments{
 \item{x}{A vector or data frame.}

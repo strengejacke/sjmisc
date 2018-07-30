@@ -4,7 +4,8 @@
 \alias{spread_coef}
 \title{Spread model coefficients of list-variables into columns}
 \usage{
-spread_coef(data, model.column, model.term, se, p.val, append = TRUE, ...)
+spread_coef(data, model.column, model.term, se, p.val, append = TRUE,
+  ...)
 }
 \arguments{
 \item{data}{A (nested) data frame with a list-variable that contains fitted
