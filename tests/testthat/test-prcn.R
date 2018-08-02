@@ -3,7 +3,7 @@ context("sjmisc, prcn")
 library(sjmisc)
 
 test_that("prcn", {
-  expect_equal(prcn(0.2389), "24.89%")
+  expect_equal(prcn(0.2389), "23.89%")
 })
 
 test_that("prcn", {

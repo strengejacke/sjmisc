@@ -5,17 +5,15 @@
 #'              \code{row_means()} simply wraps \code{\link[sjstats]{mean_n}},
 #'              however, the argument-structure of both functions is designed
 #'              to work nicely within a pipe-workflow and allows select-helpers
-#'              for selecting variables, the default for \code{na.rm} is \code{TRUE},
-#'              and the return value is always a tibble (with one variable).
+#'              for selecting variables and the return value is always a tibble
+#'              (with one variable).
 #'
 #' @param n May either be
 #'          \itemize{
-#'            \item a numeric value that indicates the amount of valid values per row to calculate the row mean;
-#'            \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see 'Details').
+#'            \item a numeric value that indicates the amount of valid values per row to calculate the row mean or sum;
+#'            \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean or sum (see 'Details').
 #'          }
-#'          If a row's sum of valid values is less than \code{n}, \code{NA} will be returned as row mean value.
-#' @param na.rm Logical, \code{TRUE} if missing values should be omitted from
-#'          the calculations.
+#'          If a row's sum of valid (i.e. non-\code{NA}) values is less than \code{n}, \code{NA} will be returned as value for the row mean or sum.
 #' @param var Name of new the variable with the row sums or means.
 #'
 #' @inheritParams to_factor
@@ -29,17 +27,17 @@
 #'
 #' @details For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If
 #'          a \emph{row} in \code{x} has at least \code{n} non-missing values, the
-#'          row mean is returned. If \code{n} is a non-integer value from 0 to 1,
+#'          row mean or sum is returned. If \code{n} is a non-integer value from 0 to 1,
 #'          \code{n} is considered to indicate the proportion of necessary non-missing
 #'          values per row. E.g., if \code{n = .75}, a row must have at least \code{ncol(x) * n}
-#'          non-missing values for the row mean to be calculated. See 'Examples'.
+#'          non-missing values for the row mean or sum to be calculated. See 'Examples'.
 #'
 #' @examples
 #' data(efc)
-#' efc %>% row_sums(c82cop1:c90cop9, append = FALSE)
+#' efc %>% row_sums(c82cop1:c90cop9, n = 3, append = FALSE)
 #'
 #' library(dplyr)
-#' row_sums(efc, contains("cop"), append = FALSE)
+#' row_sums(efc, contains("cop"), n = 2, append = FALSE)
 #'
 #' dat <- data.frame(
 #'   c1 = c(1,2,NA,4),
@@ -51,9 +49,12 @@
 #' dat
 #'
 #' row_means(dat, n = 4)
+#' row_sums(dat, n = 4)
+#'
 #' row_means(dat, c1:c4, n = 4)
 #' # at least 40% non-missing
 #' row_means(dat, c1:c4, n = .4)
+#' row_sums(dat, c1:c4, n = .4)
 #'
 #' # total mean of all values in the data frame
 #' total_mean(dat)
@@ -61,18 +62,19 @@
 #' # create sum-score of COPE-Index, and append to data
 #' efc %>%
 #'   select(c82cop1:c90cop9) %>%
-#'   row_sums()
+#'   row_sums(n = 1)
 #'
 #' @export
-row_sums <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
+row_sums <- function(x, ...) {
   UseMethod("row_sums")
 }
 
 
 #' @importFrom dplyr quos bind_cols
 #' @importFrom tibble as_tibble
+#' @rdname row_sums
 #' @export
-row_sums.default <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
+row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
@@ -80,7 +82,23 @@ row_sums.default <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRU
   orix <- tibble::as_tibble(x)
 
   if (is.data.frame(x)) {
-    rs <- rowSums(.dat, na.rm = na.rm)
+    # is 'n' indicating a proportion?
+    digs <- n %% 1
+    if (digs != 0) n <- round(ncol(.dat) * digs)
+
+    # check if we have a data framme with at least two columns
+    if (ncol(.dat) < 2) {
+      warning("`x` must be a data frame with at least two columns.", call. = TRUE)
+      return(NA)
+    }
+
+    # n may not be larger as df's amount of columns
+    if (ncol(.dat) < n) {
+      warning("`n` must be smaller or equal to number of columns in data frame.", call. = TRUE)
+      return(NA)
+    }
+
+    rs <- apply(.dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, sum(x, na.rm = TRUE), NA))
   } else {
     stop("`x` must be a data frame.", call. = F)
   }
@@ -97,8 +115,9 @@ row_sums.default <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRU
 }
 
 
+#' @rdname row_sums
 #' @export
-row_sums.mids <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) {
+row_sums.mids <- function(x, ..., var = "rowsums", append = TRUE) {
   rfun <- rowSums
   row_mids(x = x, ..., var = var, append = append, rfun = rfun)
 }
@@ -106,7 +125,7 @@ row_sums.mids <- function(x, ..., na.rm = TRUE, var = "rowsums", append = TRUE) 
 
 #' @rdname row_sums
 #' @export
-row_means <- function(x, ..., n, var = "rowmeans", append = TRUE) {
+row_means <- function(x, ...) {
   UseMethod("row_means")
 }
 
@@ -128,6 +147,7 @@ total_mean.data.frame <- function(x, ...) {
 
 #' @importFrom dplyr quos bind_cols
 #' @importFrom tibble as_tibble
+#' @rdname row_sums
 #' @export
 row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   # evaluate arguments, generate data
@@ -170,8 +190,9 @@ row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
 }
 
 
+#' @rdname row_sums
 #' @export
-row_means.mids <- function(x, ..., na.rm = TRUE, var = "rowmeans", append = TRUE) {
+row_means.mids <- function(x, ..., var = "rowmeans", append = TRUE) {
   rfun <- rowMeans
   row_mids(x = x, ..., var = var, append = append, rfun = rfun)
 }

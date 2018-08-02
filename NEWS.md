@@ -5,10 +5,12 @@
 * `has_na()` to check if variables or observations in a data frame contain `NA`, `NaN` or `Inf` values. Convenient shortcuts for this function are `complete_cases()`, `incomplete_cases()`, `complete_vars()` and `incomplete_vars()`.
 * `total_mean()` to compute the overall mean of all values from all columns in a data frame.
 * `prcn()` to convert numeric scalars between 0 and 1 into a character-percentage value.
+* `numeric_to_factor()` to convert numeric variables into factors, using associated value labels as factor levels.
 
 ## Changes to functions
 
 * `set_na()` now also replaces different values per variable into `NA`.
+* Changed behaviour of `row_sums()` and missing values. `row_sums()` gets a `n`-argument and now computes row sums if a row has at least `n` non-missing values.
 
 # sjmisc 2.7.3
 
