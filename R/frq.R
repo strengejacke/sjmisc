@@ -139,10 +139,22 @@ frq <- function(x,
   } else {
     w <- rlang::quo_name(rlang::enquo(weight.by))
 
-    if (!sjmisc::is_empty(w) && w != "NULL") {
-      if (!tibble::has_name(xw, w) && tibble::has_name(x, w))
-        x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
+    w.string <- tryCatch(
+      {
+        eval(weight.by)
+      },
+      error = function(x) { NULL },
+      warning = function(x) { NULL },
+      finally = function(x) { NULL }
+    )
+
+    if (!is.null(w.string) && is.character(w.string)) w <- w.string
+
+
+    if (!sjmisc::is_empty(w) && w != "NULL" && !tibble::has_name(xw, w) && tibble::has_name(x, w)) {
+      x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
     } else {
+      message(sprintf("Weights `%s` not found in data.", w))
       w <- NULL
       x <- xw
     }
