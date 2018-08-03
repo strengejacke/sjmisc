@@ -13,6 +13,8 @@
 #' @param keep.labels Logical, if \code{TRUE}, former factor levels will be added as
 #'          value labels. For numeric factor levels, values labels will be used,
 #'          if present. See 'Examples' and \code{\link{set_labels}} for more details.
+#' @param use.labels Logical, if \code{TRUE} and \code{x} has numeric value labels,
+#'          these value labels will be set as numeric values.
 #'
 #' @return A numeric variable with values ranging either from \code{start.at} to
 #'           \code{start.at} + length of factor levels, or to the corresponding
@@ -77,27 +79,34 @@
 #' # convert back "sex" and "age" into numeric
 #' to_value(efc, e16sex, e17age)
 #'
+#' x <- factor(c("None", "Little", "Some", "Lots"))
+#' x <- set_labels(x, labels = c("0.5", "1.3", "1.8", ".2"))
+#' x
+#' to_value(x)
+#' to_value(x, use.labels = TRUE)
+#' to_value(x, use.labels = TRUE, keep.labels = FALSE)
+#'
 #' @export
-to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE) {
+to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE) {
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
 
   if (is.data.frame(x)) {
     # iterate variables of data frame
     for (i in colnames(.dat)) {
-      x[[i]] <- to_value_helper(.dat[[i]], start.at, keep.labels)
+      x[[i]] <- to_value_helper(.dat[[i]], start.at, keep.labels, use.labels)
     }
     # coerce to tibble
     x <- tibble::as_tibble(x)
   } else {
-    x <- to_value_helper(.dat, start.at, keep.labels)
+    x <- to_value_helper(.dat, start.at, keep.labels, use.labels)
   }
 
   x
 }
 
 
-to_value_helper <- function(x, start.at, keep.labels) {
+to_value_helper <- function(x, start.at, keep.labels, use.labels) {
   labels <- NULL
 
   # is already numeric?
@@ -108,6 +117,9 @@ to_value_helper <- function(x, start.at, keep.labels) {
 
   # get labels
   labels <- sjlabelled::get_labels(x, attr.only = T, include.values = "n")
+
+  # get values, if these should be used after converting
+  values <- get_values(x)
 
   # is character?
   if (is.character(x)) {
@@ -144,14 +156,21 @@ to_value_helper <- function(x, start.at, keep.labels) {
   } else {
     # use non-numeric factor levels as new labels
     labels <- levels(x)
-    # check start.at value
-    if (is.null(start.at)) start.at <- 1
-    # get amount of categories
-    l <- length(levels(x))
-    # determine highest category value
-    end <- start.at + l - 1
-    # replace labels with numeric values
-    levels(x) <- start.at:end
+    # check which numeric values to use. If value labels were
+    # numeric and 'use.labels = TRUE', value labels as used
+    # as values
+    if (use.labels) {
+      levels(x) <- values
+    } else {
+      # check start.at value
+      if (is.null(start.at)) start.at <- 1
+      # get amount of categories
+      l <- length(levels(x))
+      # determine highest category value
+      end <- start.at + l - 1
+      # replace labels with numeric values
+      levels(x) <- start.at:end
+    }
     # convert to numeric
     new_value <- as.numeric(as.character(x))
   }

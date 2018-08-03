@@ -36,8 +36,8 @@
              row_means() simply wraps mean_n,
              however, the argument-structure of both functions is designed
              to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables, the default for na.rm is TRUE,
-             and the return value is always a tibble (with one variable)." />
+             for selecting variables and the return value is always a tibble
+             (with one variable)." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
       </span>
     </div>
 
@@ -133,14 +133,28 @@
              <code>row_means()</code> simply wraps <code><a href='http://www.rdocumentation.org/packages/sjstats/topics/mean_n'>mean_n</a></code>,
              however, the argument-structure of both functions is designed
              to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables, the default for <code>na.rm</code> is <code>TRUE</code>,
-             and the return value is always a tibble (with one variable).</p>
+             for selecting variables and the return value is always a tibble
+             (with one variable).</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>row_sums</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"rowsums"</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>row_sums</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-<span class='fu'>row_means</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>n</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"rowmeans"</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='co'># S3 method for default</span>
+<span class='fu'>row_sums</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>n</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"rowsums"</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for mids</span>
+<span class='fu'>row_sums</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"rowsums"</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'>row_means</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='fu'>total_mean</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for default</span>
+<span class='fu'>row_means</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>n</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"rowmeans"</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># S3 method for mids</span>
+<span class='fu'>row_means</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>var</span> <span class='kw'>=</span> <span class='st'>"rowmeans"</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,9 +173,11 @@ You may also use functions like <code>:</code> or tidyselect's
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
     <tr>
-      <th>na.rm</th>
-      <td><p>Logical, <code>TRUE</code> if missing values should be omitted from
-the calculations.</p></td>
+      <th>n</th>
+      <td><p>May either be</p><ul>
+<li><p>a numeric value that indicates the amount of valid values per row to calculate the row mean or sum;</p></li>
+<li><p>or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean or sum (see 'Details').</p></li>
+</ul><p>If a row's sum of valid (i.e. non-<code>NA</code>) values is less than <code>n</code>, <code>NA</code> will be returned as value for the row mean or sum.</p></td>
     </tr>
     <tr>
       <th>var</th>
@@ -173,13 +189,6 @@ the calculations.</p></td>
 <code>x</code> including the new variables as additional columns is returned;
 if <code>FALSE</code>, only the new variables are returned.</p></td>
     </tr>
-    <tr>
-      <th>n</th>
-      <td><p>May either be</p><ul>
-<li><p>a numeric value that indicates the amount of valid values per row to calculate the row mean;</p></li>
-<li><p>or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean (see 'Details').</p></li>
-</ul><p>If a row's sum of valid values is less than <code>n</code>, <code>NA</code> will be returned as row mean value.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -187,21 +196,22 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
     <p>For <code>row_sums()</code>, a tibble with a new variable: the row sums from
         <code>x</code>; for <code>row_means()</code>, a tibble with a new variable: the row
         means from <code>x</code>. If <code>append = FALSE</code>, only the new variable
-        with row sums resp. row means is returned.</p>
+        with row sums resp. row means is returned. <code>total_mean()</code> returns
+        the mean of all values from all specified columns in a data frame.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For <code>n</code>, must be a numeric value from <code>0</code> to <code>ncol(x)</code>. If
          a <em>row</em> in <code>x</code> has at least <code>n</code> non-missing values, the
-         row mean is returned. If <code>n</code> is a non-integer value from 0 to 1,
+         row mean or sum is returned. If <code>n</code> is a non-integer value from 0 to 1,
          <code>n</code> is considered to indicate the proportion of necessary non-missing
          values per row. E.g., if <code>n = .75</code>, a row must have at least <code>ncol(x) * n</code>
-         non-missing values for the row mean to be calculated. See 'Examples'.</p>
+         non-missing values for the row mean or sum to be calculated. See 'Examples'.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>efc</span>)
-<span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'>row_sums</span>(<span class='no'>c82cop1</span>:<span class='no'>c90cop9</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 1
+<span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'>row_sums</span>(<span class='no'>c82cop1</span>:<span class='no'>c90cop9</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 1
 #&gt;    rowsums
 #&gt;      &lt;dbl&gt;
 #&gt;  1      19
@@ -216,7 +226,7 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
 #&gt; 10      15
 #&gt; # ... with 898 more rows</div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='fu'>row_sums</span>(<span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 1
+<span class='fu'>row_sums</span>(<span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 1
 #&gt;    rowsums
 #&gt;      &lt;dbl&gt;
 #&gt;  1      19
@@ -248,7 +258,14 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
 #&gt; 1     1    NA    NA     2     1     NA  
 #&gt; 2     2     2     4     3     7      3.6
 #&gt; 3    NA    NA    NA     7     5     NA  
-#&gt; 4     4     5    NA     8     3      5  </div><div class='input'><span class='fu'>row_means</span>(<span class='no'>dat</span>, <span class='no'>c1</span>:<span class='no'>c4</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 6
+#&gt; 4     4     5    NA     8     3      5  </div><div class='input'><span class='fu'>row_sums</span>(<span class='no'>dat</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 6
+#&gt;      c1    c2    c3    c4    c5 rowsums
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1     1    NA    NA     2     1      NA
+#&gt; 2     2     2     4     3     7      18
+#&gt; 3    NA    NA    NA     7     5      NA
+#&gt; 4     4     5    NA     8     3      20</div><div class='input'>
+<span class='fu'>row_means</span>(<span class='no'>dat</span>, <span class='no'>c1</span>:<span class='no'>c4</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 6
 #&gt;      c1    c2    c3    c4    c5 rowmeans
 #&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
 #&gt; 1     1    NA    NA     2     1    NA   
@@ -261,11 +278,19 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
 #&gt; 1     1    NA    NA     2     1     1.5 
 #&gt; 2     2     2     4     3     7     2.75
 #&gt; 3    NA    NA    NA     7     5    NA   
-#&gt; 4     4     5    NA     8     3     5.67</div><div class='input'>
+#&gt; 4     4     5    NA     8     3     5.67</div><div class='input'><span class='fu'>row_sums</span>(<span class='no'>dat</span>, <span class='no'>c1</span>:<span class='no'>c4</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>.4</span>)</div><div class='output co'>#&gt; # A tibble: 4 x 6
+#&gt;      c1    c2    c3    c4    c5 rowsums
+#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1     1    NA    NA     2     1       3
+#&gt; 2     2     2     4     3     7      11
+#&gt; 3    NA    NA    NA     7     5      NA
+#&gt; 4     4     5    NA     8     3      17</div><div class='input'>
+<span class='co'># total mean of all values in the data frame</span>
+<span class='fu'>total_mean</span>(<span class='no'>dat</span>)</div><div class='output co'>#&gt; [1] 3.857143</div><div class='input'>
 <span class='co'># create sum-score of COPE-Index, and append to data</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>c82cop1</span>:<span class='no'>c90cop9</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>row_sums</span>()</div><div class='output co'>#&gt; # A tibble: 908 x 10
+  <span class='fu'>row_sums</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 10
 #&gt;    c82cop1 c83cop2 c84cop3 c85cop4 c86cop5 c87cop6 c88cop7 c89cop8 c90cop9
 #&gt;      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
 #&gt;  1       3       2       2       2       1       1       2       3       3

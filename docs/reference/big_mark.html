@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Formats large numbers with big marks — big_mark • sjmisc</title>
+<title>Format numbers — big_mark • sjmisc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Formats large numbers with big marks — big_mark" />
+<meta property="og:title" content="Format numbers — big_mark" />
 
-<meta property="og:description" content="Formats large numbers with big marks" />
+<meta property="og:description" content="big_mark() formats large numbers with big marks, while
+   prcn() converts a numeric scalar between 0 and 1 into a character
+   vector, representing the percentage-value." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -63,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
       </span>
     </div>
 
@@ -117,18 +119,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Formats large numbers with big marks</h1>
+    <h1>Format numbers</h1>
     <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/big_mark.R'><code>R/big_mark.R</code></a></small>
     <div class="hidden name"><code>big_mark.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Formats large numbers with big marks</p>
+    <p><code>big_mark()</code> formats large numbers with big marks, while
+   <code>prcn()</code> converts a numeric scalar between 0 and 1 into a character
+   vector, representing the percentage-value.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>big_mark</span>(<span class='no'>x</span>, <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>big_mark</span>(<span class='no'>x</span>, <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='no'>...</span>)
+
+<span class='fu'>prcn</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,7 +142,8 @@
     <tr>
       <th>x</th>
       <td><p>A vector or data frame. All numeric inputs (including numeric character)
-vectors) will be prettified.</p></td>
+vectors) will be prettified. For <code>prcn()</code>, a number between
+0 and 1, or a vector or data frame with such numbers.</p></td>
     </tr>
     <tr>
       <th>big.mark</th>
@@ -150,7 +157,8 @@ vectors) will be prettified.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A prettified <code>x</code> as character, with big marks.</p>
+    <p>For <code>big_mark()</code>, a prettified <code>x</code> as character, with big marks.
+   For <code>prcn</code>, a character vector with a percentage number.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -160,6 +168,17 @@ vectors) will be prettified.</p></td>
 <span class='fu'>big_mark</span>(<span class='fu'>c</span>(<span class='fl'>1234567</span>, <span class='st'>"55443322"</span>))</div><div class='output co'>#&gt; [1] " 1,234,567" "55,443,322"</div><div class='input'>
 <span class='co'># pre-defined width of character output</span>
 <span class='fu'>big_mark</span>(<span class='fu'>c</span>(<span class='fl'>1234567</span>, <span class='fl'>55443322</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; [1] "        1,234,567" "       55,443,322"</div><div class='input'>
+<span class='co'># convert numbers into percentage, as character</span>
+<span class='fu'>prcn</span>(<span class='fl'>0.2389</span>)</div><div class='output co'>#&gt; [1] "23.89%"</div><div class='input'><span class='fu'>prcn</span>(<span class='fu'>c</span>(<span class='fl'>0.2143887</span>, <span class='fl'>0.55443</span>, <span class='fl'>0.12345</span>))</div><div class='output co'>#&gt; [1] "21.44%" "55.44%" "12.35%"</div><div class='input'>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>.321</span>, <span class='fl'>.121</span>, <span class='fl'>.64543</span>),
+  <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>),
+  <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>.435</span>, <span class='fl'>.54352</span>, <span class='fl'>.234432</span>)
+)
+<span class='fu'>prcn</span>(<span class='no'>dat</span>)</div><div class='output co'>#&gt;        a b      c
+#&gt; 1 32.10% a 43.50%
+#&gt; 2 12.10% b 54.35%
+#&gt; 3 64.54% c 23.44%</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

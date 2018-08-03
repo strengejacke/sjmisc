@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
       </span>
     </div>
 
@@ -187,14 +187,14 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 #&gt; 6        0        0        0        1</div><div class='input'>
 <span class='co'># add value label as suffix to new variable name</span>
 <span class='fu'>head</span>(<span class='fu'>to_dummy</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"label"</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 4
-#&gt;   e42dep_independent `e42dep_slightly d~ `e42dep_moderately~ `e42dep_severely ~
-#&gt;                &lt;dbl&gt;               &lt;dbl&gt;               &lt;dbl&gt;              &lt;dbl&gt;
-#&gt; 1                  0                   0                   1                  0
-#&gt; 2                  0                   0                   1                  0
-#&gt; 3                  0                   0                   1                  0
-#&gt; 4                  0                   0                   0                  1
-#&gt; 5                  0                   0                   0                  1
-#&gt; 6                  0                   0                   0                  1</div><div class='input'>
+#&gt;   e42dep_independe~ `e42dep_slightly d~ `e42dep_moderately ~ `e42dep_severely ~
+#&gt;               &lt;dbl&gt;               &lt;dbl&gt;                &lt;dbl&gt;              &lt;dbl&gt;
+#&gt; 1                 0                   0                    1                  0
+#&gt; 2                 0                   0                    1                  0
+#&gt; 3                 0                   0                    1                  0
+#&gt; 4                 0                   0                    0                  1
+#&gt; 5                 0                   0                    0                  1
+#&gt; 6                 0                   0                    0                  1</div><div class='input'>
 <span class='co'># use "dummy" as new variable name</span>
 <span class='fu'>head</span>(<span class='fu'>to_dummy</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>, <span class='kw'>var.name</span> <span class='kw'>=</span> <span class='st'>"dummy"</span>))</div><div class='output co'>#&gt; # A tibble: 6 x 4
 #&gt;   dummy_1 dummy_2 dummy_3 dummy_4

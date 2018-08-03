@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
       </span>
     </div>
 
@@ -144,7 +144,8 @@
 
 <span class='fu'>center</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>include.fac</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_c"</span>)
 
-<span class='fu'>center_if</span>(<span class='no'>x</span>, <span class='no'>predicate</span>, <span class='kw'>include.fac</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_c"</span>)</pre>
+<span class='fu'>center_if</span>(<span class='no'>x</span>, <span class='no'>predicate</span>, <span class='kw'>include.fac</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_c"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -419,23 +420,22 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; [907]          NA          NA
 #&gt; attr(,"label")
 #&gt; [1] "elder' age"</div><div class='input'><span class='fu'>std</span>(<span class='no'>efc</span>, <span class='no'>e17age</span>) <span class='co'># returns a tibble</span></div><div class='output co'>#&gt; # A tibble: 908 x 27
-#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
-#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1      16        2      2     83      3       3       2       2       2
-#&gt;  2     148        2      2     88      3       3       3       3       3
-#&gt;  3      70        1      2     82      3       2       2       1       4
-#&gt;  4     168        1      2     67      4       4       1       3       1
-#&gt;  5     168        2      2     84      4       3       2       1       2
-#&gt;  6      16        2      2     85      4       2       2       3       3
-#&gt;  7     161        1      1     74      4       4       2       4       1
-#&gt;  8     110        4      2     87      4       3       2       2       1
-#&gt;  9      28        2      2     79      4       3       2       3       2
-#&gt; 10      40        2      2     83      4       3       2       1       2
-#&gt; # ... with 898 more rows, and 18 more variables: c86cop5 &lt;dbl&gt;, c87cop6 &lt;dbl&gt;,
-#&gt; #   c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;,
-#&gt; #   c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;,
-#&gt; #   pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;, resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;,
-#&gt; #   nur_pst &lt;dbl&gt;, e17age_z &lt;dbl&gt;</div><div class='input'>
+#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1      16        2      2     83      3       3       2       2       2       1
+#&gt;  2     148        2      2     88      3       3       3       3       3       4
+#&gt;  3      70        1      2     82      3       2       2       1       4       1
+#&gt;  4     168        1      2     67      4       4       1       3       1       1
+#&gt;  5     168        2      2     84      4       3       2       1       2       2
+#&gt;  6      16        2      2     85      4       2       2       3       3       3
+#&gt;  7     161        1      1     74      4       4       2       4       1       1
+#&gt;  8     110        4      2     87      4       3       2       2       1       1
+#&gt;  9      28        2      2     79      4       3       2       3       2       2
+#&gt; 10      40        2      2     83      4       3       2       1       2       1
+#&gt; # ... with 898 more rows, and 17 more variables: c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;,
+#&gt; #   c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;,
+#&gt; #   c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,
+#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;, e17age_z &lt;dbl&gt;</div><div class='input'>
 <span class='co'># works with mutate()</span>
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>

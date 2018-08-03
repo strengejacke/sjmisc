@@ -73,7 +73,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
       </span>
     </div>
 
@@ -271,69 +271,68 @@ as new columns to <code>data</code>.</p></td>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e17age</span>, <span class='no'>c160age</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='std.html'>std</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>add_columns</span>(<span class='no'>efc</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 28
-#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
-#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1      16        2      2     83      3       3       2       2       2
-#&gt;  2     148        2      2     88      3       3       3       3       3
-#&gt;  3      70        1      2     82      3       2       2       1       4
-#&gt;  4     168        1      2     67      4       4       1       3       1
-#&gt;  5     168        2      2     84      4       3       2       1       2
-#&gt;  6      16        2      2     85      4       2       2       3       3
-#&gt;  7     161        1      1     74      4       4       2       4       1
-#&gt;  8     110        4      2     87      4       3       2       2       1
-#&gt;  9      28        2      2     79      4       3       2       3       2
-#&gt; 10      40        2      2     83      4       3       2       1       2
-#&gt; # ... with 898 more rows, and 19 more variables: c86cop5 &lt;dbl&gt;, c87cop6 &lt;dbl&gt;,
-#&gt; #   c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;,
-#&gt; #   c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;,
-#&gt; #   pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;, resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;,
-#&gt; #   nur_pst &lt;dbl&gt;, e17age_z &lt;dbl&gt;, c160age_z &lt;dbl&gt;</div><div class='input'>
+#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1      16        2      2     83      3       3       2       2       2       1
+#&gt;  2     148        2      2     88      3       3       3       3       3       4
+#&gt;  3      70        1      2     82      3       2       2       1       4       1
+#&gt;  4     168        1      2     67      4       4       1       3       1       1
+#&gt;  5     168        2      2     84      4       3       2       1       2       2
+#&gt;  6      16        2      2     85      4       2       2       3       3       3
+#&gt;  7     161        1      1     74      4       4       2       4       1       1
+#&gt;  8     110        4      2     87      4       3       2       2       1       1
+#&gt;  9      28        2      2     79      4       3       2       3       2       2
+#&gt; 10      40        2      2     83      4       3       2       1       2       1
+#&gt; # ... with 898 more rows, and 18 more variables: c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;,
+#&gt; #   c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;,
+#&gt; #   c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,
+#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;,
+#&gt; #   e17age_z &lt;dbl&gt;, c160age_z &lt;dbl&gt;</div><div class='input'>
 <span class='co'># new variables with same name will overwrite old variables</span>
 <span class='co'># in "efc". order of columns is not changed.</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='to_factor.html'>to_factor</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>add_columns</span>(<span class='no'>efc</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 26
-#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
-#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1      16        2 2          83 3            3       2       2       2
-#&gt;  2     148        2 2          88 3            3       3       3       3
-#&gt;  3      70        1 2          82 3            2       2       1       4
-#&gt;  4     168        1 2          67 4            4       1       3       1
-#&gt;  5     168        2 2          84 4            3       2       1       2
-#&gt;  6      16        2 2          85 4            2       2       3       3
-#&gt;  7     161        1 1          74 4            4       2       4       1
-#&gt;  8     110        4 2          87 4            3       2       2       1
-#&gt;  9      28        2 2          79 4            3       2       3       2
-#&gt; 10      40        2 2          83 4            3       2       1       2
-#&gt; # ... with 898 more rows, and 17 more variables: c86cop5 &lt;dbl&gt;, c87cop6 &lt;dbl&gt;,
-#&gt; #   c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;,
-#&gt; #   c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;,
-#&gt; #   pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;, resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;,
-#&gt; #   nur_pst &lt;dbl&gt;</div><div class='input'>
+#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1      16        2 2          83 3            3       2       2       2       1
+#&gt;  2     148        2 2          88 3            3       3       3       3       4
+#&gt;  3      70        1 2          82 3            2       2       1       4       1
+#&gt;  4     168        1 2          67 4            4       1       3       1       1
+#&gt;  5     168        2 2          84 4            3       2       1       2       2
+#&gt;  6      16        2 2          85 4            2       2       3       3       3
+#&gt;  7     161        1 1          74 4            4       2       4       1       1
+#&gt;  8     110        4 2          87 4            3       2       2       1       1
+#&gt;  9      28        2 2          79 4            3       2       3       2       2
+#&gt; 10      40        2 2          83 4            3       2       1       2       1
+#&gt; # ... with 898 more rows, and 16 more variables: c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;,
+#&gt; #   c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;,
+#&gt; #   c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,
+#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;</div><div class='input'>
 <span class='co'># keep both old and new variables, automatically</span>
 <span class='co'># rename variables with identical name</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='to_factor.html'>to_factor</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>add_columns</span>(<span class='no'>efc</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 28
-#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
-#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-#&gt;  1      16        2      2     83      3       3       2       2       2
-#&gt;  2     148        2      2     88      3       3       3       3       3
-#&gt;  3      70        1      2     82      3       2       2       1       4
-#&gt;  4     168        1      2     67      4       4       1       3       1
-#&gt;  5     168        2      2     84      4       3       2       1       2
-#&gt;  6      16        2      2     85      4       2       2       3       3
-#&gt;  7     161        1      1     74      4       4       2       4       1
-#&gt;  8     110        4      2     87      4       3       2       2       1
-#&gt;  9      28        2      2     79      4       3       2       3       2
-#&gt; 10      40        2      2     83      4       3       2       1       2
-#&gt; # ... with 898 more rows, and 19 more variables: c86cop5 &lt;dbl&gt;, c87cop6 &lt;dbl&gt;,
-#&gt; #   c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;,
-#&gt; #   c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;,
-#&gt; #   pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;, resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;,
-#&gt; #   nur_pst &lt;dbl&gt;, e16sex1 &lt;fct&gt;, e42dep1 &lt;fct&gt;</div><div class='input'>
+#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1      16        2      2     83      3       3       2       2       2       1
+#&gt;  2     148        2      2     88      3       3       3       3       3       4
+#&gt;  3      70        1      2     82      3       2       2       1       4       1
+#&gt;  4     168        1      2     67      4       4       1       3       1       1
+#&gt;  5     168        2      2     84      4       3       2       1       2       2
+#&gt;  6      16        2      2     85      4       2       2       3       3       3
+#&gt;  7     161        1      1     74      4       4       2       4       1       1
+#&gt;  8     110        4      2     87      4       3       2       2       1       1
+#&gt;  9      28        2      2     79      4       3       2       3       2       2
+#&gt; 10      40        2      2     83      4       3       2       1       2       1
+#&gt; # ... with 898 more rows, and 18 more variables: c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;,
+#&gt; #   c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;, c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;,
+#&gt; #   c175empl &lt;dbl&gt;, barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,
+#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;, e16sex1 &lt;fct&gt;,
+#&gt; #   e42dep1 &lt;fct&gt;</div><div class='input'>
 <span class='co'># create sample data frames</span>
 <span class='no'>d1</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span>[, <span class='fl'>1</span>:<span class='fl'>10</span>]
 <span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span>[, <span class='fl'>2</span>:<span class='fl'>3</span>]
@@ -355,35 +354,34 @@ as new columns to <code>data</code>.</p></td>
 
 <span class='co'># replace duplicated columns, append remaining</span>
 <span class='fu'>replace_columns</span>(<span class='no'>d1</span>, <span class='no'>d2</span>, <span class='no'>d3</span>, <span class='no'>d4</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 12
-#&gt;    c12hour e15relat       e16sex e17age e42dep c82cop1 c83cop2  c84cop3 c85cop4
-#&gt;      &lt;dbl&gt; &lt;fct&gt;          &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;
-#&gt;  1      16 child          female     83      3       3 Sometim~ Someti~       2
-#&gt;  2     148 child          female     88      3       3 Often    Often         3
-#&gt;  3      70 spouse/partner female     82      3       2 Sometim~ Never         4
-#&gt;  4     168 spouse/partner female     67      4       4 Never    Often         1
-#&gt;  5     168 child          female     84      4       3 Sometim~ Never         2
-#&gt;  6      16 child          female     85      4       2 Sometim~ Often         3
-#&gt;  7     161 spouse/partner male       74      4       4 Sometim~ Always        1
-#&gt;  8     110 daughter or s~ female     87      4       3 Sometim~ Someti~       1
-#&gt;  9      28 child          female     79      4       3 Sometim~ Often         2
-#&gt; 10      40 child          female     83      4       3 Sometim~ Never         2
-#&gt; # ... with 898 more rows, and 3 more variables: c86cop5 &lt;dbl&gt;, c87cop6 &lt;dbl&gt;,
-#&gt; #   c88cop7 &lt;dbl&gt;</div><div class='input'>
+#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+#&gt;      &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1      16 child    female     83      3       3 Someti~ Someti~       2       1
+#&gt;  2     148 child    female     88      3       3 Often   Often         3       4
+#&gt;  3      70 spouse/~ female     82      3       2 Someti~ Never         4       1
+#&gt;  4     168 spouse/~ female     67      4       4 Never   Often         1       1
+#&gt;  5     168 child    female     84      4       3 Someti~ Never         2       2
+#&gt;  6      16 child    female     85      4       2 Someti~ Often         3       3
+#&gt;  7     161 spouse/~ male       74      4       4 Someti~ Always        1       1
+#&gt;  8     110 daughte~ female     87      4       3 Someti~ Someti~       1       1
+#&gt;  9      28 child    female     79      4       3 Someti~ Often         2       2
+#&gt; 10      40 child    female     83      4       3 Someti~ Never         2       1
+#&gt; # ... with 898 more rows, and 2 more variables: c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;</div><div class='input'>
 <span class='co'># replace duplicated columns, omit remaining</span>
 <span class='fu'>replace_columns</span>(<span class='no'>d1</span>, <span class='no'>d2</span>, <span class='no'>d3</span>, <span class='no'>d4</span>, <span class='kw'>add.unique</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; # A tibble: 908 x 10
-#&gt;    c12hour e15relat       e16sex e17age e42dep c82cop1 c83cop2  c84cop3 c85cop4
-#&gt;      &lt;dbl&gt; &lt;fct&gt;          &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;
-#&gt;  1      16 child          female     83      3       3 Sometim~ Someti~       2
-#&gt;  2     148 child          female     88      3       3 Often    Often         3
-#&gt;  3      70 spouse/partner female     82      3       2 Sometim~ Never         4
-#&gt;  4     168 spouse/partner female     67      4       4 Never    Often         1
-#&gt;  5     168 child          female     84      4       3 Sometim~ Never         2
-#&gt;  6      16 child          female     85      4       2 Sometim~ Often         3
-#&gt;  7     161 spouse/partner male       74      4       4 Sometim~ Always        1
-#&gt;  8     110 daughter or s~ female     87      4       3 Sometim~ Someti~       1
-#&gt;  9      28 child          female     79      4       3 Sometim~ Often         2
-#&gt; 10      40 child          female     83      4       3 Sometim~ Never         2
-#&gt; # ... with 898 more rows, and 1 more variable: c86cop5 &lt;dbl&gt;</div><div class='input'>
+#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84co~ c85cop4 c86cop5
+#&gt;      &lt;dbl&gt; &lt;fct&gt;    &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;fct&gt;   &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+#&gt;  1      16 child    female     83      3       3 Someti~ Somet~       2       1
+#&gt;  2     148 child    female     88      3       3 Often   Often        3       4
+#&gt;  3      70 spouse/~ female     82      3       2 Someti~ Never        4       1
+#&gt;  4     168 spouse/~ female     67      4       4 Never   Often        1       1
+#&gt;  5     168 child    female     84      4       3 Someti~ Never        2       2
+#&gt;  6      16 child    female     85      4       2 Someti~ Often        3       3
+#&gt;  7     161 spouse/~ male       74      4       4 Someti~ Always       1       1
+#&gt;  8     110 daughte~ female     87      4       3 Someti~ Somet~       1       1
+#&gt;  9      28 child    female     79      4       3 Someti~ Often        2       2
+#&gt; 10      40 child    female     83      4       3 Someti~ Never        2       1
+#&gt; # ... with 898 more rows</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
