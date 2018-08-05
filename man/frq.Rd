@@ -2,7 +2,7 @@
 % Please edit documentation in R/frq.R
 \name{frq}
 \alias{frq}
-\title{Frequencies of labelled variables}
+\title{Frequency table of labelled variables}
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weight.by = NULL,
   auto.grp = NULL, show.strings = TRUE, grp.strings = NULL,
@@ -24,9 +24,9 @@ according to their frequencies or not. Default is \code{"none"}, so
 categories are not sorted by frequency. Use \code{"asc"} or
 \code{"desc"} for sorting categories ascending or descending order.}
 
-\item{weight.by}{Name of variable in \code{x} that indicated the vector of
-weights that will be applied to weight all  observations. Default is
-\code{NULL}, so no weights are used.}
+\item{weight.by}{Bare name, or name as string, of a variable in \code{x}
+that indicates the vector of weights, which will be applied to weight all
+observations. Default is \code{NULL}, so no weights are used.}
 
 \item{auto.grp}{Numeric value, indicating the minimum amount of unique
 values in a variable, at which automatic grouping into smaller  units
@@ -63,7 +63,7 @@ This function returns a frequency table of labelled vectors, as data frame.
       The \code{print()}-method adds a table header with information on the
       variable label, variable type, total and valid N, and mean and
       standard deviations. Mean and SD are \emph{always} printed, even for
-      categorical vriables (factors) or character vectors. In this case,
+      categorical variables (factors) or character vectors. In this case,
       values are coerced into numeric vector to calculate the summary
       statistics.
 }

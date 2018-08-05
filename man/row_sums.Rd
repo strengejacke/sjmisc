@@ -49,26 +49,24 @@ if \code{FALSE}, only the new variables are returned.}
 }
 \value{
 For \code{row_sums()}, a tibble with a new variable: the row sums from
-        \code{x}; for \code{row_means()}, a tibble with a new variable: the row
-        means from \code{x}. If \code{append = FALSE}, only the new variable
-        with row sums resp. row means is returned. \code{total_mean()} returns
-        the mean of all values from all specified columns in a data frame.
+   \code{x}; for \code{row_means()}, a tibble with a new variable: the row
+   means from \code{x}. If \code{append = FALSE}, only the new variable
+   with row sums resp. row means is returned. \code{total_mean()} returns
+   the mean of all values from all specified columns in a data frame.
 }
 \description{
-\code{row_sums()} simply wraps \code{\link{rowSums}}, while
-             \code{row_means()} simply wraps \code{\link[sjstats]{mean_n}},
-             however, the argument-structure of both functions is designed
-             to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables and the return value is always a tibble
-             (with one variable).
+\code{row_sums()} and \code{row_means()} compute row sums or means
+   for at least \code{n} valid values per row. The functions are designed
+   to work nicely within a pipe-workflow and allow select-helpers
+   for selecting variables.
 }
 \details{
 For \code{n}, must be a numeric value from \code{0} to \code{ncol(x)}. If
-         a \emph{row} in \code{x} has at least \code{n} non-missing values, the
-         row mean or sum is returned. If \code{n} is a non-integer value from 0 to 1,
-         \code{n} is considered to indicate the proportion of necessary non-missing
-         values per row. E.g., if \code{n = .75}, a row must have at least \code{ncol(x) * n}
-         non-missing values for the row mean or sum to be calculated. See 'Examples'.
+   a \emph{row} in \code{x} has at least \code{n} non-missing values, the
+   row mean or sum is returned. If \code{n} is a non-integer value from 0 to 1,
+   \code{n} is considered to indicate the proportion of necessary non-missing
+   values per row. E.g., if \code{n = .75}, a row must have at least \code{ncol(x) * n}
+   non-missing values for the row mean or sum to be calculated. See 'Examples'.
 }
 \examples{
 data(efc)

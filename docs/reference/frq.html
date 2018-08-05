@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Frequencies of labelled variables — frq • sjmisc</title>
+<title>Frequency table of labelled variables — frq • sjmisc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Frequencies of labelled variables — frq" />
+<meta property="og:title" content="Frequency table of labelled variables — frq" />
 
 <meta property="og:description" content="This function returns a frequency table of labelled vectors, as data frame." />
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
       </span>
     </div>
 
@@ -117,7 +117,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Frequencies of labelled variables</h1>
+    <h1>Frequency table of labelled variables</h1>
     <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/frq.R'><code>R/frq.R</code></a></small>
     <div class="hidden name"><code>frq.Rd</code></div>
     </div>
@@ -158,9 +158,9 @@ categories are not sorted by frequency. Use <code>"asc"</code> or
     </tr>
     <tr>
       <th>weight.by</th>
-      <td><p>Name of variable in <code>x</code> that indicated the vector of
-weights that will be applied to weight all  observations. Default is
-<code>NULL</code>, so no weights are used.</p></td>
+      <td><p>Bare name, or name as string, of a variable in <code>x</code>
+that indicates the vector of weights, which will be applied to weight all
+observations. Default is <code>NULL</code>, so no weights are used.</p></td>
     </tr>
     <tr>
       <th>auto.grp</th>
@@ -206,7 +206,7 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
       The <code>print()</code>-method adds a table header with information on the
       variable label, variable type, total and valid N, and mean and
       standard deviations. Mean and SD are <em>always</em> printed, even for
-      categorical vriables (factors) or character vectors. In this case,
+      categorical variables (factors) or character vectors. In this case,
       values are coerced into numeric vector to calculate the summary
       statistics.</p>
     

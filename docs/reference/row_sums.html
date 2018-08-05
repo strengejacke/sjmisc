@@ -32,12 +32,10 @@
 
 <meta property="og:title" content="Row sums and means for data frames — row_sums" />
 
-<meta property="og:description" content="row_sums() simply wraps rowSums, while
-             row_means() simply wraps mean_n,
-             however, the argument-structure of both functions is designed
-             to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables and the return value is always a tibble
-             (with one variable)." />
+<meta property="og:description" content="row_sums() and row_means() compute row sums or means
+   for at least n valid values per row. The functions are designed
+   to work nicely within a pipe-workflow and allow select-helpers
+   for selecting variables." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -68,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.3.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
       </span>
     </div>
 
@@ -129,12 +127,10 @@
 
     <div class="ref-description">
     
-    <p><code>row_sums()</code> simply wraps <code>rowSums</code>, while
-             <code>row_means()</code> simply wraps <code><a href='http://www.rdocumentation.org/packages/sjstats/topics/mean_n'>mean_n</a></code>,
-             however, the argument-structure of both functions is designed
-             to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables and the return value is always a tibble
-             (with one variable).</p>
+    <p><code>row_sums()</code> and <code>row_means()</code> compute row sums or means
+   for at least <code>n</code> valid values per row. The functions are designed
+   to work nicely within a pipe-workflow and allow select-helpers
+   for selecting variables.</p>
     
     </div>
 
@@ -194,19 +190,19 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>For <code>row_sums()</code>, a tibble with a new variable: the row sums from
-        <code>x</code>; for <code>row_means()</code>, a tibble with a new variable: the row
-        means from <code>x</code>. If <code>append = FALSE</code>, only the new variable
-        with row sums resp. row means is returned. <code>total_mean()</code> returns
-        the mean of all values from all specified columns in a data frame.</p>
+   <code>x</code>; for <code>row_means()</code>, a tibble with a new variable: the row
+   means from <code>x</code>. If <code>append = FALSE</code>, only the new variable
+   with row sums resp. row means is returned. <code>total_mean()</code> returns
+   the mean of all values from all specified columns in a data frame.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For <code>n</code>, must be a numeric value from <code>0</code> to <code>ncol(x)</code>. If
-         a <em>row</em> in <code>x</code> has at least <code>n</code> non-missing values, the
-         row mean or sum is returned. If <code>n</code> is a non-integer value from 0 to 1,
-         <code>n</code> is considered to indicate the proportion of necessary non-missing
-         values per row. E.g., if <code>n = .75</code>, a row must have at least <code>ncol(x) * n</code>
-         non-missing values for the row mean or sum to be calculated. See 'Examples'.</p>
+   a <em>row</em> in <code>x</code> has at least <code>n</code> non-missing values, the
+   row mean or sum is returned. If <code>n</code> is a non-integer value from 0 to 1,
+   <code>n</code> is considered to indicate the proportion of necessary non-missing
+   values per row. E.g., if <code>n = .75</code>, a row must have at least <code>ncol(x) * n</code>
+   non-missing values for the row mean or sum to be calculated. See 'Examples'.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

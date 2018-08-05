@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.7.3.9000
-Date: 2018-08-02
+Version: 2.7.4
+Date: 2018-08-04
 Authors@R: person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206"))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -17,9 +17,9 @@ Depends:
     stats,
     utils
 Imports:
-    broom (>= 0.5.0),
+    broom (>= 0.4.5),
     crayon,
-    dplyr (>= 0.7.1),
+    dplyr,
     haven (>= 1.1.2),
     magrittr,
     pillar,
@@ -28,15 +28,15 @@ Imports:
     sjlabelled (>= 1.0.12),
     stringdist (>= 0.9.4),
     stringr (>= 1.2.0),
-    tibble (>= 1.4.1),
-    tidyr (>= 0.7.0),
+    tibble,
+    tidyr,
     tidyselect
 Suggests:
     ggplot2,
     graphics,
     mice,
-    sjPlot (>= 2.4.0),
-    sjstats (>= 0.13.0),
+    sjPlot,
+    sjstats,
     knitr,
     rmarkdown,
     testthat
