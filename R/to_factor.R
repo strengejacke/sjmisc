@@ -123,7 +123,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
     )
 
   # retrieve variable labels
-  varlab <- sjlabelled::get_label(x)
+  varlab <- attr(x, "label", exact = T)
 
   # switch value and names attribute, since get_labels
   # returns the values as names, and the value labels
@@ -154,7 +154,7 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
     )
 
   # set back variable labels
-  x <- sjlabelled::set_label(x, label = varlab)
+  attr(x, "label") <- varlab
 
   # change reference level?
   if (!is.null(ref.lvl)) x <- ref_lvl(x, lvl = ref.lvl)

@@ -1,3 +1,9 @@
+# sjmisc 2.7.5
+
+## Changes to functions
+
+* The `n`-argument in `row_means()` and `row_sums()` now also may be `Inf`, to compute means or sums only if all values in a row are valid (i.e. non-missing).
+
 # sjmisc 2.7.4
 
 ## New functions

@@ -1,4 +1,4 @@
-context("sjmisc, split_var")
+context("sjmisc, row_means")
 
 library(sjmisc)
 
@@ -10,7 +10,7 @@ dat <- data.frame(
   c5 = c(1,7,5,3)
 )
 
-test_that("std, split_var", {
+test_that("std, row_means", {
   tmp <- row_means(dat, n = 4, append = FALSE)
   expect_equal(sum(is.na(tmp[[1]])), 2)
 

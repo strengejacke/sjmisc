@@ -9,7 +9,8 @@
 #' @param n May either be
 #'          \itemize{
 #'            \item a numeric value that indicates the amount of valid values per row to calculate the row mean or sum;
-#'            \item or a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean or sum (see 'Details').
+#'            \item a value between 0 and 1, indicating a proportion of valid values per row to calculate the row mean or sum (see 'Details').
+#'            \item or \code{Inf}. If \code{n = Inf}, all values per row must be non-missing to compute row mean or sum.
 #'          }
 #'          If a row's sum of valid (i.e. non-\code{NA}) values is less than \code{n}, \code{NA} will be returned as value for the row mean or sum.
 #' @param var Name of new the variable with the row sums or means.
@@ -80,6 +81,10 @@ row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
   orix <- tibble::as_tibble(x)
 
   if (is.data.frame(x)) {
+
+    # for Inf-values, use all columns
+    if (is.infinite(n)) n <- ncol(.dat)
+
     # is 'n' indicating a proportion?
     digs <- n %% 1
     if (digs != 0) n <- round(ncol(.dat) * digs)
@@ -155,6 +160,9 @@ row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   orix <- tibble::as_tibble(x)
 
   if (is.data.frame(x)) {
+    # for Inf-values, use all columns
+    if (is.infinite(n)) n <- ncol(.dat)
+
     # is 'n' indicating a proportion?
     digs <- n %% 1
     if (digs != 0) n <- round(ncol(.dat) * digs)
