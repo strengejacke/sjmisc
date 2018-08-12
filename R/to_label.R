@@ -173,8 +173,8 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
     sjlabelled::get_labels(
       x,
       attr.only = TRUE,
-      include.values = iv,
-      include.non.labelled = add.non.labelled,
+      values = iv,
+      non.labelled = add.non.labelled,
       drop.na = drop.na
     )
 
@@ -186,8 +186,8 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
       sjlabelled::get_labels(
         x,
         attr.only = TRUE,
-        include.values = "n",
-        include.non.labelled = add.non.labelled,
+        values = "n",
+        non.labelled = add.non.labelled,
         drop.na = drop.na
       )
 

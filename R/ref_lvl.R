@@ -108,7 +108,7 @@ ref_lvl_helper <- function(x, value) {
     lab.values <- sjlabelled::get_labels(
       x,
       attr.only = TRUE,
-      include.values = "n",
+      values = "n",
       drop.na = TRUE
     )
     vals <- as.numeric(names(lab.values))

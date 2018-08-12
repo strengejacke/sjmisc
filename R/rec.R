@@ -339,8 +339,8 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
           sjlabelled::get_labels(
             x,
             attr.only = TRUE,
-            include.values = NULL,
-            include.non.labelled = TRUE,
+            values = NULL,
+            non.labelled = TRUE,
             drop.na = TRUE
           )
         )
@@ -385,8 +385,8 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
           sjlabelled::get_labels(
             x,
             attr.only = TRUE,
-            include.values = NULL,
-            include.non.labelled = TRUE,
+            values = NULL,
+            non.labelled = TRUE,
             drop.na = TRUE
           )
         )

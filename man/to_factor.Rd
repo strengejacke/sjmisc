@@ -71,11 +71,11 @@ x <- set_labels(efc$e42dep,
 
 # only copy existing value labels
 to_factor(x)
-get_labels(to_factor(x), include.values = "p")
+get_labels(to_factor(x), values = "p")
 
 # also add labels to non-labelled values
 to_factor(x, add.non.labelled = TRUE)
-get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
+get_labels(to_factor(x, add.non.labelled = TRUE), values = "p")
 
 
 # Convert to factor, using different reference level

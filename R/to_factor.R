@@ -62,11 +62,11 @@
 #'
 #' # only copy existing value labels
 #' to_factor(x)
-#' get_labels(to_factor(x), include.values = "p")
+#' get_labels(to_factor(x), values = "p")
 #'
 #' # also add labels to non-labelled values
 #' to_factor(x, add.non.labelled = TRUE)
-#' get_labels(to_factor(x, add.non.labelled = TRUE), include.values = "p")
+#' get_labels(to_factor(x, add.non.labelled = TRUE), values = "p")
 #'
 #'
 #' # Convert to factor, using different reference level
@@ -118,8 +118,8 @@ to_fac_helper <- function(x, add.non.labelled, ref.lvl) {
     sjlabelled::get_labels(
       x,
       attr.only = TRUE,
-      include.values = "n",
-      include.non.labelled = add.non.labelled
+      values = "n",
+      non.labelled = add.non.labelled
     )
 
   # retrieve variable labels

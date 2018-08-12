@@ -77,7 +77,7 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
 
 to_dummy_helper <- function(x, varname, suffix) {
   # check whether we have labels
-  labels <- sjlabelled::get_labels(x, attr.only = F, include.values = "n", include.non.labelled = T)
+  labels <- sjlabelled::get_labels(x, attr.only = F, values = "n", non.labelled = T)
   # get resp. set variable label for new dummy variables
   # get variable label
   label <- sjlabelled::get_label(x, def.value = varname)

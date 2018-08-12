@@ -189,8 +189,8 @@ rec_to_helper <- function(x, lowest, highest) {
   val_lab <- sjlabelled::get_labels(
     x,
     attr.only = TRUE,
-    include.values = NULL,
-    include.non.labelled = TRUE
+    values = NULL,
+    non.labelled = TRUE
   )
 
   # retrieve variable label

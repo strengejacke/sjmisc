@@ -352,8 +352,8 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
     sjlabelled::get_labels(
       x,
       attr.only = T,
-      include.values = "n",
-      include.non.labelled = T
+      values = "n",
+      non.labelled = T
     )
 
 
