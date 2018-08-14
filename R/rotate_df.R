@@ -18,9 +18,6 @@
 #' rotate_df(x, rn = "property")
 #'
 #' # use values in 1. column as column name
-#' library(tibble)
-#' x <- tibble::rownames_to_column(x)
-#' rotate_df(x)
 #' rotate_df(x, cn = TRUE)
 #' rotate_df(x, rn = "property", cn = TRUE)
 #'
@@ -47,7 +44,6 @@
 #' tmp
 #' rotate_df(tmp)
 #'
-#' @importFrom tibble rownames_to_column
 #' @importFrom dplyr select
 #' @export
 rotate_df <- function(x, rn = NULL, cn = FALSE) {
@@ -86,7 +82,7 @@ rotate_df <- function(x, rn = NULL, cn = FALSE) {
 
 
   # add rownames as column, if requested
-  if (!is.null(rn)) x <- tibble::rownames_to_column(x, var = rn)
+  if (!is.null(rn)) x <- rownames_as_column(x, var = rn)
 
 
   # add back attributes. therefore, delete the common attributes, like class etc.

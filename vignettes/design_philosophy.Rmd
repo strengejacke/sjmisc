@@ -10,7 +10,11 @@ vignette: >
 ---
 
 ```{r echo = FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  comment = "#>"
+)
+options(max.print = 1000)
 suppressPackageStartupMessages(library(sjmisc))
 ```
 
@@ -35,8 +39,8 @@ data(efc)
 x <- rec(efc$e42dep, rec = "1,2=1; 3,4=2")
 str(x)
 
-# returns a data frame (a tibble, to be exactly)
-rec(efc, e42dep, rec = "1,2=1; 3,4=2", append = FALSE)
+# returns a data frame
+rec(efc, e42dep, rec = "1,2=1; 3,4=2", append = FALSE) %>% head()
 ```
 
 This design-choice is mainly due to compatibility- and convenience-reasons. It does not affect the usual "tidyverse-workflow" or when using pipe-chains.
@@ -55,11 +59,11 @@ rec(
   efc, contains("cop"), c161sex:c175empl, 
   rec = "0,1=0; else=1", 
   append = FALSE
-)
+) %>% head()
 
 # center all variables with "age" in name, variable c12hour
 # and all variables from column 19 to 21
-center(efc, c12hour, contains("age"), 19:21, append = FALSE)
+center(efc, c12hour, contains("age"), 19:21, append = FALSE) %>% head()
 ```
 
 ## The function-types
@@ -71,7 +75,11 @@ There are two types of function designs:
 Functions like `to_factor()` or `to_label()`, which convert variables into other types or add additional information like variable or value labels as attribute, typically _return the complete data frame_ that was given as first argument _without any new variables_. The variables specified in the `...`-ellipses argument are converted (overwritten), all other variables remain unchanged.
 
 ```{r}
-to_factor(efc, e42dep, e16sex)
+x <- efc[, 3:5]
+
+x %>% str()
+
+to_factor(x, e42dep, e16sex) %>% str()
 ```
 
 ### transformation/recoding functions
@@ -80,10 +88,10 @@ Functions like `rec()` or `dicho()`, which transform or recode variables, by def
 
 ```{r}
 # complete data, including new columns
-rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = TRUE)
+rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = TRUE) %>% head()
 
 # only new columns
-rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = FALSE)
+rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = FALSE) %>% head()
 ```
 
 These variables usually get a suffix, so you can bind these variables as new columns to a data frame, for instance with `add_columns()`. The function `add_columns()` is useful if you want to bind/add columns within a pipe-chain _to the end_ of a data frame.
@@ -91,7 +99,8 @@ These variables usually get a suffix, so you can bind these variables as new col
 ```{r}
 efc %>% 
   rec(c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = FALSE) %>% 
-  add_columns(efc)
+  add_columns(efc) %>% 
+  head()
 ```
 
 ## sjmisc and dplyr
@@ -101,7 +110,8 @@ The functions of **sjmisc** are designed to work together seamlessly with other 
 ```{r}
 efc %>% 
   select(c82cop1, c83cop2) %>% 
-  rec(rec = "1,2=0; 3:4=2")
+  rec(rec = "1,2=0; 3:4=2") %>% 
+  head()
 
 efc %>% 
   select(c82cop1, c83cop2) %>% 

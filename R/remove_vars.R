@@ -20,11 +20,10 @@
 #' mtcars %>% remove_var(drat:am)
 #'
 #' @importFrom dplyr select_vars
-#' @importFrom tibble as_tibble
 #' @export
 remove_var <- function(x, ...) {
   vars_to_remove <- dplyr::select_vars(colnames(x), ...)
-  tibble::as_tibble(x[colnames(x) %nin% vars_to_remove])
+  x[colnames(x) %nin% vars_to_remove]
 }
 
 

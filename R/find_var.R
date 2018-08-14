@@ -49,11 +49,11 @@
 #' @param as.df Deprecated, use \code{out = "df"} instead.
 #' @param as.varlab Deprecated, use \code{out = "table" instead.}
 #'
-#' @return By default (i.e. \code{out = "table"}, returns a tibble with three
+#' @return By default (i.e. \code{out = "table"}, returns a data frame with three
 #'         columns: column number, variable name and variable label. If
 #'         \code{out = "index"}, returns a named vector with column indices
 #'         of matching variables (variable names are used as names-attribute);
-#'         if \code{out = "df"}, returns the matching variables as tibble.
+#'         if \code{out = "df"}, returns the matching variables as data frame
 #'
 #' @details This function searches for \code{pattern} in \code{data}'s column names
 #'            and - for labelled data - in all variable and value labels of \code{data}'s
@@ -69,7 +69,7 @@
 #' # find variables with "cop" in variable name
 #' find_var(efc, "cop")
 #'
-#' # return tibble with matching variables
+#' # return data frame with matching variables
 #' find_var(efc, "cop", out = "df")
 #'
 #' # or return column numbers
@@ -91,7 +91,6 @@
 #' view_df(res)}
 #'
 #' @importFrom stringr regex coll str_detect
-#' @importFrom tibble as_tibble
 #' @importFrom sjlabelled get_labels
 #' @importFrom purrr map_lgl
 #' @export
@@ -194,15 +193,15 @@ find_var <- function(data,
 
   # return data frame?
   if (out == "df") {
-    return(tibble::as_tibble(data[, pos]))
+    return(data[, pos, drop = FALSE])
   }
 
   # return variable labels?
   if (out == "table") {
-    return(tibble::tibble(
+    return(data.frame(
       col.nr = pos,
       var.name = colnames(data)[pos],
-      var.label = sjlabelled::get_label(data[, pos], def.value = colnames(data)[pos])
+      var.label = sjlabelled::get_label(data[, pos, drop = FALSE], def.value = colnames(data)[pos])
     ))
   }
 

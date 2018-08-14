@@ -42,7 +42,7 @@ big_mark <- function(x, big.mark = ",", ...) {
 
 #' @export
 big_mark.data.frame <- function(x, big.mark = ",", ...) {
-  tibble::as_tibble(lapply(x, FUN = big_mark_helper, big.mark, ...))
+  as.data.frame(lapply(x, FUN = big_mark_helper, big.mark, ...))
 }
 
 #' @export

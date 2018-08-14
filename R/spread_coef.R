@@ -95,7 +95,6 @@
 #'
 #' @importFrom broom tidy
 #' @importFrom dplyr select bind_cols "%>%"
-#' @importFrom tidyselect one_of
 #' @importFrom tidyr spread
 #' @importFrom purrr map_df
 #' @importFrom rlang .data
@@ -159,7 +158,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
           # filter term
           dplyr::filter(.data$term == model.term) %>%
           # just select estimate and p-value
-          dplyr::select(tidyselect::one_of(variables))
+          dplyr::select(string_one_of(pattern = variables, x = colnames(.)))
         # set colnames
         colnames(tmp) <- c(model.term, variables[-1])
         tmp

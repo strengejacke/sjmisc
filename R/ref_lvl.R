@@ -60,7 +60,6 @@
 #' levels(ref_lvl(iris$Species, lvl = 3))
 #' levels(ref_lvl(iris$Species, lvl = "versicolor"))
 #'
-#' @importFrom tibble as_tibble
 #' @importFrom dplyr quos
 #' @export
 ref_lvl <- function(x, ..., lvl = NULL) {
@@ -73,8 +72,6 @@ ref_lvl <- function(x, ..., lvl = NULL) {
     for (i in colnames(.dat)) {
       x[[i]] <- ref_lvl_helper(.dat[[i]], value = lvl)
     }
-    # coerce to tibble
-    x <- tibble::as_tibble(x)
   } else {
     x <- ref_lvl_helper(.dat, value = lvl)
   }

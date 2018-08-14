@@ -238,14 +238,12 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
 }
 
 
-
-#' @importFrom tibble as_tibble
 #' @importFrom dplyr group_indices group_vars slice ungroup bind_cols
 recode_fun <- function(x, .dat, fun, suffix, append, ...) {
   if (is.data.frame(x)) {
 
     # remember original data, if user wants to bind columns
-    orix <- tibble::as_tibble(x)
+    orix <- x
 
     # do we have a grouped data frame?
     if (inherits(.dat, "grouped_df")) {
@@ -275,15 +273,15 @@ recode_fun <- function(x, .dat, fun, suffix, append, ...) {
       }
 
       # remove grouping column
-      x <- tibble::as_tibble(.dat[colnames(.dat) %nin% grp.vars])
+      x <- .dat[colnames(.dat) %nin% grp.vars]
     } else {
       # iterate variables of data frame
       for (i in colnames(.dat)) {
         x[[i]] <- fun(x = .dat[[i]], ...)
       }
 
-      # coerce to tibble and select only recoded variables
-      x <- tibble::as_tibble(x[colnames(.dat)])
+      # select only recoded variables
+      x <- x[colnames(.dat)]
     }
 
     # add suffix to recoded variables?

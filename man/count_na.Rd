@@ -46,8 +46,7 @@ y <- labelled(
 )
 
 # create data frame
-library(tibble)
-dat <- tibble(x, y)
+dat <- data.frame(x, y)
 
 # possible count()-function calls
 count_na(dat)

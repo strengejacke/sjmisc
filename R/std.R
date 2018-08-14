@@ -61,7 +61,7 @@
 #'
 #' # NOTE!
 #' std(efc$e17age) # returns a vector
-#' std(efc, e17age) # returns a tibble
+#' std(efc, e17age) # returns a data frame
 #'
 #' # works with mutate()
 #' library(dplyr)

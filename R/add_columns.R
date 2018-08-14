@@ -102,7 +102,6 @@
 #' replace_columns(d1, d2, d3, d4, add.unique = FALSE)
 #'
 #' @importFrom dplyr bind_cols
-#' @importFrom tibble as_tibble
 #' @export
 add_columns <- function(data, ..., replace = TRUE) {
   # evaluate dots
@@ -141,8 +140,7 @@ add_columns <- function(data, ..., replace = TRUE) {
     x <- x[, order(reihenfolge)]
   }
 
-  # return a tibble
-  tibble::as_tibble(x)
+  x
 }
 
 
@@ -174,6 +172,5 @@ replace_columns <- function(data, ..., add.unique = TRUE) {
   else
     x <- data
 
-  # return a tibble
-  tibble::as_tibble(x)
+  x
 }

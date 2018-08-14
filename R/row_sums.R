@@ -18,8 +18,8 @@
 #' @inheritParams to_factor
 #' @inheritParams rec
 #'
-#' @return For \code{row_sums()}, a tibble with a new variable: the row sums from
-#'    \code{x}; for \code{row_means()}, a tibble with a new variable: the row
+#' @return For \code{row_sums()}, a data frame with a new variable: the row sums from
+#'    \code{x}; for \code{row_means()}, a data frame with a new variable: the row
 #'    means from \code{x}. If \code{append = FALSE}, only the new variable
 #'    with row sums resp. row means is returned. \code{total_mean()} returns
 #'    the mean of all values from all specified columns in a data frame.
@@ -70,7 +70,6 @@ row_sums <- function(x, ...) {
 
 
 #' @importFrom dplyr quos bind_cols
-#' @importFrom tibble as_tibble
 #' @rdname row_sums
 #' @export
 row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
@@ -78,7 +77,7 @@ row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
   .dat <- get_dot_data(x, dplyr::quos(...))
 
   # remember original data, if user wants to bind columns
-  orix <- tibble::as_tibble(x)
+  orix <- x
 
   if (is.data.frame(x)) {
 
@@ -107,8 +106,8 @@ row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
   }
 
 
-  # to tibble, and rename variable
-  rs <- tibble::as_tibble(rs)
+  # to data frame, and rename variable
+  rs <- as.data.frame(rs)
   colnames(rs) <- var
 
   # combine data
@@ -149,7 +148,6 @@ total_mean.data.frame <- function(x, ...) {
 
 
 #' @importFrom dplyr quos bind_cols
-#' @importFrom tibble as_tibble
 #' @rdname row_sums
 #' @export
 row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
@@ -157,7 +155,7 @@ row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
   .dat <- get_dot_data(x, dplyr::quos(...))
 
   # remember original data, if user wants to bind columns
-  orix <- tibble::as_tibble(x)
+  orix <- x
 
   if (is.data.frame(x)) {
     # for Inf-values, use all columns
@@ -185,8 +183,8 @@ row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
     stop("`x` must be a data frame.", call. = F)
   }
 
-  # to tibble, and rename variable
-  rm <- tibble::as_tibble(rm)
+  # to data frame, and rename variable
+  rm <- as.data.frame(rm)
   colnames(rm) <- var
 
   # combine data

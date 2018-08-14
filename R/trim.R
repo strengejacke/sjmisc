@@ -28,7 +28,7 @@ trim <- function(x) {
 
 #' @export
 trim.data.frame <- function(x) {
-  tibble::as_tibble(lapply(x, FUN = trim_helper))
+  as.data.frame(lapply(x, FUN = trim_helper))
 }
 
 #' @export

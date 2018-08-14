@@ -108,7 +108,6 @@
 #'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join select_if select
-#' @importFrom tibble add_row as_tibble has_name
 #' @importFrom sjlabelled get_label get_labels get_values copy_labels
 #' @importFrom purrr map_if
 #' @importFrom rlang quo_name enquo
@@ -151,7 +150,7 @@ frq <- function(x,
     if (!is.null(w.string) && is.character(w.string)) w <- w.string
 
 
-    if (!sjmisc::is_empty(w) && w != "NULL" && !tibble::has_name(xw, w) && tibble::has_name(x, w)) {
+    if (!sjmisc::is_empty(w) && w != "NULL" && !obj_has_name(xw, w) && obj_has_name(x, w)) {
       x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
     } else {
       message(sprintf("Weights `%s` not found in data.", w))
@@ -198,7 +197,7 @@ frq <- function(x,
       purrr::map_if(is.character, ~ group_str(
         strings = .x, maxdist = grp.strings, remove.empty = FALSE)
       ) %>%
-      tibble::as_tibble()
+      as.data.frame()
   }
 
 
@@ -243,7 +242,7 @@ frq <- function(x,
 
   } else {
     # if we don't have data frame, coerce
-    if (!is.data.frame(x)) x <- tibble::tibble(x)
+    if (!is.data.frame(x)) x <- data.frame(x)
 
     if (!is.null(w))
       wb <- x[[w]]
@@ -282,10 +281,9 @@ frq <- function(x,
 }
 
 
-#' @importFrom dplyr n_distinct full_join
+#' @importFrom dplyr n_distinct full_join bind_rows
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
-#' @importFrom tibble add_row
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   # remember type
   vartype <- var_type(x)
@@ -438,11 +436,13 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
 
   # check if we have any NA-values - if not, add row for NA's
   if (!anyNA(mydat$val)) {
-    mydat <- tibble::add_row(
+    mydat <- dplyr::bind_rows(
       mydat,
-      val = NA,
-      label = NA,
-      frq = 0
+      data.frame(
+        val = NA,
+        label = NA,
+        frq = 0
+      )
     )
   }
 

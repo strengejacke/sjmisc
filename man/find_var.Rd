@@ -61,11 +61,11 @@ is used for fuzzy matching.}
 \item{as.varlab}{Deprecated, use \code{out = "table" instead.}}
 }
 \value{
-By default (i.e. \code{out = "table"}, returns a tibble with three
+By default (i.e. \code{out = "table"}, returns a data frame with three
         columns: column number, variable name and variable label. If
         \code{out = "index"}, returns a named vector with column indices
         of matching variables (variable names are used as names-attribute);
-        if \code{out = "df"}, returns the matching variables as tibble.
+        if \code{out = "df"}, returns the matching variables as data frame
 }
 \description{
 This functions finds variables in a data frame, which variable
@@ -87,7 +87,7 @@ data(efc)
 # find variables with "cop" in variable name
 find_var(efc, "cop")
 
-# return tibble with matching variables
+# return data frame with matching variables
 find_var(efc, "cop", out = "df")
 
 # or return column numbers

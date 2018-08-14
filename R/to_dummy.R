@@ -39,7 +39,6 @@
 #'   select(e42dep, e16sex, c172code) %>%
 #'   to_dummy()
 #'
-#' @importFrom tibble as_tibble
 #' @export
 to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) {
   # check for abbr
@@ -70,8 +69,7 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
     x <- to_dummy_helper(.dat, varname, suffix)
   }
 
-  # coerce to tibble
-  tibble::as_tibble(x)
+  as.data.frame(x)
 }
 
 

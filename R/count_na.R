@@ -31,8 +31,7 @@
 #' )
 #'
 #' # create data frame
-#' library(tibble)
-#' dat <- tibble(x, y)
+#' dat <- data.frame(x, y)
 #'
 #' # possible count()-function calls
 #' count_na(dat)
@@ -40,7 +39,6 @@
 #' count_na(dat, x)
 #' count_na(dat, x, y)
 #'
-#' @importFrom tibble as_tibble
 #' @importFrom dplyr select filter quos
 #' @importFrom haven is_tagged_na na_tag
 #' @importFrom sjlabelled get_label

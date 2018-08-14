@@ -29,9 +29,6 @@ rotate_df(x)
 rotate_df(x, rn = "property")
 
 # use values in 1. column as column name
-library(tibble)
-x <- tibble::rownames_to_column(x)
-rotate_df(x)
 rotate_df(x, cn = TRUE)
 rotate_df(x, rn = "property", cn = TRUE)
 

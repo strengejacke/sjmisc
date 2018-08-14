@@ -43,7 +43,6 @@
 #' # or even use select-helpers
 #' descr(efc, contains("cop"), max.length = 20)
 #'
-#' @importFrom tibble as_tibble rownames_to_column
 #' @importFrom dplyr select mutate
 #' @importFrom sjlabelled copy_labels
 #' @export
@@ -108,7 +107,6 @@ descr <- function(x, ..., max.length = NULL, out = c("txt", "viewer", "browser")
 #' @importFrom tidyr gather
 #' @importFrom sjlabelled get_label
 #' @importFrom stats var na.omit sd median
-#' @importFrom tibble add_column
 #' @importFrom rlang .data
 descr_helper <- function(dd, max.length) {
 
@@ -125,7 +123,7 @@ descr_helper <- function(dd, max.length) {
   if (is.null(var.name)) var.name <- NA
 
   type <- var_type(dd)
-  labels <- unname(sjlabelled::get_label(dd, def.value = var.name))
+  label <- unname(sjlabelled::get_label(dd, def.value = var.name))
 
   dd <- to_value(dd, keep.labels = FALSE)
 
@@ -154,12 +152,7 @@ descr_helper <- function(dd, max.length) {
     )
 
     # summarise_all() sorts variables, so restore order
-    x <- x[match(var.name, x$var), ] %>%
-      tibble::add_column(
-        type = type,
-        label = labels,
-        .after = 1
-      )
+    x <- x[match(var.name, x$var), ] %>% add_cols(type, label, .after = 1)
 
   # check if labels should be truncated
   x$label <- shorten_string(x$label, max.length)

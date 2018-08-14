@@ -103,10 +103,6 @@ replace_na <- function(x, ..., value, na.label = NULL, tagged.na = NULL) {
         tagged.na = tagged.na
       )
     }
-
-    # coerce to tibble
-    x <- tibble::as_tibble(x)
-
   } else {
     x <- replace_na_helper(
       x = .dat,

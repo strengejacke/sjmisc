@@ -265,13 +265,12 @@ rec_if <- function(x, predicate, rec, as.num = TRUE, var.label = NULL, val.label
 }
 
 
-#' @importFrom tibble as_tibble
 rec_core_fun <- function(x, .dat, rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
 
   if (is.data.frame(x)) {
 
     # remember original data, if user wants to bind columns
-    orix <- tibble::as_tibble(x)
+    orix <- x
 
     # iterate variables of data frame
     for (i in colnames(.dat)) {
@@ -284,8 +283,8 @@ rec_core_fun <- function(x, .dat, rec, as.num = TRUE, var.label = NULL, val.labe
       )
     }
 
-    # coerce to tibble and select only recoded variables
-    x <- tibble::as_tibble(x[colnames(.dat)])
+    # select only recoded variables
+    x <- x[colnames(.dat)]
 
     # add suffix to recoded variables?
     if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {

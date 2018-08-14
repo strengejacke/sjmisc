@@ -40,7 +40,6 @@
 #'
 #' @importFrom stringr str_locate_all coll
 #' @importFrom dplyr pull
-#' @importFrom tibble as_tibble
 #' @importFrom purrr map
 #' @export
 str_start <- function(x, pattern, ignore.case = TRUE) {
@@ -66,12 +65,12 @@ str_start_end <- function(x, pattern, ignore.case, index) {
   if (length(pos) > 1) {
     purrr::map(pos, function(st) {
       st %>%
-        tibble::as_tibble() %>%
+        as.data.frame() %>%
         dplyr::pull(index)
     })
   } else {
     pos[[1]] %>%
-      tibble::as_tibble() %>%
+      as.data.frame() %>%
       dplyr::pull(index)
   }
 }

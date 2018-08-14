@@ -31,8 +31,8 @@ or null-values.}
 if \code{FALSE}, only the new variables are returned.}
 }
 \value{
-For \code{row_count()}, a tibble with one variable: the sum of \code{count}
-        appearing in each row of \code{x}; for \code{col_count()}, a tibble with
+For \code{row_count()}, a data frame with one variable: the sum of \code{count}
+        appearing in each row of \code{x}; for \code{col_count()}, a data frame with
         one row and the same number of variables as in \code{x}: each variable
         holds the sum of \code{count} appearing in each variable of \code{x}.
         If \code{append = TRUE}, \code{x} including this variable will be returned.
@@ -42,7 +42,7 @@ For \code{row_count()}, a tibble with one variable: the sum of \code{count}
              for a specific value indicated by \code{count}. Hence, it is equivalent
              to \code{rowSums(x == count, na.rm = TRUE)}. However, this function
              is designed to work nicely within a pipe-workflow and allows select-helpers
-             for selecting variables and the return value is always a tibble
+             for selecting variables and the return value is always a data frame
              (with one variable).
              \cr \cr
              \code{col_count()} does the same for columns. The return value is
@@ -50,16 +50,11 @@ For \code{row_count()}, a tibble with one variable: the sum of \code{count}
              of columns as \code{x}.
 }
 \examples{
-library(dplyr)
-library(tibble)
-dat <- tribble(
-  ~c1, ~c2, ~c3, ~c4,
-    1,   3,   1,   1,
-    2,   2,   1,   1,
-    3,   1,   2,   3,
-    1,   2,   1,   2,
-    3,  NA,   3,   1,
-   NA,   3,  NA,   2
+dat <- data.frame(
+  c1 = c(1, 2, 3, 1, 3, NA),
+  c2 = c(3, 2, 1, 2, NA, 3),
+  c3 = c(1, 1, 2, 1, 3, NA),
+  c4 = c(1, 1, 3, 2, 1, 2)
 )
 
 row_count(dat, count = 1, append = FALSE)

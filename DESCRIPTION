@@ -25,12 +25,10 @@ Imports:
     pillar,
     purrr,
     rlang,
-    sjlabelled (>= 1.0.12),
+    sjlabelled (>= 1.0.13),
     stringdist (>= 0.9.4),
     stringr (>= 1.2.0),
-    tibble,
-    tidyr,
-    tidyselect
+    tidyr
 Suggests:
     ggplot2,
     graphics,

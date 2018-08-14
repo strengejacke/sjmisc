@@ -88,7 +88,6 @@
 #' to_factor(efc, contains("cop"), c161sex:c175empl)
 #'
 #'
-#' @importFrom tibble as_tibble
 #' @export
 to_factor <- function(x, ..., add.non.labelled = FALSE, ref.lvl = NULL) {
   # evaluate arguments, generate data
@@ -99,8 +98,6 @@ to_factor <- function(x, ..., add.non.labelled = FALSE, ref.lvl = NULL) {
     for (i in colnames(.dat)) {
       x[[i]] <- to_fac_helper(.dat[[i]], add.non.labelled, ref.lvl)
     }
-    # coerce to tibble
-    x <- tibble::as_tibble(x)
   } else {
     x <- to_fac_helper(.dat, add.non.labelled, ref.lvl)
   }
