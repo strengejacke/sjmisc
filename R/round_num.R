@@ -23,9 +23,14 @@ round_num <- function(x, digits = 0) {
 #' @importFrom purrr map_if
 #' @export
 round_num.data.frame <- function(x, digits = 0) {
-  x %>%
+  xa <- attributes(x)
+
+  x <- x %>%
     purrr::map_if(is.numeric, ~ round(.x, digits = digits)) %>%
-    as.data.frame()
+    as.data.frame(stringsAsFactors = FALSE)
+
+  attributes(x) <- xa
+  x
 }
 
 
