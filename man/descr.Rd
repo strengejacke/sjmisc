@@ -4,7 +4,8 @@
 \alias{descr}
 \title{Basic descriptive statistics}
 \usage{
-descr(x, ..., max.length = NULL, out = c("txt", "viewer", "browser"))
+descr(x, ..., max.length = NULL, weights = NULL, out = c("txt",
+  "viewer", "browser"))
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -21,6 +22,10 @@ See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 in the output. If variable names are longer than \code{max.length},
 they will be shortened to the last whole word within the first
 \code{max.length} chars.}
+
+\item{weights}{Bare name, or name as string, of a variable in \code{x}
+that indicates the vector of weights, which will be applied to weight all
+observations. Default is \code{NULL}, so no weights are used.}
 
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane

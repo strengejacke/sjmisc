@@ -12,13 +12,6 @@ frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
 \item{x}{A vector or a data frame. May also be a grouped data frame
 (see 'Note' and 'Examples').}
 
-\item{...}{Optional, unquoted names of variables that should be selected for
-further processing. Required, if \code{x} is a data frame (and no
-vector) and only selected variables from \code{x} should be processed.
-You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
-See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
-
 \item{sort.frq}{Determines whether categories should be sorted
 according to their frequencies or not. Default is \code{"none"}, so
 categories are not sorted by frequency. Use \code{"asc"} or
