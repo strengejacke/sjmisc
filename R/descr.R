@@ -27,6 +27,9 @@
 #' data(efc)
 #' descr(efc, e17age, c160age)
 #'
+#' efc$weights <- abs(rnorm(nrow(efc), 1, .3))
+#' descr(efc, c12hour, barthtot, weights = weights)
+#'
 #' library(dplyr)
 #' efc %>% select(e42dep, e15relat, c172code) %>% descr()
 #'
