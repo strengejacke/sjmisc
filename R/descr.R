@@ -114,11 +114,12 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
 }
 
 
-#' @importFrom dplyr select_if group_by summarise_all funs
+#' @importFrom dplyr select_if group_by summarise_all funs summarise
 #' @importFrom tidyr gather
 #' @importFrom sjlabelled get_label
 #' @importFrom stats var na.omit sd median
 #' @importFrom rlang .data
+#' @importFrom sjstats wtd_mean wtd_sd wtd_se
 descr_helper <- function(dd, max.length) {
 
   # check if we have a single vector, because purrr would return
