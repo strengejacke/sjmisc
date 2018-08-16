@@ -10,3 +10,10 @@ get_dot_data <- function(x, qs) {
   else
     suppressMessages(dplyr::select(x, !!!qs))
 }
+
+
+data_frame <- function(...) {
+  x <- data.frame(..., stringsAsFactors = FALSE)
+  rownames(x) <- NULL
+  x
+}

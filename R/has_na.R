@@ -73,21 +73,19 @@ has_na <- function(x, ..., by = c("col", "row"), out = c("table", "df", "index")
 
     # return variable labels?
     if (out == "table" && by == "col") {
-      tmp <- data.frame(
+      tmp <- data_frame(
         col = match(names(tmp), colnames(x)),
         name = names(tmp),
         label = shorten_string(sjlabelled::get_label(.dat, def.value = names(tmp)), 35),
-        has.na = tmp,
-        stringsAsFactors = FALSE
+        has.na = tmp
       )
       class(tmp) <- c("sj_has_na", class(tmp))
     }
 
     if (out == "table" && by == "row") {
-      tmp <- data.frame(
+      tmp <- data_frame(
         case = 1:nrow(.dat),
-        has.na = tmp,
-        stringsAsFactors = FALSE
+        has.na = tmp
       )
     }
 

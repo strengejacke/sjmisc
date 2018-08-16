@@ -7,6 +7,7 @@
 ## Changes to functions
 
 * The `n`-argument in `row_means()` and `row_sums()` now also may be `Inf`, to compute means or sums only if all values in a row are valid (i.e. non-missing).
+* Argument `weight.by` in `frq()` was renamed into `weights`.
 
 # sjmisc 2.7.4
 

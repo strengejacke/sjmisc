@@ -71,5 +71,8 @@ prcn.default <- function(x) sprintf("%.2f%%", round(x * 100, 2))
 
 #' @export
 prcn.data.frame <- function(x) {
-  as.data.frame(purrr::map_if(x, is.numeric, ~ sprintf("%.2f%%", round(.x * 100, 2))))
+  as.data.frame(
+    purrr::map_if(x, is.numeric, ~ sprintf("%.2f%%", round(.x * 100, 2))),
+    stringsAsFactors = FALSE
+  )
 }

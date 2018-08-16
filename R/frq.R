@@ -7,7 +7,7 @@
 #'   according to their frequencies or not. Default is \code{"none"}, so
 #'   categories are not sorted by frequency. Use \code{"asc"} or
 #'   \code{"desc"} for sorting categories ascending or descending order.
-#' @param weight.by Bare name, or name as string, of a variable in \code{x}
+#' @param weights Bare name, or name as string, of a variable in \code{x}
 #'   that indicates the vector of weights, which will be applied to weight all
 #'   observations. Default is \code{NULL}, so no weights are used.
 #' @param auto.grp Numeric value, indicating the minimum amount of unique
@@ -23,6 +23,7 @@
 #'   with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
 #'   on grouping, and that function's \code{maxdist}-argument to get more
 #'   details on the distance of strings to be treated as equal.
+#' @param weight.by Deprecated.
 #'
 #' @inheritParams descr
 #'
@@ -91,7 +92,7 @@
 #'
 #' # and with weights
 #' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
-#' frq(efc, c160age, auto.grp = 5, weight.by = weights)
+#' frq(efc, c160age, auto.grp = 5, weights = weights)
 #'
 #' # group string values
 #' \dontrun{
@@ -115,11 +116,12 @@
 frq <- function(x,
                 ...,
                 sort.frq = c("none", "asc", "desc"),
-                weight.by = NULL,
+                weights = NULL,
                 auto.grp = NULL,
                 show.strings = TRUE,
                 grp.strings = NULL,
-                out = c("txt", "viewer", "browser")) {
+                out = c("txt", "viewer", "browser"),
+                weight.by) {
 
   out <- match.arg(out)
 
@@ -128,19 +130,26 @@ frq <- function(x,
     out <- "txt"
   }
 
+  ## TODO remove deprecated argument later
+
+  if (!missing(weight.by)) {
+    message("Argument `weight.by` is deprecated. Please use `weights`.")
+    weights <- weight.by
+  }
+
 
   # get dot data
   xw <- get_dot_data(x, dplyr::quos(...))
 
-  if (missing(weight.by)) {
+  if (missing(weights)) {
     w <- NULL
     x <- xw
   } else {
-    w <- rlang::quo_name(rlang::enquo(weight.by))
+    w <- rlang::quo_name(rlang::enquo(weights))
 
     w.string <- tryCatch(
       {
-        eval(weight.by)
+        eval(weights)
       },
       error = function(x) { NULL },
       warning = function(x) { NULL },
@@ -242,7 +251,7 @@ frq <- function(x,
 
   } else {
     # if we don't have data frame, coerce
-    if (!is.data.frame(x)) x <- data.frame(x)
+    if (!is.data.frame(x)) x <- data.frame(x, stringsAsFactors = FALSE)
 
     if (!is.null(w))
       wb <- x[[w]]
@@ -366,10 +375,9 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   if (!is.null(labels)) {
     # add rownames and values as columns
     dat <-
-      data.frame(
+      data_frame(
         n = names(labels),
-        v = as.character(labels),
-        stringsAsFactors = FALSE
+        v = as.character(labels)
       )
 
     colnames(dat) <- c("val", "label")

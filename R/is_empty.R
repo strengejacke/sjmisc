@@ -4,7 +4,7 @@
 #'                length 1), a list or any vector (numeric, atomic) is empty or not.
 #'
 #'
-#' @param x String, character vector of length 1, list or vector.
+#' @param x String, character vector, list, data.frame or numeric vector or factor.
 #' @param first.only Logical, if \code{FALSE} and \code{x} is a character
 #'        vector, each element of \code{x} will be checked if empty. If
 #'        \code{TRUE}, only the first element of \code{x} will be checked.
@@ -16,17 +16,10 @@
 #'         'Examples') and will return \code{TRUE}.
 #'
 #' @examples
-#' x <- "test"
-#' is_empty(x)
-#'
-#' x <- ""
-#' is_empty(x)
-#'
-#' x <- NA
-#' is_empty(x)
-#'
-#' x <- NULL
-#' is_empty(x)
+#' is_empty("test")
+#' is_empty("")
+#' is_empty(NA)
+#' is_empty(NULL)
 #'
 #' # string is not empty
 #' is_empty(" ")
@@ -43,6 +36,10 @@
 #' # check multiple elements of character vectors
 #' is_empty(c("", "a"))
 #' is_empty(c("", "a"), first.only = FALSE)
+#'
+#' # empty data frame
+#' d <- data.frame()
+#' is_empty(d)
 #'
 #' @export
 is_empty <- function(x, first.only = TRUE) {

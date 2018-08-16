@@ -198,7 +198,7 @@ find_var <- function(data,
 
   # return variable labels?
   if (out == "table") {
-    return(data.frame(
+    return(data_frame(
       col.nr = pos,
       var.name = colnames(data)[pos],
       var.label = sjlabelled::get_label(data[, pos, drop = FALSE], def.value = colnames(data)[pos])
