@@ -43,7 +43,7 @@ add_cols <- function(data, ..., .after = 1) {
   dat <- data.frame(..., stringsAsFactors = FALSE)
 
   if (.after < 1) {
-    x <- cbind(dat, data)
+    cbind(dat, data)
   } else {
     c1 <- 1:.after
     c2 <- (.after + 1):ncol(data)
@@ -51,8 +51,6 @@ add_cols <- function(data, ..., .after = 1) {
     x1 <- dplyr::select(data, !! c1)
     x2 <- dplyr::select(data, !! c2)
 
-    x <- cbind(x1, dat, x2)
+    cbind(x1, dat, x2)
   }
-
-  x
 }
