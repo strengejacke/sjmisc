@@ -117,9 +117,8 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
 #' @importFrom dplyr select_if group_by summarise_all funs summarise
 #' @importFrom tidyr gather
 #' @importFrom sjlabelled get_label
-#' @importFrom stats var na.omit sd median
+#' @importFrom stats var na.omit sd median weighted.mean
 #' @importFrom rlang .data
-#' @importFrom sjstats wtd_mean wtd_sd wtd_se
 descr_helper <- function(dd, max.length) {
 
   # check if we have a single vector, because purrr would return
@@ -183,9 +182,9 @@ descr_helper <- function(dd, max.length) {
         dplyr::summarise(
           n = round(sum(.data$.weights[!is.na(.data$val)], na.rm = TRUE)),
           NA.prc = 100 * sum(is.na(.data$val)) / sum(.data$.weights[!is.na(.data$val)], na.rm = TRUE),
-          mean = sjstats::wtd_mean(.data$val, weights = .data$.weights),
-          sd = sjstats::wtd_sd(.data$val, weights = .data$.weights),
-          se = sjstats::wtd_se(.data$val, weights = .data$.weights),
+          mean = stats::weighted.mean(.data$val, w = .data$.weights, na.rm = TRUE),
+          sd = wtd_sd_helper(.data$val, weights = .data$.weights),
+          se = wtd_se_helper(.data$val, weights = .data$.weights),
           range = sprintf(
             "%s (%s-%s)",
             as.character(round(diff(range(.data$val, na.rm = TRUE)), 2)),
@@ -221,4 +220,26 @@ sjmisc.skew <- function(x) {
     return(NA)
 
   sqrt(n) * sum(x ^ 3) / (sum(x ^ 2) ^ (3 / 2)) * sqrt(n * (n - 1)) / (n - 2)
+}
+
+
+wtd_se_helper <- function(x, weights) {
+  sqrt(wtd_var(x, weights) / length(stats::na.omit(x)))
+}
+
+wtd_sd_helper <- function(x, weights = NULL) {
+  sqrt(wtd_var(x, weights))
+}
+
+wtd_var <- function(x, w) {
+  if (is.null(w)) w <- rep(1, length(x))
+
+  x[is.na(w)] <- NA
+  w[is.na(x)] <- NA
+
+  w <- na.omit(w)
+  x <- na.omit(x)
+
+  xbar <- sum(w * x) / sum(w)
+  sum(w * ((x - xbar)^2)) / (sum(w) - 1)
 }
