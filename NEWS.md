@@ -4,6 +4,10 @@
 
 * Reduce package dependencies.
 
+## New functions
+
+* `de_mean()` to compute group-meaned and de-meaned variables.
+
 ## Changes to functions
 
 * `descr()` gets a `weights`-argument, to print weighted descriptive statistics.

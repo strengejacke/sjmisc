@@ -42,6 +42,8 @@
 #'     \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
 #'     \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
 #'     \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
+#'     \item de-meaned variables (\code{de_mean()}) will be suffixed with \code{"_dm"}
+#'     \item grouped-meaned variables (\code{de_mean()}) will be suffixed with \code{"_gm"}
 #'   }
 #'
 #' @inheritParams to_factor
