@@ -43,14 +43,29 @@ var_type <- function(x, ..., abbr = FALSE) {
 
 
 #' @importFrom purrr flatten_chr
-#' @importFrom pillar type_sum
 #' @importFrom dplyr case_when
 get_vt <- function(x, abbr) {
-  # get type of object. might be multiple types, e.g. for labelled vectors
-  vt <- purrr::flatten_chr(strsplit(pillar::type_sum(x), "+", fixed = TRUE))
 
-  # only keep "main" type of object
-  if (length(vt) > 1) vt <- vt[1]
+  if (is.ordered(x))
+    vt <- "ord"
+  else if (is.factor(x))
+    vt <- "fct"
+  else if (is(x, "Date"))
+    vt <- "date"
+  else {
+    vt <- switch(
+      typeof(x),
+      logical = "lgl",
+      integer = "int",
+      double = "dbl",
+      character = "chr",
+      complex = "cpl",
+      closure = "fn",
+      environment = "env",
+      typeof(x)
+    )
+  }
+
 
   if (!abbr) {
     vt <- dplyr::case_when(
@@ -60,6 +75,7 @@ get_vt <- function(x, abbr) {
       vt == "int" ~ "integer",
       vt == "chr" ~ "character",
       vt == "lbl" ~ "labelled",
+      vt == "cpl" ~ "complex",
       TRUE ~ vt
     )
   }

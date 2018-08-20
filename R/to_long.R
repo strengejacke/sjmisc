@@ -215,9 +215,9 @@ to_long_helper <- function(data, keys, values, ..., labels, recode.key) {
     for (i in 2:length(dummy)) {
       # find gathered columns that do not already exist in our
       # output data frame
-      add_cols <- dummy[[i]][!colnames(dummy[[i]]) %in% colnames(mydat)]
+      .add_cols <- dummy[[i]][!colnames(dummy[[i]]) %in% colnames(mydat)]
       # and bind them to the output
-      mydat <- dplyr::bind_cols(mydat, add_cols)
+      mydat <- dplyr::bind_cols(mydat, .add_cols)
     }
   }
 

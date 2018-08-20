@@ -22,7 +22,6 @@ Imports:
     dplyr,
     haven (>= 1.1.2),
     magrittr,
-    pillar,
     purrr,
     rlang,
     sjlabelled (>= 1.0.13),
