@@ -39,7 +39,8 @@ the column in \code{data}, after/before \code{...} should be inserted.}
 d <- data.frame(
   a = c(1, 2, 3),
   b = c("a", "b", "c"),
-  c = c(10, 20, 30)
+  c = c(10, 20, 30),
+  stringsAsFactors = FALSE
 )
 
 add_case(d, b = "d")
