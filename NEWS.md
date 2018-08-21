@@ -7,6 +7,7 @@
 ## New functions
 
 * `de_mean()` to compute group-meaned and de-meaned variables.
+* `add_variables()` and `add_case()` to add columns or rows in a convenient way to a data frame.
 
 ## Changes to functions
 
