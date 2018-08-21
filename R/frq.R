@@ -23,6 +23,10 @@
 #'   with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
 #'   on grouping, and that function's \code{maxdist}-argument to get more
 #'   details on the distance of strings to be treated as equal.
+#' @param title String, will be used as alternative title to the variable
+#'   label. If \code{x} is a grouped data frame, \code{title} must be a
+#'   vector of same length as groups.
+#'
 #' @param weight.by Deprecated.
 #'
 #' @inheritParams descr
@@ -121,6 +125,7 @@ frq <- function(x,
                 show.strings = TRUE,
                 grp.strings = NULL,
                 out = c("txt", "viewer", "browser"),
+                title = NULL,
                 weight.by) {
 
   out <- match.arg(out)
@@ -229,6 +234,12 @@ frq <- function(x,
         else
           wb <- NULL
 
+        # user-defined title
+        if (!is.null(title) && length(title) >= i)
+          gr.title <- title[i]
+        else
+          gr.title <- NULL
+
         # iterate data frame, but don't select
         # weighting variable
         if (is.null(w) || colnames(tmp)[1] != w) {
@@ -238,7 +249,8 @@ frq <- function(x,
               sort.frq = sort.frq,
               weight.by = wb,
               cn = colnames(tmp)[1],
-              auto.grp = auto.grp
+              auto.grp = auto.grp,
+              title = gr.title
             )
 
           attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
@@ -268,7 +280,8 @@ frq <- function(x,
             sort.frq = sort.frq,
             weight.by = wb,
             cn = colnames(x)[i],
-            auto.grp = auto.grp
+            auto.grp = auto.grp,
+            title = title
           )
 
         # save data frame for return value
@@ -293,7 +306,7 @@ frq <- function(x,
 #' @importFrom dplyr n_distinct full_join bind_rows
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
-frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
+frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL) {
   # remember type
   vartype <- var_type(x)
 
@@ -485,8 +498,16 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp) {
   if (sort.frq == "none") mydat <- mydat[order(reihe), ]
 
   # add variable label and type as attribute, for print-method
-  attr(mydat, "label") <- varlab
-  attr(mydat, "vartype") <- vartype
+
+  if (!is.null(title)) {
+    attr(mydat, "label") <- title
+    attr(mydat, "vartype") <- ""
+
+  } else {
+    attr(mydat, "label") <- varlab
+    attr(mydat, "vartype") <- vartype
+  }
+
   attr(mydat, "mean") <- mean.value
   attr(mydat, "sd") <- sd.value
 

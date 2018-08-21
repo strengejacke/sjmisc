@@ -6,7 +6,7 @@
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
   auto.grp = NULL, show.strings = TRUE, grp.strings = NULL,
-  out = c("txt", "viewer", "browser"), weight.by)
+  out = c("txt", "viewer", "browser"), title = NULL, weight.by)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -40,6 +40,10 @@ details on the distance of strings to be treated as equal.}
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 (\code{out = "viewer"}) or browser (\code{out = "browser"}).}
+
+\item{title}{String, will be used as alternative title to the variable
+label. If \code{x} is a grouped data frame, \code{title} must be a
+vector of same length as groups.}
 
 \item{weight.by}{Deprecated.}
 }

@@ -18,8 +18,14 @@ print.sjmisc_frq <- function(x, ...) {
     lab <- attr(dat, "label", exact = T)
     vt <- attr(dat, "vartype", exact = T)
 
+    # fix variable type string
+    if (!sjmisc::is_empty(vt))
+      vt <- sprintf(" <%s>", vt)
+    else
+      vt <- ""
+
     # print label
-    if (!is.null(lab)) cat(crayon::blue(sprintf("# %s <%s>", lab, vt)), "\n")
+    if (!is.null(lab)) cat(crayon::blue(sprintf("# %s%s", lab, vt)), "\n")
 
     # add Total N
     cat(crayon::blue(sprintf(
