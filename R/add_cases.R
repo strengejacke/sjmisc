@@ -52,7 +52,7 @@ add_variables <- function(data, ..., .after = Inf, .before = NULL) {
 
   if (.after < 1) {
     cbind(dat, data)
-  } else if (is.infinite(.after)) {
+  } else if (is.infinite(.after) || .after >= ncol(data)) {
     cbind(data, dat)
   } else {
     c1 <- 1:.after
@@ -84,10 +84,10 @@ add_case <- function(data, ..., .after = Inf, .before = NULL) {
 
   if (.after < 1)
     o <- c(last.row, 1:(last.row - 1))
-  else if (is.infinite(.after))
+  else if (is.infinite(.after) || .after >= nrow(x))
     o <- 1:last.row
   else
-    o <- c(1:.after, last.row, (.after + 1):(last.row) - 1)
+    o <- c(1:.after, last.row, (.after + 1):(last.row - 1))
 
   x[o, , drop = FALSE]
 }
