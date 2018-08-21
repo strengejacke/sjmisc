@@ -14,22 +14,39 @@
 #'   which will be added as new column or row to \code{data}. For \code{add_cases()},
 #'   non-matching columns in \code{data} will be filled with \code{NA}.
 #' @param .after,.before Numerical index of row or column, after or before which
-#'   the new variable or case should be added. In case of \code{add_variables()},
+#'   the new variable or case should be added. If \code{.after = -1}, variables
+#'   or cases are added before other columns/rows; if \code{.after = Inf},
+#'   variables and cases are added at the end. In case of \code{add_variables()},
 #'   \code{.after} and \code{.before} may also be a character name indicating
 #'   the column in \code{data}, after/before \code{...} should be inserted.
 #'
 #' @return \code{data}, including the new variables or cases from \code{...}.
 #'
 #' @examples
+#' d <- data.frame(
+#'   a = c(1, 2, 3),
+#'   b = c("a", "b", "c"),
+#'   c = c(10, 20, 30),
+#'   stringsAsFactors = FALSE
+#' )
+#'
+#' add_case(d, b = "d")
+#' add_case(d, b = "d", a = 5, .before = 1)
+#'
+#' add_variables(d, new = 5)
+#' add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = "b")
 #'
 #' @importFrom dplyr select
 #' @export
-add_variables <- function(data, ..., .after = 1, .before = NULL) {
+add_variables <- function(data, ..., .after = Inf, .before = NULL) {
   if (is.character(.after))
     .after <- which(colnames(data) == .after)
 
   if (!is.null(.before) && is.character(.before))
     .after <- which(colnames(data) == .before) - 1
+
+  if (!is.null(.before) && is.numeric(.before))
+    .after <- .before - 1
 
   dat <- data.frame(..., stringsAsFactors = FALSE)
 
@@ -52,7 +69,10 @@ add_variables <- function(data, ..., .after = 1, .before = NULL) {
 #' @rdname add_variables
 #' @importFrom dplyr select
 #' @export
-add_case <- function(data, ..., .after = -1, .before = NULL) {
+add_case <- function(data, ..., .after = Inf, .before = NULL) {
+
+  if (!is.null(.before))
+    .after <- .before - 1
 
   dat <- data.frame(..., stringsAsFactors = FALSE)
   x <- rbind(data, NA)

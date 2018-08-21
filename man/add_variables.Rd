@@ -5,9 +5,9 @@
 \alias{add_case}
 \title{Add variables or cases to data frames}
 \usage{
-add_variables(data, ..., .after = 1, .before = NULL)
+add_variables(data, ..., .after = Inf, .before = NULL)
 
-add_case(data, ..., .after = -1, .before = NULL)
+add_case(data, ..., .after = Inf, .before = NULL)
 }
 \arguments{
 \item{data}{A data frame. For \code{add_columns()}, will be bound after data
@@ -19,7 +19,9 @@ which will be added as new column or row to \code{data}. For \code{add_cases()},
 non-matching columns in \code{data} will be filled with \code{NA}.}
 
 \item{.after, .before}{Numerical index of row or column, after or before which
-the new variable or case should be added. In case of \code{add_variables()},
+the new variable or case should be added. If \code{.after = -1}, variables
+or cases are added before other columns/rows; if \code{.after = Inf},
+variables and cases are added at the end. In case of \code{add_variables()},
 \code{.after} and \code{.before} may also be a character name indicating
 the column in \code{data}, after/before \code{...} should be inserted.}
 }
@@ -34,5 +36,16 @@ the column in \code{data}, after/before \code{...} should be inserted.}
   into a pipe-workflow.
 }
 \examples{
+d <- data.frame(
+  a = c(1, 2, 3),
+  b = c("a", "b", "c"),
+  c = c(10, 20, 30)
+)
+
+add_case(d, b = "d")
+add_case(d, b = "d", a = 5, .before = 1)
+
+add_variables(d, new = 5)
+add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = "b")
 
 }
