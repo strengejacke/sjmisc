@@ -14,6 +14,7 @@
 * `descr()` gets a `weights`-argument, to print weighted descriptive statistics.
 * The `n`-argument in `row_means()` and `row_sums()` now also may be `Inf`, to compute means or sums only if all values in a row are valid (i.e. non-missing).
 * Argument `weight.by` in `frq()` was renamed into `weights`.
+* `frq()` gets a `title`-argument, to specify an alternative title to the variable label.
 
 ## Bug fixes
 
