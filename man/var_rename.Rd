@@ -9,8 +9,8 @@ var_rename(x, ...)
 \arguments{
 \item{x}{A data frame.}
 
-\item{...}{Pairs of named vectors, where the name equals the column name that
-should be renamed, and the value is the new column name.}
+\item{...}{Pairs of named vectors, where the name (lhs) equals the column name
+that should be renamed, and the value (rhs) is the new column name.}
 }
 \value{
 \code{x}, with new column names for those variables specified in \code{...}.

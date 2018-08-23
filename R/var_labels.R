@@ -5,8 +5,8 @@
 #'                renames the columns of the data frame.
 #'
 #' @param x A data frame.
-#' @param ... Pairs of named vectors, where the name equals the column name that
-#'          should be renamed, and the value is the new column name.
+#' @param ... Pairs of named vectors, where the name (lhs) equals the column name
+#'    that should be renamed, and the value (rhs) is the new column name.
 #'
 #' @return \code{x}, with new column names for those variables specified in \code{...}.
 #'
