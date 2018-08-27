@@ -40,3 +40,9 @@ test_that("frq", {
     dplyr::group_by(c172code) %>%
     frq(e16sex, title = c("1", "2", "3"))
 })
+
+test_that("frq", {
+  efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
+  frq(efc, c160age, auto.grp = 5, weights = weights)
+  frq(efc, e42dep, weights = weights)
+})

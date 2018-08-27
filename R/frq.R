@@ -151,21 +151,12 @@ frq <- function(x,
     x <- xw
   } else {
     w <- rlang::quo_name(rlang::enquo(weights))
-
-    w.string <- tryCatch(
-      {
-        eval(weights)
-      },
-      error = function(x) { NULL },
-      warning = function(x) { NULL },
-      finally = function(x) { NULL }
-    )
-
-    if (!is.null(w.string) && is.character(w.string)) w <- w.string
-
+    w.string <- try(eval(weights), silent = TRUE)
+    if (!inherits(w.string, "try-error")) w <- w.string
 
     if (!sjmisc::is_empty(w) && w != "NULL" && !obj_has_name(xw, w) && obj_has_name(x, w)) {
-      x <- dplyr::bind_cols(xw, dplyr::select(x, !! w))
+      x <- dplyr::bind_cols(xw, data.frame(x[[w]]))
+      colnames(x)[ncol(x)] <- w
     } else {
       message(sprintf("Weights `%s` not found in data.", w))
       w <- NULL

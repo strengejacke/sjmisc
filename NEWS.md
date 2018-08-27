@@ -19,6 +19,7 @@
 ## Bug fixes
 
 * `round_num()` preserves data frame attributes.
+* `frq()` printed frequencies of grouping-variable for grouped data frames, when `weights` was not `NULL`.
 
 # sjmisc 2.7.4
 
