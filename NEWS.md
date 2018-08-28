@@ -20,6 +20,7 @@
 
 * `round_num()` preserves data frame attributes.
 * `frq()` printed frequencies of grouping-variable for grouped data frames, when `weights` was not `NULL`.
+* Fixed issue with wrong title in `frq()` for grouped data frames, when grouping variable was an unlabelled factor.
 
 # sjmisc 2.7.4
 
