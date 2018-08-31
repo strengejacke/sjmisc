@@ -30,6 +30,7 @@
 #' @param weight.by Deprecated.
 #'
 #' @inheritParams descr
+#' @inheritParams to_factor
 #'
 #' @return A list of data frames with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.

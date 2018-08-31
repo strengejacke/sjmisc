@@ -8,6 +8,8 @@
 
 * `de_mean()` to compute group-meaned and de-meaned variables.
 * `add_variables()` and `add_case()` to add columns or rows in a convenient way to a data frame.
+* `move_columns()` to move one or more columns to another position in a data frame.
+* `is_num_chr()` to check whether a character vector has only numeric strings.
 
 ## Changes to functions
 
