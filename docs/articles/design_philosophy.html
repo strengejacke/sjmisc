@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
       <h1>The Design Philosophy of Functions in sjmisc</h1>
                         <h4 class="author">Daniel Lüdecke</h4>
             
-            <h4 class="date">2018-08-04</h4>
+            <h4 class="date">2018-08-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/master/vignettes/design_philosophy.Rmd"><code>vignettes/design_philosophy.Rmd</code></a></small>
       <div class="hidden name"><code>design_philosophy.Rmd</code></div>
@@ -117,22 +117,15 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rec.html"
 <span class="co">#&gt;  num [1:908] 2 2 2 2 2 2 2 2 2 2 ...</span>
 <span class="co">#&gt;  - attr(*, "label")= chr "elder's dependency"</span>
 
-<span class="co"># returns a data frame (a tibble, to be exactly)</span>
-<span class="kw"><a href="../reference/rec.html">rec</a></span>(efc, e42dep, <span class="dt">rec =</span> <span class="st">"1,2=1; 3,4=2"</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; # A tibble: 908 x 1</span>
-<span class="co">#&gt;    e42dep_r</span>
-<span class="co">#&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1        2</span>
-<span class="co">#&gt;  2        2</span>
-<span class="co">#&gt;  3        2</span>
-<span class="co">#&gt;  4        2</span>
-<span class="co">#&gt;  5        2</span>
-<span class="co">#&gt;  6        2</span>
-<span class="co">#&gt;  7        2</span>
-<span class="co">#&gt;  8        2</span>
-<span class="co">#&gt;  9        2</span>
-<span class="co">#&gt; 10        2</span>
-<span class="co">#&gt; # ... with 898 more rows</span></code></pre></div>
+<span class="co"># returns a data frame</span>
+<span class="kw"><a href="../reference/rec.html">rec</a></span>(efc, e42dep, <span class="dt">rec =</span> <span class="st">"1,2=1; 3,4=2"</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt;   e42dep_r</span>
+<span class="co">#&gt; 1        2</span>
+<span class="co">#&gt; 2        2</span>
+<span class="co">#&gt; 3        2</span>
+<span class="co">#&gt; 4        2</span>
+<span class="co">#&gt; 5        2</span>
+<span class="co">#&gt; 6        2</span></code></pre></div>
 <p>This design-choice is mainly due to compatibility- and convenience-reasons. It does not affect the usual “tidyverse-workflow” or when using pipe-chains.</p>
 </div>
 <div id="the--ellipses-argument" class="section level2">
@@ -145,40 +138,32 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rec.html"
   efc, <span class="kw">contains</span>(<span class="st">"cop"</span>), c161sex<span class="op">:</span>c175empl, 
   <span class="dt">rec =</span> <span class="st">"0,1=0; else=1"</span>, 
   <span class="dt">append =</span> <span class="ot">FALSE</span>
-)
-<span class="co">#&gt; # A tibble: 908 x 12</span>
-<span class="co">#&gt;    c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r</span>
-<span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1         1         1         1         1         0         0         1</span>
-<span class="co">#&gt;  2         1         1         1         1         1         0         1</span>
-<span class="co">#&gt;  3         1         1         0         1         0         0         0</span>
-<span class="co">#&gt;  4         1         0         1         0         0         0         0</span>
-<span class="co">#&gt;  5         1         1         0         1         1         1         0</span>
-<span class="co">#&gt;  6         1         1         1         1         1         1         1</span>
-<span class="co">#&gt;  7         1         1         1         0         0         1         1</span>
-<span class="co">#&gt;  8         1         1         1         0         0         0         1</span>
-<span class="co">#&gt;  9         1         1         1         1         1         0         1</span>
-<span class="co">#&gt; 10         1         1         0         1         0         0         0</span>
-<span class="co">#&gt; # ... with 898 more rows, and 5 more variables: c89cop8_r &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c90cop9_r &lt;dbl&gt;, c161sex_r &lt;dbl&gt;, c172code_r &lt;dbl&gt;, c175empl_r &lt;dbl&gt;</span>
+) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt;   c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r</span>
+<span class="co">#&gt; 1         1         1         1         1         0         0         1</span>
+<span class="co">#&gt; 2         1         1         1         1         1         0         1</span>
+<span class="co">#&gt; 3         1         1         0         1         0         0         0</span>
+<span class="co">#&gt; 4         1         0         1         0         0         0         0</span>
+<span class="co">#&gt; 5         1         1         0         1         1         1         0</span>
+<span class="co">#&gt; 6         1         1         1         1         1         1         1</span>
+<span class="co">#&gt;   c89cop8_r c90cop9_r c161sex_r c172code_r c175empl_r</span>
+<span class="co">#&gt; 1         1         1         1          1          0</span>
+<span class="co">#&gt; 2         1         1         1          1          0</span>
+<span class="co">#&gt; 3         1         1         0          0          0</span>
+<span class="co">#&gt; 4         1         1         0          1          0</span>
+<span class="co">#&gt; 5         1         1         1          1          0</span>
+<span class="co">#&gt; 6         0         0         0          1          0</span>
 
 <span class="co"># center all variables with "age" in name, variable c12hour</span>
 <span class="co"># and all variables from column 19 to 21</span>
-<span class="kw"><a href="../reference/std.html">center</a></span>(efc, c12hour, <span class="kw">contains</span>(<span class="st">"age"</span>), <span class="dv">19</span><span class="op">:</span><span class="dv">21</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; # A tibble: 908 x 6</span>
-<span class="co">#&gt;    c12hour_c e17age_c c160age_c barthtot_c neg_c_7_c pos_v_4_c</span>
-<span class="co">#&gt;        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1    -26.4     3.88      2.54       10.5      0.150    -0.477</span>
-<span class="co">#&gt;  2    106.      8.88      0.537      10.5      8.15     -1.48 </span>
-<span class="co">#&gt;  3     27.6     2.88     26.5       -29.5     -0.850     0.523</span>
-<span class="co">#&gt;  4    126.    -12.1      15.5       -64.5     -1.85      2.52 </span>
-<span class="co">#&gt;  5    126.      4.88     -6.46      -39.5      0.150     2.52 </span>
-<span class="co">#&gt;  6    -26.4     5.88      2.54       -4.55     7.15     -3.48 </span>
-<span class="co">#&gt;  7    119.     -5.12      7.54      -59.5      3.15      0.523</span>
-<span class="co">#&gt;  8     67.6     7.88     13.5       -29.5     -0.850     1.52 </span>
-<span class="co">#&gt;  9    -14.4    -0.121     5.54      -49.5      3.15      0.523</span>
-<span class="co">#&gt; 10     -2.40    3.88     -4.46      -64.5     -1.85      0.523</span>
-<span class="co">#&gt; # ... with 898 more rows</span></code></pre></div>
+<span class="kw"><a href="../reference/std.html">center</a></span>(efc, c12hour, <span class="kw">contains</span>(<span class="st">"age"</span>), <span class="dv">19</span><span class="op">:</span><span class="dv">21</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt;   c12hour_c   e17age_c  c160age_c barthtot_c  neg_c_7_c pos_v_4_c</span>
+<span class="co">#&gt; 1 -26.39911   3.878788  2.5371809  10.453001  0.1502242 -0.476731</span>
+<span class="co">#&gt; 2 105.60089   8.878788  0.5371809  10.453001  8.1502242 -1.476731</span>
+<span class="co">#&gt; 3  27.60089   2.878788 26.5371809 -29.546999 -0.8497758  0.523269</span>
+<span class="co">#&gt; 4 125.60089 -12.121212 15.5371809 -64.546999 -1.8497758  2.523269</span>
+<span class="co">#&gt; 5 125.60089   4.878788 -6.4628191 -39.546999  0.1502242  2.523269</span>
+<span class="co">#&gt; 6 -26.39911   5.878788  2.5371809  -4.546999  7.1502242 -3.476731</span></code></pre></div>
 </div>
 <div id="the-function-types" class="section level2">
 <h2 class="hasAnchor">
@@ -188,91 +173,111 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rec.html"
 <h3 class="hasAnchor">
 <a href="#coercingconverting-functions" class="anchor"></a>coercing/converting functions</h3>
 <p>Functions like <code><a href="../reference/to_factor.html">to_factor()</a></code> or <code><a href="../reference/to_label.html">to_label()</a></code>, which convert variables into other types or add additional information like variable or value labels as attribute, typically <em>return the complete data frame</em> that was given as first argument <em>without any new variables</em>. The variables specified in the <code>...</code>-ellipses argument are converted (overwritten), all other variables remain unchanged.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/to_factor.html">to_factor</a></span>(efc, e42dep, e16sex)
-<span class="co">#&gt; # A tibble: 908 x 26</span>
-<span class="co">#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4</span>
-<span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;   &lt;dbl&gt; &lt;fct&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt;  1      16        2 2          83 3            3       2       2       2</span>
-<span class="co">#&gt;  2     148        2 2          88 3            3       3       3       3</span>
-<span class="co">#&gt;  3      70        1 2          82 3            2       2       1       4</span>
-<span class="co">#&gt;  4     168        1 2          67 4            4       1       3       1</span>
-<span class="co">#&gt;  5     168        2 2          84 4            3       2       1       2</span>
-<span class="co">#&gt;  6      16        2 2          85 4            2       2       3       3</span>
-<span class="co">#&gt;  7     161        1 1          74 4            4       2       4       1</span>
-<span class="co">#&gt;  8     110        4 2          87 4            3       2       2       1</span>
-<span class="co">#&gt;  9      28        2 2          79 4            3       2       3       2</span>
-<span class="co">#&gt; 10      40        2 2          83 4            3       2       1       2</span>
-<span class="co">#&gt; # ... with 898 more rows, and 17 more variables: c86cop5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>efc[, <span class="dv">3</span><span class="op">:</span><span class="dv">5</span>]
+
+x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()
+<span class="co">#&gt; 'data.frame':    908 obs. of  3 variables:</span>
+<span class="co">#&gt;  $ e16sex: num  2 2 2 2 2 2 1 2 2 2 ...</span>
+<span class="co">#&gt;   ..- attr(*, "label")= chr "elder's gender"</span>
+<span class="co">#&gt;   ..- attr(*, "labels")= Named num  1 2</span>
+<span class="co">#&gt;   .. ..- attr(*, "names")= chr  "male" "female"</span>
+<span class="co">#&gt;  $ e17age: num  83 88 82 67 84 85 74 87 79 83 ...</span>
+<span class="co">#&gt;   ..- attr(*, "label")= chr "elder' age"</span>
+<span class="co">#&gt;  $ e42dep: num  3 3 3 4 4 4 4 4 4 4 ...</span>
+<span class="co">#&gt;   ..- attr(*, "label")= chr "elder's dependency"</span>
+<span class="co">#&gt;   ..- attr(*, "labels")= Named num  1 2 3 4</span>
+<span class="co">#&gt;   .. ..- attr(*, "names")= chr  "independent" "slightly dependent" "moderately dependent" "severely dependent"</span>
+
+<span class="kw"><a href="../reference/to_factor.html">to_factor</a></span>(x, e42dep, e16sex) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str</span>()
+<span class="co">#&gt; 'data.frame':    908 obs. of  3 variables:</span>
+<span class="co">#&gt;  $ e16sex: Factor w/ 2 levels "1","2": 2 2 2 2 2 2 1 2 2 2 ...</span>
+<span class="co">#&gt;   ..- attr(*, "labels")= Named num  1 2</span>
+<span class="co">#&gt;   .. ..- attr(*, "names")= chr  "male" "female"</span>
+<span class="co">#&gt;   ..- attr(*, "label")= chr "elder's gender"</span>
+<span class="co">#&gt;  $ e17age: num  83 88 82 67 84 85 74 87 79 83 ...</span>
+<span class="co">#&gt;   ..- attr(*, "label")= chr "elder' age"</span>
+<span class="co">#&gt;  $ e42dep: Factor w/ 4 levels "1","2","3","4": 3 3 3 4 4 4 4 4 4 4 ...</span>
+<span class="co">#&gt;   ..- attr(*, "labels")= Named num  1 2 3 4</span>
+<span class="co">#&gt;   .. ..- attr(*, "names")= chr  "independent" "slightly dependent" "moderately dependent" "severely dependent"</span>
+<span class="co">#&gt;   ..- attr(*, "label")= chr "elder's dependency"</span></code></pre></div>
 </div>
 <div id="transformationrecoding-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#transformationrecoding-functions" class="anchor"></a>transformation/recoding functions</h3>
 <p>Functions like <code><a href="../reference/rec.html">rec()</a></code> or <code><a href="../reference/dicho.html">dicho()</a></code>, which transform or recode variables, by default add <em>the transformed or recoded variables</em> to the data frame, so they return the new variables <em>and</em> the original data as combined data frame. To return <em>only the transformed and recoded variables</em> specified in the <code>...</code>-ellipses argument, use argument <code>append = FALSE</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># complete data, including new columns</span>
-<span class="kw"><a href="../reference/rec.html">rec</a></span>(efc, c82cop1, c83cop2, <span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>, <span class="dt">append =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; # A tibble: 908 x 28</span>
-<span class="co">#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4</span>
-<span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt;  1      16        2      2     83      3       3       2       2       2</span>
-<span class="co">#&gt;  2     148        2      2     88      3       3       3       3       3</span>
-<span class="co">#&gt;  3      70        1      2     82      3       2       2       1       4</span>
-<span class="co">#&gt;  4     168        1      2     67      4       4       1       3       1</span>
-<span class="co">#&gt;  5     168        2      2     84      4       3       2       1       2</span>
-<span class="co">#&gt;  6      16        2      2     85      4       2       2       3       3</span>
-<span class="co">#&gt;  7     161        1      1     74      4       4       2       4       1</span>
-<span class="co">#&gt;  8     110        4      2     87      4       3       2       2       1</span>
-<span class="co">#&gt;  9      28        2      2     79      4       3       2       3       2</span>
-<span class="co">#&gt; 10      40        2      2     83      4       3       2       1       2</span>
-<span class="co">#&gt; # ... with 898 more rows, and 19 more variables: c86cop5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c82cop1_r &lt;dbl&gt;, c83cop2_r &lt;dbl&gt;</span>
+<span class="kw"><a href="../reference/rec.html">rec</a></span>(efc, c82cop1, c83cop2, <span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>, <span class="dt">append =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4</span>
+<span class="co">#&gt; 1      16        2      2     83      3       3       2       2       2</span>
+<span class="co">#&gt; 2     148        2      2     88      3       3       3       3       3</span>
+<span class="co">#&gt; 3      70        1      2     82      3       2       2       1       4</span>
+<span class="co">#&gt; 4     168        1      2     67      4       4       1       3       1</span>
+<span class="co">#&gt; 5     168        2      2     84      4       3       2       1       2</span>
+<span class="co">#&gt; 6      16        2      2     85      4       2       2       3       3</span>
+<span class="co">#&gt;   c86cop5 c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code</span>
+<span class="co">#&gt; 1       1       1       2       3       3      56       2        2</span>
+<span class="co">#&gt; 2       4       1       3       2       2      54       2        2</span>
+<span class="co">#&gt; 3       1       1       1       4       3      80       1        1</span>
+<span class="co">#&gt; 4       1       1       1       2       4      69       1        2</span>
+<span class="co">#&gt; 5       2       2       1       4       4      47       2        2</span>
+<span class="co">#&gt; 6       3       2       2       1       1      56       1        2</span>
+<span class="co">#&gt;   c175empl barthtot neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu</span>
+<span class="co">#&gt; 1        1       75      12      12     14        0        4      0</span>
+<span class="co">#&gt; 2        1       75      20      11     10        4        0      0</span>
+<span class="co">#&gt; 3        0       35      11      13      7        0        1      2</span>
+<span class="co">#&gt; 4        0        0      10      15     12        2        0      3</span>
+<span class="co">#&gt; 5        0       25      12      15     19        2        1      2</span>
+<span class="co">#&gt; 6        1       60      19       9      8        1        3      2</span>
+<span class="co">#&gt;   nur_pst c82cop1_r c83cop2_r</span>
+<span class="co">#&gt; 1      NA         2         0</span>
+<span class="co">#&gt; 2      NA         2         2</span>
+<span class="co">#&gt; 3       2         0         0</span>
+<span class="co">#&gt; 4       3         2         0</span>
+<span class="co">#&gt; 5       2         2         0</span>
+<span class="co">#&gt; 6       2         0         0</span>
 
 <span class="co"># only new columns</span>
-<span class="kw"><a href="../reference/rec.html">rec</a></span>(efc, c82cop1, c83cop2, <span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>)
-<span class="co">#&gt; # A tibble: 908 x 2</span>
-<span class="co">#&gt;    c82cop1_r c83cop2_r</span>
-<span class="co">#&gt;        &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1         2         0</span>
-<span class="co">#&gt;  2         2         2</span>
-<span class="co">#&gt;  3         0         0</span>
-<span class="co">#&gt;  4         2         0</span>
-<span class="co">#&gt;  5         2         0</span>
-<span class="co">#&gt;  6         0         0</span>
-<span class="co">#&gt;  7         2         0</span>
-<span class="co">#&gt;  8         2         0</span>
-<span class="co">#&gt;  9         2         0</span>
-<span class="co">#&gt; 10         2         0</span>
-<span class="co">#&gt; # ... with 898 more rows</span></code></pre></div>
+<span class="kw"><a href="../reference/rec.html">rec</a></span>(efc, c82cop1, c83cop2, <span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()
+<span class="co">#&gt;   c82cop1_r c83cop2_r</span>
+<span class="co">#&gt; 1         2         0</span>
+<span class="co">#&gt; 2         2         2</span>
+<span class="co">#&gt; 3         0         0</span>
+<span class="co">#&gt; 4         2         0</span>
+<span class="co">#&gt; 5         2         0</span>
+<span class="co">#&gt; 6         0         0</span></code></pre></div>
 <p>These variables usually get a suffix, so you can bind these variables as new columns to a data frame, for instance with <code><a href="../reference/add_columns.html">add_columns()</a></code>. The function <code><a href="../reference/add_columns.html">add_columns()</a></code> is useful if you want to bind/add columns within a pipe-chain <em>to the end</em> of a data frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw"><a href="../reference/rec.html">rec</a></span>(c82cop1, c83cop2, <span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>, <span class="dt">append =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/add_columns.html">add_columns</a></span>(efc)
-<span class="co">#&gt; # A tibble: 908 x 28</span>
-<span class="co">#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4</span>
-<span class="co">#&gt;      &lt;dbl&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt;  1      16        2      2     83      3       3       2       2       2</span>
-<span class="co">#&gt;  2     148        2      2     88      3       3       3       3       3</span>
-<span class="co">#&gt;  3      70        1      2     82      3       2       2       1       4</span>
-<span class="co">#&gt;  4     168        1      2     67      4       4       1       3       1</span>
-<span class="co">#&gt;  5     168        2      2     84      4       3       2       1       2</span>
-<span class="co">#&gt;  6      16        2      2     85      4       2       2       3       3</span>
-<span class="co">#&gt;  7     161        1      1     74      4       4       2       4       1</span>
-<span class="co">#&gt;  8     110        4      2     87      4       3       2       2       1</span>
-<span class="co">#&gt;  9      28        2      2     79      4       3       2       3       2</span>
-<span class="co">#&gt; 10      40        2      2     83      4       3       2       1       2</span>
-<span class="co">#&gt; # ... with 898 more rows, and 19 more variables: c86cop5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c87cop6 &lt;dbl&gt;, c88cop7 &lt;dbl&gt;, c89cop8 &lt;dbl&gt;, c90cop9 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c160age &lt;dbl&gt;, c161sex &lt;dbl&gt;, c172code &lt;dbl&gt;, c175empl &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   barthtot &lt;dbl&gt;, neg_c_7 &lt;dbl&gt;, pos_v_4 &lt;dbl&gt;, quol_5 &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   resttotn &lt;dbl&gt;, tot_sc_e &lt;dbl&gt;, n4pstu &lt;dbl&gt;, nur_pst &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   c82cop1_r &lt;dbl&gt;, c83cop2_r &lt;dbl&gt;</span></code></pre></div>
+<span class="st">  </span><span class="kw"><a href="../reference/add_columns.html">add_columns</a></span>(efc) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4</span>
+<span class="co">#&gt; 1      16        2      2     83      3       3       2       2       2</span>
+<span class="co">#&gt; 2     148        2      2     88      3       3       3       3       3</span>
+<span class="co">#&gt; 3      70        1      2     82      3       2       2       1       4</span>
+<span class="co">#&gt; 4     168        1      2     67      4       4       1       3       1</span>
+<span class="co">#&gt; 5     168        2      2     84      4       3       2       1       2</span>
+<span class="co">#&gt; 6      16        2      2     85      4       2       2       3       3</span>
+<span class="co">#&gt;   c86cop5 c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code</span>
+<span class="co">#&gt; 1       1       1       2       3       3      56       2        2</span>
+<span class="co">#&gt; 2       4       1       3       2       2      54       2        2</span>
+<span class="co">#&gt; 3       1       1       1       4       3      80       1        1</span>
+<span class="co">#&gt; 4       1       1       1       2       4      69       1        2</span>
+<span class="co">#&gt; 5       2       2       1       4       4      47       2        2</span>
+<span class="co">#&gt; 6       3       2       2       1       1      56       1        2</span>
+<span class="co">#&gt;   c175empl barthtot neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu</span>
+<span class="co">#&gt; 1        1       75      12      12     14        0        4      0</span>
+<span class="co">#&gt; 2        1       75      20      11     10        4        0      0</span>
+<span class="co">#&gt; 3        0       35      11      13      7        0        1      2</span>
+<span class="co">#&gt; 4        0        0      10      15     12        2        0      3</span>
+<span class="co">#&gt; 5        0       25      12      15     19        2        1      2</span>
+<span class="co">#&gt; 6        1       60      19       9      8        1        3      2</span>
+<span class="co">#&gt;   nur_pst c82cop1_r c83cop2_r</span>
+<span class="co">#&gt; 1      NA         2         0</span>
+<span class="co">#&gt; 2      NA         2         2</span>
+<span class="co">#&gt; 3       2         0         0</span>
+<span class="co">#&gt; 4       3         2         0</span>
+<span class="co">#&gt; 5       2         2         0</span>
+<span class="co">#&gt; 6       2         0         0</span></code></pre></div>
 </div>
 </div>
 <div id="sjmisc-and-dplyr" class="section level2">
@@ -281,21 +286,15 @@ x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rec.html"
 <p>The functions of <strong>sjmisc</strong> are designed to work together seamlessly with other packes from the tidyverse, like <strong>dplyr</strong>. For instance, you can use the functions from <strong>sjmisc</strong> both within a pipe-worklflow to manipulate data frames, or to create new variables with <code>mutate()</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(c82cop1, c83cop2) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/rec.html">rec</a></span>(<span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>)
-<span class="co">#&gt; # A tibble: 908 x 4</span>
-<span class="co">#&gt;    c82cop1 c83cop2 c82cop1_r c83cop2_r</span>
-<span class="co">#&gt;      &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1       3       2         2         0</span>
-<span class="co">#&gt;  2       3       3         2         2</span>
-<span class="co">#&gt;  3       2       2         0         0</span>
-<span class="co">#&gt;  4       4       1         2         0</span>
-<span class="co">#&gt;  5       3       2         2         0</span>
-<span class="co">#&gt;  6       2       2         0         0</span>
-<span class="co">#&gt;  7       4       2         2         0</span>
-<span class="co">#&gt;  8       3       2         2         0</span>
-<span class="co">#&gt;  9       3       2         2         0</span>
-<span class="co">#&gt; 10       3       2         2         0</span>
-<span class="co">#&gt; # ... with 898 more rows</span>
+<span class="st">  </span><span class="kw"><a href="../reference/rec.html">rec</a></span>(<span class="dt">rec =</span> <span class="st">"1,2=0; 3:4=2"</span>) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">head</span>()
+<span class="co">#&gt;   c82cop1 c83cop2 c82cop1_r c83cop2_r</span>
+<span class="co">#&gt; 1       3       2         2         0</span>
+<span class="co">#&gt; 2       3       3         2         2</span>
+<span class="co">#&gt; 3       2       2         0         0</span>
+<span class="co">#&gt; 4       4       1         2         0</span>
+<span class="co">#&gt; 5       3       2         2         0</span>
+<span class="co">#&gt; 6       2       2         0         0</span>
 
 efc <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">select</span>(c82cop1, c83cop2) <span class="op">%&gt;%</span><span class="st"> </span>

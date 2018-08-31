@@ -32,8 +32,9 @@
 
 <meta property="og:title" content="Check whether a factor has numeric levels only — is_num_fac" />
 
-<meta property="og:description" content="This function checks whether a factor has only numeric or
-               any non-numeric factor levels." />
+<meta property="og:description" content="is_num_fac() checks whether a factor has only numeric or
+   any non-numeric factor levels, while is_num_chr() checks whether
+   a character vector has only numeric strings." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -64,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -125,26 +126,30 @@
 
     <div class="ref-description">
     
-    <p>This function checks whether a factor has only numeric or
-               any non-numeric factor levels.</p>
+    <p><code>is_num_fac()</code> checks whether a factor has only numeric or
+   any non-numeric factor levels, while <code>is_num_chr()</code> checks whether
+   a character vector has only numeric strings.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>is_num_fac</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>is_num_fac</span>(<span class='no'>x</span>)
+
+<span class='fu'>is_num_chr</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A <code>factor</code>.</p></td>
+      <td><p>A factor for <code>is_num_fac()</code> and a character vector for
+<code>is_num_chr()</code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Logical, <code>TRUE</code> if factor has numeric factor levels only,
-          <code>FALSE</code> otherwise.</p>
+    <p>Logical, <code>TRUE</code> if factor has numeric factor levels only, or
+   if character vector has numeric strings only, <code>FALSE</code> otherwise.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -157,6 +162,7 @@
 <span class='co'># not completeley numeric factor levels</span>
 <span class='no'>f3</span> <span class='kw'>&lt;-</span> <span class='fu'>factor</span>(<span class='fu'>c</span>(<span class='st'>"Justus"</span>, <span class='st'>"Bob"</span>, <span class='st'>"Peter"</span>))
 <span class='fu'>is_num_fac</span>(<span class='no'>f3</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='fu'>is_num_chr</span>(<span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"1"</span>))</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_num_chr</span>(<span class='fu'>c</span>(<span class='st'>"2"</span>, <span class='st'>"1"</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

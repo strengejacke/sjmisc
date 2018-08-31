@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Format numbers — big_mark • sjmisc</title>
+<title>Add variables or cases to data frames — add_variables • sjmisc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,13 @@
 
 
 
-<meta property="og:title" content="Format numbers — big_mark" />
+<meta property="og:title" content="Add variables or cases to data frames — add_variables" />
 
-<meta property="og:description" content="big_mark() formats large numbers with big marks, while
-   prcn() converts a numeric scalar between 0 and 1 into a character
-   vector, representing the percentage-value." />
+<meta property="og:description" content="add_variables() adds a new column to a data frame, while
+  add_cases() adds a new row to a data frame. These are convenient
+  functions to add columns or rows not only at the end of a data frame,
+  but at any column or row position. Furthermore, they allow easy integration
+  into a pipe-workflow." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -119,66 +121,80 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Format numbers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/big_mark.R'><code>R/big_mark.R</code></a></small>
-    <div class="hidden name"><code>big_mark.Rd</code></div>
+    <h1>Add variables or cases to data frames</h1>
+    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/add_cases.R'><code>R/add_cases.R</code></a></small>
+    <div class="hidden name"><code>add_variables.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>big_mark()</code> formats large numbers with big marks, while
-   <code>prcn()</code> converts a numeric scalar between 0 and 1 into a character
-   vector, representing the percentage-value.</p>
+    <p><code>add_variables()</code> adds a new column to a data frame, while
+  <code>add_cases()</code> adds a new row to a data frame. These are convenient
+  functions to add columns or rows not only at the end of a data frame,
+  but at any column or row position. Furthermore, they allow easy integration
+  into a pipe-workflow.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>big_mark</span>(<span class='no'>x</span>, <span class='kw'>big.mark</span> <span class='kw'>=</span> <span class='st'>","</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>add_variables</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>.after</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>.before</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>prcn</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>add_case</span>(<span class='no'>data</span>, <span class='no'>...</span>, <span class='kw'>.after</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>.before</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A vector or data frame. All numeric inputs (including numeric character)
-vectors) will be prettified. For <code>prcn()</code>, a number between
-0 and 1, or a vector or data frame with such numbers.</p></td>
-    </tr>
-    <tr>
-      <th>big.mark</th>
-      <td><p>Character, used as mark between every 3 decimals before the decimal point.</p></td>
+      <th>data</th>
+      <td><p>A data frame. For <code><a href='add_columns.html'>add_columns()</a></code>, will be bound after data
+frames specified in <code>...</code>. For <code><a href='add_columns.html'>replace_columns()</a></code>, duplicated
+columns in <code>data</code> will be replaced by columns in <code>...</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Other arguments passed down to the <code>prettyNum</code>-function.</p></td>
+      <td><p>One or more names vectors that indicate the variables or values,
+which will be added as new column or row to <code>data</code>. For <code>add_cases()</code>,
+non-matching columns in <code>data</code> will be filled with <code>NA</code>.</p></td>
+    </tr>
+    <tr>
+      <th>.after, .before</th>
+      <td><p>Numerical index of row or column, after or before which
+the new variable or case should be added. If <code>.after = -1</code>, variables
+or cases are added before other columns/rows; if <code>.after = Inf</code>,
+variables and cases are added at the end. In case of <code>add_variables()</code>,
+<code>.after</code> and <code>.before</code> may also be a character name indicating
+the column in <code>data</code>, after/before <code>...</code> should be inserted.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For <code>big_mark()</code>, a prettified <code>x</code> as character, with big marks.
-   For <code>prcn</code>, a character vector with a percentage number.</p>
+    <p><code>data</code>, including the new variables or cases from <code>...</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># simple big mark</span>
-<span class='fu'>big_mark</span>(<span class='fl'>1234567</span>)</div><div class='output co'>#&gt; [1] "1,234,567"</div><div class='input'>
-<span class='co'># big marks for several values at once, mixed numeric and character</span>
-<span class='fu'>big_mark</span>(<span class='fu'>c</span>(<span class='fl'>1234567</span>, <span class='st'>"55443322"</span>))</div><div class='output co'>#&gt; [1] " 1,234,567" "55,443,322"</div><div class='input'>
-<span class='co'># pre-defined width of character output</span>
-<span class='fu'>big_mark</span>(<span class='fu'>c</span>(<span class='fl'>1234567</span>, <span class='fl'>55443322</span>), <span class='kw'>width</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='output co'>#&gt; [1] "        1,234,567" "       55,443,322"</div><div class='input'>
-<span class='co'># convert numbers into percentage, as character</span>
-<span class='fu'>prcn</span>(<span class='fl'>0.2389</span>)</div><div class='output co'>#&gt; [1] "23.89%"</div><div class='input'><span class='fu'>prcn</span>(<span class='fu'>c</span>(<span class='fl'>0.2143887</span>, <span class='fl'>0.55443</span>, <span class='fl'>0.12345</span>))</div><div class='output co'>#&gt; [1] "21.44%" "55.44%" "12.35%"</div><div class='input'>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
-  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>.321</span>, <span class='fl'>.121</span>, <span class='fl'>.64543</span>),
+    <pre class="examples"><div class='input'><span class='no'>d</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(
+  <span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
   <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>),
-  <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>.435</span>, <span class='fl'>.54352</span>, <span class='fl'>.234432</span>)
+  <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>),
+  <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
-<span class='fu'>prcn</span>(<span class='no'>dat</span>)</div><div class='output co'>#&gt;        a b      c
-#&gt; 1 32.10% a 43.50%
-#&gt; 2 12.10% b 54.35%
-#&gt; 3 64.54% c 23.44%</div><div class='input'>
+
+<span class='fu'>add_case</span>(<span class='no'>d</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"d"</span>)</div><div class='output co'>#&gt;    a b  c
+#&gt; 1  1 a 10
+#&gt; 2  2 b 20
+#&gt; 3  3 c 30
+#&gt; 4 NA d NA</div><div class='input'><span class='fu'>add_case</span>(<span class='no'>d</span>, <span class='kw'>b</span> <span class='kw'>=</span> <span class='st'>"d"</span>, <span class='kw'>a</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>.before</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;   a b  c
+#&gt; 4 5 d NA
+#&gt; 1 1 a 10
+#&gt; 2 2 b 20
+#&gt; 3 3 c 30</div><div class='input'>
+<span class='fu'>add_variables</span>(<span class='no'>d</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt;   a b  c new
+#&gt; 1 1 a 10   5
+#&gt; 2 2 b 20   5
+#&gt; 3 3 c 30   5</div><div class='input'><span class='fu'>add_variables</span>(<span class='no'>d</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>), <span class='kw'>new2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>), <span class='kw'>.after</span> <span class='kw'>=</span> <span class='st'>"b"</span>)</div><div class='output co'>#&gt;   a b new new2  c
+#&gt; 1 1 a   4    5 10
+#&gt; 2 2 b   4    5 20
+#&gt; 3 3 c   4    5 30</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

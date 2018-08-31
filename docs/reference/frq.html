@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -128,9 +128,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>frq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>sort.frq</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"asc"</span>, <span class='st'>"desc"</span>), <span class='kw'>weight.by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>frq</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>sort.frq</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"asc"</span>, <span class='st'>"desc"</span>), <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>show.strings</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grp.strings</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span>))</pre>
+  <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span>), <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>weight.by</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,7 +157,7 @@ categories are not sorted by frequency. Use <code>"asc"</code> or
 <code>"desc"</code> for sorting categories ascending or descending order.</p></td>
     </tr>
     <tr>
-      <th>weight.by</th>
+      <th>weights</th>
       <td><p>Bare name, or name as string, of a variable in <code>x</code>
 that indicates the vector of weights, which will be applied to weight all
 observations. Default is <code>NULL</code>, so no weights are used.</p></td>
@@ -189,6 +189,16 @@ details on the distance of strings to be treated as equal.</p></td>
       <td><p>Character vector, indicating whether the results should be printed
 to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 (<code>out = "viewer"</code>) or browser (<code>out = "browser"</code>).</p></td>
+    </tr>
+    <tr>
+      <th>title</th>
+      <td><p>String, will be used as alternative title to the variable
+label. If <code>x</code> is a grouped data frame, <code>title</code> must be a
+vector of same length as groups.</p></td>
+    </tr>
+    <tr>
+      <th>weight.by</th>
+      <td><p>Deprecated.</p></td>
     </tr>
     </table>
     
@@ -628,19 +638,7 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 #&gt; </div><div class='input'>
 <span class='co'># and with weights</span>
 <span class='no'>efc</span>$<span class='no'>weights</span> <span class='kw'>&lt;-</span> <span class='fu'>abs</span>(<span class='fu'>rnorm</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>efc</span>), <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.5</span>))
-<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>, <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>weight.by</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; 
-#&gt; # carer' age (c160age) &lt;numeric&gt; 
-#&gt; # total N=905  valid N=905  mean=53.30  sd=13.36
-#&gt;  
-#&gt;  val label frq raw.prc valid.prc cum.prc
-#&gt;    1 18-32  58    6.41      6.41    6.41
-#&gt;    2 33-47 247   27.29     27.29   33.70
-#&gt;    3 48-62 361   39.89     39.89   73.59
-#&gt;    4 63-77 214   23.65     23.65   97.24
-#&gt;    5 78-92  25    2.76      2.76  100.00
-#&gt;   NA    NA   0    0.00        NA      NA
-#&gt; 
-#&gt; </div><div class='input'>
+<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>, <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='error'>Error in w != "NULL": comparison (2) is possible only for atomic and list types</span></div><div class='input'>
 # group string values
 </div><span class='co'># NOT RUN {</span>
 <span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>3</span>)

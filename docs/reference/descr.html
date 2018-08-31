@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -130,7 +130,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>descr</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max.length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span>))</pre>
+    <pre class="usage"><span class='fu'>descr</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>max.length</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"txt"</span>,
+  <span class='st'>"viewer"</span>, <span class='st'>"browser"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -155,6 +156,12 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 in the output. If variable names are longer than <code>max.length</code>,
 they will be shortened to the last whole word within the first
 <code>max.length</code> chars.</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>Bare name, or name as string, of a variable in <code>x</code>
+that indicates the vector of weights, which will be applied to weight all
+observations. Default is <code>NULL</code>, so no weights are used.</p></td>
     </tr>
     <tr>
       <th>out</th>
@@ -186,6 +193,16 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 #&gt;   skew
 #&gt;   0.06
 #&gt;  -0.14</div><div class='input'>
+<span class='no'>efc</span>$<span class='no'>weights</span> <span class='kw'>&lt;-</span> <span class='fu'>abs</span>(<span class='fu'>rnorm</span>(<span class='fu'>nrow</span>(<span class='no'>efc</span>), <span class='fl'>1</span>, <span class='fl'>.3</span>))
+<span class='fu'>descr</span>(<span class='no'>efc</span>, <span class='no'>c12hour</span>, <span class='no'>barthtot</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; 
+#&gt; ## Basic descriptive statistics
+#&gt; 
+#&gt;       var    type                                    label   n NA.prc  mean
+#&gt;   c12hour numeric average number of hours of care per week 900   0.67 41.86
+#&gt;  barthtot numeric                Total score BARTHEL INDEX 880   2.84 64.93
+#&gt;     sd   se       range
+#&gt;  50.47 1.68 164 (4-168)
+#&gt;  29.46 0.99 100 (0-100)</div><div class='input'>
 <span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span> <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
 #&gt; ## Basic descriptive statistics

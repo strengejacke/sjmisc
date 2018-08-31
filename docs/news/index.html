@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -119,13 +119,62 @@
       <small>Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="sjmisc-2-7-4" class="section level1">
+    <div id="sjmisc-2-7-5" class="section level1">
 <h1 class="page-header">
-<a href="#sjmisc-2-7-4" class="anchor"></a>sjmisc 2.7.4<small> Unreleased </small>
+<a href="#sjmisc-2-7-5" class="anchor"></a>sjmisc 2.7.5<small> Unreleased </small>
 </h1>
+<div id="general" class="section level2">
+<h2 class="hasAnchor">
+<a href="#general" class="anchor"></a>General</h2>
+<ul>
+<li>Reduce package dependencies.</li>
+</ul>
+</div>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/de_mean.html">de_mean()</a></code> to compute group-meaned and de-meaned variables.</li>
+<li>
+<code><a href="../reference/add_variables.html">add_variables()</a></code> and <code><a href="../reference/add_variables.html">add_case()</a></code> to add columns or rows in a convenient way to a data frame.</li>
+<li>
+<code><a href="../reference/move_columns.html">move_columns()</a></code> to move one or more columns to another position in a data frame.</li>
+<li>
+<code><a href="../reference/is_num_fac.html">is_num_chr()</a></code> to check whether a character vector has only numeric strings.</li>
+</ul>
+</div>
+<div id="changes-to-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<ul>
+<li>
+<code><a href="../reference/descr.html">descr()</a></code> gets a <code>weights</code>-argument, to print weighted descriptive statistics.</li>
+<li>The <code>n</code>-argument in <code><a href="../reference/row_sums.html">row_means()</a></code> and <code><a href="../reference/row_sums.html">row_sums()</a></code> now also may be <code>Inf</code>, to compute means or sums only if all values in a row are valid (i.e. non-missing).</li>
+<li>Argument <code>weight.by</code> in <code><a href="../reference/frq.html">frq()</a></code> was renamed into <code>weights</code>.</li>
+<li>
+<code><a href="../reference/frq.html">frq()</a></code> gets a <code>title</code>-argument, to specify an alternative title to the variable label.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>
+<code><a href="../reference/round_num.html">round_num()</a></code> preserves data frame attributes.</li>
+<li>
+<code><a href="../reference/frq.html">frq()</a></code> printed frequencies of grouping-variable for grouped data frames, when <code>weights</code> was not <code>NULL</code>.</li>
+<li>Fixed issue with wrong title in <code><a href="../reference/frq.html">frq()</a></code> for grouped data frames, when grouping variable was an unlabelled factor.</li>
+</ul>
+</div>
+</div>
+    <div id="sjmisc-2-7-4" class="section level1">
+<h1 class="page-header">
+<a href="#sjmisc-2-7-4" class="anchor"></a>sjmisc 2.7.4<small> 2018-08-04 </small>
+</h1>
+<div id="new-functions-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/has_na.html">has_na()</a></code> to check if variables or observations in a data frame contain <code>NA</code>, <code>NaN</code> or <code>Inf</code> values. Convenient shortcuts for this function are <code><a href="../reference/has_na.html">complete_cases()</a></code>, <code><a href="../reference/has_na.html">incomplete_cases()</a></code>, <code><a href="../reference/has_na.html">complete_vars()</a></code> and <code><a href="../reference/has_na.html">incomplete_vars()</a></code>.</li>
@@ -137,9 +186,9 @@
 <code><a href="../reference/numeric_to_factor.html">numeric_to_factor()</a></code> to convert numeric variables into factors, using associated value labels as factor levels.</li>
 </ul>
 </div>
-<div id="changes-to-functions" class="section level2">
+<div id="changes-to-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/set_na.html">set_na()</a></code> now also replaces different values per variable into <code>NA</code>.</li>
@@ -151,33 +200,33 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-7-3" class="anchor"></a>sjmisc 2.7.3<small> 2018-06-20 </small>
 </h1>
-<div id="general" class="section level2">
+<div id="general-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general" class="anchor"></a>General</h2>
+<a href="#general-1" class="anchor"></a>General</h2>
 <ul>
 <li>A test-suite was added to the package.</li>
 <li>Updated reference in <code>CITATION</code> to the publication in the Journal of Open Source Software.</li>
 </ul>
 </div>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/is_crossed.html">is_cross_classified()</a></code> to check whether two factors are partially crossed.</li>
 </ul>
 </div>
-<div id="changes-to-functions-1" class="section level2">
+<div id="changes-to-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-1" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also accepts value labels as value for the <code>lvl</code>-argument. Additionally, <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also works for factor with non-numeric factor levels and simply returns <code>relevel(x, ref = lvl)</code> in such cases.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed encoding issues in <code><a href="../reference/rec.html">rec()</a></code> with direct labelling for certain locales.</li>
 <li>Fixed issue in <code><a href="../reference/count_na.html">count_na()</a></code>, which did not print labels of tagged <code>NA</code> values since the last revision of <code><a href="../reference/frq.html">frq()</a></code>.</li>
@@ -190,17 +239,17 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-7-2" class="anchor"></a>sjmisc 2.7.2<small> 2018-05-04 </small>
 </h1>
-<div id="new-functions-2" class="section level2">
+<div id="new-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h2>
+<a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/round_num.html">round_num()</a></code> to round only numeric values in a data frame.</li>
 </ul>
 </div>
-<div id="general-1" class="section level2">
+<div id="general-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-1" class="anchor"></a>General</h2>
+<a href="#general-2" class="anchor"></a>General</h2>
 <ul>
 <li>Improved performance for <code><a href="../reference/add_rows.html">merge_df()</a></code>. Furthermore, <code><a href="../reference/add_rows.html">add_rows()</a></code> was added as alias for <code><a href="../reference/add_rows.html">merge_df()</a></code>.</li>
 <li>
@@ -217,16 +266,16 @@
 <code><a href="../reference/row_count.html">row_count()</a></code>, <code><a href="../reference/row_sums.html">row_sums()</a></code>, <code><a href="../reference/row_sums.html">row_means()</a></code>, <code><a href="../reference/rec.html">rec()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/recode_to.html">recode_to()</a></code> and <code><a href="../reference/to_long.html">to_long()</a></code>.</li>
 </ul>
 </div>
-<div id="changes-to-functions-2" class="section level2">
+<div id="changes-to-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-2" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>The <code>weight.by</code>-argument in <code><a href="../reference/frq.html">frq()</a></code> now should be a variable name from a variable in <code>x</code>, and no longer a separate vector.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/descr.html">descr()</a></code> does not work with character vectors, so these are being removed now.</li>
@@ -237,16 +286,16 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-7-1" class="anchor"></a>sjmisc 2.7.1<small> 2018-03-25 </small>
 </h1>
-<div id="general-2" class="section level2">
+<div id="general-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-2" class="anchor"></a>General</h2>
+<a href="#general-3" class="anchor"></a>General</h2>
 <ul>
 <li>Fix typos and revise outdated paragraphs in vignettes.</li>
 </ul>
 </div>
-<div id="new-functions-3" class="section level2">
+<div id="new-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-3" class="anchor"></a>New functions</h2>
+<a href="#new-functions-4" class="anchor"></a>New functions</h2>
 <p>The recoding and transformation functions get scoped variants, allowing to select variables based on logical conditions described in a function:</p>
 <ul>
 <li>
@@ -267,9 +316,9 @@
 <code><a href="../reference/set_na.html">set_na_if()</a></code> as scoped variant of <code><a href="../reference/set_na.html">set_na()</a></code>.</li>
 </ul>
 </div>
-<div id="changes-to-functions-3" class="section level2">
+<div id="changes-to-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-3" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>New function <code><a href="../reference/remove_var.html">remove_cols()</a></code> as alias for <code><a href="../reference/remove_var.html">remove_var()</a></code>.</li>
 <li>
@@ -277,9 +326,9 @@
 <li>Slightly improved performance for <code><a href="../reference/set_na.html">set_na()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/frq.html">frq()</a></code> now removes empty columns before computing frequencies, because applying <code><a href="../reference/frq.html">frq()</a></code> on empty vectors caused an error.</li>
@@ -294,9 +343,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-7-0" class="anchor"></a>sjmisc 2.7.0<small> 2018-02-03 </small>
 </h1>
-<div id="general-3" class="section level2">
+<div id="general-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-3" class="anchor"></a>General</h2>
+<a href="#general-4" class="anchor"></a>General</h2>
 <ul>
 <li>
 <em>Breaking changes</em>: The <code>append</code>-argument in recode and transformation functions like <code><a href="../reference/rec.html">rec()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/split_var.html">split_var()</a></code>, <code><a href="../reference/group_var.html">group_var()</a></code>, <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/recode_to.html">recode_to()</a></code>, <code><a href="../reference/row_sums.html">row_sums()</a></code>, <code><a href="../reference/row_count.html">row_count()</a></code>, <code><a href="../reference/row_count.html">col_count()</a></code> and <code><a href="../reference/row_sums.html">row_means()</a></code> now defaults to <code>TRUE</code>.</li>
@@ -304,17 +353,17 @@
 <li>Cross refences from <code><a href="http://dplyr.tidyverse.org/reference/reexports.html">dplyr::select_helpers</a></code> were updated to <code><a href="http://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">tidyselect::select_helpers</a></code>.</li>
 </ul>
 </div>
-<div id="new-functions-4" class="section level2">
+<div id="new-functions-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-4" class="anchor"></a>New functions</h2>
+<a href="#new-functions-5" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/is_float.html">is_whole()</a></code> as counterpart to <code><a href="../reference/is_float.html">is_float()</a></code>.</li>
 </ul>
 </div>
-<div id="changes-to-functions-4" class="section level2">
+<div id="changes-to-functions-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-4" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-5" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/frq.html">frq()</a></code> now prints variable names for non-labelled data, adds variable names in braces for labelled data and omits the <em>label</em> column for non-labelled data.</li>
@@ -332,9 +381,9 @@
 <code><a href="../reference/descr.html">descr()</a></code> gets an <code>out</code>-argument, to print output to console, or as HTML table in the viewer or web browser.</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/is_empty.html">is_empty()</a></code> returned <code>TRUE</code> for single vectors with <code>NA</code> being the first element.</li>
@@ -346,18 +395,18 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-3" class="anchor"></a>sjmisc 2.6.3<small> 2017-11-27 </small>
 </h1>
-<div id="general-4" class="section level2">
+<div id="general-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-4" class="anchor"></a>General</h2>
+<a href="#general-5" class="anchor"></a>General</h2>
 <ul>
 <li>Revised examples that used removed methods from other packages.</li>
 <li>Use select-helpers from package <em>tidyselect</em>, instead of <em>dplyr</em>.</li>
 <li>Beautiful colored output for <code><a href="../reference/frq.html">frq()</a></code>, <code><a href="../reference/descr.html">descr()</a></code> and <code><a href="../reference/flat_table.html">flat_table()</a></code>.</li>
 </ul>
 </div>
-<div id="changes-to-functions-5" class="section level2">
+<div id="changes-to-functions-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-5" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-6" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
 <code><a href="../reference/rec.html">rec()</a></code> now also recodes doubles with floating points, if a range of values is specified.</li>
@@ -369,9 +418,9 @@
 <code><a href="../reference/frq.html">frq()</a></code> now shows total and valid N in output.</li>
 </ul>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/split_var.html">split_var()</a></code> and <code><a href="../reference/group_var.html">group_var()</a></code> did not work correctly for grouped data frames.</li>
@@ -384,9 +433,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-2" class="anchor"></a>sjmisc 2.6.2<small> 2017-10-26 </small>
 </h1>
-<div id="changes-to-functions-6" class="section level2">
+<div id="changes-to-functions-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-6" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-7" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>Arguments <code>as.df</code> and <code>as.varlab</code> in function <code><a href="../reference/find_var.html">find_var()</a></code> are now deprecated. Please use <code>out</code> instead.</li>
 <li>
@@ -395,9 +444,9 @@
 <code><a href="../reference/is_float.html">is_float()</a></code> is now exported as function.</li>
 </ul>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed bug for <code><a href="../reference/to_label.html">to_label()</a></code>, when <code>x</code> was a character vector and argument <code>drop.levels</code> was <code>TRUE</code>.</li>
 </ul>
@@ -407,16 +456,16 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-1" class="anchor"></a>sjmisc 2.6.1<small> 2017-08-20 </small>
 </h1>
-<div id="general-5" class="section level2">
+<div id="general-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-5" class="anchor"></a>General</h2>
+<a href="#general-6" class="anchor"></a>General</h2>
 <ul>
 <li>Fixed issue with latest tidyr-update on CRAN.</li>
 </ul>
 </div>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/frq.html">frq()</a></code> did not correctly calculate valid and cumulative percentages when using weights.</li>
@@ -427,16 +476,16 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-6-0" class="anchor"></a>sjmisc 2.6.0<small> 2017-08-05 </small>
 </h1>
-<div id="general-6" class="section level2">
+<div id="general-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-6" class="anchor"></a>General</h2>
+<a href="#general-7" class="anchor"></a>General</h2>
 <ul>
 <li>All labelled-data functions were removed and are now in package <em>sjlabelled</em>.</li>
 </ul>
 </div>
-<div id="new-functions-5" class="section level2">
+<div id="new-functions-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-5" class="anchor"></a>New functions</h2>
+<a href="#new-functions-6" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/remove_var.html">remove_var()</a></code> as pipe-friendly function to remove variables from data frames.</li>
@@ -450,9 +499,9 @@
 <code><a href="../reference/shorten_string.html">shorten_string()</a></code>, to shorten strings to a certain maxium number of chars.</li>
 </ul>
 </div>
-<div id="changes-to-functions-7" class="section level2">
+<div id="changes-to-functions-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-7" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-8" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>Following functions now also work on grouped data frames: <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/split_var.html">split_var()</a></code>, <code><a href="../reference/group_var.html">group_var()</a></code>, <code><a href="../reference/std.html">std()</a></code> and <code><a href="../reference/std.html">center()</a></code>.</li>
 <li>Argument <code>groupcount</code> in <code><a href="../reference/split_var.html">split_var()</a></code>, <code><a href="../reference/group_var.html">group_var()</a></code> and <code><a href="../reference/group_var.html">group_labels()</a></code> is now named <code>n</code>.</li>
@@ -476,18 +525,18 @@
 <h1 class="page-header">
 <a href="#sjmisc-2-5-0" class="anchor"></a>sjmisc 2.5.0<small> 2017-06-12 </small>
 </h1>
-<div id="general-7" class="section level2">
+<div id="general-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#general-7" class="anchor"></a>General</h2>
+<a href="#general-8" class="anchor"></a>General</h2>
 <ul>
 <li>
 <strong>sjmisc</strong> now uses dplyr’s <a href="http://dplyr.tidyverse.org/articles/programming.html">tidyeval-approach</a> to evaluate arguments. This means that the select-helper-functions (like <code>one_of()</code> or <code>contains()</code>) no longer need to be prefixed with a <code>~</code> when used as argument within <strong>sjmisc</strong>-functions.</li>
 <li>All labelled-data functions are now deprecated and will become defunct in future package versions. The labelled-data functions have been moved into a separate package, <em>sjlabelled</em>.</li>
 </ul>
 </div>
-<div id="new-functions-6" class="section level2">
+<div id="new-functions-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-6" class="anchor"></a>New functions</h2>
+<a href="#new-functions-7" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/row_count.html">row_count()</a></code> to count specific values in a data frame per observation.</li>
@@ -497,18 +546,18 @@
 <code><a href="../reference/str_start.html">str_start()</a></code> and <code><a href="../reference/str_start.html">str_end()</a></code> to find starting and end indices of patterns inside strings.</li>
 </ul>
 </div>
-<div id="changes-to-functions-8" class="section level2">
+<div id="changes-to-functions-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#changes-to-functions-8" class="anchor"></a>Changes to functions</h2>
+<a href="#changes-to-functions-9" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>The output for <code><a href="../reference/frq.html">frq()</a></code> now always includes a <code>NA</code>-row, but no longer prints a value for the <code>NA</code>-row.</li>
 <li>
 <code><a href="../reference/merge_imputations.html">merge_imputations()</a></code> gets a <code>summary</code>-argument to plot a graphical summary of the quality of the merging process.</li>
 </ul>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/add_columns.html">add_columns()</a></code> and <code><a href="../reference/add_columns.html">replace_columns()</a></code> crashed R when no data frame was specified in <code>...</code>-ellipses argument.</li>
@@ -525,6 +574,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#sjmisc-2-7-5">2.7.5</a></li>
         <li><a href="#sjmisc-2-7-4">2.7.4</a></li>
         <li><a href="#sjmisc-2-7-3">2.7.3</a></li>
         <li><a href="#sjmisc-2-7-2">2.7.2</a></li>

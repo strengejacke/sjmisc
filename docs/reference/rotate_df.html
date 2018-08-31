@@ -64,7 +64,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -169,22 +169,13 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
 #&gt; 3     disp       160           160      108.0
 #&gt; 4       hp       110           110       93.0</div><div class='input'>
 <span class='co'># use values in 1. column as column name</span>
-<span class='fu'>library</span>(<span class='no'>tibble</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/tibble/topics/rownames'>rownames_to_column</a></span>(<span class='no'>x</span>)
-<span class='fu'>rotate_df</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;                V1            V2         V3
-#&gt; rowname Mazda RX4 Mazda RX4 Wag Datsun 710
-#&gt; mpg          21.0          21.0       22.8
-#&gt; cyl             6             6          4
-#&gt; disp          160           160        108
-#&gt; hp            110           110         93</div><div class='input'><span class='fu'>rotate_df</span>(<span class='no'>x</span>, <span class='kw'>cn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;      Mazda RX4 Mazda RX4 Wag Datsun 710
-#&gt; mpg         21            21       22.8
-#&gt; cyl          6             6        4.0
-#&gt; disp       160           160      108.0
-#&gt; hp         110           110       93.0</div><div class='input'><span class='fu'>rotate_df</span>(<span class='no'>x</span>, <span class='kw'>rn</span> <span class='kw'>=</span> <span class='st'>"property"</span>, <span class='kw'>cn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   property Mazda RX4 Mazda RX4 Wag Datsun 710
-#&gt; 1      mpg        21            21       22.8
-#&gt; 2      cyl         6             6        4.0
-#&gt; 3     disp       160           160      108.0
-#&gt; 4       hp       110           110       93.0</div><div class='input'>
+<span class='fu'>rotate_df</span>(<span class='no'>x</span>, <span class='kw'>cn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;       21  21 22.8
+#&gt; cyl    6   6    4
+#&gt; disp 160 160  108
+#&gt; hp   110 110   93</div><div class='input'><span class='fu'>rotate_df</span>(<span class='no'>x</span>, <span class='kw'>rn</span> <span class='kw'>=</span> <span class='st'>"property"</span>, <span class='kw'>cn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   property  21  21 22.8
+#&gt; 1      cyl   6   6    4
+#&gt; 2     disp 160 160  108
+#&gt; 3       hp 110 110   93</div><div class='input'>
 <span class='co'># also works on list-results</span>
 <span class='fu'>library</span>(<span class='no'>purrr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'purrr'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:sjmisc':</span>

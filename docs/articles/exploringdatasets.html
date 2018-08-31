@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@
       <h1>Exploring Data Sets</h1>
                         <h4 class="author">Daniel Lüdecke</h4>
             
-            <h4 class="date">2018-08-04</h4>
+            <h4 class="date">2018-08-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/master/vignettes/exploringdatasets.Rmd"><code>vignettes/exploringdatasets.Rmd</code></a></small>
       <div class="hidden name"><code>exploringdatasets.Rmd</code></div>
@@ -128,10 +128,8 @@
 <p>By default, it looks for variable name and labels. The function also supports regex-patterns. By default, <code><a href="../reference/find_var.html">find_var()</a></code> returns the column-indices, but you can also print a small “summary”" with the <code>out</code>-argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find all variables with "dependency" in name or label</span>
 <span class="kw"><a href="../reference/find_var.html">find_var</a></span>(efc, <span class="st">"dependency"</span>, <span class="dt">out =</span> <span class="st">"table"</span>)
-<span class="co">#&gt; # A tibble: 1 x 3</span>
-<span class="co">#&gt;   col.nr var.name var.label         </span>
-<span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;             </span>
-<span class="co">#&gt; 1      5 e42dep   elder's dependency</span></code></pre></div>
+<span class="co">#&gt;   col.nr var.name          var.label</span>
+<span class="co">#&gt; 1      5   e42dep elder's dependency</span></code></pre></div>
 <p>Variable in column 5, named <em>e42dep</em>, is what we are looking for.</p>
 </div>
 <div id="print-crosstables-with-labels" class="section level2">
