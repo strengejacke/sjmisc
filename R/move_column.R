@@ -1,7 +1,9 @@
 #' @title Move columns to other positions in a data frame
 #' @name move_columns
 #'
-#' @description \code{move_columns()}#'
+#' @description \code{move_columns()} moves one or more columns in a data frame
+#'    to another position.
+#'
 #' @param data A data frame.
 #' @param ... Unquoted names or character vector with names of variables that
 #'   should be move to another position. You may also use functions like

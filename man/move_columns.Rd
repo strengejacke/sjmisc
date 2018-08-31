@@ -25,7 +25,8 @@ position \emph{after} the column indicated by \code{.after}.}
 \code{data}, with resorted columns.
 }
 \description{
-\code{move_columns()}#'
+\code{move_columns()} moves one or more columns in a data frame
+   to another position.
 }
 \note{
 If neither \code{.before} nor \code{.after} are specified, the
