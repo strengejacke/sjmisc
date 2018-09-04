@@ -13,14 +13,19 @@
 #' @param ... One or more names vectors that indicate the variables or values,
 #'   which will be added as new column or row to \code{data}. For \code{add_cases()},
 #'   non-matching columns in \code{data} will be filled with \code{NA}.
-#' @param .after,.before Numerical index of row or column, after or before which
+#' @param .after,.before Numerical index of row or column, after or infront of what
 #'   the new variable or case should be added. If \code{.after = -1}, variables
-#'   or cases are added before other columns/rows; if \code{.after = Inf},
+#'   or cases are added at the beginning; if \code{.after = Inf},
 #'   variables and cases are added at the end. In case of \code{add_variables()},
 #'   \code{.after} and \code{.before} may also be a character name indicating
-#'   the column in \code{data}, after/before \code{...} should be inserted.
+#'   the column in \code{data}, after or infront of what \code{...} should be
+#'   inserted.
 #'
 #' @return \code{data}, including the new variables or cases from \code{...}.
+#'
+#' @note For \code{add_case()}, if variable does not exist, a new variable is
+#'    created and existing cases for this new variable get the value \code{NA}.
+#'    See 'Examples'.
 #'
 #' @examples
 #' d <- data.frame(
@@ -32,6 +37,9 @@
 #'
 #' add_case(d, b = "d")
 #' add_case(d, b = "d", a = 5, .before = 1)
+#'
+#' # adding a new case for a new variable
+#' add_case(d, e = "new case")
 #'
 #' add_variables(d, new = 5)
 #' add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = "b")
