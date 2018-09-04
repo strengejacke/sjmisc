@@ -10,6 +10,7 @@
 * `add_variables()` and `add_case()` to add columns or rows in a convenient way to a data frame.
 * `move_columns()` to move one or more columns to another position in a data frame.
 * `is_num_chr()` to check whether a character vector has only numeric strings.
+* `seq_col()` and `seq_row()` as convenient wrapper to create a regular sequence for column or row numbers.
 
 ## Changes to functions
 
