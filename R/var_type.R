@@ -44,13 +44,14 @@ var_type <- function(x, ..., abbr = FALSE) {
 
 #' @importFrom purrr flatten_chr
 #' @importFrom dplyr case_when
+#' @importFrom methods is
 get_vt <- function(x, abbr) {
 
   if (is.ordered(x))
     vt <- "ord"
   else if (is.factor(x))
     vt <- "fct"
-  else if (is(x, "Date"))
+  else if (methods::is(x, "Date"))
     vt <- "date"
   else {
     vt <- switch(

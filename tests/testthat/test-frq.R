@@ -45,4 +45,9 @@ test_that("frq", {
   efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
   frq(efc, c160age, auto.grp = 5, weights = weights)
   frq(efc, e42dep, weights = weights)
+
+  test.weight <- function(x, y, w) {
+    frq(x, y, weights = w)
+  }
+  test.weight(efc, "neg_c_7", "weights")
 })

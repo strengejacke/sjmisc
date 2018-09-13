@@ -18,7 +18,7 @@
 #'          be removed from string values.
 #' @param remove.empty Logical; if \code{TRUE} (default), empty string values will be removed from the
 #'          character vector \code{strings}.
-#' @param showProgressBar Logical; if \code{TRUE}, the progress bar is displayed when computing the distance matrix.
+#' @param verbose Logical; if \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 #'          Default in \code{FALSE}, hence the bar is hidden.
 #'
 #' @return A character vector where similar string elements (values) are recoded
@@ -60,7 +60,7 @@ group_str <- function(strings,
                       strict = FALSE,
                       trim.whitespace = TRUE,
                       remove.empty = TRUE,
-                      showProgressBar = FALSE) {
+                      verbose = FALSE) {
   # coerce to character, if necessary
   if (!is.character(strings)) strings <- as.character(strings)
 
@@ -80,12 +80,12 @@ group_str <- function(strings,
   pairs <- list()
 
   # create progress bar
-  if (showProgressBar) pb <- utils::txtProgressBar(min = 0, max = ncol(m), style = 3)
+  if (verbose) pb <- utils::txtProgressBar(min = 0, max = ncol(m), style = 3)
 
   # iterate matrix
   for (i in seq_len(nrow(m))) {
     # update progress bar
-    if (showProgressBar) utils::setTxtProgressBar(pb, i)
+    if (verbose) utils::setTxtProgressBar(pb, i)
 
     # check if current element is already grouped
     if (!findInPairs(rownames(m)[i], pairs)) {
@@ -148,7 +148,7 @@ group_str <- function(strings,
     strings.new[indices] <- paste0(pairs[[i]], collapse = ", ")
   }
 
-  if (showProgressBar) close(pb)
+  if (verbose) close(pb)
 
   # return new vector, where all single "close"
   # values are replaced by the group of closed values.
@@ -165,7 +165,7 @@ findInPairs <- function(curel, pairs) {
   if (length(pairs) > 0) {
     for (ll in seq_len(length(pairs))) {
       pel <- pairs[[ll]]
-      if (any(pel == curel)) elfound <- TRUE
+      if (any(pel == curel)) return(TRUE)
     }
   }
   elfound

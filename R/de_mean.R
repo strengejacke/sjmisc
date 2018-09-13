@@ -22,7 +22,7 @@
 #'   group-/de-meaned variables will be returned.
 #'
 #' @details \code{de_mean()} is intended to create group- and de-meaned variables
-#'    for complex random-effect-within-between model (see \cite{Bell et al. 2018}),
+#'    for complex random-effect-within-between models (see \cite{Bell et al. 2018}),
 #'    where group-effects (random effects) and fixed effects correlate (see
 #'    \cite{Bafumi and Gelman 2006)}). This violation of the so called
 #'    \emph{Gauss-Markov-assumption} can happen, for instance, when analysing panel

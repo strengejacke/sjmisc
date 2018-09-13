@@ -5,8 +5,7 @@
 \title{Group near elements of string vectors}
 \usage{
 group_str(strings, maxdist = 2, method = "lv", strict = FALSE,
-  trim.whitespace = TRUE, remove.empty = TRUE,
-  showProgressBar = FALSE)
+  trim.whitespace = TRUE, remove.empty = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{strings}{Character vector with string elements.}
@@ -25,7 +24,7 @@ be removed from string values.}
 \item{remove.empty}{Logical; if \code{TRUE} (default), empty string values will be removed from the
 character vector \code{strings}.}
 
-\item{showProgressBar}{Logical; if \code{TRUE}, the progress bar is displayed when computing the distance matrix.
+\item{verbose}{Logical; if \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 Default in \code{FALSE}, hence the bar is hidden.}
 }
 \value{

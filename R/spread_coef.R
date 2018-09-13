@@ -156,9 +156,14 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         # tidy model. for mixed effects, return fixed effects only
         tmp <- broom::tidy(x, effects = "fixed", ...) %>%
           # filter term
-          dplyr::filter(.data$term == model.term) %>%
-          # just select estimate and p-value
-          dplyr::select(string_one_of(pattern = variables, x = colnames(.)))
+          dplyr::filter(.data$term == model.term)
+
+        # just select estimate and p-value
+        tmp <- dplyr::select(
+          tmp,
+          string_one_of(pattern = variables, x = colnames(tmp))
+        )
+
         # set colnames
         colnames(tmp) <- c(model.term, variables[-1])
         tmp

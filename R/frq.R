@@ -49,32 +49,12 @@
 #' @seealso \code{\link{flat_table}} for labelled (proportional) tables.
 #'
 #' @examples
-#' library(haven)
-#' # create labelled integer
-#' x <- labelled(
-#'   c(1, 2, 1, 3, 4, 1),
-#'   c(Male = 1, Female = 2, Refused = 3, "N/A" = 4)
-#' )
-#' frq(x)
-#'
-#' x <- labelled(
-#'   c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
-#'   c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-#'     "Refused" = tagged_na("a"), "Not home" = tagged_na("z"))
-#' )
-#' frq(x)
-#'
-#' # in a pipe
+#' # simple vector
 #' data(efc)
-#' library(dplyr)
-#' efc %>%
-#'   select(e42dep, e15relat, c172code) %>%
-#'   frq()
-#'
-#' # or:
-#' # frq(efc, e42dep, e15relat, c172code)
+#' frq(efc$e42dep)
 #'
 #' # with grouped data frames, in a pipe
+#' library(dplyr)
 #' efc %>%
 #'   group_by(e16sex, c172code) %>%
 #'   frq(e16sex, c172code, e42dep)
@@ -91,17 +71,12 @@
 #' data(iris)
 #' frq(iris, Species)
 #'
-#' # group variables with large range
-#' frq(efc, c160age)
-#' frq(efc, c160age, auto.grp = 5)
-#'
-#' # and with weights
+#' # group variables with large range and with weights
 #' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
 #' frq(efc, c160age, auto.grp = 5, weights = weights)
 #'
 #' # group string values
-#' \dontrun{
-#' dummy <- efc %>% dplyr::select(3)
+#' dummy <- efc[1:50, 3, drop = FALSE]
 #' dummy$words <- sample(
 #'   c("Hello", "Helo", "Hole", "Apple", "Ape",
 #'     "New", "Old", "System", "Systemic"),
@@ -110,7 +85,7 @@
 #' )
 #'
 #' frq(dummy)
-#' frq(dummy, grp.strings = 2)}
+#' frq(dummy, grp.strings = 2)
 #'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join select_if select
@@ -151,9 +126,11 @@ frq <- function(x,
     w <- NULL
     x <- xw
   } else {
-    w <- rlang::quo_name(rlang::enquo(weights))
+    w <- try(rlang::quo_name(rlang::enquo(weights)), silent = TRUE)
+    if (inherits(w, "try-error")) w <- NULL
+
     w.string <- try(eval(weights), silent = TRUE)
-    if (!inherits(w.string, "try-error")) w <- w.string
+    if (!inherits(w.string, "try-error") && is.character(w.string)) w <- w.string
 
     if (!sjmisc::is_empty(w) && w != "NULL" && !obj_has_name(xw, w) && obj_has_name(x, w)) {
       x <- dplyr::bind_cols(xw, data.frame(x[[w]]))

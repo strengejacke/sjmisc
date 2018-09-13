@@ -74,32 +74,12 @@ This function returns a frequency table of labelled vectors, as data frame.
       statistics.
 }
 \examples{
-library(haven)
-# create labelled integer
-x <- labelled(
-  c(1, 2, 1, 3, 4, 1),
-  c(Male = 1, Female = 2, Refused = 3, "N/A" = 4)
-)
-frq(x)
-
-x <- labelled(
-  c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
-  c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-    "Refused" = tagged_na("a"), "Not home" = tagged_na("z"))
-)
-frq(x)
-
-# in a pipe
+# simple vector
 data(efc)
-library(dplyr)
-efc \%>\%
-  select(e42dep, e15relat, c172code) \%>\%
-  frq()
-
-# or:
-# frq(efc, e42dep, e15relat, c172code)
+frq(efc$e42dep)
 
 # with grouped data frames, in a pipe
+library(dplyr)
 efc \%>\%
   group_by(e16sex, c172code) \%>\%
   frq(e16sex, c172code, e42dep)
@@ -116,17 +96,12 @@ frq(efc, c161sex:c175empl)
 data(iris)
 frq(iris, Species)
 
-# group variables with large range
-frq(efc, c160age)
-frq(efc, c160age, auto.grp = 5)
-
-# and with weights
+# group variables with large range and with weights
 efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
 frq(efc, c160age, auto.grp = 5, weights = weights)
 
 # group string values
-\dontrun{
-dummy <- efc \%>\% dplyr::select(3)
+dummy <- efc[1:50, 3, drop = FALSE]
 dummy$words <- sample(
   c("Hello", "Helo", "Hole", "Apple", "Ape",
     "New", "Old", "System", "Systemic"),
@@ -135,7 +110,7 @@ dummy$words <- sample(
 )
 
 frq(dummy)
-frq(dummy, grp.strings = 2)}
+frq(dummy, grp.strings = 2)
 
 }
 \seealso{

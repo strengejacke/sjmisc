@@ -1,15 +1,11 @@
 context("sjmisc, col_count")
 
 library(sjmisc)
-library(tibble)
-dat <- tribble(
-  ~c1, ~c2, ~c3, ~c4,
-  1,   3,   1,   1,
-  2,   2,   1,   1,
-  3,   1,   2,   3,
-  1,   2,   1,   2,
-  3,  NA,   3,   1,
-  NA,   3,  NA,   2
+dat <- data.frame(
+  c1 = c(1, 2, 3, 1, 3, NA),
+  c2 = c(3, 2, 1, 2, NA, 3),
+  c3 = c(1, 1, 2, 1, 3, NA),
+  c4 = c(1, 1, 3, 2, 1, 2)
 )
 
 test_that("col_count", {

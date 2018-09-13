@@ -2,7 +2,6 @@ context("sjmisc, count_na")
 
 library(sjmisc)
 library(haven)
-library(tibble)
 
 x <- labelled(
   x = c(1:3, tagged_na("a", "c", "z"), 4:1, tagged_na("a", "a", "c"), 1:3, tagged_na("z", "c", "c"), 1:4, tagged_na("a", "c", "z")),
@@ -15,7 +14,7 @@ y <- labelled(
 )
 
 test_that("count_na, general", {
-  dat <- tibble(x, y)
+  dat <- data.frame(x, y)
 
   # possible count()-function calls
   count_na(dat)
