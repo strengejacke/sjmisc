@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.5</span>
       </span>
     </div>
 
@@ -236,31 +236,31 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># show value distribution</span>
 <span class='fu'>table</span>(<span class='no'>dummy</span>)</div><div class='output co'>#&gt; dummy
 #&gt;  1  2  3  4  5  6  7  8 
-#&gt; 14  8  7 11 16 19 17  8 </div><div class='input'><span class='co'># set value 1 and 8 as missings</span>
+#&gt; 15 12 12 13 12 10 15 11 </div><div class='input'><span class='co'># set value 1 and 8 as missings</span>
 <span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='fu'>set_na</span>(<span class='no'>dummy</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>8</span>))
 <span class='co'># show value distribution, including missings</span>
 <span class='fu'>table</span>(<span class='no'>dummy</span>, <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt; dummy
 #&gt;    2    3    4    5    6    7 &lt;NA&gt; 
-#&gt;    8    7   11   16   19   17   22 </div><div class='input'>
+#&gt;   12   12   13   12   10   15   26 </div><div class='input'>
 <span class='co'># add named vector as further missing value</span>
-<span class='fu'>set_na</span>(<span class='no'>dummy</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   [1]  6  7  6  6  4  4  7 NA NA  6  2 NA  2  4 NA NA  2  4  7 NA NA NA  3  2 NA
-#&gt;  [26] NA  6  2  6 NA NA  3  6 NA NA  7 NA  3  6 NA NA  6 NA  7 NA  4  2  7  6  7
-#&gt;  [51] NA  7  6  6 NA NA  2  2  3 NA NA  4  7  7  7  7  6  4 NA NA  4  6 NA  3  7
-#&gt;  [76] NA  7  4 NA NA NA  4 NA  6  4 NA  3 NA  3  7  6 NA  6 NA  7 NA  6  7  6 NA
+<span class='fu'>set_na</span>(<span class='no'>dummy</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;   [1] NA  3  7 NA  7  4 NA NA NA  4 NA  6  4 NA  3 NA  3  7  6 NA  6 NA  7 NA  6
+#&gt;  [26]  7  6 NA  7  4  2  3 NA NA NA  6  7 NA  2 NA  4 NA  4 NA  2 NA  3  7  7  7
+#&gt;  [51] NA  4  6 NA  2  2  2  4  6 NA NA  7  3  6  2 NA  3  2  3  2  3  2 NA  4 NA
+#&gt;  [76] NA NA  7  7  3  4 NA  7  4 NA NA  6 NA  7 NA NA NA  4  2  2  4  3  3 NA NA
 #&gt; attr(,"labels")
 #&gt; Refused 
 #&gt;      NA </div><div class='input'><span class='co'># see different missing types</span>
 <span class='fu'>library</span>(<span class='no'>haven</span>)
 <span class='fu'>library</span>(<span class='no'>sjlabelled</span>)
-<span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>print_tagged_na</a></span>(<span class='fu'>set_na</span>(<span class='no'>dummy</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt;   [1]     6     7     6     6     4     4     7 NA(5) NA(5)     6     2 NA(5)
-#&gt;  [13]     2     4    NA    NA     2     4     7    NA    NA NA(5)     3     2
-#&gt;  [25]    NA NA(5)     6     2     6 NA(5) NA(5)     3     6    NA    NA     7
-#&gt;  [37] NA(5)     3     6    NA    NA     6    NA     7    NA     4     2     7
-#&gt;  [49]     6     7    NA     7     6     6 NA(5) NA(5)     2     2     3 NA(5)
-#&gt;  [61] NA(5)     4     7     7     7     7     6     4 NA(5)    NA     4     6
-#&gt;  [73]    NA     3     7 NA(5)     7     4    NA NA(5)    NA     4    NA     6
-#&gt;  [85]     4    NA     3 NA(5)     3     7     6    NA     6    NA     7    NA
-#&gt;  [97]     6     7     6    NA</div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>print_tagged_na</a></span>(<span class='fu'>set_na</span>(<span class='no'>dummy</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fl'>5</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt;   [1]    NA     3     7 NA(5)     7     4    NA NA(5)    NA     4    NA     6
+#&gt;  [13]     4    NA     3 NA(5)     3     7     6    NA     6    NA     7    NA
+#&gt;  [25]     6     7     6    NA     7     4     2     3 NA(5)    NA    NA     6
+#&gt;  [37]     7    NA     2 NA(5)     4 NA(5)     4    NA     2    NA     3     7
+#&gt;  [49]     7     7    NA     4     6    NA     2     2     2     4     6 NA(5)
+#&gt;  [61] NA(5)     7     3     6     2    NA     3     2     3     2     3     2
+#&gt;  [73]    NA     4    NA    NA    NA     7     7     3     4 NA(5)     7     4
+#&gt;  [85]    NA    NA     6    NA     7 NA(5) NA(5)    NA     4     2     2     4
+#&gt;  [97]     3     3    NA NA(5)</div><div class='input'>
 
 <span class='co'># create sample data frame</span>
 <span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='fu'>data.frame</span>(<span class='kw'>var1</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fl'>8</span>, <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
@@ -268,12 +268,12 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
                     <span class='kw'>var3</span> <span class='kw'>=</span> <span class='fu'>sample</span>(<span class='fl'>1</span>:<span class='fl'>6</span>, <span class='fl'>100</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
 <span class='co'># set value 2 and 4 as missings</span>
 <span class='no'>dummy</span> <span class='kw'>%&gt;%</span> <span class='fu'>set_na</span>(<span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>4</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>head</span>()</div><div class='output co'>#&gt;   var1 var2 var3
-#&gt; 1    7   10    3
-#&gt; 2   NA    8   NA
-#&gt; 3   NA    1    5
-#&gt; 4    3    8    3
-#&gt; 5    5    6   NA
-#&gt; 6    1    6    1</div><div class='input'><span class='no'>dummy</span> <span class='kw'>%&gt;%</span> <span class='fu'>set_na</span>(<span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sjlabelled/topics/get_na'>get_na</a></span>()</div><div class='output co'>#&gt; $var1
+#&gt; 1    8    7    1
+#&gt; 2    3    5    1
+#&gt; 3    3   NA   NA
+#&gt; 4   NA   NA   NA
+#&gt; 5    5    9    5
+#&gt; 6   NA    8    1</div><div class='input'><span class='no'>dummy</span> <span class='kw'>%&gt;%</span> <span class='fu'>set_na</span>(<span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/sjlabelled/topics/get_na'>get_na</a></span>()</div><div class='output co'>#&gt; $var1
 #&gt;  2  4 
 #&gt; NA NA 
 #&gt; 

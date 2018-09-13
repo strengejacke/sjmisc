@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.5</span>
       </span>
     </div>
 
@@ -280,9 +280,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='fu'>hist</span>(<span class='no'>age</span>)</div><div class='img'><img src='group_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>hist</span>(<span class='no'>age.grp</span>)</div><div class='img'><img src='group_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>age.grpvar</span> <span class='kw'>&lt;-</span> <span class='fu'>group_labels</span>(<span class='no'>age</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='fu'>table</span>(<span class='no'>age.grp</span>)</div><div class='output co'>#&gt; age.grp
-#&gt;  1  2  3  4  5  6  7  8  9 10 11 
-#&gt;  1  3  6 10 16 18 21 13  8  3  1 </div><div class='input'><span class='fu'>print</span>(<span class='no'>age.grpvar</span>)</div><div class='output co'>#&gt;  [1] "10-19"   "20-29"   "30-39"   "40-49"   "50-59"   "60-69"   "70-79"  
-#&gt;  [8] "80-89"   "90-99"   "100-109" "110-119"</div><div class='input'>
+#&gt;  1  2  3  4  5  6  7  8 
+#&gt;  2  9 10 18 21 21 11  8 </div><div class='input'><span class='fu'>print</span>(<span class='no'>age.grpvar</span>)</div><div class='output co'>#&gt; [1] "20-29" "30-39" "40-49" "50-59" "60-69" "70-79" "80-89" "90-99"</div><div class='input'>
 <span class='co'># histogram with EUROFAMCARE sample dataset</span>
 <span class='co'># variable not grouped</span>
 <span class='fu'>library</span>(<span class='no'>sjlabelled</span>)
@@ -1209,7 +1208,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># create vector with values from 50 to 80</span>
 <span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='fu'>round</span>(<span class='fu'>runif</span>(<span class='fl'>200</span>, <span class='fl'>50</span>, <span class='fl'>80</span>))
 <span class='co'># labels with grouping starting at lower bound</span>
-<span class='fu'>group_labels</span>(<span class='no'>dummy</span>)</div><div class='output co'>#&gt; [1] "50-54" "55-59" "60-64" "65-69" "70-74" "75-79"</div><div class='input'><span class='co'># labels with grouping startint at upper bound</span>
+<span class='fu'>group_labels</span>(<span class='no'>dummy</span>)</div><div class='output co'>#&gt; [1] "50-54" "55-59" "60-64" "65-69" "70-74" "75-79" "80-84"</div><div class='input'><span class='co'># labels with grouping startint at upper bound</span>
 <span class='fu'>group_labels</span>(<span class='no'>dummy</span>, <span class='kw'>right.interval</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "46-50" "51-55" "56-60" "61-65" "66-70" "71-75" "76-80"</div><div class='input'>
 <span class='co'># works also with gouped data frames</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>

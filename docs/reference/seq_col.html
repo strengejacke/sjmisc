@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Contributing to sjmisc • sjmisc</title>
+<title>Sequence generation for column or row counts of data frames — seq_col • sjmisc</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script>
 
 
 
-<meta property="og:title" content="Contributing to sjmisc" />
+<meta property="og:title" content="Sequence generation for column or row counts of data frames — seq_col" />
+
+<meta property="og:description" content="seq_col(x) is a convenient wrapper for seq_len(ncol(x)),
+   while seq_row(x) is a convenient wrapper for seq_len(nrow(x))." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -49,7 +52,7 @@
   </head>
 
   <body>
-    <div class="container template-title-body">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -60,7 +63,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">sjmisc</a>
+        <a class="navbar-link" href="../index.html">sjmisc</a>
         <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.5</span>
       </span>
     </div>
@@ -68,13 +71,13 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -84,15 +87,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/design_philosophy.html">The Design Philosophy of Functions in sjmisc</a>
+      <a href="../articles/design_philosophy.html">The Design Philosophy of Functions in sjmisc</a>
     </li>
     <li>
-      <a href="articles/exploringdatasets.html">Exploring Data Sets</a>
+      <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="news/index.html">Changelog</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -113,46 +116,63 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Contributing to sjmisc</h1>
+    <h1>Sequence generation for column or row counts of data frames</h1>
+    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/seq_col.R'><code>R/seq_col.R</code></a></small>
+    <div class="hidden name"><code>seq_col.Rd</code></div>
     </div>
 
-<div id="contributing-to-sjmisc" class="section level1">
+    <div class="ref-description">
+    
+    <p><code>seq_col(x)</code> is a convenient wrapper for <code>seq_len(ncol(x))</code>,
+   while <code>seq_row(x)</code> is a convenient wrapper for <code>seq_len(nrow(x))</code>.</p>
+    
+    </div>
 
-<p>This outlines how to propose a change to sjmisc.</p>
-<div id="fixing-typos" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fixing-typos" class="anchor"></a>Fixing typos</h2>
-<p>Small typos or grammatical errors in documentation may be edited directly using the GitHub web interface, so long as the changes are made in the <em>source</em> file. If you want to fix typos in the documentation, please edit the related <code>.R</code> file in the <code>R/</code> folder. Do <em>not</em> edit an <code>.Rd</code> file in <code>man/</code>.</p>
-</div>
-<div id="filing-an-issue" class="section level2">
-<h2 class="hasAnchor">
-<a href="#filing-an-issue" class="anchor"></a>Filing an issue</h2>
-<p>The easiest way to propose a change or new feature is to file an issue. If you’ve found a bug, you may also create an associated issue. If possible, try to illustrate your proposal or the bug with a minimal <a href="https://www.tidyverse.org/help/#reprex">reproducible example</a>.</p>
-</div>
-<div id="pull-request" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pull-request" class="anchor"></a>Pull request</h2>
-<ul>
-<li>Please create a Git branch for each pull request (PR).</li>
-<li>Your contributed code should roughly follow the tidyverse <a href="http://style.tidyverse.org">style guide</a>. <em>Exceptions</em> from this guide: if separated, use underscores for <em>function names</em>, but <em>dots</em> for argument names. See as example <a href="https://strengejacke.github.io/sjmisc/reference/set_na.html">set_na()</a>.</li>
-<li>sjmisc uses <a href="https://cran.r-project.org/package=roxygen2">roxygen2</a>, with <a href="https://cran.r-project.org/web/packages/roxygen2/vignettes/markdown.html">Markdown syntax</a>, for documentation.</li>
-<li>sjmisc uses <a href="https://cran.r-project.org/package=testthat">testthat</a>. Adding tests to the PR makes it easier for me to merge your PR into the code base.</li>
-<li>If your PR is a user-visible change, you may add a bullet to the top of <code>NEWS.md</code> describing the changes made. You may optionally add your GitHub username, and links to relevant issue(s)/PR(s).</li>
-</ul>
-</div>
-<div id="code-of-conduct" class="section level2">
-<h2 class="hasAnchor">
-<a href="#code-of-conduct" class="anchor"></a>Code of Conduct</h2>
-<p>Please note that this project is released with a <a href="CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</p>
-</div>
-</div>
+    <pre class="usage"><span class='fu'>seq_col</span>(<span class='no'>x</span>)
+
+<span class='fu'>seq_row</span>(<span class='no'>x</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A data frame.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A numeric sequence from 1 to number of columns or rows.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>data</span>(<span class='no'>iris</span>)
+<span class='fu'>seq_col</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt; [1] 1 2 3 4 5</div><div class='input'><span class='fu'>seq_row</span>(<span class='no'>iris</span>)</div><div class='output co'>#&gt;   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+#&gt;  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
+#&gt;  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
+#&gt;  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
+#&gt;  [73]  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89  90
+#&gt;  [91]  91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108
+#&gt; [109] 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126
+#&gt; [127] 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144
+#&gt; [145] 145 146 147 148 149 150</div><div class='input'>
+</div></pre>
+  </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
-
 </div>
-
 
       <footer>
       <div class="copyright">

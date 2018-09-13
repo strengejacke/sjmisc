@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.5</span>
       </span>
     </div>
 
@@ -226,48 +226,10 @@ vector of same length as groups.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>haven</span>)
-<span class='co'># create labelled integer</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/labelled'>labelled</a></span>(
-  <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>),
-  <span class='fu'>c</span>(<span class='kw'>Male</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>Female</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>Refused</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='st'>"N/A"</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-)
-<span class='fu'>frq</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; 
-#&gt; # x &lt;numeric&gt; 
-#&gt; # total N=6  valid N=6  mean=2.00  sd=1.26
-#&gt;  
-#&gt;  val   label frq raw.prc valid.prc cum.prc
-#&gt;    1    Male   3   50.00     50.00   50.00
-#&gt;    2  Female   1   16.67     16.67   66.67
-#&gt;    3 Refused   1   16.67     16.67   83.33
-#&gt;    4     N/A   1   16.67     16.67  100.00
-#&gt;   NA      NA   0    0.00        NA      NA
-#&gt; 
-#&gt; </div><div class='input'>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/labelled'>labelled</a></span>(
-  <span class='fu'>c</span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>, <span class='fl'>2</span>:<span class='fl'>3</span>),
-  <span class='fu'>c</span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"c"</span>),
-    <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"z"</span>))
-)
-<span class='fu'>frq</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; 
-#&gt; # x &lt;numeric&gt; 
-#&gt; # total N=12  valid N=9  mean=2.33  sd=1.00
-#&gt;  
-#&gt;  val        label frq raw.prc valid.prc cum.prc
-#&gt;    1    Agreement   2   16.67     22.22   22.22
-#&gt;    2            2   3   25.00     33.33   55.56
-#&gt;    3            3   3   25.00     33.33   88.89
-#&gt;    4 Disagreement   1    8.33     11.11  100.00
-#&gt;   NA           NA   3   25.00        NA      NA
-#&gt; 
-#&gt; </div><div class='input'>
-<span class='co'># in a pipe</span>
+    <pre class="examples"><div class='input'><span class='co'># simple vector</span>
 <span class='fu'>data</span>(<span class='no'>efc</span>)
-<span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>frq</span>()</div><div class='output co'>#&gt; 
-#&gt; # elder's dependency (e42dep) &lt;numeric&gt; 
+<span class='fu'>frq</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)</div><div class='output co'>#&gt; 
+#&gt; # elder's dependency (x) &lt;numeric&gt; 
 #&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
 #&gt;  
 #&gt;  val                label frq raw.prc valid.prc cum.prc
@@ -277,36 +239,9 @@ vector of same length as groups.</p></td>
 #&gt;    4   severely dependent 304   33.48     33.74  100.00
 #&gt;   NA                   NA   7    0.77        NA      NA
 #&gt; 
-#&gt; 
-#&gt; # relationship to elder (e15relat) &lt;numeric&gt; 
-#&gt; # total N=908  valid N=901  mean=2.85  sd=2.08
-#&gt;  
-#&gt;  val                   label frq raw.prc valid.prc cum.prc
-#&gt;    1          spouse/partner 171   18.83     18.98   18.98
-#&gt;    2                   child 473   52.09     52.50   71.48
-#&gt;    3                 sibling  29    3.19      3.22   74.69
-#&gt;    4 daughter or son -in-law  85    9.36      9.43   84.13
-#&gt;    5              ancle/aunt  23    2.53      2.55   86.68
-#&gt;    6            nephew/niece  22    2.42      2.44   89.12
-#&gt;    7                  cousin   6    0.66      0.67   89.79
-#&gt;    8          other, specify  92   10.13     10.21  100.00
-#&gt;   NA                      NA   7    0.77        NA      NA
-#&gt; 
-#&gt; 
-#&gt; # carer's level of education (c172code) &lt;numeric&gt; 
-#&gt; # total N=908  valid N=842  mean=1.97  sd=0.63
-#&gt;  
-#&gt;  val                           label frq raw.prc valid.prc cum.prc
-#&gt;    1          low level of education 180   19.82     21.38   21.38
-#&gt;    2 intermediate level of education 506   55.73     60.10   81.47
-#&gt;    3         high level of education 156   17.18     18.53  100.00
-#&gt;   NA                              NA  66    7.27        NA      NA
-#&gt; 
 #&gt; </div><div class='input'>
-<span class='co'># or:</span>
-<span class='co'># frq(efc, e42dep, e15relat, c172code)</span>
-
 <span class='co'># with grouped data frames, in a pipe</span>
+<span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>frq</span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>, <span class='no'>e42dep</span>)</div><div class='output co'>#&gt; 
@@ -546,102 +481,23 @@ vector of same length as groups.</p></td>
 #&gt;        &lt;NA&gt;   0    0.00        NA      NA
 #&gt; 
 #&gt; </div><div class='input'>
-<span class='co'># group variables with large range</span>
-<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>)</div><div class='output co'>#&gt; 
+<span class='co'># group variables with large range and with weights</span>
+<span class='no'>efc</span>$<span class='no'>weights</span> <span class='kw'>&lt;-</span> <span class='fu'>abs</span>(<span class='fu'>rnorm</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>efc</span>), <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.5</span>))
+<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>, <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; 
 #&gt; # carer' age (c160age) &lt;numeric&gt; 
-#&gt; # total N=908  valid N=901  mean=53.46  sd=13.35
-#&gt;  
-#&gt;   val frq raw.prc valid.prc cum.prc
-#&gt;    18   1    0.11      0.11    0.11
-#&gt;    19   2    0.22      0.22    0.33
-#&gt;    20   2    0.22      0.22    0.55
-#&gt;    21   1    0.11      0.11    0.67
-#&gt;    22   2    0.22      0.22    0.89
-#&gt;    23   4    0.44      0.44    1.33
-#&gt;    24   3    0.33      0.33    1.66
-#&gt;    25   5    0.55      0.55    2.22
-#&gt;    26   3    0.33      0.33    2.55
-#&gt;    27   4    0.44      0.44    3.00
-#&gt;    28   4    0.44      0.44    3.44
-#&gt;    29   8    0.88      0.89    4.33
-#&gt;    30   9    0.99      1.00    5.33
-#&gt;    31   9    0.99      1.00    6.33
-#&gt;    32   5    0.55      0.55    6.88
-#&gt;    33  10    1.10      1.11    7.99
-#&gt;    34   9    0.99      1.00    8.99
-#&gt;    35  17    1.87      1.89   10.88
-#&gt;    36   6    0.66      0.67   11.54
-#&gt;    37   7    0.77      0.78   12.32
-#&gt;    38  13    1.43      1.44   13.76
-#&gt;    39  12    1.32      1.33   15.09
-#&gt;    40  13    1.43      1.44   16.54
-#&gt;    41  15    1.65      1.66   18.20
-#&gt;    42  21    2.31      2.33   20.53
-#&gt;    43  24    2.64      2.66   23.20
-#&gt;    44  25    2.75      2.77   25.97
-#&gt;    45  14    1.54      1.55   27.52
-#&gt;    46  22    2.42      2.44   29.97
-#&gt;    47  27    2.97      3.00   32.96
-#&gt;    48  26    2.86      2.89   35.85
-#&gt;    49  32    3.52      3.55   39.40
-#&gt;    50  19    2.09      2.11   41.51
-#&gt;    51  15    1.65      1.66   43.17
-#&gt;    52  22    2.42      2.44   45.62
-#&gt;    53  27    2.97      3.00   48.61
-#&gt;    54  28    3.08      3.11   51.72
-#&gt;    55  24    2.64      2.66   54.38
-#&gt;    56  27    2.97      3.00   57.38
-#&gt;    57  21    2.31      2.33   59.71
-#&gt;    58  26    2.86      2.89   62.60
-#&gt;    59  20    2.20      2.22   64.82
-#&gt;    60  28    3.08      3.11   67.92
-#&gt;    61  19    2.09      2.11   70.03
-#&gt;    62  28    3.08      3.11   73.14
-#&gt;    63  25    2.75      2.77   75.92
-#&gt;    64  25    2.75      2.77   78.69
-#&gt;    65  26    2.86      2.89   81.58
-#&gt;    66  18    1.98      2.00   83.57
-#&gt;    67  17    1.87      1.89   85.46
-#&gt;    68  14    1.54      1.55   87.01
-#&gt;    69  18    1.98      2.00   89.01
-#&gt;    70  15    1.65      1.66   90.68
-#&gt;    71   4    0.44      0.44   91.12
-#&gt;    72  11    1.21      1.22   92.34
-#&gt;    73   7    0.77      0.78   93.12
-#&gt;    74   7    0.77      0.78   93.90
-#&gt;    75  12    1.32      1.33   95.23
-#&gt;    76  10    1.10      1.11   96.34
-#&gt;    77   7    0.77      0.78   97.11
-#&gt;    78   5    0.55      0.55   97.67
-#&gt;    79   5    0.55      0.55   98.22
-#&gt;    80   5    0.55      0.55   98.78
-#&gt;    81   3    0.33      0.33   99.11
-#&gt;    82   1    0.11      0.11   99.22
-#&gt;    83   4    0.44      0.44   99.67
-#&gt;    85   1    0.11      0.11   99.78
-#&gt;    87   1    0.11      0.11   99.89
-#&gt;    89   1    0.11      0.11  100.00
-#&gt;  &lt;NA&gt;   7    0.77        NA      NA
-#&gt; 
-#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>, <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; 
-#&gt; # carer' age (c160age) &lt;numeric&gt; 
-#&gt; # total N=908  valid N=901  mean=53.46  sd=13.35
+#&gt; # total N=920  valid N=920  mean=53.85  sd=13.09
 #&gt;  
 #&gt;  val label frq raw.prc valid.prc cum.prc
-#&gt;    1 18-32  62    6.83      6.88    6.88
-#&gt;    2 33-47 235   25.88     26.08   32.96
-#&gt;    3 48-62 362   39.87     40.18   73.14
-#&gt;    4 63-77 216   23.79     23.97   97.11
-#&gt;    5 78-92  26    2.86      2.89  100.00
-#&gt;   NA    NA   7    0.77        NA      NA
+#&gt;    1 18-32  56    6.09      6.09    6.09
+#&gt;    2 33-47 234   25.43     25.43   31.52
+#&gt;    3 48-62 380   41.30     41.30   72.83
+#&gt;    4 63-77 223   24.24     24.24   97.07
+#&gt;    5 78-92  27    2.93      2.93  100.00
+#&gt;   NA    NA   0    0.00        NA      NA
 #&gt; 
 #&gt; </div><div class='input'>
-<span class='co'># and with weights</span>
-<span class='no'>efc</span>$<span class='no'>weights</span> <span class='kw'>&lt;-</span> <span class='fu'>abs</span>(<span class='fu'>rnorm</span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>nrow</span>(<span class='no'>efc</span>), <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.5</span>))
-<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>, <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: is.na() applied to non-(list or vector) of type 'closure'</span></div><div class='output co'>#&gt; <span class='error'>Error in w != "NULL": comparison (2) is possible only for atomic and list types</span></div><div class='input'>
-# group string values
-</div><span class='co'># NOT RUN {</span>
-<span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>3</span>)
+<span class='co'># group string values</span>
+<span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span>[<span class='fl'>1</span>:<span class='fl'>50</span>, <span class='fl'>3</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
 <span class='no'>dummy</span>$<span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sample.html'>sample</a></span>(
   <span class='fu'>c</span>(<span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>, <span class='st'>"Ape"</span>,
     <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span>),
@@ -649,9 +505,53 @@ vector of same length as groups.</p></td>
   <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )
 
-<span class='fu'>frq</span>(<span class='no'>dummy</span>)
-<span class='fu'>frq</span>(<span class='no'>dummy</span>, <span class='kw'>grp.strings</span> <span class='kw'>=</span> <span class='fl'>2</span>)
-<span class='co'># }</span><div class='input'>
+<span class='fu'>frq</span>(<span class='no'>dummy</span>)</div><div class='output co'>#&gt; 
+#&gt; # e16sex &lt;numeric&gt; 
+#&gt; # total N=50  valid N=50  mean=1.56  sd=0.50
+#&gt;  
+#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt;     1  22      44        44      44
+#&gt;     2  28      56        56     100
+#&gt;  &lt;NA&gt;   0       0        NA      NA
+#&gt; 
+#&gt; 
+#&gt; # words &lt;character&gt; 
+#&gt; # total N=50  valid N=50  mean=5.54  sd=2.63
+#&gt;  
+#&gt;       val frq raw.prc valid.prc cum.prc
+#&gt;       Ape   3       6         6       6
+#&gt;     Apple   4       8         8      14
+#&gt;     Hello   7      14        14      28
+#&gt;      Helo   8      16        16      44
+#&gt;      Hole   2       4         4      48
+#&gt;       New   4       8         8      56
+#&gt;       Old   5      10        10      66
+#&gt;    System   9      18        18      84
+#&gt;  Systemic   8      16        16     100
+#&gt;      &lt;NA&gt;   0       0        NA      NA
+#&gt; 
+#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='no'>dummy</span>, <span class='kw'>grp.strings</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; # e16sex &lt;numeric&gt; 
+#&gt; # total N=50  valid N=50  mean=1.56  sd=0.50
+#&gt;  
+#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt;     1  22      44        44      44
+#&gt;     2  28      56        56     100
+#&gt;  &lt;NA&gt;   0       0        NA      NA
+#&gt; 
+#&gt; 
+#&gt; # words &lt;categorical&gt; 
+#&gt; # total N=50  valid N=50  mean=3.16  sd=1.54
+#&gt;  
+#&gt;                val frq raw.prc valid.prc cum.prc
+#&gt;         Ape, Apple   7      14        14      14
+#&gt;  Hello, Helo, Hole  17      34        34      48
+#&gt;                New   4       8         8      56
+#&gt;                Old   5      10        10      66
+#&gt;   System, Systemic  17      34        34     100
+#&gt;               &lt;NA&gt;   0       0        NA      NA
+#&gt; 
+#&gt; </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

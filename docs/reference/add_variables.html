@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.4.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.7.5</span>
       </span>
     </div>
 
@@ -157,18 +157,25 @@ non-matching columns in <code>data</code> will be filled with <code>NA</code>.</
     </tr>
     <tr>
       <th>.after, .before</th>
-      <td><p>Numerical index of row or column, after or before which
+      <td><p>Numerical index of row or column, after or infront of what
 the new variable or case should be added. If <code>.after = -1</code>, variables
-or cases are added before other columns/rows; if <code>.after = Inf</code>,
+or cases are added at the beginning; if <code>.after = Inf</code>,
 variables and cases are added at the end. In case of <code>add_variables()</code>,
 <code>.after</code> and <code>.before</code> may also be a character name indicating
-the column in <code>data</code>, after/before <code>...</code> should be inserted.</p></td>
+the column in <code>data</code>, after or infront of what <code>...</code> should be
+inserted.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>data</code>, including the new variables or cases from <code>...</code>.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>For <code>add_case()</code>, if variable does not exist, a new variable is
+   created and existing cases for this new variable get the value <code>NA</code>.
+   See 'Examples'.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -188,6 +195,12 @@ the column in <code>data</code>, after/before <code>...</code> should be inserte
 #&gt; 1 1 a 10
 #&gt; 2 2 b 20
 #&gt; 3 3 c 30</div><div class='input'>
+<span class='co'># adding a new case for a new variable</span>
+<span class='fu'>add_case</span>(<span class='no'>d</span>, <span class='kw'>e</span> <span class='kw'>=</span> <span class='st'>"new case"</span>)</div><div class='output co'>#&gt;    a    b  c        e
+#&gt; 1  1    a 10     &lt;NA&gt;
+#&gt; 2  2    b 20     &lt;NA&gt;
+#&gt; 3  3    c 30     &lt;NA&gt;
+#&gt; 4 NA &lt;NA&gt; NA new case</div><div class='input'>
 <span class='fu'>add_variables</span>(<span class='no'>d</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt;   a b  c new
 #&gt; 1 1 a 10   5
 #&gt; 2 2 b 20   5
@@ -203,6 +216,8 @@ the column in <code>data</code>, after/before <code>...</code> should be inserte
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
