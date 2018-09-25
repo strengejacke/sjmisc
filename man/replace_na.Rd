@@ -91,9 +91,8 @@ table(replace_na(x, value = 2, tagged.na = "c"))
 # tagged NA also works for non-labelled class
 # init vector
 x <- c(1, 2, 3, 4)
-# set values 2 and 3 as NA, will automatically become
-# tagged NAs by 'set_na()'.
-x <- set_na(x, na = c(2, 3))
+# set values 2 and 3 as tagged NA
+x <- set_na(x, na = c(2, 3), as.tag = TRUE)
 # see result
 x
 # now replace only NA tagged with 2 with value 5
