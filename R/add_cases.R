@@ -2,7 +2,7 @@
 #' @name add_variables
 #'
 #' @description \code{add_variables()} adds a new column to a data frame, while
-#'   \code{add_cases()} adds a new row to a data frame. These are convenient
+#'   \code{add_case()} adds a new row to a data frame. These are convenient
 #'   functions to add columns or rows not only at the end of a data frame,
 #'   but at any column or row position. Furthermore, they allow easy integration
 #'   into a pipe-workflow.
@@ -11,7 +11,7 @@
 #'   frames specified in \code{...}. For \code{replace_columns()}, duplicated
 #'   columns in \code{data} will be replaced by columns in \code{...}.
 #' @param ... One or more names vectors that indicate the variables or values,
-#'   which will be added as new column or row to \code{data}. For \code{add_cases()},
+#'   which will be added as new column or row to \code{data}. For \code{add_case()},
 #'   non-matching columns in \code{data} will be filled with \code{NA}.
 #' @param .after,.before Numerical index of row or column, after or infront of what
 #'   the new variable or case should be added. If \code{.after = -1}, variables
