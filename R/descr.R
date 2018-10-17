@@ -201,7 +201,7 @@ descr_helper <- function(dd, max.length) {
 
 
   # summarise_all() sorts variables, so restore order
-  x <- x[match(var.name, x$var), ] %>% add_cols(type, label, .after = 1)
+  x <- x[match(var.name, x$var), ] %>% add_variables(type, label, .after = 1)
 
   # check if labels should be truncated
   x$label <- shorten_string(x$label, max.length)
