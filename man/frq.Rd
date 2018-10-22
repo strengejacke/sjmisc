@@ -6,7 +6,8 @@
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
   auto.grp = NULL, show.strings = TRUE, grp.strings = NULL,
-  out = c("txt", "viewer", "browser"), title = NULL, weight.by)
+  out = c("txt", "viewer", "browser"), title = NULL,
+  encoding = "UTF-8", file = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -52,7 +53,12 @@ to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 label. If \code{x} is a grouped data frame, \code{title} must be a
 vector of same length as groups.}
 
-\item{weight.by}{Deprecated.}
+\item{encoding}{Character vector, indicating the charset encoding used
+for variable and value labels. Default is \code{"UTF-8"}. Only used
+when \code{out} is not \code{"txt"}.}
+
+\item{file}{Destination file, if the output should be saved as file.
+Only used when \code{out} is not \code{"txt"}.}
 }
 \value{
 A list of data frames with values, value labels, frequencies, raw, valid and

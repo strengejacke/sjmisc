@@ -26,8 +26,11 @@
 #' @param title String, will be used as alternative title to the variable
 #'   label. If \code{x} is a grouped data frame, \code{title} must be a
 #'   vector of same length as groups.
-#'
-#' @param weight.by Deprecated.
+#' @param file Destination file, if the output should be saved as file.
+#'   Only used when \code{out} is not \code{"txt"}.
+#' @param encoding Character vector, indicating the charset encoding used
+#'   for variable and value labels. Default is \code{"UTF-8"}. Only used
+#'   when \code{out} is not \code{"txt"}.
 #'
 #' @inheritParams descr
 #' @inheritParams to_factor
@@ -102,7 +105,8 @@ frq <- function(x,
                 grp.strings = NULL,
                 out = c("txt", "viewer", "browser"),
                 title = NULL,
-                weight.by) {
+                encoding = "UTF-8",
+                file = NULL) {
 
   out <- match.arg(out)
 
@@ -110,14 +114,6 @@ frq <- function(x,
     message("Package `sjPlot` needs to be loaded to print HTML tables.")
     out <- "txt"
   }
-
-  ## TODO remove deprecated argument later
-
-  if (!missing(weight.by)) {
-    message("Argument `weight.by` is deprecated. Please use `weights`.")
-    weights <- weight.by
-  }
-
 
   # get dot data
   xw <- get_dot_data(x, dplyr::quos(...))
@@ -267,6 +263,8 @@ frq <- function(x,
 
   # save how to print output
   attr(dataframes, "print") <- out
+  attr(dataframes, "encoding") <- encoding
+  attr(dataframes, "file") <- file
 
   dataframes
 }
