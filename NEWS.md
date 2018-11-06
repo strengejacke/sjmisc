@@ -3,6 +3,7 @@
 ## Changes to functions
 
 * `frq()` gets a `file` and `encoding` argument, to save the HTML output as file.
+* `add_variables()` and `move_columns()` now preserve the attributes of a data frame.
 
 # sjmisc 2.7.5
 

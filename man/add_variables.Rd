@@ -10,15 +10,13 @@ add_variables(data, ..., .after = Inf, .before = NULL)
 add_case(data, ..., .after = Inf, .before = NULL)
 }
 \arguments{
-\item{data}{A data frame. For \code{add_columns()}, will be bound after data
-frames specified in \code{...}. For \code{replace_columns()}, duplicated
-columns in \code{data} will be replaced by columns in \code{...}.}
+\item{data}{A data frame.}
 
-\item{...}{One or more names vectors that indicate the variables or values,
+\item{...}{One or more named vectors that indicate the variables or values,
 which will be added as new column or row to \code{data}. For \code{add_case()},
 non-matching columns in \code{data} will be filled with \code{NA}.}
 
-\item{.after, .before}{Numerical index of row or column, after or infront of what
+\item{.after, .before}{Numerical index of row or column, where after or before
 the new variable or case should be added. If \code{.after = -1}, variables
 or cases are added at the beginning; if \code{.after = Inf},
 variables and cases are added at the end. In case of \code{add_variables()},

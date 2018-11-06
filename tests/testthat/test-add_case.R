@@ -9,6 +9,8 @@ d <- data.frame(
   stringsAsFactors = FALSE
 )
 
+attr(d, "test") <- "abc"
+
 test_that("add_case", {
   add_case(d, b = "d")
   add_case(d, b = "d", .after = -1)
@@ -26,4 +28,9 @@ test_that("add_variable", {
   add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = "b")
   add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = Inf)
   add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = -1)
+})
+
+test_that("add_variable", {
+  x <- add_variables(d, new = 5)
+  expect_equal(attr(x, "test", exact = TRUE), "abc")
 })

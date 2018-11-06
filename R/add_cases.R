@@ -7,13 +7,11 @@
 #'   but at any column or row position. Furthermore, they allow easy integration
 #'   into a pipe-workflow.
 #'
-#' @param data A data frame. For \code{add_columns()}, will be bound after data
-#'   frames specified in \code{...}. For \code{replace_columns()}, duplicated
-#'   columns in \code{data} will be replaced by columns in \code{...}.
-#' @param ... One or more names vectors that indicate the variables or values,
+#' @param data A data frame.
+#' @param ... One or more named vectors that indicate the variables or values,
 #'   which will be added as new column or row to \code{data}. For \code{add_case()},
 #'   non-matching columns in \code{data} will be filled with \code{NA}.
-#' @param .after,.before Numerical index of row or column, after or infront of what
+#' @param .after,.before Numerical index of row or column, where after or before
 #'   the new variable or case should be added. If \code{.after = -1}, variables
 #'   or cases are added at the beginning; if \code{.after = Inf},
 #'   variables and cases are added at the end. In case of \code{add_variables()},
@@ -47,6 +45,9 @@
 #' @importFrom dplyr select
 #' @export
 add_variables <- function(data, ..., .after = Inf, .before = NULL) {
+  # copy attributes
+  a <- attributes(data)
+
   if (is.character(.after))
     .after <- which(colnames(data) == .after)
 
@@ -59,9 +60,9 @@ add_variables <- function(data, ..., .after = Inf, .before = NULL) {
   dat <- data.frame(..., stringsAsFactors = FALSE)
 
   if (.after < 1) {
-    cbind(dat, data)
+    x <- cbind(dat, data)
   } else if (is.infinite(.after) || .after >= ncol(data)) {
-    cbind(data, dat)
+    x <- cbind(data, dat)
   } else {
     c1 <- 1:.after
     c2 <- (.after + 1):ncol(data)
@@ -69,8 +70,13 @@ add_variables <- function(data, ..., .after = Inf, .before = NULL) {
     x1 <- dplyr::select(data, !! c1)
     x2 <- dplyr::select(data, !! c2)
 
-    cbind(x1, dat, x2)
+    x <- cbind(x1, dat, x2)
   }
+
+  a[names(a) %in% names(attributes(x))] <- NULL
+  attributes(x) <- c(attributes(x), a)
+
+  x
 }
 
 

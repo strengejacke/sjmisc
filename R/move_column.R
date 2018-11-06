@@ -48,6 +48,9 @@
 #' @export
 move_columns <- function(data, ..., .before, .after) {
 
+  # copy attributes
+  a <- attributes(data)
+
   variables <- dplyr::quos(...)
   dat <- dplyr::select(data, !!! variables)
 
@@ -77,9 +80,9 @@ move_columns <- function(data, ..., .before, .after) {
 
 
   if (pos.after < 1) {
-    cbind(dat, data)
+    x <- cbind(dat, data)
   } else if (is.infinite(pos.after) || pos.after >= ncol(data)) {
-    cbind(data, dat)
+    x <- cbind(data, dat)
   } else {
     c1 <- 1:pos.after
     c2 <- (pos.after + 1):ncol(data)
@@ -87,6 +90,11 @@ move_columns <- function(data, ..., .before, .after) {
     x1 <- dplyr::select(data, !! c1)
     x2 <- dplyr::select(data, !! c2)
 
-    cbind(x1, dat, x2)
+    x <- cbind(x1, dat, x2)
   }
+
+  a[names(a) %in% names(attributes(x))] <- NULL
+  attributes(x) <- c(attributes(x), a)
+
+  x
 }
