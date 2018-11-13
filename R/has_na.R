@@ -111,7 +111,11 @@ incomplete_cases <- function(x, ...) {
 complete_cases <- function(x, ...) {
   all.cases <- seq_len(nrow(x))
   na.cases <- has_na(x, ..., by = "row", out = "index")
-  all.cases[-na.cases]
+
+  if (sjmisc::is_empty(na.cases))
+    all.cases
+  else
+    all.cases[-na.cases]
 }
 
 

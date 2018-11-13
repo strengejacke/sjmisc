@@ -51,3 +51,17 @@ test_that("frq", {
   }
   test.weight(efc, "neg_c_7", "weights")
 })
+
+
+v1 <- c(1, 2, 1, 2, 1, 1)
+v2 <- c(1, 2, 1, NA, 1, 1)
+
+test_that("frq, show.na", {
+  expect_equal(nrow(frq(v1, show.na = TRUE)[[1]]), 3)
+  expect_equal(nrow(frq(v1, show.na = FALSE)[[1]]), 2)
+  expect_equal(nrow(frq(v1, show.na = "auto")[[1]]), 2)
+
+  expect_equal(nrow(frq(v2, show.na = TRUE)[[1]]), 3)
+  expect_equal(nrow(frq(v2, show.na = FALSE)[[1]]), 2)
+  expect_equal(nrow(frq(v2, show.na = "auto")[[1]]), 3)
+})

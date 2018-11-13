@@ -1,3 +1,13 @@
+# sjmisc 2.7.7
+
+## Changes to functions
+
+* `frq()` gets a `show.na`-argument, to (automatically) show or hide the information for `NA`-values from the output.
+
+## Bug fixes
+
+* `complete_cases()` returned an empty vector instead of all indexes if all cases (rows) of a data frame were complete.
+
 # sjmisc 2.7.6
 
 ## Changes to functions

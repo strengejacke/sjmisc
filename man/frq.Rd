@@ -5,9 +5,9 @@
 \title{Frequency table of labelled variables}
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
-  auto.grp = NULL, show.strings = TRUE, grp.strings = NULL,
-  out = c("txt", "viewer", "browser"), title = NULL,
-  encoding = "UTF-8", file = NULL)
+  auto.grp = NULL, show.strings = TRUE, show.na = TRUE,
+  grp.strings = NULL, out = c("txt", "viewer", "browser"),
+  title = NULL, encoding = "UTF-8", file = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -38,6 +38,13 @@ is \code{NULL}, i.e. auto-grouping is off.}
 vectors will not be printed. This is useful when printing frequency tables
 of all variables from a data frame, and due to computational reasons
 character vectors should not be printed.}
+
+\item{show.na}{Logical, or \code{"auto"}. If \code{TRUE}, the output always
+contains informatin on missing values, even if variables have no missing
+values. If \code{FALSE}, information on missing values are removed from
+the output. If \code{show.na = "auto"}, information on missing values
+is only shown when variables actually have missing values, else it's not
+shown.}
 
 \item{grp.strings}{Numeric, if not \code{NULL}, groups string values in
 character vectors, based on their similarity. The similarity is estimated

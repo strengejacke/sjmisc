@@ -18,6 +18,12 @@
 #'   vectors will not be printed. This is useful when printing frequency tables
 #'   of all variables from a data frame, and due to computational reasons
 #'   character vectors should not be printed.
+#' @param show.na Logical, or \code{"auto"}. If \code{TRUE}, the output always
+#'   contains informatin on missing values, even if variables have no missing
+#'   values. If \code{FALSE}, information on missing values are removed from
+#'   the output. If \code{show.na = "auto"}, information on missing values
+#'   is only shown when variables actually have missing values, else it's not
+#'   shown.
 #' @param grp.strings Numeric, if not \code{NULL}, groups string values in
 #'   character vectors, based on their similarity. The similarity is estimated
 #'   with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
@@ -102,6 +108,7 @@ frq <- function(x,
                 weights = NULL,
                 auto.grp = NULL,
                 show.strings = TRUE,
+                show.na = TRUE,
                 grp.strings = NULL,
                 out = c("txt", "viewer", "browser"),
                 title = NULL,
@@ -215,7 +222,8 @@ frq <- function(x,
               weight.by = wb,
               cn = colnames(tmp)[1],
               auto.grp = auto.grp,
-              title = gr.title
+              title = gr.title,
+              show.na = show.na
             )
 
           attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
@@ -246,7 +254,8 @@ frq <- function(x,
             weight.by = wb,
             cn = colnames(x)[i],
             auto.grp = auto.grp,
-            title = title
+            title = title,
+            show.na = show.na
           )
 
         # save data frame for return value
@@ -273,7 +282,7 @@ frq <- function(x,
 #' @importFrom dplyr n_distinct full_join bind_rows
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
-frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL) {
+frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE) {
   # remember type
   vartype <- var_type(x)
 
@@ -463,6 +472,11 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL) {
 
   # sort
   if (sort.frq == "none") mydat <- mydat[order(reihe), ]
+
+  # remove NA, if requested
+  has.na <- mydat$frq[nrow(mydat)] > 0
+  if ((!is.logical(show.na) && show.na == "auto" && !has.na) || identical(show.na, FALSE))
+    mydat <- mydat[-nrow(mydat), ]
 
   # add variable label and type as attribute, for print-method
 
