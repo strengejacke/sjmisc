@@ -74,6 +74,8 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
 
 
 to_dummy_helper <- function(x, varname, suffix) {
+  # make sure we have a factor, so order of values is correct
+  if (is.character(x)) x <- to_factor(x)
   # check whether we have labels
   labels <- sjlabelled::get_labels(x, attr.only = F, values = "n", non.labelled = T)
   # get resp. set variable label for new dummy variables

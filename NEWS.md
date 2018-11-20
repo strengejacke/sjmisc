@@ -7,6 +7,7 @@
 ## Bug fixes
 
 * `complete_cases()` returned an empty vector instead of all indexes if all cases (rows) of a data frame were complete.
+* Fix issue with `to_dummy()` for character-vector input.
 
 # sjmisc 2.7.6
 
