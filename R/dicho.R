@@ -24,7 +24,9 @@
 #' @return \code{x}, dichotomized. If \code{x} is a data frame,
 #'   for \code{append = TRUE}, \code{x} including the dichotomized. variables
 #'   as new columns is returned; if \code{append = FALSE}, only
-#'   the dichotomized variables will be returned.
+#'   the dichotomized variables will be returned. If \code{append = TRUE} and
+#'   \code{suffix = ""}, recoded variables will replace (overwrite) existing
+#'   variables.
 #'
 #' @note Variable label attributes are preserved (unless changed via
 #'       \code{var.label}-argument).
@@ -284,14 +286,30 @@ recode_fun <- function(x, .dat, fun, suffix, append, ...) {
       x <- x[colnames(.dat)]
     }
 
-    # add suffix to recoded variables?
-    if (!is.null(suffix) && !sjmisc::is_empty(suffix))
-      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-
-    # combine data
-    if (append) x <- dplyr::bind_cols(orix, x)
+    # add suffix to recoded variables and combine data
+    x <- append_columns(x, orix, suffix, append)
   } else {
     x <- fun(x = .dat, ...)
+  }
+
+  x
+}
+
+
+append_columns <- function(x, orix, suffix, append) {
+  append.replace <- !is.null(suffix) && sjmisc::is_empty(suffix)
+
+  # add suffix to recoded variables?
+  if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
+    colnames(x) <- sprintf("%s%s", colnames(x), suffix)
+  }
+
+  # combine data
+  if (append) {
+    if (append.replace)
+      x <- add_columns(x, orix, replace = TRUE)
+    else
+      x <- dplyr::bind_cols(orix, x)
   }
 
   x

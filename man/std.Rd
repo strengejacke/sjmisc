@@ -60,7 +60,9 @@ column names in a data frame depends on the function call:
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
   \item de-meaned variables (\code{de_mean()}) will be suffixed with \code{"_dm"}
   \item grouped-meaned variables (\code{de_mean()}) will be suffixed with \code{"_gm"}
-}}
+}
+If \code{suffix = ""} and \code{append = TRUE}, existing variables that
+have been recoded/transformed will be overwritten.}
 
 \item{predicate}{A predicate function to be applied to the columns. The
 variables for which \code{predicate} returns \code{TRUE} are selected.}
@@ -70,6 +72,8 @@ If \code{x} is a vector, returns a vector with standardized or
   centered variables. If \code{x} is a data frame, for \code{append = TRUE},
   \code{x} including the transformed variables as new columns is returned;
   if \code{append = FALSE}, only the transformed variables will be returned.
+  If \code{append = TRUE} and \code{suffix = ""}, recoded variables will
+  replace (overwrite) existing variables.
 }
 \description{
 \code{std()} computes a z-transformation (standardized and centered)

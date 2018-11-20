@@ -26,3 +26,10 @@ test_that("rec", {
   expect_equal(rec(x, rec = "1=NA;NA=1;else=copy"), c(NA, 2, 3, 1))
   expect_equal(rec(x, rec = "min=10;max=5;NA=9;else=copy"), c(10, 2, 5, 9))
 })
+
+test_that("rec", {
+  expect_equal(
+    unique(rec(iris, Petal.Length, rec = "lo:3=1;3.01:4.5=2;4.501:max=3", append = T, suffix = "")$Petal.Length),
+    c(1, 3, 2)
+  )
+})

@@ -23,7 +23,8 @@
 #' @return A grouped variable with equal sized groups. If \code{x} is a data frame,
 #'   for \code{append = TRUE}, \code{x} including the grouped variables as new
 #'   columns is returned; if \code{append = FALSE}, only the grouped variables
-#'   will be returned.
+#'   will be returned. If \code{append = TRUE} and \code{suffix = ""},
+#'   recoded variables will replace (overwrite) existing variables.
 #'
 #' @details \code{split_var()} splits a variable into equal sized groups, where
 #'   the amount of groups depends on the \code{groupcount}-argument. Thus, this

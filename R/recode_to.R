@@ -24,7 +24,9 @@
 #' @return \code{x} with recoded category values, where \code{lowest} indicates
 #'   the lowest value;  If \code{x} is a data frame, for \code{append = TRUE},
 #'   \code{x} including the recoded variables as new columns is returned; if
-#'   \code{append = FALSE}, only the recoded variables will be returned.
+#'   \code{append = FALSE}, only the recoded variables will be returned. If
+#'   \code{append = TRUE} and \code{suffix = ""}, recoded variables will replace
+#'   (overwrite) existing variables.
 #'
 #' @note Value and variable label attributes are preserved.
 #'
@@ -163,13 +165,8 @@ rec_to_fun <- function(x, .dat, lowest, highest, append, suffix) {
     # select only recoded variables
     x <- x[colnames(.dat)]
 
-    # add suffix to recoded variables?
-    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
-      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-    }
-
-    # combine data
-    if (append) x <- dplyr::bind_cols(orix, x)
+    # add suffix to recoded variables and combine data
+    x <- append_columns(x, orix, suffix, append)
   } else {
     x <- rec_to_helper(
       x = .dat,

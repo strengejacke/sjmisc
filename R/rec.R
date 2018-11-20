@@ -45,13 +45,17 @@
 #'     \item de-meaned variables (\code{de_mean()}) will be suffixed with \code{"_dm"}
 #'     \item grouped-meaned variables (\code{de_mean()}) will be suffixed with \code{"_gm"}
 #'   }
+#'   If \code{suffix = ""} and \code{append = TRUE}, existing variables that
+#'   have been recoded/transformed will be overwritten.
 #'
 #' @inheritParams to_factor
 #'
 #' @return \code{x} with recoded categories. If \code{x} is a data frame,
 #'   for \code{append = TRUE}, \code{x} including the recoded variables
 #'   as new columns is returned; if \code{append = FALSE}, only
-#'   the recoded variables will be returned.
+#'   the recoded variables will be returned. If \code{append = TRUE} and
+#'   \code{suffix = ""}, recoded variables will replace (overwrite) existing
+#'   variables.
 #'
 #' @details  The \code{rec} string has following syntax:
 #'   \describe{
@@ -288,13 +292,8 @@ rec_core_fun <- function(x, .dat, rec, as.num = TRUE, var.label = NULL, val.labe
     # select only recoded variables
     x <- x[colnames(.dat)]
 
-    # add suffix to recoded variables?
-    if (!is.null(suffix) && !sjmisc::is_empty(suffix)) {
-      colnames(x) <- sprintf("%s%s", colnames(x), suffix)
-    }
-
-    # combine data
-    if (append) x <- dplyr::bind_cols(orix, x)
+    # add suffix to recoded variables and combine data
+    x <- append_columns(x, orix, suffix, append)
   } else {
     x <- rec_helper(
       x = .dat,

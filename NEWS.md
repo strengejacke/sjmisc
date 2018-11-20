@@ -3,6 +3,7 @@
 ## Changes to functions
 
 * `frq()` gets a `show.na`-argument, to (automatically) show or hide the information for `NA`-values from the output.
+* For recode-functions (like `rec()`, `dicho()`, ...), if `suffix = ""` and `append = TRUE`, existing variables will be replaced by the new, recoded variables.
 
 ## Bug fixes
 
