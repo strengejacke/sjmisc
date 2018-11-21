@@ -1,5 +1,9 @@
 # sjmisc 2.7.7
 
+## New functions
+
+* `tidy_values()` to "clean" values (i.e. remove special chars) of character vectors or levels of factors.
+
 ## Changes to functions
 
 * `frq()` gets a `show.na`-argument, to (automatically) show or hide the information for `NA`-values from the output.
