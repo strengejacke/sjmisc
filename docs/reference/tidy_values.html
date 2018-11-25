@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Trim leading and trailing whitespaces from strings — trim • sjmisc</title>
+<title>Tidy values of character vectors. — tidy_values • sjmisc</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Trim leading and trailing whitespaces from strings — trim" />
+<meta property="og:title" content="Tidy values of character vectors. — tidy_values" />
 
-<meta property="og:description" content="Trims leading and trailing whitespaces from strings or
-               character vectors." />
+<meta property="og:description" content="This function &quot;cleans&quot; values of a character vector or levels of
+  a factor by removing space and punctuation characters." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -120,49 +120,66 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Trim leading and trailing whitespaces from strings</h1>
-    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/trim.R'><code>R/trim.R</code></a></small>
-    <div class="hidden name"><code>trim.Rd</code></div>
+    <h1>Tidy values of character vectors.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/tidy_values.R'><code>R/tidy_values.R</code></a></small>
+    <div class="hidden name"><code>tidy_values.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Trims leading and trailing whitespaces from strings or
-               character vectors.</p>
+    <p>This function "cleans" values of a character vector or levels of
+  a factor by removing space and punctuation characters.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>trim</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>tidy_values</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Character vector or string, or a list or data frame with such vectors.
-Function is vectorized, i.e. vector may have a length greater than
-1. See 'Examples'.</p></td>
+      <td><p>A vector or data frame.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Optional, unquoted names of variables that should be selected for
+further processing. Required, if <code>x</code> is a data frame (and no
+vector) and only selected variables from <code>x</code> should be processed.
+You may also use functions like <code>:</code> or tidyselect's
+<code><a href='https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers'>select_helpers</a></code>.
+See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Trimmed <code>x</code>, i.e. with leading and trailing spaces removed.</p>
+    <p><code>x</code>, with "cleaned" values or levels.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>trim</span>(<span class='st'>"white space at end "</span>)</div><div class='output co'>#&gt; [1] "white space at end"</div><div class='input'><span class='fu'>trim</span>(<span class='st'>" white space at start and end "</span>)</div><div class='output co'>#&gt; [1] "white space at start and end"</div><div class='input'><span class='fu'>trim</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>" string1 "</span>, <span class='st'>"   string2"</span>, <span class='st'>"string 3   "</span>))</div><div class='output co'>#&gt; [1] "string1"  "string2"  "string 3"</div><div class='input'>
-<span class='no'>tmp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>" string1 "</span>, <span class='st'>"   string2"</span>, <span class='st'>"string 3   "</span>),
-                  <span class='kw'>b</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>" strong one  "</span>, <span class='st'>"    string two"</span>, <span class='st'>"  third string "</span>),
-                  <span class='kw'>c</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>" str1 "</span>, <span class='st'>"   str2"</span>, <span class='st'>"str3   "</span>))
-<span class='no'>tmp</span></div><div class='output co'>#&gt;             a               b       c
-#&gt; 1    string1     strong one     str1 
-#&gt; 2     string2      string two    str2
-#&gt; 3 string 3      third string  str3   </div><div class='input'><span class='fu'>trim</span>(<span class='no'>tmp</span>)</div><div class='output co'>#&gt;          a            b    c
-#&gt; 1  string1   strong one str1
-#&gt; 2  string2   string two str2
-#&gt; 3 string 3 third string str3</div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>f1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sprintf'>sprintf</a></span>(<span class='st'>"Char %s"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
+<span class='no'>f2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sprintf'>sprintf</a></span>(<span class='st'>"F / %s"</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)))
+<span class='no'>f3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='no'>f1</span>, <span class='no'>f2</span>, <span class='no'>f3</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>tidy_values</span>(<span class='no'>f1</span>)</div><div class='output co'>#&gt;  [1] "Char_C" "Char_E" "Char_A" "Char_E" "Char_A" "Char_C" "Char_A" "Char_C"
+#&gt;  [9] "Char_A" "Char_D"</div><div class='input'><span class='fu'>tidy_values</span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;  [1] F_e F_b F_b F_b F_b F_b F_a F_c F_d F_e
+#&gt; Levels: F_a F_b F_c F_d F_e</div><div class='input'><span class='fu'>tidy_values</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
+#&gt;    f1     f2       f3
+#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Char_C F_e       5
+#&gt; </span><span style='color: #555555;'> 2</span><span> Char_E F_b       2
+#&gt; </span><span style='color: #555555;'> 3</span><span> Char_A F_b       4
+#&gt; </span><span style='color: #555555;'> 4</span><span> Char_E F_b       4
+#&gt; </span><span style='color: #555555;'> 5</span><span> Char_A F_b       3
+#&gt; </span><span style='color: #555555;'> 6</span><span> Char_C F_b       4
+#&gt; </span><span style='color: #555555;'> 7</span><span> Char_A F_a       2
+#&gt; </span><span style='color: #555555;'> 8</span><span> Char_C F_c       4
+#&gt; </span><span style='color: #555555;'> 9</span><span> Char_A F_d       4
+#&gt; </span><span style='color: #555555;'>10</span><span> Char_D F_e       1</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -112,7 +112,6 @@ std(efc$e17age) # returns a vector
 std(efc, e17age) # returns a data frame
 
 # with quasi-quotation
-library(rlang)
 x <- "e17age"
 center(efc, !!x, append = FALSE) \%>\% head()
 
