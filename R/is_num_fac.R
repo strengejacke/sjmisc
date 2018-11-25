@@ -29,12 +29,12 @@
 #' @export
 is_num_fac <- function(x) {
   # check if we have numeric levels
-  !anyNA(suppressWarnings(as.numeric(levels(x))))
+  is.factor(x) && !anyNA(suppressWarnings(as.numeric(levels(x))))
 }
 
 #' @rdname is_num_fac
 #' @export
 is_num_chr <- function(x) {
   # check if we have numeric bvalues
-  !anyNA(suppressWarnings(as.numeric(x)))
+  is.character(x) && !anyNA(suppressWarnings(as.numeric(na.omit(x))))
 }

@@ -97,16 +97,24 @@ group_str <- function(strings,
         # check if we found a pair's distance that
         # is within the maximum requested distance
         # i.e. which are "close" enough
-        if (m[i, j] <= maxdist) {
+        if (!is.na(m[i, j]) && m[i, j] <= maxdist) {
           # go through all rows of this column and
           # check if there's a better match for the
           # currently compared token
           foundBetterToken <- !strict
           for (cnt in seq_len(nrow(m))) {
-            if (strict) {
-              if (m[cnt, j] > 0 && m[cnt, j] < m[i, j]) foundBetterToken <- TRUE
-            } else {
-              if (m[cnt, j] <= maxdist && m[i, cnt] <= maxdist) foundBetterToken <- FALSE
+            if (!is.na(m[cnt, j]) && !is.na(m[i, cnt])) {
+              if (strict) {
+                if (m[cnt, j] > 0 && m[cnt, j] < m[i, j]) {
+                  foundBetterToken <- TRUE
+                  break
+                }
+              } else {
+                if (m[cnt, j] <= maxdist && m[i, cnt] <= maxdist) {
+                  foundBetterToken <- FALSE
+                  break
+                }
+              }
             }
           }
 
@@ -137,7 +145,7 @@ group_str <- function(strings,
 
   # we now have a list, where each list element
   # is a vector of "close" string values
-  strings.new <- c()
+  strings.new <- rep(NA, length(strings))
 
   # go through each list element
   for (i in seq_len(length(pairs))) {
@@ -165,7 +173,7 @@ findInPairs <- function(curel, pairs) {
   if (length(pairs) > 0) {
     for (ll in seq_len(length(pairs))) {
       pel <- pairs[[ll]]
-      if (any(pel == curel)) return(TRUE)
+      if (!is.na(curel) && any(pel == curel)) return(TRUE)
     }
   }
   elfound

@@ -179,11 +179,25 @@ frq <- function(x,
   # group strings
 
   if (!is.null(grp.strings)) {
+    a <- attributes(x)
+
+    if (!is.data.frame(x)) {
+      was.df <- FALSE
+      x <- data.frame(x, stringsAsFactors = FALSE)
+    } else
+      was.df <- TRUE
+
+
     x <- x %>%
       purrr::map_if(is.character, ~ group_str(
         strings = .x, maxdist = grp.strings, remove.empty = FALSE)
       ) %>%
-      as.data.frame()
+      as.data.frame(stringsAsFactors = FALSE)
+
+    if (was.df)
+      attributes(x) <- a
+    else
+      attributes(x[[1]]) <- a
   }
 
 

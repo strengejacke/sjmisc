@@ -13,6 +13,8 @@
 
 * `complete_cases()` returned an empty vector instead of all indexes if all cases (rows) of a data frame were complete.
 * Fix issue with `to_dummy()` for character-vector input.
+* Fix issue with missing values in `group_str()`.
+* Fix issue with missing values in `frq()` when `grp.strings = TRUE`.
 
 # sjmisc 2.7.6
 
