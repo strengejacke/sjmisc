@@ -17,14 +17,21 @@ that should be renamed, and the value (rhs) is the new column name.}
 }
 \description{
 This function renames variables in a data frame, i.e. it
-               renames the columns of the data frame.
+   renames the columns of the data frame.
 }
 \examples{
-# Set variable labels for data frame
-dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
-                    b = sample(1:4, 10, replace = TRUE),
-                    c = sample(1:4, 10, replace = TRUE))
+dummy <- data.frame(
+  a = sample(1:4, 10, replace = TRUE),
+  b = sample(1:4, 10, replace = TRUE),
+  c = sample(1:4, 10, replace = TRUE)
+)
 
 var_rename(dummy, a = "first.col", c = "3rd.col")
+
+# using quasi-quotation
+library(rlang)
+v1 <- "first.col"
+v2 <- "3rd.col"
+var_rename(dummy, a = !!v1, c = !!v2)
 
 }

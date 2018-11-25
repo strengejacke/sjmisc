@@ -2,7 +2,7 @@
 #' @name var_rename
 #'
 #' @description This function renames variables in a data frame, i.e. it
-#'                renames the columns of the data frame.
+#'    renames the columns of the data frame.
 #'
 #' @param x A data frame.
 #' @param ... Pairs of named vectors, where the name (lhs) equals the column name
@@ -11,22 +11,35 @@
 #' @return \code{x}, with new column names for those variables specified in \code{...}.
 #'
 #' @examples
-#' # Set variable labels for data frame
-#' dummy <- data.frame(a = sample(1:4, 10, replace = TRUE),
-#'                     b = sample(1:4, 10, replace = TRUE),
-#'                     c = sample(1:4, 10, replace = TRUE))
+#' dummy <- data.frame(
+#'   a = sample(1:4, 10, replace = TRUE),
+#'   b = sample(1:4, 10, replace = TRUE),
+#'   c = sample(1:4, 10, replace = TRUE)
+#' )
 #'
 #' var_rename(dummy, a = "first.col", c = "3rd.col")
 #'
+#' # using quasi-quotation
+#' library(rlang)
+#' v1 <- "first.col"
+#' v2 <- "3rd.col"
+#' var_rename(dummy, a = !!v1, c = !!v2)
+#'
+#' @importFrom rlang ensyms as_string
 #' @export
 var_rename <- function(x, ...) {
   # get dots
   .dots <- match.call(expand.dots = FALSE)$`...`
 
+  if (inherits(.dots, "pairlist"))
+    .dots <- lapply(rlang::ensyms(...), rlang::as_string) %>% unlist()
+  else
+    .dots <- unlist(.dots)
+
   # select variables
-  old_names <- names(unlist(.dots))
+  old_names <- names(.dots)
   # get new variable names
-  new_names <- unname(unlist(.dots))
+  new_names <- unname(.dots)
 
 
   # non-matching column names

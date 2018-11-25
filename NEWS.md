@@ -9,6 +9,7 @@
 * `frq()` gets a `show.na`-argument, to (automatically) show or hide the information for `NA`-values from the output.
 * For recode-functions (like `rec()`, `dicho()`, ...), if `suffix = ""` and `append = TRUE`, existing variables will be replaced by the new, recoded variables.
 * Improved performance for `group_str()`.
+* `var_rename()` now supports quasi-quotation (see Examples).
 
 ## Bug fixes
 
