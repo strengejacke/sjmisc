@@ -65,3 +65,21 @@ test_that("frq, show.na", {
   expect_equal(nrow(frq(v2, show.na = FALSE)[[1]]), 2)
   expect_equal(nrow(frq(v2, show.na = "auto")[[1]]), 3)
 })
+
+
+test_that("frq", {
+  data(efc)
+  efc$e15relat <- to_label(efc$e15relat)
+  levels(efc$e15relat) <- c("Hello", "Helo", "Hole", "Apple", "Ape", "System", "Systemic", "new")
+  efc$e15relat <- to_character(efc$e15relat)
+
+  frq(efc$e15relat)
+  frq(efc, e15relat)
+  frq(efc$e15relat, grp.strings = 2)
+  frq(efc, e15relat, grp.strings = 2)
+  x <- efc$e15relat
+  frq(x)
+  frq(x, grp.strings = 2)
+
+  efc %>% dplyr::group_by(c172code) %>% frq(c161sex, e15relat, grp.strings = 2)
+})

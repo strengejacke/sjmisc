@@ -8,13 +8,14 @@
 
 * `frq()` gets a `show.na`-argument, to (automatically) show or hide the information for `NA`-values from the output.
 * For recode-functions (like `rec()`, `dicho()`, ...), if `suffix = ""` and `append = TRUE`, existing variables will be replaced by the new, recoded variables.
+* Improved performance for `group_str()`.
 
 ## Bug fixes
 
 * `complete_cases()` returned an empty vector instead of all indexes if all cases (rows) of a data frame were complete.
 * Fix issue with `to_dummy()` for character-vector input.
 * Fix issue with missing values in `group_str()`.
-* Fix issue with missing values in `frq()` when `grp.strings = TRUE`.
+* Fix issue with grouped data frames in `frq()` when `grp.strings = TRUE`.
 
 # sjmisc 2.7.6
 
