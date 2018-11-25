@@ -34,4 +34,8 @@ v1 <- "first.col"
 v2 <- "3rd.col"
 var_rename(dummy, a = !!v1, c = !!v2)
 
+x1 <- "a"
+x2 <- "b"
+var_rename(dummy, !!x1 := !!v1, !!x2 := !!v2)
+
 }
