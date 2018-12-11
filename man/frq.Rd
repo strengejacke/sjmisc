@@ -113,6 +113,12 @@ frq(iris, Species)
 efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
 frq(efc, c160age, auto.grp = 5, weights = weights)
 
+# different weight options
+frq(efc, c172code, weights = weights)
+frq(efc, c172code, weights = "weights")
+frq(efc, c172code, weights = efc$weights)
+frq(efc$c172code, weights = efc$weights)
+
 # group string values
 dummy <- efc[1:50, 3, drop = FALSE]
 dummy$words <- sample(

@@ -43,7 +43,7 @@ print.sjmisc_frq <- function(x, ...) {
     # print frq-table
     print.data.frame(dat, ..., row.names = FALSE, quote = FALSE)
 
-    cat("\n\n")
+    cat("\n")
   })
 }
 

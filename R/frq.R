@@ -84,6 +84,12 @@
 #' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
 #' frq(efc, c160age, auto.grp = 5, weights = weights)
 #'
+#' # different weight options
+#' frq(efc, c172code, weights = weights)
+#' frq(efc, c172code, weights = "weights")
+#' frq(efc, c172code, weights = efc$weights)
+#' frq(efc$c172code, weights = efc$weights)
+#'
 #' # group string values
 #' dummy <- efc[1:50, 3, drop = FALSE]
 #' dummy$words <- sample(
@@ -137,6 +143,10 @@ frq <- function(x,
 
     if (!sjmisc::is_empty(w) && w != "NULL" && !obj_has_name(xw, w) && obj_has_name(x, w)) {
       x <- dplyr::bind_cols(xw, data.frame(x[[w]]))
+      colnames(x)[ncol(x)] <- w
+    } else if (!sjmisc::is_empty(string_contains("$", w)) && length(w.string) > 1 && is.numeric(w.string)) {
+      x <- cbind(xw, data.frame(w.string))
+      w <- sub("(.*)\\$(.*)", "\\2", w)
       colnames(x)[ncol(x)] <- w
     } else {
       message(sprintf("Weights `%s` not found in data.", w))

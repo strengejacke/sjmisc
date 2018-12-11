@@ -7,6 +7,7 @@
 ## Changes to functions
 
 * `frq()` gets a `show.na`-argument, to (automatically) show or hide the information for `NA`-values from the output.
+* The `weights`-argument in `frq()` now also accepts vectors, and is not limited to variable names. Note that these vectors must be part of a data frame.
 * For recode-functions (like `rec()`, `dicho()`, ...), if `suffix = ""` and `append = TRUE`, existing variables will be replaced by the new, recoded variables.
 * Improved performance for `group_str()`.
 * `var_rename()` now supports quasi-quotation (see Examples).
