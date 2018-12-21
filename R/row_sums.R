@@ -63,6 +63,9 @@
 #'   select(c82cop1:c90cop9) %>%
 #'   row_sums(n = 1)
 #'
+#' # if data frame has only one column, this column is returned
+#' row_sums(dat[, 1, drop = FALSE], n = 0)
+#'
 #' @export
 row_sums <- function(x, ...) {
   UseMethod("row_sums")
@@ -88,16 +91,17 @@ row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
     digs <- n %% 1
     if (digs != 0) n <- round(ncol(.dat) * digs)
 
-    # check if we have a data framme with at least two columns
+    # check if we have a data frame with at least two columns
     if (ncol(.dat) < 2) {
-      warning("`x` must be a data frame with at least two columns.", call. = TRUE)
-      return(NA)
+      message("No row-sums are returned, because `x` has only one column.", call. = TRUE)
+      colnames(orix) <- var
+      return(orix)
     }
 
     # n may not be larger as df's amount of columns
     if (ncol(.dat) < n) {
       warning("`n` must be smaller or equal to number of columns in data frame.", call. = TRUE)
-      return(NA)
+      return(orix)
     }
 
     rs <- apply(.dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, sum(x, na.rm = TRUE), NA))
@@ -165,16 +169,17 @@ row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
     digs <- n %% 1
     if (digs != 0) n <- round(ncol(.dat) * digs)
 
-    # check if we have a data framme with at least two columns
+    # check if we have a data frame with at least two columns
     if (ncol(.dat) < 2) {
-      warning("`x` must be a data frame with at least two columns.", call. = TRUE)
-      return(NA)
+      message("No row-means are returned, because `x` has only one column.", call. = TRUE)
+      colnames(orix) <- var
+      return(orix)
     }
 
     # n may not be larger as df's amount of columns
     if (ncol(.dat) < n) {
       warning("`n` must be smaller or equal to number of columns in data frame.", call. = TRUE)
-      return(NA)
+      return(orix)
     }
 
     rm <- apply(.dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA))

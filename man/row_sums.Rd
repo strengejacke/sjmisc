@@ -101,4 +101,7 @@ efc \%>\%
   select(c82cop1:c90cop9) \%>\%
   row_sums(n = 1)
 
+# if data frame has only one column, this column is returned
+row_sums(dat[, 1, drop = FALSE], n = 0)
+
 }

@@ -10,7 +10,7 @@ dat <- data.frame(
   c5 = c(1,7,5,3)
 )
 
-test_that("std, row_sums", {
+test_that("row_sums", {
   tmp <- row_sums(dat, n = 4, append = FALSE)
   expect_equal(sum(is.na(tmp[[1]])), 2)
   expect_equal(sum(tmp[[1]], na.rm = TRUE), 38)
@@ -31,4 +31,6 @@ test_that("std, row_sums", {
   tmp <- row_sums(dat, n = 3, append = FALSE)
   expect_equal(sum(is.na(tmp[[1]])), 1)
   expect_equal(sum(tmp[[1]], na.rm = TRUE), 42)
+
+  expect_message(row_sums(dat[, 1, drop = FALSE], n = 0))
 })

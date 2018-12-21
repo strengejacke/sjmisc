@@ -23,4 +23,6 @@ test_that("std, row_means", {
 
   tmp <- row_means(dat, n = .51, append = FALSE)
   expect_equal(sum(is.na(tmp[[1]])), 1)
+
+  expect_message(row_means(dat[, 1, drop = FALSE], n = 0))
 })

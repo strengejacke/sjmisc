@@ -3,11 +3,14 @@
 \name{add_columns}
 \alias{add_columns}
 \alias{replace_columns}
+\alias{add_id}
 \title{Add or replace data frame columns}
 \usage{
 add_columns(data, ..., replace = TRUE)
 
 replace_columns(data, ..., add.unique = TRUE)
+
+add_id(data, var = "ID")
 }
 \arguments{
 \item{data}{A data frame. For \code{add_columns()}, will be bound after data
@@ -24,6 +27,8 @@ The order of columns after replacing is preserved.}
 \item{add.unique}{Logical, if \code{TRUE} (default), remaining columns in
 \code{...} that did not replace any column in \code{data}, are appended
 as new columns to \code{data}.}
+
+\item{var}{Name of new the ID-variable.}
 }
 \value{
 For \code{add_columns()}, a data frame, where columns of \code{data}
@@ -33,6 +38,9 @@ For \code{add_columns()}, a data frame, where columns of \code{data}
   will be replaced by identically named columns in \code{...}, and remaining
   columns from \code{...} will be appended to \code{data} (if
   \code{add.unique = TRUE}).
+  \cr \cr
+  For \code{add_id()}, a new column with ID numbers. This column is always
+  the first column in the returned data frame.
 }
 \description{
 \code{add_columns()} combines two or more data frames, but unlike
@@ -46,6 +54,10 @@ For \code{add_columns()}, a data frame, where columns of \code{data}
   \code{replace_columns()} replaces all columns in \code{data} with
   identically named columns in \code{...}, and adds remaining (non-duplicated)
   columns from \code{...} to \code{data}.
+  \cr \cr
+  \code{add_id()} simply adds an ID-column to the data frame, with values
+  from 1 to \code{nrow(data)}, respectively for grouped data frames, values
+  from 1 to group size. See 'Examples'.
 }
 \note{
 For \code{add_columns()}, by default, columns in \code{data} with
@@ -115,5 +127,16 @@ replace_columns(d1, d2, d3, d4)
 
 # replace duplicated columns, omit remaining
 replace_columns(d1, d2, d3, d4, add.unique = FALSE)
+
+# add ID to dataset
+library(dplyr)
+data(mtcars)
+add_id(mtcars)
+
+mtcars \%>\%
+  group_by(gear) \%>\%
+  add_id() \%>\%
+  arrange(gear, ID) \%>\%
+  print(n = 100)
 
 }

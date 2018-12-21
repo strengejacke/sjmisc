@@ -3,6 +3,7 @@
 ## New functions
 
 * `tidy_values()` to "clean" values (i.e. remove special chars) of character vectors or levels of factors.
+* `add_id()` to qickly add an ID variable to (grouped) data frames.
 
 ## Changes to functions
 
@@ -11,6 +12,7 @@
 * For recode-functions (like `rec()`, `dicho()`, ...), if `suffix = ""` and `append = TRUE`, existing variables will be replaced by the new, recoded variables.
 * Improved performance for `group_str()`.
 * `var_rename()` now supports quasi-quotation (see Examples).
+* `row_sums()` and `row_means()` now return the input data frame when this data frame only had one column and no row means or sums were calculated. The returned data frame still gets the new variable name defined in `var`.
 
 ## Bug fixes
 

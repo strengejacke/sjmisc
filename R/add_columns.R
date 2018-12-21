@@ -12,6 +12,10 @@
 #'   \code{replace_columns()} replaces all columns in \code{data} with
 #'   identically named columns in \code{...}, and adds remaining (non-duplicated)
 #'   columns from \code{...} to \code{data}.
+#'   \cr \cr
+#'   \code{add_id()} simply adds an ID-column to the data frame, with values
+#'   from 1 to \code{nrow(data)}, respectively for grouped data frames, values
+#'   from 1 to group size. See 'Examples'.
 #'
 #' @param data A data frame. For \code{add_columns()}, will be bound after data
 #'   frames specified in \code{...}. For \code{replace_columns()}, duplicated
@@ -24,6 +28,7 @@
 #' @param add.unique Logical, if \code{TRUE} (default), remaining columns in
 #'   \code{...} that did not replace any column in \code{data}, are appended
 #'   as new columns to \code{data}.
+#' @param var Name of new the ID-variable.
 #'
 #' @return For \code{add_columns()}, a data frame, where columns of \code{data}
 #'   are appended after columns of \code{...}.
@@ -32,6 +37,9 @@
 #'   will be replaced by identically named columns in \code{...}, and remaining
 #'   columns from \code{...} will be appended to \code{data} (if
 #'   \code{add.unique = TRUE}).
+#'   \cr \cr
+#'   For \code{add_id()}, a new column with ID numbers. This column is always
+#'   the first column in the returned data frame.
 #'
 #' @note For \code{add_columns()}, by default, columns in \code{data} with
 #'   identical names like columns in one of the data frames in \code{...}
@@ -100,6 +108,17 @@
 #'
 #' # replace duplicated columns, omit remaining
 #' replace_columns(d1, d2, d3, d4, add.unique = FALSE)
+#'
+#' # add ID to dataset
+#' library(dplyr)
+#' data(mtcars)
+#' add_id(mtcars)
+#'
+#' mtcars %>%
+#'   group_by(gear) %>%
+#'   add_id() %>%
+#'   arrange(gear, ID) %>%
+#'   print(n = 100)
 #'
 #' @importFrom dplyr bind_cols
 #' @export
@@ -173,4 +192,17 @@ replace_columns <- function(data, ..., add.unique = TRUE) {
     x <- data
 
   x
+}
+
+
+#' @importFrom dplyr bind_cols row_number mutate
+#' @rdname add_columns
+#' @export
+add_id <- function(data, var = "ID") {
+  if (!is.data.frame(data))
+    stop("`data` must be a data frame.", call. = FALSE)
+
+  x <- dplyr::mutate(data, id = dplyr::row_number())
+  colnames(x)[ncol(x)] <- var
+  dplyr::bind_cols(x[, ncol(x), drop = FALSE], data)
 }
