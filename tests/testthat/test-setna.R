@@ -16,3 +16,10 @@ test_that("set_na", {
 
   expect_true(all_na(set_na(x, na = 1:3)))
 })
+
+test_that("set_na", {
+  x <- c(1, 2, NA, 3)
+  expect_warning(expect_equal(set_na(x, na = c(1, NA), as.tag = FALSE), c(1, 2, NA, 3)))
+  expect_warning(expect_equal(set_na(x, na = NA), c(1, 2, NA, 3)))
+  expect_warning(expect_equal(set_na(x, na = NULL), c(1, 2, NA, 3)))
+})

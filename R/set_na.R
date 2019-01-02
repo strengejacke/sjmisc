@@ -148,7 +148,10 @@
 #' @export
 set_na <- function(x, ..., na, drop.levels = TRUE, as.tag = FALSE) {
   # check for valid value
-  if (is.null(na) || is.na(na)) return(x)
+  if (is.null(na) || anyNA(na)) {
+    warning("`na` is not allowed to ne `NULL` or to contain `NA`-values.", call. = FALSE)
+    return(x)
+  }
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
