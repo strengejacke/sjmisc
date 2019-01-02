@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.6.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
       </span>
     </div>
 
@@ -104,12 +104,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/strengejacke/sjmisc">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -123,7 +118,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Row sums and means for data frames</h1>
-    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/row_sums.R'><code>R/row_sums.R</code></a></small>
+    
     <div class="hidden name"><code>row_sums.Rd</code></div>
     </div>
 
@@ -3887,6 +3882,12 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
 #&gt; 906      NA
 #&gt; 907      NA
 #&gt; 908      NA</div><div class='input'>
+<span class='co'># if data frame has only one column, this column is returned</span>
+<span class='fu'>row_sums</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>], <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; <span class='message'>No row-sums are returned, because `x` has only one column.TRUE</span></div><div class='output co'>#&gt;   rowsums
+#&gt; 1       1
+#&gt; 2       2
+#&gt; 3      NA
+#&gt; 4       4</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -3910,7 +3911,7 @@ if <code>FALSE</code>, only the new variables are returned.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>
