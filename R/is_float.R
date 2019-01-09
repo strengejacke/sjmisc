@@ -58,7 +58,7 @@ is_whole <- function(x) {
 }
 
 iwh <- function(x) {
-  (is.numeric(x) && all(floor(x) == x)) || is.character(x) || is.factor(x)
+  (is.numeric(x) && all(floor(x) == x, na.rm = T)) || is.character(x) || is.factor(x)
 }
 
 #' @export

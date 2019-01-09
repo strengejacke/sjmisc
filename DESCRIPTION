@@ -2,7 +2,7 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.7.7
+Version: 2.7.7.9000
 Date: 2019-01-02
 Authors@R: person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206"))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>

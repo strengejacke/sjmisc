@@ -1,3 +1,9 @@
+# sjmisc 2.7.8
+
+## Changes to functions
+
+* `is_whole()` now automatically removes missing values from vectors.
+
 # sjmisc 2.7.7
 
 ## New functions
