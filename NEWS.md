@@ -3,6 +3,7 @@
 ## Changes to functions
 
 * `is_whole()` now automatically removes missing values from vectors.
+* `is_empty()` now also checks lists with only `NULL`-elements.
 
 # sjmisc 2.7.7
 

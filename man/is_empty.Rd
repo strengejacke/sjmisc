@@ -52,4 +52,7 @@ is_empty(c("", "a"), first.only = FALSE)
 d <- data.frame()
 is_empty(d)
 
+# empty list
+is_empty(list(NULL))
+
 }

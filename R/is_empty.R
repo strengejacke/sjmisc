@@ -41,6 +41,10 @@
 #' d <- data.frame()
 #' is_empty(d)
 #'
+#' # empty list
+#' is_empty(list(NULL))
+#'
+#' @importFrom purrr compact
 #' @export
 is_empty <- function(x, first.only = TRUE) {
   # do we have a valid vector?
@@ -65,11 +69,15 @@ is_empty <- function(x, first.only = TRUE) {
         return(unname(zero_len))
       }
       # we have a non-character vector here. check for length
+    } else if (is.list(x)) {
+      x <- purrr::compact(x)
+      zero_len <- length(x) == 0
     } else {
       zero_len <- length(x) == 0
     }
   }
-  return(is.null(x) || zero_len || all(is.na(x)))
+
+  any(is.null(x) || zero_len || all(is.na(x)))
 }
 
 
