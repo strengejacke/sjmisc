@@ -45,6 +45,7 @@
 #' @importFrom dplyr select
 #' @export
 add_variables <- function(data, ..., .after = Inf, .before = NULL) {
+
   # copy attributes
   a <- attributes(data)
 
