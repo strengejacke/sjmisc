@@ -5,6 +5,11 @@
 * `is_whole()` now automatically removes missing values from vectors.
 * `is_empty()` now also checks lists with only `NULL`-elements.
 
+## Bug fixes
+
+* Better handling of factors in `merge_imputations()`, which previously could result in `NA`-values when merging imputed values into one variable.
+* Fix issue in `is_empty()` in case the vector had non-missing values, but first element of vector was `NA`.
+
 # sjmisc 2.7.7
 
 ## New functions

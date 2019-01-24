@@ -183,7 +183,7 @@ frq <- function(x,
   if (!show.strings)
     x <- dplyr::select_if(x, no_character)
 
-  if (sjmisc::is_empty(x)) return(NULL)
+  if (sjmisc::is_empty(stats::na.omit(x))) return(NULL)
 
 
   # group strings

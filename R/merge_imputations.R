@@ -130,7 +130,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
 
       # convert imputed variable to numeric. needed to perform row means.
-      miss_inc_dat <- sjlabelled::as_numeric(miss_inc_dat)
+      miss_inc_dat_num <- sjlabelled::as_numeric(miss_inc_dat)
 
       # copy original variable with missings to a new dummy vector
       x <- dat[[i]]
@@ -143,18 +143,26 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
       # in the original variable with the most likely imputed value. For numeric
       # integer values, this mean is rounded.
 
-      if (is_float(x))
-        x[miss_inc] <- rowMeans(miss_inc_dat[miss_inc, ])
-      else
-        x[miss_inc] <- round(rowMeans(miss_inc_dat[miss_inc, ]))
+      if (is_float(x)) {
+        x[miss_inc] <- rowMeans(miss_inc_dat_num[miss_inc, ])
+      } else if (is.numeric(x)) {
+        x[miss_inc] <- round(rowMeans(miss_inc_dat_num[miss_inc, ]))
+      } else if (is_num_fac(x)) {
+        new.vals <- round(rowMeans(miss_inc_dat_num[miss_inc, ]))
+        x <- factor(x, levels = unique(c(levels(x), as.character(new.vals))))
+        x[miss_inc] <- new.vals
+      } else {
+        tmp <- miss_inc_dat[miss_inc, ]
+        x[miss_inc] <- apply(tmp, MARGIN = 1, FUN = mode_value)
+      }
 
 
       # analyse quality of merged values, by saving mean and standard deviation
       # for each merged value to a separate list. the mean and sd refer to
       # all imputed values for a case
 
-      analyse.mw <- apply(miss_inc_dat[miss_inc, ], 1, mean)
-      analyse.sd <- apply(miss_inc_dat[miss_inc, ], 1, sd)
+      analyse.mw <- apply(miss_inc_dat_num[miss_inc, ], 1, mean)
+      analyse.sd <- apply(miss_inc_dat_num[miss_inc, ], 1, sd)
 
       merge_result <- list(
         merged = x[miss_inc],
@@ -207,4 +215,19 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
   else
     # return data frame with appended imputed variables
     dplyr::bind_cols(ori, imputed.dat)
+}
+
+mode_value <- function(x) {
+  # create frequency table, to find most common value
+  counts <- table(x)
+  modus <- names(counts)[max(counts) == counts]
+
+  # in case all values appear equally often, use first value
+  if (length(modus) > 1) modus <- modus[1]
+
+  # check if it's numeric
+  if (!is.na(suppressWarnings(as.numeric(modus))))
+    as.numeric(modus)
+  else
+    modus
 }

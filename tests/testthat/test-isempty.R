@@ -14,5 +14,8 @@ test_that("is_empty", {
 
   expect_true(is_empty(c("", " "), first.only = TRUE))
   expect_equal(is_empty(c("", " "), first.only = FALSE), c(TRUE, FALSE))
+
+  expect_true(is_empty(data.frame()))
+  expect_true(is_empty(list(NULL)))
 })
 
