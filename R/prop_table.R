@@ -54,7 +54,6 @@
 #'
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
-#' @importFrom crayon cyan italic
 #' @export
 flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
 
@@ -92,7 +91,7 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
       # print title for grouping
-      cat(crayon::cyan(crayon::italic(
+      cat(.colour("cyan", .colour("italic",
         sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n"))
       )), "\n")
 

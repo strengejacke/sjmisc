@@ -6,7 +6,7 @@
 \usage{
 find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
   "name_value", "label_value", "name", "label", "value", "all"),
-  out = c("table", "df", "index"), fuzzy = FALSE, as.df, as.varlab)
+  out = c("table", "df", "index"), fuzzy = FALSE)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -55,10 +55,6 @@ and must be one of:
 close distance matching) will be used to find \code{pattern}
 in \code{data} if no exact match was found. \code{\link{str_pos}}
 is used for fuzzy matching.}
-
-\item{as.df}{Deprecated, use \code{out = "df"} instead.}
-
-\item{as.varlab}{Deprecated, use \code{out = "table" instead.}}
 }
 \value{
 By default (i.e. \code{out = "table"}, returns a data frame with three

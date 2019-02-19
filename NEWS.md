@@ -1,5 +1,13 @@
 # sjmisc 2.7.8
 
+## General
+
+* Reduce package dependencies.
+
+## New functions
+
+* `typical_value()`, which was formerly located in package _sjstats_.
+
 ## Changes to functions
 
 * `is_whole()` now automatically removes missing values from vectors.

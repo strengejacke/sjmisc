@@ -46,8 +46,6 @@
 #'          close distance matching) will be used to find \code{pattern}
 #'          in \code{data} if no exact match was found. \code{\link{str_pos}}
 #'          is used for fuzzy matching.
-#' @param as.df Deprecated, use \code{out = "df"} instead.
-#' @param as.varlab Deprecated, use \code{out = "table" instead.}
 #'
 #' @return By default (i.e. \code{out = "table"}, returns a data frame with three
 #'         columns: column number, variable name and variable label. If
@@ -90,7 +88,6 @@
 #' library(sjPlot)
 #' view_df(res)}
 #'
-#' @importFrom stringr regex coll str_detect
 #' @importFrom sjlabelled get_labels
 #' @importFrom purrr map_lgl
 #' @export
@@ -99,9 +96,7 @@ find_var <- function(data,
                      ignore.case = TRUE,
                      search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
                      out = c("table", "df", "index"),
-                     fuzzy = FALSE,
-                     as.df,
-                     as.varlab) {
+                     fuzzy = FALSE) {
   # check valid args
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame.", call. = F)
@@ -111,27 +106,12 @@ find_var <- function(data,
   search <- match.arg(search)
   out <- match.arg(out)
 
-  # check deprecated
-  if (!missing(as.df)) {
-    message("`as.df` is deprecated. Please use `out = \"df\" instead.")
-    out <- "df"
-  }
-
-  if (!missing(as.varlab)) {
-    message("`as.varlab` is deprecated. Please use `out = \"table\" instead.")
-    out <- "table"
-  }
-
-
   pos1 <- pos2 <- pos3 <- c()
+  fixed <- !inherits(pattern, "regex")
 
   # search for pattern in variable names
   if (search %in% c("name", "name_label", "name_value", "all")) {
-    # check variable names
-    if (inherits(pattern, "regex"))
-      pos1 <- which(stringr::str_detect(colnames(data), pattern))
-    else
-      pos1 <- which(stringr::str_detect(colnames(data), stringr::coll(pattern, ignore_case = ignore.case)))
+    pos1 <- which(grepl(pattern = pattern, x = colnames(data), ignore.case = ignore.case, fixed = fixed))
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos1) && fuzzy && !inherits(pattern, "regex")) {
@@ -139,17 +119,10 @@ find_var <- function(data,
     }
   }
 
-
   # search for pattern in variable labels
   if (search %in% c("label", "name_label", "label_value", "all")) {
-    # get labels and variable names
     labels <- sjlabelled::get_label(data)
-
-    # check labels
-    if (inherits(pattern, "regex"))
-      pos2 <- which(stringr::str_detect(labels, pattern))
-    else
-      pos2 <- which(stringr::str_detect(labels, stringr::coll(pattern, ignore_case = ignore.case)))
+    pos2 <- which(grepl(pattern, x = labels, ignore.case = ignore.case, fixed = fixed))
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos2) && fuzzy && !inherits(pattern, "regex")) {
@@ -160,16 +133,7 @@ find_var <- function(data,
   # search for pattern in value labels
   if (search %in% c("value", "name_value", "label_value", "all")) {
     labels <- sjlabelled::get_labels(data, attr.only = F)
-
-    # check value labels with regex
-    if (inherits(pattern, "regex")) {
-      pos3 <- which(purrr::map_lgl(labels, ~ any(stringr::str_detect(.x, pattern))))
-    } else {
-      pos3 <-
-        which(purrr::map_lgl(labels, ~ any(stringr::str_detect(
-          .x, stringr::coll(pattern, ignore_case = ignore.case)
-        ))))
-    }
+    pos3 <- which(purrr::map_lgl(labels, ~ any(grepl(pattern, x = .x, ignore.case = ignore.case, fixed = fixed))))
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos3) && fuzzy && !inherits(pattern, "regex")) {
