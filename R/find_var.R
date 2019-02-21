@@ -44,8 +44,7 @@
 #'          }
 #' @param fuzzy Logical, if \code{TRUE}, "fuzzy matching" (partial and
 #'          close distance matching) will be used to find \code{pattern}
-#'          in \code{data} if no exact match was found. \code{\link{str_pos}}
-#'          is used for fuzzy matching.
+#'          in \code{data} if no exact match was found.
 #'
 #' @return By default (i.e. \code{out = "table"}, returns a data frame with three
 #'         columns: column number, variable name and variable label. If
@@ -108,6 +107,7 @@ find_var <- function(data,
 
   pos1 <- pos2 <- pos3 <- c()
   fixed <- !inherits(pattern, "regex")
+  if (isTRUE(fixed)) ignore.case <- FALSE
 
   # search for pattern in variable names
   if (search %in% c("name", "name_label", "name_value", "all")) {
@@ -115,7 +115,7 @@ find_var <- function(data,
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos1) && fuzzy && !inherits(pattern, "regex")) {
-      pos1 <- str_pos(search.string = colnames(data), find.term = pattern, part.dist.match = 1)
+      pos1 <- fuzzy_find(x = colnames(data), pattern = pattern, precision = 2)
     }
   }
 
@@ -126,7 +126,7 @@ find_var <- function(data,
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos2) && fuzzy && !inherits(pattern, "regex")) {
-      pos2 <- str_pos(search.string = labels, find.term = pattern, part.dist.match = 1)
+      pos2 <- fuzzy_find(x = labels, pattern = pattern, precision = 2)
     }
   }
 
@@ -140,12 +140,12 @@ find_var <- function(data,
       pos3 <- which(purrr::map_lgl(
         labels,
         function(.x) {
-          p <- str_pos(
-            search.string = .x,
-            find.term = pattern,
-            part.dist.match = 1
+          p <- fuzzy_find(
+            x = .x,
+            pattern = pattern,
+            precision = 2
           )
-          p[1] != -1
+          !sjmisc::is_empty(p[1])
         }))
     }
   }

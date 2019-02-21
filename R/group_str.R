@@ -11,8 +11,6 @@
 #' @param strings Character vector with string elements.
 #' @param maxdist Maximum distance between two string elements, which is allowed to treat two
 #'          elements as similar or equal.
-#' @param method Method for distance calculation. The default is \code{"lv"}. See
-#'          \code{\link[stringdist]{stringdist}} for details.
 #' @param strict Logical; if \code{TRUE}, value matching is more strictly. See 'Examples'.
 #' @param trim.whitespace Logical; if \code{TRUE} (default), leading and trailing white spaces will
 #'          be removed from string values.
@@ -52,11 +50,9 @@
 #' frq(newstring)
 #'
 #' @importFrom utils txtProgressBar
-#' @importFrom stringdist stringdistmatrix
 #' @export
 group_str <- function(strings,
                       maxdist = 2,
-                      method = "lv",
                       strict = FALSE,
                       trim.whitespace = TRUE,
                       remove.empty = TRUE,
@@ -74,7 +70,7 @@ group_str <- function(strings,
   }
 
   # create matrix from string values of variable
-  m <- stringdist::stringdistmatrix(strings, strings, method = method, useNames = "strings")
+  m <- string_dist_matrix(strings)
 
   # init variable that contains "close" pairs
   pairs <- list()
@@ -179,3 +175,44 @@ findInPairs <- function(curel, pairs) {
   elfound
 }
 
+
+fuzzy_find <- function(x, pattern, precision = NULL) {
+  if (is.null(precision)) precision <- round(nchar(pattern) / 3)
+  if (nchar(precision) > nchar(pattern)) precision <- round(nchar(pattern) / 3)
+  p <- sprintf("(%s){~%i}", pattern, precision)
+  grep(pattern = p, x = x)
+}
+
+
+string_dist_matrix <- function(string) {
+  l <- length(string)
+  m <- matrix(nrow = l, ncol = l)
+  for (i in 1:l) {
+    for (j in 1:l) {
+      if (nchar(string[j]) > nchar(string[i])) {
+        x <- string[i]
+        pattern <- string[j]
+      } else {
+        x <- string[j]
+        pattern <- string[i]
+      }
+
+      len <- nchar(pattern)
+      if (len > 8) len <- 8
+
+      for (p in 0:len) {
+        pos <- fuzzy_find(x = x, pattern = pattern, precision = p)
+        if (length(pos)) {
+          m[i, j] <- p
+          break
+        }
+      }
+      if (!length(pos)) m[i, j] <- 8
+    }
+  }
+
+  rownames(m) <- string
+  colnames(m) <- string
+
+  m
+}

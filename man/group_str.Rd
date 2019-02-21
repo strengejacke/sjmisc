@@ -4,7 +4,7 @@
 \alias{group_str}
 \title{Group near elements of string vectors}
 \usage{
-group_str(strings, maxdist = 2, method = "lv", strict = FALSE,
+group_str(strings, maxdist = 2, strict = FALSE,
   trim.whitespace = TRUE, remove.empty = TRUE, verbose = FALSE)
 }
 \arguments{
@@ -12,9 +12,6 @@ group_str(strings, maxdist = 2, method = "lv", strict = FALSE,
 
 \item{maxdist}{Maximum distance between two string elements, which is allowed to treat two
 elements as similar or equal.}
-
-\item{method}{Method for distance calculation. The default is \code{"lv"}. See
-\code{\link[stringdist]{stringdist}} for details.}
 
 \item{strict}{Logical; if \code{TRUE}, value matching is more strictly. See 'Examples'.}
 

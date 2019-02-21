@@ -53,8 +53,7 @@ and must be one of:
 
 \item{fuzzy}{Logical, if \code{TRUE}, "fuzzy matching" (partial and
 close distance matching) will be used to find \code{pattern}
-in \code{data} if no exact match was found. \code{\link{str_pos}}
-is used for fuzzy matching.}
+in \code{data} if no exact match was found.}
 }
 \value{
 By default (i.e. \code{out = "table"}, returns a data frame with three
