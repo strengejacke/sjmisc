@@ -9,9 +9,10 @@
 #' @param pattern Character string to be matched in \code{data}. May also be a
 #'          character vector of length > 1 (see 'Examples'). \code{pattern} is
 #'          searched for in column names and variable label attributes of
-#'          \code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern} might also
-#'          be a regular-expression object, as returned by \code{\link[stringr]{regex}},
-#'          or any of \pkg{stringr}'s supported \code{\link[stringr]{modifiers}}.
+#'          \code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern}
+#'          might also be a regular-expression object, as returned by \code{\link[stringr]{regex}}.
+#'          Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
+#'          expression rather than a fixed string.
 #' @param ignore.case Logical, whether matching should be case sensitive or not.
 #' @param search Character string, indicating where \code{pattern} is sought.
 #'          Use one of following options:
@@ -45,6 +46,8 @@
 #' @param fuzzy Logical, if \code{TRUE}, "fuzzy matching" (partial and
 #'          close distance matching) will be used to find \code{pattern}
 #'          in \code{data} if no exact match was found.
+#' @param regex Logical, if \code{TRUE}, \code{pattern} is treated as a regular
+#'          expression rather than a fixed string.
 #'
 #' @return By default (i.e. \code{out = "table"}, returns a data frame with three
 #'         columns: column number, variable name and variable label. If
@@ -55,10 +58,8 @@
 #' @details This function searches for \code{pattern} in \code{data}'s column names
 #'            and - for labelled data - in all variable and value labels of \code{data}'s
 #'            variables (see \code{\link[sjlabelled]{get_label}} for details on variable labels and
-#'            labelled data). Search is performed using the
-#'            \code{\link[stringr]{str_detect}} functions; hence, regular
-#'            expressions are supported as well, by simply using
-#'            \code{pattern = stringr::regex(...)}.
+#'            labelled data). Regular expressions are supported as well, by simply using
+#'            \code{pattern = stringr::regex(...)} or \code{regex = TRUE}.
 #'
 #' @examples
 #' data(efc)
@@ -95,7 +96,8 @@ find_var <- function(data,
                      ignore.case = TRUE,
                      search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
                      out = c("table", "df", "index"),
-                     fuzzy = FALSE) {
+                     fuzzy = FALSE,
+                     regex = FALSE) {
   # check valid args
   if (!is.data.frame(data)) {
     stop("`data` must be a data frame.", call. = F)
@@ -104,6 +106,8 @@ find_var <- function(data,
   # match args
   search <- match.arg(search)
   out <- match.arg(out)
+
+  if (regex) class(pattern) <- c("regex", class(pattern))
 
   pos1 <- pos2 <- pos3 <- c()
   fixed <- !inherits(pattern, "regex")
@@ -115,7 +119,7 @@ find_var <- function(data,
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos1) && fuzzy && !inherits(pattern, "regex")) {
-      pos1 <- fuzzy_find(x = colnames(data), pattern = pattern, precision = 2)
+      pos1 <- fuzzy_grep(x = colnames(data), pattern = pattern)
     }
   }
 
@@ -126,7 +130,7 @@ find_var <- function(data,
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos2) && fuzzy && !inherits(pattern, "regex")) {
-      pos2 <- fuzzy_find(x = labels, pattern = pattern, precision = 2)
+      pos2 <- fuzzy_grep(x = labels, pattern = pattern)
     }
   }
 
@@ -140,10 +144,9 @@ find_var <- function(data,
       pos3 <- which(purrr::map_lgl(
         labels,
         function(.x) {
-          p <- fuzzy_find(
+          p <- fuzzy_grep(
             x = .x,
-            pattern = pattern,
-            precision = 2
+            pattern = pattern
           )
           !sjmisc::is_empty(p[1])
         }))

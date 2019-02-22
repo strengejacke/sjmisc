@@ -25,10 +25,10 @@
 #'   is only shown when variables actually have missing values, else it's not
 #'   shown.
 #' @param grp.strings Numeric, if not \code{NULL}, groups string values in
-#'   character vectors, based on their similarity. The similarity is estimated
-#'   with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
-#'   on grouping, and that function's \code{maxdist}-argument to get more
-#'   details on the distance of strings to be treated as equal.
+#'   character vectors, based on their similarity. See \code{\link{group_str}}
+#'   and \code{\link{str_find}} for details on grouping, and their
+#'   \code{precision}-argument to get more details on the distance of strings
+#'   to be treated as equal.
 #' @param title String, will be used as alternative title to the variable
 #'   label. If \code{x} is a grouped data frame, \code{title} must be a
 #'   vector of same length as groups.
@@ -103,7 +103,7 @@
 #' frq(dummy, grp.strings = 2)
 #'
 #' @importFrom stats na.omit
-#' @importFrom dplyr full_join select_if select
+#' @importFrom dplyr full_join select_if select group_keys
 #' @importFrom sjlabelled get_label get_labels get_values copy_labels
 #' @importFrom purrr map_if
 #' @importFrom rlang quo_name enquo
@@ -200,7 +200,7 @@ frq <- function(x,
 
     x <- x %>%
       purrr::map_if(is.character, ~ group_str(
-        strings = .x, maxdist = grp.strings, remove.empty = FALSE)
+        strings = .x, precision = grp.strings, remove.empty = FALSE)
       ) %>%
       as.data.frame(stringsAsFactors = FALSE)
 
@@ -213,6 +213,11 @@ frq <- function(x,
 
   # do we have a grouped data frame?
   if (inherits(x, "grouped_df")) {
+
+    grkey <- colnames(dplyr::group_keys(x))
+    for (i in grkey) {
+      if (is.character(x[[i]])) x[[i]] <- as.factor(x[[i]])
+    }
 
     # get grouped data
     grps <- get_grouped_data(x)

@@ -126,7 +126,7 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
     # suggestions of possibly meant correct terms
     if (model.term %nin% tmp$term) {
 
-      pos <- str_pos(search.string = tmp$term, find.term = model.term, part.dist.match = 1)
+      pos <- str_find(string = tmp$term, pattern = model.term, partial = 1)
 
       if (pos != -1) {
         pos_str <-

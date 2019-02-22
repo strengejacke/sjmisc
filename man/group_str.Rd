@@ -4,14 +4,16 @@
 \alias{group_str}
 \title{Group near elements of string vectors}
 \usage{
-group_str(strings, maxdist = 2, strict = FALSE,
-  trim.whitespace = TRUE, remove.empty = TRUE, verbose = FALSE)
+group_str(strings, precision = 2, strict = FALSE,
+  trim.whitespace = TRUE, remove.empty = TRUE, verbose = FALSE,
+  maxdist)
 }
 \arguments{
 \item{strings}{Character vector with string elements.}
 
-\item{maxdist}{Maximum distance between two string elements, which is allowed to treat two
-elements as similar or equal.}
+\item{precision}{Maximum distance ("precision") between two string elements,
+which is allowed to treat them as similar or equal. Smaller values mean
+less tolerance in matching.}
 
 \item{strict}{Logical; if \code{TRUE}, value matching is more strictly. See 'Examples'.}
 
@@ -23,6 +25,8 @@ character vector \code{strings}.}
 
 \item{verbose}{Logical; if \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 Default in \code{FALSE}, hence the bar is hidden.}
+
+\item{maxdist}{Deprecated. Please use \code{precision} now.}
 }
 \value{
 A character vector where similar string elements (values) are recoded
@@ -52,16 +56,16 @@ frq(oldstring)
 frq(newstring)
 
 # larger groups
-newstring <- group_str(oldstring, maxdist = 3)
+newstring <- group_str(oldstring, precision = 3)
 frq(oldstring)
 frq(newstring)
 
 # be more strict with matching pairs
-newstring <- group_str(oldstring, maxdist = 3, strict = TRUE)
+newstring <- group_str(oldstring, precision = 3, strict = TRUE)
 frq(oldstring)
 frq(newstring)
 
 }
 \seealso{
-\code{\link{str_pos}}
+\code{\link{str_find}}
 }

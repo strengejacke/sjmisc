@@ -47,10 +47,10 @@ is only shown when variables actually have missing values, else it's not
 shown.}
 
 \item{grp.strings}{Numeric, if not \code{NULL}, groups string values in
-character vectors, based on their similarity. The similarity is estimated
-with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
-on grouping, and that function's \code{maxdist}-argument to get more
-details on the distance of strings to be treated as equal.}
+character vectors, based on their similarity. See \code{\link{group_str}}
+and \code{\link{str_find}} for details on grouping, and their
+\code{precision}-argument to get more details on the distance of strings
+to be treated as equal.}
 
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
