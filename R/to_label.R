@@ -40,184 +40,22 @@
 #' head(efc$c161sex)
 #' head(to_label(efc$c161sex))
 #'
-#' print(get_labels(efc)['e42dep'])
-#' table(efc$e42dep)
-#' table(to_label(efc$e42dep))
+#' # Find more examples at '?sjlabelled::as_label'
 #'
-#' head(efc$e42dep)
-#' head(to_label(efc$e42dep))
-#'
-#' # structure of numeric values won't be changed
-#' # by this function, it only applies to labelled vectors
-#' # (typically categorical or factor variables)
-#' str(efc$e17age)
-#' str(to_label(efc$e17age))
-#'
-#'
-#' # factor with non-numeric levels
-#' to_label(factor(c("a", "b", "c")))
-#'
-#' # factor with non-numeric levels, prefixed
-#' x <- factor(c("a", "b", "c"))
-#' x <- set_labels(x, labels = c("ape", "bear", "cat"))
-#' to_label(x, prefix = TRUE)
-#'
-#'
-#' # create vector
-#' x <- c(1, 2, 3, 2, 4, NA)
-#' # add less labels than values
-#' x <- set_labels(x,
-#'                 labels = c("yes", "maybe", "no"),
-#'                 force.labels = FALSE,
-#'                 force.values = FALSE)
-#' # convert to label w/o non-labelled values
-#' to_label(x)
-#' # convert to label, including non-labelled values
-#' to_label(x, add.non.labelled = TRUE)
-#'
-#'
-#' # create labelled integer, with missing flag
-#' library(haven)
-#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
-#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
-#' # to labelled factor, with missing labels
-#' to_label(x, drop.na = FALSE)
-#' # to labelled factor, missings removed
-#' to_label(x, drop.na = TRUE)
-#' # keep missings, and use non-labelled values as well
-#' to_label(x, add.non.labelled = TRUE, drop.na = FALSE)
-#'
-#'
-#' # convert labelled character to factor
-#' dummy <- c("M", "F", "F", "X")
-#' dummy <- set_labels(
-#'   dummy,
-#'   labels = c(`M` = "Male", `F` = "Female", `X` = "Refused")
-#' )
-#' get_labels(dummy,, "p")
-#' to_label(dummy)
-#'
-#' # drop unused factor levels, but preserve variable label
-#' x <- factor(c("a", "b", "c"), levels = c("a", "b", "c", "d"))
-#' x <- set_labels(x, labels = c("ape", "bear", "cat"))
-#' set_label(x) <- "A factor!"
-#' x
-#' to_label(x, drop.levels = TRUE)
-#'
-#' # change variable label
-#' to_label(x, var.label = "New variable label!", drop.levels = TRUE)
-#'
-#'
-#' # easily coerce specific variables in a data frame to factor
-#' # and keep other variables, with their class preserved
-#' to_label(efc, e42dep, e16sex, c172code)
-#'
+#' @importFrom sjlabelled as_label
 #' @export
 to_label <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  # evaluate arguments, generate data
-  .dat <- get_dot_data(x, dplyr::quos(...))
-
-  if (is.data.frame(x)) {
-    # iterate variables of data frame
-    for (i in colnames(.dat)) {
-      x[[i]] <- to_label_helper(.dat[[i]], add.non.labelled, prefix, var.label, drop.na, drop.levels)
-    }
-  } else {
-    x <- to_label_helper(.dat, add.non.labelled, prefix, var.label, drop.na, drop.levels)
-  }
-
-  x
+  sjlabelled::as_label(
+    x = x,
+    ...,
+    add.non.labelled = add.non.labelled,
+    prefix = prefix,
+    var.label = var.label,
+    drop.na = drop.na,
+    drop.levels = drop.levels
+  )
 }
 
-#' @importFrom haven na_tag
-to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, drop.levels) {
-  # prefix labels?
-  if (prefix)
-    iv <- "p"
-  else
-    iv <- 0
-
-  # retrieve variable label
-  if (is.null(var.label))
-    var_lab <- sjlabelled::get_label(x)
-  else
-    var_lab <- var.label
-
-  # keep missings?
-  if (!drop.na) {
-    # get NA
-    current.na <- sjlabelled::get_na(x)
-    # any NA?
-    if (!is.null(current.na)) {
-      # we have to set all NA labels at once, else NA loses tag
-      # so we prepare a dummy label-vector, where we copy all different
-      # NA labels to `x` afterwards
-      dummy_na <- rep("", times = length(x))
-      # iterare NA
-      for (i in seq_len(length(current.na))) {
-        dummy_na[haven::na_tag(x) == haven::na_tag(current.na[i])] <- names(current.na)[i]
-      }
-      x[haven::is_tagged_na(x)] <- dummy_na[haven::is_tagged_na(x)]
-    }
-  } else {
-    # in case x has tagged NA's we need to be sure to convert
-    # those into regular NA's, because else saving would not work
-    x[is.na(x)] <- NA
-  }
-
-  # get value labels
-  vl <-
-    sjlabelled::get_labels(
-      x,
-      attr.only = TRUE,
-      values = iv,
-      non.labelled = add.non.labelled,
-      drop.na = drop.na
-    )
-
-  # check if we have any labels, else
-  # return variable "as is"
-  if (!is.null(vl)) {
-    # get associated values for value labels
-    vnn <-
-      sjlabelled::get_labels(
-        x,
-        attr.only = TRUE,
-        values = "n",
-        non.labelled = add.non.labelled,
-        drop.na = drop.na
-      )
-
-    # convert to numeric
-    vn <- suppressWarnings(as.numeric(names(vnn)))
-    # where some values non-numeric? if yes,
-    # use value names as character values
-    if (anyNA(vn)) vn <- names(vnn)
-
-    # replace values with labels
-    if (is.factor(x)) {
-      # more levels than labels?
-      remain_labels <- levels(x)[!levels(x) %in% vn]
-      # set new levels
-      levels(x) <- c(vl, remain_labels)
-      # remove attributes
-      x <- sjlabelled::remove_all_labels(x)
-    } else {
-      for (i in seq_len(length(vl))) x[x == vn[i]] <- vl[i]
-      # to factor
-      x <- factor(x, levels = unique(vl))
-    }
-  }
-  # drop unused levels?
-  if (drop.levels && is.factor(x)) x <- droplevels(x)
-
-  # set back variable labels
-  if (!is.null(var_lab)) x <- suppressWarnings(sjlabelled::set_label(x, label = var_lab))
-
-  # return as factor
-  x
-}
 
 
 #' @title Convert variable into character vector and replace values with associated value labels
@@ -250,76 +88,18 @@ to_label_helper <- function(x, add.non.labelled, prefix, var.label, drop.na, dro
 #' head(efc$c161sex)
 #' head(to_character(efc$c161sex))
 #'
-#' print(get_labels(efc)['e42dep'])
-#' table(efc$e42dep)
-#' table(to_character(efc$e42dep))
+#' # Find more examples at '?sjlabelled::as_label'
 #'
-#' head(efc$e42dep)
-#' head(to_character(efc$e42dep))
-#'
-#' # numeric values w/o value labels will also be converted into character
-#' str(efc$e17age)
-#' str(to_character(efc$e17age))
-#'
-#'
-#' # factor with non-numeric levels, non-prefixed and prefixed
-#' x <- factor(c("a", "b", "c"))
-#' x <- set_labels(x, labels = c("ape", "bear", "cat"))
-#'
-#' to_character(x, prefix = FALSE)
-#' to_character(x, prefix = TRUE)
-#'
-#'
-#' # create vector
-#' x <- c(1, 2, 3, 2, 4, NA)
-#' # add less labels than values
-#' x <- set_labels(x,
-#'                 labels = c("yes", "maybe", "no"),
-#'                 force.labels = FALSE,
-#'                 force.values = FALSE)
-#' # convert to character w/o non-labelled values
-#' to_character(x)
-#' # convert to character, including non-labelled values
-#' to_character(x, add.non.labelled = TRUE)
-#'
-#'
-#' # create labelled integer, with missing flag
-#' library(haven)
-#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1, 2:3),
-#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
-#' # to character, with missing labels
-#' to_character(x, drop.na = FALSE)
-#' # to character, missings removed
-#' to_character(x, drop.na = TRUE)
-#' # keep missings, and use non-labelled values as well
-#' to_character(x, add.non.labelled = TRUE, drop.na = FALSE)
-#'
-#'
-#' # easily coerce specific variables in a data frame to character
-#' # and keep other variables, with their class preserved
-#' to_character(efc, e42dep, e16sex, c172code)
-#'
+#' @importFrom sjlabelled as_character
 #' @export
 to_character <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.label = NULL, drop.na = TRUE, drop.levels = FALSE) {
-  # evaluate arguments, generate data
-  .dat <- get_dot_data(x, dplyr::quos(...))
-
-  # get variable labels
-  vl <- sjlabelled::get_label(x)
-
-  if (is.data.frame(x)) {
-
-    # iterate variables of data frame
-    for (i in colnames(.dat)) {
-      x[[i]] <- as.character(to_label_helper(.dat[[i]], add.non.labelled, prefix, var.label, drop.na, drop.levels))
-    }
-  } else {
-    x <- as.character(to_label_helper(.dat, add.non.labelled, prefix, var.label, drop.na, drop.levels))
-  }
-
-  # set back variable labels, if any
-  if (!is.null(vl)) x <- sjlabelled::set_label(x, vl)
-
-  x
+  sjlabelled::as_character(
+    x = x,
+    ...,
+    add.non.labelled = add.non.labelled,
+    prefix = prefix,
+    var.label = var.label,
+    drop.na = drop.na,
+    drop.levels = drop.levels
+  )
 }
