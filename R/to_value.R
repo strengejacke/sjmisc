@@ -40,5 +40,5 @@
 #' @importFrom sjlabelled as_numeric
 #' @export
 to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE) {
-  sjlabelled::as_numeric(x = y, ..., start.at = start.at, keep.labels = keep.labels, use.labels = use.labels)
+  sjlabelled::as_numeric(x = x, ..., start.at = start.at, keep.labels = keep.labels, use.labels = use.labels)
 }
