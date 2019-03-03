@@ -87,7 +87,6 @@ print.sjmisc_grpdescr <- function(x, ...) {
 
 #' @importFrom purrr map_df
 #' @importFrom dplyr n_distinct filter
-#' @importFrom tidyr gather
 #' @importFrom rlang .data
 #' @export
 print.sj_merge.imp <- function(x, ...) {
@@ -121,9 +120,8 @@ print.sj_merge.imp <- function(x, ...) {
         title = "Standard Deviation of imputed values for each merged value"
       )
   } else {
-    analyse <- x$summary %>%
-      purrr::map_df(~.x) %>%
-      tidyr::gather(key = "value", value = "xpos", 1:2)
+    analyse <- purrr::map_df(x$summary, ~.x)
+    analyse <- .gather(analyse, key = "value", value = "xpos", colnames(analyse)[1:2])
 
     if (!is.null(x$filter))
       analyse <- analyse %>% dplyr::filter(.data$grp %in% x$filter)

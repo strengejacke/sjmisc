@@ -118,7 +118,6 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
 
 
 #' @importFrom dplyr select_if group_by summarise_all funs summarise
-#' @importFrom tidyr gather
 #' @importFrom sjlabelled get_label
 #' @importFrom stats var na.omit sd median weighted.mean
 #' @importFrom rlang .data
@@ -153,7 +152,7 @@ descr_helper <- function(dd, max.length) {
     x <- suppressWarnings(
       dd %>%
         dplyr::select_if(is.numeric) %>%
-        tidyr::gather(key = "var", value = "val") %>%
+        .gather(key = "var", value = "val") %>%
         dplyr::group_by(.data$var) %>%
         dplyr::summarise_all(
           dplyr::funs(
@@ -177,10 +176,11 @@ descr_helper <- function(dd, max.length) {
   } else {
     dd$.weights <- weights
 
+    tmp <- dplyr::select_if(dd, is.numeric)
+    tmp <- .gather(tmp, key = "var", value = "val", setdiff(colnames(tmp), ".weights"))
+
     x <- suppressWarnings(
-      dd %>%
-        dplyr::select_if(is.numeric) %>%
-        tidyr::gather(key = "var", value = "val", -.data$.weights) %>%
+      tmp %>%
         dplyr::group_by(.data$var) %>%
         dplyr::summarise(
           n = round(sum(.data$.weights[!is.na(.data$val)], na.rm = TRUE)),

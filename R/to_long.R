@@ -24,14 +24,13 @@
 #'          column will be recoded to numeric values, in sequential ascending
 #'          order.
 #'
-#' @details This function enhances \pkg{tidyr}'s \code{\link[tidyr]{gather}}
-#'            function that you can gather multiple column groups at once.
-#'            Value and variable labels for non-gathered variables are preserved.
-#'            However, gathered variables may have different variable label
-#'            attributes. In this case, \code{\link[tidyr]{gather}} will drop
-#'            these attributes. Hence, the new created variables from gathered
-#'            columns don't have any variable label attributes. In such cases,
-#'            use \code{labels} argument to set variable label attributes.
+#' @details This function reshapes data from wide to long format, however,
+#'   you can gather multiple column groups at once. Value and variable labels
+#'   for non-gathered variables are preserved. Attributes from gathered variables,
+#'   such as information about the variable labels, are lost during reshaping.
+#'   Hence, the new created variables from gathered columns don't have any
+#'   variable label attributes. In such cases, use \code{labels} argument to set
+#'   back variable label attributes.
 #'
 #' @examples
 #' # create sample
@@ -43,9 +42,6 @@
 #'                     speed_t1 = c(2, 3, 1),
 #'                     speed_t2 = c(3, 4, 5),
 #'                     speed_t3 = c(1, 8, 6))
-#'
-#' # check tidyr. score is gathered, however, speed is not
-#' tidyr::gather(mydat, "time", "score", score_t1, score_t2, score_t3)
 #'
 #' # gather multiple columns. both time and speed are gathered.
 #' to_long(
@@ -147,7 +143,6 @@ to_long.mids <- function(data, keys, values, ..., labels = NULL, recode.key = FA
 }
 
 
-#' @importFrom tidyr gather
 #' @importFrom dplyr bind_cols
 #' @importFrom purrr map
 #' @importFrom sjlabelled as_numeric set_label
@@ -192,7 +187,7 @@ to_long_helper <- function(data, keys, values, ..., labels, recode.key) {
     # remove those columns that should not be gathered
     tmp <- data[, -match(remove_cols, colnames(data))]
     # gather data frame
-    tmp <- suppressWarnings(tidyr::gather(tmp, !!keys[i], !!values[i], !!data_cols[[i]]))
+    tmp <- suppressWarnings(.gather(tmp, keys[i], values[i], data_cols[[i]]))
 
     # need to recode key-value?
     if (recode.key)

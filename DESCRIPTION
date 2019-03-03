@@ -24,8 +24,7 @@ Imports:
     methods,
     purrr,
     rlang,
-    sjlabelled (>= 1.0.13),
-    tidyr
+    sjlabelled (>= 1.0.13)
 Suggests:
     ggplot2,
     graphics,
@@ -35,7 +34,8 @@ Suggests:
     knitr,
     rmarkdown,
     rstudioapi,
-    testthat
+    testthat,
+    tidyr
 URL: https://strengejacke.github.io/sjmisc
 BugReports: https://github.com/strengejacke/sjmisc/issues
 RoxygenNote: 6.1.1

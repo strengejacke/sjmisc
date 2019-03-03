@@ -569,13 +569,12 @@ get_title_part <- function(x, grps, level, i) {
 }
 
 
-#' @importFrom tidyr nest
 #' @importFrom dplyr filter
 #' @importFrom stats complete.cases
 #' @importFrom rlang .data
 get_grouped_data <- function(x) {
   # nest data frame
-  grps <- tidyr::nest(x)
+  grps <- .nest(x)
 
   # remove NA category for grouped data
   cc <- grps %>%

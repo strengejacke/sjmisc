@@ -208,7 +208,6 @@ row_means.mids <- function(x, ..., var = "rowmeans", append = TRUE) {
 
 
 #' @importFrom dplyr quos group_by select
-#' @importFrom tidyr nest unnest
 #' @importFrom purrr map
 row_mids <- function(x, ..., var, append, rfun, count = NULL) {
   # check if suggested package is available
@@ -230,7 +229,7 @@ row_mids <- function(x, ..., var, append, rfun, count = NULL) {
 
   ndf <- long %>%
     dplyr::group_by(.data$.imp) %>%
-    tidyr::nest()
+    .nest()
 
 
   # select variable and compute rowsums. add this variable
@@ -265,7 +264,7 @@ row_mids <- function(x, ..., var, append, rfun, count = NULL) {
   # because "as.mids()" can't cope with tibbles
 
   ndf %>%
-    tidyr::unnest() %>%
+    .unnest() %>%
     as.data.frame() %>%
     mice::as.mids()
 }

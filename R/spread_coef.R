@@ -95,7 +95,6 @@
 #'
 #' @importFrom broom tidy
 #' @importFrom dplyr select bind_cols "%>%"
-#' @importFrom tidyr spread
 #' @importFrom purrr map_df
 #' @importFrom rlang .data
 #' @export
@@ -176,10 +175,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         tmp <- broom::tidy(x, effects = "fixed", ...)
 
         # just select term name and estimate value
-        df1 <- tmp %>%
-          dplyr::select(.data$term, .data$estimate) %>%
-          # spread to columns
-          tidyr::spread(key = .data$term, value = .data$estimate)
+        df1 <- as.data.frame(t(tmp$estimate))
+        colnames(df1) <- tmp$term
 
         # columns for each data frame
         cols <- ncol(df1)
@@ -187,12 +184,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         # standard error also requested?
         if (se) {
           # just select term name and estimate value
-          df2 <- tmp %>%
-            dplyr::select(.data$term, .data$std.error) %>%
-            # spread to columns
-            tidyr::spread(key = .data$term, value = .data$std.error)
-          # fix column names
-          colnames(df2) <- sprintf("%s.se", colnames(df2))
+          df2 <- as.data.frame(t(tmp$std.error))
+          colnames(df2) <- sprintf("%s.se", tmp$term)
           # bind together
           df1 <- dplyr::bind_cols(df1, df2)
         }
@@ -200,12 +193,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         # p-value also requested?
         if (p.val) {
           # just select term name and estimate value
-          df3 <- tmp %>%
-            dplyr::select(.data$term, .data$p.value) %>%
-            # spread to columns
-            tidyr::spread(key = .data$term, value = .data$p.value)
-          # fix column names
-          colnames(df3) <- sprintf("%s.p", colnames(df3))
+          df3 <- as.data.frame(t(tmp$p.value))
+          colnames(df3) <- sprintf("%s.p", tmp$term)
           # bind together
           df1 <- dplyr::bind_cols(df1, df3)
         }
