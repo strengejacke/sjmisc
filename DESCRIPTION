@@ -17,7 +17,6 @@ Depends:
     stats,
     utils
 Imports:
-    broom (>= 0.4.5),
     dplyr (>= 0.8.0),
     haven (>= 1.1.2),
     magrittr,

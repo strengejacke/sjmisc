@@ -18,7 +18,6 @@
 #' @param append Logical, if \code{TRUE} (default), this function returns
 #'          \code{data} with new columns for the model coefficients; else,
 #'          a new data frame with model coefficients only are returned.
-#' @param ... Other arguments passed down to the \code{\link[broom]{tidy}}-function.
 #'
 #' @return A data frame with columns for each coefficient of the models
 #'           that are stored in the list-variable of \code{data}; or, if
@@ -93,12 +92,11 @@
 #'   # compute the CI for all bootstrapped model coefficients
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
-#' @importFrom broom tidy
 #' @importFrom dplyr select bind_cols "%>%"
 #' @importFrom purrr map_df
 #' @importFrom rlang .data
 #' @export
-spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE, ...) {
+spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE) {
   # check if we have a data frame
   if (!is.data.frame(data))
     stop("`data` needs to be a data frame.", call. = FALSE)
@@ -119,7 +117,16 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
   # if yes, select this, and its p-value
   if (!sjmisc::is_empty(model.term)) {
     # validate model term, i.e. check if coefficient exists in models
-    tmp <- broom::tidy(data[[model.column]][[1]], effects = "fixed")
+    tmp <- summary(data[[model.column]][[1]])$coefficients %>%
+      var_rename(
+        Estimate = "estimate",
+        `Std. Error` = "std.error",
+        `t value` = "statistic",
+        `z value` = "statistic",
+        `Pr(>|t|)` = "p.value",
+        `Pr(>|z|)` = "p.value",
+        verbose = FALSE
+      )
 
     # if term is no valid coefficient name, tell user, and make
     # suggestions of possibly meant correct terms
@@ -153,7 +160,16 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
     dat <-
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        tmp <- broom::tidy(x, effects = "fixed", ...) %>%
+        tmp <- summary(x)$coefficients %>%
+          var_rename(
+            Estimate = "estimate",
+            `Std. Error` = "std.error",
+            `t value` = "statistic",
+            `z value` = "statistic",
+            `Pr(>|t|)` = "p.value",
+            `Pr(>|z|)` = "p.value",
+            verbose = FALSE
+          ) %>%
           # filter term
           dplyr::filter(.data$term == model.term)
 
@@ -172,7 +188,16 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
     dat <-
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        tmp <- broom::tidy(x, effects = "fixed", ...)
+        tmp <- summary(x)$coefficients %>%
+          var_rename(
+            Estimate = "estimate",
+            `Std. Error` = "std.error",
+            `t value` = "statistic",
+            `z value` = "statistic",
+            `Pr(>|t|)` = "p.value",
+            `Pr(>|z|)` = "p.value",
+            verbose = FALSE
+          )
 
         # just select term name and estimate value
         df1 <- as.data.frame(t(tmp$estimate))

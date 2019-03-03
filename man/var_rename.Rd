@@ -4,13 +4,16 @@
 \alias{var_rename}
 \title{Rename variables}
 \usage{
-var_rename(x, ...)
+var_rename(x, ..., verbose = TRUE)
 }
 \arguments{
 \item{x}{A data frame.}
 
 \item{...}{Pairs of named vectors, where the name (lhs) equals the column name
 that should be renamed, and the value (rhs) is the new column name.}
+
+\item{verbose}{Logical, if \code{TRUE}, a warning is displayed when variable
+names do not exist in \code{x}.}
 }
 \value{
 \code{x}, with new column names for those variables specified in \code{...}.
