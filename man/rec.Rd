@@ -204,7 +204,7 @@ rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
 
 }
 \seealso{
-\code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
+\code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
            to replace \code{NA}'s with specific value, \code{\link{recode_to}}
            for re-shifting value ranges and \code{\link{ref_lvl}} to change the
            reference level of (numeric) factors.

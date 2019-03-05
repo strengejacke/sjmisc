@@ -3,6 +3,11 @@
 magrittr::`%>%`
 
 
+#' @importFrom sjlabelled set_na
+#' @export
+sjlabelled::set_na
+
+
 #' @importFrom dplyr quos select
 get_dot_data <- function(x, qs) {
   if (sjmisc::is_empty(qs))
