@@ -531,7 +531,7 @@ get_grouped_title <- function(x, grps, i, sep = "\n") {
   title <- sprintf("%s: %s", tp[1], tp[2])
 
   # do we have another groupng variable?
-  if (length(attr(x, "vars", exact = T)) > 1) {
+  if (length(dplyr::group_vars(x)) > 1) {
     tp <- get_title_part(x, grps, 2, i)
     title <- sprintf("%s%s%s: %s", title, sep, tp[1], tp[2])
   }
@@ -569,7 +569,7 @@ get_title_part <- function(x, grps, level, i) {
 }
 
 
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter group_vars
 #' @importFrom stats complete.cases
 #' @importFrom rlang .data
 get_grouped_data <- function(x) {
@@ -586,7 +586,7 @@ get_grouped_data <- function(x) {
 
   # arrange data
 
-  if (length(attr(x, "vars", exact = T)) == 1)
+  if (length(dplyr::group_vars(x)) == 1)
     reihe <- order(grps[[1]])
   else
     reihe <- order(grps[[1]], grps[[2]])

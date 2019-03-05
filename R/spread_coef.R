@@ -118,6 +118,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
   if (!sjmisc::is_empty(model.term)) {
     # validate model term, i.e. check if coefficient exists in models
     tmp <- summary(data[[model.column]][[1]])$coefficients %>%
+      as.data.frame() %>%
+      rownames_as_column("term") %>%
       var_rename(
         Estimate = "estimate",
         `Std. Error` = "std.error",
@@ -161,6 +163,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
         tmp <- summary(x)$coefficients %>%
+          as.data.frame() %>%
+          rownames_as_column("term") %>%
           var_rename(
             Estimate = "estimate",
             `Std. Error` = "std.error",
@@ -189,6 +193,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
         tmp <- summary(x)$coefficients %>%
+          as.data.frame() %>%
+          rownames_as_column("term") %>%
           var_rename(
             Estimate = "estimate",
             `Std. Error` = "std.error",
