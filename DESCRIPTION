@@ -23,7 +23,7 @@ Imports:
     methods,
     purrr,
     rlang,
-    sjlabelled (>= 1.0.13)
+    sjlabelled (>= 1.0.17)
 Suggests:
     ggplot2,
     graphics,
