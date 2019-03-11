@@ -19,6 +19,7 @@
 * Better handling of factors in `merge_imputations()`, which previously could result in `NA`-values when merging imputed values into one variable.
 * Fix issue in `is_empty()` in case the vector had non-missing values, but first element of vector was `NA`.
 * Fixed bug in `frq()` for grouped data frame, when grouping variable was a character vector. In this case, group titles were mixed up.
+* Fix encoding issues in help-files.
 
 # sjmisc 2.7.7
 
