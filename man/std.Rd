@@ -143,7 +143,7 @@ std_if(efc, predicate = p, append = FALSE)
 }
 \references{
 Gelman A (2008) Scaling regression inputs by dividing by two
-  standard deviations. \emph{Statistics in Medicine 27: 2865–2873.}
+  standard deviations. \emph{Statistics in Medicine 27: 2865-2873.}
   \url{http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf}
   \cr \cr
   Gelman A, Hill J (2007) Data Analysis Using Regression and Multilevel/Hierarchical
