@@ -13,7 +13,7 @@
 #' @inheritParams find_var
 #'
 #' @return A numeric vector with index of start/end position(s) of \code{pattern}
-#'          found in \code{x}, or an empty vector, if \code{pattern} was not found
+#'          found in \code{x}, or \code{-1}, if \code{pattern} was not found
 #'          in \code{x}.
 #'
 #' @examples
@@ -67,7 +67,11 @@ str_start_end <- function(x, pattern, ignore.case, index) {
 
   # add end index if required
   if (index == "end") {
-    pos <- lapply(pos, function(i) i <- i + attr(i, "match.length", exact = TRUE) - 1)
+    pos <- lapply(pos, function(i) {
+      if (i != -1)
+        i <- i + attr(i, "match.length", exact = TRUE) - 1
+      i
+    })
   }
 
   # remove attributes

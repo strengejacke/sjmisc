@@ -185,20 +185,20 @@ findInPairs <- function(curel, pairs) {
 
 fuzzy_grep <- function(x, pattern, precision = NULL) {
   if (is.null(precision)) precision <- round(nchar(pattern) / 3)
-  if (nchar(precision) > nchar(pattern)) precision <- round(nchar(pattern) / 3)
+  if (precision > nchar(pattern)) return(NULL)
   p <- sprintf("(%s){~%i}", pattern, precision)
-  grep(pattern = p, x = x)
+  grep(pattern = p, x = x, ignore.case = FALSE)
 }
 
 
 string_dist_matrix <- function(string) {
   l <- length(string)
   m <- matrix(nrow = l, ncol = l)
-  for (i in 1:l) {
-    for (j in 1:l) {
+  for (i in 1:(l - 1)) {
+    for (j in (i + 1):l) {
       pos <- string_dist(string[i], string[j])
       if (pos == -1) pos <- 8
-      m[i, j] <- pos
+      m[i, j] <- m[j, i] <- pos
     }
   }
 
@@ -210,6 +210,9 @@ string_dist_matrix <- function(string) {
 
 
 string_dist <- function(s1, s2) {
+  if (is.na(s1) || is.na(s2))
+    return(-1)
+
   if (nchar(s1) > nchar(s2)) {
     x <- s2
     pattern <- s1
@@ -221,8 +224,8 @@ string_dist <- function(s1, s2) {
   len <- nchar(pattern)
   if (len > 8) len <- 8
 
-  for (p in 0:len) {
-    pos <- fuzzy_grep(x = x, pattern = pattern, precision = p)
+  for (p in 1:len) {
+    pos <- grep(pattern = sprintf("(%s){~%i}", pattern, p), x = x, ignore.case = FALSE)
     if (length(pos)) {
       return(p)
     }

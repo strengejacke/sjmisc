@@ -24,7 +24,7 @@ expression rather than a fixed string.}
 }
 \value{
 A numeric vector with index of start/end position(s) of \code{pattern}
-         found in \code{x}, or an empty vector, if \code{pattern} was not found
+         found in \code{x}, or \code{-1}, if \code{pattern} was not found
          in \code{x}.
 }
 \description{

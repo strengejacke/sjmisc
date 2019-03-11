@@ -11,6 +11,6 @@ test_that("find_var", {
   expect_equal(nrow(x), 9)
 
   x <- find_var(efc, pattern = "cop", search = "all", fuzzy = TRUE)
-  expect_equal(nrow(x), 15)
+  expect_equal(nrow(x), 10)
 })
 
