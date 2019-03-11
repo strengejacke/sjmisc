@@ -65,7 +65,7 @@
 #'       (in social sciences) it is also feasible to compute the mean or mode
 #'       of multiple imputed variables (see \cite{Burns et al. 2011}).
 #'
-#' @references Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787–93 \doi{10.1016/j.jclinepi.2010.10.011}
+#' @references Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787-93 \doi{10.1016/j.jclinepi.2010.10.011}
 #'
 #' @examples
 #' library(mice)
