@@ -215,8 +215,8 @@ frq(rec(iris, Species, rec = "setosa=huhu; else=copy", append = FALSE))
 
 # works with mutate
 efc %>%
-  select(e42dep, e17age) %>%
-  mutate(dependency_rev = rec(e42dep, rec = "rev")) %>%
+  dplyr::select(e42dep, e17age) %>%
+  dplyr::mutate(dependency_rev = rec(e42dep, rec = "rev")) %>%
   head()
 
 # recode multiple variables and set value labels via recode-syntax
