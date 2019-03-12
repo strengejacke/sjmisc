@@ -3,8 +3,6 @@ context("sjmisc, group_str")
 library(sjmisc)
 library(dplyr)
 
-data(efc)
-
 test_that("group_str", {
   data(efc)
   efc$e15relat <- to_label(efc$e15relat)

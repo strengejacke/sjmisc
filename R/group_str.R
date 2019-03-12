@@ -77,7 +77,12 @@ group_str <- function(
   }
 
   # create matrix from string values of variable
-  m <- string_dist_matrix(strings)
+  if (requireNamespace("stringdist", quietly = TRUE)) {
+    m <- stringdist::stringdistmatrix(strings, strings, method = "lv", useNames = "strings")
+  } else {
+    message("Install the `stringdist`-package to increase performance for grouping strings.")
+    m <- string_dist_matrix(strings)
+  }
 
   # init variable that contains "close" pairs
   pairs <- list()

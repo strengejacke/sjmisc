@@ -99,7 +99,7 @@
 .gather <- function(x, key = "key", value = "value", columns = colnames(x)) {
   if (is.numeric(columns)) columns <- colnames(x)[columns]
   dat <- stats::reshape(
-    x,
+    as.data.frame(x),
     idvar = "id",
     ids = row.names(x),
     times = columns,

@@ -84,7 +84,7 @@ Recode numeric variables into equal sized groups, i.e. a
 }
 \details{
 \code{split_var()} splits a variable into equal sized groups, where
-  the amount of groups depends on the \code{groupcount}-argument. Thus, this
+  the amount of groups depends on the \code{n}-argument. Thus, this
   functions \code{\link{cut}s} a variable into groups at the specified
   \code{\link[stats]{quantile}s}.
   \cr \cr

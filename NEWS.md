@@ -1,9 +1,10 @@
-# sjmisc 2.8.0
+# sjmisc 2.7.8
 
 ## General
 
 * Reduce package dependencies.
 * `str_pos()` was renamed into `str_find()`.
+* New package-vignette **Recoding Variables**.
 
 ## New functions
 

@@ -216,18 +216,3 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
     # return data frame with appended imputed variables
     dplyr::bind_cols(ori, imputed.dat)
 }
-
-mode_value <- function(x) {
-  # create frequency table, to find most common value
-  counts <- table(x)
-  modus <- names(counts)[max(counts) == counts]
-
-  # in case all values appear equally often, use first value
-  if (length(modus) > 1) modus <- modus[1]
-
-  # check if it's numeric
-  if (!is.na(suppressWarnings(as.numeric(modus))))
-    as.numeric(modus)
-  else
-    modus
-}

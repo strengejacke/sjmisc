@@ -119,7 +119,7 @@ typical_value <- function(x, fun = "mean", weights = NULL, ...) {
   else if (fun == "weighted.mean")
     myfun <- get("weighted.mean", asNamespace("stats"))
   else if (fun == "mode")
-    myfun <- get("mode_value", asNamespace("sjstats"))
+    myfun <- get("mode_value", asNamespace("sjmisc"))
   else if (fun == "zero")
     return(0)
   else
