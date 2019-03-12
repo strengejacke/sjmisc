@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -92,6 +92,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -186,10 +189,10 @@ shown.</p></td>
     <tr>
       <th>grp.strings</th>
       <td><p>Numeric, if not <code>NULL</code>, groups string values in
-character vectors, based on their similarity. The similarity is estimated
-with the <span class="pkg">stringdist</span>-package. See <code><a href='group_str.html'>group_str</a></code> for details
-on grouping, and that function's <code>maxdist</code>-argument to get more
-details on the distance of strings to be treated as equal.</p></td>
+character vectors, based on their similarity. See <code><a href='group_str.html'>group_str</a></code>
+and <code><a href='str_find.html'>str_find</a></code> for details on grouping, and their
+<code>precision</code>-argument to get more details on the distance of strings
+to be treated as equal.</p></td>
     </tr>
     <tr>
       <th>out</th>
@@ -223,7 +226,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>x</code> may also be a grouped data frame (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
+    <p><code>x</code> may also be a grouped data frame (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
       with up to two grouping variables. Frequency tables are created for each
       subgroup then.
       <br /> <br />
@@ -256,7 +259,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 <span class='co'># with grouped data frames, in a pipe</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>frq</span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>, <span class='no'>e42dep</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
 #&gt; elder's gender: male
@@ -344,7 +347,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># with select-helpers: all variables from the COPE-Index</span>
 <span class='co'># (which all have a "cop" in their name)</span>
-<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'># do you feel you cope well as caregiver? (c82cop1) &lt;numeric&gt;</span><span> 
 #&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=3.12  sd=0.58
 #&gt; </span><span> 
@@ -529,7 +532,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># group string values</span>
 <span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span>[<span class='fl'>1</span>:<span class='fl'>50</span>, <span class='fl'>3</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
-<span class='no'>dummy</span>$<span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sample.html'>sample</a></span>(
+<span class='no'>dummy</span>$<span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample.html'>sample</a></span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>, <span class='st'>"Ape"</span>,
     <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span>),
   <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>dummy</span>),

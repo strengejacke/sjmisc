@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -96,6 +96,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -229,7 +232,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>split_var()</code> splits a variable into equal sized groups, where
-  the amount of groups depends on the <code>groupcount</code>-argument. Thus, this
+  the amount of groups depends on the <code>n</code>-argument. Thus, this
   functions <code><a href='https://www.rdocumentation.org/packages/base/topics/cut'>cut</a>s</code> a variable into groups at the specified
   <code><a href='https://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a>s</code>.
   <br /> <br />
@@ -237,7 +240,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
   groups have the same value range (e.g., from 1-5, 6-10, 11-15 etc.).
   <br /> <br />
   <code>split_var()</code> also works on grouped data frames
-  (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>). In this case, splitting is applied to
+  (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>). In this case, splitting is applied to
   the subsets of variables in <code>x</code>. See 'Examples'.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -1221,7 +1224,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># separation of original categories</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/ranking.html'>ntile</a></span>(<span class='no'>efc</span>$<span class='no'>neg_c_7</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/ranking.html'>ntile</a></span>(<span class='no'>efc</span>$<span class='no'>neg_c_7</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>efc</span>$<span class='no'>neg_c_7</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt;     x
 #&gt;        1   2   3
 #&gt;   7   75   0   0
@@ -1276,7 +1279,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt;  1  2  3 
 #&gt; 11 10 11 </div><div class='input'>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>split_var</span>(<span class='no'>disp</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>()</div><div class='output co'>#&gt; .
 #&gt;  1  2  3 

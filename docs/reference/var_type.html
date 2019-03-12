@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -95,6 +95,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -168,7 +171,7 @@ If <code>FALSE</code> (default), a longer "description" is returned.</p></td>
 <span class='fu'>var_type</span>(<span class='fl'>1</span>)</div><div class='output co'>#&gt; [1] "numeric"</div><div class='input'><span class='fu'>var_type</span>(<span class='fl'>1L</span>)</div><div class='output co'>#&gt; [1] "integer"</div><div class='input'><span class='fu'>var_type</span>(<span class='st'>"a"</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'>
 <span class='fu'>var_type</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)</div><div class='output co'>#&gt; [1] "numeric"</div><div class='input'><span class='fu'>var_type</span>(<span class='fu'><a href='to_factor.html'>to_factor</a></span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>))</div><div class='output co'>#&gt; [1] "categorical"</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'>var_type</span>(<span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt;   c82cop1   c83cop2   c84cop3   c85cop4   c86cop5   c87cop6   c88cop7   c89cop8 
+<span class='fu'>var_type</span>(<span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt;   c82cop1   c83cop2   c84cop3   c85cop4   c86cop5   c87cop6   c88cop7   c89cop8 
 #&gt; "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" "numeric" 
 #&gt;   c90cop9 
 #&gt; "numeric" </div><div class='input'>

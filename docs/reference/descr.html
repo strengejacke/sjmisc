@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -93,6 +93,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -174,7 +177,7 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>data</code> may also be a grouped data frame (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
+    <p><code>data</code> may also be a grouped data frame (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
    with up to two grouping variables. Descriptive tables are created for each
    subgroup then.</p>
     
@@ -201,7 +204,7 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 #&gt;  50.47 1.68 164 (4-168)
 #&gt;  29.46 0.99 100 (0-100)</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span> <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
+<span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span> <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>      var    type                      label   n NA.prc mean   sd   se md
@@ -214,8 +217,8 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 #&gt;     1.96 2 (1-3)  0.02</div><div class='input'>
 <span class='co'># with grouped data frames</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics</span><span> 
 #&gt; </span><span style='color: #00BBBB;font-style: italic;'>
@@ -242,7 +245,7 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 #&gt;     2.03 2 (1-3) -0.01</div><div class='input'>
 <span class='co'># you can select variables also inside 'descr()'</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>descr</span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>, <span class='no'>e17age</span>, <span class='no'>c160age</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics</span><span> 
 #&gt; </span><span style='color: #00BBBB;font-style: italic;'>
@@ -306,7 +309,7 @@ to console (<code>out = "txt"</code>) or as HTML-table in the viewer-pane
 #&gt;  -0.16
 #&gt;   0.13</div><div class='input'>
 <span class='co'># or even use select-helpers</span>
-<span class='fu'>descr</span>(<span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='kw'>max.length</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>descr</span>(<span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='kw'>max.length</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>     var    type                   label   n NA.prc mean   sd   se md trimmed

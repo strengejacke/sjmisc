@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -93,6 +93,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -207,7 +210,7 @@ position <em>after</em> the column indicated by <code>.after</code>.</p></td>
 #&gt; 6          5.4  setosa          1.7         3.9         0.4</div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>iris</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'>move_columns</span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"Width"</span>), <span class='kw'>.after</span> <span class='kw'>=</span> <span class='st'>"Species"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>move_columns</span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"Width"</span>), <span class='kw'>.after</span> <span class='kw'>=</span> <span class='st'>"Species"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>()</div><div class='output co'>#&gt;   Sepal.Length Petal.Length Species Sepal.Width Petal.Width
 #&gt; 1          5.1          1.4  setosa         3.5         0.2
 #&gt; 2          4.9          1.4  setosa         3.0         0.2

@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -95,6 +95,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -131,8 +134,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>group_str</span>(<span class='no'>strings</span>, <span class='kw'>maxdist</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"lv"</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>trim.whitespace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>remove.empty</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>group_str</span>(<span class='no'>strings</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>trim.whitespace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>remove.empty</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>maxdist</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,14 +146,10 @@
       <td><p>Character vector with string elements.</p></td>
     </tr>
     <tr>
-      <th>maxdist</th>
-      <td><p>Maximum distance between two string elements, which is allowed to treat two
-elements as similar or equal.</p></td>
-    </tr>
-    <tr>
-      <th>method</th>
-      <td><p>Method for distance calculation. The default is <code>"lv"</code>. See
-<code><a href='https://www.rdocumentation.org/packages/stringdist/topics/stringdist'>stringdist</a></code> for details.</p></td>
+      <th>precision</th>
+      <td><p>Maximum distance ("precision") between two string elements,
+which is allowed to treat them as similar or equal. Smaller values mean
+less tolerance in matching.</p></td>
     </tr>
     <tr>
       <th>strict</th>
@@ -170,6 +170,10 @@ character vector <code>strings</code>.</p></td>
       <td><p>Logical; if <code>TRUE</code>, the progress bar is displayed when computing the distance matrix.
 Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
     </tr>
+    <tr>
+      <th>maxdist</th>
+      <td><p>Deprecated. Please use <code>precision</code> now.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -181,7 +185,7 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='str_pos.html'>str_pos</a></code></p></div>
+    <div class='dont-index'><p><code><a href='str_find.html'>str_find</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -229,7 +233,7 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt;              &lt;NA&gt;   0    0.00        NA      NA
 #&gt; </div><div class='input'>
 <span class='co'># larger groups</span>
-<span class='no'>newstring</span> <span class='kw'>&lt;-</span> <span class='fu'>group_str</span>(<span class='no'>oldstring</span>, <span class='kw'>maxdist</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>newstring</span> <span class='kw'>&lt;-</span> <span class='fu'>group_str</span>(<span class='no'>oldstring</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>oldstring</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
 #&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74
@@ -257,7 +261,7 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt;               &lt;NA&gt;   0    0.00        NA      NA
 #&gt; </div><div class='input'>
 <span class='co'># be more strict with matching pairs</span>
-<span class='no'>newstring</span> <span class='kw'>&lt;-</span> <span class='fu'>group_str</span>(<span class='no'>oldstring</span>, <span class='kw'>maxdist</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>newstring</span> <span class='kw'>&lt;-</span> <span class='fu'>group_str</span>(<span class='no'>oldstring</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>oldstring</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
 #&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74

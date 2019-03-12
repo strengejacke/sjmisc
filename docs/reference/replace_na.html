@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -93,6 +93,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -156,7 +159,7 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
     </tr>
     <tr>
       <th>tagged.na</th>
-      <td><p>Optional single character, specifies a <code><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></code> value
+      <td><p>Optional single character, specifies a <code><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></code> value
 that will be replaced by <code>value</code>. Herewith it is possible
 to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
     </tr>
@@ -173,7 +176,7 @@ to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>While regular <code>NA</code> values can only be <em>completely</em> replaced with
-           a single value, <code><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></code> allows to differentiate
+           a single value, <code><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></code> allows to differentiate
            between different qualitative values of <code>NA</code>s.
            Tagged <code>NA</code>s work exactly like regular R missing values
            except that they store one additional byte of information: a tag,
@@ -187,7 +190,7 @@ to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='set_na.html'>set_na</a></code> for setting <code>NA</code> values, <code><a href='rec.html'>rec</a></code>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/set_na'>set_na</a></code> for setting <code>NA</code> values, <code><a href='rec.html'>rec</a></code>
            for general recoding of variables and <code><a href='recode_to.html'>recode_to</a></code>
            for re-shifting value ranges.</p></div>
     
@@ -246,9 +249,9 @@ to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
 #&gt;  516  252   82   52    6    0 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>haven</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/labelled'>labelled</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
-              <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"c"</span>),
-                <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"z"</span>)))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
+              <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"c"</span>),
+                <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"z"</span>)))
 <span class='co'># get current NA values</span>
 <span class='no'>x</span></div><div class='output co'>#&gt; &lt;Labelled double&gt;
 #&gt;  [1]     1     2     3 NA(a) NA(c) NA(z)     4     3     2     1
@@ -281,7 +284,7 @@ to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
 <span class='co'># init vector</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>)
 <span class='co'># set values 2 and 3 as tagged NA</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='set_na.html'>set_na</a></span>(<span class='no'>x</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/set_na'>set_na</a></span>(<span class='no'>x</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># see result</span>
 <span class='no'>x</span></div><div class='output co'>#&gt; [1]  1 NA NA  4
 #&gt; attr(,"labels")

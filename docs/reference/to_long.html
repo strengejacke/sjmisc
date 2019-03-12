@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -94,6 +94,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -175,14 +178,13 @@ order.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function enhances <span class="pkg">tidyr</span>'s <code><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></code>
-           function that you can gather multiple column groups at once.
-           Value and variable labels for non-gathered variables are preserved.
-           However, gathered variables may have different variable label
-           attributes. In this case, <code><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></code> will drop
-           these attributes. Hence, the new created variables from gathered
-           columns don't have any variable label attributes. In such cases,
-           use <code>labels</code> argument to set variable label attributes.</p>
+    <p>This function reshapes data from wide to long format, however,
+  you can gather multiple column groups at once. Value and variable labels
+  for non-gathered variables are preserved. Attributes from gathered variables,
+  such as information about the variable labels, are lost during reshaping.
+  Hence, the new created variables from gathered columns don't have any
+  variable label attributes. In such cases, use <code>labels</code> argument to set
+  back variable label attributes.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -196,17 +198,6 @@ order.</p></td>
                     <span class='kw'>speed_t2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>),
                     <span class='kw'>speed_t3</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>, <span class='fl'>6</span>))
 
-<span class='co'># check tidyr. score is gathered, however, speed is not</span>
-<span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></span>(<span class='no'>mydat</span>, <span class='st'>"time"</span>, <span class='st'>"score"</span>, <span class='no'>score_t1</span>, <span class='no'>score_t2</span>, <span class='no'>score_t3</span>)</div><div class='output co'>#&gt;   age    sex speed_t1 speed_t2 speed_t3     time score
-#&gt; 1  20 Female        2        3        1 score_t1    30
-#&gt; 2  30   Male        3        4        8 score_t1    35
-#&gt; 3  40   Male        1        5        6 score_t1    32
-#&gt; 4  20 Female        2        3        1 score_t2    33
-#&gt; 5  30   Male        3        4        8 score_t2    34
-#&gt; 6  40   Male        1        5        6 score_t2    37
-#&gt; 7  20 Female        2        3        1 score_t3    36
-#&gt; 8  30   Male        3        4        8 score_t3    35
-#&gt; 9  40   Male        1        5        6 score_t3    38</div><div class='input'>
 <span class='co'># gather multiple columns. both time and speed are gathered.</span>
 <span class='fu'>to_long</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>mydat</span>,

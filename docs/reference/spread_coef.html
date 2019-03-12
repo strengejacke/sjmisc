@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
       </span>
     </div>
 
@@ -95,6 +95,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -131,8 +134,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>spread_coef</span>(<span class='no'>data</span>, <span class='no'>model.column</span>, <span class='no'>model.term</span>, <span class='no'>se</span>, <span class='no'>p.val</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>spread_coef</span>(<span class='no'>data</span>, <span class='no'>model.column</span>, <span class='no'>model.term</span>, <span class='no'>se</span>, <span class='no'>p.val</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,10 +168,6 @@ added as new column.</p></td>
       <td><p>Logical, if <code>TRUE</code> (default), this function returns
 <code>data</code> with new columns for the model coefficients; else,
 a new data frame with model coefficients only are returned.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Other arguments passed down to the <code><a href='https://www.rdocumentation.org/packages/broom/topics/reexports'>tidy</a></code>-function.</p></td>
     </tr>
     </table>
     
@@ -212,10 +210,10 @@ a new data frame with model coefficients only are returned.</p></td>
 <span class='co'># and fit linear model for each group. These models are</span>
 <span class='co'># stored in the list variable "models".</span>
 <span class='no'>model.data</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
     <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, ~<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>c12hour</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
   )
 
@@ -246,10 +244,10 @@ a new data frame with model coefficients only are returned.</p></td>
 #&gt; </span><span style='color: #555555;'>4</span><span>      2 </span><span style='color: #555555;'>&lt;tibble [225 x 25]&gt;</span><span> </span><span style='color: #555555;'>&lt;S3: lm&gt;</span><span> 0.034</span><span style='text-decoration: underline;'>5</span><span>    0.015</span><span style='text-decoration: underline;'>1</span><span>   0.023</span><span style='text-decoration: underline;'>7</span><span></div><div class='input'>
 <span class='co'># spread_coef can be used directly within a pipe-chain</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NA'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
     <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, ~<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>c12hour</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'>spread_coef</span>(<span class='no'>models</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 6</span><span>
@@ -268,16 +266,16 @@ a new data frame with model coefficients only are returned.</p></td>
   <span class='co'># generate bootstrap replicates</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/sjstats/topics/bootstrap'>bootstrap</a></span>(<span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># apply lm to all bootstrapped data sets</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
     <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>strap</span>, ~<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/lm'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>e42dep</span> + <span class='no'>c161sex</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
   ) <span class='kw'>%&gt;%</span>
   <span class='co'># spread model coefficient for all 100 models</span>
   <span class='fu'>spread_coef</span>(<span class='no'>models</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>p.val</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># compute the CI for all bootstrapped model coefficients</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/sjstats/topics/boot_ci'>boot_ci</a></span>(<span class='no'>e42dep</span>, <span class='no'>c161sex</span>, <span class='no'>c172code</span>)</div><div class='output co'>#&gt;       term    conf.low conf.high
-#&gt; 1   e42dep  1.30763889 1.8195137
-#&gt; 2  c161sex  0.04008001 1.1543226
-#&gt; 3 c172code -0.16382340 0.6815886</div><div class='input'>
+#&gt; 1   e42dep  1.34148622 1.8061243
+#&gt; 2  c161sex -0.03053365 1.1935081
+#&gt; 3 c172code -0.12734603 0.6324999</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
