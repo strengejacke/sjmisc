@@ -68,7 +68,7 @@ str_start_end <- function(x, pattern, ignore.case, index) {
   # add end index if required
   if (index == "end") {
     pos <- lapply(pos, function(i) {
-      if (i != -1)
+      if (i[1] != -1)
         i <- i + attr(i, "match.length", exact = TRUE) - 1
       i
     })
