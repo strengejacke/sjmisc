@@ -1,7 +1,6 @@
 context("sjmisc, is_empty")
 
 library(sjmisc)
-data(efc)
 
 test_that("is_empty", {
   expect_true(is_empty(NULL))
