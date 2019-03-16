@@ -165,7 +165,7 @@ print.sj_has_na <- function(x, ...) {
 
   for (i in 1:nrow(x)) {
     row <- sprintf("   %*i   %*s   %*s\n", 6, x[i, "col"], s1, x[i, "name"], s2, x[i, "label"])
-    if (isTRUE(x[i, "has.na"]))
+    if (.is_true(x[i, "has.na"]))
       cat(.colour("red", row))
     else
       cat(.colour("green", row))

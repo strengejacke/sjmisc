@@ -136,9 +136,9 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
 
       pos <- str_find(string = tmp$term, pattern = model.term, partial = 1)
 
-      if (pos != -1) {
+      if (length(pos) > 1 || pos != -1) {
         pos_str <-
-          sprintf(" Did you mean (one of) `%s`?", paste(tmp$term[pos], collapse = ","))
+          sprintf(" Did you mean (one of) `%s`?", paste(tmp$term[pos], collapse = ", "))
       } else {
         pos_str <- ""
       }

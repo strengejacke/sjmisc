@@ -18,7 +18,7 @@
 .supports_color <- function() {
   enabled <- getOption("crayon.enabled")
   if (!is.null(enabled)) {
-    return(isTRUE(enabled))
+    return(.is_true(enabled))
   }
   if (.rstudio_with_ansi_support() && sink.number() == 0) {
     return(TRUE)

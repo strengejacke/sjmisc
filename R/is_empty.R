@@ -54,17 +54,10 @@ is_empty <- function(x, first.only = TRUE) {
       # characters may also be of length 0
       if (length(x) == 0) return(TRUE)
       # else, check all elements of x
-      zero_len <- sapply(x, function(y) {
-        # zero chars, so empty?
-        l <- nchar(y) == 0
-        # if 'x' was empty, we have no chars, so zero_len will be integer(0).
-        # check this here, because zero_len needs to be logical
-        if (length(l) == 0) l <- TRUE
-        l
-      })
+      zero_len <- nchar(x) == 0
       # return result for multiple elements of character vector
       if (first.only) {
-        zero_len <- isTRUE(zero_len[1])
+        zero_len <- .is_true(zero_len[1])
         if (length(x) > 0) x <- x[!is.na(x)][1]
       } else {
         return(unname(zero_len))
@@ -79,6 +72,11 @@ is_empty <- function(x, first.only = TRUE) {
   }
 
   any(is.null(x) || zero_len || all(is.na(x)))
+}
+
+
+.is_true <- function(x) {
+  is.logical(x) && length(x) == 1L && !is.na(x) && x
 }
 
 

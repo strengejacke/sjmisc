@@ -111,7 +111,7 @@ find_var <- function(data,
 
   pos1 <- pos2 <- pos3 <- c()
   fixed <- !inherits(pattern, "regex")
-  if (isTRUE(fixed)) ignore.case <- FALSE
+  if (.is_true(fixed)) ignore.case <- FALSE
 
   # search for pattern in variable names
   if (search %in% c("name", "name_label", "name_value", "all")) {
