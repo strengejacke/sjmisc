@@ -21,6 +21,7 @@
 #'    column is moved to the end of the data frame by default.
 #'
 #' @examples
+#' \dontrun{
 #' data(iris)
 #'
 #' iris %>%
@@ -42,7 +43,7 @@
 #' library(dplyr)
 #' iris %>%
 #'   move_columns(contains("Width"), .after = "Species") %>%
-#'   head()
+#'   head()}
 #'
 #' @importFrom dplyr bind_cols
 #' @export
@@ -81,7 +82,7 @@ move_columns <- function(data, ..., .before, .after) {
   }
 
   # final test, to make sure we have a valid value here
-  if (length(pos.after)) pos.after <- Inf
+  if (!length(pos.after)) pos.after <- Inf
 
   if (!is.infinite(pos.after) && pos.after < 1) {
     x <- cbind(dat, data)

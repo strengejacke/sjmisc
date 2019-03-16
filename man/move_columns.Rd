@@ -33,6 +33,7 @@ If neither \code{.before} nor \code{.after} are specified, the
    column is moved to the end of the data frame by default.
 }
 \examples{
+\dontrun{
 data(iris)
 
 iris \%>\%
@@ -54,6 +55,6 @@ iris \%>\%
 library(dplyr)
 iris \%>\%
   move_columns(contains("Width"), .after = "Species") \%>\%
-  head()
+  head()}
 
 }
