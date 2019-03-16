@@ -28,6 +28,7 @@ test_that("rec", {
 })
 
 test_that("rec", {
+  skip_on_cran()
   expect_equal(
     unique(rec(iris, Petal.Length, rec = "lo:3=1;3.01:4.5=2;4.501:max=3", append = T, suffix = "")$Petal.Length),
     c(1, 3, 2)
