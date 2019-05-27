@@ -1,3 +1,9 @@
+# sjmisc 2.8.0
+
+## Bug fixes
+
+* `frq()` displayed labels as `NA` in some situations for grouped data frames with more than one group, when data were not labelled.
+
 # sjmisc 2.7.8
 
 ## General

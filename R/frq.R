@@ -547,22 +547,24 @@ get_title_part <- function(x, grps, level, i) {
 
   # get values from value labels
   vals <- sjlabelled::get_values(x[[var.name]])
+  t2 <- NULL
 
   # if we have no value labels, get values directly
   if (is.null(vals)) {
-    vals <- unique(x[[var.name]])
+    vals <- grps[[var.name]]
+    if (is.factor(grps[[var.name]])) vals <- as.character(vals)
     lab.pos <- i
   } else {
     # find position of value labels for current group
     lab.pos <- which(vals == grps[[var.name]][i])
+    t2 <- sjlabelled::get_labels(x[[var.name]])[lab.pos]
   }
 
   # get variable and value labels
   t1 <- sjlabelled::get_label(x[[var.name]], def.value = var.name)
-  t2 <- sjlabelled::get_labels(x[[var.name]])[lab.pos]
 
   # if we have no value label, use value instead
-  if (is.null(t2)) t2 <- vals[lab.pos]
+  if (sjmisc::is_empty(t2)) t2 <- vals[lab.pos]
 
   # generate title
   c(t1, t2)
