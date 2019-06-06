@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.9.9000</span>
       </span>
     </div>
 
@@ -205,10 +205,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt;                1                2 </div><div class='input'>
 <span class='co'># print table to compare original and grouped string</span>
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>oldstring</span>)</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74
-#&gt; </span><span> 
-#&gt;       val frq raw.prc valid.prc cum.prc
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74
+#&gt; 
+#&gt; </span><span>      val frq raw.prc valid.prc cum.prc
 #&gt;       Ape   1   11.11     11.11   11.11
 #&gt;     Apple   1   11.11     11.11   22.22
 #&gt;     Hello   1   11.11     11.11   33.33
@@ -220,10 +220,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt;  Systemic   1   11.11     11.11  100.00
 #&gt;      &lt;NA&gt;   0    0.00        NA      NA
 #&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>newstring</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=3.33  sd=2.00
-#&gt; </span><span> 
-#&gt;               val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=9  valid N=9  mean=3.33  sd=2.00
+#&gt; 
+#&gt; </span><span>              val frq raw.prc valid.prc cum.prc
 #&gt;        Ape, Apple   2   22.22     22.22   22.22
 #&gt;       Hello, Helo   2   22.22     22.22   44.44
 #&gt;              Hole   1   11.11     11.11   55.56
@@ -235,10 +235,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 <span class='co'># larger groups</span>
 <span class='no'>newstring</span> <span class='kw'>&lt;-</span> <span class='fu'>group_str</span>(<span class='no'>oldstring</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>oldstring</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74
-#&gt; </span><span> 
-#&gt;       val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74
+#&gt; 
+#&gt; </span><span>      val frq raw.prc valid.prc cum.prc
 #&gt;       Ape   1   11.11     11.11   11.11
 #&gt;     Apple   1   11.11     11.11   22.22
 #&gt;     Hello   1   11.11     11.11   33.33
@@ -250,10 +250,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt;  Systemic   1   11.11     11.11  100.00
 #&gt;      &lt;NA&gt;   0    0.00        NA      NA
 #&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>newstring</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=2.44  sd=1.13
-#&gt; </span><span> 
-#&gt;                val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=9  valid N=9  mean=2.44  sd=1.13
+#&gt; 
+#&gt; </span><span>               val frq raw.prc valid.prc cum.prc
 #&gt;         Ape, Apple   2   22.22     22.22   22.22
 #&gt;  Hello, Helo, Hole   3   33.33     33.33   55.56
 #&gt;           New, Old   2   22.22     22.22   77.78
@@ -263,10 +263,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 <span class='co'># be more strict with matching pairs</span>
 <span class='no'>newstring</span> <span class='kw'>&lt;-</span> <span class='fu'>group_str</span>(<span class='no'>oldstring</span>, <span class='kw'>precision</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>oldstring</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74
-#&gt; </span><span> 
-#&gt;       val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74
+#&gt; 
+#&gt; </span><span>      val frq raw.prc valid.prc cum.prc
 #&gt;       Ape   1   11.11     11.11   11.11
 #&gt;     Apple   1   11.11     11.11   22.22
 #&gt;     Hello   1   11.11     11.11   33.33
@@ -278,10 +278,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt;  Systemic   1   11.11     11.11  100.00
 #&gt;      &lt;NA&gt;   0    0.00        NA      NA
 #&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>newstring</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># x &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=9  valid N=9  mean=2.89  sd=1.54
-#&gt; </span><span> 
-#&gt;               val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=9  valid N=9  mean=2.89  sd=1.54
+#&gt; 
+#&gt; </span><span>              val frq raw.prc valid.prc cum.prc
 #&gt;        Ape, Apple   2   22.22     22.22   22.22
 #&gt;       Hello, Helo   2   22.22     22.22   44.44
 #&gt;         Hole, Old   2   22.22     22.22   66.67

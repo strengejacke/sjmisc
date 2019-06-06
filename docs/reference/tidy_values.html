@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.9.9000</span>
       </span>
     </div>
 
@@ -162,21 +162,21 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='no'>f1</span>, <span class='no'>f2</span>, <span class='no'>f3</span>, <span class='kw'>stringsAsFactors</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
-<span class='fu'>tidy_values</span>(<span class='no'>f1</span>)</div><div class='output co'>#&gt;  [1] "Char_A" "Char_D" "Char_B" "Char_A" "Char_D" "Char_C" "Char_D" "Char_D"
-#&gt;  [9] "Char_C" "Char_D"</div><div class='input'><span class='fu'>tidy_values</span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;  [1] F_c F_e F_b F_d F_b F_e F_b F_c F_a F_b
+<span class='fu'>tidy_values</span>(<span class='no'>f1</span>)</div><div class='output co'>#&gt;  [1] "Char_D" "Char_E" "Char_A" "Char_A" "Char_C" "Char_D" "Char_D" "Char_E"
+#&gt;  [9] "Char_E" "Char_C"</div><div class='input'><span class='fu'>tidy_values</span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;  [1] F_b F_e F_d F_a F_a F_c F_c F_d F_c F_e
 #&gt; Levels: F_a F_b F_c F_d F_e</div><div class='input'><span class='fu'>tidy_values</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
 #&gt;    f1     f2       f3
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Char_A F_c       4
-#&gt; </span><span style='color: #555555;'> 2</span><span> Char_D F_e       1
-#&gt; </span><span style='color: #555555;'> 3</span><span> Char_B F_b       4
-#&gt; </span><span style='color: #555555;'> 4</span><span> Char_A F_d       4
-#&gt; </span><span style='color: #555555;'> 5</span><span> Char_D F_b       2
-#&gt; </span><span style='color: #555555;'> 6</span><span> Char_C F_e       1
-#&gt; </span><span style='color: #555555;'> 7</span><span> Char_D F_b       3
-#&gt; </span><span style='color: #555555;'> 8</span><span> Char_D F_c       5
-#&gt; </span><span style='color: #555555;'> 9</span><span> Char_C F_a       3
-#&gt; </span><span style='color: #555555;'>10</span><span> Char_D F_b       5</div><div class='input'>
+#&gt; </span><span style='color: #555555;'> 1</span><span> Char_D F_b       2
+#&gt; </span><span style='color: #555555;'> 2</span><span> Char_E F_e       2
+#&gt; </span><span style='color: #555555;'> 3</span><span> Char_A F_d       1
+#&gt; </span><span style='color: #555555;'> 4</span><span> Char_A F_a       3
+#&gt; </span><span style='color: #555555;'> 5</span><span> Char_C F_a       4
+#&gt; </span><span style='color: #555555;'> 6</span><span> Char_D F_c       5
+#&gt; </span><span style='color: #555555;'> 7</span><span> Char_D F_c       4
+#&gt; </span><span style='color: #555555;'> 8</span><span> Char_E F_d       1
+#&gt; </span><span style='color: #555555;'> 9</span><span> Char_E F_c       4
+#&gt; </span><span style='color: #555555;'>10</span><span> Char_C F_e       4</div><div class='input'>
 </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

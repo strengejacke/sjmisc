@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.9.9000</span>
       </span>
     </div>
 
@@ -212,7 +212,7 @@ weights that will be applied to weight all observations. Default is
 <span class='co'># for factors, return either reference level or mode value</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed</a></span>(<span class='fl'>123</span>)
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='no'>iris</span>$<span class='no'>Species</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'>typical_value</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "setosa"</div><div class='input'><span class='fu'>typical_value</span>(<span class='no'>x</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='st'>"mode"</span>)</div><div class='output co'>#&gt; [1] "virginica"</div><div class='input'>
+<span class='fu'>typical_value</span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; [1] "setosa"</div><div class='input'><span class='fu'>typical_value</span>(<span class='no'>x</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='st'>"mode"</span>)</div><div class='output co'>#&gt; [1] "versicolor"</div><div class='input'>
 <span class='co'># for factors, use a named vector to apply other functions than "mode"</span>
 <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>iris</span>, ~ <span class='fu'>typical_value</span>(<span class='no'>.x</span>, <span class='kw'>fun</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>f</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)))</div><div class='output co'>#&gt; $Sepal.Length
 #&gt; [1] 5.8

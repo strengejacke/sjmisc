@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.9.9000</span>
       </span>
     </div>
 
@@ -281,8 +281,9 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>age</span>)</div><div class='img'><img src='group_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/hist'>hist</a></span>(<span class='no'>age.grp</span>)</div><div class='img'><img src='group_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='no'>age.grpvar</span> <span class='kw'>&lt;-</span> <span class='fu'>group_labels</span>(<span class='no'>age</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>age.grp</span>)</div><div class='output co'>#&gt; age.grp
-#&gt;  1  2  3  4  5  6  7  8 
-#&gt;  2  9 10 18 21 21 11  8 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>age.grpvar</span>)</div><div class='output co'>#&gt; [1] "20-29" "30-39" "40-49" "50-59" "60-69" "70-79" "80-89" "90-99"</div><div class='input'>
+#&gt;  1  2  3  4  5  6  7  8  9 10 11 12 
+#&gt;  1  2  2  3  8 17 19 19 19  8  1  1 </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>age.grpvar</span>)</div><div class='output co'>#&gt;  [1] "0-9"     "10-19"   "20-29"   "30-39"   "40-49"   "50-59"   "60-69"  
+#&gt;  [8] "70-79"   "80-89"   "90-99"   "100-109" "110-119"</div><div class='input'>
 <span class='co'># histogram with EUROFAMCARE sample dataset</span>
 <span class='co'># variable not grouped</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sjlabelled</span>)

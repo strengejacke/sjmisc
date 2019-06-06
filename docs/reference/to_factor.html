@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.9.9000</span>
       </span>
     </div>
 
@@ -203,10 +203,10 @@ reference level. See <code><a href='ref_lvl.html'>ref_lvl</a></code> for details
 <span class='co'># normal factor conversion, loses value attributes</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/factor'>as.factor</a></span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'># x &lt;categorical&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=2.94  sd=0.94
-#&gt; </span><span> 
-#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;categorical&gt;
+#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
+#&gt; 
+#&gt; </span><span>  val frq raw.prc valid.prc cum.prc
 #&gt;     1  66    7.27      7.33    7.33
 #&gt;     2 225   24.78     24.97   32.30
 #&gt;     3 306   33.70     33.96   66.26
@@ -216,10 +216,10 @@ reference level. See <code><a href='ref_lvl.html'>ref_lvl</a></code> for details
 <span class='co'># factor conversion, which keeps value attributes</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>to_factor</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (x) &lt;categorical&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=2.94  sd=0.94
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
+#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent  66    7.27      7.33    7.33
 #&gt;    2   slightly dependent 225   24.78     24.97   32.30
 #&gt;    3 moderately dependent 306   33.70     33.96   66.26
