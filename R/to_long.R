@@ -24,6 +24,8 @@
 #'          column will be recoded to numeric values, in sequential ascending
 #'          order.
 #'
+#' @seealso \code{\link{reshape_longer}}
+#'
 #' @details This function reshapes data from wide to long format, however,
 #'   you can gather multiple column groups at once. Value and variable labels
 #'   for non-gathered variables are preserved. Attributes from gathered variables,
@@ -50,6 +52,25 @@
 #'   values = c("score", "speed"),
 #'   c("score_t1", "score_t2", "score_t3"),
 #'   c("speed_t1", "speed_t2", "speed_t3")
+#' )
+#'
+#' # alternative syntax, using "reshape_longer()"
+#' reshape_longer(
+#'   mydat,
+#'   columns = list(
+#'     c("score_t1", "score_t2", "score_t3"),
+#'     c("speed_t1", "speed_t2", "speed_t3")
+#'   ),
+#'   names.to = "time",
+#'   values.to = c("score", "speed")
+#' )
+#'
+#' # or ...
+#' reshape_longer(
+#'   mydat,
+#'   list(3:5, 6:8),
+#'   names.to = "time",
+#'   values.to = c("score", "speed")
 #' )
 #'
 #' # gather multiple columns, use numeric key-value

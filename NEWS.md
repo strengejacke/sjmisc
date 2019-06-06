@@ -4,6 +4,10 @@
 
 * Some print-methods, especially for grouped data frame, are now more compact.
 
+## New functions
+
+* `reshape_longer()`, as alternative to `to_long()`, probably easier to remember (function and argument-names).
+
 ## Bug fixes
 
 * `frq()` displayed labels as `NA` in some situations for grouped data frames with more than one group, when data were not labelled.
