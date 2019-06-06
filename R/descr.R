@@ -88,7 +88,7 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
       dummy <- descr_helper(tmp, max.length)
-      attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
+      attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
 
       # save data frame for return value
       dataframes[[length(dataframes) + 1]] <- dummy

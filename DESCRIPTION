@@ -18,7 +18,7 @@ Depends:
     utils
 Imports:
     dplyr (>= 0.8.0),
-    haven (>= 1.1.2),
+    insight,
     magrittr,
     methods,
     purrr,
@@ -27,12 +27,12 @@ Imports:
 Suggests:
     ggplot2,
     graphics,
+    haven (>= 1.1.2),
     mice,
     sjPlot,
     sjstats,
     knitr,
     rmarkdown,
-    rstudioapi,
     stringdist,
     testthat,
     tidyr

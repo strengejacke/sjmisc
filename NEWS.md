@@ -1,5 +1,9 @@
 # sjmisc 2.8.0
 
+## General
+
+* Some print-methods, especially for grouped data frame, are now more compact.
+
 ## Bug fixes
 
 * `frq()` displayed labels as `NA` in some situations for grouped data frames with more than one group, when data were not labelled.

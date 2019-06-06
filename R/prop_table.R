@@ -52,6 +52,7 @@
 #'   select(e16sex, e42dep, c172code, n4pstu, c161sex) %>%
 #'   flat_table()
 #'
+#' @importFrom insight print_color
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
 #' @export
@@ -82,7 +83,6 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
 
     # get grouped data
     grps <- get_grouped_data(dd)
-    cat("\n")
 
     # now plot everything
     for (i in seq_len(nrow(grps))) {
@@ -91,9 +91,8 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
       # print title for grouping
-      cat(.colour("cyan", .colour("italic",
-        sprintf("\nGrouped by:\n%s\n", get_grouped_title(dd, grps, i, sep = "\n"))
-      )), "\n")
+      insight::print_color("\nGrouped by: ", "red")
+      insight::print_color(sprintf("%s\n\n", get_grouped_title(dd, grps, i, sep = ", ", long = FALSE)), "cyan")
 
       # print frequencies
       print(com_ft(tmp, show.values, no.prop.table, marge, digits))

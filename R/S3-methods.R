@@ -1,17 +1,10 @@
+#' @importFrom insight print_color
 #' @importFrom purrr walk
 #' @importFrom dplyr select n_distinct
 #' @importFrom rlang .data
 #' @export
 print.sjmisc_frq <- function(x, ...) {
-  cat("\n")
   purrr::walk(x, function(dat) {
-
-    # get grouping title label
-    grp <- attr(dat, "group", exact = T)
-
-    # print title for grouping
-    if (!is.null(grp))
-      cat(.colour("cyan", .colour("italic", sprintf("Grouped by:\n%s\n", grp))), "\n")
 
     # get variable label
     lab <- attr(dat, "label", exact = T)
@@ -23,17 +16,31 @@ print.sjmisc_frq <- function(x, ...) {
     else
       vt <- ""
 
+    cat("\n")
+
     # print label
-    if (!is.null(lab)) cat(.colour("blue", sprintf("# %s%s", lab, vt)), "\n")
+    if (!is.null(lab)) {
+      insight::print_color(sprintf("%s", lab), "red")
+      insight::print_color(sprintf("%s\n", vt), "blue")
+    }
+
+    # get grouping title label
+    grp <- attr(dat, "group", exact = T)
+
+    # print title for grouping
+    if (!is.null(grp)) {
+      insight::print_color("# grouped by: ", "blue")
+      insight::print_color(sprintf("%s\n", grp), "cyan")
+    }
 
     # add Total N
-    cat(.colour("blue", sprintf(
-      "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n",
+    insight::print_color(sprintf(
+      "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n\n",
       sum(dat$frq, na.rm = TRUE),
       sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE),
       attr(dat, "mean", exact = T),
       attr(dat, "sd", exact = T)
-    )), "\n")
+    ), "blue")
 
     # don't print labels, if all are "none"
     if (dplyr::n_distinct(dat$label) == 1 && unique(dat$label) == "<none>")
@@ -50,7 +57,7 @@ print.sjmisc_frq <- function(x, ...) {
 #' @export
 print.sjmisc_descr <- function(x, ...) {
   cat("\n")
-  cat(.colour("blue", "## Basic descriptive statistics\n\n"))
+  insight::print_color("## Basic descriptive statistics\n\n", "blue")
   print_descr_helper(x, ...)
 }
 
@@ -73,13 +80,12 @@ print_descr_helper <- function(x, ...) {
 #' @export
 print.sjmisc_grpdescr <- function(x, ...) {
   cat("\n")
-  cat(.colour("blue", "## Basic descriptive statistics"), "\n")
+  insight::print_color("## Basic descriptive statistics\n", "blue")
 
   purrr::walk(x, function(.x) {
     # print title for grouping
-    cat(.colour("cyan", .colour("italic",
-      sprintf("\nGrouped by:\n%s", attr(.x, "group", exact = TRUE))
-    )), "\n")
+    insight::print_color("\n\nGrouped by: ", "red")
+    insight::print_color(sprintf("%s\n\n", attr(.x, "group", exact = TRUE)), "cyan")
 
     print_descr_helper(.x, ...)
   })
@@ -161,7 +167,7 @@ print.sj_has_na <- function(x, ...) {
   s1 <- max(c(nchar(x$name), nchar("Name")))
   s2 <- max(c(nchar(x$label), nchar("Variable Label")))
 
-  cat(.colour("blue", sprintf("   Column   %*s   %*s\n\n", s1, "Name", s2, "Variable Label")))
+  insight::print_color(sprintf("   Column   %*s   %*s\n\n", s1, "Name", s2, "Variable Label"), "blue")
 
   for (i in 1:nrow(x)) {
     row <- sprintf("   %*i   %*s   %*s\n", 6, x[i, "col"], s1, x[i, "name"], s2, x[i, "label"])

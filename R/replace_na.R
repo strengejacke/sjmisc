@@ -135,6 +135,10 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
     }
     # check if we have tagged NA
     if (!is.null(tagged.na)) {
+      if (!requireNamespace("haven", quietly = TRUE)) {
+        stop("Package `haven` needed for this function to work. Please install it.", call. = FALSE)
+      }
+
       # coerce to tagged NA
       if (!haven::is_tagged_na(tagged.na)) tagged.na <- haven::tagged_na(tagged.na)
 
