@@ -40,7 +40,6 @@
 #' count_na(dat, x, y)
 #'
 #' @importFrom dplyr select filter quos
-#' @importFrom haven is_tagged_na na_tag
 #' @importFrom sjlabelled get_label
 #' @export
 count_na <- function(x, ...) {
