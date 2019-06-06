@@ -162,7 +162,7 @@ print.sj_merge.imp <- function(x, ...) {
 
 #' @export
 print.sj_has_na <- function(x, ...) {
-  cat(.colour("cyan", "## Variables with missing or infinite values (in red)\n\n"))
+  insight::print_color("## Variables with missing or infinite values (in red)\n\n", "cyan")
 
   s1 <- max(c(nchar(x$name), nchar("Name")))
   s2 <- max(c(nchar(x$label), nchar("Variable Label")))
@@ -172,9 +172,9 @@ print.sj_has_na <- function(x, ...) {
   for (i in 1:nrow(x)) {
     row <- sprintf("   %*i   %*s   %*s\n", 6, x[i, "col"], s1, x[i, "name"], s2, x[i, "label"])
     if (.is_true(x[i, "has.na"]))
-      cat(.colour("red", row))
+      insight::print_color(row, "red")
     else
-      cat(.colour("green", row))
+      insight::print_color(row, "green")
   }
 
   cat("\n")
