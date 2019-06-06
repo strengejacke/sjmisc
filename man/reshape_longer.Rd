@@ -41,15 +41,34 @@ A reshaped data frame.
   wide into long format.
 }
 \examples{
-# create sample
-mydat <- data.frame(age = c(20, 30, 40),
-                    sex = c("Female", "Male", "Male"),
-                    score_t1 = c(30, 35, 32),
-                    score_t2 = c(33, 34, 37),
-                    score_t3 = c(36, 35, 38),
-                    speed_t1 = c(2, 3, 1),
-                    speed_t2 = c(3, 4, 5),
-                    speed_t3 = c(1, 8, 6))
+# Reshape one column group into long format
+mydat <- data.frame(
+  age = c(20, 30, 40),
+  sex = c("Female", "Male", "Male"),
+  score_t1 = c(30, 35, 32),
+  score_t2 = c(33, 34, 37),
+  score_t3 = c(36, 35, 38)
+)
+
+reshape_longer(
+  mydat,
+  columns = c("score_t1", "score_t2", "score_t3"),
+  names.to = "time",
+  values.to = "score"
+)
+
+
+# Reshape multiple column groups into long format
+mydat <- data.frame(
+  age = c(20, 30, 40),
+  sex = c("Female", "Male", "Male"),
+  score_t1 = c(30, 35, 32),
+  score_t2 = c(33, 34, 37),
+  score_t3 = c(36, 35, 38),
+  speed_t1 = c(2, 3, 1),
+  speed_t2 = c(3, 4, 5),
+  speed_t3 = c(1, 8, 6)
+)
 
 reshape_longer(
   mydat,

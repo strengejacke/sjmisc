@@ -27,15 +27,34 @@
 #' @return A reshaped data frame.
 #'
 #' @examples
-#' # create sample
-#' mydat <- data.frame(age = c(20, 30, 40),
-#'                     sex = c("Female", "Male", "Male"),
-#'                     score_t1 = c(30, 35, 32),
-#'                     score_t2 = c(33, 34, 37),
-#'                     score_t3 = c(36, 35, 38),
-#'                     speed_t1 = c(2, 3, 1),
-#'                     speed_t2 = c(3, 4, 5),
-#'                     speed_t3 = c(1, 8, 6))
+#' # Reshape one column group into long format
+#' mydat <- data.frame(
+#'   age = c(20, 30, 40),
+#'   sex = c("Female", "Male", "Male"),
+#'   score_t1 = c(30, 35, 32),
+#'   score_t2 = c(33, 34, 37),
+#'   score_t3 = c(36, 35, 38)
+#' )
+#'
+#' reshape_longer(
+#'   mydat,
+#'   columns = c("score_t1", "score_t2", "score_t3"),
+#'   names.to = "time",
+#'   values.to = "score"
+#' )
+#'
+#'
+#' # Reshape multiple column groups into long format
+#' mydat <- data.frame(
+#'   age = c(20, 30, 40),
+#'   sex = c("Female", "Male", "Male"),
+#'   score_t1 = c(30, 35, 32),
+#'   score_t2 = c(33, 34, 37),
+#'   score_t3 = c(36, 35, 38),
+#'   speed_t1 = c(2, 3, 1),
+#'   speed_t2 = c(3, 4, 5),
+#'   speed_t3 = c(1, 8, 6)
+#' )
 #'
 #' reshape_longer(
 #'   mydat,
@@ -74,8 +93,11 @@ reshape_longer <- function(x, columns = colnames(x), names.to = "key", values.to
 
   variable_attr <- lapply(x, attributes)
 
-  if (is.numeric(columns)) columns <- colnames(x)[columns]
   if (!is.list(columns)) columns <- list(columns)
+
+  columns <- lapply(columns, function(.x) {
+    if (is.numeric(.x)) .x <- colnames(x)[.x]
+  })
 
   dat <- stats::reshape(
     x,
