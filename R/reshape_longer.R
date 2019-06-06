@@ -97,6 +97,7 @@ reshape_longer <- function(x, columns = colnames(x), names.to = "key", values.to
 
   columns <- lapply(columns, function(.x) {
     if (is.numeric(.x)) .x <- colnames(x)[.x]
+    .x
   })
 
   dat <- stats::reshape(
