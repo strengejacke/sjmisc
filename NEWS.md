@@ -2,7 +2,7 @@
 
 ## General
 
-* Some print-methods, especially for grouped data frame, are now more compact.
+* Some print-methods, especially for grouped data frames, are now more compact.
 
 ## New functions
 
