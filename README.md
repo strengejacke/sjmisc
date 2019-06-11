@@ -10,7 +10,7 @@ The functions of **sjmisc** are designed to work together seamlessly with other 
 
 ## Contributing to the package
 
-Please follow [this guide](CONTRIBUTING.md) if you like to contribute to this package.
+Please follow [this guide](https://raw.githubusercontent.com/strengejacke/sjmisc/master/CONTRIBUTING.md) if you like to contribute to this package.
 
 ## Installation
 
