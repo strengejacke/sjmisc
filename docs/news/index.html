@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.9.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.0</span>
       </span>
     </div>
 
@@ -127,7 +127,15 @@
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
 <ul>
-<li>Some print-methods, especially for grouped data frame, are now more compact.</li>
+<li>Some print-methods, especially for grouped data frames, are now more compact.</li>
+</ul>
+</div>
+<div id="new-functions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functions" class="anchor"></a>New functions</h2>
+<ul>
+<li>
+<code><a href="../reference/reshape_longer.html">reshape_longer()</a></code>, as alternative to <code><a href="../reference/to_long.html">to_long()</a></code>, probably easier to remember (function and argument-names).</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
@@ -153,9 +161,9 @@
 <li>New package-vignette <strong>Recoding Variables</strong>.</li>
 </ul>
 </div>
-<div id="new-functions" class="section level2">
+<div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions" class="anchor"></a>New functions</h2>
+<a href="#new-functions-1" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/typical_value.html">typical_value()</a></code>, which was formerly located in package <em>sjstats</em>.</li>
@@ -186,9 +194,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-277" class="anchor"></a>sjmisc 2.7.7<small> 2019-01-02 </small>
 </h1>
-<div id="new-functions-1" class="section level2">
+<div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-1" class="anchor"></a>New functions</h2>
+<a href="#new-functions-2" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/tidy_values.html">tidy_values()</a></code> to “clean” values (i.e. remove special chars) of character vectors or levels of factors.</li>
@@ -249,9 +257,9 @@
 <li>Reduce package dependencies.</li>
 </ul>
 </div>
-<div id="new-functions-2" class="section level2">
+<div id="new-functions-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-2" class="anchor"></a>New functions</h2>
+<a href="#new-functions-3" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/de_mean.html">de_mean()</a></code> to compute group-meaned and de-meaned variables.</li>
@@ -293,9 +301,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-274" class="anchor"></a>sjmisc 2.7.4<small> 2018-08-04 </small>
 </h1>
-<div id="new-functions-3" class="section level2">
+<div id="new-functions-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-3" class="anchor"></a>New functions</h2>
+<a href="#new-functions-4" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/has_na.html">has_na()</a></code> to check if variables or observations in a data frame contain <code>NA</code>, <code>NaN</code> or <code>Inf</code> values. Convenient shortcuts for this function are <code><a href="../reference/has_na.html">complete_cases()</a></code>, <code><a href="../reference/has_na.html">incomplete_cases()</a></code>, <code><a href="../reference/has_na.html">complete_vars()</a></code> and <code><a href="../reference/has_na.html">incomplete_vars()</a></code>.</li>
@@ -329,9 +337,9 @@
 <li>Updated reference in <code>CITATION</code> to the publication in the Journal of Open Source Software.</li>
 </ul>
 </div>
-<div id="new-functions-4" class="section level2">
+<div id="new-functions-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-4" class="anchor"></a>New functions</h2>
+<a href="#new-functions-5" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/is_crossed.html">is_cross_classified()</a></code> to check whether two factors are partially crossed.</li>
@@ -360,9 +368,9 @@
 <h1 class="page-header">
 <a href="#sjmisc-272" class="anchor"></a>sjmisc 2.7.2<small> 2018-05-04 </small>
 </h1>
-<div id="new-functions-5" class="section level2">
+<div id="new-functions-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-5" class="anchor"></a>New functions</h2>
+<a href="#new-functions-6" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/round_num.html">round_num()</a></code> to round only numeric values in a data frame.</li>
@@ -414,9 +422,9 @@
 <li>Fix typos and revise outdated paragraphs in vignettes.</li>
 </ul>
 </div>
-<div id="new-functions-6" class="section level2">
+<div id="new-functions-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-6" class="anchor"></a>New functions</h2>
+<a href="#new-functions-7" class="anchor"></a>New functions</h2>
 <p>The recoding and transformation functions get scoped variants, allowing to select variables based on logical conditions described in a function:</p>
 <ul>
 <li>
@@ -474,9 +482,9 @@
 <li>Cross refences from <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">dplyr::select_helpers</a></code> were updated to <code><a href="https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">tidyselect::select_helpers</a></code>.</li>
 </ul>
 </div>
-<div id="new-functions-7" class="section level2">
+<div id="new-functions-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-7" class="anchor"></a>New functions</h2>
+<a href="#new-functions-8" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/is_float.html">is_whole()</a></code> as counterpart to <code><a href="../reference/is_float.html">is_float()</a></code>.</li>
@@ -604,9 +612,9 @@
 <li>All labelled-data functions were removed and are now in package <em>sjlabelled</em>.</li>
 </ul>
 </div>
-<div id="new-functions-8" class="section level2">
+<div id="new-functions-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-8" class="anchor"></a>New functions</h2>
+<a href="#new-functions-9" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/remove_var.html">remove_var()</a></code> as pipe-friendly function to remove variables from data frames.</li>
@@ -655,9 +663,9 @@
 <li>All labelled-data functions are now deprecated and will become defunct in future package versions. The labelled-data functions have been moved into a separate package, <em>sjlabelled</em>.</li>
 </ul>
 </div>
-<div id="new-functions-9" class="section level2">
+<div id="new-functions-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-functions-9" class="anchor"></a>New functions</h2>
+<a href="#new-functions-10" class="anchor"></a>New functions</h2>
 <ul>
 <li>
 <code><a href="../reference/row_count.html">row_count()</a></code> to count specific values in a data frame per observation.</li>
