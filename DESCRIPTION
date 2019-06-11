@@ -2,8 +2,8 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.7.9.9000
-Date: 2019-03-16
+Version: 2.8.0
+Date: 2019-06-11
 Authors@R: person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206"))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
@@ -18,12 +18,12 @@ Depends:
     utils
 Imports:
     dplyr (>= 0.8.0),
-    insight,
+    insight (>= 0.3.0),
     magrittr,
     methods,
     purrr,
     rlang,
-    sjlabelled (>= 1.0.17)
+    sjlabelled (>= 1.1.0)
 Suggests:
     ggplot2,
     graphics,
