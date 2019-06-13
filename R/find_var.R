@@ -176,3 +176,8 @@ find_var <- function(data,
   names(pos) <- colnames(data)[pos]
   pos
 }
+
+
+#' @rdname find_var
+#' @export
+find_variables <- find_var

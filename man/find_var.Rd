@@ -2,11 +2,17 @@
 % Please edit documentation in R/find_var.R
 \name{find_var}
 \alias{find_var}
+\alias{find_variables}
 \title{Find variable by name or label}
 \usage{
 find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
   "name_value", "label_value", "name", "label", "value", "all"),
   out = c("table", "df", "index"), fuzzy = FALSE, regex = FALSE)
+
+find_variables(data, pattern, ignore.case = TRUE,
+  search = c("name_label", "name_value", "label_value", "name", "label",
+  "value", "all"), out = c("table", "df", "index"), fuzzy = FALSE,
+  regex = FALSE)
 }
 \arguments{
 \item{data}{A data frame.}

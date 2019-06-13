@@ -2,6 +2,13 @@
 
 ## General
 
+* `find_variables()` as alias for `find_var()`.
+* Revised docs.
+
+# sjmisc 2.8.0
+
+## General
+
 * Some print-methods, especially for grouped data frames, are now more compact.
 
 ## New functions
