@@ -33,7 +33,7 @@
 <meta property="og:title" content="Shorten character strings — shorten_string" />
 
 <meta property="og:description" content="This function shortens strings that are longer than max.length
-             chars." />
+   chars, without cropping words." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.0.9000</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
     <div class="ref-description">
     
     <p>This function shortens strings that are longer than <code>max.length</code>
-             chars.</p>
+   chars, without cropping words.</p>
     
     </div>
 
@@ -153,6 +153,13 @@
 
     <p>A shortened string.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If the string length defined in <code>max.length</code> happens to be inside
+  a word, this word is removed from the returned string (see 'Examples'), so
+  the returned string has a <em>maximum length</em> of <code>max.length</code>, but
+  might be shorter.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>s</span> <span class='kw'>&lt;-</span> <span class='st'>"This can be considered as very long string!"</span>
@@ -172,6 +179,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
