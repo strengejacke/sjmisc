@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -119,9 +119,9 @@
       
     </div>
 
-    <div id="sjmisc-280" class="section level1">
+    <div id="sjmisc-281" class="section level1">
 <h1 class="page-header">
-<a href="#sjmisc-280" class="anchor"></a>sjmisc 2.8.0<small> 2019-06-11 </small>
+<a href="#sjmisc-281" class="anchor"></a>sjmisc 2.8.1<small> 2019-06-17 </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
@@ -132,10 +132,17 @@
 <li>Revised docs.</li>
 </ul>
 </div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li>Fixed issue with forthcoming update of the <strong>rlang</strong> package.</li>
+</ul>
 </div>
-    <div id="sjmisc-280-1" class="section level1">
+</div>
+    <div id="sjmisc-280" class="section level1">
 <h1 class="page-header">
-<a href="#sjmisc-280-1" class="anchor"></a>sjmisc 2.8.0<small> 2019-06-11 </small>
+<a href="#sjmisc-280" class="anchor"></a>sjmisc 2.8.0<small> 2019-06-11 </small>
 </h1>
 <div id="general-1" class="section level2">
 <h2 class="hasAnchor">
@@ -152,9 +159,9 @@
 <code><a href="../reference/reshape_longer.html">reshape_longer()</a></code>, as alternative to <code><a href="../reference/to_long.html">to_long()</a></code>, probably easier to remember (function and argument-names).</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/frq.html">frq()</a></code> displayed labels as <code>NA</code> in some situations for grouped data frames with more than one group, when data were not labelled.</li>
@@ -193,9 +200,9 @@
 <code><a href="../reference/is_empty.html">is_empty()</a></code> now also checks lists with only <code>NULL</code>-elements.</li>
 </ul>
 </div>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Better handling of factors in <code><a href="../reference/merge_imputations.html">merge_imputations()</a></code>, which previously could result in <code>NA</code>-values when merging imputed values into one variable.</li>
 <li>Fix issue in <code><a href="../reference/is_empty.html">is_empty()</a></code> in case the vector had non-missing values, but first element of vector was <code>NA</code>.</li>
@@ -233,9 +240,9 @@
 <code><a href="../reference/row_sums.html">row_sums()</a></code> and <code><a href="../reference/row_sums.html">row_means()</a></code> now return the input data frame when this data frame only had one column and no row means or sums were calculated. The returned data frame still gets the new variable name defined in <code>var</code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/has_na.html">complete_cases()</a></code> returned an empty vector instead of all indexes if all cases (rows) of a data frame were complete.</li>
@@ -299,9 +306,9 @@
 <code><a href="../reference/frq.html">frq()</a></code> gets a <code>title</code>-argument, to specify an alternative title to the variable label.</li>
 </ul>
 </div>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/round_num.html">round_num()</a></code> preserves data frame attributes.</li>
@@ -367,9 +374,9 @@
 <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also accepts value labels as value for the <code>lvl</code>-argument. Additionally, <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also works for factor with non-numeric factor levels and simply returns <code><a href="https://www.rdocumentation.org/packages/stats/topics/relevel">relevel(x, ref = lvl)</a></code> in such cases.</li>
 </ul>
 </div>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed encoding issues in <code><a href="../reference/rec.html">rec()</a></code> with direct labelling for certain locales.</li>
 <li>Fixed issue in <code><a href="../reference/count_na.html">count_na()</a></code>, which did not print labels of tagged <code>NA</code> values since the last revision of <code><a href="../reference/frq.html">frq()</a></code>.</li>
@@ -416,9 +423,9 @@
 <li>The <code>weight.by</code>-argument in <code><a href="../reference/frq.html">frq()</a></code> now should be a variable name from a variable in <code>x</code>, and no longer a separate vector.</li>
 </ul>
 </div>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/descr.html">descr()</a></code> does not work with character vectors, so these are being removed now.</li>
@@ -469,9 +476,9 @@
 <li>Slightly improved performance for <code><a href="https://www.rdocumentation.org/packages/sjlabelled/topics/set_na">set_na()</a></code>.</li>
 </ul>
 </div>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/frq.html">frq()</a></code> now removes empty columns before computing frequencies, because applying <code><a href="../reference/frq.html">frq()</a></code> on empty vectors caused an error.</li>
@@ -524,9 +531,9 @@
 <code><a href="../reference/descr.html">descr()</a></code> gets an <code>out</code>-argument, to print output to console, or as HTML table in the viewer or web browser.</li>
 </ul>
 </div>
-<div id="bug-fixes-7" class="section level2">
+<div id="bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-7" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/is_empty.html">is_empty()</a></code> returned <code>TRUE</code> for single vectors with <code>NA</code> being the first element.</li>
@@ -561,9 +568,9 @@
 <code><a href="../reference/frq.html">frq()</a></code> now shows total and valid N in output.</li>
 </ul>
 </div>
-<div id="bug-fixes-8" class="section level2">
+<div id="bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-8" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/split_var.html">split_var()</a></code> and <code><a href="../reference/group_var.html">group_var()</a></code> did not work correctly for grouped data frames.</li>
@@ -587,9 +594,9 @@
 <code><a href="../reference/is_float.html">is_float()</a></code> is now exported as function.</li>
 </ul>
 </div>
-<div id="bug-fixes-9" class="section level2">
+<div id="bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-9" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed bug for <code><a href="../reference/to_label.html">to_label()</a></code>, when <code>x</code> was a character vector and argument <code>drop.levels</code> was <code>TRUE</code>.</li>
 </ul>
@@ -606,9 +613,9 @@
 <li>Fixed issue with latest tidyr-update on CRAN.</li>
 </ul>
 </div>
-<div id="bug-fixes-10" class="section level2">
+<div id="bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-10" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-11" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/frq.html">frq()</a></code> did not correctly calculate valid and cumulative percentages when using weights.</li>
@@ -698,9 +705,9 @@
 <code><a href="../reference/merge_imputations.html">merge_imputations()</a></code> gets a <code>summary</code>-argument to plot a graphical summary of the quality of the merging process.</li>
 </ul>
 </div>
-<div id="bug-fixes-11" class="section level2">
+<div id="bug-fixes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-11" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-12" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/add_columns.html">add_columns()</a></code> and <code><a href="../reference/add_columns.html">replace_columns()</a></code> crashed R when no data frame was specified in <code>...</code>-ellipses argument.</li>
@@ -717,8 +724,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#sjmisc-281">2.8.1</a></li>
         <li><a href="#sjmisc-280">2.8.0</a></li>
-        <li><a href="#sjmisc-280-1">2.8.0</a></li>
         <li><a href="#sjmisc-278">2.7.8</a></li>
         <li><a href="#sjmisc-277">2.7.7</a></li>
         <li><a href="#sjmisc-276">2.7.6</a></li>
