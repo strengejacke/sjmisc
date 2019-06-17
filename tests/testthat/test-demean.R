@@ -12,10 +12,5 @@ test_that("de_mean", {
   de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE)
   de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE, suffix.dm = "dm", suffix.gm = "gm")
   de_mean(efc, c12hour, barthtot, grp = ID, suffix.dm = "dm", suffix.gm = "gm")
-})
-
-
-test_that("de_mean", {
-  skip_on_travis()
   de_mean(efc, c12hour, barthtot, grp = "ID")
 })

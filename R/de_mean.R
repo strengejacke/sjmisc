@@ -51,23 +51,13 @@
 #' de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE)
 #'
 #' @importFrom dplyr ungroup select mutate arrange group_by mutate_at bind_cols quos
-#' @importFrom rlang .data enquo quo_name
+#' @importFrom rlang .data enquo quo_name global_env
 #' @importFrom purrr map
 #' @export
 de_mean <- function(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "_gm") {
-
-  group_var <- rlang::enquo(grp)
-  group_name <- rlang::quo_name(group_var)
+  group_name <- rlang::quo_name(rlang::enquo(grp))
+  group_var <- rlang::as_quosure(rlang::sym(group_name), env = rlang::global_env())
   group_ids <- c(group_name, ".dummyid")
-
-  tryCatch({
-    if (is.character(grp))
-      group_var <- rlang::as_quosure(rlang::sym(group_name))
-    },
-    error = function(x) { NULL },
-    warning = function(x) { NULL },
-    finally = function(x) { NULL }
-  )
 
   # evaluate arguments, generate data
   dat <- get_dot_data(x, dplyr::quos(...))

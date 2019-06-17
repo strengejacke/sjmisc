@@ -1,9 +1,13 @@
-# sjmisc 2.8.0
+# sjmisc 2.8.1
 
 ## General
 
 * `find_variables()` as alias for `find_var()`.
 * Revised docs.
+
+## Bug fixes
+
+* Fixed issue with forthcoming update of the **rlang** package.
 
 # sjmisc 2.8.0
 
