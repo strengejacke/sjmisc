@@ -51,7 +51,7 @@
 #' de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE)
 #'
 #' @importFrom dplyr ungroup select mutate arrange group_by mutate_at bind_cols quos
-#' @importFrom rlang .data enquo quo_name global_env
+#' @importFrom rlang .data enquo quo_name global_env sym as_quosure
 #' @importFrom purrr map
 #' @export
 de_mean <- function(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "_gm") {
