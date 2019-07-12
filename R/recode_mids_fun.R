@@ -1,5 +1,4 @@
 #' @importFrom dplyr group_by
-#' @importFrom tidyr nest
 prepare_mids_recode <- function(x) {
   # check if suggested package is available
   if (!requireNamespace("mice", quietly = TRUE))
@@ -19,12 +18,11 @@ prepare_mids_recode <- function(x) {
 
   long %>%
     dplyr::group_by(.data$.imp) %>%
-    tidyr::nest()
+    .nest()
 }
 
 
 #' @importFrom purrr map
-#' @importFrom tidyr unnest
 final_mids_recode <- function(x) {
   # check if suggested package is available
 
@@ -36,7 +34,7 @@ final_mids_recode <- function(x) {
   # because "as.mids()" can't cope with tibbles
 
   x %>%
-    tidyr::unnest() %>%
+    .unnest() %>%
     as.data.frame() %>%
     mice::as.mids()
 }

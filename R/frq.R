@@ -25,10 +25,10 @@
 #'   is only shown when variables actually have missing values, else it's not
 #'   shown.
 #' @param grp.strings Numeric, if not \code{NULL}, groups string values in
-#'   character vectors, based on their similarity. The similarity is estimated
-#'   with the \pkg{stringdist}-package. See \code{\link{group_str}} for details
-#'   on grouping, and that function's \code{maxdist}-argument to get more
-#'   details on the distance of strings to be treated as equal.
+#'   character vectors, based on their similarity. See \code{\link{group_str}}
+#'   and \code{\link{str_find}} for details on grouping, and their
+#'   \code{precision}-argument to get more details on the distance of strings
+#'   to be treated as equal.
 #' @param title String, will be used as alternative title to the variable
 #'   label. If \code{x} is a grouped data frame, \code{title} must be a
 #'   vector of same length as groups.
@@ -103,7 +103,7 @@
 #' frq(dummy, grp.strings = 2)
 #'
 #' @importFrom stats na.omit
-#' @importFrom dplyr full_join select_if select
+#' @importFrom dplyr full_join select_if select group_keys
 #' @importFrom sjlabelled get_label get_labels get_values copy_labels
 #' @importFrom purrr map_if
 #' @importFrom rlang quo_name enquo
@@ -200,7 +200,7 @@ frq <- function(x,
 
     x <- x %>%
       purrr::map_if(is.character, ~ group_str(
-        strings = .x, maxdist = grp.strings, remove.empty = FALSE)
+        strings = .x, precision = grp.strings, remove.empty = FALSE)
       ) %>%
       as.data.frame(stringsAsFactors = FALSE)
 
@@ -213,6 +213,11 @@ frq <- function(x,
 
   # do we have a grouped data frame?
   if (inherits(x, "grouped_df")) {
+
+    grkey <- colnames(dplyr::group_keys(x))
+    for (i in grkey) {
+      if (is.character(x[[i]])) x[[i]] <- as.factor(x[[i]])
+    }
 
     # get grouped data
     grps <- get_grouped_data(x)
@@ -250,7 +255,7 @@ frq <- function(x,
               show.na = show.na
             )
 
-          attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = "\n")
+          attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
 
           # save data frame for return value
           dataframes[[length(dataframes) + 1]] <- dummy
@@ -520,15 +525,23 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 }
 
 
-get_grouped_title <- function(x, grps, i, sep = "\n") {
+get_grouped_title <- function(x, grps, i, sep = ", ", long = FALSE) {
   # create title for first grouping level
   tp <- get_title_part(x, grps, 1, i)
-  title <- sprintf("%s: %s", tp[1], tp[2])
+
+  if (long)
+    title <- sprintf("%s: %s", tp[1], tp[2])
+  else
+    title <- sprintf("%s", tp[2])
 
   # do we have another groupng variable?
-  if (length(attr(x, "vars", exact = T)) > 1) {
+  if (length(dplyr::group_vars(x)) > 1) {
     tp <- get_title_part(x, grps, 2, i)
-    title <- sprintf("%s%s%s: %s", title, sep, tp[1], tp[2])
+
+    if (long)
+      title <- sprintf("%s%s%s: %s", title, sep, tp[1], tp[2])
+    else
+      title <- sprintf("%s%s%s", title, sep, tp[2])
   }
 
   # return title
@@ -542,35 +555,36 @@ get_title_part <- function(x, grps, level, i) {
 
   # get values from value labels
   vals <- sjlabelled::get_values(x[[var.name]])
+  t2 <- NULL
 
   # if we have no value labels, get values directly
   if (is.null(vals)) {
-    vals <- unique(x[[var.name]])
+    vals <- grps[[var.name]]
+    if (is.factor(grps[[var.name]])) vals <- as.character(vals)
     lab.pos <- i
   } else {
     # find position of value labels for current group
     lab.pos <- which(vals == grps[[var.name]][i])
+    t2 <- sjlabelled::get_labels(x[[var.name]])[lab.pos]
   }
 
   # get variable and value labels
   t1 <- sjlabelled::get_label(x[[var.name]], def.value = var.name)
-  t2 <- sjlabelled::get_labels(x[[var.name]])[lab.pos]
 
   # if we have no value label, use value instead
-  if (is.null(t2)) t2 <- vals[lab.pos]
+  if (sjmisc::is_empty(t2)) t2 <- vals[lab.pos]
 
   # generate title
   c(t1, t2)
 }
 
 
-#' @importFrom tidyr nest
-#' @importFrom dplyr filter
+#' @importFrom dplyr filter group_vars
 #' @importFrom stats complete.cases
 #' @importFrom rlang .data
 get_grouped_data <- function(x) {
   # nest data frame
-  grps <- tidyr::nest(x)
+  grps <- .nest(x)
 
   # remove NA category for grouped data
   cc <- grps %>%
@@ -582,7 +596,7 @@ get_grouped_data <- function(x) {
 
   # arrange data
 
-  if (length(attr(x, "vars", exact = T)) == 1)
+  if (length(dplyr::group_vars(x)) == 1)
     reihe <- order(grps[[1]])
   else
     reihe <- order(grps[[1]], grps[[2]])

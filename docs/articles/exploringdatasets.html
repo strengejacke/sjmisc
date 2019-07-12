@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -59,6 +59,9 @@
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
     </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -80,7 +83,7 @@
       <h1>Exploring Data Sets</h1>
                         <h4 class="author">Daniel Lüdecke</h4>
             
-            <h4 class="date">2019-01-02</h4>
+            <h4 class="date">2019-06-17</h4>
       
       
       <div class="hidden name"><code>exploringdatasets.Rmd</code></div>
@@ -91,22 +94,22 @@
     
 <p>Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the <a href="http://tidyverse.org/">tidyverse</a> or related packages. The <strong>sjmisc</strong>-package fits into this workflow, especially when you work with <a href="https://cran.r-project.org/package=sjlabelled">labelled data</a>, because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.</p>
 <p>The examples are based on data from the EUROFAMCARE project, a survey on the situation of family carers of older people in Europe. The sample data set <code>efc</code> is part of this package. Let us see how the family carer’s gender and subjective perception of negative impact of care as well as the cared-for person’s dependency are associated with the family carer’s quality of life.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sjmisc)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(efc)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(sjmisc)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(efc)</a></code></pre></div>
 <div id="print-frequencies-with-labels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#print-frequencies-with-labels" class="anchor"></a>Print frequencies with labels</h2>
 <p>The first thing that may be of interest is probably the distribution of gender. You can plot frequencies for labelled data with <code><a href="../reference/frq.html">frq()</a></code>. This function requires either a vector or data frame as input and prints the variable label as first line, followed by a frequency-table with values, labels, counts and percentages of the vector.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/frq.html">frq</a></span>(efc<span class="op">$</span>c161sex)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # carer's gender (x) &lt;numeric&gt; </span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=1.76  sd=0.43</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt;  val  label frq raw.prc valid.prc cum.prc</span>
-<span class="co">#&gt;    1   Male 215   23.68     23.86   23.86</span>
-<span class="co">#&gt;    2 Female 686   75.55     76.14  100.00</span>
-<span class="co">#&gt;   NA     NA   7    0.77        NA      NA</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/frq.html">frq</a></span>(efc<span class="op">$</span>c161sex)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co">#&gt; carer's gender (x) &lt;numeric&gt;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; # total N=908  valid N=901  mean=1.76  sd=0.43</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt;  val  label frq raw.prc valid.prc cum.prc</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="co">#&gt;    1   Male 215   23.68     23.86   23.86</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="co">#&gt;    2 Female 686   75.55     76.14  100.00</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="co">#&gt;   NA     NA   7    0.77        NA      NA</span></a></code></pre></div>
 </div>
 <div id="find-variables-in-a-data-frame" class="section level2">
 <h2 class="hasAnchor">
@@ -120,150 +123,147 @@
 <li>or any combination of these.</li>
 </ol>
 <p>By default, it looks for variable name and labels. The function also supports regex-patterns. By default, <code><a href="../reference/find_var.html">find_var()</a></code> returns the column-indices, but you can also print a small “summary”" with the <code>out</code>-argument.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># find all variables with "dependency" in name or label</span>
-<span class="kw"><a href="../reference/find_var.html">find_var</a></span>(efc, <span class="st">"dependency"</span>, <span class="dt">out =</span> <span class="st">"table"</span>)
-<span class="co">#&gt;   col.nr var.name          var.label</span>
-<span class="co">#&gt; 1      5   e42dep elder's dependency</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># find all variables with "dependency" in name or label</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/find_var.html">find_var</a></span>(efc, <span class="st">"dependency"</span>, <span class="dt">out =</span> <span class="st">"table"</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt;   col.nr var.name          var.label</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co">#&gt; 1      5   e42dep elder's dependency</span></a></code></pre></div>
 <p>Variable in column 5, named <em>e42dep</em>, is what we are looking for.</p>
 </div>
 <div id="print-crosstables-with-labels" class="section level2">
 <h2 class="hasAnchor">
 <a href="#print-crosstables-with-labels" class="anchor"></a>Print crosstables with labels</h2>
 <p>Now we can look at the distribution of gender by dependency:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/flat_table.html">flat_table</a></span>(efc, e42dep, c161sex)
-<span class="co">#&gt;                      c161sex Male Female</span>
-<span class="co">#&gt; e42dep                                  </span>
-<span class="co">#&gt; independent                    18     48</span>
-<span class="co">#&gt; slightly dependent             54    170</span>
-<span class="co">#&gt; moderately dependent           80    226</span>
-<span class="co">#&gt; severely dependent             63    241</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/flat_table.html">flat_table</a></span>(efc, e42dep, c161sex)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt;                      c161sex Male Female</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">#&gt; e42dep                                  </span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; independent                    18     48</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; slightly dependent             54    170</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; moderately dependent           80    226</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; severely dependent             63    241</span></a></code></pre></div>
 <p>Since the distribution of male and female carers is skewed, let’s see the proportions. To compute crosstables with row or column percentages, use the <code>margin</code>-argument:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/flat_table.html">flat_table</a></span>(efc, e42dep, c161sex, <span class="dt">margin =</span> <span class="st">"col"</span>)
-<span class="co">#&gt;                      c161sex  Male Female</span>
-<span class="co">#&gt; e42dep                                   </span>
-<span class="co">#&gt; independent                   8.37   7.01</span>
-<span class="co">#&gt; slightly dependent           25.12  24.82</span>
-<span class="co">#&gt; moderately dependent         37.21  32.99</span>
-<span class="co">#&gt; severely dependent           29.30  35.18</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/flat_table.html">flat_table</a></span>(efc, e42dep, c161sex, <span class="dt">margin =</span> <span class="st">"col"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt;                      c161sex  Male Female</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; e42dep                                   </span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; independent                   8.37   7.01</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; slightly dependent           25.12  24.82</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co">#&gt; moderately dependent         37.21  32.99</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co">#&gt; severely dependent           29.30  35.18</span></a></code></pre></div>
 </div>
 <div id="recoding-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#recoding-variables" class="anchor"></a>Recoding variables</h2>
 <p>Next, we need the negatice impact of care (<em>neg_c_7</em>) and want to create three groups: low, middle and high negative impact. We can easily recode and label vectors with <code><a href="../reference/rec.html">rec()</a></code>. This function does not only recode vectors, it also allows direct labelling of categories inside the recode-syntax (this is optional, you can also use the <code>val.labels</code>-argument). We now recode <em>neg_c_7</em> into a new variable <em>burden</em>. The cut-points are a bit arbitrary, for the sake of demonstration.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc<span class="op">$</span>burden &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rec.html">rec</a></span>(
-  efc<span class="op">$</span>neg_c_<span class="dv">7</span>,
-  <span class="dt">rec =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"min:9=1 [low]; 10:12=2 [moderate]; 13:max=3 [high]; else=NA"</span>),
-  <span class="dt">var.label =</span> <span class="st">"Subjective burden"</span>,
-  <span class="dt">as.num =</span> <span class="ot">FALSE</span> <span class="co"># we want a factor</span>
-)
-<span class="co"># print frequencies</span>
-<span class="kw"><a href="../reference/frq.html">frq</a></span>(efc<span class="op">$</span>burden)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; # Subjective burden (x) &lt;categorical&gt; </span>
-<span class="co">#&gt; # total N=908  valid N=892  mean=2.03  sd=0.81</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt;  val    label frq raw.prc valid.prc cum.prc</span>
-<span class="co">#&gt;    1      low 280   30.84     31.39   31.39</span>
-<span class="co">#&gt;    2 moderate 301   33.15     33.74   65.13</span>
-<span class="co">#&gt;    3     high 311   34.25     34.87  100.00</span>
-<span class="co">#&gt;   NA       NA  16    1.76        NA      NA</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">efc<span class="op">$</span>burden &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rec.html">rec</a></span>(</a>
+<a class="sourceLine" id="cb6-2" title="2">  efc<span class="op">$</span>neg_c_<span class="dv">7</span>,</a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">rec =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"min:9=1 [low]; 10:12=2 [moderate]; 13:max=3 [high]; else=NA"</span>),</a>
+<a class="sourceLine" id="cb6-4" title="4">  <span class="dt">var.label =</span> <span class="st">"Subjective burden"</span>,</a>
+<a class="sourceLine" id="cb6-5" title="5">  <span class="dt">as.num =</span> <span class="ot">FALSE</span> <span class="co"># we want a factor</span></a>
+<a class="sourceLine" id="cb6-6" title="6">)</a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="co"># print frequencies</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="kw"><a href="../reference/frq.html">frq</a></span>(efc<span class="op">$</span>burden)</a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; Subjective burden (x) &lt;categorical&gt;</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; # total N=908  valid N=892  mean=2.03  sd=0.81</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt;  val    label frq raw.prc valid.prc cum.prc</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt;    1      low 280   30.84     31.39   31.39</span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co">#&gt;    2 moderate 301   33.15     33.74   65.13</span></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="co">#&gt;    3     high 311   34.25     34.87  100.00</span></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt;   NA       NA  16    1.76        NA      NA</span></a></code></pre></div>
 <p>You can see the variable <em>burden</em> has a variable label (“Subjective burden”), which was set inside <code><a href="../reference/rec.html">rec()</a></code>, as well as three values with labels (“low”, “moderate” and “high”). From the lowest value in <em>neg_c_7</em> to 9 were recoded into 1, values 10 to 12 into 2 and values 13 to the highest value in <em>neg_c_7</em> into 3. All remaining values are set to missing (<code>else=NA</code> – for details on the recode-syntax, see <code><a href="../reference/rec.html">?rec</a></code>).</p>
 </div>
 <div id="grouped-data-frames" class="section level2">
 <h2 class="hasAnchor">
 <a href="#grouped-data-frames" class="anchor"></a>Grouped data frames</h2>
 <p>How is burden distributed by gender? We can group the data and print frequencies using <code><a href="../reference/frq.html">frq()</a></code> for this as well, as this function also accepts grouped data frames. Frequencies for grouped data frames first print the group-details (variable name and category), followed by the frequency table. Thanks to labelled data, the output is easy to understand.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">select</span>(burden, c161sex) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">group_by</span>(c161sex) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="../reference/frq.html">frq</a></span>()
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Grouped by:</span>
-<span class="co">#&gt; carer's gender: Male</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt; # Subjective burden (burden) &lt;categorical&gt; </span>
-<span class="co">#&gt; # total N=215  valid N=212  mean=1.91  sd=0.81</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt;  val    label frq raw.prc valid.prc cum.prc</span>
-<span class="co">#&gt;    1      low  80   37.21     37.74   37.74</span>
-<span class="co">#&gt;    2 moderate  72   33.49     33.96   71.70</span>
-<span class="co">#&gt;    3     high  60   27.91     28.30  100.00</span>
-<span class="co">#&gt;   NA       NA   3    1.40        NA      NA</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Grouped by:</span>
-<span class="co">#&gt; carer's gender: Female</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt; # Subjective burden (burden) &lt;categorical&gt; </span>
-<span class="co">#&gt; # total N=686  valid N=679  mean=2.08  sd=0.81</span>
-<span class="co">#&gt;  </span>
-<span class="co">#&gt;  val    label frq raw.prc valid.prc cum.prc</span>
-<span class="co">#&gt;    1      low 199   29.01     29.31   29.31</span>
-<span class="co">#&gt;    2 moderate 229   33.38     33.73   63.03</span>
-<span class="co">#&gt;    3     high 251   36.59     36.97  100.00</span>
-<span class="co">#&gt;   NA       NA   7    1.02        NA      NA</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">efc <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">select</span>(burden, c161sex) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(c161sex) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">  </span><span class="kw"><a href="../reference/frq.html">frq</a></span>()</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">#&gt; Subjective burden (burden) &lt;categorical&gt;</span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">#&gt; # grouped by: Male</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="co">#&gt; # total N=215  valid N=212  mean=1.91  sd=0.81</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt;  val    label frq raw.prc valid.prc cum.prc</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">#&gt;    1      low  80   37.21     37.74   37.74</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co">#&gt;    2 moderate  72   33.49     33.96   71.70</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">#&gt;    3     high  60   27.91     28.30  100.00</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="co">#&gt;   NA       NA   3    1.40        NA      NA</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&gt; Subjective burden (burden) &lt;categorical&gt;</span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">#&gt; # grouped by: Female</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">#&gt; # total N=686  valid N=679  mean=2.08  sd=0.81</span></a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt;  val    label frq raw.prc valid.prc cum.prc</span></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt;    1      low 199   29.01     29.31   29.31</span></a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co">#&gt;    2 moderate 229   33.38     33.73   63.03</span></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co">#&gt;    3     high 251   36.59     36.97  100.00</span></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">#&gt;   NA       NA   7    1.02        NA      NA</span></a></code></pre></div>
 </div>
 <div id="nested-data-frames" class="section level2">
 <h2 class="hasAnchor">
 <a href="#nested-data-frames" class="anchor"></a>Nested data frames</h2>
 <p>Let’s investigate the association between quality of life and burden across the different dependency categories, by fitting linear models for each category of <em>e42dep</em>. We can do this using <em>nested data frames</em>. <code>nest()</code> from the <strong>tidyr</strong>-package can create subsets of a data frame, based on grouping criteria, and create a new <em>list-variable</em>, where each element itself is a data frame (so it’s nested, because we have data frames inside a data frame).</p>
 <p>In the following example, we group the data by <em>e42dep</em>, and “nest” the groups. Now we get a data frame with two columns: First, the grouping variable (<em>e42dep</em>) and second, the datasets (subsets) for each country as data frame, stored in the list-variable <em>data</em>. The data frames in the subsets (in <em>data</em>) all contain the selected variables <em>burden</em>, <em>c161sex</em> and <em>quol_5</em> (quality of life).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># convert variable to labelled factor, because we then </span>
-<span class="co"># have the labels as factor levels in the output</span>
-efc<span class="op">$</span>e42dep &lt;-<span class="st"> </span><span class="kw"><a href="../reference/to_label.html">to_label</a></span>(efc<span class="op">$</span>e42dep, <span class="dt">drop.levels =</span> T)
-efc <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(e42dep, burden, c161sex, quol_<span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(e42dep) <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>()
-<span class="co">#&gt; # A tibble: 5 x 2</span>
-<span class="co">#&gt;   e42dep               data              </span>
-<span class="co">#&gt;   &lt;fct&gt;                &lt;list&gt;            </span>
-<span class="co">#&gt; 1 moderately dependent &lt;tibble [306 x 3]&gt;</span>
-<span class="co">#&gt; 2 severely dependent   &lt;tibble [304 x 3]&gt;</span>
-<span class="co">#&gt; 3 independent          &lt;tibble [66 x 3]&gt; </span>
-<span class="co">#&gt; 4 slightly dependent   &lt;tibble [225 x 3]&gt;</span>
-<span class="co">#&gt; 5 &lt;NA&gt;                 &lt;tibble [7 x 3]&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># convert variable to labelled factor, because we then </span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co"># have the labels as factor levels in the output</span></a>
+<a class="sourceLine" id="cb8-3" title="3">efc<span class="op">$</span>e42dep &lt;-<span class="st"> </span><span class="kw"><a href="../reference/to_label.html">to_label</a></span>(efc<span class="op">$</span>e42dep, <span class="dt">drop.levels =</span> T)</a>
+<a class="sourceLine" id="cb8-4" title="4">efc <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="kw">select</span>(e42dep, burden, c161sex, quol_<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(e42dep) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>()</a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co">#&gt; # A tibble: 5 x 2</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">#&gt;   e42dep               data              </span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co">#&gt;   &lt;fct&gt;                &lt;list&gt;            </span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co">#&gt; 1 moderately dependent &lt;tibble [306 x 3]&gt;</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co">#&gt; 2 severely dependent   &lt;tibble [304 x 3]&gt;</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="co">#&gt; 3 independent          &lt;tibble [66 x 3]&gt; </span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">#&gt; 4 slightly dependent   &lt;tibble [225 x 3]&gt;</span></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="co">#&gt; 5 &lt;NA&gt;                 &lt;tibble [7 x 3]&gt;</span></a></code></pre></div>
 </div>
 <div id="get-coefficients-of-nested-models" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-coefficients-of-nested-models" class="anchor"></a>Get coefficients of nested models</h2>
 <p>Using <code>map()</code> from the <strong>purrr</strong>-package, we can iterate this list and apply any function on each data frame in the list-variable “data”. We want to apply the <code><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm()</a></code>-function to the list-variable, to run linear models for all “dependency-datasets”. The results of these linear regressions are stored in another list-variable, <em>models</em> (created with <code>mutate()</code>). To quickly access and look at the coefficients, we can use <code><a href="../reference/spread_coef.html">spread_coef()</a></code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(e42dep, burden, c161sex, quol_<span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(e42dep) <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>() <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># remove nested group for NA</span>
-<span class="st">  </span><span class="kw">arrange</span>(e42dep) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># arrange by order of levels</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(
-    data, <span class="op">~</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(quol_<span class="dv">5</span> <span class="op">~</span><span class="st"> </span>burden <span class="op">+</span><span class="st"> </span>c161sex, <span class="dt">data =</span> .))
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/spread_coef.html">spread_coef</a></span>(models)
-<span class="co">#&gt; # A tibble: 4 x 7</span>
-<span class="co">#&gt;   e42dep         data         models  `(Intercept)` burden2 burden3 c161sex</span>
-<span class="co">#&gt;   &lt;fct&gt;          &lt;list&gt;       &lt;list&gt;          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 independent    &lt;tibble [66~ &lt;S3: l~          18.8   -3.16   -4.94  -0.709</span>
-<span class="co">#&gt; 2 slightly depe~ &lt;tibble [22~ &lt;S3: l~          19.8   -2.20   -2.48  -1.14 </span>
-<span class="co">#&gt; 3 moderately de~ &lt;tibble [30~ &lt;S3: l~          17.9   -1.82   -5.29  -0.637</span>
-<span class="co">#&gt; 4 severely depe~ &lt;tibble [30~ &lt;S3: l~          19.1   -3.66   -7.92  -0.746</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">efc <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">select</span>(e42dep, burden, c161sex, quol_<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(e42dep) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>() <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># remove nested group for NA</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(e42dep) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># arrange by order of levels</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(</a>
+<a class="sourceLine" id="cb9-8" title="8">    data, <span class="op">~</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(quol_<span class="dv">5</span> <span class="op">~</span><span class="st"> </span>burden <span class="op">+</span><span class="st"> </span>c161sex, <span class="dt">data =</span> .))</a>
+<a class="sourceLine" id="cb9-10" title="10">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/spread_coef.html">spread_coef</a></span>(models)</a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co">#&gt; # A tibble: 4 x 7</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co">#&gt;   e42dep          data         models `(Intercept)` burden2 burden3 c161sex</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="co">#&gt;   &lt;fct&gt;           &lt;list&gt;       &lt;list&gt;         &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="co">#&gt; 1 independent     &lt;tibble [66~ &lt;lm&gt;            18.8   -3.16   -4.94  -0.709</span></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="co">#&gt; 2 slightly depen~ &lt;tibble [22~ &lt;lm&gt;            19.8   -2.20   -2.48  -1.14 </span></a>
+<a class="sourceLine" id="cb9-17" title="17"><span class="co">#&gt; 3 moderately dep~ &lt;tibble [30~ &lt;lm&gt;            17.9   -1.82   -5.29  -0.637</span></a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="co">#&gt; 4 severely depen~ &lt;tibble [30~ &lt;lm&gt;            19.1   -3.66   -7.92  -0.746</span></a></code></pre></div>
 <p>We see that higher burden is associated with lower quality of life, for all dependency-groups. The <code>se</code> and <code>p.val</code>-arguments add standard errors and p-values to the output. <code>model.term</code> returns the statistics only for a specific term. If you specify a <code>model.term</code>, arguments <code>se</code> and <code>p.val</code> automatically default to <code>TRUE</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">efc <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">select</span>(e42dep, burden, c161sex, quol_<span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">group_by</span>(e42dep) <span class="op">%&gt;%</span>
-<span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>() <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># remove nested group for NA</span>
-<span class="st">  </span><span class="kw">arrange</span>(e42dep) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># arrange by order of levels</span>
-<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(
-    data, <span class="op">~</span><span class="st"> </span>
-<span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(quol_<span class="dv">5</span> <span class="op">~</span><span class="st"> </span>burden <span class="op">+</span><span class="st"> </span>c161sex, <span class="dt">data =</span> .))
-  ) <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw"><a href="../reference/spread_coef.html">spread_coef</a></span>(models, burden3)
-<span class="co">#&gt; # A tibble: 4 x 6</span>
-<span class="co">#&gt;   e42dep               data              models  burden3 std.error  p.value</span>
-<span class="co">#&gt;   &lt;fct&gt;                &lt;list&gt;            &lt;list&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 independent          &lt;tibble [66 x 3]&gt; &lt;S3: l~   -4.94     2.20  2.84e- 2</span>
-<span class="co">#&gt; 2 slightly dependent   &lt;tibble [225 x 3~ &lt;S3: l~   -2.48     0.694 4.25e- 4</span>
-<span class="co">#&gt; 3 moderately dependent &lt;tibble [306 x 3~ &lt;S3: l~   -5.29     0.669 5.22e-14</span>
-<span class="co">#&gt; 4 severely dependent   &lt;tibble [304 x 3~ &lt;S3: l~   -7.92     0.875 2.10e-17</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">efc <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="st">  </span><span class="kw">select</span>(e42dep, burden, c161sex, quol_<span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(e42dep) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/na.fail">na.omit</a></span>() <span class="op">%&gt;%</span><span class="st">       </span><span class="co"># remove nested group for NA</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(e42dep) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># arrange by order of levels</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">models =</span> purrr<span class="op">::</span><span class="kw"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span>(</a>
+<a class="sourceLine" id="cb10-8" title="8">    data, <span class="op">~</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="st">    </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/lm">lm</a></span>(quol_<span class="dv">5</span> <span class="op">~</span><span class="st"> </span>burden <span class="op">+</span><span class="st"> </span>c161sex, <span class="dt">data =</span> .))</a>
+<a class="sourceLine" id="cb10-10" title="10">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="st">  </span><span class="kw"><a href="../reference/spread_coef.html">spread_coef</a></span>(models, burden3)</a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt; # A tibble: 4 x 6</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="co">#&gt;   e42dep               data               models burden3 std.error  p.value</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="co">#&gt;   &lt;fct&gt;                &lt;list&gt;             &lt;list&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb10-15" title="15"><span class="co">#&gt; 1 independent          &lt;tibble [66 x 3]&gt;  &lt;lm&gt;     -4.94     2.20  2.84e- 2</span></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co">#&gt; 2 slightly dependent   &lt;tibble [225 x 3]&gt; &lt;lm&gt;     -2.48     0.694 4.25e- 4</span></a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="co">#&gt; 3 moderately dependent &lt;tibble [306 x 3]&gt; &lt;lm&gt;     -5.29     0.669 5.22e-14</span></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="co">#&gt; 4 severely dependent   &lt;tibble [304 x 3]&gt; &lt;lm&gt;     -7.92     0.875 2.10e-17</span></a></code></pre></div>
 </div>
   </div>
 

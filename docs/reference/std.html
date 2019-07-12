@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -96,6 +96,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -221,7 +224,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>std()</code> and <code>center()</code> also work on grouped data frames
-  (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>). In this case, standardization
+  (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>). In this case, standardization
   or centering is applied to the subsets of variables in <code>x</code>.
   See 'Examples'.
   <br /> <br />
@@ -240,7 +243,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gelman A (2008) Scaling regression inputs by dividing by two
-  standard deviations. <em>Statistics in Medicine 27: 2865–2873.</em>
+  standard deviations. <em>Statistics in Medicine 27: 2865-2873.</em>
   <a href='http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf'>http://www.stat.columbia.edu/~gelman/research/published/standardizing7.pdf</a>
   <br /> <br />
   Gelman A, Hill J (2007) Data Analysis Using Regression and Multilevel/Hierarchical
@@ -4065,8 +4068,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># works with mutate()</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e17age</span>, <span class='no'>neg_c_7</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>age_std</span> <span class='kw'>=</span> <span class='fu'>std</span>(<span class='no'>e17age</span>), <span class='kw'>burden</span> <span class='kw'>=</span> <span class='fu'>center</span>(<span class='no'>neg_c_7</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e17age</span>, <span class='no'>neg_c_7</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>age_std</span> <span class='kw'>=</span> <span class='fu'>std</span>(<span class='no'>e17age</span>), <span class='kw'>burden</span> <span class='kw'>=</span> <span class='fu'>center</span>(<span class='no'>neg_c_7</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>()</div><div class='output co'>#&gt;   e17age neg_c_7    age_std     burden
 #&gt; 1     83      12  0.4791992  0.1502242
 #&gt; 2     88      20  1.0969170  8.1502242
@@ -4110,7 +4113,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2 -0.88529152</div><div class='input'>
 <span class='co'># compare new column "disp_z" w/ output above</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>std</span>(<span class='no'>disp</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   cyl [3]</span><span>
 #&gt;      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb disp_z
@@ -4431,7 +4434,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 149     0.43072244    0.78617383     0.93015445  1.4439940605  virginica
 #&gt; 150     0.06843254   -0.13153881     0.76021149  0.7880306775  virginica</div><div class='input'>
 <span class='co'># standardize only variables with more than 10 unique values</span>
-<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>10</span>
+<span class='no'>p</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span>(<span class='no'>x</span>) <span class='kw'>&gt;</span> <span class='fl'>10</span>
 <span class='fu'>std_if</span>(<span class='no'>efc</span>, <span class='kw'>predicate</span> <span class='kw'>=</span> <span class='no'>p</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;        c12hour_z    e17age_z   c160age_z  barthtot_z   neg_c_7_z  pos_v_4_z
 #&gt; 1   -0.519615996  0.47919925  0.19002509  0.35385338  0.03890892 -0.2125309
 #&gt; 2    2.078551270  1.09691703  0.04023278  0.35385338  2.11095413 -0.6583397

@@ -79,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -106,6 +106,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -136,7 +139,7 @@
     <div class="ref-description">
     
     <p><code>add_columns()</code> combines two or more data frames, but unlike
-  <code><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></code> or <code><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></code>, this function
+  <code><a href='https://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></code> or <code><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></code>, this function
   binds <code>data</code> as last columns of a data frame (i.e., behind columns
   specified in <code>...</code>). This can be useful in a "pipe"-workflow, where
   a data frame returned by a previous function should be appended
@@ -212,7 +215,7 @@ as new columns to <code>data</code>.</p></td>
   replace existing variables in <code>data</code>). Use <code>replace = FALSE</code> to
   keep all columns. Identical column names will then be renamed, to ensure
   unique column names (which happens by default when using
-  <code><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></code>). When replacing columns, replaced columns
+  <code><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></code>). When replacing columns, replaced columns
   are not added to the end of the data frame. Rather, the original order of
   columns will be preserved.</p>
     
@@ -229,7 +232,7 @@ as new columns to <code>data</code>.</p></td>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from 'package:base':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span>(<span class='no'>d1</span>, <span class='no'>d2</span>))</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span>(<span class='no'>d1</span>, <span class='no'>d2</span>))</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1
 #&gt; 1      16        2      2     83      3       3
 #&gt; 2     148        2      2     88      3       3
 #&gt; 3      70        1      2     82      3       2
@@ -2969,7 +2972,7 @@ as new columns to <code>data</code>.</p></td>
 <span class='co'># (standardization in this example) and add the new, transformed</span>
 <span class='co'># variables *to the end* of the original data frame</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e17age</span>, <span class='no'>c160age</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e17age</span>, <span class='no'>c160age</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='std.html'>std</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>add_columns</span>(<span class='no'>efc</span>)</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        16        2      2     83      3       3       2       2       2
@@ -6610,7 +6613,7 @@ as new columns to <code>data</code>.</p></td>
 <span class='co'># new variables with same name will overwrite old variables</span>
 <span class='co'># in "efc". order of columns is not changed.</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='to_factor.html'>to_factor</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>add_columns</span>(<span class='no'>efc</span>)</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        16        2      2     83      3       3       2       2       2
@@ -9342,7 +9345,7 @@ as new columns to <code>data</code>.</p></td>
 <span class='co'># keep both old and new variables, automatically</span>
 <span class='co'># rename variables with identical name</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='to_factor.html'>to_factor</a></span>() <span class='kw'>%&gt;%</span>
   <span class='fu'>add_columns</span>(<span class='no'>efc</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        16        2      2     83      3       3       2       2       2
@@ -12994,8 +12997,10 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 4     168        1      2     67      4       4       1       3       1       1
 #&gt; 5     168        2      2     84      4       3       2       1       2       2
 #&gt; 6      16        2      2     85      4       2       2       3       3       3</div><div class='input'>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sjlabelled</span>)
-<span class='co'># slightly change variables, to see effect</span>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sjlabelled</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: 'sjlabelled'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:dplyr':</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    as_label</span></div><div class='input'><span class='co'># slightly change variables, to see effect</span>
 <span class='no'>d2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/as_label'>as_label</a></span>(<span class='no'>d2</span>)
 <span class='no'>d3</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/as_label'>as_label</a></span>(<span class='no'>d3</span>)
 
@@ -16674,9 +16679,9 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 31 31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 #&gt; 32 32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>gear</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>gear</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>add_id</span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>gear</span>, <span class='no'>ID</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='no'>gear</span>, <span class='no'>ID</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
 #&gt;       ID   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>

@@ -21,6 +21,7 @@
 #'    column is moved to the end of the data frame by default.
 #'
 #' @examples
+#' \dontrun{
 #' data(iris)
 #'
 #' iris %>%
@@ -42,7 +43,7 @@
 #' library(dplyr)
 #' iris %>%
 #'   move_columns(contains("Width"), .after = "Species") %>%
-#'   head()
+#'   head()}
 #'
 #' @importFrom dplyr bind_cols
 #' @export
@@ -69,17 +70,21 @@ move_columns <- function(data, ..., .before, .after) {
         pos.after <- as.numeric(pos.before) - 1
       else
         pos.after <- which(colnames(data) == pos.before) - 1
-    } else {
+    } else if (!sjmisc::is_empty(pos.after)) {
       if (is_num_chr(pos.after))
         pos.after <- as.numeric(pos.after)
       else
         pos.after <- which(colnames(data) == pos.after)
+    } else {
+      pos.after <- Inf
     }
 
   }
 
+  # final test, to make sure we have a valid value here
+  if (!length(pos.after)) pos.after <- Inf
 
-  if (pos.after < 1) {
+  if (!is.infinite(pos.after) && pos.after < 1) {
     x <- cbind(dat, data)
   } else if (is.infinite(pos.after) || pos.after >= ncol(data)) {
     x <- cbind(data, dat)

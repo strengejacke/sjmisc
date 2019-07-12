@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -96,6 +96,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -229,7 +232,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>split_var()</code> splits a variable into equal sized groups, where
-  the amount of groups depends on the <code>groupcount</code>-argument. Thus, this
+  the amount of groups depends on the <code>n</code>-argument. Thus, this
   functions <code><a href='https://www.rdocumentation.org/packages/base/topics/cut'>cut</a>s</code> a variable into groups at the specified
   <code><a href='https://www.rdocumentation.org/packages/stats/topics/quantile'>quantile</a>s</code>.
   <br /> <br />
@@ -237,7 +240,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
   groups have the same value range (e.g., from 1-5, 6-10, 11-15 etc.).
   <br /> <br />
   <code>split_var()</code> also works on grouped data frames
-  (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>). In this case, splitting is applied to
+  (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>). In this case, splitting is applied to
   the subsets of variables in <code>x</code>. See 'Examples'.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -1175,28 +1178,30 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 906      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;
 #&gt; 907      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;
 #&gt; 908      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;</div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span>(<span class='fu'>split_var</span>(<span class='no'>efc</span>, <span class='no'>neg_c_7</span>, <span class='no'>pos_v_4</span>, <span class='no'>e17age</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'># Negative impact with 7 items (neg_c_7_g) &lt;categorical&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=892  mean=2.03  sd=0.81
-#&gt; </span><span> 
-#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt; <span style='color: #BB0000;'>Negative impact with 7 items (neg_c_7_g)</span><span style='color: #0000BB;'> &lt;categorical&gt;
+#&gt; # total N=908  valid N=892  mean=2.03  sd=0.81
+#&gt; 
+#&gt; </span><span>  val frq raw.prc valid.prc cum.prc
 #&gt;     1 280   30.84     31.39   31.39
 #&gt;     2 301   33.15     33.74   65.13
 #&gt;     3 311   34.25     34.87  100.00
 #&gt;  &lt;NA&gt;  16    1.76        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># Positive value with 4 items (pos_v_4_g) &lt;categorical&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=881  mean=2.03  sd=0.81
-#&gt; </span><span> 
-#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>Positive value with 4 items (pos_v_4_g)</span><span style='color: #0000BB;'> &lt;categorical&gt;
+#&gt; # total N=908  valid N=881  mean=2.03  sd=0.81
+#&gt; 
+#&gt; </span><span>  val frq raw.prc valid.prc cum.prc
 #&gt;     1 275   30.29     31.21   31.21
 #&gt;     2 304   33.48     34.51   65.72
 #&gt;     3 302   33.26     34.28  100.00
 #&gt;  &lt;NA&gt;  27    2.97        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># elder' age (e17age_g) &lt;categorical&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=891  mean=2.05  sd=0.82
-#&gt; </span><span> 
-#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder' age (e17age_g)</span><span style='color: #0000BB;'> &lt;categorical&gt;
+#&gt; # total N=908  valid N=891  mean=2.05  sd=0.82
+#&gt; 
+#&gt; </span><span>  val frq raw.prc valid.prc cum.prc
 #&gt;     1 274   30.18     30.75   30.75
 #&gt;     2 294   32.38     33.00   63.75
 #&gt;     3 323   35.57     36.25  100.00
@@ -1221,7 +1226,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># separation of original categories</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='http://dplyr.tidyverse.org/reference/ranking.html'>ntile</a></span>(<span class='no'>efc</span>$<span class='no'>neg_c_7</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/ranking.html'>ntile</a></span>(<span class='no'>efc</span>$<span class='no'>neg_c_7</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='no'>efc</span>$<span class='no'>neg_c_7</span>, <span class='no'>x</span>)</div><div class='output co'>#&gt;     x
 #&gt;        1   2   3
 #&gt;   7   75   0   0
@@ -1276,7 +1281,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt;  1  2  3 
 #&gt; 11 10 11 </div><div class='input'>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>cyl</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>split_var</span>(<span class='no'>disp</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>()</div><div class='output co'>#&gt; .
 #&gt;  1  2  3 

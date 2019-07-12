@@ -8,3 +8,5 @@
 ^CONTRIBUTING.*$
 ^CODE_OF_CONDUCT.*$
 ^_pkgdown\.yml$
+^doc$
+^Meta$

@@ -2,11 +2,17 @@
 % Please edit documentation in R/find_var.R
 \name{find_var}
 \alias{find_var}
+\alias{find_variables}
 \title{Find variable by name or label}
 \usage{
 find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
   "name_value", "label_value", "name", "label", "value", "all"),
-  out = c("table", "df", "index"), fuzzy = FALSE, as.df, as.varlab)
+  out = c("table", "df", "index"), fuzzy = FALSE, regex = FALSE)
+
+find_variables(data, pattern, ignore.case = TRUE,
+  search = c("name_label", "name_value", "label_value", "name", "label",
+  "value", "all"), out = c("table", "df", "index"), fuzzy = FALSE,
+  regex = FALSE)
 }
 \arguments{
 \item{data}{A data frame.}
@@ -14,9 +20,10 @@ find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
 \item{pattern}{Character string to be matched in \code{data}. May also be a
 character vector of length > 1 (see 'Examples'). \code{pattern} is
 searched for in column names and variable label attributes of
-\code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern} might also
-be a regular-expression object, as returned by \code{\link[stringr]{regex}},
-or any of \pkg{stringr}'s supported \code{\link[stringr]{modifiers}}.}
+\code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern}
+might also be a regular-expression object, as returned by \code{\link[stringr]{regex}}.
+Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
+expression rather than a fixed string.}
 
 \item{ignore.case}{Logical, whether matching should be case sensitive or not.}
 
@@ -53,12 +60,10 @@ and must be one of:
 
 \item{fuzzy}{Logical, if \code{TRUE}, "fuzzy matching" (partial and
 close distance matching) will be used to find \code{pattern}
-in \code{data} if no exact match was found. \code{\link{str_pos}}
-is used for fuzzy matching.}
+in \code{data} if no exact match was found.}
 
-\item{as.df}{Deprecated, use \code{out = "df"} instead.}
-
-\item{as.varlab}{Deprecated, use \code{out = "table" instead.}}
+\item{regex}{Logical, if \code{TRUE}, \code{pattern} is treated as a regular
+expression rather than a fixed string.}
 }
 \value{
 By default (i.e. \code{out = "table"}, returns a data frame with three
@@ -76,10 +81,8 @@ This functions finds variables in a data frame, which variable
 This function searches for \code{pattern} in \code{data}'s column names
            and - for labelled data - in all variable and value labels of \code{data}'s
            variables (see \code{\link[sjlabelled]{get_label}} for details on variable labels and
-           labelled data). Search is performed using the
-           \code{\link[stringr]{str_detect}} functions; hence, regular
-           expressions are supported as well, by simply using
-           \code{pattern = stringr::regex(...)}.
+           labelled data). Regular expressions are supported as well, by simply using
+           \code{pattern = stringr::regex(...)} or \code{regex = TRUE}.
 }
 \examples{
 data(efc)

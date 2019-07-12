@@ -4,7 +4,7 @@
 #' @description This function replaces (tagged) NA's of a variable, data frame
 #'                or list of variables with \code{value}.
 #'
-#' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{rec}}
+#' @seealso \code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{rec}}
 #'            for general recoding of variables and \code{\link{recode_to}}
 #'            for re-shifting value ranges.
 #'
@@ -135,6 +135,10 @@ replace_na_helper <- function(x, value, na.label, tagged.na) {
     }
     # check if we have tagged NA
     if (!is.null(tagged.na)) {
+      if (!requireNamespace("haven", quietly = TRUE)) {
+        stop("Package `haven` needed for this function to work. Please install it.", call. = FALSE)
+      }
+
       # coerce to tagged NA
       if (!haven::is_tagged_na(tagged.na)) tagged.na <- haven::tagged_na(tagged.na)
 

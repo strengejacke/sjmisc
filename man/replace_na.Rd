@@ -100,7 +100,7 @@ replace_na(x, value = 5, tagged.na = "2")
 
 }
 \seealso{
-\code{\link{set_na}} for setting \code{NA} values, \code{\link{rec}}
+\code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{rec}}
            for general recoding of variables and \code{\link{recode_to}}
            for re-shifting value ranges.
 }

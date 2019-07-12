@@ -41,3 +41,5 @@ $RECYCLE.BIN/
 inst/doc
 revdep
 vignettes/*.html
+doc
+Meta

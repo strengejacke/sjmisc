@@ -1,4 +1,39 @@
+# sjmisc 2.8.1
+
+## General
+
+* `find_variables()` as alias for `find_var()`.
+* Revised docs.
+
+## Bug fixes
+
+* Fixed issue with forthcoming update of the **rlang** package.
+
+# sjmisc 2.8.0
+
+## General
+
+* Some print-methods, especially for grouped data frames, are now more compact.
+
+## New functions
+
+* `reshape_longer()`, as alternative to `to_long()`, probably easier to remember (function and argument-names).
+
+## Bug fixes
+
+* `frq()` displayed labels as `NA` in some situations for grouped data frames with more than one group, when data were not labelled.
+
 # sjmisc 2.7.8
+
+## General
+
+* Reduce package dependencies.
+* `str_pos()` was renamed into `str_find()`.
+* New package-vignette **Recoding Variables**.
+
+## New functions
+
+* `typical_value()`, which was formerly located in package _sjstats_.
 
 ## Changes to functions
 
@@ -9,6 +44,8 @@
 
 * Better handling of factors in `merge_imputations()`, which previously could result in `NA`-values when merging imputed values into one variable.
 * Fix issue in `is_empty()` in case the vector had non-missing values, but first element of vector was `NA`.
+* Fixed bug in `frq()` for grouped data frame, when grouping variable was a character vector. In this case, group titles were mixed up.
+* Fix encoding issues in help-files.
 
 # sjmisc 2.7.7
 

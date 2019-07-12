@@ -18,7 +18,6 @@
 #' @param append Logical, if \code{TRUE} (default), this function returns
 #'          \code{data} with new columns for the model coefficients; else,
 #'          a new data frame with model coefficients only are returned.
-#' @param ... Other arguments passed down to the \code{\link[broom]{tidy}}-function.
 #'
 #' @return A data frame with columns for each coefficient of the models
 #'           that are stored in the list-variable of \code{data}; or, if
@@ -93,13 +92,11 @@
 #'   # compute the CI for all bootstrapped model coefficients
 #'   boot_ci(e42dep, c161sex, c172code)
 #'
-#' @importFrom broom tidy
-#' @importFrom dplyr select bind_cols "%>%"
-#' @importFrom tidyr spread
+#' @importFrom dplyr select bind_cols
 #' @importFrom purrr map_df
 #' @importFrom rlang .data
 #' @export
-spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE, ...) {
+spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE) {
   # check if we have a data frame
   if (!is.data.frame(data))
     stop("`data` needs to be a data frame.", call. = FALSE)
@@ -120,17 +117,28 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
   # if yes, select this, and its p-value
   if (!sjmisc::is_empty(model.term)) {
     # validate model term, i.e. check if coefficient exists in models
-    tmp <- broom::tidy(data[[model.column]][[1]], effects = "fixed")
+    tmp <- summary(data[[model.column]][[1]])$coefficients %>%
+      as.data.frame() %>%
+      rownames_as_column("term") %>%
+      var_rename(
+        Estimate = "estimate",
+        `Std. Error` = "std.error",
+        `t value` = "statistic",
+        `z value` = "statistic",
+        `Pr(>|t|)` = "p.value",
+        `Pr(>|z|)` = "p.value",
+        verbose = FALSE
+      )
 
     # if term is no valid coefficient name, tell user, and make
     # suggestions of possibly meant correct terms
     if (model.term %nin% tmp$term) {
 
-      pos <- str_pos(search.string = tmp$term, find.term = model.term, part.dist.match = 1)
+      pos <- str_find(string = tmp$term, pattern = model.term, partial = 1)
 
-      if (pos != -1) {
+      if (length(pos) > 1 || pos != -1) {
         pos_str <-
-          sprintf(" Did you mean (one of) `%s`?", paste(tmp$term[pos], collapse = ","))
+          sprintf(" Did you mean (one of) `%s`?", paste(tmp$term[pos], collapse = ", "))
       } else {
         pos_str <- ""
       }
@@ -154,7 +162,18 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
     dat <-
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        tmp <- broom::tidy(x, effects = "fixed", ...) %>%
+        tmp <- summary(x)$coefficients %>%
+          as.data.frame() %>%
+          rownames_as_column("term") %>%
+          var_rename(
+            Estimate = "estimate",
+            `Std. Error` = "std.error",
+            `t value` = "statistic",
+            `z value` = "statistic",
+            `Pr(>|t|)` = "p.value",
+            `Pr(>|z|)` = "p.value",
+            verbose = FALSE
+          ) %>%
           # filter term
           dplyr::filter(.data$term == model.term)
 
@@ -173,13 +192,22 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
     dat <-
       purrr::map_df(data[[model.column]], function(x) {
         # tidy model. for mixed effects, return fixed effects only
-        tmp <- broom::tidy(x, effects = "fixed", ...)
+        tmp <- summary(x)$coefficients %>%
+          as.data.frame() %>%
+          rownames_as_column("term") %>%
+          var_rename(
+            Estimate = "estimate",
+            `Std. Error` = "std.error",
+            `t value` = "statistic",
+            `z value` = "statistic",
+            `Pr(>|t|)` = "p.value",
+            `Pr(>|z|)` = "p.value",
+            verbose = FALSE
+          )
 
         # just select term name and estimate value
-        df1 <- tmp %>%
-          dplyr::select(.data$term, .data$estimate) %>%
-          # spread to columns
-          tidyr::spread(key = .data$term, value = .data$estimate)
+        df1 <- as.data.frame(t(tmp$estimate))
+        colnames(df1) <- tmp$term
 
         # columns for each data frame
         cols <- ncol(df1)
@@ -187,12 +215,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         # standard error also requested?
         if (se) {
           # just select term name and estimate value
-          df2 <- tmp %>%
-            dplyr::select(.data$term, .data$std.error) %>%
-            # spread to columns
-            tidyr::spread(key = .data$term, value = .data$std.error)
-          # fix column names
-          colnames(df2) <- sprintf("%s.se", colnames(df2))
+          df2 <- as.data.frame(t(tmp$std.error))
+          colnames(df2) <- sprintf("%s.se", tmp$term)
           # bind together
           df1 <- dplyr::bind_cols(df1, df2)
         }
@@ -200,12 +224,8 @@ spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE
         # p-value also requested?
         if (p.val) {
           # just select term name and estimate value
-          df3 <- tmp %>%
-            dplyr::select(.data$term, .data$p.value) %>%
-            # spread to columns
-            tidyr::spread(key = .data$term, value = .data$p.value)
-          # fix column names
-          colnames(df3) <- sprintf("%s.p", colnames(df3))
+          df3 <- as.data.frame(t(tmp$p.value))
+          colnames(df3) <- sprintf("%s.p", tmp$term)
           # bind together
           df1 <- dplyr::bind_cols(df1, df3)
         }

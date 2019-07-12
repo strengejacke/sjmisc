@@ -7,6 +7,8 @@
 #' @param x A data frame.
 #' @param ... Pairs of named vectors, where the name (lhs) equals the column name
 #'    that should be renamed, and the value (rhs) is the new column name.
+#' @param verbose Logical, if \code{TRUE}, a warning is displayed when variable
+#'    names do not exist in \code{x}.
 #'
 #' @return \code{x}, with new column names for those variables specified in \code{...}.
 #'
@@ -31,7 +33,7 @@
 #'
 #' @importFrom rlang ensyms as_string
 #' @export
-var_rename <- function(x, ...) {
+var_rename <- function(x, ..., verbose = TRUE) {
   # get dots
   .dots <- match.call(expand.dots = FALSE)$`...`
 
@@ -51,12 +53,14 @@ var_rename <- function(x, ...) {
 
   # check if all variables exist in data frame
   if (!sjmisc::is_empty(non.match)) {
-    # tell user
-    warning(sprintf(
-      "Following elements are no valid column names in `x`: %s",
-      paste(old_names[non.match], collapse = ",")
-    ),
-    call. = F)
+    if (verbose) {
+      # tell user
+      warning(sprintf(
+        "Following elements are no valid column names in `x`: %s",
+        paste(old_names[non.match], collapse = ",")
+      ),
+      call. = F)
+    }
     # remove invalid names
     old_names <- old_names[-non.match]
     new_names <- new_names[-non.match]

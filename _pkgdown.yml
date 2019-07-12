@@ -1,0 +1,80 @@
+authors:
+  Daniel Lüdecke:
+    href: https://github.com/strengejacke
+
+template:
+  params:
+    bootswatch: cosmo
+
+reference:
+- title: "Recode and Data Transformatiomn Functions"
+  contents:
+  - rec
+  - recode_to
+  - dicho
+  - group_var
+  - group_labels
+  - split_var
+  - std
+  - center
+
+- title: "Scoped Variants of Recode and Data Transformatiomn Functions"
+  contents:
+  - rec_if
+  - recode_to_if
+  - dicho_if
+  - group_var_if
+  - group_labels_if
+  - split_var_if
+  - std
+  - center
+
+- title: "Adding, Replacing and Removing Variables or Cases from Data Frames"
+  contents:
+  - add_columns
+  - add_variables
+  - replace_columns
+  - add_case
+  - add_id
+  - move_columns
+  - remove_empty_cols
+  - remove_empty_rows
+  - remove_var
+  - remove_cols
+
+- title: "Descriptive and Summary Statistics"
+  contents:
+  - count_na
+  - descr
+  - flat_table
+  - frq
+  - row_count
+  - col_count
+  - row_sums
+  - row_means
+  - total_mean
+
+- title: "Properties of Data Frames or Variables"
+  contents:
+  - all_na
+  - empty_cols
+  - empty_rows
+  - has_na
+  - incomplete_cases
+  - complete_cases
+  - complete_vars
+  - incomplete_vars
+
+- title: "Check Variables"
+  contents:
+  - is_crossed
+  - is_nested
+  - is_cross_classified
+  - is_empty
+  - is_even
+  - is_odd
+  - is_float
+  - is_whole
+  - is_num_fac
+  - is_num_chr
+

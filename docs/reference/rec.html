@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -96,6 +96,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -226,7 +229,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <dt>recode pairs</dt><dd><p>each recode pair has to be separated by a <code>;</code>, e.g. <code>rec = "1=1; 2=4; 3=2; 4=3"</code></p></dd>
     <dt>multiple values</dt><dd><p>multiple old values that should be recoded into a new single value may be separated with comma, e.g. <code>"1,2=1; 3,4=2"</code></p></dd>
     <dt>value range</dt><dd><p>a value range is indicated by a colon, e.g. <code>"1:4=1; 5:8=2"</code> (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)</p></dd>
-    <dt>value range for doubles</dt><dd><p>for double vectors (with floating points), all values within the specified range are recoded; e.g. <code>1:2.5=1;2.6:3=2</code> recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)</p></dd>
+    <dt>value range for doubles</dt><dd><p>for double vectors (with fractional part), all values within the specified range are recoded; e.g. <code>1:2.5=1;2.6:3=2</code> recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)</p></dd>
     <dt><code>"min"</code> and <code>"max"</code></dt><dd><p>minimum and maximum values are indicates by <em>min</em> (or <em>lo</em>) and <em>max</em> (or <em>hi</em>), e.g. <code>"min:4=1; 5:max=2"</code> (recodes all values from minimum values of <code>x</code> to 4 into 1, and from 5 to maximum values of <code>x</code> into 2)</p></dd>
     <dt><code>"else"</code></dt><dd><p>all other values, which have not been specified yet, are indicated by <em>else</em>, e.g. <code>"3=1; 1=2; else=3"</code> (recodes 3 into 1, 1 into 2 and all other values into 3)</p></dd>
     <dt><code>"copy"</code></dt><dd><p>the <code>"else"</code>-token can be combined with <em>copy</em>, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. <code>"3=1; 1=2; else=copy"</code> (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')</p></dd>
@@ -240,14 +243,14 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <p>Please note following behaviours of the function:</p><ul>
 <li><p>the <code>"else"</code>-token should always be the last argument in the <code>rec</code>-string.</p></li>
 <li><p>Non-matching values will be set to <code>NA</code>, unless captured by the <code>"else"</code>-token.</p></li>
-<li><p>Tagged NA values (see <code><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></code>) and their value labels will be preserved when copying NA values to the recoded vector with <code>"else=copy"</code>.</p></li>
+<li><p>Tagged NA values (see <code><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></code>) and their value labels will be preserved when copying NA values to the recoded vector with <code>"else=copy"</code>.</p></li>
 <li><p>Variable label attributes (see, for instance, <code><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/get_label'>get_label</a></code>) are preserved (unless changed via <code>var.label</code>-argument), however, value label attributes are removed (except for <code>"rev"</code>, where present value labels will be automatically reversed as well). Use <code>val.labels</code>-argument to add labels for recoded values.</p></li>
 <li><p>If <code>x</code> is a data frame, all variables should have the same categories resp. value range (else, see second bullet, <code>NA</code>s are produced).</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='set_na.html'>set_na</a></code> for setting <code>NA</code> values, <code><a href='replace_na.html'>replace_na</a></code>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/set_na'>set_na</a></code> for setting <code>NA</code> values, <code><a href='replace_na.html'>replace_na</a></code>
            to replace <code>NA</code>'s with specific value, <code><a href='recode_to.html'>recode_to</a></code>
            for re-shifting value ranges and <code><a href='ref_lvl.html'>ref_lvl</a></code> to change the
            reference level of (numeric) factors.</p></div>
@@ -269,7 +272,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># keep value labels. variable label is automatically preserved</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>rec</span>(<span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"1,2=1; 3,4=2"</span>,
       <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"low dependency"</span>, <span class='st'>"high dependency"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>()</div><div class='output co'>#&gt; 'data.frame':	908 obs. of  2 variables:
@@ -283,8 +286,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt;   .. ..- attr(*, "names")= chr  "low dependency" "high dependency"</div><div class='input'>
 <span class='co'># works with mutate</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e17age</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>dependency_rev</span> <span class='kw'>=</span> <span class='fu'>rec</span>(<span class='no'>e42dep</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"rev"</span>)) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e17age</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>dependency_rev</span> <span class='kw'>=</span> <span class='fu'>rec</span>(<span class='no'>e42dep</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"rev"</span>)) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/head'>head</a></span>()</div><div class='output co'>#&gt;   e42dep e17age dependency_rev
 #&gt; 1      3     83              2
 #&gt; 2      3     88              2
@@ -331,19 +334,20 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
   <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
 <span class='fu'><a href='frq.html'>frq</a></span>(<span class='no'>dummy</span>)</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'># carer' age (c160age_r) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=2.40  sd=0.59
-#&gt; </span><span> 
-#&gt;  val  label frq raw.prc valid.prc cum.prc
+#&gt; <span style='color: #BB0000;'>carer' age (c160age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=901  mean=2.40  sd=0.59
+#&gt; 
+#&gt; </span><span> val  label frq raw.prc valid.prc cum.prc
 #&gt;    1  young  48    5.29      5.33    5.33
 #&gt;    2 middle 442   48.68     49.06   54.38
 #&gt;    3    old 411   45.26     45.62  100.00
 #&gt;   NA     NA   7    0.77        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># elder' age (e17age_r) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=891  mean=3.00  sd=0.00
-#&gt; </span><span> 
-#&gt;  val  label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder' age (e17age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=891  mean=3.00  sd=0.00
+#&gt; 
+#&gt; </span><span> val  label frq raw.prc valid.prc cum.prc
 #&gt;    1  young   0    0.00         0       0
 #&gt;    2 middle   0    0.00         0       0
 #&gt;    3    old 891   98.13       100     100
@@ -493,9 +497,9 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 32 88 30 </div><div class='input'>
 <span class='co'># preserve tagged NAs</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>haven</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/labelled'>labelled</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
-              <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"c"</span>),
-                <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>tagged_na</a></span>(<span class='st'>"z"</span>)))
+<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
+              <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"c"</span>),
+                <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"z"</span>)))
 <span class='co'># get current value labels</span>
 <span class='no'>x</span></div><div class='output co'>#&gt; &lt;Labelled double&gt;
 #&gt;  [1]     1     2     3 NA(a) NA(c) NA(z)     4     3     2     1
@@ -510,10 +514,10 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>)</div><div class='output co'>#&gt;  [1]  1  5  3 NA NA NA  4  3  5  1
 #&gt; attr(,"labels")
 #&gt;    First  Refused Not home 
-#&gt;       NA       NA       NA </div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/haven/topics/tagged_na'>na_tag</a></span>(<span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>))</div><div class='output co'>#&gt;  [1] NA  NA  NA  "a" "c" "z" NA  NA  NA  NA </div><div class='input'>
+#&gt;       NA       NA       NA </div><div class='input'><span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>na_tag</a></span>(<span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>))</div><div class='output co'>#&gt;  [1] NA  NA  NA  "a" "c" "z" NA  NA  NA  NA </div><div class='input'>
 <span class='co'># use select-helpers from dplyr-package</span>
 <span class='fu'>rec</span>(
-  <span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='no'>c161sex</span>:<span class='no'>c175empl</span>,
+  <span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='no'>c161sex</span>:<span class='no'>c175empl</span>,
   <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"0,1=0; else=1"</span>,
   <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</div><div class='output co'>#&gt;     c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r

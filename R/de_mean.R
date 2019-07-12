@@ -24,8 +24,8 @@
 #' @details \code{de_mean()} is intended to create group- and de-meaned variables
 #'    for complex random-effect-within-between models (see \cite{Bell et al. 2018}),
 #'    where group-effects (random effects) and fixed effects correlate (see
-#'    \cite{Bafumi and Gelman 2006)}). This violation of the so called
-#'    \emph{Gauss-Markov-assumption} can happen, for instance, when analysing panel
+#'    \cite{Bafumi and Gelman 2006)}). This violation of one of the
+#'    \emph{Gauss-Markov-assumptions} can happen, for instance, when analysing panel
 #'    data. To control for correlating predictors and group effects, it is
 #'    recommended to include the group-meaned and de-meaned version of
 #'    \emph{time-varying covariates} in the model. By this, one can fit
@@ -51,23 +51,13 @@
 #' de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE)
 #'
 #' @importFrom dplyr ungroup select mutate arrange group_by mutate_at bind_cols quos
-#' @importFrom rlang .data enquo quo_name
+#' @importFrom rlang .data enquo quo_name global_env sym as_quosure
 #' @importFrom purrr map
 #' @export
 de_mean <- function(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "_gm") {
-
-  group_var <- rlang::enquo(grp)
-  group_name <- rlang::quo_name(group_var)
+  group_name <- rlang::quo_name(rlang::enquo(grp))
+  group_var <- rlang::as_quosure(rlang::sym(group_name), env = rlang::global_env())
   group_ids <- c(group_name, ".dummyid")
-
-  tryCatch({
-    if (is.character(grp))
-      group_var <- rlang::as_quosure(rlang::sym(group_name))
-    },
-    error = function(x) { NULL },
-    warning = function(x) { NULL },
-    finally = function(x) { NULL }
-  )
 
   # evaluate arguments, generate data
   dat <- get_dot_data(x, dplyr::quos(...))

@@ -4,8 +4,7 @@
 \alias{spread_coef}
 \title{Spread model coefficients of list-variables into columns}
 \usage{
-spread_coef(data, model.column, model.term, se, p.val, append = TRUE,
-  ...)
+spread_coef(data, model.column, model.term, se, p.val, append = TRUE)
 }
 \arguments{
 \item{data}{A (nested) data frame with a list-variable that contains fitted
@@ -25,8 +24,6 @@ added as new column.}
 \item{append}{Logical, if \code{TRUE} (default), this function returns
 \code{data} with new columns for the model coefficients; else,
 a new data frame with model coefficients only are returned.}
-
-\item{...}{Other arguments passed down to the \code{\link[broom]{tidy}}-function.}
 }
 \value{
 A data frame with columns for each coefficient of the models

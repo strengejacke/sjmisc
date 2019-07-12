@@ -7,7 +7,7 @@
 #'   scoped variant of \code{rec()}, where recoding will be applied only
 #'   to those variables that match the logical condition of \code{predicate}.
 #'
-#' @seealso \code{\link{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
+#' @seealso \code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{replace_na}}
 #'            to replace \code{NA}'s with specific value, \code{\link{recode_to}}
 #'            for re-shifting value ranges and \code{\link{ref_lvl}} to change the
 #'            reference level of (numeric) factors.
@@ -62,7 +62,7 @@
 #'     \item{recode pairs}{each recode pair has to be separated by a \code{;}, e.g. \code{rec = "1=1; 2=4; 3=2; 4=3"}}
 #'     \item{multiple values}{multiple old values that should be recoded into a new single value may be separated with comma, e.g. \code{"1,2=1; 3,4=2"}}
 #'     \item{value range}{a value range is indicated by a colon, e.g. \code{"1:4=1; 5:8=2"} (recodes all values from 1 to 4 into 1, and from 5 to 8 into 2)}
-#'     \item{value range for doubles}{for double vectors (with floating points), all values within the specified range are recoded; e.g. \code{1:2.5=1;2.6:3=2} recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)}
+#'     \item{value range for doubles}{for double vectors (with fractional part), all values within the specified range are recoded; e.g. \code{1:2.5=1;2.6:3=2} recodes 1 to 2.5 into 1 and 2.6 to 3 into 2, but 2.55 would not be recoded (since it's not included in any of the specified ranges)}
 #'     \item{\code{"min"} and \code{"max"}}{minimum and maximum values are indicates by \emph{min} (or \emph{lo}) and \emph{max} (or \emph{hi}), e.g. \code{"min:4=1; 5:max=2"} (recodes all values from minimum values of \code{x} to 4 into 1, and from 5 to maximum values of \code{x} into 2)}
 #'     \item{\code{"else"}}{all other values, which have not been specified yet, are indicated by \emph{else}, e.g. \code{"3=1; 1=2; else=3"} (recodes 3 into 1, 1 into 2 and all other values into 3)}
 #'     \item{\code{"copy"}}{the \code{"else"}-token can be combined with \emph{copy}, indicating that all remaining, not yet recoded values should stay the same (are copied from the original value), e.g. \code{"3=1; 1=2; else=copy"} (recodes 3 into 1, 1 into 2 and all other values like 2, 4 or 5 etc. will not be recoded, but copied, see 'Examples')}

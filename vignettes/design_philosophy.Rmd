@@ -128,3 +128,5 @@ efc %>%
   ) %>% 
   head()
 ```
+
+This makes it easy to adapt the **sjmisc** functions to your own workflow.

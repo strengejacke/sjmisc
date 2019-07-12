@@ -2,13 +2,18 @@
 #' @name shorten_string
 #'
 #' @description This function shortens strings that are longer than \code{max.length}
-#'              chars.
+#'    chars, without cropping words.
 #'
 #' @param s A string.
 #' @param max.length Maximum length of chars for the string.
 #' @param abbr String that will be used as suffix, if \code{s} was shortened.
 #'
 #' @return A shortened string.
+#'
+#' @details If the string length defined in \code{max.length} happens to be inside
+#'   a word, this word is removed from the returned string (see 'Examples'), so
+#'   the returned string has a \emph{maximum length} of \code{max.length}, but
+#'   might be shorter.
 #'
 #' @examples
 #' s <- "This can be considered as very long string!"

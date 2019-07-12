@@ -1,7 +1,7 @@
 #' @title Group near elements of string vectors
 #' @name group_str
 #'
-#' @seealso \code{\link{str_pos}}
+#' @seealso \code{\link{str_find}}
 #'
 #' @description This function groups elements of a string vector (character or string
 #'                variable) according to the element's distance ('similatiry'). The
@@ -9,10 +9,9 @@
 #'                chance to be combined into a group.
 #'
 #' @param strings Character vector with string elements.
-#' @param maxdist Maximum distance between two string elements, which is allowed to treat two
-#'          elements as similar or equal.
-#' @param method Method for distance calculation. The default is \code{"lv"}. See
-#'          \code{\link[stringdist]{stringdist}} for details.
+#' @param precision Maximum distance ("precision") between two string elements,
+#'    which is allowed to treat them as similar or equal. Smaller values mean
+#'    less tolerance in matching.
 #' @param strict Logical; if \code{TRUE}, value matching is more strictly. See 'Examples'.
 #' @param trim.whitespace Logical; if \code{TRUE} (default), leading and trailing white spaces will
 #'          be removed from string values.
@@ -20,6 +19,7 @@
 #'          character vector \code{strings}.
 #' @param verbose Logical; if \code{TRUE}, the progress bar is displayed when computing the distance matrix.
 #'          Default in \code{FALSE}, hence the bar is hidden.
+#' @param maxdist Deprecated. Please use \code{precision} now.
 #'
 #' @return A character vector where similar string elements (values) are recoded
 #'           into a new, single value. The return value is of same length as
@@ -42,27 +42,30 @@
 #' frq(newstring)
 #'
 #' # larger groups
-#' newstring <- group_str(oldstring, maxdist = 3)
+#' newstring <- group_str(oldstring, precision = 3)
 #' frq(oldstring)
 #' frq(newstring)
 #'
 #' # be more strict with matching pairs
-#' newstring <- group_str(oldstring, maxdist = 3, strict = TRUE)
+#' newstring <- group_str(oldstring, precision = 3, strict = TRUE)
 #' frq(oldstring)
 #' frq(newstring)
 #'
 #' @importFrom utils txtProgressBar
-#' @importFrom stringdist stringdistmatrix
 #' @export
-group_str <- function(strings,
-                      maxdist = 2,
-                      method = "lv",
-                      strict = FALSE,
-                      trim.whitespace = TRUE,
-                      remove.empty = TRUE,
-                      verbose = FALSE) {
+group_str <- function(
+  strings,
+  precision = 2,
+  strict = FALSE,
+  trim.whitespace = TRUE,
+  remove.empty = TRUE,
+  verbose = FALSE,
+  maxdist
+) {
   # coerce to character, if necessary
   if (!is.character(strings)) strings <- as.character(strings)
+
+  if (!missing(maxdist)) precision <- maxdist
 
   # trim white spaces
   if (trim.whitespace) strings <- unname(sapply(strings, trim))
@@ -74,7 +77,12 @@ group_str <- function(strings,
   }
 
   # create matrix from string values of variable
-  m <- stringdist::stringdistmatrix(strings, strings, method = method, useNames = "strings")
+  if (requireNamespace("stringdist", quietly = TRUE)) {
+    m <- stringdist::stringdistmatrix(strings, strings, method = "lv", useNames = "strings")
+  } else {
+    message("Install the `stringdist`-package to increase performance for grouping strings.")
+    m <- string_dist_matrix(strings)
+  }
 
   # init variable that contains "close" pairs
   pairs <- list()
@@ -97,7 +105,7 @@ group_str <- function(strings,
         # check if we found a pair's distance that
         # is within the maximum requested distance
         # i.e. which are "close" enough
-        if (!is.na(m[i, j]) && m[i, j] <= maxdist) {
+        if (!is.na(m[i, j]) && m[i, j] <= precision) {
           # go through all rows of this column and
           # check if there's a better match for the
           # currently compared token
@@ -110,7 +118,7 @@ group_str <- function(strings,
                   break
                 }
               } else {
-                if (m[cnt, j] <= maxdist && m[i, cnt] <= maxdist) {
+                if (m[cnt, j] <= precision && m[i, cnt] <= precision) {
                   foundBetterToken <- FALSE
                   break
                 }
@@ -179,3 +187,54 @@ findInPairs <- function(curel, pairs) {
   elfound
 }
 
+
+fuzzy_grep <- function(x, pattern, precision = NULL) {
+  if (is.null(precision)) precision <- round(nchar(pattern) / 3)
+  if (precision > nchar(pattern)) return(NULL)
+  p <- sprintf("(%s){~%i}", pattern, precision)
+  grep(pattern = p, x = x, ignore.case = FALSE)
+}
+
+
+string_dist_matrix <- function(string) {
+  l <- length(string)
+  m <- matrix(nrow = l, ncol = l)
+  for (i in 1:(l - 1)) {
+    for (j in (i + 1):l) {
+      pos <- string_dist(string[i], string[j])
+      if (pos == -1) pos <- 8
+      m[i, j] <- m[j, i] <- pos
+    }
+  }
+
+  rownames(m) <- string
+  colnames(m) <- string
+
+  m
+}
+
+
+string_dist <- function(s1, s2) {
+  if (is.na(s1) || is.na(s2))
+    return(-1)
+
+  if (nchar(s1) > nchar(s2)) {
+    x <- s2
+    pattern <- s1
+  } else {
+    x <- s1
+    pattern <- s2
+  }
+
+  len <- nchar(pattern)
+  if (len > 8) len <- 8
+
+  for (p in 1:len) {
+    pos <- grep(pattern = sprintf("(%s){~%i}", pattern, p), x = x, ignore.case = FALSE)
+    if (length(pos)) {
+      return(p)
+    }
+  }
+
+  return(-1)
+}

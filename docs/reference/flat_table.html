@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -93,6 +93,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -167,7 +170,7 @@ associated value.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>data</code> may also be a grouped data frame (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
+    <p><code>data</code> may also be a grouped data frame (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
       with up to two grouping variables. Cross tables are created for each subgroup then.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -213,116 +216,96 @@ associated value.</p></td>
 <span class='co'># cross tabulation.</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; </span><span> 
-#&gt;                                 e42dep independent slightly dependent moderately dependent severely dependent
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; <span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male
+#&gt; 
+#&gt; </span><span>                                e42dep independent slightly dependent moderately dependent severely dependent
 #&gt; c172code                                                                                                     
 #&gt; low level of education                           5                 16                   28                 31
 #&gt; intermediate level of education                 15                 39                   59                 43
 #&gt; high level of education                          1                 13                   18                 11
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; </span><span> 
-#&gt;                                 e42dep independent slightly dependent moderately dependent severely dependent
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female
+#&gt; 
+#&gt; </span><span>                                e42dep independent slightly dependent moderately dependent severely dependent
 #&gt; c172code                                                                                                     
 #&gt; low level of education                           7                 25                   33                 34
 #&gt; intermediate level of education                 30                 96                  104                120
 #&gt; high level of education                          4                 26                   44                 39
 #&gt; </div><div class='input'>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>, <span class='no'>c172code</span>, <span class='no'>n4pstu</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: independent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>, <span class='no'>c172code</span>, <span class='no'>n4pstu</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, independent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                             4            1            0            0             0
 #&gt; intermediate level of education                    7            2            4            2             0
 #&gt; high level of education                            1            0            0            0             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: slightly dependent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, slightly dependent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                             9            3            1            2             0
 #&gt; intermediate level of education                   22            7            8            2             0
 #&gt; high level of education                            8            1            2            2             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: moderately dependent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, moderately dependent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                            15            6            4            2             0
 #&gt; intermediate level of education                   27           14           13            4             1
 #&gt; high level of education                           11            2            5            0             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: severely dependent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, severely dependent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                             8            5           10            7             0
 #&gt; intermediate level of education                    7            3           12           20             1
 #&gt; high level of education                            4            2            3            2             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: independent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, independent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                             3            1            2            1             0
 #&gt; intermediate level of education                   19            6            5            0             0
 #&gt; high level of education                            2            2            0            0             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: slightly dependent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, slightly dependent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                            17            4            2            1             0
 #&gt; intermediate level of education                   63           13           14            4             1
 #&gt; high level of education                           18            3            4            1             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: moderately dependent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, moderately dependent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                            16           11            5            1             0
 #&gt; intermediate level of education                   44           36           17            7             0
 #&gt; high level of education                           22           12            8            2             0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: severely dependent
-#&gt; </span><span> 
-#&gt;                                 n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, severely dependent
+#&gt; 
+#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
 #&gt; c172code                                                                                                 
 #&gt; low level of education                            14            4            8            7             0
 #&gt; intermediate level of education                   39           18           35           23             2
@@ -330,15 +313,12 @@ associated value.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># now it gets weird...</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>, <span class='no'>c172code</span>, <span class='no'>n4pstu</span>, <span class='no'>c161sex</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: independent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e16sex</span>, <span class='no'>e42dep</span>, <span class='no'>c172code</span>, <span class='no'>n4pstu</span>, <span class='no'>c161sex</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, independent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            1      3
 #&gt;                                 Care Level 1             0      1
@@ -356,12 +336,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             0      0
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: slightly dependent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, slightly dependent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            3      6
 #&gt;                                 Care Level 1             1      1
@@ -379,12 +357,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             1      1
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: moderately dependent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, moderately dependent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            7      8
 #&gt;                                 Care Level 1             0      6
@@ -402,12 +378,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             0      0
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: male
-#&gt; elder's dependency: severely dependent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, severely dependent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            0      8
 #&gt;                                 Care Level 1             1      4
@@ -425,12 +399,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             0      2
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: independent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, independent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            1      2
 #&gt;                                 Care Level 1             0      1
@@ -448,12 +420,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             0      0
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: slightly dependent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, slightly dependent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            3     14
 #&gt;                                 Care Level 1             0      4
@@ -471,12 +441,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             1      0
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: moderately dependent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, moderately dependent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            6     10
 #&gt;                                 Care Level 1             2      9
@@ -494,12 +462,10 @@ associated value.</p></td>
 #&gt;                                 Care Level 3             0      2
 #&gt;                                 Care Level 3+            0      0
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>
-#&gt; Grouped by:
-#&gt; elder's gender: female
-#&gt; elder's dependency: severely dependent
-#&gt; </span><span> 
-#&gt;                                               c161sex Male Female
+#&gt; </span><span style='color: #BB0000;'>
+#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, severely dependent
+#&gt; 
+#&gt; </span><span>                                              c161sex Male Female
 #&gt; c172code                        n4pstu                           
 #&gt; low level of education          No Care Level            4     10
 #&gt;                                 Care Level 1             2      2

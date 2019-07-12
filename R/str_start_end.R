@@ -6,13 +6,14 @@
 #'
 #' @param x A character vector.
 #' @param pattern Character string to be matched in \code{x}. \code{pattern} might also
-#'          be a regular-expression object, as returned by \code{\link[stringr]{regex}},
-#'          or any of \pkg{stringr}'s supported \code{\link[stringr]{modifiers}}.
+#'          be a regular-expression object, as returned by \code{\link[stringr]{regex}}.
+#'          Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
+#'          expression rather than a fixed string.
 #'
 #' @inheritParams find_var
 #'
 #' @return A numeric vector with index of start/end position(s) of \code{pattern}
-#'          found in \code{x}, or an empty vector, if \code{pattern} was not found
+#'          found in \code{x}, or \code{-1}, if \code{pattern} was not found
 #'          in \code{x}.
 #'
 #' @examples
@@ -38,39 +39,46 @@
 #' str_start(x, "move")
 #' str_end(x, "move")
 #'
-#' @importFrom stringr str_locate_all coll
+#' x <- c("test1234testagain")
+#' str_start(x, "\\d+4")
+#' str_start(x, "\\d+4", regex = TRUE)
+#' str_end(x, "\\d+4", regex = TRUE)
+#'
 #' @importFrom dplyr pull
 #' @importFrom purrr map
 #' @export
-str_start <- function(x, pattern, ignore.case = TRUE) {
-  str_start_end(x, pattern, ignore.case, index = 1)
+str_start <- function(x, pattern, ignore.case = TRUE, regex = FALSE) {
+  if (regex) class(pattern) <- c("regex", class(pattern))
+  str_start_end(x, pattern, ignore.case, index = "start")
 }
 
 
 #' @rdname str_start
 #' @export
-str_end <- function(x, pattern, ignore.case = TRUE) {
-  str_start_end(x, pattern, ignore.case, index = -1)
+str_end <- function(x, pattern, ignore.case = TRUE, regex = FALSE) {
+  if (regex) class(pattern) <- c("regex", class(pattern))
+  str_start_end(x, pattern, ignore.case, index = "end")
 }
 
 
 str_start_end <- function(x, pattern, ignore.case, index) {
   # get all locations of pattern
-  if (inherits(pattern, "regex"))
-    pos <- stringr::str_locate_all(x, pattern)
-  else
-    pos <- stringr::str_locate_all(x, stringr::coll(pattern, ignore_case = ignore.case))
+  pos <- gregexpr(pattern, text = x, fixed = !inherits(pattern, "regex"))
 
-  # return starting indices
-  if (length(pos) > 1) {
-    purrr::map(pos, function(st) {
-      st %>%
-        as.data.frame() %>%
-        dplyr::pull(index)
+  # add end index if required
+  if (index == "end") {
+    pos <- lapply(pos, function(i) {
+      if (i[1] != -1)
+        i <- i + attr(i, "match.length", exact = TRUE) - 1
+      i
     })
-  } else {
-    pos[[1]] %>%
-      as.data.frame() %>%
-      dplyr::pull(index)
   }
+
+  # remove attributes
+  l <- lapply(pos, as.vector)
+
+  if (length(l) == 1)
+    unlist(l)
+  else
+    l
 }

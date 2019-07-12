@@ -5,22 +5,26 @@
 \alias{str_end}
 \title{Find start and end index of pattern in string}
 \usage{
-str_start(x, pattern, ignore.case = TRUE)
+str_start(x, pattern, ignore.case = TRUE, regex = FALSE)
 
-str_end(x, pattern, ignore.case = TRUE)
+str_end(x, pattern, ignore.case = TRUE, regex = FALSE)
 }
 \arguments{
 \item{x}{A character vector.}
 
 \item{pattern}{Character string to be matched in \code{x}. \code{pattern} might also
-be a regular-expression object, as returned by \code{\link[stringr]{regex}},
-or any of \pkg{stringr}'s supported \code{\link[stringr]{modifiers}}.}
+be a regular-expression object, as returned by \code{\link[stringr]{regex}}.
+Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
+expression rather than a fixed string.}
 
 \item{ignore.case}{Logical, whether matching should be case sensitive or not.}
+
+\item{regex}{Logical, if \code{TRUE}, \code{pattern} is treated as a regular
+expression rather than a fixed string.}
 }
 \value{
 A numeric vector with index of start/end position(s) of \code{pattern}
-         found in \code{x}, or an empty vector, if \code{pattern} was not found
+         found in \code{x}, or \code{-1}, if \code{pattern} was not found
          in \code{x}.
 }
 \description{
@@ -50,5 +54,10 @@ str_end(x, "likes")
 x <- c("I like to move it, move it", "You like to move it")
 str_start(x, "move")
 str_end(x, "move")
+
+x <- c("test1234testagain")
+str_start(x, "\\\\d+4")
+str_start(x, "\\\\d+4", regex = TRUE)
+str_end(x, "\\\\d+4", regex = TRUE)
 
 }

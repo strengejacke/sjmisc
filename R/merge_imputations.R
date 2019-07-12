@@ -65,7 +65,7 @@
 #'       (in social sciences) it is also feasible to compute the mean or mode
 #'       of multiple imputed variables (see \cite{Burns et al. 2011}).
 #'
-#' @references Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787–93 \doi{10.1016/j.jclinepi.2010.10.011}
+#' @references Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787-93 \doi{10.1016/j.jclinepi.2010.10.011}
 #'
 #' @examples
 #' library(mice)
@@ -215,19 +215,4 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
   else
     # return data frame with appended imputed variables
     dplyr::bind_cols(ori, imputed.dat)
-}
-
-mode_value <- function(x) {
-  # create frequency table, to find most common value
-  counts <- table(x)
-  modus <- names(counts)[max(counts) == counts]
-
-  # in case all values appear equally often, use first value
-  if (length(modus) > 1) modus <- modus[1]
-
-  # check if it's numeric
-  if (!is.na(suppressWarnings(as.numeric(modus))))
-    as.numeric(modus)
-  else
-    modus
 }

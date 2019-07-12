@@ -67,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -94,6 +94,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -211,7 +214,7 @@ All non-defined variables will not be shown in the plot.</p></td>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787–93 doi: <a href='http://doi.org/10.1016/j.jclinepi.2010.10.011'>10.1016/j.jclinepi.2010.10.011</a></p>
+    <p>Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787-93 doi: <a href='https://doi.org/10.1016/j.jclinepi.2010.10.011'>10.1016/j.jclinepi.2010.10.011</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -247,60 +250,64 @@ All non-defined variables will not be shown in the plot.</p></td>
 #&gt;   5   5  bmi  hyp  chl</div><div class='input'>
 <span class='co'># return data frame with imputed variables</span>
 <span class='fu'>merge_imputations</span>(<span class='no'>nhanes</span>, <span class='no'>imp</span>)</div><div class='output co'>#&gt;      bmi hyp chl
-#&gt; 1  25.40   1 194
+#&gt; 1  26.56   1 183
 #&gt; 2  22.70   1 187
-#&gt; 3  28.50   1 187
-#&gt; 4  24.46   2 234
+#&gt; 3  28.66   1 187
+#&gt; 4  22.68   2 242
 #&gt; 5  20.40   1 113
-#&gt; 6  22.52   2 184
+#&gt; 6  22.96   2 184
 #&gt; 7  22.50   1 118
 #&gt; 8  30.10   1 187
 #&gt; 9  22.00   1 238
-#&gt; 10 25.48   1 194
-#&gt; 11 25.46   1 151
-#&gt; 12 25.68   1 199
+#&gt; 10 25.18   1 188
+#&gt; 11 24.58   1 145
+#&gt; 12 24.78   1 212
 #&gt; 13 21.70   1 206
 #&gt; 14 28.70   2 204
-#&gt; 15 29.60   1 180
-#&gt; 16 26.44   1 175
+#&gt; 15 29.60   1 197
+#&gt; 16 28.72   1 192
 #&gt; 17 27.20   2 284
 #&gt; 18 26.30   2 199
 #&gt; 19 35.30   1 218
-#&gt; 20 25.50   2 200
-#&gt; 21 28.88   1 198
+#&gt; 20 25.50   2 220
+#&gt; 21 28.86   1 182
 #&gt; 22 33.20   1 229
 #&gt; 23 27.50   1 131
-#&gt; 24 24.90   1 218
+#&gt; 24 24.90   1 223
 #&gt; 25 27.40   1 186</div><div class='input'>
 <span class='co'># append imputed variables to original data frame</span>
 <span class='fu'>merge_imputations</span>(<span class='no'>nhanes</span>, <span class='no'>imp</span>, <span class='no'>nhanes</span>)</div><div class='output co'>#&gt;    age  bmi hyp chl bmi_imp hyp_imp chl_imp
-#&gt; 1    1   NA  NA  NA   25.40       1     194
+#&gt; 1    1   NA  NA  NA   26.56       1     183
 #&gt; 2    2 22.7   1 187   22.70       1     187
-#&gt; 3    1   NA   1 187   28.50       1     187
-#&gt; 4    3   NA  NA  NA   24.46       2     234
+#&gt; 3    1   NA   1 187   28.66       1     187
+#&gt; 4    3   NA  NA  NA   22.68       2     242
 #&gt; 5    1 20.4   1 113   20.40       1     113
-#&gt; 6    3   NA  NA 184   22.52       2     184
+#&gt; 6    3   NA  NA 184   22.96       2     184
 #&gt; 7    1 22.5   1 118   22.50       1     118
 #&gt; 8    1 30.1   1 187   30.10       1     187
 #&gt; 9    2 22.0   1 238   22.00       1     238
-#&gt; 10   2   NA  NA  NA   25.48       1     194
-#&gt; 11   1   NA  NA  NA   25.46       1     151
-#&gt; 12   2   NA  NA  NA   25.68       1     199
+#&gt; 10   2   NA  NA  NA   25.18       1     188
+#&gt; 11   1   NA  NA  NA   24.58       1     145
+#&gt; 12   2   NA  NA  NA   24.78       1     212
 #&gt; 13   3 21.7   1 206   21.70       1     206
 #&gt; 14   2 28.7   2 204   28.70       2     204
-#&gt; 15   1 29.6   1  NA   29.60       1     180
-#&gt; 16   1   NA  NA  NA   26.44       1     175
+#&gt; 15   1 29.6   1  NA   29.60       1     197
+#&gt; 16   1   NA  NA  NA   28.72       1     192
 #&gt; 17   3 27.2   2 284   27.20       2     284
 #&gt; 18   2 26.3   2 199   26.30       2     199
 #&gt; 19   1 35.3   1 218   35.30       1     218
-#&gt; 20   3 25.5   2  NA   25.50       2     200
-#&gt; 21   1   NA  NA  NA   28.88       1     198
+#&gt; 20   3 25.5   2  NA   25.50       2     220
+#&gt; 21   1   NA  NA  NA   28.86       1     182
 #&gt; 22   1 33.2   1 229   33.20       1     229
 #&gt; 23   1 27.5   1 131   27.50       1     131
-#&gt; 24   3 24.9   1  NA   24.90       1     218
+#&gt; 24   3 24.9   1  NA   24.90       1     223
 #&gt; 25   2 27.4   1 186   27.40       1     186</div><div class='input'>
 <span class='co'># show summary of quality of merging imputations</span>
-<span class='fu'>merge_imputations</span>(<span class='no'>nhanes</span>, <span class='no'>imp</span>, <span class='kw'>summary</span> <span class='kw'>=</span> <span class='st'>"dens"</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"chl"</span>, <span class='st'>"hyp"</span>))</div><div class='img'><img src='merge_imputations-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>merge_imputations</span>(<span class='no'>nhanes</span>, <span class='no'>imp</span>, <span class='kw'>summary</span> <span class='kw'>=</span> <span class='st'>"dens"</span>, <span class='kw'>filter</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"chl"</span>, <span class='st'>"hyp"</span>))</div><div class='output co'>#&gt; <span class='message'>Registered S3 methods overwritten by 'ggplot2':</span>
+#&gt; <span class='message'>  method         from </span>
+#&gt; <span class='message'>  [.quosures     rlang</span>
+#&gt; <span class='message'>  c.quosures     rlang</span>
+#&gt; <span class='message'>  print.quosures rlang</span></div><div class='img'><img src='merge_imputations-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -9,7 +9,7 @@
 #'   recoding will be applied only to those variables that match the
 #'   logical condition of \code{predicate}.
 #'
-#' @seealso \code{\link{rec}} for general recoding of variables and \code{\link{set_na}}
+#' @seealso \code{\link{rec}} for general recoding of variables and \code{\link[sjlabelled]{set_na}}
 #'            for setting \code{\link{NA}} values.
 #'
 #' @param lowest Indicating the lowest category value for recoding. Default is 0, so the new

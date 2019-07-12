@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -92,6 +92,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -186,10 +189,10 @@ shown.</p></td>
     <tr>
       <th>grp.strings</th>
       <td><p>Numeric, if not <code>NULL</code>, groups string values in
-character vectors, based on their similarity. The similarity is estimated
-with the <span class="pkg">stringdist</span>-package. See <code><a href='group_str.html'>group_str</a></code> for details
-on grouping, and that function's <code>maxdist</code>-argument to get more
-details on the distance of strings to be treated as equal.</p></td>
+character vectors, based on their similarity. See <code><a href='group_str.html'>group_str</a></code>
+and <code><a href='str_find.html'>str_find</a></code> for details on grouping, and their
+<code>precision</code>-argument to get more details on the distance of strings
+to be treated as equal.</p></td>
     </tr>
     <tr>
       <th>out</th>
@@ -223,7 +226,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>x</code> may also be a grouped data frame (see <code><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
+    <p><code>x</code> may also be a grouped data frame (see <code><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></code>)
       with up to two grouping variables. Frequency tables are created for each
       subgroup then.
       <br /> <br />
@@ -243,10 +246,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
     <pre class="examples"><div class='input'><span class='co'># simple vector</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>efc</span>)
 <span class='fu'>frq</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #0000BB;'># elder's dependency (x) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=2.94  sd=0.94
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent  66    7.27      7.33    7.33
 #&gt;    2   slightly dependent 225   24.78     24.97   32.30
 #&gt;    3 moderately dependent 306   33.70     33.96   66.26
@@ -256,86 +259,73 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 <span class='co'># with grouped data frames, in a pipe</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='http://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>frq</span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>, <span class='no'>e42dep</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
-#&gt; elder's gender: male
-#&gt; carer's level of education: low level of education
-#&gt; </span><span> 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (e42dep) &lt;numeric&gt;</span><span> 
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # grouped by: </span><span style='color: #00BBBB;'>male, low level of education
 #&gt; </span><span style='color: #0000BB;'># total N=80  valid N=80  mean=3.06  sd=0.92
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent   5    6.25      6.25    6.25
 #&gt;    2   slightly dependent  16   20.00     20.00   26.25
 #&gt;    3 moderately dependent  28   35.00     35.00   61.25
 #&gt;    4   severely dependent  31   38.75     38.75  100.00
 #&gt;   NA                   NA   0    0.00        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
-#&gt; elder's gender: male
-#&gt; carer's level of education: intermediate level of education
-#&gt; </span><span> 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (e42dep) &lt;numeric&gt;</span><span> 
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # grouped by: </span><span style='color: #00BBBB;'>male, intermediate level of education
 #&gt; </span><span style='color: #0000BB;'># total N=156  valid N=156  mean=2.83  sd=0.94
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent  15    9.62      9.62    9.62
 #&gt;    2   slightly dependent  39   25.00     25.00   34.62
 #&gt;    3 moderately dependent  59   37.82     37.82   72.44
 #&gt;    4   severely dependent  43   27.56     27.56  100.00
 #&gt;   NA                   NA   0    0.00        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
-#&gt; elder's gender: male
-#&gt; carer's level of education: high level of education
-#&gt; </span><span> 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (e42dep) &lt;numeric&gt;</span><span> 
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # grouped by: </span><span style='color: #00BBBB;'>male, high level of education
 #&gt; </span><span style='color: #0000BB;'># total N=43  valid N=43  mean=2.91  sd=0.81
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent   1    2.33      2.33    2.33
 #&gt;    2   slightly dependent  13   30.23     30.23   32.56
 #&gt;    3 moderately dependent  18   41.86     41.86   74.42
 #&gt;    4   severely dependent  11   25.58     25.58  100.00
 #&gt;   NA                   NA   0    0.00        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
-#&gt; elder's gender: female
-#&gt; carer's level of education: low level of education
-#&gt; </span><span> 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (e42dep) &lt;numeric&gt;</span><span> 
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # grouped by: </span><span style='color: #00BBBB;'>female, low level of education
 #&gt; </span><span style='color: #0000BB;'># total N=99  valid N=99  mean=2.95  sd=0.94
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent   7    7.07      7.07    7.07
 #&gt;    2   slightly dependent  25   25.25     25.25   32.32
 #&gt;    3 moderately dependent  33   33.33     33.33   65.66
 #&gt;    4   severely dependent  34   34.34     34.34  100.00
 #&gt;   NA                   NA   0    0.00        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
-#&gt; elder's gender: female
-#&gt; carer's level of education: intermediate level of education
-#&gt; </span><span> 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (e42dep) &lt;numeric&gt;</span><span> 
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # grouped by: </span><span style='color: #00BBBB;'>female, intermediate level of education
 #&gt; </span><span style='color: #0000BB;'># total N=350  valid N=350  mean=2.90  sd=0.98
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent  30    8.57      8.57    8.57
 #&gt;    2   slightly dependent  96   27.43     27.43   36.00
 #&gt;    3 moderately dependent 104   29.71     29.71   65.71
 #&gt;    4   severely dependent 120   34.29     34.29  100.00
 #&gt;   NA                   NA   0    0.00        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #00BBBB;font-style: italic;'>Grouped by:
-#&gt; elder's gender: female
-#&gt; carer's level of education: high level of education
-#&gt; </span><span> 
-#&gt; </span><span style='color: #0000BB;'># elder's dependency (e42dep) &lt;numeric&gt;</span><span> 
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # grouped by: </span><span style='color: #00BBBB;'>female, high level of education
 #&gt; </span><span style='color: #0000BB;'># total N=113  valid N=113  mean=3.04  sd=0.85
-#&gt; </span><span> 
-#&gt;  val                label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
 #&gt;    1          independent   4    3.54      3.54    3.54
 #&gt;    2   slightly dependent  26   23.01     23.01   26.55
 #&gt;    3 moderately dependent  44   38.94     38.94   65.49
@@ -344,91 +334,99 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># with select-helpers: all variables from the COPE-Index</span>
 <span class='co'># (which all have a "cop" in their name)</span>
-<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='fu'><a href='http://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># do you feel you cope well as caregiver? (c82cop1) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=3.12  sd=0.58
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+<span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt; 
+#&gt; </span><span style='color: #BB0000;'>do you feel you cope well as caregiver? (c82cop1)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=901  mean=3.12  sd=0.58
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     never   3    0.33      0.33    0.33
 #&gt;    2 sometimes  97   10.68     10.77   11.10
 #&gt;    3     often 591   65.09     65.59   76.69
 #&gt;    4    always 210   23.13     23.31  100.00
 #&gt;   NA        NA   7    0.77        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># do you find caregiving too demanding? (c83cop2) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=902  mean=2.02  sd=0.72
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>do you find caregiving too demanding? (c83cop2)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=902  mean=2.02  sd=0.72
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     Never 186   20.48     20.62   20.62
 #&gt;    2 Sometimes 547   60.24     60.64   81.26
 #&gt;    3     Often 130   14.32     14.41   95.68
 #&gt;    4    Always  39    4.30      4.32  100.00
 #&gt;   NA        NA   6    0.66        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># does caregiving cause difficulties in your relationship with your friends? (c84cop3) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=902  mean=1.63  sd=0.87
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>does caregiving cause difficulties in your relationship with your friends? (c84cop3)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=902  mean=1.63  sd=0.87
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     Never 516   56.83     57.21   57.21
 #&gt;    2 Sometimes 252   27.75     27.94   85.14
 #&gt;    3     Often  82    9.03      9.09   94.24
 #&gt;    4    Always  52    5.73      5.76  100.00
 #&gt;   NA        NA   6    0.66        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># does caregiving have negative effect on your physical health? (c85cop4) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=898  mean=1.77  sd=0.87
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>does caregiving have negative effect on your physical health? (c85cop4)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=898  mean=1.77  sd=0.87
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     Never 409   45.04     45.55   45.55
 #&gt;    2 Sometimes 346   38.11     38.53   84.08
 #&gt;    3     Often  85    9.36      9.47   93.54
 #&gt;    4    Always  58    6.39      6.46  100.00
 #&gt;   NA        NA  10    1.10        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># does caregiving cause difficulties in your relationship with your family? (c86cop5) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=902  mean=1.39  sd=0.67
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>does caregiving cause difficulties in your relationship with your family? (c86cop5)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=902  mean=1.39  sd=0.67
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     Never 626   68.94     69.40   69.40
 #&gt;    2 Sometimes 211   23.24     23.39   92.79
 #&gt;    3     Often  50    5.51      5.54   98.34
 #&gt;    4    Always  15    1.65      1.66  100.00
 #&gt;   NA        NA   6    0.66        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># does caregiving cause financial difficulties? (c87cop6) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=900  mean=1.29  sd=0.64
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>does caregiving cause financial difficulties? (c87cop6)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=900  mean=1.29  sd=0.64
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     Never 713   78.52     79.22   79.22
 #&gt;    2 Sometimes 131   14.43     14.56   93.78
 #&gt;    3     Often  39    4.30      4.33   98.11
 #&gt;    4    Always  17    1.87      1.89  100.00
 #&gt;   NA        NA   8    0.88        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># do you feel trapped in your role as caregiver? (c88cop7) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=900  mean=1.92  sd=0.91
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>do you feel trapped in your role as caregiver? (c88cop7)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=900  mean=1.92  sd=0.91
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     Never 336   37.00     37.33   37.33
 #&gt;    2 Sometimes 374   41.19     41.56   78.89
 #&gt;    3     Often 113   12.44     12.56   91.44
 #&gt;    4    Always  77    8.48      8.56  100.00
 #&gt;   NA        NA   8    0.88        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># do you feel supported by friends/neighbours? (c89cop8) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=2.16  sd=1.04
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>do you feel supported by friends/neighbours? (c89cop8)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=901  mean=2.16  sd=1.04
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     never 313   34.47     34.74   34.74
 #&gt;    2 sometimes 237   26.10     26.30   61.04
 #&gt;    3     often 241   26.54     26.75   87.79
 #&gt;    4    always 110   12.11     12.21  100.00
 #&gt;   NA        NA   7    0.77        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># do you feel caregiving worthwhile? (c90cop9) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=888  mean=2.93  sd=0.96
-#&gt; </span><span> 
-#&gt;  val     label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>do you feel caregiving worthwhile? (c90cop9)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=888  mean=2.93  sd=0.96
+#&gt; 
+#&gt; </span><span> val     label frq raw.prc valid.prc cum.prc
 #&gt;    1     never  76    8.37      8.56    8.56
 #&gt;    2 sometimes 210   23.13     23.65   32.21
 #&gt;    3     often 300   33.04     33.78   65.99
@@ -437,27 +435,29 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># all variables from column "c161sex" to column "c175empl"</span>
 <span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c161sex</span>:<span class='no'>c175empl</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer's gender (c161sex) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=901  mean=1.76  sd=0.43
-#&gt; </span><span> 
-#&gt;  val  label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>carer's gender (c161sex)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=901  mean=1.76  sd=0.43
+#&gt; 
+#&gt; </span><span> val  label frq raw.prc valid.prc cum.prc
 #&gt;    1   Male 215   23.68     23.86   23.86
 #&gt;    2 Female 686   75.55     76.14  100.00
 #&gt;   NA     NA   7    0.77        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer's level of education (c172code) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=842  mean=1.97  sd=0.63
-#&gt; </span><span> 
-#&gt;  val                           label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=842  mean=1.97  sd=0.63
+#&gt; 
+#&gt; </span><span> val                           label frq raw.prc valid.prc cum.prc
 #&gt;    1          low level of education 180   19.82     21.38   21.38
 #&gt;    2 intermediate level of education 506   55.73     60.10   81.47
 #&gt;    3         high level of education 156   17.18     18.53  100.00
 #&gt;   NA                              NA  66    7.27        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># are you currently employed? (c175empl) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=908  valid N=902  mean=0.43  sd=0.49
-#&gt; </span><span> 
-#&gt;  val label frq raw.prc valid.prc cum.prc
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>are you currently employed? (c175empl)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=908  valid N=902  mean=0.43  sd=0.49
+#&gt; 
+#&gt; </span><span> val label frq raw.prc valid.prc cum.prc
 #&gt;    0    no 518   57.05     57.43   57.43
 #&gt;    1   yes 384   42.29     42.57  100.00
 #&gt;   NA    NA   6    0.66        NA      NA
@@ -466,10 +466,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 <span class='co'># and "label" column is removed from output</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>iris</span>)
 <span class='fu'>frq</span>(<span class='no'>iris</span>, <span class='no'>Species</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># Species &lt;categorical&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=150  valid N=150  mean=2.00  sd=0.82
-#&gt; </span><span> 
-#&gt;         val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>Species</span><span style='color: #0000BB;'> &lt;categorical&gt;
+#&gt; # total N=150  valid N=150  mean=2.00  sd=0.82
+#&gt; 
+#&gt; </span><span>        val frq raw.prc valid.prc cum.prc
 #&gt;      setosa  50   33.33     33.33   33.33
 #&gt;  versicolor  50   33.33     33.33   66.67
 #&gt;   virginica  50   33.33     33.33  100.00
@@ -478,10 +478,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 <span class='co'># group variables with large range and with weights</span>
 <span class='no'>efc</span>$<span class='no'>weights</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/MathFun'>abs</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>efc</span>), <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>.5</span>))
 <span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c160age</span>, <span class='kw'>auto.grp</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer' age (c160age) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=920  valid N=920  mean=53.85  sd=13.09
-#&gt; </span><span> 
-#&gt;  val label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>carer' age (c160age)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=920  valid N=920  mean=53.85  sd=13.09
+#&gt; 
+#&gt; </span><span> val label frq raw.prc valid.prc cum.prc
 #&gt;    1 18-32  56    6.09      6.09    6.09
 #&gt;    2 33-47 234   25.43     25.43   31.52
 #&gt;    3 48-62 380   41.30     41.30   72.83
@@ -491,37 +491,37 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># different weight options</span>
 <span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c172code</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer's level of education (c172code) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=860  valid N=860  mean=1.98  sd=0.63
-#&gt; </span><span> 
-#&gt;  val                           label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
+#&gt; 
+#&gt; </span><span> val                           label frq raw.prc valid.prc cum.prc
 #&gt;    1          low level of education 176   20.47     20.47   20.47
 #&gt;    2 intermediate level of education 523   60.81     60.81   81.28
 #&gt;    3         high level of education 161   18.72     18.72  100.00
 #&gt;   NA                              NA   0    0.00        NA      NA
 #&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c172code</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='st'>"weights"</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer's level of education (c172code) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=860  valid N=860  mean=1.98  sd=0.63
-#&gt; </span><span> 
-#&gt;  val                           label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
+#&gt; 
+#&gt; </span><span> val                           label frq raw.prc valid.prc cum.prc
 #&gt;    1          low level of education 176   20.47     20.47   20.47
 #&gt;    2 intermediate level of education 523   60.81     60.81   81.28
 #&gt;    3         high level of education 161   18.72     18.72  100.00
 #&gt;   NA                              NA   0    0.00        NA      NA
 #&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='no'>efc</span>, <span class='no'>c172code</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>efc</span>$<span class='no'>weights</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer's level of education (c172code) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=860  valid N=860  mean=1.98  sd=0.63
-#&gt; </span><span> 
-#&gt;  val                           label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
+#&gt; 
+#&gt; </span><span> val                           label frq raw.prc valid.prc cum.prc
 #&gt;    1          low level of education 176   20.47     20.47   20.47
 #&gt;    2 intermediate level of education 523   60.81     60.81   81.28
 #&gt;    3         high level of education 161   18.72     18.72  100.00
 #&gt;   NA                              NA   0    0.00        NA      NA
 #&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='no'>efc</span>$<span class='no'>c172code</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>efc</span>$<span class='no'>weights</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># carer's level of education (xw) &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=860  valid N=860  mean=1.98  sd=0.63
-#&gt; </span><span> 
-#&gt;  val                           label frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>carer's level of education (xw)</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
+#&gt; 
+#&gt; </span><span> val                           label frq raw.prc valid.prc cum.prc
 #&gt;    1          low level of education 176   20.47     20.47   20.47
 #&gt;    2 intermediate level of education 523   60.81     60.81   81.28
 #&gt;    3         high level of education 161   18.72     18.72  100.00
@@ -529,7 +529,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># group string values</span>
 <span class='no'>dummy</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span>[<span class='fl'>1</span>:<span class='fl'>50</span>, <span class='fl'>3</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>]
-<span class='no'>dummy</span>$<span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/sample.html'>sample</a></span>(
+<span class='no'>dummy</span>$<span class='no'>words</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/sample.html'>sample</a></span>(
   <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>, <span class='st'>"Ape"</span>,
     <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span>),
   <span class='kw'>size</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>dummy</span>),
@@ -537,47 +537,49 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 )
 
 <span class='fu'>frq</span>(<span class='no'>dummy</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># e16sex &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=50  valid N=50  mean=1.56  sd=0.50
-#&gt; </span><span> 
-#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>e16sex</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=50  valid N=50  mean=1.56  sd=0.50
+#&gt; 
+#&gt; </span><span>  val frq raw.prc valid.prc cum.prc
 #&gt;     1  22      44        44      44
 #&gt;     2  28      56        56     100
 #&gt;  &lt;NA&gt;   0       0        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># words &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=50  valid N=50  mean=5.54  sd=2.63
-#&gt; </span><span> 
-#&gt;       val frq raw.prc valid.prc cum.prc
-#&gt;       Ape   3       6         6       6
-#&gt;     Apple   4       8         8      14
-#&gt;     Hello   7      14        14      28
-#&gt;      Helo   8      16        16      44
-#&gt;      Hole   2       4         4      48
-#&gt;       New   4       8         8      56
-#&gt;       Old   5      10        10      66
-#&gt;    System   9      18        18      84
-#&gt;  Systemic   8      16        16     100
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>words</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=50  valid N=50  mean=4.70  sd=2.38
+#&gt; 
+#&gt; </span><span>      val frq raw.prc valid.prc cum.prc
+#&gt;       Ape   6      12        12      12
+#&gt;     Hello   7      14        14      26
+#&gt;      Helo   4       8         8      34
+#&gt;      Hole   4       8         8      42
+#&gt;       New   8      16        16      58
+#&gt;       Old   9      18        18      76
+#&gt;    System   3       6         6      82
+#&gt;  Systemic   9      18        18     100
 #&gt;      &lt;NA&gt;   0       0        NA      NA
 #&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='no'>dummy</span>, <span class='kw'>grp.strings</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #0000BB;'># e16sex &lt;numeric&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=50  valid N=50  mean=1.56  sd=0.50
-#&gt; </span><span> 
-#&gt;   val frq raw.prc valid.prc cum.prc
+#&gt; </span><span style='color: #BB0000;'>e16sex</span><span style='color: #0000BB;'> &lt;numeric&gt;
+#&gt; # total N=50  valid N=50  mean=1.56  sd=0.50
+#&gt; 
+#&gt; </span><span>  val frq raw.prc valid.prc cum.prc
 #&gt;     1  22      44        44      44
 #&gt;     2  28      56        56     100
 #&gt;  &lt;NA&gt;   0       0        NA      NA
 #&gt; 
-#&gt; </span><span style='color: #0000BB;'># words &lt;character&gt;</span><span> 
-#&gt; </span><span style='color: #0000BB;'># total N=50  valid N=50  mean=3.16  sd=1.54
-#&gt; </span><span> 
-#&gt;                val frq raw.prc valid.prc cum.prc
-#&gt;         Ape, Apple   7      14        14      14
-#&gt;  Hello, Helo, Hole  17      34        34      48
-#&gt;                New   4       8         8      56
-#&gt;                Old   5      10        10      66
-#&gt;   System, Systemic  17      34        34     100
-#&gt;               &lt;NA&gt;   0       0        NA      NA
+#&gt; 
+#&gt; </span><span style='color: #BB0000;'>words</span><span style='color: #0000BB;'> &lt;character&gt;
+#&gt; # total N=50  valid N=50  mean=3.86  sd=1.73
+#&gt; 
+#&gt; </span><span>              val frq raw.prc valid.prc cum.prc
+#&gt;               Ape   6      12        12      12
+#&gt;             Hello   7      14        14      26
+#&gt;        Helo, Hole   8      16        16      42
+#&gt;               New   8      16        16      58
+#&gt;               Old   9      18        18      76
+#&gt;  System, Systemic  12      24        24     100
+#&gt;              &lt;NA&gt;   0       0        NA      NA
 #&gt; </div><div class='input'>
 </div></span></pre>
   </div>

@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.7.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
       </span>
     </div>
 
@@ -92,6 +92,9 @@
     </li>
     <li>
       <a href="../articles/exploringdatasets.html">Exploring Data Sets</a>
+    </li>
+    <li>
+      <a href="../articles/recodingvariables.html">Recoding Variables</a>
     </li>
   </ul>
 </li>
@@ -149,7 +152,7 @@ source data frames for appended rows.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function works like <code><a href='http://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></code>, but preserves
+    <p>This function works like <code><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_rows</a></code>, but preserves
   variable and value label attributes. <code>add_rows()</code> row-binds all data
   frames in <code>...</code>, even if these have different numbers of columns.
   Non-matching columns will be column-bound and filled with <code>NA</code>-values
@@ -165,8 +168,8 @@ source data frames for appended rows.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>efc</span>)
-<span class='no'>x1</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
-<span class='no'>x2</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>3</span>:<span class='fl'>7</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>11</span>:<span class='fl'>20</span>)
+<span class='no'>x1</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>1</span>:<span class='fl'>5</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>x2</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>3</span>:<span class='fl'>7</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>11</span>:<span class='fl'>20</span>)
 
 <span class='no'>mydf</span> <span class='kw'>&lt;-</span> <span class='fu'>add_rows</span>(<span class='no'>x1</span>, <span class='no'>x2</span>)
 <span class='no'>mydf</span></div><div class='output co'>#&gt;    c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2
@@ -218,8 +221,8 @@ source data frames for appended rows.</p></td>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sjPlot</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/sjPlot/topics/view_df'>view_df</a></span>(<span class='no'>mydf</span>)
 <span class='co'># }</span><div class='input'>
-<span class='no'>x3</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>5</span>:<span class='fl'>9</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>21</span>:<span class='fl'>30</span>)
-<span class='no'>x4</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>11</span>:<span class='fl'>14</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='http://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>31</span>:<span class='fl'>40</span>)
+<span class='no'>x3</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>5</span>:<span class='fl'>9</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>21</span>:<span class='fl'>30</span>)
+<span class='no'>x4</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>11</span>:<span class='fl'>14</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span>(<span class='fl'>31</span>:<span class='fl'>40</span>)
 
 <span class='no'>mydf</span> <span class='kw'>&lt;-</span> <span class='fu'>add_rows</span>(<span class='no'>x1</span>, <span class='no'>x2</span>, <span class='no'>x3</span>, <span class='no'>x4</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"subsets"</span>)
 <span class='no'>mydf</span></div><div class='output co'>#&gt;    subsets c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3

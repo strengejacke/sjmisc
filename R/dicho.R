@@ -97,7 +97,6 @@ dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, 
 
 
 #' @importFrom dplyr group_vars
-#' @importFrom tidyr unnest
 #' @export
 dicho.default <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
 

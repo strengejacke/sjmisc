@@ -40,7 +40,6 @@
 #' count_na(dat, x, y)
 #'
 #' @importFrom dplyr select filter quos
-#' @importFrom haven is_tagged_na na_tag
 #' @importFrom sjlabelled get_label
 #' @export
 count_na <- function(x, ...) {
@@ -82,9 +81,12 @@ count_na <- function(x, ...) {
 
 
 #' @importFrom sjlabelled get_na
-#' @importFrom haven is_tagged_na na_tag
 #' @importFrom dplyr select filter
 count_na_helper <- function(x, cn) {
+  if (!requireNamespace("haven", quietly = TRUE)) {
+    stop("Package `haven` needed for this function to work. Please install it.", call. = FALSE)
+  }
+
   # check if x has any tagged NA values
   if (sum(haven::is_tagged_na(x)) < 1) {
     message("`x` has no tagged NA values.")

@@ -38,14 +38,13 @@ This function converts wide data into long format. It allows
                from wide to long format in one single step.
 }
 \details{
-This function enhances \pkg{tidyr}'s \code{\link[tidyr]{gather}}
-           function that you can gather multiple column groups at once.
-           Value and variable labels for non-gathered variables are preserved.
-           However, gathered variables may have different variable label
-           attributes. In this case, \code{\link[tidyr]{gather}} will drop
-           these attributes. Hence, the new created variables from gathered
-           columns don't have any variable label attributes. In such cases,
-           use \code{labels} argument to set variable label attributes.
+This function reshapes data from wide to long format, however,
+  you can gather multiple column groups at once. Value and variable labels
+  for non-gathered variables are preserved. Attributes from gathered variables,
+  such as information about the variable labels, are lost during reshaping.
+  Hence, the new created variables from gathered columns don't have any
+  variable label attributes. In such cases, use \code{labels} argument to set
+  back variable label attributes.
 }
 \examples{
 # create sample
@@ -58,9 +57,6 @@ mydat <- data.frame(age = c(20, 30, 40),
                     speed_t2 = c(3, 4, 5),
                     speed_t3 = c(1, 8, 6))
 
-# check tidyr. score is gathered, however, speed is not
-tidyr::gather(mydat, "time", "score", score_t1, score_t2, score_t3)
-
 # gather multiple columns. both time and speed are gathered.
 to_long(
   data = mydat,
@@ -68,6 +64,25 @@ to_long(
   values = c("score", "speed"),
   c("score_t1", "score_t2", "score_t3"),
   c("speed_t1", "speed_t2", "speed_t3")
+)
+
+# alternative syntax, using "reshape_longer()"
+reshape_longer(
+  mydat,
+  columns = list(
+    c("score_t1", "score_t2", "score_t3"),
+    c("speed_t1", "speed_t2", "speed_t3")
+  ),
+  names.to = "time",
+  values.to = c("score", "speed")
+)
+
+# or ...
+reshape_longer(
+  mydat,
+  list(3:5, 6:8),
+  names.to = "time",
+  values.to = c("score", "speed")
 )
 
 # gather multiple columns, use numeric key-value
@@ -114,4 +129,7 @@ library(sjlabelled)
 str(mydat$score)
 get_label(mydat$speed)
 
+}
+\seealso{
+\code{\link{reshape_longer}}
 }
