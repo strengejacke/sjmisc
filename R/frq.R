@@ -29,6 +29,10 @@
 #'   and \code{\link{str_find}} for details on grouping, and their
 #'   \code{precision}-argument to get more details on the distance of strings
 #'   to be treated as equal.
+#' @param min.frq Numeric value, indicating the minimum frequency for which a 
+#'   value will be shown in the output (except for the missing values, prevailing
+#'   \code{show.na}). Default value for \code{min.frq} is \code{0}, so all value
+#'   frequencies are shown.
 #' @param title String, will be used as alternative title to the variable
 #'   label. If \code{x} is a grouped data frame, \code{title} must be a
 #'   vector of same length as groups.
