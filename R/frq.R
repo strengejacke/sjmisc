@@ -19,7 +19,7 @@
 #'   of all variables from a data frame, and due to computational reasons
 #'   character vectors should not be printed.
 #' @param show.na Logical, or \code{"auto"}. If \code{TRUE}, the output always
-#'   contains informatin on missing values, even if variables have no missing
+#'   contains information on missing values, even if variables have no missing
 #'   values. If \code{FALSE}, information on missing values are removed from
 #'   the output. If \code{show.na = "auto"}, information on missing values
 #'   is only shown when variables actually have missing values, else it's not
@@ -116,6 +116,7 @@ frq <- function(x,
                 show.strings = TRUE,
                 show.na = TRUE,
                 grp.strings = NULL,
+                min.frq = 0,
                 out = c("txt", "viewer", "browser"),
                 title = NULL,
                 encoding = "UTF-8",
@@ -126,6 +127,12 @@ frq <- function(x,
   if (out != "txt" && !requireNamespace("sjPlot", quietly = TRUE)) {
     message("Package `sjPlot` needs to be loaded to print HTML tables.")
     out <- "txt"
+  }
+  
+  # check min.frq value
+  if (!is.numeric(min.frq)) {
+    message("min.frq value is not numeric. Returned output assumes default value 0.")
+    min.frq <- 0
   }
 
   # get dot data
@@ -252,7 +259,8 @@ frq <- function(x,
               cn = colnames(tmp)[1],
               auto.grp = auto.grp,
               title = gr.title,
-              show.na = show.na
+              show.na = show.na,
+              min.frq = min.frq
             )
 
           attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
@@ -284,7 +292,8 @@ frq <- function(x,
             cn = colnames(x)[i],
             auto.grp = auto.grp,
             title = title,
-            show.na = show.na
+            show.na = show.na,
+            min.frq = min.frq
           )
 
         # save data frame for return value
@@ -311,7 +320,7 @@ frq <- function(x,
 #' @importFrom dplyr n_distinct full_join bind_rows
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
-frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE) {
+frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq) {
   # remember type
   vartype <- var_type(x)
 
@@ -447,6 +456,16 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     } else {
       # if we have no labels, do simple frq table
       mydat <- data.frame(table(x, useNA = "always"))
+      
+      # no labels, no weights;
+      # maybe outside, indenpendent on labels and weights, with val instead of x and frq instead of Freq
+      if(any(mydat$Freq < min.frq)) {
+        mydatS1 <- mydat[which(mydat$Freq >= min.frq | is.na(mydat$x)),]
+        mydatS2 <- mydat[which(mydat$Freq < min.frq & !is.na(mydat$x)),]
+        mydatS3 <- data.frame(x = c("Lower frequencies subtotal"), Freq = c(sum(mydatS2$Freq)))
+        mydat <- rbind(mydatS1,mydatS3)
+      }
+      
     }
 
     colnames(mydat) <- c("val", "frq")
@@ -474,17 +493,25 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # valid values are one row less, because last row is NA row
   valid.vals <- nrow(mydat) - 1
+  extra.vals <- 1
+  
+  # Momentarily, in order to sort categories, we consider lower frequencies subtotal as a non valid value
+  if (is.na(mydat$val[valid.vals]) & mydat$val[valid.vals+1] == "Lower frequencies subtotal") {
+    valid.vals <- valid.vals - 1
+    extra.vals <- 2
+  }
 
   # sort categories ascending or descending
   if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
     ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
-    mydat <- mydat[c(ord, valid.vals + 1), ]
+    mydat <- mydat[c(ord, (valid.vals + extra.vals):(valid.vals + 1)), ]
   }
+  valid.vals <- nrow(mydat) - 1
 
   # raw percentages
   mydat$raw.prc <- mydat$frq / sum(mydat$frq)
 
-  # compute valud and cumulative percentages
+  # compute valid and cumulative percentages
   mydat$valid.prc <- c(mydat$frq[seq_len(valid.vals)] / sum(mydat$frq[seq_len(valid.vals)]), NA)
   mydat$cum.prc <- c(cumsum(mydat$valid.prc[seq_len(valid.vals)]), NA)
 
@@ -496,11 +523,19 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # "rename" labels for NA values
   if (!is.null(mydat$label)) mydat$label[is.na(mydat$label)] <- "NA"
 
-  # save original order
-  reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
-
-  # sort
-  if (sort.frq == "none") mydat <- mydat[order(reihe), ]
+  if (extra.vals == 1) {
+    # save original order
+    reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
+    
+    # sort
+    if (sort.frq == "none") mydat <- mydat[order(reihe), ]
+  } else if (extra.vals == 2) {
+    # save original order
+    reihe <- sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F)
+    
+    # sort
+    if (sort.frq == "none") mydat <- mydat[c(order(reihe, valid.vals, valid.vals+1)), ]
+  }
 
   # remove NA, if requested
   has.na <- mydat$frq[nrow(mydat)] > 0
