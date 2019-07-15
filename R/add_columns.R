@@ -2,7 +2,7 @@
 #' @name add_columns
 #'
 #' @description \code{add_columns()} combines two or more data frames, but unlike
-#'   \code{\link{cbind}} or \code{\link[dplyr]{bind_cols}}, this function
+#'   \code{\link{cbind}} or \code{\link[dplyr:bind]{dplyr::bind_cols()}}, this function
 #'   binds \code{data} as last columns of a data frame (i.e., behind columns
 #'   specified in \code{...}). This can be useful in a "pipe"-workflow, where
 #'   a data frame returned by a previous function should be appended
@@ -47,7 +47,7 @@
 #'   replace existing variables in \code{data}). Use \code{replace = FALSE} to
 #'   keep all columns. Identical column names will then be renamed, to ensure
 #'   unique column names (which happens by default when using
-#'   \code{\link[dplyr]{bind_cols}}). When replacing columns, replaced columns
+#'   \code{\link[dplyr:bind]{dplyr::bind_cols()}}). When replacing columns, replaced columns
 #'   are not added to the end of the data frame. Rather, the original order of
 #'   columns will be preserved.
 #'
