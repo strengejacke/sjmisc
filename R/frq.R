@@ -19,7 +19,7 @@
 #'   of all variables from a data frame, and due to computational reasons
 #'   character vectors should not be printed.
 #' @param show.na Logical, or \code{"auto"}. If \code{TRUE}, the output always
-#'   contains informatin on missing values, even if variables have no missing
+#'   contains information on missing values, even if variables have no missing
 #'   values. If \code{FALSE}, information on missing values are removed from
 #'   the output. If \code{show.na = "auto"}, information on missing values
 #'   is only shown when variables actually have missing values, else it's not
@@ -484,7 +484,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # raw percentages
   mydat$raw.prc <- mydat$frq / sum(mydat$frq)
 
-  # compute valud and cumulative percentages
+  # compute valid and cumulative percentages
   mydat$valid.prc <- c(mydat$frq[seq_len(valid.vals)] / sum(mydat$frq[seq_len(valid.vals)]), NA)
   mydat$cum.prc <- c(cumsum(mydat$valid.prc[seq_len(valid.vals)]), NA)
 

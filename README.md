@@ -6,7 +6,7 @@ Data preparation is a common task in research, which usually takes the most amou
 
 **sjmisc** tries to fill this gap. Basically, this package complements the **dplyr** package in that **sjmisc** takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc. A distinctive feature of **sjmisc** is the support for labelled data, which is especially useful for users who often work with data sets from other statistical software packages like _SPSS_ or _Stata_.
 
-The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-workflow to manipulate data frames, or to create new variables with `mutate()`. See `vignette("design_philosophy", "sjmisc")` for more details.
+The functions of **sjmisc** are designed to work together seamlessly with other packages from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-workflow to manipulate data frames, or to create new variables with `mutate()`. See `vignette("design_philosophy", "sjmisc")` for more details.
 
 ## Contributing to the package
 
