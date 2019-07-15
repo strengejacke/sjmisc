@@ -112,7 +112,7 @@ rec(efc, c82cop1, c83cop2, rec = "1,2=0; 3:4=2", append = TRUE, suffix = "") %>%
 
 ## sjmisc and dplyr
 
-The functions of **sjmisc** are designed to work together seamlessly with other packes from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-worklflow to manipulate data frames, or to create new variables with `mutate()`:
+The functions of **sjmisc** are designed to work together seamlessly with other packages from the tidyverse, like **dplyr**. For instance, you can use the functions from **sjmisc** both within a pipe-worklflow to manipulate data frames, or to create new variables with `mutate()`:
 
 ```{r}
 efc %>% 
