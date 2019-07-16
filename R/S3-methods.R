@@ -37,7 +37,7 @@ print.sjmisc_frq <- function(x, ...) {
     insight::print_color(sprintf(
       "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n\n",
       sum(dat$frq, na.rm = TRUE),
-      sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE),
+      sum(dat$frq[0:(nrow(dat) - 1)], na.rm = TRUE),
       attr(dat, "mean", exact = T),
       attr(dat, "sd", exact = T)
     ), "blue")
