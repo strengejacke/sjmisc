@@ -4,7 +4,7 @@
 \alias{is_empty}
 \title{Check whether string, list or vector is empty}
 \usage{
-is_empty(x, first.only = TRUE)
+is_empty(x, first.only = TRUE, all.na.empty = TRUE)
 }
 \arguments{
 \item{x}{String, character vector, list, data.frame or numeric vector or factor.}
@@ -17,7 +17,6 @@ vector, each element of \code{x} will be checked if empty. If
 only, \code{is_empty} will return \code{FALSE} if \code{all.na.empty==FALSE},
 and will return \code{TRUE} if \code{all.na.empty==TRUE} (default).}
 }
-
 \value{
 Logical, \code{TRUE} if \code{x} is a character vector or string and
           is empty, \code{TRUE} if \code{x} is a vector or list and of length 0,
@@ -60,9 +59,9 @@ is_empty(d)
 # empty list
 is_empty(list(NULL))
 
-}
-
 # NA vector
 x <- rep(NA,5)
 is_empty(x)
 is_empty(x, all.na.empty = FALSE)
+
+}
