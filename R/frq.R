@@ -494,7 +494,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   mydat$valid.prc <- 100 * round(mydat$valid.prc, 4)
 
   # "rename" labels for NA values
-  if (!is.null(mydat$label)) mydat$label[is.na(mydat$label)] <- "NA"
+  if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- "NA"
 
   # save original order
   reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
