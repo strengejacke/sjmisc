@@ -496,11 +496,13 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # "rename" labels for NA values
   if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- "NA"
 
-  # save original order
-  reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
+  if (!all(is.na(mydat$val))) {
+    # save original order
+    reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
 
-  # sort
-  if (sort.frq == "none") mydat <- mydat[order(reihe), ]
+    # sort
+    if (sort.frq == "none") mydat <- mydat[order(reihe), ]
+  }
 
   # remove NA, if requested
   has.na <- mydat$frq[nrow(mydat)] > 0
