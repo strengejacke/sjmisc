@@ -318,8 +318,8 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # convert NaN and Inf to missing
   x <- zap_inf(x)
 
-  # variable with only mising?
-  if (length(stats::na.omit(x)) == 0) {
+  # variable with only missing?
+  if (length(stats::na.omit(x)) == 0 && show.na == FALSE) {
     mydat <- data.frame(
       val = NA,
       label = NA,
