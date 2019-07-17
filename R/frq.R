@@ -476,11 +476,13 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # valid values are one row less, because last row is NA row
   valid.vals <- nrow(mydat) - 1
+  if (!all(is.na(mydat$val))) {
 
-  # sort categories ascending or descending
-  if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
-    ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
-    mydat <- mydat[c(ord, valid.vals + 1), ]
+    # sort categories ascending or descending
+    if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
+      ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
+      mydat <- mydat[c(ord, valid.vals + 1), ]
+    }
   }
 
   # raw percentages
