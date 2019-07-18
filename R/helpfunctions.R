@@ -8,7 +8,7 @@ magrittr::`%>%`
 sjlabelled::set_na
 
 
-#' @importFrom dplyr quos select
+#' @importFrom dplyr quos enquos select
 get_dot_data <- function(x, qs) {
   if (sjmisc::is_empty(qs))
     x
@@ -38,6 +38,7 @@ build_col <- function(x, qs_expr) {
   }
 }
 
+#' @importFrom tidyselect vars_select_helpers
 # name or numeric expressions, regular sequences or those looked for with select helpers are selected
 # otherwise, they are transmuted
 check_qs <- function(is_expr) {
@@ -45,7 +46,7 @@ check_qs <- function(is_expr) {
     TRUE
   } else if (as.character(is_expr)[1] == ":") {
     TRUE
-  } else if (as.character(is_expr)[1] %in% c("contains","ends_with","everything","matches","num_range","one_of","starts_with", "last_col")) {
+  } else if (as.character(is_expr)[1] %in% paste0(c(rep("",length(tidyselect::vars_select_helpers)),rep("dplyr::",length(tidyselect::vars_select_helpers)),rep("tidyselect::",length(tidyselect::vars_select_helpers))),names(tidyselect::vars_select_helpers))) {
     TRUE
   } else {
     FALSE
