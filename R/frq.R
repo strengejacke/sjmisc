@@ -324,7 +324,7 @@ frq <- function(x,
 #' @importFrom dplyr n_distinct full_join bind_rows
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
-frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq) {
+frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0) {
   # remember type
   vartype <- var_type(x)
 
