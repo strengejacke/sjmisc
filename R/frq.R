@@ -79,6 +79,7 @@
 #' # and "label" column is removed from output
 #' data(iris)
 #' frq(iris, Species)
+#' frq(iris, Sepal.Length > 5)
 #'
 #' # group variables with large range and with weights
 #' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
@@ -129,7 +130,7 @@ frq <- function(x,
   }
 
   # get dot data
-  xw <- get_dot_data(x, dplyr::quos(...))
+  xw <- get_dot_data(x, dplyr::enquos(...))
 
   if (missing(weights)) {
     w <- NULL
