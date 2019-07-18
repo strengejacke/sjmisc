@@ -463,11 +463,12 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
       
       # no labels, no weights;
       # maybe outside, indenpendent on labels and weights, with val instead of x and frq instead of Freq
-      if(any(mydat$Freq < min.frq)) {
+      if(any(mydat$Freq[!is.na(mydat$x)] < min.frq)) {
         mydatS1 <- mydat[which(mydat$Freq >= min.frq | is.na(mydat$x)),]
         mydatS2 <- mydat[which(mydat$Freq < min.frq & !is.na(mydat$x)),]
         mydatS3 <- data.frame(x = c("Lower frequencies subtotal"), Freq = c(sum(mydatS2$Freq)))
         mydat <- rbind(mydatS1,mydatS3)
+        row.names(mydat) <- c(row.names(mydat)[-length(row.names(mydat))],as.character(as.integer(row.names(mydat)[length(row.names(mydat))-1]) + 1))
       }
       
     }
@@ -508,8 +509,10 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # sort categories ascending or descending
   if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
     ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
-    mydat <- mydat[c(ord, (valid.vals + extra.vals):(valid.vals + 1)), ]
+  } else {
+    ord <- seq_len(valid.vals)
   }
+  mydat <- mydat[c(ord, (valid.vals + extra.vals):(valid.vals + 1)), ]
   valid.vals <- nrow(mydat) - 1
 
   # raw percentages
@@ -538,7 +541,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     reihe <- sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F)
     
     # sort
-    if (sort.frq == "none") mydat <- mydat[c(order(reihe, valid.vals, valid.vals+1)), ]
+    if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals+1), ]
   }
 
   # remove NA, if requested
