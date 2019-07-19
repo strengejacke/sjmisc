@@ -32,9 +32,9 @@ build_dot_data <- function(x, qs) {
 # depending on the dots expressions, old variables are selected or new ones are computed with transmute
 build_col <- function(x, qs_expr) {
   if(check_qs(rlang::get_expr(qs_expr))) {
-    suppressMessages(dplyr::select(x, !!!qs_expr))
+    suppressMessages(dplyr::select(x, !!qs_expr))
   } else {
-    suppressMessages(dplyr::transmute(x, !!!qs_expr))
+    suppressMessages(dplyr::transmute(x, !!qs_expr))
   }
 }
 
