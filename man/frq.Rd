@@ -108,7 +108,12 @@ frq(efc, c161sex:c175empl)
 # and "label" column is removed from output
 data(iris)
 frq(iris, Species)
-frq(iris, Sepal.Length > 5)
+  
+# other expressions than variables
+frq(mtcars, cyl ==6)
+frq(efc, is.na(nur_pst), dplyr::contains("cop"))
+iris \%>\%
+  frq(starts_with("Petal"), Sepal.Length >5)
 
 # group variables with large range and with weights
 efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
