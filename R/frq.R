@@ -460,23 +460,21 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     } else {
       # if we have no labels, do simple frq table
       mydat <- data.frame(table(x, useNA = "always"))
-      
-      # no labels, no weights;
-      # maybe outside, indenpendent on labels and weights, with val instead of x and frq instead of Freq
-      if(any(mydat$Freq[!is.na(mydat$x)] < min.frq)) {
-        mydatS1 <- mydat[which(mydat$Freq >= min.frq | is.na(mydat$x)),]
-        mydatS2 <- mydat[which(mydat$Freq < min.frq & !is.na(mydat$x)),]
-        mydatS3 <- data.frame(x = c("Lower frequencies subtotal"), Freq = c(sum(mydatS2$Freq)))
-        mydat <- rbind(mydatS1,mydatS3)
-        row.names(mydat) <- c(row.names(mydat)[-length(row.names(mydat))],as.character(as.integer(row.names(mydat)[length(row.names(mydat))-1]) + 1))
-      }
-      
     }
 
     colnames(mydat) <- c("val", "frq")
 
     # add values as label
     mydat$label <- as.character("<none>")
+    mydat <- mydat[c("val", "label", "frq")]
+  }
+
+  if (any(mydat$frq[!is.na(mydat$val)] < min.frq)) {
+	  mydatS1 <- mydat[which(mydat$frq >= min.frq | is.na(mydat$val)),]
+	  mydatS2 <- mydat[which(mydat$frq < min.frq & !is.na(mydat$val)),]
+	  mydatS3 <- data.frame(val = c("Lower frequencies subtotal"), label = c("<none>"), frq = c(sum(mydatS2$frq)))
+	  mydat <- rbind(mydatS1, mydatS3)
+	  row.names(mydat) <- c(row.names(mydat)[-length(row.names(mydat))], as.character(as.integer(row.names(mydat)[length(row.names(mydat)) - 1]) + 1))
   }
 
   # need numeric
