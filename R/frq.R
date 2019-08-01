@@ -536,7 +536,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     if (sort.frq == "none") mydat <- mydat[order(reihe), ]
   } else if (extra.vals == 2) {
     # save original order
-    reihe <- sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F)
+    reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F))
     
     # sort
     if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals+1), ]
