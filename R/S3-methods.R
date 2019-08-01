@@ -42,8 +42,8 @@ print.sjmisc_frq <- function(x, ...) {
       attr(dat, "sd", exact = T)
     ), "blue")
 
-    # don't print labels, if all are "none"
-    if (dplyr::n_distinct(dat$label) == 1 && unique(dat$label) == "<none>")
+    # don't print labels, if all except for the NA value are "none"
+    if (dplyr::n_distinct(dat$label[!is.na(dat$val)]) == 1 && unique(dat$label[!is.na(dat$val)]) == "<none>")
       dat <- dplyr::select(dat, -.data$label)
     else if (length(dat$val) == 1 && is.na(dat$val))
       dat <- dplyr::select(dat, -.data$label)

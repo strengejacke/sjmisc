@@ -25,7 +25,9 @@ might also be a regular-expression object, as returned by \code{\link[stringr]{r
 Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 expression rather than a fixed string.}
 
-\item{ignore.case}{Logical, whether matching should be case sensitive or not.}
+\item{ignore.case}{Logical, whether matching should be case sensitive or not.
+\code{ignore.case} is ignored when \code{pattern} is no regular expression or
+\code{regex = FALSE}.}
 
 \item{search}{Character string, indicating where \code{pattern} is sought.
 Use one of following options:

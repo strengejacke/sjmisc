@@ -9,7 +9,7 @@
 #'
 #' @return A full joined data frame.
 #'
-#' @details This function works like \code{\link[dplyr]{bind_rows}}, but preserves
+#' @details This function works like \code{\link[dplyr:bind]{dplyr::bind_rows()}}, but preserves
 #'   variable and value label attributes. \code{add_rows()} row-binds all data
 #'   frames in \code{...}, even if these have different numbers of columns.
 #'   Non-matching columns will be column-bound and filled with \code{NA}-values

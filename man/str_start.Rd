@@ -17,7 +17,9 @@ be a regular-expression object, as returned by \code{\link[stringr]{regex}}.
 Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 expression rather than a fixed string.}
 
-\item{ignore.case}{Logical, whether matching should be case sensitive or not.}
+\item{ignore.case}{Logical, whether matching should be case sensitive or not.
+\code{ignore.case} is ignored when \code{pattern} is no regular expression or
+\code{regex = FALSE}.}
 
 \item{regex}{Logical, if \code{TRUE}, \code{pattern} is treated as a regular
 expression rather than a fixed string.}
