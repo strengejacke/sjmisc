@@ -72,6 +72,12 @@
 #'   group_by(e16sex, c172code) %>%
 #'   frq(e16sex, c172code, e42dep)
 #'
+#' # with grouped data frames for which some groups are completely missing
+#' efc %>% 
+#'   slice(1:4) %>% 
+#'   group_by(c12hour) %>% 
+#'   frq(nur_pst)
+#'
 #' # with select-helpers: all variables from the COPE-Index
 #' # (which all have a "cop" in their name)
 #' frq(efc, contains("cop"))
@@ -167,17 +173,19 @@ frq <- function(x,
   }
 
 
-  # remove empty columns
+  if (show.na!=TRUE) {
+    # remove empty columns
+    
+    rem.col <- empty_cols(x)
+    
+    if (!sjmisc::is_empty(rem.col)) {
+      rem.vars <- colnames(x)[rem.col]
+      x <- remove_empty_cols(x)
 
-  rem.col <- empty_cols(x)
-
-  if (!sjmisc::is_empty(rem.col)) {
-    rem.vars <- colnames(x)[rem.col]
-    x <- remove_empty_cols(x)
-
-    message(sprintf("Following %i variables have only missing values and are not shown:", length(rem.vars)))
-    cat(paste(sprintf("%s [%i]", rem.vars, rem.col), collapse = ", "))
-    cat("\n")
+      message(sprintf("Following %i variables have only missing values and are not shown:", length(rem.vars)))
+      cat(paste(sprintf("%s [%i]", rem.vars, rem.col), collapse = ", "))
+      cat("\n")
+    }
   }
 
 
@@ -194,7 +202,7 @@ frq <- function(x,
   if (!show.strings)
     x <- dplyr::select_if(x, no_character)
 
-  if (sjmisc::is_empty(stats::na.omit(x))) return(NULL)
+  if ((sjmisc::is_empty(stats::na.omit(x)) && show.na==FALSE) || (sjmisc::is_empty(x, all.na.empty = FALSE))) return(NULL)
 
 
   # group strings
@@ -331,8 +339,8 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # convert NaN and Inf to missing
   x <- zap_inf(x)
 
-  # variable with only mising?
-  if (length(stats::na.omit(x)) == 0) {
+  # variable with only missing?
+  if (length(stats::na.omit(x)) == 0 && show.na == FALSE) {
     mydat <- data.frame(
       val = NA,
       label = NA,
@@ -496,21 +504,24 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # valid values are one row less, because last row is NA row
   valid.vals <- nrow(mydat) - 1
-  extra.vals <- 1
-  
-  # Momentarily, in order to sort categories, we consider lower frequencies subtotal as a non valid value
-  if (is.na(mydat$val[valid.vals]) & mydat$val[valid.vals+1] == "Lower frequencies subtotal") {
-    valid.vals <- valid.vals - 1
-    extra.vals <- 2
-  }
+  if (!all(is.na(mydat$val))) {
 
-  # sort categories ascending or descending
-  if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
-    ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
-  } else {
-    ord <- seq_len(valid.vals)
+    extra.vals <- 1
+    # Momentarily, in order to sort categories, we consider lower frequencies subtotal as a non valid value
+    if (is.na(mydat$val[valid.vals]) & mydat$val[valid.vals+1] == "Lower frequencies subtotal") {
+      valid.vals <- valid.vals - 1
+      extra.vals <- 2
+    }
+
+
+    # sort categories ascending or descending
+    if (!is.null(sort.frq) && (sort.frq == "asc" || sort.frq == "desc")) {
+      ord <- order(mydat$frq[seq_len(valid.vals)], decreasing = (sort.frq == "desc"))
+    } else {
+      ord <- seq_len(valid.vals)
+    }
+    mydat <- mydat[c(ord, (valid.vals + extra.vals):(valid.vals + 1)), ]
   }
-  mydat <- mydat[c(ord, (valid.vals + extra.vals):(valid.vals + 1)), ]
   valid.vals <- nrow(mydat) - 1
 
   # raw percentages
@@ -528,18 +539,18 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # "rename" labels for NA values
   if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- "<NA>"
 
-  if (extra.vals == 1) {
-    # save original order
-    reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
-    
-    # sort
-    if (sort.frq == "none") mydat <- mydat[order(reihe), ]
-  } else if (extra.vals == 2) {
-    # save original order
-    reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F))
-    
-    # sort
-    if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals+1), ]
+  if (!all(is.na(mydat$val))) {
+    if (extra.vals == 1) {
+      # save original order
+      reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
+      # sort
+      if (sort.frq == "none") mydat <- mydat[order(reihe), ]
+    } else if (extra.vals == 2) {
+      # save original order
+      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F))
+      # sort
+      if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals+1), ]
+    }
   }
 
   # remove NA, if requested

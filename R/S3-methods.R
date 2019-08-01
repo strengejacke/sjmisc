@@ -37,13 +37,15 @@ print.sjmisc_frq <- function(x, ...) {
     insight::print_color(sprintf(
       "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n\n",
       sum(dat$frq, na.rm = TRUE),
-      sum(dat$frq[1:(nrow(dat) - 1)], na.rm = TRUE),
+      sum(dat$frq[0:(nrow(dat) - 1)], na.rm = TRUE),
       attr(dat, "mean", exact = T),
       attr(dat, "sd", exact = T)
     ), "blue")
 
     # don't print labels, if all except for the NA value are "none"
     if (dplyr::n_distinct(dat$label[!is.na(dat$val)]) == 1 && unique(dat$label[!is.na(dat$val)]) == "<none>")
+      dat <- dplyr::select(dat, -.data$label)
+    else if (length(dat$val) == 1 && is.na(dat$val))
       dat <- dplyr::select(dat, -.data$label)
 
     # print frq-table
