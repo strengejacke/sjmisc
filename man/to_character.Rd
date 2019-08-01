@@ -55,7 +55,7 @@ Value labels will be removed when converting variables to factors,
       variable labels, however, are preserved.
       \cr \cr
       This function is kept for backwards-compatibility. It is preferred to
-      use \code{\link[sjlabelled]{as_character}}.
+      use \code{\link[sjlabelled:as_label]{sjlabelled::as_character()}}.
 }
 \examples{
 library(sjlabelled)
