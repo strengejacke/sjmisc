@@ -72,7 +72,8 @@
 #'   group_by(e16sex, c172code) %>%
 #'   frq(e16sex, c172code, e42dep)
 #'
-#' # with grouped data frames for which some groups are completely missing, and also choosing minimum frequenciesAn
+#' # with grouped data frames for which some groups are completely missing,
+#' # and also choosing minimum frequencies
 #' efc %>% 
 #'   slice(1:4) %>% 
 #'   group_by(c12hour) %>% 
