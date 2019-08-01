@@ -68,6 +68,12 @@
 #'   group_by(e16sex, c172code) %>%
 #'   frq(e16sex, c172code, e42dep)
 #'
+#' # with grouped data frames for which some groups are completely missing
+#' efc %>% 
+#'   slice(1:4) %>% 
+#'   group_by(c12hour) %>% 
+#'   frq(nur_pst)
+#'
 #' # with select-helpers: all variables from the COPE-Index
 #' # (which all have a "cop" in their name)
 #' frq(efc, contains("cop"))
