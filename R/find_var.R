@@ -14,6 +14,8 @@
 #'          Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 #'          expression rather than a fixed string.
 #' @param ignore.case Logical, whether matching should be case sensitive or not.
+#'   \code{ignore.case} is ignored when \code{pattern} is no regular expression or
+#'   \code{regex = FALSE}.
 #' @param search Character string, indicating where \code{pattern} is sought.
 #'          Use one of following options:
 #'          \describe{
@@ -89,7 +91,6 @@
 #' view_df(res)}
 #'
 #' @importFrom sjlabelled get_labels
-#' @importFrom purrr map_lgl
 #' @export
 find_var <- function(data,
                      pattern,
@@ -111,6 +112,8 @@ find_var <- function(data,
 
   pos1 <- pos2 <- pos3 <- c()
   fixed <- !inherits(pattern, "regex")
+
+  # avoid warning. For fixed=TRUE, ignore.case is ignored.
   if (.is_true(fixed)) ignore.case <- FALSE
 
   # search for pattern in variable names
@@ -137,11 +140,11 @@ find_var <- function(data,
   # search for pattern in value labels
   if (search %in% c("value", "name_value", "label_value", "all")) {
     labels <- sjlabelled::get_labels(data, attr.only = F)
-    pos3 <- which(purrr::map_lgl(labels, ~ any(grepl(pattern, x = .x, ignore.case = ignore.case, fixed = fixed))))
+    pos3 <- which(sapply(labels, function(.x) any(grepl(pattern, x = .x, ignore.case = ignore.case, fixed = fixed)), simplify = TRUE))
 
     # if nothing found, find in near distance
     if (sjmisc::is_empty(pos3) && fuzzy && !inherits(pattern, "regex")) {
-      pos3 <- which(purrr::map_lgl(
+      pos3 <- which(sapply(
         labels,
         function(.x) {
           p <- fuzzy_grep(
@@ -149,7 +152,7 @@ find_var <- function(data,
             pattern = pattern
           )
           !sjmisc::is_empty(p[1])
-        }))
+        }, simplify = TRUE))
     }
   }
 
