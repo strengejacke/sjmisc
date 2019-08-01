@@ -45,6 +45,8 @@ print.sjmisc_frq <- function(x, ...) {
     # don't print labels, if all are "none"
     if (dplyr::n_distinct(dat$label) == 1 && unique(dat$label) == "<none>")
       dat <- dplyr::select(dat, -.data$label)
+    else if (length(dat$val) == 1 && is.na(dat$val))
+      dat <- dplyr::select(dat, -.data$label)
 
     # print frq-table
     print.data.frame(dat, ..., row.names = FALSE, quote = FALSE)
