@@ -18,7 +18,7 @@ get_dot_data <- function(x, qs) {
 }
 
 build_dot_data <- function(x, qs) {
-  # below for goes through each of the expressions in dots data 
+  # below lapply goes through each of the expressions in dots data 
   # and the corresponding subdataframes got with build_col are saved in list out
   out <- lapply(qs, function(dot_expr) build_col(x, dot_expr))
   out <- bind_cols(out)
