@@ -4,8 +4,8 @@
 \alias{descr}
 \title{Basic descriptive statistics}
 \usage{
-descr(x, ..., max.length = NULL, weights = NULL, out = c("txt",
-  "viewer", "browser"))
+descr(x, ..., max.length = NULL, weights = NULL, show = "all",
+  out = c("txt", "viewer", "browser"))
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -26,6 +26,13 @@ they will be shortened to the last whole word within the first
 \item{weights}{Bare name, or name as string, of a variable in \code{x}
 that indicates the vector of weights, which will be applied to weight all
 observations. Default is \code{NULL}, so no weights are used.}
+
+\item{show}{Character vector, indicating which information (columns) that describe
+the data should be returned. May be one or more of \code{"type", "label", "n",
+"NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew"}. There are
+two shortcuts: \code{show = "all"} (default) shows all information,
+\code{show = "short"} just shows n, missing percentage, mean and standard
+deviation.}
 
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
@@ -52,6 +59,9 @@ descr(efc, c12hour, barthtot, weights = weights)
 
 library(dplyr)
 efc \%>\% select(e42dep, e15relat, c172code) \%>\% descr()
+
+show just a few elements
+efc \%>\% select(e42dep, e15relat, c172code) \%>\% descr(show = "short")
 
 # with grouped data frames
 efc \%>\%

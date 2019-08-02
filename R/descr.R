@@ -10,6 +10,12 @@
 #'    in the output. If variable names are longer than \code{max.length},
 #'    they will be shortened to the last whole word within the first
 #'    \code{max.length} chars.
+#' @param show Character vector, indicating which information (columns) that describe
+#'   the data should be returned. May be one or more of \code{"type", "label", "n",
+#'   "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew"}. There are
+#'   two shortcuts: \code{show = "all"} (default) shows all information,
+#'   \code{show = "short"} just shows n, missing percentage, mean and standard
+#'   deviation.
 #' @param out Character vector, indicating whether the results should be printed
 #'    to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 #'    (\code{out = "viewer"}) or browser (\code{out = "browser"}).
@@ -33,6 +39,9 @@
 #' library(dplyr)
 #' efc %>% select(e42dep, e15relat, c172code) %>% descr()
 #'
+#' show just a few elements
+#' efc %>% select(e42dep, e15relat, c172code) %>% descr(show = "short")
+#'
 #' # with grouped data frames
 #' efc %>%
 #'   group_by(e16sex) %>%
@@ -50,7 +59,7 @@
 #' @importFrom dplyr select mutate
 #' @importFrom sjlabelled copy_labels
 #' @export
-descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "viewer", "browser")) {
+descr <- function(x, ..., max.length = NULL, weights = NULL, show = "all", out = c("txt", "viewer", "browser")) {
 
   out <- match.arg(out)
 
@@ -58,6 +67,15 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
     message("Package `sjPlot` needs to be loaded to print HTML tables.")
     out <- "txt"
   }
+
+  # select elements that should be shown
+
+  if (show == "all")
+    show <- c("type", "label", "n", "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew")
+  else if (show == "short")
+    show <- c("n", "NA.prc", "mean", "sd")
+
+  show <- c("var", show)
 
 
   # get dot data
@@ -91,7 +109,7 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
       attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
 
       # save data frame for return value
-      dataframes[[length(dataframes) + 1]] <- dummy
+      dataframes[[length(dataframes) + 1]] <- dummy[, show]
     }
 
     # add class-attr for print-method()
@@ -101,7 +119,7 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, out = c("txt", "vie
       class(dataframes) <- c("sjt_grpdescr", "list")
 
   } else {
-    dataframes <- descr_helper(dd, max.length)
+    dataframes <- descr_helper(dd, max.length)[, show]
 
     # add class-attr for print-method()
     if (out == "txt")

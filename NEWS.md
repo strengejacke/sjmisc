@@ -1,3 +1,9 @@
+# sjmisc 2.8.2
+
+## Changes to functions
+
+* `descr()` gets a `show` argument to show selected columns only.
+
 # sjmisc 2.8.1
 
 ## General

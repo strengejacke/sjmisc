@@ -69,10 +69,11 @@ print_descr_helper <- function(x, ...) {
   if ("digits" %in% names(add.args)) digits <- eval(add.args[["digits"]])
 
   # round values
-  if (is.null(attr(x, "weights", exact = TRUE)))
-    x[, c(5:10, 12)] <- round(x[, c(5:10, 12)], digits = digits)
-  else
-    x[, c(5:8)] <- round(x[, c(5:8)], digits = digits)
+  to.round <- c("NA.prc", "mean", "sd", "se", "md", "trimmed")
+  if (is.null(attr(x, "weights", exact = TRUE))) to.round <- c(to.round, "skew")
+  to.round <- intersect(to.round, colnames(x))
+  x[, to.round] <- round(x[, to.round], digits = digits)
+
   # print frq-table
   print.data.frame(x, ..., row.names = FALSE)
 }
