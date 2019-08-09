@@ -18,7 +18,7 @@ Depends:
     utils
 Imports:
     dplyr (>= 0.8.0),
-    insight (>= 0.3.0),
+    insight (>= 0.4.1),
     magrittr,
     methods,
     purrr,
