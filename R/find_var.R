@@ -183,4 +183,4 @@ find_var <- function(data,
 
 #' @rdname find_var
 #' @export
-find_variables <- find_var
+find_in_data <- find_var
