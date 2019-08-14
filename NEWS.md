@@ -1,5 +1,9 @@
 # sjmisc 2.8.2
 
+## General
+
+* Alias `find_variables()` (alias for `find_var()`) was renamed to `find_in_data()`, to avoid conflicts with package *insight*.
+
 ## Changes to functions
 
 * `descr()` gets a `show` argument to show selected columns only.
