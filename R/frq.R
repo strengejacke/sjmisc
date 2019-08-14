@@ -80,6 +80,12 @@
 #' data(iris)
 #' frq(iris, Species)
 #'
+#' # other expressions than variables
+#' frq(mtcars, cyl ==6)
+#' frq(efc, is.na(nur_pst), dplyr::contains("cop"))
+#' iris %>%
+#'   frq(starts_with("Petal"), Sepal.Length >5)
+#'
 #' # group variables with large range and with weights
 #' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
 #' frq(efc, c160age, auto.grp = 5, weights = weights)
@@ -129,7 +135,7 @@ frq <- function(x,
   }
 
   # get dot data
-  xw <- get_dot_data(x, dplyr::quos(...))
+  xw <- get_dot_data(x, dplyr::enquos(...))
 
   if (missing(weights)) {
     w <- NULL
