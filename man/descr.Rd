@@ -60,7 +60,7 @@ descr(efc, c12hour, barthtot, weights = weights)
 library(dplyr)
 efc \%>\% select(e42dep, e15relat, c172code) \%>\% descr()
 
-show just a few elements
+# show just a few elements
 efc \%>\% select(e42dep, e15relat, c172code) \%>\% descr(show = "short")
 
 # with grouped data frames

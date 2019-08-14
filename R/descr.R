@@ -39,7 +39,7 @@
 #' library(dplyr)
 #' efc %>% select(e42dep, e15relat, c172code) %>% descr()
 #'
-#' show just a few elements
+#' # show just a few elements
 #' efc %>% select(e42dep, e15relat, c172code) %>% descr(show = "short")
 #'
 #' # with grouped data frames
@@ -119,7 +119,8 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, show = "all", out =
       class(dataframes) <- c("sjt_grpdescr", "list")
 
   } else {
-    dataframes <- descr_helper(dd, max.length)[, show]
+    dataframes <- descr_helper(dd, max.length)
+    dataframes <- dataframes[, intersect(colnames(dataframes), show)]
 
     # add class-attr for print-method()
     if (out == "txt")
