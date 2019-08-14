@@ -2,12 +2,10 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.8.1
+Version: 2.8.1.9000
 Date: 2019-06-17
-Authors@R: c(
-person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206")),
-person("Iago", "Giné-Vázquez", role = c("ctb"), email = "i.gine@pssjd.org")
-)
+Authors@R: c(person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206")),
+    person("Iago", "Giné-Vázquez", role = c("ctb"), email = "i.gine@pssjd.org"))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
     transformation tasks like recoding, dichotomizing or grouping variables, 

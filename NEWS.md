@@ -3,6 +3,7 @@
 ## Changes to functions
 
 * `descr()` gets a `show` argument to show selected columns only.
+* `frq()` now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.
 
 # sjmisc 2.8.1
 

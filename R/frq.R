@@ -80,11 +80,18 @@
 #' data(iris)
 #' frq(iris, Species)
 #'
-#' # other expressions than variables
+#' # other expressions than variables (logical conditions)
 #' frq(mtcars, cyl ==6)
-#' frq(efc, is.na(nur_pst), dplyr::contains("cop"))
+#'
+#' frq(efc, is.na(nur_pst), contains("cop"))
+#'
 #' iris %>%
 #'   frq(starts_with("Petal"), Sepal.Length >5)
+#'
+#' # also works on grouped data frames
+#' efc %>%
+#'   group_by(c172code) %>%
+#'   frq(is.na(nur_pst))
 #'
 #' # group variables with large range and with weights
 #' efc$weights <- abs(rnorm(n = nrow(efc), mean = 1, sd = .5))
