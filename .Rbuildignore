@@ -1,9 +1,13 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^revdep$
 ^\.travis\.yml$
-^docs$
 ^paper.*$
+
+^docs$
+^revdep$
+^paper$
+^.github$
+
 ^LICENSE
 ^CONTRIBUTING.*$
 ^CODE_OF_CONDUCT.*$
