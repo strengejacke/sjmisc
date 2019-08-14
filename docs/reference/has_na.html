@@ -11,8 +11,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1.9000</span>
       </span>
     </div>
 
@@ -1168,7 +1168,8 @@ these values.</p></td>
 #&gt; 905  905   TRUE
 #&gt; 906  906   TRUE
 #&gt; 907  907   TRUE
-#&gt; 908  908   TRUE</div><div class='input'><span class='fu'>has_na</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"index"</span>)</div><div class='output co'>#&gt; [1]  97 279 903 904 905 906 907 908</div><div class='input'><span class='fu'>has_na</span>(<span class='no'>efc</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"df"</span>)</div><div class='output co'>#&gt;       tmp
+#&gt; 908  908   TRUE</div><div class='input'><span class='fu'>has_na</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"index"</span>)</div><div class='output co'>#&gt;  97 279 903 904 905 906 907 908 
+#&gt;  97 279 903 904 905 906 907 908 </div><div class='input'><span class='fu'>has_na</span>(<span class='no'>efc</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"row"</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"df"</span>)</div><div class='output co'>#&gt;       tmp
 #&gt; 1    TRUE
 #&gt; 2    TRUE
 #&gt; 3   FALSE
@@ -2126,7 +2127,8 @@ these values.</p></td>
 #&gt; [829] 831 832 833 834 835 836 837 838 839 840 841 842 843 844 845 846 847 848
 #&gt; [847] 849 850 851 852 853 854 855 856 857 858 859 860 861 862 863 864 865 866
 #&gt; [865] 867 868 869 870 871 872 873 874 875 876 877 878 879 880 881 882 883 884
-#&gt; [883] 885 886 887 888 889 890 891 892 893 894 895 896 897 898 899 900 901 902</div><div class='input'><span class='fu'>incomplete_cases</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>)</div><div class='output co'>#&gt; [1]  97 279 903 904 905 906 907 908</div><div class='input'><span class='fu'>complete_vars</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>)</div><div class='output co'>#&gt; tot_sc_e 
+#&gt; [883] 885 886 887 888 889 890 891 892 893 894 895 896 897 898 899 900 901 902</div><div class='input'><span class='fu'>incomplete_cases</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>)</div><div class='output co'>#&gt;  97 279 903 904 905 906 907 908 
+#&gt;  97 279 903 904 905 906 907 908 </div><div class='input'><span class='fu'>complete_vars</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>)</div><div class='output co'>#&gt; tot_sc_e 
 #&gt;        2 </div><div class='input'><span class='fu'>incomplete_vars</span>(<span class='no'>efc</span>, <span class='no'>e42dep</span>, <span class='no'>tot_sc_e</span>, <span class='no'>c161sex</span>)</div><div class='output co'>#&gt;  e42dep c161sex 
 #&gt;       1       3 </div><div class='input'>
 </div></span></pre>
@@ -2148,7 +2150,7 @@ these values.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Daniel Lüdecke.</p>
+  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
 </div>
 
 <div class="pkgdown">
