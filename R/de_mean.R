@@ -82,7 +82,7 @@ de_mean <- function(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "
   x_dm <- as.data.frame(x_dm_list)
   colnames(x_dm) <- sprintf("%s%s", colnames(x_dm), suffix.dm)
 
-  renamers <- which(colnames(x_gm) == cn)
+  renamers <- which(colnames(x_gm) %in% cn)
   colnames(x_gm)[renamers] <- sprintf("%s%s", colnames(x_gm)[renamers], suffix.gm)
 
   dat <- dat %>%
