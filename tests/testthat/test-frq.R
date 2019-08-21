@@ -85,3 +85,16 @@ test_that("frq", {
 
   efc %>% dplyr::group_by(c172code) %>% frq(c161sex, e15relat, grp.strings = 2)
 })
+
+#' # with grouped data frames for which some groups are completely missing,
+#' # and also choosing minimum frequencies
+#' efc %>%
+#'   slice(1:4) %>%
+#'   group_by(c12hour) %>%
+#'   frq(nur_pst)
+#'
+#' efc %>%
+#'   slice(1:4) %>%
+#'   group_by(c12hour) %>%
+#'   frq(nur_pst, min.frq = 1)
+#'

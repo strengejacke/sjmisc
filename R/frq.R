@@ -29,10 +29,12 @@
 #'   and \code{\link{str_find}} for details on grouping, and their
 #'   \code{precision}-argument to get more details on the distance of strings
 #'   to be treated as equal.
-#' @param min.frq Numeric value, indicating the minimum frequency for which a 
+#' @param min.frq Numeric, indicating the minimum frequency for which a
 #'   value will be shown in the output (except for the missing values, prevailing
 #'   \code{show.na}). Default value for \code{min.frq} is \code{0}, so all value
-#'   frequencies are shown.
+#'   frequencies are shown. All values or categories that have less than
+#'   \code{min.frq} occurences in the data will be summarized in a \code{"n < 100"}
+#'   category.
 #' @param title String, will be used as alternative title to the variable
 #'   label. If \code{x} is a grouped data frame, \code{title} must be a
 #'   vector of same length as groups.
@@ -77,16 +79,12 @@
 #'   group_by(e16sex, c172code) %>%
 #'   frq(e16sex, c172code, e42dep)
 #'
-#' # with grouped data frames for which some groups are completely missing,
-#' # and also choosing minimum frequencies
-#' efc %>% 
-#'   slice(1:4) %>% 
-#'   group_by(c12hour) %>% 
-#'   frq(nur_pst)
-#' efc %>% 
-#'   slice(1:4) %>% 
-#'   group_by(c12hour) %>% 
-#'   frq(nur_pst, min.frq = 1)
+#' # show only categories with a minimal amount of frequencies
+#' frq(mtcars$gear)
+#'
+#' frq(mtcars$gear, min.frq = 10)
+#'
+#' frq(mtcars$gear, min.frq = 15)
 #'
 #' # with select-helpers: all variables from the COPE-Index
 #' # (which all have a "cop" in their name)
@@ -177,7 +175,7 @@ frq <- function(x,
     message("Package `sjPlot` needs to be loaded to print HTML tables.")
     out <- "txt"
   }
-  
+
   # check min.frq value
   if (!is.numeric(min.frq)) {
     message("min.frq value is not numeric. Returned output assumes default value 0.")
@@ -212,11 +210,11 @@ frq <- function(x,
   }
 
 
-  if (show.na!=TRUE) {
+  if (!isTRUE(show.na)) {
     # remove empty columns
-    
+
     rem.col <- empty_cols(x)
-    
+
     if (!sjmisc::is_empty(rem.col)) {
       rem.vars <- colnames(x)[rem.col]
       x <- remove_empty_cols(x)
@@ -241,7 +239,8 @@ frq <- function(x,
   if (!show.strings)
     x <- dplyr::select_if(x, no_character)
 
-  if ((sjmisc::is_empty(stats::na.omit(x)) && show.na==FALSE) || (sjmisc::is_empty(x, all.na.empty = FALSE))) return(NULL)
+  if ((sjmisc::is_empty(stats::na.omit(x)) && show.na == FALSE) || (sjmisc::is_empty(x, all.na.empty = FALSE)))
+    return(NULL)
 
 
   # group strings
@@ -436,9 +435,9 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   labels <-
     sjlabelled::get_labels(
       x,
-      attr.only = T,
+      attr.only = TRUE,
       values = "n",
-      non.labelled = T
+      non.labelled = TRUE
     )
 
 
@@ -452,11 +451,10 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   # do we have a labelled vector?
   if (!is.null(labels)) {
     # add rownames and values as columns
-    dat <-
-      data_frame(
-        n = names(labels),
-        v = as.character(labels)
-      )
+    dat <- data_frame(
+      n = names(labels),
+      v = as.character(labels)
+    )
 
     colnames(dat) <- c("val", "label")
 
@@ -516,12 +514,24 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     mydat <- mydat[c("val", "label", "frq")]
   }
 
+  min.frq.string <- sprintf("n < %g", min.frq)
+
   if (any(mydat$frq[!is.na(mydat$val)] < min.frq)) {
-	  mydatS1 <- mydat[which(mydat$frq >= min.frq | is.na(mydat$val)),]
-	  mydatS2 <- mydat[which(mydat$frq < min.frq & !is.na(mydat$val)),]
-	  mydatS3 <- data.frame(val = c("Lower frequencies subtotal"), label = c("<none>"), frq = c(sum(mydatS2$frq)))
+	  mydatS1 <- mydat[which(mydat$frq >= min.frq | is.na(mydat$val)), ]
+	  mydatS2 <- mydat[which(mydat$frq < min.frq & !is.na(mydat$val)), ]
+
+	  mydatS3 <- data_frame(
+      val = min.frq.string,
+      label = "<none>",
+      frq = sum(mydatS2$frq)
+    )
+
 	  mydat <- rbind(mydatS1, mydatS3)
-	  row.names(mydat) <- c(row.names(mydat)[-length(row.names(mydat))], as.character(as.integer(row.names(mydat)[length(row.names(mydat)) - 1]) + 1))
+
+	  row.names(mydat) <- c(
+	    row.names(mydat)[-length(row.names(mydat))],
+	    as.character(as.integer(row.names(mydat)[length(row.names(mydat)) - 1]) + 1)
+	  )
   }
 
   # need numeric
@@ -543,11 +553,12 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # valid values are one row less, because last row is NA row
   valid.vals <- nrow(mydat) - 1
+
   if (!all(is.na(mydat$val))) {
 
     extra.vals <- 1
     # Momentarily, in order to sort categories, we consider lower frequencies subtotal as a non valid value
-    if (is.na(mydat$val[valid.vals]) & mydat$val[valid.vals+1] == "Lower frequencies subtotal") {
+    if (is.na(mydat$val[valid.vals]) & mydat$val[valid.vals + 1] == min.frq.string) {
       valid.vals <- valid.vals - 1
       extra.vals <- 2
     }
@@ -561,6 +572,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     }
     mydat <- mydat[c(ord, (valid.vals + extra.vals):(valid.vals + 1)), ]
   }
+
   valid.vals <- nrow(mydat) - 1
 
   # raw percentages

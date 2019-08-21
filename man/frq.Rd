@@ -52,10 +52,12 @@ and \code{\link{str_find}} for details on grouping, and their
 \code{precision}-argument to get more details on the distance of strings
 to be treated as equal.}
 
-\item{min.frq}{Numeric value, indicating the minimum frequency for which a 
+\item{min.frq}{Numeric, indicating the minimum frequency for which a
 value will be shown in the output (except for the missing values, prevailing
 \code{show.na}). Default value for \code{min.frq} is \code{0}, so all value
-frequencies are shown.}
+frequencies are shown. All values or categories that have less than
+\code{min.frq} occurences in the data will be summarized in a \code{"n < 100"}
+category.}
 
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
@@ -108,16 +110,12 @@ efc \%>\%
   group_by(e16sex, c172code) \%>\%
   frq(e16sex, c172code, e42dep)
 
-# with grouped data frames for which some groups are completely missing,
-# and also choosing minimum frequencies
-efc \%>\% 
-  slice(1:4) \%>\% 
-  group_by(c12hour) \%>\% 
-  frq(nur_pst)
-efc \%>\% 
-  slice(1:4) \%>\% 
-  group_by(c12hour) \%>\% 
-  frq(nur_pst, min.frq = 1)
+# show only categories with a minimal amount of frequencies
+frq(mtcars$gear)
+
+frq(mtcars$gear, min.frq = 10)
+
+frq(mtcars$gear, min.frq = 15)
 
 # with select-helpers: all variables from the COPE-Index
 # (which all have a "cop" in their name)
