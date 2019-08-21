@@ -2,12 +2,12 @@
 #' @name merge_imputations
 #'
 #' @description This function merges multiple imputed data frames from
-#'                \code{\link[mice]{mids}}-objects into a single data frame
+#'                \code{\link[mice:mids-class]{mice::mids()}}-objects into a single data frame
 #'                by computing the mean or selecting the most likely imputed value.
 #'
 #' @param dat The data frame that was imputed and used as argument in the
 #'        \code{\link[mice]{mice}}-function call.
-#' @param imp The \code{\link[mice]{mids}}-object with the imputed data frames
+#' @param imp The \code{\link[mice:mids-class]{mice::mids()}}-object with the imputed data frames
 #'        from \code{dat}.
 #' @param ori Optional, if \code{ori} is specified, the imputed variables are
 #'        appended to this data frame; else, a new data frame with the imputed

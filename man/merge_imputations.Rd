@@ -11,7 +11,7 @@ merge_imputations(dat, imp, ori = NULL, summary = c("none", "dens",
 \item{dat}{The data frame that was imputed and used as argument in the
 \code{\link[mice]{mice}}-function call.}
 
-\item{imp}{The \code{\link[mice]{mids}}-object with the imputed data frames
+\item{imp}{The \code{\link[mice:mids-class]{mice::mids()}}-object with the imputed data frames
 from \code{dat}.}
 
 \item{ori}{Optional, if \code{ori} is specified, the imputed variables are
@@ -54,7 +54,7 @@ A data frame with (merged) imputed variables; or \code{ori} with
 }
 \description{
 This function merges multiple imputed data frames from
-               \code{\link[mice]{mids}}-objects into a single data frame
+               \code{\link[mice:mids-class]{mice::mids()}}-objects into a single data frame
                by computing the mean or selecting the most likely imputed value.
 }
 \details{

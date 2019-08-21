@@ -72,7 +72,7 @@ to_label <- function(x, ..., add.non.labelled = FALSE, prefix = FALSE, var.label
 #'       variable labels, however, are preserved.
 #'       \cr \cr
 #'       This function is kept for backwards-compatibility. It is preferred to
-#'       use \code{\link[sjlabelled]{as_character}}.
+#'       use \code{\link[sjlabelled:as_label]{sjlabelled::as_character()}}.
 #'
 #' @return A character vector with the associated value labels as values. If \code{x}
 #'           is a data frame, the complete data frame \code{x} will be returned,

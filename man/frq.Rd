@@ -6,8 +6,8 @@
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
   auto.grp = NULL, show.strings = TRUE, show.na = TRUE,
-  grp.strings = NULL, out = c("txt", "viewer", "browser"),
-  title = NULL, encoding = "UTF-8", file = NULL)
+  grp.strings = NULL, min.frq = 0, out = c("txt", "viewer",
+  "browser"), title = NULL, encoding = "UTF-8", file = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -51,6 +51,11 @@ character vectors, based on their similarity. See \code{\link{group_str}}
 and \code{\link{str_find}} for details on grouping, and their
 \code{precision}-argument to get more details on the distance of strings
 to be treated as equal.}
+
+\item{min.frq}{Numeric value, indicating the minimum frequency for which a 
+value will be shown in the output (except for the missing values, prevailing
+\code{show.na}). Default value for \code{min.frq} is \code{0}, so all value
+frequencies are shown.}
 
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
@@ -102,6 +107,17 @@ library(dplyr)
 efc \%>\%
   group_by(e16sex, c172code) \%>\%
   frq(e16sex, c172code, e42dep)
+
+# with grouped data frames for which some groups are completely missing,
+# and also choosing minimum frequencies
+efc \%>\% 
+  slice(1:4) \%>\% 
+  group_by(c12hour) \%>\% 
+  frq(nur_pst)
+efc \%>\% 
+  slice(1:4) \%>\% 
+  group_by(c12hour) \%>\% 
+  frq(nur_pst, min.frq = 1)
 
 # with select-helpers: all variables from the COPE-Index
 # (which all have a "cop" in their name)

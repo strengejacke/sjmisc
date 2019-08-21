@@ -67,7 +67,7 @@
 ## New functions
 
 * `tidy_values()` to "clean" values (i.e. remove special chars) of character vectors or levels of factors.
-* `add_id()` to qickly add an ID variable to (grouped) data frames.
+* `add_id()` to quickly add an ID variable to (grouped) data frames.
 
 ## Changes to functions
 
