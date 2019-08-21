@@ -44,6 +44,11 @@
 #' @return A list of data frames with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
+#' @details The \dots-argument not only accepts variable names or expressions
+#'   from \code{\link[tidyselect]{select_helpers}}. You can also use logical
+#'   conditions, math operations, or combining variables to produce "crosstables".
+#'   See 'Examples' for more details.
+#'
 #' @note \code{x} may also be a grouped data frame (see \code{\link[dplyr]{group_by}})
 #'       with up to two grouping variables. Frequency tables are created for each
 #'       subgroup then.
@@ -80,14 +85,6 @@
 #' data(iris)
 #' frq(iris, Species)
 #'
-#' # other expressions than variables (logical conditions)
-#' frq(mtcars, cyl ==6)
-#'
-#' frq(efc, is.na(nur_pst), contains("cop"))
-#'
-#' iris %>%
-#'   frq(starts_with("Petal"), Sepal.Length >5)
-#'
 #' # also works on grouped data frames
 #' efc %>%
 #'   group_by(c172code) %>%
@@ -114,6 +111,30 @@
 #'
 #' frq(dummy)
 #' frq(dummy, grp.strings = 2)
+#'
+#' #### other expressions than variables
+#'
+#' # logical conditions
+#' frq(mtcars, cyl ==6)
+#'
+#' frq(efc, is.na(nur_pst), contains("cop"))
+#'
+#' iris %>%
+#'   frq(starts_with("Petal"), Sepal.Length > 5)
+#'
+#' # computation of variables "on the fly"
+#' frq(mtcars, (gear + carb) / cyl)
+#'
+#' # crosstables
+#' set.seed(123)
+#' d <- data.frame(
+#'   var_x = sample(letters[1:3], size = 30, replace = TRUE),
+#'   var_y = sample(1:2, size = 30, replace = TRUE),
+#'   var_z = sample(LETTERS[8:10], size = 30, replace = TRUE)
+#' )
+#' table(d$var_x, d$var_z)
+#' frq(d, paste0(var_x, var_z))
+#' frq(d, paste0(var_x, var_y, var_z))
 #'
 #' @importFrom stats na.omit
 #' @importFrom dplyr full_join select_if select group_keys
