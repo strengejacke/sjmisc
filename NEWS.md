@@ -9,6 +9,7 @@
 
 * `descr()` gets a `show` argument to show selected columns only.
 * `frq()` now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.
+* `frq()` gets a `min.frq`-argument, indicating the minimum frequency for which a value will be shown in the output.
 * `var_rename()` now also accepts a named vector with multiple elements as ellipses-argument.
 
 ## Bug fixes
