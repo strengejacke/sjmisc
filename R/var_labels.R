@@ -20,21 +20,21 @@
 #'   c = sample(1:4, 10, replace = TRUE)
 #' )
 #'
-#' var_rename(dummy, a = "first.col", c = "3rd.col")
+#' rename_variables(dummy, a = "first.col", c = "3rd.col")
 #'
 #' # using quasi-quotation
 #' library(rlang)
 #' v1 <- "first.col"
 #' v2 <- "3rd.col"
-#' var_rename(dummy, a = !!v1, c = !!v2)
+#' rename_variables(dummy, a = !!v1, c = !!v2)
 #'
 #' x1 <- "a"
 #' x2 <- "b"
-#' var_rename(dummy, !!x1 := !!v1, !!x2 := !!v2)
+#' rename_variables(dummy, !!x1 := !!v1, !!x2 := !!v2)
 #'
 #' # using a named vector
 #' new_names <- c(a = "first.col", c = "3rd.col")
-#' var_rename(dummy, new_names)
+#' rename_variables(dummy, new_names)
 #'
 #' @importFrom rlang ensyms as_string
 #' @export

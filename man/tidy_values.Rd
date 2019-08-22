@@ -2,9 +2,12 @@
 % Please edit documentation in R/tidy_values.R
 \name{tidy_values}
 \alias{tidy_values}
-\title{Tidy values of character vectors.}
+\alias{clean_values}
+\title{Clean values of character vectors.}
 \usage{
 tidy_values(x, ...)
+
+clean_values(x, ...)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -30,8 +33,8 @@ f3 <- sample(1:5, size = 10, replace = TRUE)
 
 x <- data.frame(f1, f2, f3, stringsAsFactors = FALSE)
 
-tidy_values(f1)
-tidy_values(f2)
-tidy_values(x)
+clean_values(f1)
+clean_values(f2)
+clean_values(x)
 
 }
