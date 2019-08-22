@@ -3,15 +3,18 @@
 ## General
 
 * Alias `find_variables()` (alias for `find_var()`) was renamed to `find_in_data()`, to avoid conflicts with package *insight*.
+* `rename_variables()` and `rename_columns()` are aliases for `var_rename()`.
 
 ## Changes to functions
 
 * `descr()` gets a `show` argument to show selected columns only.
 * `frq()` now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.
+* `var_rename()` now also accepts a named vector with multiple elements as ellipses-argument.
 
 ## Bug fixes
 
 * Fix erroneously warning in `de_mean()`.
+* `merge_df()` now removes columns with identical column names before merging, to avoid errors.
 
 # sjmisc 2.8.1
 

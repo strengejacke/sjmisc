@@ -5,8 +5,9 @@
 #'    renames the columns of the data frame.
 #'
 #' @param x A data frame.
-#' @param ... Pairs of named vectors, where the name (lhs) equals the column name
-#'    that should be renamed, and the value (rhs) is the new column name.
+#' @param ... A named vector, or pairs of named vectors, where the name (lhs)
+#'   equals the column name that should be renamed, and the value (rhs) is
+#'   the new column name.
 #' @param verbose Logical, if \code{TRUE}, a warning is displayed when variable
 #'    names do not exist in \code{x}.
 #'
@@ -31,16 +32,24 @@
 #' x2 <- "b"
 #' var_rename(dummy, !!x1 := !!v1, !!x2 := !!v2)
 #'
+#' # using a named vector
+#' new_names <- c(a = "first.col", c = "3rd.col")
+#' var_rename(dummy, new_names)
+#'
 #' @importFrom rlang ensyms as_string
 #' @export
 var_rename <- function(x, ..., verbose = TRUE) {
   # get dots
   .dots <- match.call(expand.dots = FALSE)$`...`
 
-  if (inherits(.dots, "pairlist"))
-    .dots <- lapply(rlang::ensyms(...), rlang::as_string) %>% unlist()
-  else
+  if (inherits(.dots, "pairlist")) {
+    d <- lapply(rlang::ensyms(...), rlang::as_string) %>% unlist()
+    # we might have a simple named vector
+    if (sjmisc::is_empty(names(d)) && length(.dots) == 1) d <- eval(.dots[[1]])
+    .dots <- d
+  } else {
     .dots <- unlist(.dots)
+  }
 
   # select variables
   old_names <- names(.dots)
@@ -76,3 +85,12 @@ var_rename <- function(x, ..., verbose = TRUE) {
   # return data
   x
 }
+
+
+#' @rdname var_rename
+#' @export
+rename_variables <- var_rename
+
+#' @rdname var_rename
+#' @export
+rename_columns <- var_rename

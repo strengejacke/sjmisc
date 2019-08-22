@@ -57,9 +57,16 @@ add_rows <- function(..., id = NULL) {
     warning(sprintf("Value of `id` already exists as column name. ID column was renamed to `%s`.", id), call. = F)
   }
 
+  # remove variables with duplicated names
+
+  dat <- lapply(list(...), function(d) {
+    d[, unique(names(d)), drop = FALSE]
+  })
+
+
   # bind all data frames
 
-  x <- dplyr::bind_rows(..., .id = id)
+  x <- dplyr::bind_rows(dat, .id = id)
 
 
   # get attributes from all variables of original data frame

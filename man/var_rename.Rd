@@ -2,15 +2,22 @@
 % Please edit documentation in R/var_labels.R
 \name{var_rename}
 \alias{var_rename}
+\alias{rename_variables}
+\alias{rename_columns}
 \title{Rename variables}
 \usage{
 var_rename(x, ..., verbose = TRUE)
+
+rename_variables(x, ..., verbose = TRUE)
+
+rename_columns(x, ..., verbose = TRUE)
 }
 \arguments{
 \item{x}{A data frame.}
 
-\item{...}{Pairs of named vectors, where the name (lhs) equals the column name
-that should be renamed, and the value (rhs) is the new column name.}
+\item{...}{A named vector, or pairs of named vectors, where the name (lhs)
+equals the column name that should be renamed, and the value (rhs) is
+the new column name.}
 
 \item{verbose}{Logical, if \code{TRUE}, a warning is displayed when variable
 names do not exist in \code{x}.}
@@ -40,5 +47,9 @@ var_rename(dummy, a = !!v1, c = !!v2)
 x1 <- "a"
 x2 <- "b"
 var_rename(dummy, !!x1 := !!v1, !!x2 := !!v2)
+
+# using a named vector
+new_names <- c(a = "first.col", c = "3rd.col")
+var_rename(dummy, new_names)
 
 }
