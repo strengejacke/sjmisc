@@ -105,11 +105,11 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, show = "all", out =
       # copy back labels to grouped data frame
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
-      dummy <- descr_helper(tmp, max.length)
+      dummy <- descr_helper(tmp, max.length)[, show]
       attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
 
       # save data frame for return value
-      dataframes[[length(dataframes) + 1]] <- dummy[, show]
+      dataframes[[length(dataframes) + 1]] <- dummy
     }
 
     # add class-attr for print-method()
