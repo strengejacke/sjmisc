@@ -1,4 +1,4 @@
-#' @title Tidy values of character vectors.
+#' @title Clean values of character vectors.
 #' @name tidy_values
 #'
 #' @description This function "cleans" values of a character vector or levels of
@@ -15,9 +15,9 @@
 #'
 #' x <- data.frame(f1, f2, f3, stringsAsFactors = FALSE)
 #'
-#' tidy_values(f1)
-#' tidy_values(f2)
-#' tidy_values(x)
+#' clean_values(f1)
+#' clean_values(f2)
+#' clean_values(x)
 #'
 #' @importFrom dplyr quos
 #' @importFrom purrr map_df
@@ -43,3 +43,8 @@ tidy_value_helper <- function(x) {
   }
   x
 }
+
+
+#' @rdname tidy_values
+#' @export
+clean_values <- tidy_values
