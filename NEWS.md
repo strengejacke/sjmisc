@@ -15,7 +15,7 @@
 ## Bug fixes
 
 * Fix erroneously warning in `de_mean()`.
-* `merge_df()` now removes columns with identical column names before merging, to avoid errors.
+* `merge_df()` now removes columns with identical column names inside a data frame before merging, to avoid errors.
 
 # sjmisc 2.8.1
 
