@@ -239,7 +239,7 @@ frq <- function(x,
   if (!show.strings)
     x <- dplyr::select_if(x, no_character)
 
-  if ((sjmisc::is_empty(stats::na.omit(x)) && show.na == FALSE) || (sjmisc::is_empty(x, all.na.empty = FALSE)))
+  if ((sjmisc::is_empty(stats::na.omit(x), first.only = FALSE) && show.na == FALSE) || (sjmisc::is_empty(x, all.na.empty = FALSE)))
     return(NULL)
 
 
@@ -588,7 +588,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   mydat$valid.prc <- 100 * round(mydat$valid.prc, 4)
 
   # "rename" labels for NA values
-  if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- "<NA>"
+  if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- NA_character_
 
   if (!all(is.na(mydat$val))) {
     if (extra.vals == 1) {
