@@ -509,6 +509,10 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
     colnames(mydat) <- c("val", "frq")
 
+    if (!anyNA(suppressWarnings(as.numeric(attr(mydat$val, "levels"))))) {
+      mydat$val <- sjlabelled::as_numeric(mydat$val, keep.labels = F)
+    }
+
     # add values as label
     mydat$label <- as.character("<none>")
     mydat <- mydat[c("val", "label", "frq")]
