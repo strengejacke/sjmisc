@@ -239,7 +239,7 @@ frq <- function(x,
   if (!show.strings)
     x <- dplyr::select_if(x, no_character)
 
-  if ((sjmisc::is_empty(stats::na.omit(x), first.only = FALSE) && show.na == FALSE) || (sjmisc::is_empty(x, first.only = FALSE, all.na.empty = FALSE)))
+  if ((all(sjmisc::is_empty(stats::na.omit(x), first.only = FALSE)) && show.na == FALSE) || all((sjmisc::is_empty(x, first.only = FALSE, all.na.empty = FALSE))))
     return(NULL)
 
 
