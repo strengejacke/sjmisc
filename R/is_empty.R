@@ -8,9 +8,9 @@
 #' @param first.only Logical, if \code{FALSE} and \code{x} is a character
 #'        vector, each element of \code{x} will be checked if empty. If
 #'        \code{TRUE}, only the first element of \code{x} will be checked.
-#' @param all.na.empty Logical, if \code{x} is a vector with \code{NA}-values 
-#'         only, \code{is_empty} will return \code{FALSE} if \code{all.na.empty==FALSE},
-#'         and will return \code{TRUE} if \code{all.na.empty==TRUE} (default).
+#' @param all.na.empty Logical, if \code{x} is a vector with \code{NA}-values
+#'         only, \code{is_empty} will return \code{FALSE} if \code{all.na.empty = FALSE},
+#'         and will return \code{TRUE} if \code{all.na.empty = TRUE} (default).
 #' @return Logical, \code{TRUE} if \code{x} is a character vector or string and
 #'           is empty, \code{TRUE} if \code{x} is a vector or list and of length 0,
 #'           \code{FALSE} otherwise.
