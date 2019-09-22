@@ -17,6 +17,7 @@
 
 * Fix erroneously warning in `de_mean()`.
 * `merge_df()` now removes columns with identical column names inside a data frame before merging, to avoid errors.
+* Fix issue when printing character vectors in `frq()`, where first element was empty, and vectors were not provided as data frame argument.
 
 # sjmisc 2.8.1
 
