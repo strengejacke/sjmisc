@@ -11,6 +11,7 @@
 * `frq()` now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.
 * `frq()` gets a `min.frq`-argument, indicating the minimum frequency for which a value will be shown in the output.
 * `var_rename()` now also accepts a named vector with multiple elements as ellipses-argument.
+* `descr()` gets a `file`-argument to write the output as HTML file.
 
 ## Bug fixes
 
