@@ -65,8 +65,8 @@ is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
       zero_len <- nchar(x) == 0
       # return result for multiple elements of character vector
       if (first.only) {
-        zero_len <- .is_true(zero_len[!is.na(x) & !is.null(x)][1])
-        if (length(x) > 0) x <- x[!is.na(x) & !is.null(x)][1]
+        zero_len <- .is_true(zero_len[1])
+        if (length(x) > 0) x <- x[1]
       } else {
         return(unname(zero_len))
       }
