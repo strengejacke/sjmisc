@@ -59,7 +59,14 @@
 #' @importFrom dplyr select mutate
 #' @importFrom sjlabelled copy_labels
 #' @export
-descr <- function(x, ..., max.length = NULL, weights = NULL, show = "all", out = c("txt", "viewer", "browser")) {
+descr <- function(x,
+                  ...,
+                  max.length = NULL,
+                  weights = NULL,
+                  show = "all",
+                  out = c("txt", "viewer", "browser"),
+                  encoding = "UTF-8",
+                  file = NULL) {
 
   out <- match.arg(out)
 
@@ -131,6 +138,8 @@ descr <- function(x, ..., max.length = NULL, weights = NULL, show = "all", out =
 
   # save how to print output
   attr(dataframes, "print") <- out
+  attr(dataframes, "encoding") <- encoding
+  attr(dataframes, "file") <- file
 
   dataframes
 }

@@ -5,7 +5,8 @@
 \title{Basic descriptive statistics}
 \usage{
 descr(x, ..., max.length = NULL, weights = NULL, show = "all",
-  out = c("txt", "viewer", "browser"))
+  out = c("txt", "viewer", "browser"), encoding = "UTF-8",
+  file = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -37,6 +38,13 @@ deviation.}
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 (\code{out = "viewer"}) or browser (\code{out = "browser"}).}
+
+\item{encoding}{Character vector, indicating the charset encoding used
+for variable and value labels. Default is \code{"UTF-8"}. Only used
+when \code{out} is not \code{"txt"}.}
+
+\item{file}{Destination file, if the output should be saved as file.
+Only used when \code{out} is not \code{"txt"}.}
 }
 \value{
 A data frame with basic descriptive statistics.
