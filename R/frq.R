@@ -239,7 +239,7 @@ frq <- function(x,
   if (!show.strings)
     x <- dplyr::select_if(x, no_character)
 
-  if ((sjmisc::is_empty(stats::na.omit(x)) && show.na == FALSE) || (sjmisc::is_empty(x, all.na.empty = FALSE)))
+  if ((all(sjmisc::is_empty(stats::na.omit(x), first.only = FALSE)) && show.na == FALSE) || all(suppressMessages(replace_na(sjmisc::is_empty(x, first.only = FALSE, all.na.empty = FALSE), value = FALSE))))
     return(NULL)
 
 
@@ -509,6 +509,10 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
     colnames(mydat) <- c("val", "frq")
 
+    if (!anyNA(suppressWarnings(as.numeric(attr(mydat$val, "levels"))))) {
+      mydat$val <- sjlabelled::as_numeric(mydat$val, keep.labels = F)
+    }
+
     # add values as label
     mydat$label <- as.character("<none>")
     mydat <- mydat[c("val", "label", "frq")]
@@ -588,7 +592,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   mydat$valid.prc <- 100 * round(mydat$valid.prc, 4)
 
   # "rename" labels for NA values
-  if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- "<NA>"
+  if (!is.null(mydat$label)) mydat$label[is.na(mydat$val)] <- NA_character_
 
   if (!all(is.na(mydat$val))) {
     if (extra.vals == 1) {
