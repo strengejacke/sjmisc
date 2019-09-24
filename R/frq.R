@@ -164,6 +164,7 @@ frq <- function(x,
                 show.na = TRUE,
                 grp.strings = NULL,
                 min.frq = 0,
+		rm.labels = FALSE,
                 out = c("txt", "viewer", "browser"),
                 title = NULL,
                 encoding = "UTF-8",
@@ -310,7 +311,8 @@ frq <- function(x,
               auto.grp = auto.grp,
               title = gr.title,
               show.na = show.na,
-              min.frq = min.frq
+              min.frq = min.frq,
+	      rm.labels = rm.labels
             )
 
           attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
@@ -343,7 +345,8 @@ frq <- function(x,
             auto.grp = auto.grp,
             title = title,
             show.na = show.na,
-            min.frq = min.frq
+            min.frq = min.frq,
+	    rm.labels = rm.labels
           )
 
         # save data frame for return value
@@ -370,7 +373,7 @@ frq <- function(x,
 #' @importFrom dplyr n_distinct full_join bind_rows
 #' @importFrom stats na.omit xtabs na.pass sd weighted.mean
 #' @importFrom sjlabelled get_labels get_label as_numeric
-frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0) {
+frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0, rm.labels = FALSE) {
   # remember type
   vartype <- var_type(x)
 
@@ -612,6 +615,13 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   has.na <- mydat$frq[nrow(mydat)] > 0
   if ((!is.logical(show.na) && show.na == "auto" && !has.na) || identical(show.na, FALSE))
     mydat <- mydat[-nrow(mydat), ]
+
+
+  # remove labels if rm.labels == TRUE
+  if (isTRUE(rm.labels)) {
+	  mydat$label <- NULL
+  }
+
 
   # add variable label and type as attribute, for print-method
 
