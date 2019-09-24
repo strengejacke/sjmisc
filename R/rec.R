@@ -323,29 +323,32 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   # remember if NA's have been recoded...
   na_recoded <- FALSE
 
+  # save some sates...
+  reversed_value_labels <- NULL
+  recodes_reversed <- recodes == "rev"
+  n_values <- n_unique(x)
+
   # drop labels when reversing
-  if (recodes == "rev") x <- sjlabelled::drop_labels(x, drop.na = TRUE)
+  if (recodes_reversed) {
+    reversed_value_labels <- sjlabelled::get_labels(
+      x,
+      attr.only = TRUE,
+      values = "n",
+      non.labelled = FALSE,
+      drop.na = TRUE
+    )
+
+    # reverse value labels, but not values
+    r_values <- names(reversed_value_labels)
+    reversed_value_labels <- rev(reversed_value_labels)
+    names(reversed_value_labels) <- r_values
+  }
 
   # get current NA values
   current.na <- sjlabelled::get_na(x)
 
   # do we have a factor with "x"?
   if (is.factor(x)) {
-    # save variable labels before in case we just want
-    # to reverse the order
-    if (is.null(val_lab) && recodes == "rev") {
-      val_lab <-
-        rev(
-          sjlabelled::get_labels(
-            x,
-            attr.only = TRUE,
-            values = NULL,
-            non.labelled = TRUE,
-            drop.na = TRUE
-          )
-        )
-    }
-
     if (is_num_fac(x)) {
       # numeric factors coerced to numeric
       x <- as.numeric(as.character(x))
@@ -367,30 +370,18 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   max_val <- max(x, na.rm = T)
 
   # do we have special recode-token?
-  if (recodes == "rev") {
-
+  if (recodes_reversed) {
     # retrieve unique valus, sorted
-    ov <- sort(unique(stats::na.omit(as.vector(x))))
+    ov <- if (!is.null(reversed_value_labels) && n_values <= length(reversed_value_labels))
+      as.numeric(as.vector(names(reversed_value_labels)))
+    else
+      sort(unique(stats::na.omit(as.vector(x))))
 
     # new values should be reversed order
     nv <- rev(ov)
 
     # create recodes-string
     recodes <- paste(sprintf("%i=%i", ov, nv), collapse = ";")
-
-    # when we simply reverse values, we can keep value labels
-    if (is.null(val_lab)) {
-      val_lab <-
-        rev(
-          sjlabelled::get_labels(
-            x,
-            attr.only = TRUE,
-            values = NULL,
-            non.labelled = TRUE,
-            drop.na = TRUE
-          )
-        )
-    }
   }
 
   # we allow direct labelling, so extract possible direct labels here
@@ -578,6 +569,11 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
   # replace remaining -Inf with NA
   if (any(is.infinite(new_var))) new_var[which(new_var == -Inf)] <- NA
+
+  # if we have no value labels, but we have reversed labels, add them back now
+  if (is.null(val_lab) && !is.null(reversed_value_labels) && n_values <= length(reversed_value_labels)) {
+    val_lab <- reversed_value_labels
+  }
 
   # add back NA labels
   if (!is.null(current.na) && length(current.na) > 0) {

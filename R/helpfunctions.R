@@ -58,3 +58,11 @@ data_frame <- function(...) {
   rownames(x) <- NULL
   x
 }
+
+
+
+n_unique <- function(x, na.rm = TRUE) {
+  x <- as.vector(x)
+  if (na.rm) x <- stats::na.omit(x)
+  length(unique(x))
+}
