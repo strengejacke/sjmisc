@@ -21,12 +21,17 @@
 #' @importFrom stats na.omit
 #' @export
 word_wrap <- function(labels, wrap, linesep = NULL) {
+  # infinite wrap? then return labels
+  if (is.infinite(wrap) | wrap == 0) return(labels)
+  # expressions can't be wrapped
+  if (is.expression(labels)) {
+    warning("Word wrap is not available for expressions.")
+    return(labels)
+  }
   # check if labels have NA values and remove them
   if (anyNA(labels)) labels <- as.character(stats::na.omit(labels))
   # check for valid value
   if (is.null(labels) || length(labels) == 0) return(NULL)
-  # infinite wrap? then return labels
-  if (is.infinite(wrap)) return(labels)
   # coerce to character, if factor
   if (!is.character(labels)) labels <- as.character(labels)
   # default line separator is \n
