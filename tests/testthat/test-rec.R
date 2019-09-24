@@ -34,3 +34,29 @@ test_that("rec", {
     c(1, 3, 2)
   )
 })
+
+
+test_that("rec rev", {
+  x <- c(1, 2, 3, 4, 1, 2, 3, 4)
+  x <- sjlabelled::set_labels(x, labels = c("1" = "a", "2" = "b", "3" = "c"))
+  expect_equal(
+    rec(x, rec = "rev"),
+    c(4, 3, 2, 1, 4, 3, 2, 1)
+  )
+
+
+  x <- c(1, 2, 3, 4, 1, 2, 3, 4)
+  x <- sjlabelled::set_labels(x, labels = c("1" = "a", "2" = "b", "3" = "c", "4" = "d"))
+  expect_equal(
+    rec(x, rec = "rev"),
+    structure(c(4, 3, 2, 1, 4, 3, 2, 1), labels = c(d = 1, c = 2, b = 3, a = 4))
+  )
+
+  x <- c(1, 2, 3, 4, 1, 2, 3, 4)
+  x <- sjlabelled::set_labels(x, labels = c("1" = "a", "2" = "b", "3" = "c", "4" = "d", "5" = "e"))
+  expect_equal(
+    rec(x, rec = "rev"),
+    structure(c(5, 4, 3, 2, 5, 4, 3, 2), labels = c(e = 1, d = 2, c = 3, b = 4, a = 5))
+  )
+}
+)
