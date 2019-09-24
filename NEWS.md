@@ -19,6 +19,7 @@
 * `merge_df()` now removes columns with identical column names inside a data frame before merging, to avoid errors.
 * Fixed issue when printing character vectors in `frq()`, where first element was empty, and vectors were not provided as data frame argument.
 * Fixed issue in `word_wrap()` when processing expressions.
+* Fixed issue in `rec()` with token `rec = "rev"`, when reversing labelled vectors with more value labels than values.
 
 # sjmisc 2.8.1
 
