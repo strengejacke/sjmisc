@@ -5,7 +5,8 @@ Title: Data and Variable Transformation Functions
 Version: 2.8.2
 Date: 2019-09-24
 Authors@R: c(person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206")),
-    person("Iago", "Giné-Vázquez", role = c("ctb"), email = "i.gine@pssjd.org"))
+    person("Iago", "Giné-Vázquez", role = c("ctb"), email = "i.gine@pssjd.org"),
+    person("Alexander", "Bartel", role = "ctb", email = "alexander.bartel@fu-berlin.de", comment = c(ORCID = "0000-0002-1280-6138")))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 
     transformation tasks like recoding, dichotomizing or grouping variables, 
