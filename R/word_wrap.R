@@ -5,12 +5,13 @@
 #'                labels / titles for plots or tables.
 #'
 #' @param labels Label(s) as character string, where a line break should be
-#'          inserted. Several strings may be passed as vector  (see 'Examples').
-#' @param wrap Maximum amount of chars per line (i.e. line length). If \code{wrap = Inf},
-#'          no word wrap will be performed (i.e. \code{labels} will be returned as is).
+#'   inserted. Several strings may be passed as vector  (see 'Examples').
+#' @param wrap Maximum amount of chars per line (i.e. line length). If
+#'   \code{wrap = Inf} or \code{wrap = 0}, no word wrap will be performed
+#'   (i.e. \code{labels} will be returned as is).
 #' @param linesep By default, this argument is \code{NULL} and a regular new line
-#'          string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}
-#'          could be \code{"<br>"}.
+#'   string (\code{"\\n"}) is used. For HTML-purposes, for instance, \code{linesep}
+#'   could be \code{"<br>"}.
 #' @return New label(s) with line breaks inserted at every \code{wrap}'s position.
 #'
 #' @examples

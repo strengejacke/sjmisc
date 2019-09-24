@@ -7,17 +7,18 @@
 
 ## Changes to functions
 
-* `descr()` gets a `show` argument to show selected columns only.
 * `frq()` now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.
 * `frq()` gets a `min.frq`-argument, indicating the minimum frequency for which a value will be shown in the output.
-* `var_rename()` now also accepts a named vector with multiple elements as ellipses-argument.
+* `descr()` gets a `show` argument to show selected columns only.
 * `descr()` gets a `file`-argument to write the output as HTML file.
+* `var_rename()` now also accepts a named vector with multiple elements as ellipses-argument.
 
 ## Bug fixes
 
-* Fix erroneously warning in `de_mean()`.
+* Fixed erroneously warning in `de_mean()`.
 * `merge_df()` now removes columns with identical column names inside a data frame before merging, to avoid errors.
-* Fix issue when printing character vectors in `frq()`, where first element was empty, and vectors were not provided as data frame argument.
+* Fixed issue when printing character vectors in `frq()`, where first element was empty, and vectors were not provided as data frame argument.
+* Fixed issue in `word_wrap()` when processing expressions.
 
 # sjmisc 2.8.1
 
