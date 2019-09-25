@@ -75,6 +75,9 @@
 #' data(efc)
 #' frq(efc$e42dep)
 #'
+#' # remove labels
+#' frq(efc$e42dep, rm.labels = TRUE)
+#'
 #' # with grouped data frames, in a pipe
 #' library(dplyr)
 #' efc %>%
