@@ -35,6 +35,8 @@
 #'   frequencies are shown. All values or categories that have less than
 #'   \code{min.frq} occurences in the data will be summarized in a \code{"n < 100"}
 #'   category.
+#' @param rm.labels Logical, if \code{TRUE}, \code{label} column is removed from
+#'   \code{frq} output. Default is \code{FALSE}.
 #' @param title String, will be used as alternative title to the variable
 #'   label. If \code{x} is a grouped data frame, \code{title} must be a
 #'   vector of same length as groups.
