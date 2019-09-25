@@ -6,8 +6,9 @@
 \usage{
 frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
   auto.grp = NULL, show.strings = TRUE, show.na = TRUE,
-  grp.strings = NULL, min.frq = 0, out = c("txt", "viewer",
-  "browser"), title = NULL, encoding = "UTF-8", file = NULL)
+  grp.strings = NULL, min.frq = 0, rm.labels = FALSE,
+  out = c("txt", "viewer", "browser"), title = NULL,
+  encoding = "UTF-8", file = NULL)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
@@ -59,6 +60,9 @@ frequencies are shown. All values or categories that have less than
 \code{min.frq} occurences in the data will be summarized in a \code{"n < 100"}
 category.}
 
+\item{rm.labels}{Logical, if \code{TRUE}, \code{label} column is removed from
+\code{frq} output. Default is \code{FALSE}.}
+
 \item{out}{Character vector, indicating whether the results should be printed
 to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 (\code{out = "viewer"}) or browser (\code{out = "browser"}).}
@@ -103,6 +107,9 @@ The \dots-argument not only accepts variable names or expressions
 # simple vector
 data(efc)
 frq(efc$e42dep)
+
+# remove labels
+frq(efc$e42dep, rm.labels = TRUE)
 
 # with grouped data frames, in a pipe
 library(dplyr)
