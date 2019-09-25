@@ -532,13 +532,19 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
       label = "<none>",
       frq = sum(mydatS2$frq)
     )
+	  if (mydatS3$frq == 0) {
+		  mydat <- mydatS1
+	  } else {
+		  mydat <- rbind(mydatS1, mydatS3)
 
-	  mydat <- rbind(mydatS1, mydatS3)
+		  rows.length <- length(row.names(mydat))
 
-	  row.names(mydat) <- c(
-	    row.names(mydat)[-length(row.names(mydat))],
-	    as.character(as.integer(row.names(mydat)[length(row.names(mydat)) - 1]) + 1)
-	  )
+		  row.names(mydat) <- c(
+					row.names(mydat)[-c(rows.length, rows.length - 1)],
+					as.character(as.integer(row.names(mydat)[rows.length - 1]) + 1),
+					row.names(mydat)[rows.length - 1]
+		  )
+	  }
   }
 
   # need numeric
