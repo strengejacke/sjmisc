@@ -8,21 +8,32 @@
 
 <title>Changelog • sjmisc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +41,11 @@
 
 
 
-<meta property="og:title" content="Changelog" />
 
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -45,6 +57,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -63,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
       </span>
     </div>
 
@@ -71,7 +84,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -100,7 +113,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -110,6 +122,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -121,13 +134,15 @@
 
     <div id="sjmisc-282" class="section level1">
 <h1 class="page-header">
-<a href="#sjmisc-282" class="anchor"></a>sjmisc 2.8.2<small> Unreleased </small>
+<a href="#sjmisc-282" class="anchor"></a>sjmisc 2.8.2<small> 2019-09-24 </small>
 </h1>
 <div id="general" class="section level2">
 <h2 class="hasAnchor">
 <a href="#general" class="anchor"></a>General</h2>
 <ul>
 <li>Alias <code>find_variables()</code> (alias for <code><a href="../reference/find_var.html">find_var()</a></code>) was renamed to <code><a href="../reference/find_var.html">find_in_data()</a></code>, to avoid conflicts with package <em>insight</em>.</li>
+<li>
+<code><a href="../reference/var_rename.html">rename_variables()</a></code> and <code><a href="../reference/var_rename.html">rename_columns()</a></code> are aliases for <code><a href="../reference/var_rename.html">var_rename()</a></code>.</li>
 </ul>
 </div>
 <div id="changes-to-functions" class="section level2">
@@ -135,16 +150,27 @@
 <a href="#changes-to-functions" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
+<code><a href="../reference/frq.html">frq()</a></code> now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.</li>
+<li>
+<code><a href="../reference/frq.html">frq()</a></code> gets a <code>min.frq</code>-argument, indicating the minimum frequency for which a value will be shown in the output.</li>
+<li>
 <code><a href="../reference/descr.html">descr()</a></code> gets a <code>show</code> argument to show selected columns only.</li>
 <li>
-<code><a href="../reference/frq.html">frq()</a></code> now also prints frequencies of logical conditions, e.g. how many values are lower or greater than a certain threshold.</li>
+<code><a href="../reference/descr.html">descr()</a></code> gets a <code>file</code>-argument to write the output as HTML file.</li>
+<li>
+<code><a href="../reference/var_rename.html">var_rename()</a></code> now also accepts a named vector with multiple elements as ellipses-argument.</li>
 </ul>
 </div>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fix erroneously warning in <code><a href="../reference/de_mean.html">de_mean()</a></code>.</li>
+<li>Fixed erroneously warning in <code><a href="../reference/de_mean.html">de_mean()</a></code>.</li>
+<li>
+<code><a href="../reference/add_rows.html">merge_df()</a></code> now removes columns with identical column names inside a data frame before merging, to avoid errors.</li>
+<li>Fixed issue when printing character vectors in <code><a href="../reference/frq.html">frq()</a></code>, where first element was empty, and vectors were not provided as data frame argument.</li>
+<li>Fixed issue in <code><a href="../reference/word_wrap.html">word_wrap()</a></code> when processing expressions.</li>
+<li>Fixed issue in <code><a href="../reference/rec.html">rec()</a></code> with token <code>rec = "rev"</code>, when reversing labelled vectors with more value labels than values.</li>
 </ul>
 </div>
 </div>
@@ -370,7 +396,7 @@
 <a href="#changes-to-functions-5" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
-<code><a href="https://www.rdocumentation.org/packages/sjlabelled/topics/set_na">set_na()</a></code> now also replaces different values per variable into <code>NA</code>.</li>
+<code><a href="https://rdrr.io/pkg/sjlabelled/man/set_na.html">set_na()</a></code> now also replaces different values per variable into <code>NA</code>.</li>
 <li>Changed behaviour of <code><a href="../reference/row_sums.html">row_sums()</a></code> and missing values. <code><a href="../reference/row_sums.html">row_sums()</a></code> gets a <code>n</code>-argument and now computes row sums if a row has at least <code>n</code> non-missing values.</li>
 </ul>
 </div>
@@ -400,7 +426,7 @@
 <a href="#changes-to-functions-6" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
-<code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also accepts value labels as value for the <code>lvl</code>-argument. Additionally, <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also works for factor with non-numeric factor levels and simply returns <code><a href="https://www.rdocumentation.org/packages/stats/topics/relevel">relevel(x, ref = lvl)</a></code> in such cases.</li>
+<code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also accepts value labels as value for the <code>lvl</code>-argument. Additionally, <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also works for factor with non-numeric factor levels and simply returns <code><a href="https://rdrr.io/r/stats/relevel.html">relevel(x, ref = lvl)</a></code> in such cases.</li>
 </ul>
 </div>
 <div id="bug-fixes-6" class="section level2">
@@ -492,7 +518,7 @@
 <li>
 <code><a href="../reference/recode_to.html">recode_to_if()</a></code> as scoped variant of <code><a href="../reference/recode_to.html">recode_to()</a></code>.</li>
 <li>
-<code><a href="../reference/set_na_if.html">set_na_if()</a></code> as scoped variant of <code><a href="https://www.rdocumentation.org/packages/sjlabelled/topics/set_na">set_na()</a></code>.</li>
+<code><a href="../reference/set_na_if.html">set_na_if()</a></code> as scoped variant of <code><a href="https://rdrr.io/pkg/sjlabelled/man/set_na.html">set_na()</a></code>.</li>
 </ul>
 </div>
 <div id="changes-to-functions-8" class="section level2">
@@ -502,7 +528,7 @@
 <li>New function <code><a href="../reference/remove_var.html">remove_cols()</a></code> as alias for <code><a href="../reference/remove_var.html">remove_var()</a></code>.</li>
 <li>
 <code><a href="../reference/std.html">std()</a></code> gets a new robust-option, <code>robust = "2sd"</code>, which divides the centered variables by two standard deviations.</li>
-<li>Slightly improved performance for <code><a href="https://www.rdocumentation.org/packages/sjlabelled/topics/set_na">set_na()</a></code>.</li>
+<li>Slightly improved performance for <code><a href="https://rdrr.io/pkg/sjlabelled/man/set_na.html">set_na()</a></code>.</li>
 </ul>
 </div>
 <div id="bug-fixes-8" class="section level2">
@@ -528,8 +554,8 @@
 <ul>
 <li>
 <em>Breaking changes</em>: The <code>append</code>-argument in recode and transformation functions like <code><a href="../reference/rec.html">rec()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/split_var.html">split_var()</a></code>, <code><a href="../reference/group_var.html">group_var()</a></code>, <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/recode_to.html">recode_to()</a></code>, <code><a href="../reference/row_sums.html">row_sums()</a></code>, <code><a href="../reference/row_count.html">row_count()</a></code>, <code><a href="../reference/row_count.html">col_count()</a></code> and <code><a href="../reference/row_sums.html">row_means()</a></code> now defaults to <code>TRUE</code>.</li>
-<li>The <code><a href="https://www.rdocumentation.org/packages/base/topics/print">print()</a></code>-method for <code><a href="../reference/descr.html">descr()</a></code> now accepts a <code>digits</code>-argument, to specify the rounding of the output.</li>
-<li>Cross refences from <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">dplyr::select_helpers</a></code> were updated to <code><a href="https://www.rdocumentation.org/packages/tidyselect/topics/select_helpers">tidyselect::select_helpers</a></code>.</li>
+<li>The <code><a href="https://rdrr.io/r/base/print.html">print()</a></code>-method for <code><a href="../reference/descr.html">descr()</a></code> now accepts a <code>digits</code>-argument, to specify the rounding of the output.</li>
+<li>Cross refences from <code><a href="https://dplyr.tidyverse.org/reference/reexports.html">dplyr::select_helpers</a></code> were updated to <code><a href="https://rdrr.io/pkg/tidyselect/man/select_helpers.html">tidyselect::select_helpers</a></code>.</li>
 </ul>
 </div>
 <div id="new-functions-8" class="section level2">
@@ -743,7 +769,7 @@
 <li>
 <code><a href="../reference/descr.html">descr()</a></code> and <code><a href="../reference/frq.html">frq()</a></code> used wrong variable labels when processing grouped data frames for specific situations, where the grouping variable had no sequences values.</li>
 <li>
-<code><a href="../reference/descr.html">descr()</a></code> did not work for large data frames, because internally, because <code><a href="https://www.rdocumentation.org/packages/psych/topics/describe">psych::describe()</a></code> switched to fast mode by default then (removing columns from the output).</li>
+<code><a href="../reference/descr.html">descr()</a></code> did not work for large data frames, because internally, because <code><a href="https://rdrr.io/pkg/psych/man/describe.html">psych::describe()</a></code> switched to fast mode by default then (removing columns from the output).</li>
 </ul>
 </div>
 </div>
@@ -776,19 +802,23 @@
 
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

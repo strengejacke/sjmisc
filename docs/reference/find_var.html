@@ -8,21 +8,32 @@
 
 <title>Find variable by name or label — find_var • sjmisc</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,14 +41,14 @@
 
 
 
-<meta property="og:title" content="Find variable by name or label — find_var" />
 
+<meta property="og:title" content="Find variable by name or label — find_var" />
 <meta property="og:description" content="This functions finds variables in a data frame, which variable
                names or variable (and value) label attribute match a specific
                pattern. Regular expression for the pattern is supported." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,6 +60,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -67,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
       </span>
     </div>
 
@@ -75,7 +87,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -104,7 +116,6 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -114,6 +125,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -125,22 +137,20 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This functions finds variables in a data frame, which variable
                names or variable (and value) label attribute match a specific
                pattern. Regular expression for the pattern is supported.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>find_var</span>(<span class='no'>data</span>, <span class='no'>pattern</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>search</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"name_label"</span>,
+    <pre class="usage"><span class='fu'>find_var</span>(<span class='no'>data</span>, <span class='no'>pattern</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>search</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"name_label"</span>,
   <span class='st'>"name_value"</span>, <span class='st'>"label_value"</span>, <span class='st'>"name"</span>, <span class='st'>"label"</span>, <span class='st'>"value"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"table"</span>, <span class='st'>"df"</span>, <span class='st'>"index"</span>), <span class='kw'>fuzzy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+  <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"table"</span>, <span class='st'>"df"</span>, <span class='st'>"index"</span>), <span class='kw'>fuzzy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>find_in_data</span>(<span class='no'>data</span>, <span class='no'>pattern</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>search</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"name_label"</span>, <span class='st'>"name_value"</span>, <span class='st'>"label_value"</span>, <span class='st'>"name"</span>, <span class='st'>"label"</span>,
-  <span class='st'>"value"</span>, <span class='st'>"all"</span>), <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"table"</span>, <span class='st'>"df"</span>, <span class='st'>"index"</span>), <span class='kw'>fuzzy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>search</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"name_label"</span>, <span class='st'>"name_value"</span>, <span class='st'>"label_value"</span>, <span class='st'>"name"</span>, <span class='st'>"label"</span>,
+  <span class='st'>"value"</span>, <span class='st'>"all"</span>), <span class='kw'>out</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"table"</span>, <span class='st'>"df"</span>, <span class='st'>"index"</span>), <span class='kw'>fuzzy</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>regex</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -153,8 +163,8 @@
       <td><p>Character string to be matched in <code>data</code>. May also be a
 character vector of length &gt; 1 (see 'Examples'). <code>pattern</code> is
 searched for in column names and variable label attributes of
-<code>data</code> (see <code><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/get_label'>get_label</a></code>). <code>pattern</code>
-might also be a regular-expression object, as returned by <code><a href='https://stringr.tidyverse.org/reference/modifiers.html'>regex</a></code>.
+<code>data</code> (see <code><a href='https://rdrr.io/pkg/sjlabelled/man/get_label.html'>get_label</a></code>). <code>pattern</code>
+might also be a regular-expression object, as returned by <code><a href='https://stringr.tidyverse.org/reference/modifiers.html'>stringr::regex()</a></code>.
 Alternatively, use <code>regex = TRUE</code> to treat <code>pattern</code> as a regular
 expression rather than a fixed string.</p></td>
     </tr>
@@ -182,6 +192,7 @@ Use one of following options:</p><dl class='dl-horizontal'>
         value labels.</p></dd>
   <dt><code>"all"</code></dt><dd><p>Searches for <code>pattern</code> in
         variable names, variable and value labels.</p></dd>
+
 </dl></td>
     </tr>
     <tr>
@@ -192,6 +203,7 @@ and must be one of:</p><dl class='dl-horizontal'>
     column indices, variable names and labels of matching variables.</p></dd>
   <dt><code>"df"</code></dt><dd><p>A data frame with all matching variables.</p></dd>
   <dt><code>"index"</code></dt><dd><p>A named vector with column indices of all matching variables.</p></dd>
+
 </dl></td>
     </tr>
     <tr>
@@ -206,7 +218,7 @@ in <code>data</code> if no exact match was found.</p></td>
 expression rather than a fixed string.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>By default (i.e. <code>out = "table"</code>, returns a data frame with three
@@ -214,18 +226,16 @@ expression rather than a fixed string.</p></td>
         <code>out = "index"</code>, returns a named vector with column indices
         of matching variables (variable names are used as names-attribute);
         if <code>out = "df"</code>, returns the matching variables as data frame</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function searches for <code>pattern</code> in <code>data</code>'s column names
            and - for labelled data - in all variable and value labels of <code>data</code>'s
-           variables (see <code><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/get_label'>get_label</a></code> for details on variable labels and
+           variables (see <code><a href='https://rdrr.io/pkg/sjlabelled/man/get_label.html'>get_label</a></code> for details on variable labels and
            labelled data). Regular expressions are supported as well, by simply using
            <code>pattern = stringr::regex(...)</code> or <code>regex = TRUE</code>.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>efc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>efc</span>)
 
 <span class='co'># find variables with "cop" in variable name</span>
 <span class='fu'>find_var</span>(<span class='no'>efc</span>, <span class='st'>"cop"</span>)</div><div class='output co'>#&gt;   col.nr var.name
@@ -1162,9 +1172,9 @@ expression rather than a fixed string.</p></td>
 <span class='fu'>find_var</span>(<span class='no'>efc</span>, <span class='st'>"cop"</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"index"</span>)</div><div class='output co'>#&gt; c82cop1 c83cop2 c84cop3 c85cop4 c86cop5 c87cop6 c88cop7 c89cop8 c90cop9 
 #&gt;       6       7       8       9      10      11      12      13      14 </div><div class='input'>
 <span class='co'># find variables with "dependency" in names and variable labels</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sjlabelled</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sjlabelled</span>)
 <span class='fu'>find_var</span>(<span class='no'>efc</span>, <span class='st'>"dependency"</span>)</div><div class='output co'>#&gt;   col.nr var.name          var.label
-#&gt; 1      5   e42dep elder's dependency</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/get_label'>get_label</a></span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)</div><div class='output co'>#&gt; [1] "elder's dependency"</div><div class='input'>
+#&gt; 1      5   e42dep elder's dependency</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_label.html'>get_label</a></span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)</div><div class='output co'>#&gt; [1] "elder's dependency"</div><div class='input'>
 <span class='co'># find variables with "level" in names and value labels</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'>find_var</span>(<span class='no'>efc</span>, <span class='st'>"level"</span>, <span class='kw'>search</span> <span class='kw'>=</span> <span class='st'>"name_value"</span>, <span class='kw'>out</span> <span class='kw'>=</span> <span class='st'>"df"</span>)
 <span class='no'>res</span></div><div class='output co'>#&gt;     c172code
@@ -2075,31 +2085,27 @@ expression rather than a fixed string.</p></td>
 #&gt; 905       NA
 #&gt; 906       NA
 #&gt; 907       NA
-#&gt; 908       NA</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/sjlabelled/topics/get_labels'>get_labels</a></span>(<span class='no'>res</span>, <span class='kw'>attr.only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $c172code
+#&gt; 908       NA</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_labels.html'>get_labels</a></span>(<span class='no'>res</span>, <span class='kw'>attr.only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; $c172code
 #&gt; [1] "low level of education"          "intermediate level of education"
 #&gt; [3] "high level of education"        
 #&gt; </div><div class='input'>
-# use sjPlot::view_df() to view results
-</div><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>sjPlot</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/sjPlot/topics/view_df'>view_df</a></span>(<span class='no'>res</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
+<span class='co'># use sjPlot::view_df() to view results</span>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sjPlot</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/sjPlot/man/view_df.html'>view_df</a></span>(<span class='no'>res</span>)}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -2107,13 +2113,16 @@ expression rather than a fixed string.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
