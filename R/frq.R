@@ -356,7 +356,7 @@ frq <- function(x,
   if (out == "txt")
     class(dataframes) <- c("sjmisc_frq", "list")
   else
-    class(dataframes) <- c("sjt_frq", "list")
+    class(dataframes) <- c("sjt_frq", "sjmisc_frq", "list")
 
   # save how to print output
   attr(dataframes, "print") <- out
@@ -602,9 +602,9 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
       if (sort.frq == "none") mydat <- mydat[order(reihe), ]
     } else if (extra.vals == 2) {
       # save original order
-      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals,valid.vals+1)], start.at = 1, keep.labels = F))
+      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals, valid.vals + 1)], start.at = 1, keep.labels = F))
       # sort
-      if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals+1), ]
+      if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals + 1), ]
     }
   }
 
@@ -714,3 +714,15 @@ get_grouped_data <- function(x) {
 
 
 no_character <- function(x) !is.character(x)
+
+
+#' @export
+as.data.frame.sjmisc_frq <- function(x, row.names = NULL, optional = FALSE, ...) {
+  x <- lapply(x, function(i) {
+    i$variable <- attr(i, "label")
+    i$group <- attr(i, "group")
+    cols <- c("variable", "group", "val", "label", "frq", "raw.prc", "vaid.prc", "cum.prc")
+    i[, intersect(cols, colnames(i))]
+  })
+  do.call(rbind, x)
+}

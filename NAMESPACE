@@ -3,6 +3,7 @@
 S3method(all_na,data.frame)
 S3method(all_na,default)
 S3method(all_na,list)
+S3method(as.data.frame,sjmisc_frq)
 S3method(big_mark,data.frame)
 S3method(big_mark,default)
 S3method(big_mark,list)
