@@ -562,7 +562,7 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
       } else {
         # else we have numeric values, which should be replaced
-        new_var[which(x == old_val[k])] <- new_val
+        new_var[which(gsub(" ", "", x) == old_val[k])] <- new_val
       }
     }
   }
