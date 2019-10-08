@@ -104,7 +104,7 @@
 #'   mutate(dependency_rev = rec(e42dep, rec = "rev")) %>%
 #'   head()
 #'
-#' # recode 1 to 3 into 4 into 2
+#' # recode 1 to 3 into 1 and 4 into 2
 #' table(rec(efc$e42dep, rec = "min:3=1; 4=2"), useNA = "always")
 #'
 #' # recode 2 to 1 and all others into 2
