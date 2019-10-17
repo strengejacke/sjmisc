@@ -142,7 +142,7 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-recode-and-data-transformatiomn-functions" class="hasAnchor"><a href="#section-recode-and-data-transformatiomn-functions" class="anchor"></a>Recode and Data Transformatiomn Functions</h2>
+          <h2 id="section-recode-and-data-transformation-functions" class="hasAnchor"><a href="#section-recode-and-data-transformation-functions" class="anchor"></a>Recode and Data Transformation Functions</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -170,6 +170,12 @@
           <p><code><a href="group_var.html">group_var()</a></code> <code><a href="group_var.html">group_var_if()</a></code> <code><a href="group_var.html">group_labels()</a></code> <code><a href="group_var.html">group_labels_if()</a></code> </p>
         </td>
         <td><p>Recode numeric variables into equal-ranged groups</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="group_str.html">group_str()</a></code> </p>
+        </td>
+        <td><p>Group near elements of string vectors</p></td>
       </tr><tr>
         
         <td>
@@ -186,46 +192,22 @@
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-scoped-variants-of-recode-and-data-transformatiomn-functions" class="hasAnchor"><a href="#section-scoped-variants-of-recode-and-data-transformatiomn-functions" class="anchor"></a>Scoped Variants of Recode and Data Transformatiomn Functions</h2>
+          <h2 id="section-data-frame-transformation-functions" class="hasAnchor"><a href="#section-data-frame-transformation-functions" class="anchor"></a>Data Frame Transformation Functions</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
       <tr>
         
         <td>
-          <p><code><a href="rec.html">rec()</a></code> <code><a href="rec.html">rec_if()</a></code> </p>
+          <p><code><a href="merge_imputations.html">merge_imputations()</a></code> </p>
         </td>
-        <td><p>Recode variables</p></td>
+        <td><p>Merges multiple imputed data frames into a single data frame</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="recode_to.html">recode_to()</a></code> <code><a href="recode_to.html">recode_to_if()</a></code> </p>
+          <p><code><a href="rotate_df.html">rotate_df()</a></code> </p>
         </td>
-        <td><p>Recode variable categories into new values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="dicho.html">dicho()</a></code> <code><a href="dicho.html">dicho_if()</a></code> </p>
-        </td>
-        <td><p>Dichotomize variables</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="group_var.html">group_var()</a></code> <code><a href="group_var.html">group_var_if()</a></code> <code><a href="group_var.html">group_labels()</a></code> <code><a href="group_var.html">group_labels_if()</a></code> </p>
-        </td>
-        <td><p>Recode numeric variables into equal-ranged groups</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="split_var.html">split_var()</a></code> <code><a href="split_var.html">split_var_if()</a></code> </p>
-        </td>
-        <td><p>Split numeric variables into smaller groups</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="std.html">std()</a></code> <code><a href="std.html">std_if()</a></code> <code><a href="std.html">center()</a></code> <code><a href="std.html">center_if()</a></code> </p>
-        </td>
-        <td><p>Standardize and center variables</p></td>
+        <td><p>Rotate a data frame</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -240,6 +222,12 @@
           <p><code><a href="add_columns.html">add_columns()</a></code> <code><a href="add_columns.html">replace_columns()</a></code> <code><a href="add_columns.html">add_id()</a></code> </p>
         </td>
         <td><p>Add or replace data frame columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="add_rows.html">add_rows()</a></code> <code><a href="add_rows.html">merge_df()</a></code> </p>
+        </td>
+        <td><p>Merge labelled data frames</p></td>
       </tr><tr>
         
         <td>
@@ -264,6 +252,154 @@
           <p><code><a href="remove_var.html">remove_var()</a></code> <code><a href="remove_var.html">remove_cols()</a></code> </p>
         </td>
         <td><p>Remove variables from a data frame</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="var_rename.html">var_rename()</a></code> <code><a href="var_rename.html">rename_variables()</a></code> <code><a href="var_rename.html">rename_columns()</a></code> </p>
+        </td>
+        <td><p>Rename variables</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-variable-transformation" class="hasAnchor"><a href="#section-variable-transformation" class="anchor"></a>Variable Transformation</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="numeric_to_factor.html">numeric_to_factor()</a></code> </p>
+        </td>
+        <td><p>Convert numeric vectors into factors associated value labels</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_character.html">to_character()</a></code> </p>
+        </td>
+        <td><p>Convert variable into character vector and replace values with associated value labels</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_factor.html">to_factor()</a></code> </p>
+        </td>
+        <td><p>Convert variable into factor and keep value labels</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_label.html">to_label()</a></code> </p>
+        </td>
+        <td><p>Convert variable into factor with associated value labels</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_value.html">to_value()</a></code> </p>
+        </td>
+        <td><p>Convert factors to numeric variables</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-creating-new-variables" class="hasAnchor"><a href="#section-creating-new-variables" class="anchor"></a>Creating New Variables</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="de_mean.html">de_mean()</a></code> </p>
+        </td>
+        <td><p>Compute group-meaned and de-meaned variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_dummy.html">to_dummy()</a></code> </p>
+        </td>
+        <td><p>Split (categorical) vectors into dummy variables</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-variable-utility-functions" class="hasAnchor"><a href="#section-variable-utility-functions" class="anchor"></a>Variable Utility Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="ref_lvl.html">ref_lvl()</a></code> </p>
+        </td>
+        <td><p>Change reference level of (numeric) factors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="round_num.html">round_num()</a></code> </p>
+        </td>
+        <td><p>Round numeric variables in a data frame</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="shorten_string.html">shorten_string()</a></code> </p>
+        </td>
+        <td><p>Shorten character strings</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="zap_inf.html">zap_inf()</a></code> </p>
+        </td>
+        <td><p>Convert infiite or NaN values into regular NA</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-missing-values" class="hasAnchor"><a href="#section-missing-values" class="anchor"></a>Missing Values</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="replace_na.html">replace_na()</a></code> </p>
+        </td>
+        <td><p>Replace NA with specific values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="set_na_if.html">set_na_if()</a></code> </p>
+        </td>
+        <td><p>Replace specific values in vector with NA</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-finding-variables-and-values" class="hasAnchor"><a href="#section-finding-variables-and-values" class="anchor"></a>Finding Variables and Values</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="find_var.html">find_var()</a></code> <code><a href="find_var.html">find_in_data()</a></code> </p>
+        </td>
+        <td><p>Find variable by name or label</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="str_contains.html">str_contains()</a></code> </p>
+        </td>
+        <td><p>Check if string contains pattern</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="str_start.html">str_start()</a></code> <code><a href="str_start.html">str_end()</a></code> </p>
+        </td>
+        <td><p>Find start and end index of pattern in string</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="str_find.html">str_find()</a></code> </p>
+        </td>
+        <td><p>Find partial matching and close distance elements in strings</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -373,6 +509,86 @@
         </td>
         <td><p>Check whether a factor has numeric levels only</p></td>
       </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility Functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="grapes-nin-grapes.html">`%nin%`</a></code> </p>
+        </td>
+        <td><p>Value matching</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="big_mark.html">big_mark()</a></code> <code><a href="big_mark.html">prcn()</a></code> </p>
+        </td>
+        <td><p>Format numbers</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="rec_pattern.html">rec_pattern()</a></code> </p>
+        </td>
+        <td><p>Create recode pattern for 'rec' function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="reshape_longer.html">reshape_longer()</a></code> </p>
+        </td>
+        <td><p>Reshape data into long format</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seq_col.html">seq_col()</a></code> <code><a href="seq_col.html">seq_row()</a></code> </p>
+        </td>
+        <td><p>Sequence generation for column or row counts of data frames</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="spread_coef.html">spread_coef()</a></code> </p>
+        </td>
+        <td><p>Spread model coefficients of list-variables into columns</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tidy_values.html">tidy_values()</a></code> <code><a href="tidy_values.html">clean_values()</a></code> </p>
+        </td>
+        <td><p>Clean values of character vectors.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="to_long.html">to_long()</a></code> </p>
+        </td>
+        <td><p>Convert wide data to long format</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="trim.html">trim()</a></code> </p>
+        </td>
+        <td><p>Trim leading and trailing whitespaces from strings</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="typical_value.html">typical_value()</a></code> </p>
+        </td>
+        <td><p>Return the typical value of a vector</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="var_type.html">var_type()</a></code> </p>
+        </td>
+        <td><p>Determine variable type</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="word_wrap.html">word_wrap()</a></code> </p>
+        </td>
+        <td><p>Insert line breaks in long labels</p></td>
+      </tr>
     </tbody>
     </table>
   </div>
@@ -380,12 +596,18 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-recode-and-data-transformatiomn-functions">Recode and Data Transformatiomn Functions</a></li>
-      <li><a href="#section-scoped-variants-of-recode-and-data-transformatiomn-functions">Scoped Variants of Recode and Data Transformatiomn Functions</a></li>
+      <li><a href="#section-recode-and-data-transformation-functions">Recode and Data Transformation Functions</a></li>
+      <li><a href="#section-data-frame-transformation-functions">Data Frame Transformation Functions</a></li>
       <li><a href="#section-adding-replacing-and-removing-variables-or-cases-from-data-frames">Adding, Replacing and Removing Variables or Cases from Data Frames</a></li>
+      <li><a href="#section-variable-transformation">Variable Transformation</a></li>
+      <li><a href="#section-creating-new-variables">Creating New Variables</a></li>
+      <li><a href="#section-variable-utility-functions">Variable Utility Functions</a></li>
+      <li><a href="#section-missing-values">Missing Values</a></li>
+      <li><a href="#section-finding-variables-and-values">Finding Variables and Values</a></li>
       <li><a href="#section-descriptive-and-summary-statistics">Descriptive and Summary Statistics</a></li>
       <li><a href="#section-properties-of-data-frames-or-variables">Properties of Data Frames or Variables</a></li>
       <li><a href="#section-check-variables">Check Variables</a></li>
+      <li><a href="#section-utility-functions">Utility Functions</a></li>
     </ul>
   </div>
 </div>

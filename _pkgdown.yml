@@ -7,31 +7,27 @@ template:
     bootswatch: cosmo
 
 reference:
-- title: "Recode and Data Transformatiomn Functions"
+- title: "Recode and Data Transformation Functions"
   contents:
   - rec
   - recode_to
   - dicho
   - group_var
   - group_labels
+  - group_str
   - split_var
   - std
   - center
 
-- title: "Scoped Variants of Recode and Data Transformatiomn Functions"
+- title: "Data Frame Transformation Functions"
   contents:
-  - rec_if
-  - recode_to_if
-  - dicho_if
-  - group_var_if
-  - group_labels_if
-  - split_var_if
-  - std
-  - center
+  - merge_imputations
+  - rotate_df
 
 - title: "Adding, Replacing and Removing Variables or Cases from Data Frames"
   contents:
   - add_columns
+  - add_rows
   - add_variables
   - replace_columns
   - add_case
@@ -41,6 +37,39 @@ reference:
   - remove_empty_rows
   - remove_var
   - remove_cols
+  - var_rename
+
+- title: "Variable Transformation"
+  contents:
+  - numeric_to_factor
+  - to_character
+  - to_factor
+  - to_label
+  - to_value
+
+- title: "Creating New Variables"
+  contents:
+  - de_mean
+  - to_dummy
+
+- title: "Variable Utility Functions"
+  contents:
+  - ref_lvl
+  - round_num
+  - shorten_string
+  - zap_inf
+
+- title: "Missing Values"
+  contents:
+  - replace_na
+  - set_na_if
+
+- title: "Finding Variables and Values"
+  contents:
+  - find_var
+  - str_contains
+  - str_start
+  - str_find
 
 - title: "Descriptive and Summary Statistics"
   contents:
@@ -78,3 +107,17 @@ reference:
   - is_num_fac
   - is_num_chr
 
+- title: "Utility Functions"
+  contents:
+  - "%nin%"
+  - big_mark
+  - rec_pattern
+  - reshape_longer
+  - seq_col
+  - spread_coef
+  - tidy_values
+  - to_long
+  - trim
+  - typical_value
+  - var_type
+  - word_wrap
