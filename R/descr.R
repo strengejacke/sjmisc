@@ -77,9 +77,9 @@ descr <- function(x,
 
   # select elements that should be shown
 
-  if (show == "all")
+  if ("all" %in% show)
     show <- c("type", "label", "n", "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew")
-  else if (show == "short")
+  else if ("short" %in% show)
     show <- c("n", "NA.prc", "mean", "sd")
 
   show <- c("var", show)
