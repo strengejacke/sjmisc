@@ -1,3 +1,13 @@
+# sjmisc 2.8.3
+
+## New functions
+
+* Added `as.data.frame()` for `frq()`.
+
+## Bug fixes
+
+* Fixed warning from CRAN checks.
+
 # sjmisc 2.8.2
 
 ## General
