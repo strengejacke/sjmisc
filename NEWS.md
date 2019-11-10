@@ -4,6 +4,10 @@
 
 * Added `as.data.frame()` for `frq()`.
 
+## Changes to functions
+
+* The recode-pattern in `rec()` now also works for character variables with whitespaces.
+
 ## Bug fixes
 
 * Fixed warning from CRAN checks.
