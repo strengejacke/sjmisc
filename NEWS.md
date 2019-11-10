@@ -7,6 +7,7 @@
 ## Changes to functions
 
 * The recode-pattern in `rec()` now also works for character variables with whitespaces.
+* `rec()` now warns explicetly for possible non-intended multiple assignment of identical new recode-values.
 
 ## Bug fixes
 
