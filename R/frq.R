@@ -630,6 +630,8 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   attr(mydat, "mean") <- mean.value
   attr(mydat, "sd") <- sd.value
 
+  row.names(mydat) <- NULL
+
   mydat
 }
 
