@@ -43,7 +43,7 @@ print.sjmisc_frq <- function(x, ...) {
     ), "blue")
 
     # don't print labels, if all except for the NA value are "none"
-    if (!is.null(dat$label) && ((dplyr::n_distinct(dat$label[!is.na(dat$val)]) == 1 && unique(dat$label[!is.na(dat$val)]) == "<none>") || (length(dat$val) == 1 && is.na(dat$val))))
+    if ((dplyr::n_distinct(dat$label[!is.na(dat$val)]) == 1 && unique(dat$label[!is.na(dat$val)]) == "<none>") || (length(dat$val) == 1 && is.na(dat$val)))
       dat <- dplyr::select(dat, -.data$label)
 
     # print frq-table
