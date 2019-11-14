@@ -1,3 +1,18 @@
+# sjmisc 2.8.3
+
+## New functions
+
+* Added `as.data.frame()` for `frq()`.
+
+## Changes to functions
+
+* The recode-pattern in `rec()` now also works for character variables with whitespaces.
+* `rec()` now warns explicetly for possible non-intended multiple assignment of identical new recode-values.
+
+## Bug fixes
+
+* Fixed warning from CRAN checks.
+
 # sjmisc 2.8.2
 
 ## General

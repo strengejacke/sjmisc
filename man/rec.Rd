@@ -127,7 +127,7 @@ efc \%>\%
   mutate(dependency_rev = rec(e42dep, rec = "rev")) \%>\%
   head()
 
-# recode 1 to 3 into 4 into 2
+# recode 1 to 3 into 1 and 4 into 2
 table(rec(efc$e42dep, rec = "min:3=1; 4=2"), useNA = "always")
 
 # recode 2 to 1 and all others into 2
@@ -200,8 +200,6 @@ rec(
 # recode only variables that have a value range from 1-4
 p <- function(x) min(x, na.rm = TRUE) > 0 && max(x, na.rm = TRUE) < 5
 rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
-
-
 }
 \seealso{
 \code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{replace_na}}

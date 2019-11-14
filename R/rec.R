@@ -104,7 +104,7 @@
 #'   mutate(dependency_rev = rec(e42dep, rec = "rev")) %>%
 #'   head()
 #'
-#' # recode 1 to 3 into 4 into 2
+#' # recode 1 to 3 into 1 and 4 into 2
 #' table(rec(efc$e42dep, rec = "min:3=1; 4=2"), useNA = "always")
 #'
 #' # recode 2 to 1 and all others into 2
@@ -177,8 +177,7 @@
 #' # recode only variables that have a value range from 1-4
 #' p <- function(x) min(x, na.rm = TRUE) > 0 && max(x, na.rm = TRUE) < 5
 #' rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
-#'
-#'
+#' @importFrom insight print_color
 #' @export
 rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
   UseMethod("rec")
@@ -449,6 +448,14 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
     stop(sprintf("?Syntax error in argument \"%s\"", paste(correct_syntax, collapse = "=")), call. = F)
   }
 
+
+  # check for duplicated inputs
+  if (anyDuplicated(sapply(rec_pairs, function(i) i[2])) > 0) {
+    insight::print_color("One or more of the old values are recoded into identical new values.\nPlease check if you correctly specified the recode-pattern,\nelse separate multiple values with comma, e.g.", "red")
+    insight::print_color(" rec=\"a,b,c=1; d,e,f=2\"", "green")
+    insight::print_color(".\n", "red")
+  }
+
   # the new, recoded variable
   new_var <- rep(-Inf, length(x))
 
@@ -562,7 +569,7 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
       } else {
         # else we have numeric values, which should be replaced
-        new_var[which(x == old_val[k])] <- new_val
+        new_var[which(gsub(" ", "", x) == old_val[k])] <- new_val
       }
     }
   }
