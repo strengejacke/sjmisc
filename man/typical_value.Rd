@@ -71,6 +71,4 @@ typical_value(x, fun = "mode")
 
 # for factors, use a named vector to apply other functions than "mode"
 map(iris, ~ typical_value(.x, fun = c(n = "median", f = "mean")))
-
-
 }

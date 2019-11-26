@@ -22,8 +22,6 @@
 #'   \code{NULL}, so no weights are used.
 #' @param ... Further arguments, passed down to \code{fun}.
 #'
-#' @inheritParams grpmean
-#'
 #' @return The "typical" value of \code{x}.
 #'
 #' @details By default, for numeric variables, \code{typical_value()} returns the
@@ -62,13 +60,9 @@
 #'
 #' # for factors, use a named vector to apply other functions than "mode"
 #' map(iris, ~ typical_value(.x, fun = c(n = "median", f = "mean")))
-#'
-#'
+#' @importFrom stats median
 #' @export
 typical_value <- function(x, fun = "mean", weights = NULL, ...) {
-
-  # set default for integer to median
-  if (missing(fun) && is.integer(x)) fun <- "median"
 
   # check if we have named vectors and find the requested function
   # for special functions for factors, convert to numeric first
@@ -78,6 +72,7 @@ typical_value <- function(x, fun = "mean", weights = NULL, ...) {
   if (!is.null(fnames)) {
     if (is.integer(x)) {
       fun <- fun[which(fnames %in% c("integer", "i"))]
+      x <- as.numeric(x)
     } else if (is.numeric(x)) {
       fun <- fun[which(fnames %in% c("numeric", "n"))]
     } else if (is.factor(x)) {
@@ -130,7 +125,9 @@ typical_value <- function(x, fun = "mean", weights = NULL, ...) {
   else
     myfun <- get("mean", asNamespace("base"))
 
-  if (is.numeric(x)) {
+  if (is.integer(x)) {
+    stats::median(x, na.rm = TRUE)
+  } else if (is.numeric(x)) {
     if (fun == "weighted.mean")
       do.call(myfun, args = list(x = x, na.rm = TRUE, w = weights, ...))
     else
