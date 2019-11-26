@@ -3,6 +3,7 @@
 ^\.travis\.yml$
 ^paper.*$
 ^docs$
+^pkgdown$
 ^revdep$
 ^paper$
 ^.github$
