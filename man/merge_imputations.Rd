@@ -4,8 +4,13 @@
 \alias{merge_imputations}
 \title{Merges multiple imputed data frames into a single data frame}
 \usage{
-merge_imputations(dat, imp, ori = NULL, summary = c("none", "dens",
-  "hist", "sd"), filter = NULL)
+merge_imputations(
+  dat,
+  imp,
+  ori = NULL,
+  summary = c("none", "dens", "hist", "sd"),
+  filter = NULL
+)
 }
 \arguments{
 \item{dat}{The data frame that was imputed and used as argument in the

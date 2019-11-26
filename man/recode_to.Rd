@@ -5,11 +5,16 @@
 \alias{recode_to_if}
 \title{Recode variable categories into new values}
 \usage{
-recode_to(x, ..., lowest = 0, highest = -1, append = TRUE,
-  suffix = "_r0")
+recode_to(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0")
 
-recode_to_if(x, predicate, lowest = 0, highest = -1, append = TRUE,
-  suffix = "_r0")
+recode_to_if(
+  x,
+  predicate,
+  lowest = 0,
+  highest = -1,
+  append = TRUE,
+  suffix = "_r0"
+)
 }
 \arguments{
 \item{x}{A vector or data frame.}

@@ -4,8 +4,7 @@
 \alias{de_mean}
 \title{Compute group-meaned and de-meaned variables}
 \usage{
-de_mean(x, ..., grp, append = TRUE, suffix.dm = "_dm",
-  suffix.gm = "_gm")
+de_mean(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "_gm")
 }
 \arguments{
 \item{x}{A data frame.}

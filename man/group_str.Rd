@@ -4,9 +4,15 @@
 \alias{group_str}
 \title{Group near elements of string vectors}
 \usage{
-group_str(strings, precision = 2, strict = FALSE,
-  trim.whitespace = TRUE, remove.empty = TRUE, verbose = FALSE,
-  maxdist)
+group_str(
+  strings,
+  precision = 2,
+  strict = FALSE,
+  trim.whitespace = TRUE,
+  remove.empty = TRUE,
+  verbose = FALSE,
+  maxdist
+)
 }
 \arguments{
 \item{strings}{Character vector with string elements.}

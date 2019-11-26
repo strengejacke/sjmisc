@@ -5,14 +5,25 @@
 \alias{find_in_data}
 \title{Find variable by name or label}
 \usage{
-find_var(data, pattern, ignore.case = TRUE, search = c("name_label",
-  "name_value", "label_value", "name", "label", "value", "all"),
-  out = c("table", "df", "index"), fuzzy = FALSE, regex = FALSE)
+find_var(
+  data,
+  pattern,
+  ignore.case = TRUE,
+  search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
+  out = c("table", "df", "index"),
+  fuzzy = FALSE,
+  regex = FALSE
+)
 
-find_in_data(data, pattern, ignore.case = TRUE,
-  search = c("name_label", "name_value", "label_value", "name", "label",
-  "value", "all"), out = c("table", "df", "index"), fuzzy = FALSE,
-  regex = FALSE)
+find_in_data(
+  data,
+  pattern,
+  ignore.case = TRUE,
+  search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
+  out = c("table", "df", "index"),
+  fuzzy = FALSE,
+  regex = FALSE
+)
 }
 \arguments{
 \item{data}{A data frame.}

@@ -4,10 +4,21 @@
 \alias{frq}
 \title{Frequency table of labelled variables}
 \usage{
-frq(x, ..., sort.frq = c("none", "asc", "desc"), weights = NULL,
-  auto.grp = NULL, show.strings = TRUE, show.na = TRUE,
-  grp.strings = NULL, min.frq = 0, out = c("txt", "viewer",
-  "browser"), title = NULL, encoding = "UTF-8", file = NULL)
+frq(
+  x,
+  ...,
+  sort.frq = c("none", "asc", "desc"),
+  weights = NULL,
+  auto.grp = NULL,
+  show.strings = TRUE,
+  show.na = TRUE,
+  grp.strings = NULL,
+  min.frq = 0,
+  out = c("txt", "viewer", "browser"),
+  title = NULL,
+  encoding = "UTF-8",
+  file = NULL
+)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame

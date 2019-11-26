@@ -4,8 +4,15 @@
 \alias{to_label}
 \title{Convert variable into factor with associated value labels}
 \usage{
-to_label(x, ..., add.non.labelled = FALSE, prefix = FALSE,
-  var.label = NULL, drop.na = TRUE, drop.levels = FALSE)
+to_label(
+  x,
+  ...,
+  add.non.labelled = FALSE,
+  prefix = FALSE,
+  var.label = NULL,
+  drop.na = TRUE,
+  drop.levels = FALSE
+)
 }
 \arguments{
 \item{x}{A vector or data frame.}

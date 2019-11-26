@@ -4,8 +4,7 @@
 \alias{str_find}
 \title{Find partial matching and close distance elements in strings}
 \usage{
-str_find(string, pattern, precision = 2, partial = 0,
-  verbose = FALSE)
+str_find(string, pattern, precision = 2, partial = 0, verbose = FALSE)
 }
 \arguments{
 \item{string}{Character vector with string elements.}

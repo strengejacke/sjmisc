@@ -4,8 +4,7 @@
 \alias{to_value}
 \title{Convert factors to numeric variables}
 \usage{
-to_value(x, ..., start.at = NULL, keep.labels = TRUE,
-  use.labels = FALSE)
+to_value(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}

@@ -4,8 +4,13 @@
 \alias{flat_table}
 \title{Flat (proportional) tables}
 \usage{
-flat_table(data, ..., margin = c("counts", "cell", "row", "col"),
-  digits = 2, show.values = FALSE)
+flat_table(
+  data,
+  ...,
+  margin = c("counts", "cell", "row", "col"),
+  digits = 2,
+  show.values = FALSE
+)
 }
 \arguments{
 \item{data}{A data frame. May also be a grouped data frame (see 'Note' and

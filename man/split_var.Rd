@@ -5,13 +5,29 @@
 \alias{split_var_if}
 \title{Split numeric variables into smaller groups}
 \usage{
-split_var(x, ..., n, as.num = FALSE, val.labels = NULL,
-  var.label = NULL, inclusive = FALSE, append = TRUE,
-  suffix = "_g")
+split_var(
+  x,
+  ...,
+  n,
+  as.num = FALSE,
+  val.labels = NULL,
+  var.label = NULL,
+  inclusive = FALSE,
+  append = TRUE,
+  suffix = "_g"
+)
 
-split_var_if(x, predicate, n, as.num = FALSE, val.labels = NULL,
-  var.label = NULL, inclusive = FALSE, append = TRUE,
-  suffix = "_g")
+split_var_if(
+  x,
+  predicate,
+  n,
+  as.num = FALSE,
+  val.labels = NULL,
+  var.label = NULL,
+  inclusive = FALSE,
+  append = TRUE,
+  suffix = "_g"
+)
 }
 \arguments{
 \item{x}{A vector or data frame.}

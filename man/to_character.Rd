@@ -4,8 +4,15 @@
 \alias{to_character}
 \title{Convert variable into character vector and replace values with associated value labels}
 \usage{
-to_character(x, ..., add.non.labelled = FALSE, prefix = FALSE,
-  var.label = NULL, drop.na = TRUE, drop.levels = FALSE)
+to_character(
+  x,
+  ...,
+  add.non.labelled = FALSE,
+  prefix = FALSE,
+  var.label = NULL,
+  drop.na = TRUE,
+  drop.levels = FALSE
+)
 }
 \arguments{
 \item{x}{A vector or data frame.}

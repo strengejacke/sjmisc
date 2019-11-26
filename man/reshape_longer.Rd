@@ -4,9 +4,15 @@
 \alias{reshape_longer}
 \title{Reshape data into long format}
 \usage{
-reshape_longer(x, columns = colnames(x), names.to = "key",
-  values.to = "value", labels = NULL, numeric.timevar = FALSE,
-  id = ".id")
+reshape_longer(
+  x,
+  columns = colnames(x),
+  names.to = "key",
+  values.to = "value",
+  labels = NULL,
+  numeric.timevar = FALSE,
+  id = ".id"
+)
 }
 \arguments{
 \item{x}{A data frame.}

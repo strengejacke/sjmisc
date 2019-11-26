@@ -14,7 +14,7 @@
 #'        only \code{fun = "mode"} is applicable; for all other functions (including
 #'        the default, \code{"mean"}) the reference level of \code{x} is returned.
 #'        For character vectors, only the mode is returned. You can use a named
-#'        vector to apply other different functions to numeric and categorical
+#'        vector to apply other different functions to integer, numeric and categorical
 #'        \code{x}, where factors are first converted to numeric vectors, e.g.
 #'        \code{fun = c(numeric = "median", factor = "mean")}. See 'Examples'.
 #' @param weights Name of variable in \code{x} that indicated the vector of
@@ -31,12 +31,12 @@
 #'          \cr \cr
 #'          For factors, the reference level is returned or the most common value
 #'          (if \code{fun = "mode"}), unless \code{fun} is a named vector. If
-#'          \code{fun} is a named vector, specify the function for numeric
+#'          \code{fun} is a named vector, specify the function for integer, numeric
 #'          and categorical variables as element names, e.g.
-#'          \code{fun = c(numeric = "median", factor = "mean")}. In this case,
+#'          \code{fun = c(integer = "median", factor = "mean")}. In this case,
 #'          factors are converted to numeric values (using \code{\link{to_value}})
 #'          and the related function is applied. You may abbreviate the names
-#'          \code{fun = c(n = "median", f = "mean")}. See also 'Examples'.
+#'          \code{fun = c(i = "median", f = "mean")}. See also 'Examples'.
 #'          \cr \cr
 #'          For character vectors the most common value (mode) is returned.
 #'
@@ -67,13 +67,18 @@
 #' @export
 typical_value <- function(x, fun = "mean", weights = NULL, ...) {
 
+  # set default for integer to median
+  if (missing(fun) && is.integer(x)) fun <- "median"
+
   # check if we have named vectors and find the requested function
   # for special functions for factors, convert to numeric first
 
   fnames <- names(fun)
 
   if (!is.null(fnames)) {
-    if (is.numeric(x)) {
+    if (is.integer(x)) {
+      fun <- fun[which(fnames %in% c("integer", "i"))]
+    } else if (is.numeric(x)) {
       fun <- fun[which(fnames %in% c("numeric", "n"))]
     } else if (is.factor(x)) {
       fun <- fun[which(fnames %in% c("factor", "f"))]

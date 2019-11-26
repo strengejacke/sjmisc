@@ -7,16 +7,27 @@
 \alias{center_if}
 \title{Standardize and center variables}
 \usage{
-std(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE,
-  append = TRUE, suffix = "_z")
+std(
+  x,
+  ...,
+  robust = c("sd", "2sd", "gmd", "mad"),
+  include.fac = FALSE,
+  append = TRUE,
+  suffix = "_z"
+)
 
-std_if(x, predicate, robust = c("sd", "2sd", "gmd", "mad"),
-  include.fac = FALSE, append = TRUE, suffix = "_z")
+std_if(
+  x,
+  predicate,
+  robust = c("sd", "2sd", "gmd", "mad"),
+  include.fac = FALSE,
+  append = TRUE,
+  suffix = "_z"
+)
 
 center(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c")
 
-center_if(x, predicate, include.fac = FALSE, append = TRUE,
-  suffix = "_c")
+center_if(x, predicate, include.fac = FALSE, append = TRUE, suffix = "_c")
 }
 \arguments{
 \item{x}{A vector or data frame.}

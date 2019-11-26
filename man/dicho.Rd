@@ -5,12 +5,27 @@
 \alias{dicho_if}
 \title{Dichotomize variables}
 \usage{
-dicho(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL,
-  val.labels = NULL, append = TRUE, suffix = "_d")
+dicho(
+  x,
+  ...,
+  dich.by = "median",
+  as.num = FALSE,
+  var.label = NULL,
+  val.labels = NULL,
+  append = TRUE,
+  suffix = "_d"
+)
 
-dicho_if(x, predicate, dich.by = "median", as.num = FALSE,
-  var.label = NULL, val.labels = NULL, append = TRUE,
-  suffix = "_d")
+dicho_if(
+  x,
+  predicate,
+  dich.by = "median",
+  as.num = FALSE,
+  var.label = NULL,
+  val.labels = NULL,
+  append = TRUE,
+  suffix = "_d"
+)
 }
 \arguments{
 \item{x}{A vector or data frame.}

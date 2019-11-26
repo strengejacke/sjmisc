@@ -5,11 +5,27 @@
 \alias{rec_if}
 \title{Recode variables}
 \usage{
-rec(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
-  append = TRUE, suffix = "_r")
+rec(
+  x,
+  ...,
+  rec,
+  as.num = TRUE,
+  var.label = NULL,
+  val.labels = NULL,
+  append = TRUE,
+  suffix = "_r"
+)
 
-rec_if(x, predicate, rec, as.num = TRUE, var.label = NULL,
-  val.labels = NULL, append = TRUE, suffix = "_r")
+rec_if(
+  x,
+  predicate,
+  rec,
+  as.num = TRUE,
+  var.label = NULL,
+  val.labels = NULL,
+  append = TRUE,
+  suffix = "_r"
+)
 }
 \arguments{
 \item{x}{A vector or data frame.}

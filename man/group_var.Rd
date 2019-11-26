@@ -7,16 +7,31 @@
 \alias{group_labels_if}
 \title{Recode numeric variables into equal-ranged groups}
 \usage{
-group_var(x, ..., size = 5, as.num = TRUE, right.interval = FALSE,
-  n = 30, append = TRUE, suffix = "_gr")
+group_var(
+  x,
+  ...,
+  size = 5,
+  as.num = TRUE,
+  right.interval = FALSE,
+  n = 30,
+  append = TRUE,
+  suffix = "_gr"
+)
 
-group_var_if(x, predicate, size = 5, as.num = TRUE,
-  right.interval = FALSE, n = 30, append = TRUE, suffix = "_gr")
+group_var_if(
+  x,
+  predicate,
+  size = 5,
+  as.num = TRUE,
+  right.interval = FALSE,
+  n = 30,
+  append = TRUE,
+  suffix = "_gr"
+)
 
 group_labels(x, ..., size = 5, right.interval = FALSE, n = 30)
 
-group_labels_if(x, predicate, size = 5, right.interval = FALSE,
-  n = 30)
+group_labels_if(x, predicate, size = 5, right.interval = FALSE, n = 30)
 }
 \arguments{
 \item{x}{A vector or data frame.}

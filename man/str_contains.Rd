@@ -4,8 +4,7 @@
 \alias{str_contains}
 \title{Check if string contains pattern}
 \usage{
-str_contains(x, pattern, ignore.case = FALSE, logic = NULL,
-  switch = FALSE)
+str_contains(x, pattern, ignore.case = FALSE, logic = NULL, switch = FALSE)
 }
 \arguments{
 \item{x}{Character string where matches are sought. May also be a

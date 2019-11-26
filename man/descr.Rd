@@ -4,9 +4,16 @@
 \alias{descr}
 \title{Basic descriptive statistics}
 \usage{
-descr(x, ..., max.length = NULL, weights = NULL, show = "all",
-  out = c("txt", "viewer", "browser"), encoding = "UTF-8",
-  file = NULL)
+descr(
+  x,
+  ...,
+  max.length = NULL,
+  weights = NULL,
+  show = "all",
+  out = c("txt", "viewer", "browser"),
+  encoding = "UTF-8",
+  file = NULL
+)
 }
 \arguments{
 \item{x}{A vector or a data frame. May also be a grouped data frame
