@@ -58,13 +58,13 @@
 #'
 #' library(dplyr)
 #' head(bind_cols(d1, d2))
-#' add_columns(d1, d2)
+#' add_columns(d1, d2) %>% head()
 #'
 #' d1 <- efc[, 1:3]
 #' d2 <- efc[, 2:6]
 #'
-#' add_columns(d1, d2, replace = TRUE)
-#' add_columns(d1, d2, replace = FALSE)
+#' add_columns(d1, d2, replace = TRUE) %>% head()
+#' add_columns(d1, d2, replace = FALSE) %>% head()
 #'
 #' # use case: we take the original data frame, select specific
 #' # variables and do some transformations or recodings
@@ -73,21 +73,24 @@
 #' efc %>%
 #'   select(e17age, c160age) %>%
 #'   std() %>%
-#'   add_columns(efc)
+#'   add_columns(efc) %>%
+#'   head()
 #'
 #' # new variables with same name will overwrite old variables
 #' # in "efc". order of columns is not changed.
 #' efc %>%
 #'   select(e16sex, e42dep) %>%
 #'   to_factor() %>%
-#'   add_columns(efc)
+#'   add_columns(efc) %>%
+#'   head()
 #'
 #' # keep both old and new variables, automatically
 #' # rename variables with identical name
 #' efc %>%
 #'   select(e16sex, e42dep) %>%
 #'   to_factor() %>%
-#'   add_columns(efc, replace = FALSE)
+#'   add_columns(efc, replace = FALSE) %>%
+#'   head()
 #'
 #' # create sample data frames
 #' d1 <- efc[, 1:10]
@@ -104,10 +107,10 @@
 #' d3 <- as_label(d3)
 #'
 #' # replace duplicated columns, append remaining
-#' replace_columns(d1, d2, d3, d4)
+#' replace_columns(d1, d2, d3, d4) %>% head()
 #'
 #' # replace duplicated columns, omit remaining
-#' replace_columns(d1, d2, d3, d4, add.unique = FALSE)
+#' replace_columns(d1, d2, d3, d4, add.unique = FALSE) %>% head()
 #'
 #' # add ID to dataset
 #' library(dplyr)
@@ -119,7 +122,6 @@
 #'   add_id() %>%
 #'   arrange(gear, ID) %>%
 #'   print(n = 100)
-#'
 #' @importFrom dplyr bind_cols
 #' @export
 add_columns <- function(data, ..., replace = TRUE) {

@@ -6,10 +6,10 @@
 
 ## Changes to functions
 
-* `typical_value()` now returns the median for integer-values.
+* `typical_value()` now returns the median for integer-values (instead of mean), to preserve the integer-type of a variable.
 * The recode-pattern in `rec()` now also works for character variables with whitespaces.
 * `rec()` now warns explicetly for possible non-intended multiple assignment of identical new recode-values.
-* Improve printing for `frq()`.
+* Improved printing for `frq()`.
 
 ## Bug fixes
 

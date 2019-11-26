@@ -58,8 +58,8 @@ str_start(x, "move")
 str_end(x, "move")
 
 x <- c("test1234testagain")
-str_start(x, "\\d+4")
-str_start(x, "\\d+4", regex = TRUE)
-str_end(x, "\\d+4", regex = TRUE)
+str_start(x, "\\\\d+4")
+str_start(x, "\\\\d+4", regex = TRUE)
+str_end(x, "\\\\d+4", regex = TRUE)
 
 }
