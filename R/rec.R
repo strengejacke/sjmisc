@@ -582,6 +582,48 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
     val_lab <- reversed_value_labels
   }
 
+  # if we have no value labels and there is a 1 to 1 correspondence between old and new values, keep the old labels with the related new values
+  if(is.null(val_lab)) {
+    old_values <- sapply(rec_pairs, function(item) item[1])
+    new_values <- sapply(rec_pairs, function(item) item[2])
+    num_ovs <- suppressWarnings(as.numeric(old_values))
+    num_nvs <- suppressWarnings(as.numeric(new_values))
+    lab_log <- c()
+
+    # all numeric or NA or else=copy
+    lab_log <- c(lab_log, length(old_values) == sum(!is.na(num_ovs) | old_values == "NA" | (new_values == "copy" & old_values == "else")))
+    lab_log <- c(lab_log, length(new_values) == sum(!is.na(num_nvs) | new_values == "NA" | (new_values == "copy" & old_values == "else")))
+
+    # at most 2 distinct non-numeric elements (which only can be NA or else=copy)
+    lab_log <- c(lab_log, sum(is.na(num_ovs)) == 0 || identical(old_values[is.na(num_ovs)], "NA") || identical(old_values[is.na(num_ovs)], "else") || (setequal(old_values[is.na(num_ovs)],c("else","NA")) & sum(is.na(num_ovs)) == 2))
+    lab_log <- c(lab_log, sum(is.na(num_nvs)) == 0 || identical(new_values[is.na(num_nvs)], "NA") || identical(new_values[is.na(num_nvs)], "copy") || (setequal(new_values[is.na(num_nvs)],c("copy","NA")) & sum(is.na(num_nvs)) == 2))
+
+    # all numeric values distinct
+    lab_log <- c(lab_log, length(num_ovs[!is.na(num_ovs)]) == length(unique(num_ovs[!is.na(num_ovs)])))
+    lab_log <- c(lab_log, length(num_nvs[!is.na(num_nvs)]) == length(unique(num_nvs[!is.na(num_nvs)])))
+
+
+    if(all(lab_log)) {
+      value_labels <- sjlabelled::get_labels(
+        x,
+        attr.only = TRUE,
+        values = "n",
+        non.labelled = FALSE,
+        drop.na = TRUE
+      )
+      nullw <- which(is.na(num_nvs[which(suppressWarnings(old_values==names(value_labels)))]))
+      if(length(nullw) != 0) {
+        value_labels <- value_labels[-nullw] # remove possible label mapped to NA
+      }
+      new_value_labels <- value_labels
+      ivl <- intersect(old_values,names(value_labels))
+      for(nvl in ivl) {
+        names(new_value_labels)[which(names(value_labels) == nvl)] <- new_values[which(old_values == nvl)]
+      }
+      val_lab <- new_value_labels
+    }
+  }
+
   # add back NA labels
   if (!is.null(current.na) && length(current.na) > 0) {
     # add named missings
