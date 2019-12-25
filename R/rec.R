@@ -611,12 +611,18 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
         non.labelled = FALSE,
         drop.na = TRUE
       )
-      nullw <- which(is.na(num_nvs[which(suppressWarnings(old_values==names(value_labels)))]))
+      nullw <- which(names(value_labels) %in% old_values[which(new_values=="NA")])
       if(length(nullw) != 0) {
         value_labels <- value_labels[-nullw] # remove possible label mapped to NA
       }
-      new_value_labels <- value_labels
-      ivl <- intersect(old_values,names(value_labels))
+      if("else=copy" %in% rec_string && length(intersect(setdiff(names(value_labels), old_values), new_values)) == 0) {
+        new_value_labels <- value_labels
+      } else if(!"else=copy" %in% rec_string){
+        new_value_labels <- value_labels <- value_labels[which(names(value_labels) %in% old_values)]
+      } else {
+        new_value_labels <- value_labels <- NULL # don't keep labels, since there are new values which should keep the labels from multiple old values
+      }
+      ivl <- intersect(old_values, names(value_labels))
       for(nvl in ivl) {
         names(new_value_labels)[which(names(value_labels) == nvl)] <- new_values[which(old_values == nvl)]
       }
