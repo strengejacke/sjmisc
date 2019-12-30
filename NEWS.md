@@ -14,6 +14,7 @@
 ## Bug fixes
 
 * Fixed warning from CRAN checks.
+* Fixed errors from CRAN checks.
 
 # sjmisc 2.8.2
 
