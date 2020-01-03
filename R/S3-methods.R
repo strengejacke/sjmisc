@@ -92,72 +92,9 @@ print.sjmisc_grpdescr <- function(x, ...) {
   })
 }
 
-#' @importFrom purrr map_df
-#' @importFrom dplyr n_distinct filter
-#' @importFrom rlang .data
 #' @export
 print.sj_merge.imp <- function(x, ...) {
-
-  # check if ggplot is installed
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("Package `ggplot2` needed for to plot summaries. Please install it.", call. = FALSE)
-  }
-
-  if (x$sum.type == "sd") {
-    analyse <- x$summary %>% purrr::map_df(~.x)
-
-    if (!is.null(x$filter))
-      analyse <- analyse %>% dplyr::filter(.data$grp %in% x$filter)
-
-    p <- ggplot2::ggplot(
-      data = analyse,
-      mapping = ggplot2::aes_string(x = "merged", y = "sd")
-    ) +
-      ggplot2::geom_point() +
-      ggplot2::facet_wrap(
-        facets = ~grp,
-        scales = "free",
-        ncol = ceiling(sqrt(dplyr::n_distinct(analyse$grp)))
-      ) +
-      ggplot2::theme_bw() +
-      ggplot2::labs(
-        x = NULL,
-        y = NULL,
-        fill = NULL,
-        title = "Standard Deviation of imputed values for each merged value"
-      )
-  } else {
-    analyse <- purrr::map_df(x$summary, ~.x)
-    analyse <- .gather(analyse, key = "value", value = "xpos", colnames(analyse)[1:2])
-
-    if (!is.null(x$filter))
-      analyse <- analyse %>% dplyr::filter(.data$grp %in% x$filter)
-
-    p <- ggplot2::ggplot(
-      data = analyse,
-      mapping = ggplot2::aes_string(x = "xpos", fill = "value")
-    ) +
-      ggplot2::facet_wrap(
-        facets = ~grp,
-        scales = "free",
-        ncol = ceiling(sqrt(dplyr::n_distinct(analyse$grp)))
-      ) +
-      ggplot2::theme_bw() +
-      ggplot2::labs(
-        x = NULL,
-        y = NULL,
-        fill = NULL,
-        title = "Comparison between mean of imputed values and final merged values"
-      )
-
-    # check type of summary diagram
-    if (x$sum.type == "dens")
-      p <- p + ggplot2::geom_density(alpha = .2)
-    else
-      p <- p + ggplot2::geom_histogram(position = "dodge")
-  }
-
-  graphics::plot(p, ...)
+  graphics::plot(x$plot, ...)
 }
 
 

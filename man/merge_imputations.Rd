@@ -55,7 +55,7 @@ A data frame with (merged) imputed variables; or \code{ori} with
         appended imputed variables, if \code{ori} was specified.
         If \code{summary} is included, returns a list with the data frame
         \code{data} with (merged) imputed variables and some other summary
-        information, which are required for the plot-output.
+        information, including the \code{plot} as ggplot-object.
 }
 \description{
 This function merges multiple imputed data frames from
