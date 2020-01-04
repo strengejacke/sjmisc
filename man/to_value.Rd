@@ -2,9 +2,12 @@
 % Please edit documentation in R/to_value.R
 \name{to_value}
 \alias{to_value}
+\alias{to_numeric}
 \title{Convert factors to numeric variables}
 \usage{
 to_value(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE)
+
+to_numeric(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}
@@ -40,7 +43,7 @@ A numeric variable with values ranging either from \code{start.at} to
 \description{
 This function converts (replaces) factor levels with the
 related factor level index number, thus the factor is converted to
-a numeric variable.
+a numeric variable. \code{to_value()} and \code{to_numeric()} are aliases.
 }
 \note{
 This function is kept for backwards-compatibility. It is preferred to

@@ -3,7 +3,7 @@
 #'
 #' @description This function converts (replaces) factor levels with the
 #' related factor level index number, thus the factor is converted to
-#' a numeric variable.
+#' a numeric variable. \code{to_value()} and \code{to_numeric()} are aliases.
 #'
 #' @param start.at Starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
@@ -42,3 +42,7 @@
 to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE) {
   sjlabelled::as_numeric(x = x, ..., start.at = start.at, keep.labels = keep.labels, use.labels = use.labels)
 }
+
+#' @rdname to_value
+#' @export
+to_numeric <- to_value

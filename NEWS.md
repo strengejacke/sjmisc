@@ -11,6 +11,7 @@
 * `rec()` now warns explicetly for possible non-intended multiple assignment of identical new recode-values.
 * Improved printing for `frq()`.
 * `merge_imputations()` now returns the plot-object as well.
+* `to_numeric()` as alias for `to_value()`.
 
 ## Bug fixes
 
