@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
       </span>
     </div>
 
@@ -146,11 +146,27 @@
   to those variables that match the logical condition of <code>predicate</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rec</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>rec</span>, <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_r"</span>)
+    <pre class="usage"><span class='fu'>rec</span>(
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='no'>rec</span>,
+  <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_r"</span>
+)
 
-<span class='fu'>rec_if</span>(<span class='no'>x</span>, <span class='no'>predicate</span>, <span class='no'>rec</span>, <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_r"</span>)</pre>
+<span class='fu'>rec_if</span>(
+  <span class='no'>x</span>,
+  <span class='no'>predicate</span>,
+  <span class='no'>rec</span>,
+  <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_r"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -304,7 +320,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 4      4     67              1
 #&gt; 5      4     84              1
 #&gt; 6      4     85              1</div><div class='input'>
-<span class='co'># recode 1 to 3 into 4 into 2</span>
+<span class='co'># recode 1 to 3 into 1 and 4 into 2</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>rec</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"min:3=1; 4=2"</span>), <span class='kw'>useNA</span> <span class='kw'>=</span> <span class='st'>"always"</span>)</div><div class='output co'>#&gt; 
 #&gt;    1    2 &lt;NA&gt; 
 #&gt;  597  304    7 </div><div class='input'>
@@ -346,21 +362,23 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; <span style='color: #BB0000;'>carer' age (c160age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=908  valid N=901  mean=2.40  sd=0.59
 #&gt; 
-#&gt; </span><span> val  label frq raw.prc valid.prc cum.prc
-#&gt;    1  young  48    5.29      5.33    5.33
-#&gt;    2 middle 442   48.68     49.06   54.38
-#&gt;    3    old 411   45.26     45.62  100.00
-#&gt;   NA   &lt;NA&gt;   7    0.77        NA      NA
+#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %
+#&gt; -----------------------------------------------
+#&gt;     1 |  young |  48 |  5.29 |    5.33 |   5.33
+#&gt;     2 | middle | 442 | 48.68 |   49.06 |  54.38
+#&gt;     3 |    old | 411 | 45.26 |   45.62 | 100.00
+#&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; 
 #&gt; 
 #&gt; </span><span style='color: #BB0000;'>elder' age (e17age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=908  valid N=891  mean=3.00  sd=0.00
 #&gt; 
-#&gt; </span><span> val  label frq raw.prc valid.prc cum.prc
-#&gt;    1  young   0    0.00         0       0
-#&gt;    2 middle   0    0.00         0       0
-#&gt;    3    old 891   98.13       100     100
-#&gt;   NA   &lt;NA&gt;  17    1.87        NA      NA
+#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %
+#&gt; -----------------------------------------------
+#&gt;     1 |  young |   0 |  0.00 |       0 |      0
+#&gt;     2 | middle |   0 |  0.00 |       0 |      0
+#&gt;     3 |    old | 891 | 98.13 |     100 |    100
+#&gt;  &lt;NA&gt; |   &lt;NA&gt; |  17 |  1.87 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># recode variables with same value-range</span>
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(
@@ -6893,9 +6911,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 905        NA        NA        NA        NA         NA         1
 #&gt; 906        NA        NA        NA        NA         NA         1
 #&gt; 907        NA        NA        NA        NA         NA        NA
-#&gt; 908        NA        NA        NA        NA         NA        NA</div><div class='input'>
-
-</div></span></pre>
+#&gt; 908        NA        NA        NA        NA         NA        NA</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

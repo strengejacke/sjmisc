@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
       </span>
     </div>
 
@@ -140,9 +140,15 @@
   wide into long format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>reshape_longer</span>(<span class='no'>x</span>, <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>x</span>), <span class='kw'>names.to</span> <span class='kw'>=</span> <span class='st'>"key"</span>,
-  <span class='kw'>values.to</span> <span class='kw'>=</span> <span class='st'>"value"</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>numeric.timevar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>".id"</span>)</pre>
+    <pre class="usage"><span class='fu'>reshape_longer</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>columns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>x</span>),
+  <span class='kw'>names.to</span> <span class='kw'>=</span> <span class='st'>"key"</span>,
+  <span class='kw'>values.to</span> <span class='kw'>=</span> <span class='st'>"value"</span>,
+  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>numeric.timevar</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>".id"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

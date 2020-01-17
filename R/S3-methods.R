@@ -1,4 +1,4 @@
-#' @importFrom insight print_color
+#' @importFrom insight print_color format_table
 #' @importFrom purrr walk
 #' @importFrom dplyr select n_distinct
 #' @importFrom rlang .data
@@ -46,8 +46,17 @@ print.sjmisc_frq <- function(x, ...) {
     if ((dplyr::n_distinct(dat$label[!is.na(dat$val)]) == 1 && unique(dat$label[!is.na(dat$val)]) == "<none>") || (length(dat$val) == 1 && is.na(dat$val)))
       dat <- dplyr::select(dat, -.data$label)
 
+
+    # fix colnames
+    colnames(dat)[names(dat) == "val"] <- "Value"
+    colnames(dat)[names(dat) == "label"] <- "Label"
+    colnames(dat)[names(dat) == "frq"] <- "N"
+    colnames(dat)[names(dat) == "raw.prc"] <- "Raw %"
+    colnames(dat)[names(dat) == "valid.prc"] <- "Valid %"
+    colnames(dat)[names(dat) == "cum.prc"] <- "Cum. %"
+
     # print frq-table
-    print.data.frame(dat, ..., row.names = FALSE, quote = FALSE)
+    cat(insight::format_table(dat, missing = "<NA>"))
 
     cat("\n")
   })

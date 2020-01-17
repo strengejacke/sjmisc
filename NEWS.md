@@ -1,3 +1,9 @@
+# sjmisc 2.8.4
+
+## Changes to functions
+
+* Revised `print()`-method for `frq()`.
+
 # sjmisc 2.8.3
 
 ## New functions

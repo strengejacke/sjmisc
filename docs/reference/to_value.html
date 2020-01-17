@@ -45,7 +45,7 @@
 <meta property="og:title" content="Convert factors to numeric variables — to_value" />
 <meta property="og:description" content="This function converts (replaces) factor levels with the
 related factor level index number, thus the factor is converted to
-a numeric variable." />
+a numeric variable. to_value() and to_numeric() are aliases." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -79,7 +79,7 @@ a numeric variable." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
       </span>
     </div>
 
@@ -139,11 +139,12 @@ a numeric variable." />
     <div class="ref-description">
     <p>This function converts (replaces) factor levels with the
 related factor level index number, thus the factor is converted to
-a numeric variable.</p>
+a numeric variable. <code>to_value()</code> and <code>to_numeric()</code> are aliases.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>to_value</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>start.at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep.labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>use.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>to_value</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>start.at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep.labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>use.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>to_numeric</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>start.at</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>keep.labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>use.labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

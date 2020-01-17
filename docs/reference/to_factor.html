@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
       </span>
     </div>
 
@@ -212,12 +212,13 @@ reference level. See <code><a href='ref_lvl.html'>ref_lvl</a></code> for details
 #&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;categorical&gt;
 #&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
 #&gt; 
-#&gt; </span><span> val frq raw.prc valid.prc cum.prc
-#&gt;    1  66    7.27      7.33    7.33
-#&gt;    2 225   24.78     24.97   32.30
-#&gt;    3 306   33.70     33.96   66.26
-#&gt;    4 304   33.48     33.74  100.00
-#&gt;   NA   7    0.77        NA      NA
+#&gt; </span><span>Value |   N | Raw % | Valid % | Cum. %
+#&gt; --------------------------------------
+#&gt;     1 |  66 |  7.27 |    7.33 |   7.33
+#&gt;     2 | 225 | 24.78 |   24.97 |  32.30
+#&gt;     3 | 306 | 33.70 |   33.96 |  66.26
+#&gt;     4 | 304 | 33.48 |   33.74 | 100.00
+#&gt;  &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># factor conversion, which keeps value attributes</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'>to_factor</span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>)
@@ -225,12 +226,13 @@ reference level. See <code><a href='ref_lvl.html'>ref_lvl</a></code> for details
 #&gt; </span><span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
 #&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
 #&gt; 
-#&gt; </span><span> val                label frq raw.prc valid.prc cum.prc
-#&gt;    1          independent  66    7.27      7.33    7.33
-#&gt;    2   slightly dependent 225   24.78     24.97   32.30
-#&gt;    3 moderately dependent 306   33.70     33.96   66.26
-#&gt;    4   severely dependent 304   33.48     33.74  100.00
-#&gt;   NA                 &lt;NA&gt;   7    0.77        NA      NA
+#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %
+#&gt; -------------------------------------------------------------
+#&gt;     1 |          independent |  66 |  7.27 |    7.33 |   7.33
+#&gt;     2 |   slightly dependent | 225 | 24.78 |   24.97 |  32.30
+#&gt;     3 | moderately dependent | 306 | 33.70 |   33.96 |  66.26
+#&gt;     4 |   severely dependent | 304 | 33.48 |   33.74 | 100.00
+#&gt;  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># create parially labelled vector</span>
 <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/set_labels.html'>set_labels</a></span>(<span class='no'>efc</span>$<span class='no'>e42dep</span>,

@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
       </span>
     </div>
 
@@ -146,12 +146,27 @@
    of <code>predicate</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dicho</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>dich.by</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_d"</span>)
+    <pre class="usage"><span class='fu'>dicho</span>(
+  <span class='no'>x</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>dich.by</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_d"</span>
+)
 
-<span class='fu'>dicho_if</span>(<span class='no'>x</span>, <span class='no'>predicate</span>, <span class='kw'>dich.by</span> <span class='kw'>=</span> <span class='st'>"median"</span>, <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_d"</span>)</pre>
+<span class='fu'>dicho_if</span>(
+  <span class='no'>x</span>,
+  <span class='no'>predicate</span>,
+  <span class='kw'>dich.by</span> <span class='kw'>=</span> <span class='st'>"median"</span>,
+  <span class='kw'>as.num</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>var.label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>val.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>append</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>suffix</span> <span class='kw'>=</span> <span class='st'>"_d"</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -1205,10 +1220,11 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; <span style='color: #BB0000;'>Dependency (dichotomized) (e42dep_d)</span><span style='color: #0000BB;'> &lt;categorical&gt;
 #&gt; # total N=908  valid N=901  mean=0.34  sd=0.47
 #&gt; 
-#&gt; </span><span> val  label frq raw.prc valid.prc cum.prc
-#&gt;    0  lower 597   65.75     66.26   66.26
-#&gt;    1 higher 304   33.48     33.74  100.00
-#&gt;   NA   &lt;NA&gt;   7    0.77        NA      NA
+#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %
+#&gt; -----------------------------------------------
+#&gt;     0 |  lower | 597 | 65.75 |   66.26 |  66.26
+#&gt;     1 | higher | 304 | 33.48 |   33.74 | 100.00
+#&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># works also with gouped data frames</span>
 <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>

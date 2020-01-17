@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
       </span>
     </div>
 
@@ -158,7 +158,7 @@ simply returns 0. <strong>Note:</strong> By default, if <code>x</code> is a fact
 only <code>fun = "mode"</code> is applicable; for all other functions (including
 the default, <code>"mean"</code>) the reference level of <code>x</code> is returned.
 For character vectors, only the mode is returned. You can use a named
-vector to apply other different functions to numeric and categorical
+vector to apply other different functions to integer, numeric and categorical
 <code>x</code>, where factors are first converted to numeric vectors, e.g.
 <code>fun = c(numeric = "median", factor = "mean")</code>. See 'Examples'.</p></td>
     </tr>
@@ -184,12 +184,12 @@ weights that will be applied to weight all observations. Default is
          <br /> <br />
          For factors, the reference level is returned or the most common value
          (if <code>fun = "mode"</code>), unless <code>fun</code> is a named vector. If
-         <code>fun</code> is a named vector, specify the function for numeric
+         <code>fun</code> is a named vector, specify the function for integer, numeric
          and categorical variables as element names, e.g.
-         <code>fun = c(numeric = "median", factor = "mean")</code>. In this case,
+         <code>fun = c(integer = "median", factor = "mean")</code>. In this case,
          factors are converted to numeric values (using <code><a href='to_value.html'>to_value</a></code>)
          and the related function is applied. You may abbreviate the names
-         <code>fun = c(n = "median", f = "mean")</code>. See also 'Examples'.
+         <code>fun = c(i = "median", f = "mean")</code>. See also 'Examples'.
          <br /> <br />
          For character vectors the most common value (mode) is returned.</p>
 
@@ -236,9 +236,7 @@ weights that will be applied to weight all observations. Default is
 #&gt; 
 #&gt; $Species
 #&gt; [1] 2
-#&gt; </div><div class='input'>
-
-</div></pre>
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

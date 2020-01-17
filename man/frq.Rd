@@ -119,7 +119,7 @@ frq(efc$e42dep)
 library(dplyr)
 efc \%>\%
   group_by(e16sex, c172code) \%>\%
-  frq(e16sex, c172code, e42dep)
+  frq(e42dep)
 
 # show only categories with a minimal amount of frequencies
 frq(mtcars$gear)
