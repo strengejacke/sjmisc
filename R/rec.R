@@ -157,15 +157,16 @@
 #' ))
 #'
 #' # preserve tagged NAs
-#' library(haven)
-#' x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
-#'               c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-#'                 "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
-#' # get current value labels
-#' x
-#' # recode 2 into 5; Values of tagged NAs are preserved
-#' rec(x, rec = "2=5;else=copy")
-#' na_tag(rec(x, rec = "2=5;else=copy"))
+#' if (require("haven")) {
+#'   x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+#'                 c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+#'                   "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+#'   # get current value labels
+#'   x
+#'   # recode 2 into 5; Values of tagged NAs are preserved
+#'   rec(x, rec = "2=5;else=copy")
+#'   na_tag(rec(x, rec = "2=5;else=copy"))
+#' }
 #'
 #' # use select-helpers from dplyr-package
 #' rec(

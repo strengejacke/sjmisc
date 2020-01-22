@@ -68,18 +68,18 @@
 #' @references Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787-93 \doi{10.1016/j.jclinepi.2010.10.011}
 #'
 #' @examples
-#' library(mice)
-#' imp <- mice(nhanes)
+#' if (require("mice")) {
+#'   imp <- mice(nhanes)
 #'
-#' # return data frame with imputed variables
-#' merge_imputations(nhanes, imp)
+#'   # return data frame with imputed variables
+#'   merge_imputations(nhanes, imp)
 #'
-#' # append imputed variables to original data frame
-#' merge_imputations(nhanes, imp, nhanes)
+#'   # append imputed variables to original data frame
+#'   merge_imputations(nhanes, imp, nhanes)
 #'
-#' # show summary of quality of merging imputations
-#' merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
-#'
+#'   # show summary of quality of merging imputations
+#'   merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
+#' }
 #' @importFrom dplyr bind_cols
 #' @export
 merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", "hist", "sd"), filter = NULL) {
