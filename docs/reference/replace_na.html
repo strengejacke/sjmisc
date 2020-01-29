@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -254,50 +254,31 @@ to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
 #&gt;    1    2    3    4   99 &lt;NA&gt; 
 #&gt;  516  252   82   52    6    0 
 #&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>haven</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
-              <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"c"</span>),
-                <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"z"</span>)))
-<span class='co'># get current NA values</span>
-<span class='no'>x</span></div><div class='output co'>#&gt; &lt;Labelled double&gt;
-#&gt;  [1]     1     2     3 NA(a) NA(c) NA(z)     4     3     2     1
-#&gt; 
-#&gt; Labels:
-#&gt;  value        label
-#&gt;      1    Agreement
-#&gt;      4 Disagreement
-#&gt;  NA(c)        First
-#&gt;  NA(a)      Refused
-#&gt;  NA(z)     Not home</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_na.html'>get_na</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt;    First  Refused Not home 
-#&gt;       NA       NA       NA </div><div class='input'>
-<span class='co'># replace only the NA, which is tagged as NA(c)</span>
-<span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"c"</span>)</div><div class='output co'>#&gt; &lt;Labelled double&gt;
-#&gt;  [1]     1     2     3 NA(a)     2 NA(z)     4     3     2     1
-#&gt; 
-#&gt; Labels:
-#&gt;  value        label
-#&gt;      1    Agreement
-#&gt;      4 Disagreement
-#&gt;  NA(a)      Refused
-#&gt;  NA(z)     Not home</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_na.html'>get_na</a></span>(<span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"c"</span>))</div><div class='output co'>#&gt;  Refused Not home 
-#&gt;       NA       NA </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>x</span>)</div><div class='output co'>#&gt; x
-#&gt; 1 2 3 4 
-#&gt; 2 2 2 1 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"c"</span>))</div><div class='output co'>#&gt; 
-#&gt; 1 2 3 4 
-#&gt; 2 3 2 1 </div><div class='input'>
-<span class='co'># tagged NA also works for non-labelled class</span>
-<span class='co'># init vector</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>)
-<span class='co'># set values 2 and 3 as tagged NA</span>
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/set_na.html'>set_na</a></span>(<span class='no'>x</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># see result</span>
-<span class='no'>x</span></div><div class='output co'>#&gt; [1]  1 NA NA  4
-#&gt; attr(,"labels")
-#&gt;  2  3 
-#&gt; NA NA </div><div class='input'><span class='co'># now replace only NA tagged with 2 with value 5</span>
-<span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"2"</span>)</div><div class='output co'>#&gt; [1]  1  5 NA  4</div><div class='input'>
-</div></pre>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"haven"</span>)) {
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
+                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"c"</span>),
+                  <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"z"</span>)))
+  <span class='co'># get current NA values</span>
+  <span class='no'>x</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_na.html'>get_na</a></span>(<span class='no'>x</span>)
+
+  <span class='co'># replace only the NA, which is tagged as NA(c)</span>
+  <span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"c"</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_na.html'>get_na</a></span>(<span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"c"</span>))
+
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>x</span>)
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"c"</span>))
+
+  <span class='co'># tagged NA also works for non-labelled class</span>
+  <span class='co'># init vector</span>
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>)
+  <span class='co'># set values 2 and 3 as tagged NA</span>
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/set_na.html'>set_na</a></span>(<span class='no'>x</span>, <span class='kw'>na</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>), <span class='kw'>as.tag</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='co'># see result</span>
+  <span class='no'>x</span>
+  <span class='co'># now replace only NA tagged with 2 with value 5</span>
+  <span class='fu'>replace_na</span>(<span class='no'>x</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>tagged.na</span> <span class='kw'>=</span> <span class='st'>"2"</span>)
+}</div><div class='output co'>#&gt; [1]  1  5 NA  4</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

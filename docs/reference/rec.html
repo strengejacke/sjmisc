@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -523,25 +523,16 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt;  1  2  3 
 #&gt; 32 88 30 </div><div class='input'>
 <span class='co'># preserve tagged NAs</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>haven</span>)
-<span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
-              <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"c"</span>),
-                <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"z"</span>)))
-<span class='co'># get current value labels</span>
-<span class='no'>x</span></div><div class='output co'>#&gt; &lt;Labelled double&gt;
-#&gt;  [1]     1     2     3 NA(a) NA(c) NA(z)     4     3     2     1
-#&gt; 
-#&gt; Labels:
-#&gt;  value        label
-#&gt;      1    Agreement
-#&gt;      4 Disagreement
-#&gt;  NA(c)        First
-#&gt;  NA(a)      Refused
-#&gt;  NA(z)     Not home</div><div class='input'><span class='co'># recode 2 into 5; Values of tagged NAs are preserved</span>
-<span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>)</div><div class='output co'>#&gt;  [1]  1  5  3 NA NA NA  4  3  5  1
-#&gt; attr(,"labels")
-#&gt;    First  Refused Not home 
-#&gt;       NA       NA       NA </div><div class='input'><span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>na_tag</a></span>(<span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>))</div><div class='output co'>#&gt;  [1] NA  NA  NA  "a" "c" "z" NA  NA  NA  NA </div><div class='input'>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"haven"</span>)) {
+  <span class='no'>x</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span>), <span class='fl'>4</span>:<span class='fl'>1</span>),
+                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Agreement"</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"c"</span>),
+                  <span class='st'>"Refused"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"a"</span>), <span class='st'>"Not home"</span> <span class='kw'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span>(<span class='st'>"z"</span>)))
+  <span class='co'># get current value labels</span>
+  <span class='no'>x</span>
+  <span class='co'># recode 2 into 5; Values of tagged NAs are preserved</span>
+  <span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>)
+  <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>na_tag</a></span>(<span class='fu'>rec</span>(<span class='no'>x</span>, <span class='kw'>rec</span> <span class='kw'>=</span> <span class='st'>"2=5;else=copy"</span>))
+}</div><div class='output co'>#&gt;  [1] NA  NA  NA  "a" "c" "z" NA  NA  NA  NA </div><div class='input'>
 <span class='co'># use select-helpers from dplyr-package</span>
 <span class='fu'>rec</span>(
   <span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='no'>c161sex</span>:<span class='no'>c175empl</span>,

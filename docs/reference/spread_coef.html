@@ -19,7 +19,7 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
@@ -205,90 +205,64 @@ a new data frame with model coefficients only are returned.</p></td>
            model's coefficients in an own <em>column</em>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"dplyr"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"tidyr"</span>) <span class='kw'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>"purrr"</span>)) {
+  <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>efc</span>)
+
+  <span class='co'># create nested data frame, grouped by dependency (e42dep)</span>
+  <span class='co'># and fit linear model for each group. These models are</span>
+  <span class='co'># stored in the list variable "models".</span>
+  <span class='no'>model.data</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>() <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+      <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, ~<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>c12hour</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
+    )
+
+  <span class='co'># spread coefficients, so we can easily access and compare the</span>
+  <span class='co'># coefficients over all models. arguments `se` and `p.val` default</span>
+  <span class='co'># to `FALSE`, when `model.term` is not specified</span>
+  <span class='fu'>spread_coef</span>(<span class='no'>model.data</span>, <span class='no'>models</span>)
+  <span class='fu'>spread_coef</span>(<span class='no'>model.data</span>, <span class='no'>models</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+  <span class='co'># select only specific model term. `se` and `p.val` default to `TRUE`</span>
+  <span class='fu'>spread_coef</span>(<span class='no'>model.data</span>, <span class='no'>models</span>, <span class='no'>c12hour</span>)
+
+  <span class='co'># spread_coef can be used directly within a pipe-chain</span>
+  <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>() <span class='kw'>%&gt;%</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+      <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, ~<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>c12hour</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
+    ) <span class='kw'>%&gt;%</span>
+    <span class='fu'>spread_coef</span>(<span class='no'>models</span>)
+
+  <span class='co'># spread_coef() makes it easy to generate bootstrapped</span>
+  <span class='co'># confidence intervals, using the 'bootstrap()' and 'boot_ci()'</span>
+  <span class='co'># functions from the 'sjstats' package, which creates nested</span>
+  <span class='co'># data frames of bootstrap replicates</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sjstats</span>)
+  <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
+    <span class='co'># generate bootstrap replicates</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/sjstats/man/bootstrap.html'>bootstrap</a></span>(<span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
+    <span class='co'># apply lm to all bootstrapped data sets</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
+      <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>strap</span>, ~<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>e42dep</span> + <span class='no'>c161sex</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
+    ) <span class='kw'>%&gt;%</span>
+    <span class='co'># spread model coefficient for all 100 models</span>
+    <span class='fu'>spread_coef</span>(<span class='no'>models</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>p.val</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
+    <span class='co'># compute the CI for all bootstrapped model coefficients</span>
+    <span class='fu'><a href='https://rdrr.io/pkg/sjstats/man/boot_ci.html'>boot_ci</a></span>(<span class='no'>e42dep</span>, <span class='no'>c161sex</span>, <span class='no'>c172code</span>)
+}</div><div class='output co'>#&gt; <span class='message'>Loading required package: tidyr</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: 'tidyr'</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:mice':</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    complete</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from 'package:sjmisc':</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    replace_na</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>purrr</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>efc</span>)
-
-<span class='co'># create nested data frame, grouped by dependency (e42dep)</span>
-<span class='co'># and fit linear model for each group. These models are</span>
-<span class='co'># stored in the list variable "models".</span>
-<span class='no'>model.data</span> <span class='kw'>&lt;-</span> <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, ~<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>c12hour</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
-  )
-
-<span class='co'># spread coefficients, so we can easily access and compare the</span>
-<span class='co'># coefficients over all models. arguments `se` and `p.val` default</span>
-<span class='co'># to `FALSE`, when `model.term` is not specified</span>
-<span class='fu'>spread_coef</span>(<span class='no'>model.data</span>, <span class='no'>models</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 6</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   e42dep [4]</span><span>
-#&gt;   e42dep            data models `(Intercept)` c12hour c172code
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&lt;df[,25]&gt;&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>      3      </span><span style='color: #555555;'>[306 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           10.9  0.003</span><span style='text-decoration: underline;'>72</span><span>   0.385 
-#&gt; </span><span style='color: #555555;'>2</span><span>      4      </span><span style='color: #555555;'>[304 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           13.0  0.008</span><span style='text-decoration: underline;'>24</span><span>   0.049</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span>      1       </span><span style='color: #555555;'>[66 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           10.9  0.012</span><span style='text-decoration: underline;'>8</span><span>   -</span><span style='color: #BB0000;'>1.00</span><span>  
-#&gt; </span><span style='color: #555555;'>4</span><span>      2      </span><span style='color: #555555;'>[225 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>            8.27 0.034</span><span style='text-decoration: underline;'>5</span><span>    0.770 </div><div class='input'><span class='fu'>spread_coef</span>(<span class='no'>model.data</span>, <span class='no'>models</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 9</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   e42dep [4]</span><span>
-#&gt;   e42dep       data models `(Intercept)` `(Intercept).se` c12hour c12hour.se
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&lt;df[&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>      3 </span><span style='color: #555555;'>[306 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           10.9             0.681 0.003</span><span style='text-decoration: underline;'>72</span><span>    0.004</span><span style='text-decoration: underline;'>85</span><span>
-#&gt; </span><span style='color: #555555;'>2</span><span>      4 </span><span style='color: #555555;'>[304 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           13.0             0.925 0.008</span><span style='text-decoration: underline;'>24</span><span>    0.004</span><span style='text-decoration: underline;'>19</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span>      1  </span><span style='color: #555555;'>[66 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           10.9             1.34  0.012</span><span style='text-decoration: underline;'>8</span><span>     0.039</span><span style='text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #555555;'>4</span><span>      2 </span><span style='color: #555555;'>[225 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>            8.27            0.786 0.034</span><span style='text-decoration: underline;'>5</span><span>     0.015</span><span style='text-decoration: underline;'>1</span><span> 
-#&gt; </span><span style='color: #555555;'># ... with 2 more variables: c172code </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, c172code.se </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span></div><div class='input'>
-<span class='co'># select only specific model term. `se` and `p.val` default to `TRUE`</span>
-<span class='fu'>spread_coef</span>(<span class='no'>model.data</span>, <span class='no'>models</span>, <span class='no'>c12hour</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 6</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   e42dep [4]</span><span>
-#&gt;   e42dep            data models c12hour std.error p.value
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&lt;df[,25]&gt;&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>      3      </span><span style='color: #555555;'>[306 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>   0.003</span><span style='text-decoration: underline;'>72</span><span>   0.004</span><span style='text-decoration: underline;'>85</span><span>  0.443 
-#&gt; </span><span style='color: #555555;'>2</span><span>      4      </span><span style='color: #555555;'>[304 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>   0.008</span><span style='text-decoration: underline;'>24</span><span>   0.004</span><span style='text-decoration: underline;'>19</span><span>  0.050</span><span style='text-decoration: underline;'>2</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span>      1       </span><span style='color: #555555;'>[66 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>   0.012</span><span style='text-decoration: underline;'>8</span><span>    0.039</span><span style='text-decoration: underline;'>1</span><span>   0.745 
-#&gt; </span><span style='color: #555555;'>4</span><span>      2      </span><span style='color: #555555;'>[225 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>   0.034</span><span style='text-decoration: underline;'>5</span><span>    0.015</span><span style='text-decoration: underline;'>1</span><span>   0.023</span><span style='text-decoration: underline;'>7</span><span></div><div class='input'>
-<span class='co'># spread_coef can be used directly within a pipe-chain</span>
-<span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='no'>e42dep</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e42dep</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span>() <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>data</span>, ~<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>c12hour</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
-  ) <span class='kw'>%&gt;%</span>
-  <span class='fu'>spread_coef</span>(<span class='no'>models</span>)</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 4 x 6</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   e42dep [4]</span><span>
-#&gt;   e42dep            data models `(Intercept)` c12hour c172code
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&lt;df[,25]&gt;&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>      3      </span><span style='color: #555555;'>[306 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           10.9  0.003</span><span style='text-decoration: underline;'>72</span><span>   0.385 
-#&gt; </span><span style='color: #555555;'>2</span><span>      4      </span><span style='color: #555555;'>[304 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           13.0  0.008</span><span style='text-decoration: underline;'>24</span><span>   0.049</span><span style='text-decoration: underline;'>1</span><span>
-#&gt; </span><span style='color: #555555;'>3</span><span>      1       </span><span style='color: #555555;'>[66 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>           10.9  0.012</span><span style='text-decoration: underline;'>8</span><span>   -</span><span style='color: #BB0000;'>1.00</span><span>  
-#&gt; </span><span style='color: #555555;'>4</span><span>      2      </span><span style='color: #555555;'>[225 x 25]</span><span> </span><span style='color: #555555;'>&lt;lm&gt;</span><span>            8.27 0.034</span><span style='text-decoration: underline;'>5</span><span>    0.770 </div><div class='input'>
-<span class='co'># spread_coef() makes it easy to generate bootstrapped</span>
-<span class='co'># confidence intervals, using the 'bootstrap()' and 'boot_ci()'</span>
-<span class='co'># functions from the 'sjstats' package, which creates nested</span>
-<span class='co'># data frames of bootstrap replicates</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sjstats</span>)
-<span class='no'>efc</span> <span class='kw'>%&gt;%</span>
-  <span class='co'># generate bootstrap replicates</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/sjstats/man/bootstrap.html'>bootstrap</a></span>(<span class='fl'>100</span>) <span class='kw'>%&gt;%</span>
-  <span class='co'># apply lm to all bootstrapped data sets</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(
-    <span class='kw'>models</span> <span class='kw'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span>(<span class='no'>strap</span>, ~<span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span>(<span class='no'>neg_c_7</span> ~ <span class='no'>e42dep</span> + <span class='no'>c161sex</span> + <span class='no'>c172code</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>.x</span>))
-  ) <span class='kw'>%&gt;%</span>
-  <span class='co'># spread model coefficient for all 100 models</span>
-  <span class='fu'>spread_coef</span>(<span class='no'>models</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>p.val</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>) <span class='kw'>%&gt;%</span>
-  <span class='co'># compute the CI for all bootstrapped model coefficients</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/sjstats/man/boot_ci.html'>boot_ci</a></span>(<span class='no'>e42dep</span>, <span class='no'>c161sex</span>, <span class='no'>c172code</span>)</div><div class='output co'>#&gt;       term    conf.low conf.high
+#&gt; <span class='message'>    replace_na</span></div><div class='output co'>#&gt;       term    conf.low conf.high
 #&gt; 1   e42dep  1.32512573 1.8149172
 #&gt; 2  c161sex -0.03160549 1.1785775
-#&gt; 3 c172code -0.22689525 0.7176051</div><div class='input'>
-</div></span></pre>
+#&gt; 3 c172code -0.22689525 0.7176051</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
