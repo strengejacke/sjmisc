@@ -368,7 +368,7 @@ frq <- function(x,
 
 
 #' @importFrom dplyr n_distinct full_join bind_rows
-#' @importFrom stats na.omit xtabs na.pass sd weighted.mean
+#' @importFrom stats na.omit xtabs na.pass sd weighted.mean qnorm
 #' @importFrom sjlabelled get_labels get_label as_numeric
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0) {
   # remember type
@@ -613,8 +613,17 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # remove NA, if requested
   has.na <- mydat$frq[nrow(mydat)] > 0
-  if ((!is.logical(show.na) && show.na == "auto" && !has.na) || identical(show.na, FALSE))
+  if ((!is.logical(show.na) && show.na == "auto" && !has.na) || identical(show.na, FALSE)) {
     mydat <- mydat[-nrow(mydat), ]
+  }
+
+  # compute relative confidence intervals
+  total_n <- sum(mydat$frq)
+  rel_frq <- as.numeric(mydat$frq / total_n)
+  ci <- stats::qnorm(.975) * suppressWarnings(sqrt(rel_frq * (1 - rel_frq) / total_n))
+  total_ci <- data.frame(lower = total_n * (rel_frq - ci), upper = total_n * (rel_frq + ci))
+  relative_ci <- data.frame(lower = rel_frq - ci, upper = rel_frq + ci)
+
 
   # add variable label and type as attribute, for print-method
 
@@ -629,6 +638,9 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   attr(mydat, "mean") <- mean.value
   attr(mydat, "sd") <- sd.value
+
+  attr(mydat, "ci") <- total_ci
+  attr(mydat, "relative.ci") <- relative_ci
 
   row.names(mydat) <- NULL
 
