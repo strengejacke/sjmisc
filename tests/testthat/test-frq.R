@@ -110,25 +110,37 @@ test_that("frq, string", {
   expect_equal(
     frq(dat$x),
     structure(list(structure(list(
-      val = structure(
-        c(1L, 2L, 3L, NA),
-        .Label = c("", "a", "b"),
-        class = "factor"
-      ),
+      val = structure(c(1L, 2L, 3L, NA), .Label = c("", "a", "b"), class = "factor"),
       label = c("<none>", "<none>", "<none>", NA),
       frq = c(2L, 2L, 1L, 0L),
       raw.prc = c(40, 40, 20, 0),
       valid.prc = c(40, 40, 20, NA),
-      cum.prc = c(40, 80, 100, NA)),
-      row.names = c(NA, 4L),
+      cum.prc = c(40, 80, 100, NA)
+    ),
+    row.names = c(NA, -4L),
+    class = "data.frame",
+    label = "x",
+    vartype = "character",
+    mean = 1.8,
+    sd = 0.836660026534076,
+    ci = structure(
+      list(
+        lower = c(-0.147032972460588, -0.147032972460588, -0.753045081153163, 0),
+        upper = c(4.14703297246059, 4.14703297246059, 2.75304508115316, 0)
+      ),
       class = "data.frame",
-      label = "x",
-      vartype = "character",
-      mean = 1.8,
-      sd = 0.83666)),
-      class = c("sjmisc_frq", "list"),
-      print = "txt",
-      encoding = "UTF-8"
+      row.names = c(NA, -4L)
+    ),
+    relative.ci = structure(
+      list(
+      lower = c(-0.0294065944921176, -0.0294065944921176, -0.150609016230633, 0),
+      upper = c(0.829406594492118, 0.829406594492118, 0.550609016230633, 0)
+    ),
+    class = "data.frame",
+    row.names = c(NA, -4L)))),
+    class = c("sjmisc_frq", "list"),
+    print = "txt",
+    encoding = "UTF-8"
     ),
     tolerance = 1e-4
   )
@@ -136,25 +148,37 @@ test_that("frq, string", {
   expect_equal(
     frq(dat[["x"]]),
     structure(list(structure(list(
-      val = structure(
-        c(1L, 2L, 3L, NA),
-        .Label = c("", "a", "b"),
-        class = "factor"
-      ),
+      val = structure(c(1L, 2L, 3L, NA), .Label = c("", "a", "b"), class = "factor"),
       label = c("<none>", "<none>", "<none>", NA),
       frq = c(2L, 2L, 1L, 0L),
       raw.prc = c(40, 40, 20, 0),
       valid.prc = c(40, 40, 20, NA),
-      cum.prc = c(40, 80, 100, NA)),
-      row.names = c(NA, 4L),
+      cum.prc = c(40, 80, 100, NA)
+    ),
+    row.names = c(NA, -4L),
+    class = "data.frame",
+    label = "x",
+    vartype = "character",
+    mean = 1.8,
+    sd = 0.836660026534076,
+    ci = structure(
+      list(
+        lower = c(-0.147032972460588, -0.147032972460588, -0.753045081153163, 0),
+        upper = c(4.14703297246059, 4.14703297246059, 2.75304508115316, 0)
+      ),
       class = "data.frame",
-      label = "x",
-      vartype = "character",
-      mean = 1.8,
-      sd = 0.83666)),
-      class = c("sjmisc_frq", "list"),
-      print = "txt",
-      encoding = "UTF-8"
+      row.names = c(NA, -4L)
+    ),
+    relative.ci = structure(
+      list(
+        lower = c(-0.0294065944921176, -0.0294065944921176, -0.150609016230633, 0),
+        upper = c(0.829406594492118, 0.829406594492118, 0.550609016230633, 0)
+      ),
+      class = "data.frame",
+      row.names = c(NA, -4L)))),
+    class = c("sjmisc_frq", "list"),
+    print = "txt",
+    encoding = "UTF-8"
     ),
     tolerance = 1e-4
   )
@@ -162,25 +186,37 @@ test_that("frq, string", {
   expect_equal(
     frq(dat["x"]),
     structure(list(structure(list(
-      val = structure(
-        c(1L, 2L, 3L, NA),
-        .Label = c("", "a", "b"),
-        class = "factor"
-      ),
+      val = structure(c(1L, 2L, 3L, NA), .Label = c("", "a", "b"), class = "factor"),
       label = c("<none>", "<none>", "<none>", NA),
       frq = c(2L, 2L, 1L, 0L),
       raw.prc = c(40, 40, 20, 0),
       valid.prc = c(40, 40, 20, NA),
-      cum.prc = c(40, 80, 100, NA)),
-      row.names = c(NA, 4L),
+      cum.prc = c(40, 80, 100, NA)
+    ),
+    row.names = c(NA, -4L),
+    class = "data.frame",
+    label = "x",
+    vartype = "character",
+    mean = 1.8,
+    sd = 0.836660026534076,
+    ci = structure(
+      list(
+        lower = c(-0.147032972460588, -0.147032972460588, -0.753045081153163, 0),
+        upper = c(4.14703297246059, 4.14703297246059, 2.75304508115316, 0)
+      ),
       class = "data.frame",
-      label = "x",
-      vartype = "character",
-      mean = 1.8,
-      sd = 0.83666)),
-      class = c("sjmisc_frq", "list"),
-      print = "txt",
-      encoding = "UTF-8"
+      row.names = c(NA, -4L)
+    ),
+    relative.ci = structure(
+      list(
+        lower = c(-0.0294065944921176, -0.0294065944921176, -0.150609016230633, 0),
+        upper = c(0.829406594492118, 0.829406594492118, 0.550609016230633, 0)
+      ),
+      class = "data.frame",
+      row.names = c(NA, -4L)))),
+    class = c("sjmisc_frq", "list"),
+    print = "txt",
+    encoding = "UTF-8"
     ),
     tolerance = 1e-4
   )
