@@ -58,8 +58,6 @@
 #'
 #' @importFrom dplyr select mutate
 #' @importFrom sjlabelled copy_labels
-#' @importFrom parameters skewness
-#' @importFrom stats IQR
 #' @export
 descr <- function(x,
                   ...,
@@ -149,7 +147,7 @@ descr <- function(x,
 
 #' @importFrom dplyr select_if group_by summarise_all funs summarise
 #' @importFrom sjlabelled get_label
-#' @importFrom stats var na.omit sd median weighted.mean
+#' @importFrom stats var na.omit sd median weighted.mean IQR
 #' @importFrom rlang .data
 descr_helper <- function(dd, max.length) {
 
@@ -200,7 +198,7 @@ descr_helper <- function(dd, max.length) {
               as.character(round(max(.data$val, na.rm = TRUE), 2))
             ),
             iqr = stats::IQR(.data$val, na.rm = TRUE),
-            skew = parameters::skewness(.data$val)
+            skew = sjmisc.skew(.data$val)
           ))
     ) %>%
       as.data.frame()
@@ -262,4 +260,23 @@ wtd_var <- function(x, w) {
 
   xbar <- sum(w * x) / sum(w)
   sum(w * ((x - xbar)^2)) / (sum(w) - 1)
+}
+
+
+
+
+sjmisc.skew <- function(x) {
+  if (any(ina <- is.na(x)))
+    x <- x[!ina]
+
+  n <- length(x)
+  x <- x - mean(x)
+
+  if (n < 3)
+    return(NA)
+
+  # type-1 skewness
+  out <- (sum((x - mean(x))^3) / n) / (sum((x - mean(x))^2) / n)^1.5
+  # type-2 skewness
+  out * sqrt(n * (n - 1)) / (n - 2)
 }
