@@ -2,6 +2,7 @@
 
 ## Changes to functions
 
+* `descr()` now also calculates the IQR.
 * Revised `print()`-method for `frq()`.
 
 # sjmisc 2.8.3

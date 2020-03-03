@@ -12,7 +12,7 @@
 #'    \code{max.length} chars.
 #' @param show Character vector, indicating which information (columns) that describe
 #'   the data should be returned. May be one or more of \code{"type", "label", "n",
-#'   "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew"}. There are
+#'   "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "iqr", "skew"}. There are
 #'   two shortcuts: \code{show = "all"} (default) shows all information,
 #'   \code{show = "short"} just shows n, missing percentage, mean and standard
 #'   deviation.
@@ -58,6 +58,8 @@
 #'
 #' @importFrom dplyr select mutate
 #' @importFrom sjlabelled copy_labels
+#' @importFrom parameters skewness
+#' @importFrom stats IQR
 #' @export
 descr <- function(x,
                   ...,
@@ -78,7 +80,7 @@ descr <- function(x,
   # select elements that should be shown
 
   if ("all" %in% show)
-    show <- c("type", "label", "n", "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew")
+    show <- c("type", "label", "n", "NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "iqr", "skew")
   else if ("short" %in% show)
     show <- c("n", "NA.prc", "mean", "sd")
 
@@ -197,7 +199,8 @@ descr_helper <- function(dd, max.length) {
               as.character(round(min(.data$val, na.rm = TRUE), 2)),
               as.character(round(max(.data$val, na.rm = TRUE), 2))
             ),
-            skew = sjmisc.skew(.data$val)
+            iqr = stats::IQR(.data$val, na.rm = TRUE),
+            skew = parameters::skewness(.data$val)
           ))
     ) %>%
       as.data.frame()
@@ -237,20 +240,6 @@ descr_helper <- function(dd, max.length) {
   if (!is.null(weights)) attr(x, "weights") <- "TRUE"
 
   x
-}
-
-
-sjmisc.skew <- function(x) {
-  if (any(ina <- is.na(x)))
-    x <- x[!ina]
-
-  n <- length(x)
-  x <- x - mean(x)
-
-  if (n < 3)
-    return(NA)
-
-  sqrt(n) * sum(x ^ 3) / (sum(x ^ 2) ^ (3 / 2)) * sqrt(n * (n - 1)) / (n - 2)
 }
 
 
