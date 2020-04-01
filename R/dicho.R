@@ -255,7 +255,7 @@ recode_fun <- function(x, .dat, fun, suffix, append, ...) {
 
       # names of grouping variables
       vars <- colnames(.dat)[colnames(.dat) %nin% grp.vars]
-      .dat <- dplyr::ungroup(.dat)
+      .dat <- as.data.frame(.dat)
 
       # iterate all groups
       for (i in unique(grps)) {
