@@ -9,7 +9,8 @@ find_var(
   data,
   pattern,
   ignore.case = TRUE,
-  search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
+  search = c("name_label", "name_value", "label_value", "name", "label", "value",
+    "all"),
   out = c("table", "df", "index"),
   fuzzy = FALSE,
   regex = FALSE
@@ -19,7 +20,8 @@ find_in_data(
   data,
   pattern,
   ignore.case = TRUE,
-  search = c("name_label", "name_value", "label_value", "name", "label", "value", "all"),
+  search = c("name_label", "name_value", "label_value", "name", "label", "value",
+    "all"),
   out = c("table", "df", "index"),
   fuzzy = FALSE,
   regex = FALSE
