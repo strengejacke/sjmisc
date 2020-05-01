@@ -4,6 +4,10 @@
 
 * `flat_table()` gains a `weights`-argument.
 
+## Bug fixes
+
+* `descr()` calculated wrong percentage of missing values for weighted data.
+
 # sjmisc 2.8.4
 
 ## Changes to functions
