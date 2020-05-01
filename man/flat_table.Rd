@@ -9,7 +9,8 @@ flat_table(
   ...,
   margin = c("counts", "cell", "row", "col"),
   digits = 2,
-  show.values = FALSE
+  show.values = FALSE,
+  weights = NULL
 )
 }
 \arguments{

@@ -1,3 +1,9 @@
+# sjmisc 2.8.5
+
+## Changes to functions
+
+* `flat_table()` gains a `weights`-argument.
+
 # sjmisc 2.8.4
 
 ## Changes to functions

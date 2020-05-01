@@ -90,10 +90,15 @@ descr <- function(x,
 
   w.name <- deparse(substitute(weights))
 
-  if (w.name == "NULL") {
-    w.name <- NULL
+  if (w.name != "NULL") {
+    w.name <- gsub("\"", "", w.name, fixed = FALSE)
+    if (!is.null(x[[w.name]])) {
+      dd$.weights <- x[[w.name]]
+    } else {
+      dd$.weights <- eval(substitute(weights))
+    }
   } else {
-    dd$.weights <- x[[w.name]]
+    w.name <- NULL
   }
 
 
