@@ -1,5 +1,3 @@
-context("sjmisc, rec")
-
 library(sjmisc)
 data(iris)
 data(efc)

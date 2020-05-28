@@ -96,7 +96,7 @@
 #'   select(e42dep) %>%
 #'   rec(rec = "1,2=1; 3,4=2",
 #'       val.labels = c("low dependency", "high dependency")) %>%
-#'   str()
+#'   frq()
 #'
 #' # works with mutate
 #' efc %>%
@@ -145,7 +145,7 @@
 #' rec(dummy, rec = "M=Male; F=Female; X=Refused")
 #'
 #' # recode numeric to character
-#' rec(efc$e42dep, rec = "1=first;2=2nd;3=third;else=hi")
+#' rec(efc$e42dep, rec = "1=first;2=2nd;3=third;else=hi") %>% head()
 #'
 #' # recode non-numeric factors
 #' data(iris)
@@ -165,19 +165,20 @@
 #'   x
 #'   # recode 2 into 5; Values of tagged NAs are preserved
 #'   rec(x, rec = "2=5;else=copy")
-#'   na_tag(rec(x, rec = "2=5;else=copy"))
 #' }
 #'
 #' # use select-helpers from dplyr-package
-#' rec(
+#' out <- rec(
 #'   efc, contains("cop"), c161sex:c175empl,
 #'   rec = "0,1=0; else=1",
 #'   append = FALSE
 #' )
+#' head(out)
 #'
 #' # recode only variables that have a value range from 1-4
 #' p <- function(x) min(x, na.rm = TRUE) > 0 && max(x, na.rm = TRUE) < 5
-#' rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
+#' out <- rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
+#' head(out)
 #' @importFrom insight print_color
 #' @export
 rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
@@ -433,10 +434,15 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   rec_string <- gsub("\r", "", rec_string, useBytes = TRUE, fixed = F)
 
   # replace min and max placeholders
-  rec_string <- gsub("(min)\\b", as.character(min_val), rec_string, useBytes = TRUE, perl = TRUE)
-  rec_string <- gsub("(lo)\\b", as.character(min_val), rec_string, useBytes = TRUE, perl = TRUE)
-  rec_string <- gsub("(max)\\b", as.character(max_val), rec_string, useBytes = TRUE, perl = TRUE)
-  rec_string <- gsub("(hi)\\b", as.character(max_val), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(\\blo\\b)(.*)=(.*)", paste0(as.character(min_val), "\\2=\\3"), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(\\bmin\\b)(.*)=(.*)", paste0(as.character(min_val), "\\2=\\3"), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(\\bmax\\b)(.*)=(.*)", paste0(as.character(max_val), "\\2=\\3"), rec_string, useBytes = TRUE, perl = TRUE)
+  rec_string <- gsub("(\\bhi\\b)(.*)=(.*)", paste0(as.character(max_val), "\\2=\\3"), rec_string, useBytes = TRUE, perl = TRUE)
+
+  # rec_string <- gsub("(min)\\b", as.character(min_val), rec_string, useBytes = TRUE, perl = TRUE)
+  # rec_string <- gsub("(lo)\\b", as.character(min_val), rec_string, useBytes = TRUE, perl = TRUE)
+  # rec_string <- gsub("(max)\\b", as.character(max_val), rec_string, useBytes = TRUE, perl = TRUE)
+  # rec_string <- gsub("(hi)\\b", as.character(max_val), rec_string, useBytes = TRUE, perl = TRUE)
 
   # retrieve all recode-pairs, i.e. all old-value = new-value assignments
   rec_pairs <- strsplit(rec_string, "=", fixed = TRUE)

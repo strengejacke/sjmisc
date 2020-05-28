@@ -29,6 +29,10 @@ number of decimal places.}
 
 \item{show.values}{Logical, if \code{TRUE}, value labels are prefixed by the
 associated value.}
+
+\item{weights}{Bare name, or name as string, of a variable in \code{x}
+that indicates the vector of weights, which will be applied to weight all
+observations. Default is \code{NULL}, so no weights are used.}
 }
 \value{
 An object of class \code{\link[stats]{ftable}}.

@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -46,7 +50,6 @@
 <meta property="og:description" content="This function prints a basic descriptive statistic, including
   variable labels." />
 <meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -64,7 +67,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -78,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.4.1</span>
       </span>
     </div>
 
@@ -116,7 +119,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/strengejacke/sjmisc/">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -131,7 +139,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Basic descriptive statistics</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/strengejacke/sjmisc/blob/master/R/descr.R'><code>R/descr.R</code></a></small>
     <div class="hidden name"><code>descr.Rd</code></div>
     </div>
 
@@ -165,7 +173,7 @@
 further processing. Required, if <code>x</code> is a data frame (and no
 vector) and only selected variables from <code>x</code> should be processed.
 You may also use functions like <code>:</code> or tidyselect's
-<code><a href='https://rdrr.io/pkg/tidyselect/man/select_helpers.html'>select_helpers</a></code>.
+<code><a href='https://tidyselect.r-lib.org/reference/language.html'>select_helpers</a></code>.
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
     <tr>
@@ -185,7 +193,7 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
       <th>show</th>
       <td><p>Character vector, indicating which information (columns) that describe
 the data should be returned. May be one or more of <code>"type", "label", "n",
-"NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew"</code>. There are
+"NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "iqr", "skew"</code>. There are
 two shortcuts: <code>show = "all"</code> (default) shows all information,
 <code>show = "short"</code> just shows n, missing percentage, mean and standard
 deviation.</p></td>
@@ -226,19 +234,19 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </span><span>     var    type      label   n NA.prc  mean    sd   se md trimmed       range
 #&gt;   e17age numeric elder' age 891   1.87 79.12  8.09 0.27 79   79.05 38 (65-103)
 #&gt;  c160age numeric carer' age 901   0.77 53.46 13.35 0.44 54   53.68  71 (18-89)
-#&gt;   skew
-#&gt;   0.06
-#&gt;  -0.14</div><div class='input'>
+#&gt;  iqr  skew
+#&gt;   12  0.06
+#&gt;   19 -0.14</div><div class='input'>
 <span class='no'>efc</span>$<span class='no'>weights</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>efc</span>), <span class='fl'>1</span>, <span class='fl'>.3</span>))
 <span class='fu'>descr</span>(<span class='no'>efc</span>, <span class='no'>c12hour</span>, <span class='no'>barthtot</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='no'>weights</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>      var    type                                    label   n NA.prc  mean
-#&gt;   c12hour numeric average number of hours of care per week 900   0.67 41.86
-#&gt;  barthtot numeric                Total score BARTHEL INDEX 880   2.84 64.93
-#&gt;     sd   se       range
-#&gt;  50.47 1.68 164 (4-168)
-#&gt;  29.46 0.99 100 (0-100)</div><div class='input'>
+#&gt;   c12hour numeric average number of hours of care per week 900   0.66 41.86
+#&gt;  barthtot numeric                Total score BARTHEL INDEX 880   2.75 64.93
+#&gt;     sd   se       range   iqr  skew
+#&gt;  50.47 1.68 164 (4-168) 32.75  1.66
+#&gt;  29.46 0.99 100 (0-100) 45.00 -0.73</div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span> <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
@@ -247,10 +255,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e42dep numeric         elder's dependency 901   0.77 2.94 0.94 0.03  3
 #&gt;  e15relat numeric      relationship to elder 901   0.77 2.85 2.08 0.07  2
 #&gt;  c172code numeric carer's level of education 842   7.27 1.97 0.63 0.02  2
-#&gt;  trimmed   range  skew
-#&gt;     3.02 3 (1-4) -0.42
-#&gt;     2.44 7 (1-8)  1.56
-#&gt;     1.96 2 (1-3)  0.02</div><div class='input'>
+#&gt;  trimmed   range iqr  skew
+#&gt;     3.02 3 (1-4)   2 -0.42
+#&gt;     2.44 7 (1-8)   2  1.56
+#&gt;     1.96 2 (1-3)   0  0.02</div><div class='input'>
 <span class='co'># show just a few elements</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>e42dep</span>, <span class='no'>e15relat</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span> <span class='fu'>descr</span>(<span class='kw'>show</span> <span class='kw'>=</span> <span class='st'>"short"</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
@@ -273,10 +281,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e42dep numeric         elder's dependency 295   0.34 2.92 0.93 0.05  3
 #&gt;  e15relat numeric      relationship to elder 296   0.00 2.32 1.93 0.11  2
 #&gt;  c172code numeric carer's level of education 279   5.74 1.87 0.65 0.04  2
-#&gt;  trimmed   range  skew
-#&gt;     3.00 3 (1-4) -0.44
-#&gt;     1.86 7 (1-8)  1.98
-#&gt;     1.84 2 (1-3)  0.14
+#&gt;  trimmed   range iqr  skew
+#&gt;     3.00 3 (1-4)   2 -0.44
+#&gt;     1.86 7 (1-8)   1  1.98
+#&gt;     1.84 2 (1-3)   1  0.14
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>female
@@ -285,10 +293,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e42dep numeric         elder's dependency 605   0.00 2.95 0.94 0.04  3
 #&gt;  e15relat numeric      relationship to elder 604   0.17 3.11 2.11 0.09  2
 #&gt;  c172code numeric carer's level of education 562   7.11 2.02 0.61 0.03  2
-#&gt;  trimmed   range  skew
-#&gt;     3.03 3 (1-4) -0.42
-#&gt;     2.74 7 (1-8)  1.45
-#&gt;     2.03 2 (1-3) -0.01</div><div class='input'>
+#&gt;  trimmed   range iqr  skew
+#&gt;     3.03 3 (1-4)   2 -0.42
+#&gt;     2.74 7 (1-8)   2  1.45
+#&gt;     2.03 2 (1-3)   0 -0.01</div><div class='input'>
 <span class='co'># you can select variables also inside 'descr()'</span>
 <span class='no'>efc</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='no'>e16sex</span>, <span class='no'>c172code</span>) <span class='kw'>%&gt;%</span>
@@ -307,15 +315,15 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e16sex3 numeric             elder's gender 80   0.00  1.00  0.00 0.00  1
 #&gt;  c172code3 numeric carer's level of education 80   0.00  1.00  0.00 0.00  1
 #&gt;    c160age numeric                 carer' age 80   0.00 61.36 12.04 1.35 64
-#&gt;  trimmed      range  skew
-#&gt;      1.0    0 (1-1)   NaN
-#&gt;      1.0    0 (1-1)   NaN
-#&gt;      1.0    0 (1-1)   NaN
-#&gt;      1.0    0 (1-1)   NaN
-#&gt;     77.8 30 (65-95)  0.24
-#&gt;      1.0    0 (1-1)   NaN
-#&gt;      1.0    0 (1-1)   NaN
-#&gt;     61.8 56 (31-87) -0.38
+#&gt;  trimmed      range  iqr  skew
+#&gt;      1.0    0 (1-1)  0.0   NaN
+#&gt;      1.0    0 (1-1)  0.0   NaN
+#&gt;      1.0    0 (1-1)  0.0   NaN
+#&gt;      1.0    0 (1-1)  0.0   NaN
+#&gt;     77.8 30 (65-95) 13.0  0.24
+#&gt;      1.0    0 (1-1)  0.0   NaN
+#&gt;      1.0    0 (1-1)  0.0   NaN
+#&gt;     61.8 56 (31-87) 15.5 -0.38
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>male, intermediate level of education
@@ -329,15 +337,15 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e16sex3 numeric             elder's gender 156   0.00  1.00  0.00 0.00  1.0
 #&gt;  c172code3 numeric carer's level of education 156   0.00  2.00  0.00 0.00  2.0
 #&gt;    c160age numeric                 carer' age 156   0.00 53.50 15.66 1.25 54.5
-#&gt;  trimmed      range  skew
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;    74.82 30 (65-95)  0.45
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;    53.86 61 (20-81) -0.17
+#&gt;  trimmed      range iqr  skew
+#&gt;     1.00    0 (1-1)   0   NaN
+#&gt;     2.00    0 (2-2)   0   NaN
+#&gt;     1.00    0 (1-1)   0   NaN
+#&gt;     2.00    0 (2-2)   0   NaN
+#&gt;    74.82 30 (65-95)  10  0.45
+#&gt;     1.00    0 (1-1)   0   NaN
+#&gt;     2.00    0 (2-2)   0   NaN
+#&gt;    53.86 61 (20-81)  26 -0.17
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>male, high level of education
@@ -351,15 +359,15 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e16sex3 numeric             elder's gender 43      0  1.00  0.00 0.00  1
 #&gt;  c172code3 numeric carer's level of education 43      0  3.00  0.00 0.00  3
 #&gt;    c160age numeric                 carer' age 43      0 53.35 11.15 1.70 54
-#&gt;  trimmed      range  skew
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     3.00    0 (3-3)   NaN
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     3.00    0 (3-3)   NaN
-#&gt;    76.66 31 (65-96)  0.34
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     3.00    0 (3-3)   NaN
-#&gt;    53.60 46 (29-75) -0.22
+#&gt;  trimmed      range  iqr  skew
+#&gt;     1.00    0 (1-1)  0.0   NaN
+#&gt;     3.00    0 (3-3)  0.0   NaN
+#&gt;     1.00    0 (1-1)  0.0   NaN
+#&gt;     3.00    0 (3-3)  0.0   NaN
+#&gt;    76.66 31 (65-96) 14.0  0.34
+#&gt;     1.00    0 (1-1)  0.0   NaN
+#&gt;     3.00    0 (3-3)  0.0   NaN
+#&gt;    53.60 46 (29-75) 13.5 -0.22
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>female, low level of education
@@ -373,15 +381,15 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e16sex3 numeric             elder's gender 99   0.00  2.00  0.00 0.00  2
 #&gt;  c172code3 numeric carer's level of education 99   0.00  1.00  0.00 0.00  1
 #&gt;    c160age numeric                 carer' age 99   0.00 56.59 11.75 1.18 57
-#&gt;  trimmed      range  skew
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;    79.89 33 (65-98) -0.08
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     1.00    0 (1-1)   NaN
-#&gt;    56.62 51 (31-82) -0.05
+#&gt;  trimmed      range  iqr  skew
+#&gt;     2.00    0 (2-2)  0.0   NaN
+#&gt;     1.00    0 (1-1)  0.0   NaN
+#&gt;     2.00    0 (2-2)  0.0   NaN
+#&gt;     1.00    0 (1-1)  0.0   NaN
+#&gt;    79.89 33 (65-98)  9.0 -0.08
+#&gt;     2.00    0 (2-2)  0.0   NaN
+#&gt;     1.00    0 (1-1)  0.0   NaN
+#&gt;    56.62 51 (31-82) 17.5 -0.05
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>female, intermediate level of education
@@ -395,15 +403,15 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e16sex3 numeric             elder's gender 350      0  2.00  0.00 0.00  2.0
 #&gt;  c172code3 numeric carer's level of education 350      0  2.00  0.00 0.00  2.0
 #&gt;    c160age numeric                 carer' age 350      0 50.27 12.74 0.68 50.5
-#&gt;  trimmed       range  skew
-#&gt;     2.00     0 (2-2)   NaN
-#&gt;     2.00     0 (2-2)   NaN
-#&gt;     2.00     0 (2-2)   NaN
-#&gt;     2.00     0 (2-2)   NaN
-#&gt;    80.38 38 (65-103) -0.12
-#&gt;     2.00     0 (2-2)   NaN
-#&gt;     2.00     0 (2-2)   NaN
-#&gt;    50.47  71 (18-89) -0.09
+#&gt;  trimmed       range   iqr  skew
+#&gt;     2.00     0 (2-2)  0.00   NaN
+#&gt;     2.00     0 (2-2)  0.00   NaN
+#&gt;     2.00     0 (2-2)  0.00   NaN
+#&gt;     2.00     0 (2-2)  0.00   NaN
+#&gt;    80.38 38 (65-103) 12.00 -0.12
+#&gt;     2.00     0 (2-2)  0.00   NaN
+#&gt;     2.00     0 (2-2)  0.00   NaN
+#&gt;    50.47  71 (18-89) 16.75 -0.09
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>female, high level of education
@@ -417,15 +425,15 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;    e16sex3 numeric             elder's gender 113   0.00  2.00  0.00 0.00  2.0
 #&gt;  c172code3 numeric carer's level of education 113   0.00  3.00  0.00 0.00  3.0
 #&gt;    c160age numeric                 carer' age 112   0.88 52.54 12.14 1.15 53.5
-#&gt;  trimmed      range  skew
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     3.00    0 (3-3)   NaN
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     3.00    0 (3-3)   NaN
-#&gt;    81.42 34 (65-99) -0.16
-#&gt;     2.00    0 (2-2)   NaN
-#&gt;     3.00    0 (3-3)   NaN
-#&gt;    52.43 57 (28-85)  0.13</div><div class='input'>
+#&gt;  trimmed      range iqr  skew
+#&gt;     2.00    0 (2-2)   0   NaN
+#&gt;     3.00    0 (3-3)   0   NaN
+#&gt;     2.00    0 (2-2)   0   NaN
+#&gt;     3.00    0 (3-3)   0   NaN
+#&gt;    81.42 34 (65-99)  11 -0.16
+#&gt;     2.00    0 (2-2)   0   NaN
+#&gt;     3.00    0 (3-3)   0   NaN
+#&gt;    52.43 57 (28-85)  17  0.13</div><div class='input'>
 <span class='co'># or even use select-helpers</span>
 <span class='fu'>descr</span>(<span class='no'>efc</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/reexports.html'>contains</a></span>(<span class='st'>"cop"</span>), <span class='kw'>max.length</span> <span class='kw'>=</span> <span class='fl'>20</span>)</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
@@ -440,27 +448,22 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  c88cop7 numeric  do you feel trapped... 900   0.88 1.92 0.91 0.03  2    1.80
 #&gt;  c89cop8 numeric          do you feel... 901   0.77 2.16 1.04 0.03  2    2.08
 #&gt;  c90cop9 numeric          do you feel... 888   2.20 2.93 0.96 0.03  3    3.02
-#&gt;    range  skew
-#&gt;  3 (1-4) -0.12
-#&gt;  3 (1-4)  0.65
-#&gt;  3 (1-4)  1.31
-#&gt;  3 (1-4)  1.06
-#&gt;  3 (1-4)  1.77
-#&gt;  3 (1-4)  2.43
-#&gt;  3 (1-4)  0.83
-#&gt;  3 (1-4)  0.32
-#&gt;  3 (1-4) -0.45</div><div class='input'>
+#&gt;    range iqr  skew
+#&gt;  3 (1-4)   0 -0.12
+#&gt;  3 (1-4)   0  0.65
+#&gt;  3 (1-4)   1  1.31
+#&gt;  3 (1-4)   1  1.06
+#&gt;  3 (1-4)   1  1.77
+#&gt;  3 (1-4)   0  2.43
+#&gt;  3 (1-4)   1  0.83
+#&gt;  3 (1-4)   2  0.32
+#&gt;  3 (1-4)   2 -0.45</div><div class='input'>
 </div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -471,7 +474,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
