@@ -2,12 +2,9 @@
 % Please edit documentation in R/to_value.R
 \name{to_value}
 \alias{to_value}
-\alias{to_numeric}
 \title{Convert factors to numeric variables}
 \usage{
 to_value(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE)
-
-to_numeric(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE)
 }
 \arguments{
 \item{x}{A vector or data frame.}

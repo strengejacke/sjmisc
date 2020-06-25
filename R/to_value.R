@@ -42,7 +42,3 @@
 to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE) {
   sjlabelled::as_numeric(x = x, ..., start.at = start.at, keep.labels = keep.labels, use.labels = use.labels)
 }
-
-#' @rdname to_value
-#' @export
-to_numeric <- to_value
