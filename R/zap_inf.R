@@ -6,7 +6,7 @@
 #'
 #' @param x A vector or a data frame.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return \code{x}, where all \code{Inf}, \code{-Inf} and \code{NaN} are converted to \code{NA}.
 #'

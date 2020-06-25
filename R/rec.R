@@ -48,7 +48,7 @@
 #'   If \code{suffix = ""} and \code{append = TRUE}, existing variables that
 #'   have been recoded/transformed will be overwritten.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return \code{x} with recoded categories. If \code{x} is a data frame,
 #'   for \code{append = TRUE}, \code{x} including the recoded variables

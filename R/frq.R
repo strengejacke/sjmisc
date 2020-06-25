@@ -45,13 +45,13 @@
 #'   when \code{out} is not \code{"txt"}.
 #'
 #' @inheritParams descr
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return A list of data frames with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
 #' @details The \dots-argument not only accepts variable names or expressions
-#'   from \code{\link[tidyselect]{select_helpers}}. You can also use logical
+#'   from select-helpers. You can also use logical
 #'   conditions, math operations, or combining variables to produce "crosstables".
 #'   See 'Examples' for more details.
 #'

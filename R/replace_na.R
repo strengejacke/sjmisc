@@ -15,7 +15,7 @@
 #'          that will be replaced by \code{value}. Herewith it is possible
 #'          to replace only specific \code{NA} values of \code{x}.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return \code{x}, where \code{NA}'s are replaced with \code{value}. If \code{x}

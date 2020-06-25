@@ -20,7 +20,7 @@
 #'    to console (\code{out = "txt"}) or as HTML-table in the viewer-pane
 #'    (\code{out = "viewer"}) or browser (\code{out = "browser"}).
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams frq
 #'
 #' @return A data frame with basic descriptive statistics.

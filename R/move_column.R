@@ -7,7 +7,7 @@
 #' @param data A data frame.
 #' @param ... Unquoted names or character vector with names of variables that
 #'   should be move to another position. You may also use functions like
-#'   \code{:} or tidyselect's \code{\link[tidyselect]{select_helpers}}.
+#'   \code{:} or tidyselect's select-helpers.
 #' @param .before Optional, column name or numeric index of the position where
 #'   \code{col} should be moved to. If not missing, \code{col} is moved to the
 #'   position \emph{before} the column indicated by \code{.before}.

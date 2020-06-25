@@ -8,6 +8,7 @@
 \alias{to_character}
 \alias{to_label}
 \alias{to_numeric}
+\alias{to_factor}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -17,6 +18,6 @@ below to see their documentation.
 \describe{
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 
-  \item{sjlabelled}{\code{\link[sjlabelled]{set_na}}, \code{\link[sjlabelled:as_label]{to_character}}, \code{\link[sjlabelled:as_label]{to_label}}, \code{\link[sjlabelled:as_numeric]{to_numeric}}}
+  \item{sjlabelled}{\code{\link[sjlabelled]{set_na}}, \code{\link[sjlabelled:as_label]{to_character}}, \code{\link[sjlabelled:as_factor]{to_factor}}, \code{\link[sjlabelled:as_label]{to_label}}, \code{\link[sjlabelled:as_numeric]{to_numeric}}}
 }}
 

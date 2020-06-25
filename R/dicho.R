@@ -18,7 +18,7 @@
 #'    attributes of dichotomized variable (see \code{\link[sjlabelled]{set_labels}}).
 #'    If \code{NULL} (default), no value labels will be set.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return \code{x}, dichotomized. If \code{x} is a data frame,

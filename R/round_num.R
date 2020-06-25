@@ -6,7 +6,7 @@
 #'    ignored.
 #'
 #' @param digits Numeric, number of decimals to round to.
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return \code{x} with all numeric variables rounded.
 #'

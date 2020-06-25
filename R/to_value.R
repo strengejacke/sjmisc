@@ -23,7 +23,7 @@
 #'           specified in \code{...} are coerced to numeric; if \code{...} is
 #'           not specified, applies to all variables in the data frame.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @note This function is kept for backwards-compatibility. It is preferred to
 #'       use \code{\link[sjlabelled]{as_numeric}}.

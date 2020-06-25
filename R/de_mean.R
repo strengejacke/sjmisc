@@ -14,7 +14,7 @@
 #'   variables will be suffixed with \code{"_dm"} and grouped-meaned variables
 #'   with \code{"_gm"}.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return For \code{append = TRUE}, \code{x} including the group-/de-meaned

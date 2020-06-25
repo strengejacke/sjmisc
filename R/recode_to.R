@@ -18,7 +18,7 @@
 #'          \code{highest} will be set to \code{NA}. Default is \code{-1}, i.e. this argument is ignored
 #'          and no NA's will be produced.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return \code{x} with recoded category values, where \code{lowest} indicates

@@ -25,7 +25,7 @@
 #'   (\code{size = "auto"}). Default is 30. If \code{size} is not set to \code{"auto"},
 #'   this argument will be ignored.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return

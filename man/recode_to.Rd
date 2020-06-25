@@ -23,7 +23,7 @@ recode_to_if(
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{lowest}{Indicating the lowest category value for recoding. Default is 0, so the new
@@ -37,23 +37,10 @@ and no NA's will be produced.}
 \code{x} including the new variables as additional columns is returned;
 if \code{FALSE}, only the new variables are returned.}
 
-\item{suffix}{String value, will be appended to variable (column) names of
-\code{x}, if \code{x} is a data frame. If \code{x} is not a data
-frame, this argument will be ignored. The default value to suffix
-column names in a data frame depends on the function call:
-\itemize{
-  \item recoded variables (\code{rec()}) will be suffixed with \code{"_r"}
-  \item recoded variables (\code{recode_to()}) will be suffixed with \code{"_r0"}
-  \item dichotomized variables (\code{dicho()}) will be suffixed with \code{"_d"}
-  \item grouped variables (\code{split_var()}) will be suffixed with \code{"_g"}
-  \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
-  \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
-  \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
-  \item de-meaned variables (\code{de_mean()}) will be suffixed with \code{"_dm"}
-  \item grouped-meaned variables (\code{de_mean()}) will be suffixed with \code{"_gm"}
-}
-If \code{suffix = ""} and \code{append = TRUE}, existing variables that
-have been recoded/transformed will be overwritten.}
+\item{suffix}{Indicates which suffix will be added to each dummy variable.
+Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
+\emph{x_2}, \emph{x_3} etc. Use \code{"label"} to add value label,
+e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.}
 
 \item{predicate}{A predicate function to be applied to the columns. The
 variables for which \code{predicate} returns \code{TRUE} are selected.}

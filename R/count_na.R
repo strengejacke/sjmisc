@@ -4,7 +4,7 @@
 #' @description This method counts tagged NA values (see \code{\link[haven]{tagged_na}})
 #'              in a vector and prints a frequency table of counted tagged NAs.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return A data frame with counted tagged NA values.
 #'
