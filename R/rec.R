@@ -518,6 +518,10 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
         if (is.na(from) || is.na(to)) {
           stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = F)
         }
+        # to lower than from?
+        if (from > to) {
+          stop(sprintf("?Syntax error in recode range from %g to %g.", from, to), call. = FALSE)
+        }
         # for floating point range, we keep the range
         if (with_dec)
           old_val <- ovs

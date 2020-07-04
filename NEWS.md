@@ -7,7 +7,8 @@
 ## Bug fixes
 
 * `descr()` calculated wrong percentage of missing values for weighted data.
-* Fixed issue in `rec` when `min`, `max`, `lo` or `hi` was used to recode a numeric into a character vector, and the new recode string contained one of these four strings as pattern.
+* Fixed issue in `rec()` when `min`, `max`, `lo` or `hi` was used to recode a numeric into a character vector, and the new recode string contained one of these four strings as pattern.
+* Give informative warning in `rec()` when `max` or `hi` was used to recode a value which maximum values was lower than a defined range, e.g. `4:max` when the maximum values was lower than 4.
 
 # sjmisc 2.8.4
 
