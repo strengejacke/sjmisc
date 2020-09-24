@@ -10,7 +10,7 @@
 #'        for the variable type (as returned by \code{\link[pillar]{type_sum}}).
 #'        If \code{FALSE} (default), a longer "description" is returned.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return The variable type of \code{x}, as character.
 #'

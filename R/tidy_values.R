@@ -4,7 +4,7 @@
 #' @description This function "cleans" values of a character vector or levels of
 #'   a factor by removing space and punctuation characters.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return \code{x}, with "cleaned" values or levels.
 #'

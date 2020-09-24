@@ -13,10 +13,10 @@ ref_lvl(x, ..., lvl = NULL)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
-\item{lvl}{Eiher numeric, indicating the new reference level, or a string,
+\item{lvl}{Either numeric, indicating the new reference level, or a string,
 indicating the value label from the new reference level. If \code{x} is a
 factor with non-numeric factor levels, \code{relevel(x, ref = lvl)} is
 returned. See 'Examples'.}

@@ -20,7 +20,7 @@
 #'   deviations, following a suggestion by \emph{Gelman (2008)}, so the
 #'   rescaled input is comparable to binary variables.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return If \code{x} is a vector, returns a vector with standardized or

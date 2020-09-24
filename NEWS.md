@@ -1,3 +1,23 @@
+# sjmisc 2.8.5
+
+## Changes to functions
+
+* `flat_table()` gains a `weights`-argument.
+
+## Bug fixes
+
+* `descr()` calculated wrong percentage of missing values for weighted data.
+* Fixed issue in `rec()` when `min`, `max`, `lo` or `hi` was used to recode a numeric into a character vector, and the new recode string contained one of these four strings as pattern.
+* Give informative warning in `rec()` when `max` or `hi` was used to recode a value which maximum values was lower than a defined range, e.g. `4:max` when the maximum values was lower than 4.
+
+# sjmisc 2.8.4
+
+## Changes to functions
+
+* `descr()` now also calculates the IQR.
+* Revised `print()`-method for `frq()`.
+* Minor changes to be compatible with forthcoming dplyr-release.
+
 # sjmisc 2.8.3
 
 ## New functions
@@ -11,10 +31,13 @@
 * `rec()` now warns explicitely for possible non-intended multiple assignment of identical new recode-values.
 * `rec()` now keeps the labels of the old values with the new ones when there are no labels specified and there is a 1 to 1 correpondence between old and new values.
 * Improved printing for `frq()`.
+* `merge_imputations()` now returns the plot-object as well.
+* `to_numeric()` as alias for `to_value()`.
 
 ## Bug fixes
 
 * Fixed warning from CRAN checks.
+* Fixed errors from CRAN checks.
 
 # sjmisc 2.8.2
 

@@ -3,7 +3,7 @@
 #'
 #' @description This function converts (replaces) factor levels with the
 #' related factor level index number, thus the factor is converted to
-#' a numeric variable.
+#' a numeric variable. \code{to_value()} and \code{to_numeric()} are aliases.
 #'
 #' @param start.at Starting index, i.e. the lowest numeric value of the variable's
 #'          value range. By default, this argument is \code{NULL}, hence the lowest
@@ -23,7 +23,7 @@
 #'           specified in \code{...} are coerced to numeric; if \code{...} is
 #'           not specified, applies to all variables in the data frame.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @note This function is kept for backwards-compatibility. It is preferred to
 #'       use \code{\link[sjlabelled]{as_numeric}}.

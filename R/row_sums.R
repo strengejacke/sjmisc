@@ -15,7 +15,7 @@
 #'          If a row's sum of valid (i.e. non-\code{NA}) values is less than \code{n}, \code{NA} will be returned as value for the row mean or sum.
 #' @param var Name of new the variable with the row sums or means.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return For \code{row_sums()}, a data frame with a new variable: the row sums from

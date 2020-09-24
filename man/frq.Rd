@@ -28,7 +28,7 @@ frq(
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{sort.frq}{Determines whether categories should be sorted
@@ -94,7 +94,7 @@ This function returns a frequency table of labelled vectors, as data frame.
 }
 \details{
 The \dots-argument not only accepts variable names or expressions
-  from \code{\link[tidyselect]{select_helpers}}. You can also use logical
+  from select-helpers. You can also use logical
   conditions, math operations, or combining variables to produce "crosstables".
   See 'Examples' for more details.
 }
@@ -119,7 +119,7 @@ frq(efc$e42dep)
 library(dplyr)
 efc \%>\%
   group_by(e16sex, c172code) \%>\%
-  frq(e16sex, c172code, e42dep)
+  frq(e42dep)
 
 # show only categories with a minimal amount of frequencies
 frq(mtcars$gear)

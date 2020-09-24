@@ -12,11 +12,11 @@
 #'
 #' @param n The new number of groups that \code{x} should be split into.
 #' @param inclusive Logical; if \code{TRUE}, cut point value are included in
-#'          the preceeding group. This may be necessary if cutting a vector into
+#'          the preceding group. This may be necessary if cutting a vector into
 #'          groups does not define proper ("equal sized") group sizes.
 #'          See 'Note' and 'Examples'.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams group_var
 #' @inheritParams rec
 #'

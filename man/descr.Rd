@@ -23,7 +23,7 @@ descr(
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{max.length}{Numeric, indicating the maximum length of variable labels
@@ -37,7 +37,7 @@ observations. Default is \code{NULL}, so no weights are used.}
 
 \item{show}{Character vector, indicating which information (columns) that describe
 the data should be returned. May be one or more of \code{"type", "label", "n",
-"NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "skew"}. There are
+"NA.prc", "mean", "sd", "se", "md", "trimmed", "range", "iqr", "skew"}. There are
 two shortcuts: \code{show = "all"} (default) shows all information,
 \code{show = "short"} just shows n, missing percentage, mean and standard
 deviation.}

@@ -15,7 +15,7 @@ remove_cols(x, ...)
 \item{...}{Character vector with variable names, or unquoted names
 of variables that should be removed from the data frame.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.}
+select-helpers.}
 }
 \value{
 \code{x}, with variables specified in \code{...} removed.

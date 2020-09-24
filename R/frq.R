@@ -45,13 +45,13 @@
 #'   when \code{out} is not \code{"txt"}.
 #'
 #' @inheritParams descr
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return A list of data frames with values, value labels, frequencies, raw, valid and
 #'           cumulative percentages of \code{x}.
 #'
 #' @details The \dots-argument not only accepts variable names or expressions
-#'   from \code{\link[tidyselect]{select_helpers}}. You can also use logical
+#'   from select-helpers. You can also use logical
 #'   conditions, math operations, or combining variables to produce "crosstables".
 #'   See 'Examples' for more details.
 #'
@@ -77,7 +77,7 @@
 #' library(dplyr)
 #' efc %>%
 #'   group_by(e16sex, c172code) %>%
-#'   frq(e16sex, c172code, e42dep)
+#'   frq(e42dep)
 #'
 #' # show only categories with a minimal amount of frequencies
 #' frq(mtcars$gear)
@@ -368,7 +368,7 @@ frq <- function(x,
 
 
 #' @importFrom dplyr n_distinct full_join bind_rows
-#' @importFrom stats na.omit xtabs na.pass sd weighted.mean
+#' @importFrom stats na.omit xtabs na.pass sd weighted.mean qnorm
 #' @importFrom sjlabelled get_labels get_label as_numeric
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0) {
   # remember type
@@ -613,8 +613,17 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # remove NA, if requested
   has.na <- mydat$frq[nrow(mydat)] > 0
-  if ((!is.logical(show.na) && show.na == "auto" && !has.na) || identical(show.na, FALSE))
+  if ((!is.logical(show.na) && show.na == "auto" && !has.na) || identical(show.na, FALSE)) {
     mydat <- mydat[-nrow(mydat), ]
+  }
+
+  # compute relative confidence intervals
+  total_n <- sum(mydat$frq)
+  rel_frq <- as.numeric(mydat$frq / total_n)
+  ci <- stats::qnorm(.975) * suppressWarnings(sqrt(rel_frq * (1 - rel_frq) / total_n))
+  total_ci <- data.frame(lower = total_n * (rel_frq - ci), upper = total_n * (rel_frq + ci))
+  relative_ci <- data.frame(lower = rel_frq - ci, upper = rel_frq + ci)
+
 
   # add variable label and type as attribute, for print-method
 
@@ -629,6 +638,9 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   attr(mydat, "mean") <- mean.value
   attr(mydat, "sd") <- sd.value
+
+  attr(mydat, "ci") <- total_ci
+  attr(mydat, "relative.ci") <- relative_ci
 
   row.names(mydat) <- NULL
 

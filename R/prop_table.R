@@ -15,6 +15,7 @@
 #'               number of decimal places.
 #' @param show.values Logical, if \code{TRUE}, value labels are prefixed by the
 #'          associated value.
+#' @inheritParams frq
 #'
 #' @return An object of class \code{\link[stats]{ftable}}.
 #'
@@ -56,7 +57,7 @@
 #' @importFrom dplyr case_when select
 #' @importFrom stats ftable
 #' @export
-flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE) {
+flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE, weights = NULL) {
 
   # match arguments
   margin <- match.arg(margin)
@@ -78,6 +79,19 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
   # get dot data
   dd <- get_dot_data(data, dplyr::quos(...))
 
+  # weights
+  w <- deparse(substitute(weights))
+  if (w != "NULL") {
+    w <- gsub("\"", "", w, fixed = FALSE)
+    if (!is.null(data[[w]])) {
+      w <- data[[w]]
+    } else {
+      w <- eval(substitute(weights))
+    }
+  } else {
+    w <- NULL
+  }
+
   # do we have a grouped data frame?
   if (inherits(dd, "grouped_df")) {
 
@@ -95,21 +109,28 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
       insight::print_color(sprintf("%s\n\n", get_grouped_title(dd, grps, i, sep = ", ", long = FALSE)), "cyan")
 
       # print frequencies
-      print(com_ft(tmp, show.values, no.prop.table, marge, digits))
+      print(com_ft(tmp, show.values, no.prop.table, marge, digits, w = w))
       cat("\n")
     }
   } else {
-    com_ft(dd, show.values, no.prop.table, marge, digits)
+    com_ft(dd, show.values, no.prop.table, marge, digits, w = w)
   }
 }
 
 
+#' @importFrom stats as.formula xtabs
 #' @importFrom sjlabelled as_label
-com_ft <- function(dd, show.values, no.prop.table, marge, digits) {
+com_ft <- function(dd, show.values, no.prop.table, marge, digits, w = NULL) {
   # select variables, convert to label and create ftable-pbject
-  x <- dd %>%
-    sjlabelled::as_label(add.non.labelled = TRUE, prefix = show.values) %>%
-    stats::ftable()
+  x <- sjlabelled::as_label(dd, add.non.labelled = TRUE, prefix = show.values)
+
+  if (!is.null(w)) {
+    f <- paste(colnames(x), collapse = " + ")
+    x$.weights <- w
+    f <- stats::as.formula(paste(".weights ~ ", f))
+    x <- round(stats::xtabs(formula = f, data = x))
+  }
+  x <- stats::ftable(x)
 
   # if required, compute table margins
   if (!no.prop.table) {

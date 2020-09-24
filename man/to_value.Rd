@@ -13,7 +13,7 @@ to_value(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{start.at}{Starting index, i.e. the lowest numeric value of the variable's
@@ -40,7 +40,7 @@ A numeric variable with values ranging either from \code{start.at} to
 \description{
 This function converts (replaces) factor levels with the
 related factor level index number, thus the factor is converted to
-a numeric variable.
+a numeric variable. \code{to_value()} and \code{to_numeric()} are aliases.
 }
 \note{
 This function is kept for backwards-compatibility. It is preferred to

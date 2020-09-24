@@ -4,6 +4,13 @@
 #' @description This function splits categorical or numeric vectors with
 #'                more than two categories into 0/1-coded dummy variables.
 #'
+#' @param x A vector or data frame.
+#' @param ... Optional, unquoted names of variables that should be selected for
+#'   further processing. Required, if \code{x} is a data frame (and no
+#'   vector) and only selected variables from \code{x} should be processed.
+#'   You may also use functions like \code{:} or tidyselect's
+#'   select-helpers.
+#'   See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.
 #' @param var.name Indicates how the new dummy variables are named. Use
 #'          \code{"name"} to use the variable name or any other string that will
 #'          be used as is. Only applies, if \code{x} is a vector. See 'Examples'.
@@ -11,8 +18,6 @@
 #'          Use \code{"numeric"} to number dummy variables, e.g. \emph{x_1},
 #'          \emph{x_2}, \emph{x_3} etc. Use \code{"label"} to add value label,
 #'          e.g. \emph{x_low}, \emph{x_mid}, \emph{x_high}. May be abbreviated.
-#'
-#' @inheritParams to_factor
 #'
 #' @return A data frame with dummy variables for each category of \code{x}.
 #'         The dummy coded variables are of type \code{\link{atomic}}.

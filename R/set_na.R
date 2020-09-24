@@ -25,7 +25,7 @@
 #'   by \code{tagged_na}, else by usual \code{NA} values. Use a named
 #'   vector to assign the value label to the tagged NA value (see 'Examples').
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return \code{x}, with all values in \code{na} being replaced by \code{NA}.

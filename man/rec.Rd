@@ -34,7 +34,7 @@ rec_if(
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{rec}{String with recode pairs of old and new values. See 'Details'
@@ -135,7 +135,7 @@ efc \%>\%
   select(e42dep) \%>\%
   rec(rec = "1,2=1; 3,4=2",
       val.labels = c("low dependency", "high dependency")) \%>\%
-  str()
+  frq()
 
 # works with mutate
 efc \%>\%
@@ -184,7 +184,7 @@ dummy <- c("M", "F", "F", "X")
 rec(dummy, rec = "M=Male; F=Female; X=Refused")
 
 # recode numeric to character
-rec(efc$e42dep, rec = "1=first;2=2nd;3=third;else=hi")
+rec(efc$e42dep, rec = "1=first;2=2nd;3=third;else=hi") \%>\% head()
 
 # recode non-numeric factors
 data(iris)
@@ -196,26 +196,28 @@ table(rec(
 ))
 
 # preserve tagged NAs
-library(haven)
-x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
-              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
-# get current value labels
-x
-# recode 2 into 5; Values of tagged NAs are preserved
-rec(x, rec = "2=5;else=copy")
-na_tag(rec(x, rec = "2=5;else=copy"))
+if (require("haven")) {
+  x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+                c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                  "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+  # get current value labels
+  x
+  # recode 2 into 5; Values of tagged NAs are preserved
+  rec(x, rec = "2=5;else=copy")
+}
 
 # use select-helpers from dplyr-package
-rec(
+out <- rec(
   efc, contains("cop"), c161sex:c175empl,
   rec = "0,1=0; else=1",
   append = FALSE
 )
+head(out)
 
 # recode only variables that have a value range from 1-4
 p <- function(x) min(x, na.rm = TRUE) > 0 && max(x, na.rm = TRUE) < 5
-rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
+out <- rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
+head(out)
 }
 \seealso{
 \code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{replace_na}}

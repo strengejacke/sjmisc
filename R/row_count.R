@@ -18,7 +18,7 @@
 #'          or null-values.
 #' @param var Name of new the variable with the row or column counts.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #' @inheritParams rec
 #'
 #' @return For \code{row_count()}, a data frame with one variable: the sum of \code{count}

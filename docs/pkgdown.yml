@@ -1,8 +1,0 @@
-pandoc: 2.7.2
-pkgdown: 1.4.1
-pkgdown_sha: ~
-articles:
-  design_philosophy: design_philosophy.html
-  exploringdatasets: exploringdatasets.html
-  recodingvariables: recodingvariables.html
-

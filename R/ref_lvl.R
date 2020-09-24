@@ -6,12 +6,12 @@
 #' @seealso \code{\link{to_factor}} to convert numeric vectors into factors;
 #'            \code{\link{rec}} to recode variables.
 #'
-#' @param lvl Eiher numeric, indicating the new reference level, or a string,
+#' @param lvl Either numeric, indicating the new reference level, or a string,
 #'   indicating the value label from the new reference level. If \code{x} is a
 #'   factor with non-numeric factor levels, \code{relevel(x, ref = lvl)} is
 #'   returned. See 'Examples'.
 #'
-#' @inheritParams to_factor
+#' @inheritParams to_dummy
 #'
 #' @return \code{x} with new reference level. If \code{x}
 #'           is a data frame, the complete data frame \code{x} will be returned,

@@ -43,7 +43,7 @@
 #'         appended imputed variables, if \code{ori} was specified.
 #'         If \code{summary} is included, returns a list with the data frame
 #'         \code{data} with (merged) imputed variables and some other summary
-#'         information, which are required for the plot-output.
+#'         information, including the \code{plot} as ggplot-object.
 #'
 #' @details This method merges multiple imputations of variables into a single
 #'          variable by computing the (rounded) mean of all imputed values
@@ -68,18 +68,18 @@
 #' @references Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787-93 \doi{10.1016/j.jclinepi.2010.10.011}
 #'
 #' @examples
-#' library(mice)
-#' imp <- mice(nhanes)
+#' if (require("mice")) {
+#'   imp <- mice(nhanes)
 #'
-#' # return data frame with imputed variables
-#' merge_imputations(nhanes, imp)
+#'   # return data frame with imputed variables
+#'   merge_imputations(nhanes, imp)
 #'
-#' # append imputed variables to original data frame
-#' merge_imputations(nhanes, imp, nhanes)
+#'   # append imputed variables to original data frame
+#'   merge_imputations(nhanes, imp, nhanes)
 #'
-#' # show summary of quality of merging imputations
-#' merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
-#'
+#'   # show summary of quality of merging imputations
+#'   merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
+#' }
 #' @importFrom dplyr bind_cols
 #' @export
 merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", "hist", "sd"), filter = NULL) {
@@ -205,7 +205,14 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
       data <- dplyr::bind_cols(ori, imputed.dat)
 
     # return merged data and summary data
-    impret <- list(data = data, summary = analyse, sum.type = summary, filter = filter)
+    impret <-
+      list(
+        data = data,
+        summary = analyse,
+        sum.type = summary,
+        filter = filter,
+        plot = .create_imputation_plot(summary, filter, analyse)
+      )
     return(structure(class = "sj_merge.imp", impret))
   }
 
@@ -215,4 +222,72 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
   else
     # return data frame with appended imputed variables
     dplyr::bind_cols(ori, imputed.dat)
+}
+
+
+
+#' @importFrom purrr map_df
+#' @importFrom dplyr n_distinct filter
+#' @importFrom rlang .data
+.create_imputation_plot <- function(.sum.type, .filter, .summary) {
+  # check if ggplot is installed
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package `ggplot2` needed for to plot summaries. Please install it.", call. = FALSE)
+  }
+
+  if (.sum.type == "sd") {
+    analyse <- .summary %>% purrr::map_df(~.x)
+
+    if (!is.null(.filter))
+      analyse <- analyse %>% dplyr::filter(.data$grp %in% .filter)
+
+    p <- ggplot2::ggplot(
+      data = analyse,
+      mapping = ggplot2::aes_string(x = "merged", y = "sd")
+    ) +
+      ggplot2::geom_point() +
+      ggplot2::facet_wrap(
+        facets = ~grp,
+        scales = "free",
+        ncol = ceiling(sqrt(dplyr::n_distinct(analyse$grp)))
+      ) +
+      ggplot2::theme_bw() +
+      ggplot2::labs(
+        x = NULL,
+        y = NULL,
+        fill = NULL,
+        title = "Standard Deviation of imputed values for each merged value"
+      )
+  } else {
+    analyse <- purrr::map_df(.summary, ~.x)
+    analyse <- .gather(analyse, key = "value", value = "xpos", colnames(analyse)[1:2])
+
+    if (!is.null(.filter))
+      analyse <- analyse %>% dplyr::filter(.data$grp %in% .filter)
+
+    p <- ggplot2::ggplot(
+      data = analyse,
+      mapping = ggplot2::aes_string(x = "xpos", fill = "value")
+    ) +
+      ggplot2::facet_wrap(
+        facets = ~grp,
+        scales = "free",
+        ncol = ceiling(sqrt(dplyr::n_distinct(analyse$grp)))
+      ) +
+      ggplot2::theme_bw() +
+      ggplot2::labs(
+        x = NULL,
+        y = NULL,
+        fill = NULL,
+        title = "Comparison between mean of imputed values and final merged values"
+      )
+
+    # check type of summary diagram
+    if (.sum.type == "dens")
+      p <- p + ggplot2::geom_density(alpha = .2)
+    else
+      p <- p + ggplot2::geom_histogram(position = "dodge")
+  }
+
+  p
 }

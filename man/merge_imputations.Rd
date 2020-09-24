@@ -55,7 +55,7 @@ A data frame with (merged) imputed variables; or \code{ori} with
         appended imputed variables, if \code{ori} was specified.
         If \code{summary} is included, returns a list with the data frame
         \code{data} with (merged) imputed variables and some other summary
-        information, which are required for the plot-output.
+        information, including the \code{plot} as ggplot-object.
 }
 \description{
 This function merges multiple imputed data frames from
@@ -85,18 +85,18 @@ Typically, further analyses are conducted on pooled results of multiple
       of multiple imputed variables (see \cite{Burns et al. 2011}).
 }
 \examples{
-library(mice)
-imp <- mice(nhanes)
+if (require("mice")) {
+  imp <- mice(nhanes)
 
-# return data frame with imputed variables
-merge_imputations(nhanes, imp)
+  # return data frame with imputed variables
+  merge_imputations(nhanes, imp)
 
-# append imputed variables to original data frame
-merge_imputations(nhanes, imp, nhanes)
+  # append imputed variables to original data frame
+  merge_imputations(nhanes, imp, nhanes)
 
-# show summary of quality of merging imputations
-merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
-
+  # show summary of quality of merging imputations
+  merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
+}
 }
 \references{
 Burns RA, Butterworth P, Kiely KM, Bielak AAM, Luszcz MA, Mitchell P, et al. 2011. Multiple imputation was an efficient method for harmonizing the Mini-Mental State Examination with missing item-level data. Journal of Clinical Epidemiology;64:787-93 \doi{10.1016/j.jclinepi.2010.10.011}

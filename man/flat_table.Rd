@@ -9,7 +9,8 @@ flat_table(
   ...,
   margin = c("counts", "cell", "row", "col"),
   digits = 2,
-  show.values = FALSE
+  show.values = FALSE,
+  weights = NULL
 )
 }
 \arguments{
@@ -28,6 +29,10 @@ number of decimal places.}
 
 \item{show.values}{Logical, if \code{TRUE}, value labels are prefixed by the
 associated value.}
+
+\item{weights}{Bare name, or name as string, of a variable in \code{x}
+that indicates the vector of weights, which will be applied to weight all
+observations. Default is \code{NULL}, so no weights are used.}
 }
 \value{
 An object of class \code{\link[stats]{ftable}}.

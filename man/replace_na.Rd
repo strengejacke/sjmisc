@@ -13,7 +13,7 @@ replace_na(x, ..., value, na.label = NULL, tagged.na = NULL)
 further processing. Required, if \code{x} is a data frame (and no
 vector) and only selected variables from \code{x} should be processed.
 You may also use functions like \code{:} or tidyselect's
-\code{\link[tidyselect]{select_helpers}}.
+select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{value}{Value that will replace the \code{\link{NA}}'s.}
@@ -73,31 +73,31 @@ lapply(dummy, table, useNA = "always")
 # show variables, NA's replaced with 99
 lapply(replace_na(dummy, v2, v3, value = 99), table, useNA = "always")
 
-library(haven)
-x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
-              c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
-                "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
-# get current NA values
-x
-get_na(x)
+if (require("haven")) {
+  x <- labelled(c(1:3, tagged_na("a", "c", "z"), 4:1),
+                c("Agreement" = 1, "Disagreement" = 4, "First" = tagged_na("c"),
+                  "Refused" = tagged_na("a"), "Not home" = tagged_na("z")))
+  # get current NA values
+  x
+  get_na(x)
 
-# replace only the NA, which is tagged as NA(c)
-replace_na(x, value = 2, tagged.na = "c")
-get_na(replace_na(x, value = 2, tagged.na = "c"))
+  # replace only the NA, which is tagged as NA(c)
+  replace_na(x, value = 2, tagged.na = "c")
+  get_na(replace_na(x, value = 2, tagged.na = "c"))
 
-table(x)
-table(replace_na(x, value = 2, tagged.na = "c"))
+  table(x)
+  table(replace_na(x, value = 2, tagged.na = "c"))
 
-# tagged NA also works for non-labelled class
-# init vector
-x <- c(1, 2, 3, 4)
-# set values 2 and 3 as tagged NA
-x <- set_na(x, na = c(2, 3), as.tag = TRUE)
-# see result
-x
-# now replace only NA tagged with 2 with value 5
-replace_na(x, value = 5, tagged.na = "2")
-
+  # tagged NA also works for non-labelled class
+  # init vector
+  x <- c(1, 2, 3, 4)
+  # set values 2 and 3 as tagged NA
+  x <- set_na(x, na = c(2, 3), as.tag = TRUE)
+  # see result
+  x
+  # now replace only NA tagged with 2 with value 5
+  replace_na(x, value = 5, tagged.na = "2")
+}
 }
 \seealso{
 \code{\link[sjlabelled]{set_na}} for setting \code{NA} values, \code{\link{rec}}
