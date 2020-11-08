@@ -91,12 +91,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -154,27 +148,27 @@
    of <code>predicate</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dicho</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  dich.by = <span class='st'>"median"</span>,
-  as.num = <span class='fl'>FALSE</span>,
-  var.label = <span class='kw'>NULL</span>,
-  val.labels = <span class='kw'>NULL</span>,
-  append = <span class='fl'>TRUE</span>,
-  suffix = <span class='st'>"_d"</span>
-)
+    <pre class="usage"><span class='fu'>dicho</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  dich.by <span class='op'>=</span> <span class='st'>"median"</span>,
+  as.num <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  var.label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  val.labels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  append <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_d"</span>
+<span class='op'>)</span>
 
-<span class='fu'>dicho_if</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>predicate</span>,
-  dich.by = <span class='st'>"median"</span>,
-  as.num = <span class='fl'>FALSE</span>,
-  var.label = <span class='kw'>NULL</span>,
-  val.labels = <span class='kw'>NULL</span>,
-  append = <span class='fl'>TRUE</span>,
-  suffix = <span class='st'>"_d"</span>
-)</pre>
+<span class='fu'>dicho_if</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>predicate</span>,
+  dich.by <span class='op'>=</span> <span class='st'>"median"</span>,
+  as.num <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  var.label <span class='op'>=</span> <span class='cn'>NULL</span>,
+  val.labels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  append <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_d"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,7 +210,7 @@ be used (if present). If empty, variable label attributes will be removed.</p></
     <tr>
       <th>val.labels</th>
       <td><p>Optional character vector (of length two), to set value label
-attributes of dichotomized variable (see <code><a href='https://rdrr.io/pkg/sjlabelled/man/set_labels.html'>set_labels</a></code>).
+attributes of dichotomized variable (see <code><a href='https://strengejacke.github.io/sjlabelled/reference/set_labels.html'>set_labels</a></code>).
 If <code>NULL</code> (default), no value labels will be set.</p></td>
     </tr>
     <tr>
@@ -258,20 +252,25 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
       <code>var.label</code>-argument).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 #&gt;    4.00   10.00   20.00   42.40   42.75  168.00       6 </div><div class='input'><span class='co'># split at median</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>dicho</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>dicho</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   0   1 
 #&gt; 464 438 </div><div class='input'><span class='co'># split at mean</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>dicho</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>, dich.by = <span class='st'>"mean"</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>dicho</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span>, dich.by <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   0   1 
 #&gt; 676 226 </div><div class='input'><span class='co'># split between value lowest to 30, and above 30</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'>dicho</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>, dich.by = <span class='fl'>30</span>))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>dicho</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span>, dich.by <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   0   1 
 #&gt; 606 296 </div><div class='input'>
 <span class='co'># sample data frame, values from 1-4</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>efc</span>[, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>10</span>])</div><div class='output co'>#&gt;   c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
 #&gt; 1       3       2       2       2       1
 #&gt; 2       3       3       3       3       4
 #&gt; 3       2       2       1       4       1
@@ -279,11 +278,12 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 5       3       2       1       2       2
 #&gt; 6       2       2       3       3       3</div><div class='input'>
 <span class='co'># dichtomized values (1 to 2 = 0, 3 to 4 = 1)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='fl'>6</span><span class='op'>:</span><span class='fl'>10</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>dicho</span>(dich.by = <span class='fl'>2</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   c82cop1 c83cop2 c84cop3 c85cop4 c86cop5 c82cop1_d c83cop2_d c84cop3_d
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='fl'>6</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dicho</span><span class='op'>(</span>dich.by <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c82cop1 c83cop2 c84cop3 c85cop4 c86cop5 c82cop1_d c83cop2_d c84cop3_d
 #&gt; 1       3       2       2       2       1         1         0         0
 #&gt; 2       3       3       3       3       4         1         1         1
 #&gt; 3       2       2       1       4       1         0         0         0
@@ -298,7 +298,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 5         0         0
 #&gt; 6         1         1</div><div class='input'>
 <span class='co'># dichtomize several variables in a data frame</span>
-<span class='fu'>dicho</span>(<span class='kw'>efc</span>, <span class='kw'>c12hour</span>, <span class='kw'>e17age</span>, <span class='kw'>c160age</span>, append = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;     c12hour_d e17age_d c160age_d
+<span class='fu'>dicho</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c12hour</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     c12hour_d e17age_d c160age_d
 #&gt; 1           0        1         1
 #&gt; 2           1        1         0
 #&gt; 3           1        1         1
@@ -1208,12 +1209,13 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 907      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;
 #&gt; 908      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;</div><div class='input'>
 <span class='co'># dichotomize and set labels</span>
-<span class='fu'><a href='frq.html'>frq</a></span>(<span class='fu'>dicho</span>(
-  <span class='kw'>efc</span>, <span class='kw'>e42dep</span>,
-  var.label = <span class='st'>"Dependency (dichotomized)"</span>,
-  val.labels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"lower"</span>, <span class='st'>"higher"</span>),
-  append = <span class='fl'>FALSE</span>
-))</div><div class='output co'>#&gt; 
+<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='fu'>dicho</span><span class='op'>(</span>
+  <span class='va'>efc</span>, <span class='va'>e42dep</span>,
+  var.label <span class='op'>=</span> <span class='st'>"Dependency (dichotomized)"</span>,
+  val.labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"lower"</span>, <span class='st'>"higher"</span><span class='op'>)</span>,
+  append <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; <span style='color: #BB0000;'>Dependency (dichotomized) (e42dep_d)</span><span style='color: #0000BB;'> &lt;categorical&gt;
 #&gt; # total N=908  valid N=901  mean=0.34  sd=0.47
 #&gt; 
@@ -1224,33 +1226,38 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># works also with gouped data frames</span>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>dicho</span>(<span class='kw'>disp</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>()</div><div class='output co'>#&gt; .
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dicho</span><span class='op'>(</span><span class='va'>disp</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; .
 #&gt;  0  1 
 #&gt; 16 16 </div><div class='input'>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>cyl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>dicho</span>(<span class='kw'>disp</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>()</div><div class='output co'>#&gt; .
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>dicho</span><span class='op'>(</span><span class='va'>disp</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; .
 #&gt;  1  2 
 #&gt; 18 14 </div><div class='input'>
 <span class='co'># dichotomizing grouped data frames leads to different</span>
 <span class='co'># results for a dichotomized variable, because the split</span>
 <span class='co'># value is different for each group.</span>
 <span class='co'># compare:</span>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>cyl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span>(median = <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='kw'>disp</span>))</div><div class='output co'>#&gt; <span class='message'>`summarise()` ungrouping output (override with `.groups` argument)</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 2</span><span>
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>median <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>`summarise()` ungrouping output (override with `.groups` argument)</span></div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 3 x 2</span><span>
 #&gt;     cyl median
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>1</span><span>     4   108 
 #&gt; </span><span style='color: #555555;'>2</span><span>     6   168.
 #&gt; </span><span style='color: #555555;'>3</span><span>     8   350.</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>disp</span>)</div><div class='output co'>#&gt; [1] 196.3</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>disp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 196.3</div><div class='input'>
 <span class='co'># dichotomize only variables with more than 10 unique values</span>
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span>(<span class='kw'>x</span>) <span class='op'>&gt;</span> <span class='fl'>10</span>
-<span class='fu'>dicho_if</span>(<span class='kw'>efc</span>, predicate = <span class='kw'>p</span>, append = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;     c12hour_d e17age_d c160age_d barthtot_d neg_c_7_d pos_v_4_d quol_5_d
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>10</span>
+<span class='fu'>dicho_if</span><span class='op'>(</span><span class='va'>efc</span>, predicate <span class='op'>=</span> <span class='va'>p</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     c12hour_d e17age_d c160age_d barthtot_d neg_c_7_d pos_v_4_d quol_5_d
 #&gt; 1           0        1         1          1         1         0        0
 #&gt; 2           1        1         0          1         1         0        0
 #&gt; 3           1        1         1          0         0         0        0
@@ -2158,7 +2165,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 905      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;
 #&gt; 906      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;
 #&gt; 907      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;
-#&gt; 908      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;</div><div class='input'></div></span></pre>
+#&gt; 908      &lt;NA&gt;     &lt;NA&gt;      &lt;NA&gt;       &lt;NA&gt;      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -2174,7 +2182,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

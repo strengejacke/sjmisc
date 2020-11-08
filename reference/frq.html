@@ -87,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -146,21 +140,21 @@
     <p>This function returns a frequency table of labelled vectors, as data frame.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>frq</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  sort.frq = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"asc"</span>, <span class='st'>"desc"</span>),
-  weights = <span class='kw'>NULL</span>,
-  auto.grp = <span class='kw'>NULL</span>,
-  show.strings = <span class='fl'>TRUE</span>,
-  show.na = <span class='fl'>TRUE</span>,
-  grp.strings = <span class='kw'>NULL</span>,
-  min.frq = <span class='fl'>0</span>,
-  out = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span>),
-  title = <span class='kw'>NULL</span>,
-  encoding = <span class='st'>"UTF-8"</span>,
-  file = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>frq</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  sort.frq <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"asc"</span>, <span class='st'>"desc"</span><span class='op'>)</span>,
+  weights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  auto.grp <span class='op'>=</span> <span class='cn'>NULL</span>,
+  show.strings <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  show.na <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  grp.strings <span class='op'>=</span> <span class='cn'>NULL</span>,
+  min.frq <span class='op'>=</span> <span class='fl'>0</span>,
+  out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span><span class='op'>)</span>,
+  title <span class='op'>=</span> <span class='cn'>NULL</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>,
+  file <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -285,8 +279,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simple vector</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='fu'>frq</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e42dep</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
 #&gt; 
@@ -299,10 +294,11 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># with grouped data frames, in a pipe</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>c172code</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>frq</span>(<span class='kw'>e42dep</span>)</div><div class='output co'>#&gt; 
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>frq</span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # grouped by: </span><span style='color: #00BBBB;'>male, low level of education
 #&gt; </span><span style='color: #0000BB;'># total N=80  valid N=80  mean=3.06  sd=0.92
@@ -381,7 +377,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  &lt;NA&gt; |                 &lt;NA&gt; |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># show only categories with a minimal amount of frequencies</span>
-<span class='fu'>frq</span>(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>gear</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>gear</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=32  valid N=32  mean=3.69  sd=0.74
 #&gt; 
@@ -392,7 +389,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     5 |  5 | 15.62 |   15.62 | 100.00
 #&gt;  &lt;NA&gt; |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
-<span class='fu'>frq</span>(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>gear</span>, min.frq = <span class='fl'>10</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>gear</span>, min.frq <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=32  valid N=32  mean=3.69  sd=0.74
 #&gt; 
@@ -403,7 +401,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; n &lt; 10 |  5 | 15.62 |   15.62 | 100.00
 #&gt; &lt;NA&gt;   |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
-<span class='fu'>frq</span>(<span class='kw'>mtcars</span><span class='op'>$</span><span class='kw'>gear</span>, min.frq = <span class='fl'>15</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>$</span><span class='va'>gear</span>, min.frq <span class='op'>=</span> <span class='fl'>15</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=32  valid N=32  mean=3.69  sd=0.74
 #&gt; 
@@ -415,7 +414,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># with select-helpers: all variables from the COPE-Index</span>
 <span class='co'># (which all have a "cop" in their name)</span>
-<span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"cop"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>do you feel you cope well as caregiver? (c82cop1)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=908  valid N=901  mean=3.12  sd=0.58
 #&gt; 
@@ -524,7 +524,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |  20 |  2.20 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># all variables from column "c161sex" to column "c175empl"</span>
-<span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='kw'>c161sex</span><span class='op'>:</span><span class='kw'>c175empl</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c161sex</span><span class='op'>:</span><span class='va'>c175empl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>carer's gender (c161sex)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=908  valid N=901  mean=1.76  sd=0.43
 #&gt; 
@@ -557,8 +558,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; </div><div class='input'>
 <span class='co'># for non-labelled data, variable name is printed,</span>
 <span class='co'># and "label" column is removed from output</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>iris</span>)
-<span class='fu'>frq</span>(<span class='kw'>iris</span>, <span class='kw'>Species</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>Species</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>Species</span><span style='color: #0000BB;'> &lt;categorical&gt;
 #&gt; # total N=150  valid N=150  mean=2.00  sd=0.82
 #&gt; 
@@ -570,9 +572,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; &lt;NA&gt;       |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># also works on grouped data frames</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>c172code</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>frq</span>(<span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>nur_pst</span>))</div><div class='output co'>#&gt; 
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>frq</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>nur_pst</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>is.na(nur_pst)</span><span style='color: #0000BB;'> &lt;lgl&gt;
 #&gt; # grouped by: </span><span style='color: #00BBBB;'>low level of education
 #&gt; </span><span style='color: #0000BB;'># total N=180  valid N=180  mean=0.51  sd=0.50
@@ -606,8 +609,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; &lt;NA&gt;  |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># group variables with large range and with weights</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>weights</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(n = <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>efc</span>), mean = <span class='fl'>1</span>, sd = <span class='fl'>.5</span>))
-<span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='kw'>c160age</span>, auto.grp = <span class='fl'>5</span>, weights = <span class='kw'>weights</span>)</div><div class='output co'>#&gt; 
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>weights</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>, mean <span class='op'>=</span> <span class='fl'>1</span>, sd <span class='op'>=</span> <span class='fl'>.5</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c160age</span>, auto.grp <span class='op'>=</span> <span class='fl'>5</span>, weights <span class='op'>=</span> <span class='va'>weights</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>carer' age (c160age)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=920  valid N=920  mean=53.85  sd=13.09
 #&gt; 
@@ -621,7 +625,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  &lt;NA&gt; |  &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># different weight options</span>
-<span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='kw'>c172code</span>, weights = <span class='kw'>weights</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c172code</span>, weights <span class='op'>=</span> <span class='va'>weights</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
 #&gt; 
@@ -631,7 +636,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     2 | intermediate level of education | 523 | 60.81 |   60.81 |  81.28
 #&gt;     3 |         high level of education | 161 | 18.72 |   18.72 | 100.00
 #&gt;  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='kw'>c172code</span>, weights = <span class='st'>"weights"</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c172code</span>, weights <span class='op'>=</span> <span class='st'>"weights"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
 #&gt; 
@@ -641,7 +647,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     2 | intermediate level of education | 523 | 60.81 |   60.81 |  81.28
 #&gt;     3 |         high level of education | 161 | 18.72 |   18.72 | 100.00
 #&gt;  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='kw'>c172code</span>, weights = <span class='kw'>efc</span><span class='op'>$</span><span class='kw'>weights</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c172code</span>, weights <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>weights</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>carer's level of education (c172code)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
 #&gt; 
@@ -651,7 +658,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     2 | intermediate level of education | 523 | 60.81 |   60.81 |  81.28
 #&gt;     3 |         high level of education | 161 | 18.72 |   18.72 | 100.00
 #&gt;  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c172code</span>, weights = <span class='kw'>efc</span><span class='op'>$</span><span class='kw'>weights</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c172code</span>, weights <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>weights</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>carer's level of education (xw)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=860  valid N=860  mean=1.98  sd=0.63
 #&gt; 
@@ -663,15 +671,16 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># group string values</span>
-<span class='kw'>dummy</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>50</span>, <span class='fl'>3</span>, drop = <span class='fl'>FALSE</span>]
-<span class='kw'>dummy</span><span class='op'>$</span><span class='kw'>words</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>, <span class='st'>"Ape"</span>,
-    <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span>),
-  size = <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>dummy</span>),
-  replace = <span class='fl'>TRUE</span>
-)
+<span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>50</span>, <span class='fl'>3</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span>
+<span class='va'>dummy</span><span class='op'>$</span><span class='va'>words</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>, <span class='st'>"Ape"</span>,
+    <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span><span class='op'>)</span>,
+  size <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>dummy</span><span class='op'>)</span>,
+  replace <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>frq</span>(<span class='kw'>dummy</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>dummy</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>e16sex</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=50  valid N=50  mean=1.56  sd=0.50
 #&gt; 
@@ -696,7 +705,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; System   | 3 |  6.00 |    6.00 |  82.00
 #&gt; Systemic | 9 | 18.00 |   18.00 | 100.00
 #&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='kw'>dummy</span>, grp.strings = <span class='fl'>2</span>)</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>frq</span><span class='op'>(</span><span class='va'>dummy</span>, grp.strings <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>e16sex</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=50  valid N=50  mean=1.56  sd=0.50
 #&gt; 
@@ -723,7 +733,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 <span class='co'>#### other expressions than variables</span>
 
 <span class='co'># logical conditions</span>
-<span class='fu'>frq</span>(<span class='kw'>mtcars</span>, <span class='kw'>cyl</span> <span class='op'>==</span><span class='fl'>6</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='va'>cyl</span> <span class='op'>==</span><span class='fl'>6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>cyl == 6</span><span style='color: #0000BB;'> &lt;lgl&gt;
 #&gt; # total N=32  valid N=32  mean=0.22  sd=0.42
 #&gt; 
@@ -733,7 +744,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; TRUE  |  7 | 21.88 |   21.88 | 100.00
 #&gt; &lt;NA&gt;  |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
-<span class='fu'>frq</span>(<span class='kw'>efc</span>, <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span>(<span class='kw'>nur_pst</span>), <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"cop"</span>))</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>efc</span>, <span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>nur_pst</span><span class='op'>)</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"cop"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>is.na(nur_pst)</span><span style='color: #0000BB;'> &lt;lgl&gt;
 #&gt; # total N=908  valid N=908  mean=0.46  sd=0.50
 #&gt; 
@@ -851,8 +863,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     4 |    always | 302 | 33.26 |   34.01 | 100.00
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |  20 |  2.20 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
-<span class='kw'>iris</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>frq</span>(<span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span>(<span class='st'>"Petal"</span>), <span class='kw'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; 
+<span class='va'>iris</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>frq</span><span class='op'>(</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"Petal"</span><span class='op'>)</span>, <span class='va'>Sepal.Length</span> <span class='op'>&gt;</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>Petal.Length</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=150  valid N=150  mean=3.76  sd=1.77
 #&gt; 
@@ -944,7 +957,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; &lt;NA&gt;  |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># computation of variables "on the fly"</span>
-<span class='fu'>frq</span>(<span class='kw'>mtcars</span>, (<span class='kw'>gear</span> <span class='op'>+</span> <span class='kw'>carb</span>) <span class='op'>/</span> <span class='kw'>cyl</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>frq</span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='op'>(</span><span class='va'>gear</span> <span class='op'>+</span> <span class='va'>carb</span><span class='op'>)</span> <span class='op'>/</span> <span class='va'>cyl</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>(gear + carb)/cyl</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=32  valid N=32  mean=1.12  sd=0.38
 #&gt; 
@@ -965,17 +979,19 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  &lt;NA&gt; | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='co'># crosstables</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='kw'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  var_x = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>], size = <span class='fl'>30</span>, replace = <span class='fl'>TRUE</span>),
-  var_y = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, size = <span class='fl'>30</span>, replace = <span class='fl'>TRUE</span>),
-  var_z = <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>LETTERS</span>[<span class='fl'>8</span><span class='op'>:</span><span class='fl'>10</span>], size = <span class='fl'>30</span>, replace = <span class='fl'>TRUE</span>)
-)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>d</span><span class='op'>$</span><span class='kw'>var_x</span>, <span class='kw'>d</span><span class='op'>$</span><span class='kw'>var_z</span>)</div><div class='output co'>#&gt;    
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  var_x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>30</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  var_y <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>, size <span class='op'>=</span> <span class='fl'>30</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+  var_z <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>8</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>30</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>$</span><span class='va'>var_x</span>, <span class='va'>d</span><span class='op'>$</span><span class='va'>var_z</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    
 #&gt;     H I J
 #&gt;   a 1 5 2
 #&gt;   b 3 4 4
-#&gt;   c 6 2 3</div><div class='input'><span class='fu'>frq</span>(<span class='kw'>d</span>, <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='kw'>var_x</span>, <span class='kw'>var_z</span>))</div><div class='output co'>#&gt; 
+#&gt;   c 6 2 3</div><div class='input'><span class='fu'>frq</span><span class='op'>(</span><span class='va'>d</span>, <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>var_x</span>, <span class='va'>var_z</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>paste0(var_x, var_z)</span><span style='color: #0000BB;'> &lt;character&gt;
 #&gt; # total N=30  valid N=30  mean=5.27  sd=2.38
 #&gt; 
@@ -991,7 +1007,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; cI    | 2 |  6.67 |    6.67 |  90.00
 #&gt; cJ    | 3 | 10.00 |   10.00 | 100.00
 #&gt; &lt;NA&gt;  | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>frq</span>(<span class='kw'>d</span>, <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='kw'>var_x</span>, <span class='kw'>var_y</span>, <span class='kw'>var_z</span>))</div><div class='output co'>#&gt; 
+#&gt; </div><div class='input'><span class='fu'>frq</span><span class='op'>(</span><span class='va'>d</span>, <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='va'>var_x</span>, <span class='va'>var_y</span>, <span class='va'>var_z</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #BB0000;'>paste0(var_x, var_y, var_z)</span><span style='color: #0000BB;'> &lt;character&gt;
 #&gt; # total N=30  valid N=30  mean=6.97  sd=3.69
 #&gt; 
@@ -1011,7 +1028,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt; c1J   | 3 | 10.00 |   10.00 |  96.67
 #&gt; c2H   | 1 |  3.33 |    3.33 | 100.00
 #&gt; &lt;NA&gt;  | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'></div></span></pre>
+#&gt; </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -1027,7 +1045,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

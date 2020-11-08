@@ -89,12 +89,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -150,7 +144,7 @@
                vectors into smaller groups.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rec_pattern</span>(<span class='kw'>from</span>, <span class='kw'>to</span>, width = <span class='fl'>5</span>, other = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>rec_pattern</span><span class='op'>(</span><span class='va'>from</span>, <span class='va'>to</span>, width <span class='op'>=</span> <span class='fl'>5</span>, other <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,7 +173,7 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 
     <p>A list with two values:</p><dl>
            <dt><code>pattern</code></dt><dd><p>string pattern that can be used as <code>rec</code> argument for the <code><a href='rec.html'>rec</a></code>-function.</p></dd>
-           <dt><code>labels</code></dt><dd><p>the associated values labels that can be used with <code><a href='https://rdrr.io/pkg/sjlabelled/man/set_labels.html'>set_labels</a></code>.</p></dd>
+           <dt><code>labels</code></dt><dd><p>the associated values labels that can be used with <code><a href='https://strengejacke.github.io/sjlabelled/reference/set_labels.html'>set_labels</a></code>.</p></dd>
           
 </dl>
 
@@ -189,8 +183,9 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
           <code><a href='group_var.html'>group_labels</a></code> to create the asssociated value labels.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>rp</span> <span class='op'>&lt;-</span> <span class='fu'>rec_pattern</span>(<span class='fl'>1</span>, <span class='fl'>100</span>)
-<span class='kw'>rp</span></div><div class='output co'>#&gt; $pattern
+    <pre class="examples"><div class='input'><span class='va'>rp</span> <span class='op'>&lt;-</span> <span class='fu'>rec_pattern</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>100</span><span class='op'>)</span>
+<span class='va'>rp</span>
+</div><div class='output co'>#&gt; $pattern
 #&gt; [1] "1:5=1;6:10=2;11:15=3;16:20=4;21:25=5;26:30=6;31:35=7;36:40=8;41:45=9;46:50=10;51:55=11;56:60=12;61:65=13;66:70=14;71:75=15;76:80=16;81:85=17;86:90=18;91:95=19;96:100=20;"
 #&gt; 
 #&gt; $labels
@@ -202,8 +197,9 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 #&gt;  "81-85"  "86-90"  "91-95" "96-100" 
 #&gt; </div><div class='input'>
 <span class='co'># sample data, inspect age of carers</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c160age</span>, exclude = <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33 
 #&gt;    1    2    2    1    2    4    3    5    3    4    4    8    9    9    5   10 
 #&gt;   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49 
@@ -213,17 +209,19 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 #&gt;   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80   81 
 #&gt;   18   17   14   18   15    4   11    7    7   12   10    7    5    5    5    3 
 #&gt;   82   83   85   87   89 &lt;NA&gt; 
-#&gt;    1    4    1    1    1    7 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='fu'><a href='rec.html'>rec</a></span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c160age</span>, rec = <span class='kw'>rp</span><span class='op'>$</span><span class='kw'>pattern</span>), exclude = <span class='kw'>NULL</span>)</div><div class='output co'>#&gt; 
+#&gt;    1    4    1    1    1    7 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span><span class='op'>)</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt;    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18 &lt;NA&gt; 
 #&gt;    5   15   28   50   51   99  126  116  122  123   82   41   32    9    2    7 </div><div class='input'>
 <span class='co'># recode carers age into groups of width 5</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rec.html'>rec</a></span>(
-  <span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c160age</span>,
-  rec = <span class='kw'>rp</span><span class='op'>$</span><span class='kw'>pattern</span>,
-  val.labels = <span class='kw'>rp</span><span class='op'>$</span><span class='kw'>labels</span>
-)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span>
+  <span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>,
+  rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span>,
+  val.labels <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>labels</span>
+<span class='op'>)</span>
 <span class='co'># watch result</span>
-<span class='fu'><a href='frq.html'>frq</a></span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt; 
+<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; <span style='color: #BB0000;'>carer' age (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;
 #&gt; # total N=908  valid N=901  mean=11.07  sd=2.69
 #&gt; 
@@ -250,7 +248,8 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 #&gt;    19 |  91-95 |   0 |  0.00 |    0.00 | 100.00
 #&gt;    20 | 96-100 |   0 |  0.00 |    0.00 | 100.00
 #&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'></div></span></pre>
+#&gt; </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -266,7 +265,7 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

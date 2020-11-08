@@ -98,12 +98,6 @@ There are two types of function designs:
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -162,7 +156,7 @@ There are two types of function designs:
 <p>The design of this package follows, where appropriate, the <em>tidyverse-approach</em>, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.</p>
 <p>There are two types of function designs:</p><dl>
   <dt><em>transformation/recoding functions</em></dt><dd><p>Functions like <code><a href='rec.html'>rec()</a></code> or <code><a href='dicho.html'>dicho()</a></code>, which transform or recode variables, typically return the complete data frame that was given as first argument, <em>additionally including</em> the transformed and recoded variables specified in the <code>...</code>-ellipses argument. The variables usually get a suffix, so original variables are preserved in the data.</p></dd>
-  <dt><em>coercing/converting functions</em></dt><dd><p>Functions like <code><a href='https://rdrr.io/pkg/sjlabelled/man/as_factor.html'>to_factor()</a></code> or <code><a href='https://rdrr.io/pkg/sjlabelled/man/as_label.html'>to_label()</a></code>, which convert variables into other types or add additional information like variable or value labels as attribute, also typically return the complete data frame that was given as first argument. However, the variables specified in the <code>...</code>-ellipses argument are converted ("overwritten"), all other variables remain unchanged. Hence, these functions do not return any new, additional variables.</p></dd>
+  <dt><em>coercing/converting functions</em></dt><dd><p>Functions like <code><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor()</a></code> or <code><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>to_label()</a></code>, which convert variables into other types or add additional information like variable or value labels as attribute, also typically return the complete data frame that was given as first argument. However, the variables specified in the <code>...</code>-ellipses argument are converted ("overwritten"), all other variables remain unchanged. Hence, these functions do not return any new, additional variables.</p></dd>
 
 </dl>
 
@@ -189,7 +183,7 @@ There are two types of function designs:
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

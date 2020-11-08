@@ -101,12 +101,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -174,11 +168,11 @@
   from 1 to group size. See 'Examples'.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_columns</span>(<span class='kw'>data</span>, <span class='kw'>...</span>, replace = <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>replace_columns</span>(<span class='kw'>data</span>, <span class='kw'>...</span>, add.unique = <span class='fl'>TRUE</span>)
+<span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span>, add.unique <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='fu'>add_id</span>(<span class='kw'>data</span>, var = <span class='st'>"ID"</span>)</pre>
+<span class='fu'>add_id</span><span class='op'>(</span><span class='va'>data</span>, var <span class='op'>=</span> <span class='st'>"ID"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -237,38 +231,43 @@ as new columns to <code>data</code>.</p></td>
   columns will be preserved.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='kw'>d1</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]
-<span class='kw'>d2</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span>]
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
+<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span>(<span class='kw'>d1</span>, <span class='kw'>d2</span>))</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1
+#&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1
 #&gt; 1      16        2      2     83      3       3
 #&gt; 2     148        2      2     88      3       3
 #&gt; 3      70        1      2     82      3       2
 #&gt; 4     168        1      2     67      4       4
 #&gt; 5     168        2      2     84      4       3
-#&gt; 6      16        2      2     85      4       2</div><div class='input'><span class='fu'>add_columns</span>(<span class='kw'>d1</span>, <span class='kw'>d2</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   e17age e42dep c82cop1 c12hour e15relat e16sex
+#&gt; 6      16        2      2     85      4       2</div><div class='input'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   e17age e42dep c82cop1 c12hour e15relat e16sex
 #&gt; 1     83      3       3      16        2      2
 #&gt; 2     88      3       3     148        2      2
 #&gt; 3     82      3       2      70        1      2
 #&gt; 4     67      4       4     168        1      2
 #&gt; 5     84      4       3     168        2      2
 #&gt; 6     85      4       2      16        2      2</div><div class='input'>
-<span class='kw'>d1</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>]
-<span class='kw'>d2</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>6</span>]
+<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
+<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
 
-<span class='fu'>add_columns</span>(<span class='kw'>d1</span>, <span class='kw'>d2</span>, replace = <span class='fl'>TRUE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   c12hour e15relat e17age e42dep c82cop1 e16sex
+<span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour e15relat e17age e42dep c82cop1 e16sex
 #&gt; 1      16        2     83      3       3      2
 #&gt; 2     148        2     88      3       3      2
 #&gt; 3      70        1     82      3       2      2
 #&gt; 4     168        1     67      4       4      2
 #&gt; 5     168        2     84      4       3      2
-#&gt; 6      16        2     85      4       2      2</div><div class='input'><span class='fu'>add_columns</span>(<span class='kw'>d1</span>, <span class='kw'>d2</span>, replace = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+#&gt; 6      16        2     85      4       2      2</div><div class='input'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>New names:</span>
 #&gt; <span class='message'>* e15relat -&gt; e15relat...1</span>
 #&gt; <span class='message'>* e16sex -&gt; e16sex...2</span>
 #&gt; <span class='message'>* e15relat -&gt; e15relat...7</span>
@@ -283,11 +282,12 @@ as new columns to <code>data</code>.</p></td>
 <span class='co'># variables and do some transformations or recodings</span>
 <span class='co'># (standardization in this example) and add the new, transformed</span>
 <span class='co'># variables *to the end* of the original data frame</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e17age</span>, <span class='kw'>c160age</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='std.html'>std</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'>add_columns</span>(<span class='kw'>efc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>c160age</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='std.html'>std</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
 #&gt; 1      16        2      2     83      3       3       2       2       2       1
 #&gt; 2     148        2      2     88      3       3       3       3       3       4
 #&gt; 3      70        1      2     82      3       2       2       1       4       1
@@ -317,11 +317,12 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 6  0.19002509</div><div class='input'>
 <span class='co'># new variables with same name will overwrite old variables</span>
 <span class='co'># in "efc". order of columns is not changed.</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/as_factor.html'>to_factor</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'>add_columns</span>(<span class='kw'>efc</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
 #&gt; 1      16        2      2     83      3       3       2       2       2       1
 #&gt; 2     148        2      2     88      3       3       3       3       3       4
 #&gt; 3      70        1      2     82      3       2       2       1       4       1
@@ -344,11 +345,12 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 6      19       9      8        1        3      2       2</div><div class='input'>
 <span class='co'># keep both old and new variables, automatically</span>
 <span class='co'># rename variables with identical name</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/as_factor.html'>to_factor</a></span>() <span class='op'>%&gt;%</span>
-  <span class='fu'>add_columns</span>(<span class='kw'>efc</span>, replace = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>New names:</span>
 #&gt; <span class='message'>* e16sex -&gt; e16sex...3</span>
 #&gt; <span class='message'>* e42dep -&gt; e42dep...5</span>
 #&gt; <span class='message'>* e16sex -&gt; e16sex...27</span>
@@ -381,28 +383,31 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 5           4
 #&gt; 6           4</div><div class='input'>
 <span class='co'># create sample data frames</span>
-<span class='kw'>d1</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>]
-<span class='kw'>d2</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span>]
-<span class='kw'>d3</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>7</span><span class='op'>:</span><span class='fl'>8</span>]
-<span class='kw'>d4</span> <span class='op'>&lt;-</span> <span class='kw'>efc</span>[, <span class='fl'>10</span><span class='op'>:</span><span class='fl'>12</span>]
+<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
+<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
+<span class='va'>d3</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>7</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>
+<span class='va'>d4</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>10</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>
 
 <span class='co'># show original</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>d1</span>)</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>d1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
 #&gt; 1      16        2      2     83      3       3       2       2       2       1
 #&gt; 2     148        2      2     88      3       3       3       3       3       4
 #&gt; 3      70        1      2     82      3       2       2       1       4       1
 #&gt; 4     168        1      2     67      4       4       1       3       1       1
 #&gt; 5     168        2      2     84      4       3       2       1       2       2
 #&gt; 6      16        2      2     85      4       2       2       3       3       3</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://strengejacke.github.io/sjlabelled'>sjlabelled</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘sjlabelled’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:dplyr’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    as_label</span></div><div class='input'><span class='co'># slightly change variables, to see effect</span>
-<span class='kw'>d2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/as_label.html'>as_label</a></span>(<span class='kw'>d2</span>)
-<span class='kw'>d3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/as_label.html'>as_label</a></span>(<span class='kw'>d3</span>)
+<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>as_label</a></span><span class='op'>(</span><span class='va'>d2</span><span class='op'>)</span>
+<span class='va'>d3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>as_label</a></span><span class='op'>(</span><span class='va'>d3</span><span class='op'>)</span>
 
 <span class='co'># replace duplicated columns, append remaining</span>
-<span class='fu'>replace_columns</span>(<span class='kw'>d1</span>, <span class='kw'>d2</span>, <span class='kw'>d3</span>, <span class='kw'>d4</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3
+<span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, <span class='va'>d3</span>, <span class='va'>d4</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3
 #&gt; 1      16          child female     83      3       3 Sometimes Sometimes
 #&gt; 2     148          child female     88      3       3     Often     Often
 #&gt; 3      70 spouse/partner female     82      3       2 Sometimes     Never
@@ -417,7 +422,8 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 5       2       2       2       1
 #&gt; 6       3       3       2       2</div><div class='input'>
 <span class='co'># replace duplicated columns, omit remaining</span>
-<span class='fu'>replace_columns</span>(<span class='kw'>d1</span>, <span class='kw'>d2</span>, <span class='kw'>d3</span>, <span class='kw'>d4</span>, add.unique = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3
+<span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, <span class='va'>d3</span>, <span class='va'>d4</span>, add.unique <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3
 #&gt; 1      16          child female     83      3       3 Sometimes Sometimes
 #&gt; 2     148          child female     88      3       3     Often     Often
 #&gt; 3      70 spouse/partner female     82      3       2 Sometimes     Never
@@ -432,9 +438,10 @@ as new columns to <code>data</code>.</p></td>
 #&gt; 5       2       2
 #&gt; 6       3       3</div><div class='input'>
 <span class='co'># add ID to dataset</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>mtcars</span>)
-<span class='fu'>add_id</span>(<span class='kw'>mtcars</span>)</div><div class='output co'>#&gt;                     ID  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
+<span class='fu'>add_id</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                     ID  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4            1 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag        2 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710           3 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -467,11 +474,12 @@ as new columns to <code>data</code>.</p></td>
 #&gt; Ferrari Dino        30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
 #&gt; Maserati Bora       31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
 #&gt; Volvo 142E          32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>gear</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>add_id</span>() <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span>(<span class='kw'>gear</span>, <span class='kw'>ID</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(n = <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_id</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>gear</span>, <span class='va'>ID</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
 #&gt;       ID   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span>     1  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1
@@ -521,7 +529,7 @@ as new columns to <code>data</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

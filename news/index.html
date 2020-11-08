@@ -86,12 +86,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -202,7 +196,7 @@
 <li>
 <code><a href="../reference/merge_imputations.html">merge_imputations()</a></code> now returns the plot-object as well.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/sjlabelled/man/as_numeric.html">to_numeric()</a></code> as alias for <code><a href="../reference/to_value.html">to_value()</a></code>.</li>
+<code><a href="https://strengejacke.github.io/sjlabelled/reference/as_numeric.html">to_numeric()</a></code> as alias for <code><a href="../reference/to_value.html">to_value()</a></code>.</li>
 </ul>
 </div>
 <div id="bug-fixes-1" class="section level2">
@@ -478,7 +472,7 @@
 <a href="#changes-to-functions-8" class="anchor"></a>Changes to functions</h2>
 <ul>
 <li>
-<code><a href="https://rdrr.io/pkg/sjlabelled/man/set_na.html">set_na()</a></code> now also replaces different values per variable into <code>NA</code>.</li>
+<code><a href="https://strengejacke.github.io/sjlabelled/reference/set_na.html">set_na()</a></code> now also replaces different values per variable into <code>NA</code>.</li>
 <li>Changed behaviour of <code><a href="../reference/row_sums.html">row_sums()</a></code> and missing values. <code><a href="../reference/row_sums.html">row_sums()</a></code> gets a <code>n</code>-argument and now computes row sums if a row has at least <code>n</code> non-missing values.</li>
 </ul>
 </div>
@@ -547,7 +541,7 @@
 <div id="support-for-mids-objects-package-mice" class="section level2">
 <h2 class="hasAnchor">
 <a href="#support-for-mids-objects-package-mice" class="anchor"></a>Support for <code>mids</code>-objects (package <em>mice</em>)</h2>
-<p>Following functions now also work on <code>mids</code>-objects, as returned by the <code><a href="http://stefvanbuuren.github.io/mice/reference/mice.html">mice()</a></code>-function:</p>
+<p>Following functions now also work on <code>mids</code>-objects, as returned by the <code><a href="https://rdrr.io/pkg/mice/man/mice.html">mice()</a></code>-function:</p>
 <ul>
 <li>
 <code><a href="../reference/row_count.html">row_count()</a></code>, <code><a href="../reference/row_sums.html">row_sums()</a></code>, <code><a href="../reference/row_sums.html">row_means()</a></code>, <code><a href="../reference/rec.html">rec()</a></code>, <code><a href="../reference/dicho.html">dicho()</a></code>, <code><a href="../reference/std.html">center()</a></code>, <code><a href="../reference/std.html">std()</a></code>, <code><a href="../reference/recode_to.html">recode_to()</a></code> and <code><a href="../reference/to_long.html">to_long()</a></code>.</li>
@@ -600,7 +594,7 @@
 <li>
 <code><a href="../reference/recode_to.html">recode_to_if()</a></code> as scoped variant of <code><a href="../reference/recode_to.html">recode_to()</a></code>.</li>
 <li>
-<code><a href="../reference/set_na_if.html">set_na_if()</a></code> as scoped variant of <code><a href="https://rdrr.io/pkg/sjlabelled/man/set_na.html">set_na()</a></code>.</li>
+<code><a href="../reference/set_na_if.html">set_na_if()</a></code> as scoped variant of <code><a href="https://strengejacke.github.io/sjlabelled/reference/set_na.html">set_na()</a></code>.</li>
 </ul>
 </div>
 <div id="changes-to-functions-11" class="section level2">
@@ -610,7 +604,7 @@
 <li>New function <code><a href="../reference/remove_var.html">remove_cols()</a></code> as alias for <code><a href="../reference/remove_var.html">remove_var()</a></code>.</li>
 <li>
 <code><a href="../reference/std.html">std()</a></code> gets a new robust-option, <code>robust = "2sd"</code>, which divides the centered variables by two standard deviations.</li>
-<li>Slightly improved performance for <code><a href="https://rdrr.io/pkg/sjlabelled/man/set_na.html">set_na()</a></code>.</li>
+<li>Slightly improved performance for <code><a href="https://strengejacke.github.io/sjlabelled/reference/set_na.html">set_na()</a></code>.</li>
 </ul>
 </div>
 <div id="bug-fixes-10" class="section level2">
@@ -735,7 +729,7 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-13" class="anchor"></a>Bug fixes</h2>
 <ul>
-<li>Fixed bug for <code><a href="https://rdrr.io/pkg/sjlabelled/man/as_label.html">to_label()</a></code>, when <code>x</code> was a character vector and argument <code>drop.levels</code> was <code>TRUE</code>.</li>
+<li>Fixed bug for <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html">to_label()</a></code>, when <code>x</code> was a character vector and argument <code>drop.levels</code> was <code>TRUE</code>.</li>
 </ul>
 </div>
 </div>
@@ -804,7 +798,7 @@
 <li>
 <code><a href="../reference/descr.html">descr()</a></code> now also prints information about the variable type.</li>
 <li>
-<code><a href="https://rdrr.io/pkg/sjlabelled/man/as_label.html">to_character()</a></code> now preserves variable labels.</li>
+<code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html">to_character()</a></code> now preserves variable labels.</li>
 </ul>
 </div>
 </div>
@@ -872,7 +866,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

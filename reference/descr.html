@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,16 +142,16 @@
   variable labels.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>descr</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  max.length = <span class='kw'>NULL</span>,
-  weights = <span class='kw'>NULL</span>,
-  show = <span class='st'>"all"</span>,
-  out = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span>),
-  encoding = <span class='st'>"UTF-8"</span>,
-  file = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>descr</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  max.length <span class='op'>=</span> <span class='cn'>NULL</span>,
+  weights <span class='op'>=</span> <span class='cn'>NULL</span>,
+  show <span class='op'>=</span> <span class='st'>"all"</span>,
+  out <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"txt"</span>, <span class='st'>"viewer"</span>, <span class='st'>"browser"</span><span class='op'>)</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>,
+  file <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,8 +221,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
    subgroup then.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='fu'>descr</span>(<span class='kw'>efc</span>, <span class='kw'>e17age</span>, <span class='kw'>c160age</span>)</div><div class='output co'>#&gt; 
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='fu'>descr</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; <span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>     var    type      label   n NA.prc  mean    sd   se md trimmed       range
@@ -237,8 +232,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  iqr  skew
 #&gt;   12  0.06
 #&gt;   19 -0.14</div><div class='input'>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>weights</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>efc</span>), <span class='fl'>1</span>, <span class='fl'>.3</span>))
-<span class='fu'>descr</span>(<span class='kw'>efc</span>, <span class='kw'>c12hour</span>, <span class='kw'>barthtot</span>, weights = <span class='kw'>weights</span>)</div><div class='output co'>#&gt; 
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>weights</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='fl'>.3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>descr</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c12hour</span>, <span class='va'>barthtot</span>, weights <span class='op'>=</span> <span class='va'>weights</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>      var    type                                    label   n NA.prc  mean
@@ -247,8 +243,9 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     sd   se       range   iqr  skew
 #&gt;  50.82 1.69 164 (4-168) 32.75  1.66
 #&gt;  29.59 1.00 100 (0-100) 45.00 -0.73</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e42dep</span>, <span class='kw'>e15relat</span>, <span class='kw'>c172code</span>) <span class='op'>%&gt;%</span> <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>e15relat</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>descr</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>      var    type                      label   n NA.prc mean   sd   se md
@@ -260,7 +257,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     2.44 7 (1-8)   2  1.56
 #&gt;     1.96 2 (1-3)   0  0.02</div><div class='input'>
 <span class='co'># show just a few elements</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e42dep</span>, <span class='kw'>e15relat</span>, <span class='kw'>c172code</span>) <span class='op'>%&gt;%</span> <span class='fu'>descr</span>(show = <span class='st'>"short"</span>)</div><div class='output co'>#&gt; 
+<span class='va'>efc</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>e15relat</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>descr</span><span class='op'>(</span>show <span class='op'>=</span> <span class='st'>"short"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>      var   n NA.prc mean   sd
@@ -268,10 +266,11 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  e15relat 901   0.77 2.85 2.08
 #&gt;  c172code 842   7.27 1.97 0.63</div><div class='input'>
 <span class='co'># with grouped data frames</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>e16sex</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>, <span class='kw'>e15relat</span>, <span class='kw'>c172code</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>descr</span>()</div><div class='output co'>#&gt; 
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>e15relat</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>descr</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; </span><span style='color: #BB0000;'>
 #&gt; 
@@ -298,9 +297,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     2.74 7 (1-8)   2  1.45
 #&gt;     2.03 2 (1-3)   0 -0.01</div><div class='input'>
 <span class='co'># you can select variables also inside 'descr()'</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>c172code</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>descr</span>(<span class='kw'>e16sex</span>, <span class='kw'>c172code</span>, <span class='kw'>e17age</span>, <span class='kw'>c160age</span>)</div><div class='output co'>#&gt; <span class='message'>New names:</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>descr</span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>c172code</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>New names:</span>
 #&gt; <span class='message'>* c172code -&gt; c172code...1</span>
 #&gt; <span class='message'>* e16sex -&gt; e16sex...2</span>
 #&gt; <span class='message'>* e16sex -&gt; e16sex...3</span>
@@ -332,7 +332,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;     1.96     2 (1-3)   0  0.02
 #&gt;    53.68  71 (18-89)  19 -0.14</div><div class='input'>
 <span class='co'># or even use select-helpers</span>
-<span class='fu'>descr</span>(<span class='kw'>efc</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span>(<span class='st'>"cop"</span>), max.length = <span class='fl'>20</span>)</div><div class='output co'>#&gt; 
+<span class='fu'>descr</span><span class='op'>(</span><span class='va'>efc</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"cop"</span><span class='op'>)</span>, max.length <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 
 #&gt; </span><span style='color: #0000BB;'>## Basic descriptive statistics
 #&gt; 
 #&gt; </span><span>     var    type                   label   n NA.prc mean   sd   se md trimmed
@@ -354,7 +355,8 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 #&gt;  3 (1-4)   0  2.43
 #&gt;  3 (1-4)   1  0.83
 #&gt;  3 (1-4)   2  0.32
-#&gt;  3 (1-4)   2 -0.45</div><div class='input'></div></span></pre>
+#&gt;  3 (1-4)   2 -0.45</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -370,7 +372,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

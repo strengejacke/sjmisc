@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,15 +142,15 @@
   wide into long format.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>reshape_longer</span>(
-  <span class='kw'>x</span>,
-  columns = <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='kw'>x</span>),
-  names.to = <span class='st'>"key"</span>,
-  values.to = <span class='st'>"value"</span>,
-  labels = <span class='kw'>NULL</span>,
-  numeric.timevar = <span class='fl'>FALSE</span>,
-  id = <span class='st'>".id"</span>
-)</pre>
+    <pre class="usage"><span class='fu'>reshape_longer</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>,
+  names.to <span class='op'>=</span> <span class='st'>"key"</span>,
+  values.to <span class='op'>=</span> <span class='st'>"value"</span>,
+  labels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  numeric.timevar <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  id <span class='op'>=</span> <span class='st'>".id"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,20 +204,21 @@ column will be recoded to numeric values, in sequential ascending order.</p></td
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Reshape one column group into long format</span>
-<span class='kw'>mydat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  age = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span>),
-  sex = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Female"</span>, <span class='st'>"Male"</span>, <span class='st'>"Male"</span>),
-  score_t1 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>32</span>),
-  score_t2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>33</span>, <span class='fl'>34</span>, <span class='fl'>37</span>),
-  score_t3 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>36</span>, <span class='fl'>35</span>, <span class='fl'>38</span>)
-)
+<span class='va'>mydat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  age <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span><span class='op'>)</span>,
+  sex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Female"</span>, <span class='st'>"Male"</span>, <span class='st'>"Male"</span><span class='op'>)</span>,
+  score_t1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>32</span><span class='op'>)</span>,
+  score_t2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>33</span>, <span class='fl'>34</span>, <span class='fl'>37</span><span class='op'>)</span>,
+  score_t3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>36</span>, <span class='fl'>35</span>, <span class='fl'>38</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>reshape_longer</span>(
-  <span class='kw'>mydat</span>,
-  columns = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"score_t1"</span>, <span class='st'>"score_t2"</span>, <span class='st'>"score_t3"</span>),
-  names.to = <span class='st'>"time"</span>,
-  values.to = <span class='st'>"score"</span>
-)</div><div class='output co'>#&gt;   age    sex     time score .id
+<span class='fu'>reshape_longer</span><span class='op'>(</span>
+  <span class='va'>mydat</span>,
+  columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score_t1"</span>, <span class='st'>"score_t2"</span>, <span class='st'>"score_t3"</span><span class='op'>)</span>,
+  names.to <span class='op'>=</span> <span class='st'>"time"</span>,
+  values.to <span class='op'>=</span> <span class='st'>"score"</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt;   age    sex     time score .id
 #&gt; 1  20 Female score_t1    30   1
 #&gt; 2  30   Male score_t1    35   2
 #&gt; 3  40   Male score_t1    32   3
@@ -235,26 +230,27 @@ column will be recoded to numeric values, in sequential ascending order.</p></td
 #&gt; 9  40   Male score_t3    38   3</div><div class='input'>
 
 <span class='co'># Reshape multiple column groups into long format</span>
-<span class='kw'>mydat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  age = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span>),
-  sex = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Female"</span>, <span class='st'>"Male"</span>, <span class='st'>"Male"</span>),
-  score_t1 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>32</span>),
-  score_t2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>33</span>, <span class='fl'>34</span>, <span class='fl'>37</span>),
-  score_t3 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>36</span>, <span class='fl'>35</span>, <span class='fl'>38</span>),
-  speed_t1 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>),
-  speed_t2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span>),
-  speed_t3 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>8</span>, <span class='fl'>6</span>)
-)
+<span class='va'>mydat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  age <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>20</span>, <span class='fl'>30</span>, <span class='fl'>40</span><span class='op'>)</span>,
+  sex <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Female"</span>, <span class='st'>"Male"</span>, <span class='st'>"Male"</span><span class='op'>)</span>,
+  score_t1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>30</span>, <span class='fl'>35</span>, <span class='fl'>32</span><span class='op'>)</span>,
+  score_t2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>33</span>, <span class='fl'>34</span>, <span class='fl'>37</span><span class='op'>)</span>,
+  score_t3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>36</span>, <span class='fl'>35</span>, <span class='fl'>38</span><span class='op'>)</span>,
+  speed_t1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  speed_t2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>5</span><span class='op'>)</span>,
+  speed_t3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>8</span>, <span class='fl'>6</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>reshape_longer</span>(
-  <span class='kw'>mydat</span>,
-  columns = <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(
-    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"score_t1"</span>, <span class='st'>"score_t2"</span>, <span class='st'>"score_t3"</span>),
-    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"speed_t1"</span>, <span class='st'>"speed_t2"</span>, <span class='st'>"speed_t3"</span>)
-  ),
-  names.to = <span class='st'>"time"</span>,
-  values.to = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"score"</span>, <span class='st'>"speed"</span>)
-)</div><div class='output co'>#&gt;   age    sex     time score speed .id
+<span class='fu'>reshape_longer</span><span class='op'>(</span>
+  <span class='va'>mydat</span>,
+  columns <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score_t1"</span>, <span class='st'>"score_t2"</span>, <span class='st'>"score_t3"</span><span class='op'>)</span>,
+    <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"speed_t1"</span>, <span class='st'>"speed_t2"</span>, <span class='st'>"speed_t3"</span><span class='op'>)</span>
+  <span class='op'>)</span>,
+  names.to <span class='op'>=</span> <span class='st'>"time"</span>,
+  values.to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score"</span>, <span class='st'>"speed"</span><span class='op'>)</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt;   age    sex     time score speed .id
 #&gt; 1  20 Female score_t1    30     2   1
 #&gt; 2  30   Male score_t1    35     3   2
 #&gt; 3  40   Male score_t1    32     1   3
@@ -265,12 +261,13 @@ column will be recoded to numeric values, in sequential ascending order.</p></td
 #&gt; 8  30   Male score_t3    35     8   2
 #&gt; 9  40   Male score_t3    38     6   3</div><div class='input'>
 <span class='co'># or ...</span>
-<span class='fu'>reshape_longer</span>(
-  <span class='kw'>mydat</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>8</span>),
-  names.to = <span class='st'>"time"</span>,
-  values.to = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"score"</span>, <span class='st'>"speed"</span>)
-)</div><div class='output co'>#&gt;   age    sex     time score speed .id
+<span class='fu'>reshape_longer</span><span class='op'>(</span>
+  <span class='va'>mydat</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span>,
+  names.to <span class='op'>=</span> <span class='st'>"time"</span>,
+  values.to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score"</span>, <span class='st'>"speed"</span><span class='op'>)</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt;   age    sex     time score speed .id
 #&gt; 1  20 Female score_t1    30     2   1
 #&gt; 2  30   Male score_t1    35     3   2
 #&gt; 3  40   Male score_t1    32     1   3
@@ -281,17 +278,20 @@ column will be recoded to numeric values, in sequential ascending order.</p></td
 #&gt; 8  30   Male score_t3    35     8   2
 #&gt; 9  40   Male score_t3    38     6   3</div><div class='input'>
 <span class='co'># gather multiple columns, label columns</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'>reshape_longer</span>(
-  <span class='kw'>mydat</span>,
-  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>8</span>),
-  names.to = <span class='st'>"time"</span>,
-  values.to = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"score"</span>, <span class='st'>"speed"</span>),
-  labels = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Test Score"</span>, <span class='st'>"Time needed to finish"</span>)
-)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>reshape_longer</span><span class='op'>(</span>
+  <span class='va'>mydat</span>,
+  <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>)</span>,
+  names.to <span class='op'>=</span> <span class='st'>"time"</span>,
+  values.to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score"</span>, <span class='st'>"speed"</span><span class='op'>)</span>,
+  labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Test Score"</span>, <span class='st'>"Time needed to finish"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://strengejacke.github.io/sjlabelled'>sjlabelled</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='kw'>x</span><span class='op'>$</span><span class='kw'>score</span>)</div><div class='output co'>#&gt;  num [1:9] 30 35 32 33 34 37 36 35 38
-#&gt;  - attr(*, "label")= chr "Test Score"</div><div class='input'><span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_label.html'>get_label</a></span>(<span class='kw'>x</span><span class='op'>$</span><span class='kw'>speed</span>)</div><div class='output co'>#&gt; [1] "Time needed to finish"</div><div class='input'></div></pre>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>score</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  num [1:9] 30 35 32 33 34 37 36 35 38
+#&gt;  - attr(*, "label")= chr "Test Score"</div><div class='input'><span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_label.html'>get_label</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>$</span><span class='va'>speed</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "Time needed to finish"</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -307,7 +307,7 @@ column will be recoded to numeric values, in sequential ascending order.</p></td
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -93,12 +93,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -158,31 +152,31 @@
   of <code>predicate</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>group_var</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  size = <span class='fl'>5</span>,
-  as.num = <span class='fl'>TRUE</span>,
-  right.interval = <span class='fl'>FALSE</span>,
-  n = <span class='fl'>30</span>,
-  append = <span class='fl'>TRUE</span>,
-  suffix = <span class='st'>"_gr"</span>
-)
+    <pre class="usage"><span class='fu'>group_var</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  size <span class='op'>=</span> <span class='fl'>5</span>,
+  as.num <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  right.interval <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  n <span class='op'>=</span> <span class='fl'>30</span>,
+  append <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_gr"</span>
+<span class='op'>)</span>
 
-<span class='fu'>group_var_if</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>predicate</span>,
-  size = <span class='fl'>5</span>,
-  as.num = <span class='fl'>TRUE</span>,
-  right.interval = <span class='fl'>FALSE</span>,
-  n = <span class='fl'>30</span>,
-  append = <span class='fl'>TRUE</span>,
-  suffix = <span class='st'>"_gr"</span>
-)
+<span class='fu'>group_var_if</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>predicate</span>,
+  size <span class='op'>=</span> <span class='fl'>5</span>,
+  as.num <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  right.interval <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  n <span class='op'>=</span> <span class='fl'>30</span>,
+  append <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_gr"</span>
+<span class='op'>)</span>
 
-<span class='fu'>group_labels</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, size = <span class='fl'>5</span>, right.interval = <span class='fl'>FALSE</span>, n = <span class='fl'>30</span>)
+<span class='fu'>group_labels</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, size <span class='op'>=</span> <span class='fl'>5</span>, right.interval <span class='op'>=</span> <span class='cn'>FALSE</span>, n <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span>
 
-<span class='fu'>group_labels_if</span>(<span class='kw'>x</span>, <span class='kw'>predicate</span>, size = <span class='fl'>5</span>, right.interval = <span class='fl'>FALSE</span>, n = <span class='fl'>30</span>)</pre>
+<span class='fu'>group_labels_if</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>predicate</span>, size <span class='op'>=</span> <span class='fl'>5</span>, right.interval <span class='op'>=</span> <span class='cn'>FALSE</span>, n <span class='op'>=</span> <span class='fl'>30</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -282,7 +276,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Variable label attributes (see, for instance,
-  <code><a href='https://rdrr.io/pkg/sjlabelled/man/set_label.html'>set_label</a></code>) are preserved. Usually you should use
+  <code><a href='https://strengejacke.github.io/sjlabelled/reference/set_label.html'>set_label</a></code>) are preserved. Usually you should use
   the same values for <code>size</code> and <code>right.interval</code> in
   <code>group_labels()</code> as used in the <code>group_var</code> function if you want
   matching labels for the related recoded variable.</p>
@@ -294,29 +288,36 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
   way of recoding variables into smaller groups.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>age</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>100</span>, <span class='fl'>65</span>, <span class='fl'>20</span>)))
-<span class='kw'>age.grp</span> <span class='op'>&lt;-</span> <span class='fu'>group_var</span>(<span class='kw'>age</span>, size = <span class='fl'>10</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw'>age</span>)</div><div class='img'><img src='group_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw'>age.grp</span>)</div><div class='img'><img src='group_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='kw'>age.grpvar</span> <span class='op'>&lt;-</span> <span class='fu'>group_labels</span>(<span class='kw'>age</span>, size = <span class='fl'>10</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>age.grp</span>)</div><div class='output co'>#&gt; age.grp
+    <pre class="examples"><div class='input'><span class='va'>age</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>65</span>, <span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>age.grp</span> <span class='op'>&lt;-</span> <span class='fu'>group_var</span><span class='op'>(</span><span class='va'>age</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>age</span><span class='op'>)</span>
+</div><div class='img'><img src='group_var-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>age.grp</span><span class='op'>)</span>
+</div><div class='img'><img src='group_var-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>age.grpvar</span> <span class='op'>&lt;-</span> <span class='fu'>group_labels</span><span class='op'>(</span><span class='va'>age</span>, size <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>age.grp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; age.grp
 #&gt;  1  2  3  4  5  6  7  8  9 
-#&gt;  1  4 10 21 22 19 10  9  4 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>age.grpvar</span>)</div><div class='output co'>#&gt; [1] "10-19"   "30-39"   "40-49"   "50-59"   "60-69"   "70-79"   "80-89"  
+#&gt;  1  4 10 21 22 19 10  9  4 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>age.grpvar</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "10-19"   "30-39"   "40-49"   "50-59"   "60-69"   "70-79"   "80-89"  
 #&gt; [8] "90-99"   "100-109"</div><div class='input'>
 <span class='co'># histogram with EUROFAMCARE sample dataset</span>
 <span class='co'># variable not grouped</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://strengejacke.github.io/sjlabelled'>sjlabelled</a></span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>, main = <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_label.html'>get_label</a></span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>))</div><div class='img'><img src='group_var-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span>, main <span class='op'>=</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_label.html'>get_label</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='group_var-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># bar plot with EUROFAMCARE sample dataset</span>
 <span class='co'># grouped variable</span>
-<span class='kw'>ageGrp</span> <span class='op'>&lt;-</span> <span class='fu'>group_var</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>)
-<span class='kw'>ageGrpLab</span> <span class='op'>&lt;-</span> <span class='fu'>group_labels</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='kw'>ageGrp</span>), main = <span class='fu'><a href='https://rdrr.io/pkg/sjlabelled/man/get_label.html'>get_label</a></span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>), names.arg = <span class='kw'>ageGrpLab</span>)</div><div class='img'><img src='group_var-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>ageGrp</span> <span class='op'>&lt;-</span> <span class='fu'>group_var</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>)</span>
+<span class='va'>ageGrpLab</span> <span class='op'>&lt;-</span> <span class='fu'>group_labels</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/barplot.html'>barplot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>ageGrp</span><span class='op'>)</span>, main <span class='op'>=</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_label.html'>get_label</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>)</span>, names.arg <span class='op'>=</span> <span class='va'>ageGrpLab</span><span class='op'>)</span>
+</div><div class='img'><img src='group_var-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># within a pipe-chain</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e17age</span>, <span class='kw'>c12hour</span>, <span class='kw'>c160age</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>group_var</span>(size = <span class='fl'>20</span>)</div><div class='output co'>#&gt;     e17age c12hour c160age e17age_gr c12hour_gr c160age_gr
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>c12hour</span>, <span class='va'>c160age</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_var</span><span class='op'>(</span>size <span class='op'>=</span> <span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     e17age c12hour c160age e17age_gr c12hour_gr c160age_gr
 #&gt; 1       83      16      56         2          1          3
 #&gt; 2       88     148      54         2          8          3
 #&gt; 3       82      70      80         2          4          5
@@ -1226,22 +1227,27 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 907     NA      NA      NA        NA         NA         NA
 #&gt; 908     NA      NA      NA        NA         NA         NA</div><div class='input'>
 <span class='co'># create vector with values from 50 to 80</span>
-<span class='kw'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>200</span>, <span class='fl'>50</span>, <span class='fl'>80</span>))
+<span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>200</span>, <span class='fl'>50</span>, <span class='fl'>80</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># labels with grouping starting at lower bound</span>
-<span class='fu'>group_labels</span>(<span class='kw'>dummy</span>)</div><div class='output co'>#&gt; [1] "50-54" "55-59" "60-64" "65-69" "70-74" "75-79" "80-84"</div><div class='input'><span class='co'># labels with grouping startint at upper bound</span>
-<span class='fu'>group_labels</span>(<span class='kw'>dummy</span>, right.interval = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "46-50" "51-55" "56-60" "61-65" "66-70" "71-75" "76-80"</div><div class='input'>
+<span class='fu'>group_labels</span><span class='op'>(</span><span class='va'>dummy</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "50-54" "55-59" "60-64" "65-69" "70-74" "75-79" "80-84"</div><div class='input'><span class='co'># labels with grouping startint at upper bound</span>
+<span class='fu'>group_labels</span><span class='op'>(</span><span class='va'>dummy</span>, right.interval <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "46-50" "51-55" "56-60" "61-65" "66-70" "71-75" "76-80"</div><div class='input'>
 <span class='co'># works also with gouped data frames</span>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'>group_var</span>(<span class='kw'>disp</span>, size = <span class='fl'>4</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>()</div><div class='output co'>#&gt; .
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_var</span><span class='op'>(</span><span class='va'>disp</span>, size <span class='op'>=</span> <span class='fl'>4</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; .
 #&gt;  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 
 #&gt;  1  1  2  1  1  3  1  2  2  2  1  1  3  1  1  1  2  2  1  1  1  1 </div><div class='input'>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>cyl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>group_var</span>(<span class='kw'>disp</span>, size = <span class='fl'>4</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>()</div><div class='output co'>#&gt; .
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>group_var</span><span class='op'>(</span><span class='va'>disp</span>, size <span class='op'>=</span> <span class='fl'>4</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; .
 #&gt;  1  2  3  4  5  6  7  8  9 10 
-#&gt;  5  4  5  3  4  5  2  2  1  1 </div><div class='input'></div></pre>
+#&gt;  5  4  5  3  4  5  2  2  1  1 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -1257,7 +1263,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

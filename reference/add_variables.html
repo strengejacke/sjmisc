@@ -91,12 +91,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -154,9 +148,9 @@
   into a pipe-workflow.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_variables</span>(<span class='kw'>data</span>, <span class='kw'>...</span>, .after = <span class='fl'>Inf</span>, .before = <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span>, .after <span class='op'>=</span> <span class='cn'>Inf</span>, .before <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>add_case</span>(<span class='kw'>data</span>, <span class='kw'>...</span>, .after = <span class='fl'>Inf</span>, .before = <span class='kw'>NULL</span>)</pre>
+<span class='fu'>add_case</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>...</span>, .after <span class='op'>=</span> <span class='cn'>Inf</span>, .before <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,35 +187,41 @@ inserted.</p></td>
    See 'Examples'.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(
-  a = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>),
-  b = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span>),
-  c = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span>),
-  stringsAsFactors = <span class='fl'>FALSE</span>
-)
+    <pre class="examples"><div class='input'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
+  a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
+  b <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span>, <span class='st'>"c"</span><span class='op'>)</span>,
+  c <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>20</span>, <span class='fl'>30</span><span class='op'>)</span>,
+  stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
-<span class='fu'>add_case</span>(<span class='kw'>d</span>, b = <span class='st'>"d"</span>)</div><div class='output co'>#&gt;    a b  c
+<span class='fu'>add_case</span><span class='op'>(</span><span class='va'>d</span>, b <span class='op'>=</span> <span class='st'>"d"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    a b  c
 #&gt; 1  1 a 10
 #&gt; 2  2 b 20
 #&gt; 3  3 c 30
-#&gt; 4 NA d NA</div><div class='input'><span class='fu'>add_case</span>(<span class='kw'>d</span>, b = <span class='st'>"d"</span>, a = <span class='fl'>5</span>, .before = <span class='fl'>1</span>)</div><div class='output co'>#&gt;   a b  c
+#&gt; 4 NA d NA</div><div class='input'><span class='fu'>add_case</span><span class='op'>(</span><span class='va'>d</span>, b <span class='op'>=</span> <span class='st'>"d"</span>, a <span class='op'>=</span> <span class='fl'>5</span>, .before <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   a b  c
 #&gt; 4 5 d NA
 #&gt; 1 1 a 10
 #&gt; 2 2 b 20
 #&gt; 3 3 c 30</div><div class='input'>
 <span class='co'># adding a new case for a new variable</span>
-<span class='fu'>add_case</span>(<span class='kw'>d</span>, e = <span class='st'>"new case"</span>)</div><div class='output co'>#&gt;    a    b  c        e
+<span class='fu'>add_case</span><span class='op'>(</span><span class='va'>d</span>, e <span class='op'>=</span> <span class='st'>"new case"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    a    b  c        e
 #&gt; 1  1    a 10     &lt;NA&gt;
 #&gt; 2  2    b 20     &lt;NA&gt;
 #&gt; 3  3    c 30     &lt;NA&gt;
 #&gt; 4 NA &lt;NA&gt; NA new case</div><div class='input'>
-<span class='fu'>add_variables</span>(<span class='kw'>d</span>, new = <span class='fl'>5</span>)</div><div class='output co'>#&gt;   a b  c new
+<span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>d</span>, new <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   a b  c new
 #&gt; 1 1 a 10   5
 #&gt; 2 2 b 20   5
-#&gt; 3 3 c 30   5</div><div class='input'><span class='fu'>add_variables</span>(<span class='kw'>d</span>, new = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span>), new2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span>), .after = <span class='st'>"b"</span>)</div><div class='output co'>#&gt;   a b new new2  c
+#&gt; 3 3 c 30   5</div><div class='input'><span class='fu'>add_variables</span><span class='op'>(</span><span class='va'>d</span>, new <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>, new2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>, .after <span class='op'>=</span> <span class='st'>"b"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   a b new new2  c
 #&gt; 1 1 a   4    5 10
 #&gt; 2 2 b   4    5 20
-#&gt; 3 3 c   4    5 30</div><div class='input'></div></pre>
+#&gt; 3 3 c   4    5 30</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -237,7 +237,7 @@ inserted.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

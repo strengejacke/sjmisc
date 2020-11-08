@@ -91,12 +91,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -154,27 +148,27 @@
   logical condition of <code>predicate</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>std</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>...</span>,
-  robust = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sd"</span>, <span class='st'>"2sd"</span>, <span class='st'>"gmd"</span>, <span class='st'>"mad"</span>),
-  include.fac = <span class='fl'>FALSE</span>,
-  append = <span class='fl'>TRUE</span>,
-  suffix = <span class='st'>"_z"</span>
-)
+    <pre class="usage"><span class='fu'>std</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>...</span>,
+  robust <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sd"</span>, <span class='st'>"2sd"</span>, <span class='st'>"gmd"</span>, <span class='st'>"mad"</span><span class='op'>)</span>,
+  include.fac <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  append <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_z"</span>
+<span class='op'>)</span>
 
-<span class='fu'>std_if</span>(
-  <span class='kw'>x</span>,
-  <span class='kw'>predicate</span>,
-  robust = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sd"</span>, <span class='st'>"2sd"</span>, <span class='st'>"gmd"</span>, <span class='st'>"mad"</span>),
-  include.fac = <span class='fl'>FALSE</span>,
-  append = <span class='fl'>TRUE</span>,
-  suffix = <span class='st'>"_z"</span>
-)
+<span class='fu'>std_if</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>predicate</span>,
+  robust <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"sd"</span>, <span class='st'>"2sd"</span>, <span class='st'>"gmd"</span>, <span class='st'>"mad"</span><span class='op'>)</span>,
+  include.fac <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  append <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  suffix <span class='op'>=</span> <span class='st'>"_z"</span>
+<span class='op'>)</span>
 
-<span class='fu'>center</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, include.fac = <span class='fl'>FALSE</span>, append = <span class='fl'>TRUE</span>, suffix = <span class='st'>"_c"</span>)
+<span class='fu'>center</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, include.fac <span class='op'>=</span> <span class='cn'>FALSE</span>, append <span class='op'>=</span> <span class='cn'>TRUE</span>, suffix <span class='op'>=</span> <span class='st'>"_c"</span><span class='op'>)</span>
 
-<span class='fu'>center_if</span>(<span class='kw'>x</span>, <span class='kw'>predicate</span>, include.fac = <span class='fl'>FALSE</span>, append = <span class='fl'>TRUE</span>, suffix = <span class='st'>"_c"</span>)</pre>
+<span class='fu'>center_if</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>predicate</span>, include.fac <span class='op'>=</span> <span class='cn'>FALSE</span>, append <span class='op'>=</span> <span class='cn'>TRUE</span>, suffix <span class='op'>=</span> <span class='st'>"_c"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -265,15 +259,19 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
   Models. Cambdridge, Cambdrige University Press: 55-57</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
-<span class='fu'>std</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c160age</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt; [1]  0.19002509  0.04023278  1.98753275  1.16367507 -0.48404028  0.19002509</div><div class='input'><span class='fu'>std</span>(<span class='kw'>efc</span>, <span class='kw'>e17age</span>, <span class='kw'>c160age</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;     e17age_z   c160age_z
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+<span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  0.19002509  0.04023278  1.98753275  1.16367507 -0.48404028  0.19002509</div><div class='input'><span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     e17age_z   c160age_z
 #&gt; 1  0.4791992  0.19002509
 #&gt; 2  1.0969170  0.04023278
 #&gt; 3  0.3556557  1.98753275
 #&gt; 4 -1.4974976  1.16367507
 #&gt; 5  0.6027428 -0.48404028
 #&gt; 6  0.7262864  0.19002509</div><div class='input'>
-<span class='fu'>center</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c160age</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt; [1]  2.5371809  0.5371809 26.5371809 15.5371809 -6.4628191  2.5371809</div><div class='input'><span class='fu'>center</span>(<span class='kw'>efc</span>, <span class='kw'>e17age</span>, <span class='kw'>c160age</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;     e17age_c  c160age_c
+<span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  2.5371809  0.5371809 26.5371809 15.5371809 -6.4628191  2.5371809</div><div class='input'><span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     e17age_c  c160age_c
 #&gt; 1   3.878788  2.5371809
 #&gt; 2   8.878788  0.5371809
 #&gt; 3   2.878788 26.5371809
@@ -281,7 +279,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 5   4.878788 -6.4628191
 #&gt; 6   5.878788  2.5371809</div><div class='input'>
 <span class='co'># NOTE!</span>
-<span class='fu'>std</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>) <span class='co'># returns a vector</span></div><div class='output co'>#&gt;   [1]  0.47919925  1.09691703  0.35565569 -1.49749765  0.60274280  0.72628636
+<span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>)</span> <span class='co'># returns a vector</span>
+</div><div class='output co'>#&gt;   [1]  0.47919925  1.09691703  0.35565569 -1.49749765  0.60274280  0.72628636
 #&gt;   [7] -0.63269276  0.97337347 -0.01497498  0.47919925 -1.37395409  2.20880903
 #&gt;  [13]  0.10856858 -0.50914920  0.35565569  1.22046058  0.10856858 -0.87977987
 #&gt;  [19]  1.83817836 -0.01497498  1.22046058 -1.49749765  1.83817836  0.47919925
@@ -434,7 +433,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; [901] -1.74458476 -1.49749765          NA          NA          NA          NA
 #&gt; [907]          NA          NA
 #&gt; attr(,"label")
-#&gt; [1] "elder' age"</div><div class='input'><span class='fu'>std</span>(<span class='kw'>efc</span>, <span class='kw'>e17age</span>) <span class='co'># returns a data frame</span></div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
+#&gt; [1] "elder' age"</div><div class='input'><span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span><span class='op'>)</span> <span class='co'># returns a data frame</span>
+</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        16        2      2     83      3       3       2       2       2
 #&gt; 2       148        2      2     88      3       3       3       3       3
 #&gt; 3        70        1      2     82      3       2       2       1       4
@@ -4071,8 +4071,9 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 907          NA
 #&gt; 908          NA</div><div class='input'>
 <span class='co'># with quasi-quotation</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='st'>"e17age"</span>
-<span class='fu'>center</span>(<span class='kw'>efc</span>, <span class='op'>!</span><span class='op'>!</span><span class='kw'>x</span>, append = <span class='fl'>FALSE</span>) <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;     e17age_c
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='st'>"e17age"</span>
+<span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span>, <span class='op'>!</span><span class='op'>!</span><span class='va'>x</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     e17age_c
 #&gt; 1   3.878788
 #&gt; 2   8.878788
 #&gt; 3   2.878788
@@ -4080,11 +4081,12 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 5   4.878788
 #&gt; 6   5.878788</div><div class='input'>
 <span class='co'># works with mutate()</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e17age</span>, <span class='kw'>neg_c_7</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(age_std = <span class='fu'>std</span>(<span class='kw'>e17age</span>), burden = <span class='fu'>center</span>(<span class='kw'>neg_c_7</span>)) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>()</div><div class='output co'>#&gt;   e17age neg_c_7    age_std     burden
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>neg_c_7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>age_std <span class='op'>=</span> <span class='fu'>std</span><span class='op'>(</span><span class='va'>e17age</span><span class='op'>)</span>, burden <span class='op'>=</span> <span class='fu'>center</span><span class='op'>(</span><span class='va'>neg_c_7</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   e17age neg_c_7    age_std     burden
 #&gt; 1     83      12  0.4791992  0.1502242
 #&gt; 2     88      20  1.0969170  8.1502242
 #&gt; 3     82      11  0.3556557 -0.8497758
@@ -4092,7 +4094,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 5     84      12  0.6027428  0.1502242
 #&gt; 6     85      19  0.7262864  7.1502242</div><div class='input'>
 <span class='co'># works also with grouped data frames</span>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>std</span>(<span class='kw'>disp</span>)</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>std</span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -4159,9 +4162,10 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; Maserati Bora        0.56703942
 #&gt; Volvo 142E          -0.88529152</div><div class='input'>
 <span class='co'># compare new column "disp_z" w/ output above</span>
-<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>cyl</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>std</span>(<span class='kw'>disp</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
+<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>std</span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
 #&gt; </span><span style='color: #555555;'># Groups:   cyl [3]</span><span>
 #&gt;      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb disp_z
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
@@ -4176,9 +4180,10 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; </span><span style='color: #555555;'> 9</span><span>  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2  1.33 
 #&gt; </span><span style='color: #555555;'>10</span><span>  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4 -</span><span style='color: #BB0000;'>0.378</span><span>
 #&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>iris</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 <span class='co'># also standardize factors</span>
-<span class='fu'>std</span>(<span class='kw'>iris</span>, include.fac = <span class='fl'>TRUE</span>, append = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z Species_z
+<span class='fu'>std</span><span class='op'>(</span><span class='va'>iris</span>, include.fac <span class='op'>=</span> <span class='cn'>TRUE</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z Species_z
 #&gt; 1      -0.89767388    1.01560199    -1.33575163 -1.3110521482 -1.220656
 #&gt; 2      -1.13920048   -0.13153881    -1.33575163 -1.3110521482 -1.220656
 #&gt; 3      -1.38072709    0.32731751    -1.39239929 -1.3110521482 -1.220656
@@ -4329,7 +4334,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 148     0.79301235   -0.13153881     0.81685914  1.0504160307  1.220656
 #&gt; 149     0.43072244    0.78617383     0.93015445  1.4439940605  1.220656
 #&gt; 150     0.06843254   -0.13153881     0.76021149  0.7880306775  1.220656</div><div class='input'><span class='co'># don't standardize factors</span>
-<span class='fu'>std</span>(<span class='kw'>iris</span>, include.fac = <span class='fl'>FALSE</span>, append = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z  Species_z
+<span class='fu'>std</span><span class='op'>(</span><span class='va'>iris</span>, include.fac <span class='op'>=</span> <span class='cn'>FALSE</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z  Species_z
 #&gt; 1      -0.89767388    1.01560199    -1.33575163 -1.3110521482     setosa
 #&gt; 2      -1.13920048   -0.13153881    -1.33575163 -1.3110521482     setosa
 #&gt; 3      -1.38072709    0.32731751    -1.39239929 -1.3110521482     setosa
@@ -4481,8 +4487,9 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 149     0.43072244    0.78617383     0.93015445  1.4439940605  virginica
 #&gt; 150     0.06843254   -0.13153881     0.76021149  0.7880306775  virginica</div><div class='input'>
 <span class='co'># standardize only variables with more than 10 unique values</span>
-<span class='kw'>p</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>x</span>) <span class='kw'>dplyr</span>::<span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span>(<span class='kw'>x</span>) <span class='op'>&gt;</span> <span class='fl'>10</span>
-<span class='fu'>std_if</span>(<span class='kw'>efc</span>, predicate = <span class='kw'>p</span>, append = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;        c12hour_z    e17age_z   c160age_z  barthtot_z   neg_c_7_z  pos_v_4_z
+<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>10</span>
+<span class='fu'>std_if</span><span class='op'>(</span><span class='va'>efc</span>, predicate <span class='op'>=</span> <span class='va'>p</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        c12hour_z    e17age_z   c160age_z  barthtot_z   neg_c_7_z  pos_v_4_z
 #&gt; 1   -0.519615996  0.47919925  0.19002509  0.35385338  0.03890892 -0.2125309
 #&gt; 2    2.078551270  1.09691703  0.04023278  0.35385338  2.11095413 -0.6583397
 #&gt; 3    0.543270613  0.35565569  1.98753275 -1.00022044 -0.22009673  0.2332779
@@ -6299,7 +6306,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 905          NA
 #&gt; 906          NA
 #&gt; 907          NA
-#&gt; 908          NA</div><div class='input'></div></span></pre>
+#&gt; 908          NA</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -6315,7 +6323,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

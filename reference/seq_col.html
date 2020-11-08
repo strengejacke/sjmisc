@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,9 +142,9 @@
    while <code>seq_row(x)</code> is a convenient wrapper for <code><a href='https://rdrr.io/r/base/seq.html'>seq_len(nrow(x))</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seq_col</span>(<span class='kw'>x</span>)
+    <pre class="usage"><span class='fu'>seq_col</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
 
-<span class='fu'>seq_row</span>(<span class='kw'>x</span>)</pre>
+<span class='fu'>seq_row</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,8 +160,10 @@
     <p>A numeric sequence from 1 to number of columns or rows.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>iris</span>)
-<span class='fu'>seq_col</span>(<span class='kw'>iris</span>)</div><div class='output co'>#&gt; [1] 1 2 3 4 5</div><div class='input'><span class='fu'>seq_row</span>(<span class='kw'>iris</span>)</div><div class='output co'>#&gt;   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+<span class='fu'>seq_col</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 1 2 3 4 5</div><div class='input'><span class='fu'>seq_row</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
 #&gt;  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
 #&gt;  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
 #&gt;  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
@@ -175,7 +171,8 @@
 #&gt;  [91]  91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107 108
 #&gt; [109] 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126
 #&gt; [127] 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144
-#&gt; [145] 145 146 147 148 149 150</div><div class='input'></div></pre>
+#&gt; [145] 145 146 147 148 149 150</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -191,7 +188,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

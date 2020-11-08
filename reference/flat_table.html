@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,14 +142,14 @@
              proportional (marginal) table.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>flat_table</span>(
-  <span class='kw'>data</span>,
-  <span class='kw'>...</span>,
-  margin = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"counts"</span>, <span class='st'>"cell"</span>, <span class='st'>"row"</span>, <span class='st'>"col"</span>),
-  digits = <span class='fl'>2</span>,
-  show.values = <span class='fl'>FALSE</span>,
-  weights = <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>flat_table</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>...</span>,
+  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"counts"</span>, <span class='st'>"cell"</span>, <span class='st'>"row"</span>, <span class='st'>"col"</span><span class='op'>)</span>,
+  digits <span class='op'>=</span> <span class='fl'>2</span>,
+  show.values <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  weights <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,10 +200,11 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
     <div class='dont-index'><p><code><a href='frq.html'>frq</a></code> for simple frequency table of labelled vectors.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
 
 <span class='co'># flat table with counts</span>
-<span class='fu'>flat_table</span>(<span class='kw'>efc</span>, <span class='kw'>e42dep</span>, <span class='kw'>c172code</span>, <span class='kw'>e16sex</span>)</div><div class='output co'>#&gt;                                                      e16sex male female
+<span class='fu'>flat_table</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>e16sex</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                                                      e16sex male female
 #&gt; e42dep               c172code                                          
 #&gt; independent          low level of education                    5      7
 #&gt;                      intermediate level of education          15     30
@@ -224,7 +219,8 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
 #&gt;                      intermediate level of education          43    120
 #&gt;                      high level of education                  11     39</div><div class='input'>
 <span class='co'># flat table with proportions</span>
-<span class='fu'>flat_table</span>(<span class='kw'>efc</span>, <span class='kw'>e42dep</span>, <span class='kw'>c172code</span>, <span class='kw'>e16sex</span>, margin = <span class='st'>"row"</span>)</div><div class='output co'>#&gt;                                                      e16sex  male female
+<span class='fu'>flat_table</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>e16sex</span>, margin <span class='op'>=</span> <span class='st'>"row"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                                                      e16sex  male female
 #&gt; e42dep               c172code                                           
 #&gt; independent          low level of education                 41.67  58.33
 #&gt;                      intermediate level of education        33.33  66.67
@@ -241,11 +237,12 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
 <span class='co'># flat table from grouped data frame. You need to select</span>
 <span class='co'># the grouping variables and at least two more variables for</span>
 <span class='co'># cross tabulation.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='https://dplyr.tidyverse.org'>dplyr</a></span>)
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>e16sex</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>c172code</span>, <span class='kw'>e42dep</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; <span style='color: #BB0000;'>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>c172code</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #BB0000;'>
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>male
 #&gt; 
 #&gt; </span><span>                                e42dep independent slightly dependent moderately dependent severely dependent
@@ -263,10 +260,11 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
 #&gt; intermediate level of education                 30                 96                  104                120
 #&gt; high level of education                          4                 26                   44                 39
 #&gt; </div><div class='input'>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>, <span class='kw'>c172code</span>, <span class='kw'>n4pstu</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>n4pstu</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>male, independent
 #&gt; 
 #&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+
@@ -339,10 +337,11 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
 #&gt; high level of education                            7            8           16            8             0
 #&gt; </div><div class='input'>
 <span class='co'># now it gets weird...</span>
-<span class='kw'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='kw'>e16sex</span>, <span class='kw'>e42dep</span>, <span class='kw'>c172code</span>, <span class='kw'>n4pstu</span>, <span class='kw'>c161sex</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>flat_table</span>()</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>
+<span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>n4pstu</span>, <span class='va'>c161sex</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #BB0000;'>
 #&gt; Grouped by: </span><span style='color: #00BBBB;'>male, independent
 #&gt; 
 #&gt; </span><span>                                              c161sex Male Female
@@ -509,7 +508,8 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
 #&gt;                                 Care Level 2             7      9
 #&gt;                                 Care Level 3             3      5
 #&gt;                                 Care Level 3+            0      0
-#&gt; </div><div class='input'></div></span></pre>
+#&gt; </div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -525,7 +525,7 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

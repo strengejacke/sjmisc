@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,7 +142,7 @@
                values with regular <code>NA</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>zap_inf</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>zap_inf</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,19 +167,21 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
     <p><code>x</code>, where all <code>Inf</code>, <code>-Inf</code> and <code>NaN</code> are converted to <code>NA</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>NA</span>, <span class='fl'>3</span>, <span class='fl'>NaN</span>, <span class='fl'>4</span>, <span class='fl'>NA</span>, <span class='fl'>5</span>, <span class='fl'>Inf</span>, <span class='op'>-</span><span class='fl'>Inf</span>, <span class='fl'>6</span>, <span class='fl'>7</span>)
-<span class='fu'>zap_inf</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt;  [1]  1  2 NA  3 NA  4 NA  5 NA NA  6  7</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>efc</span>)
+    <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='cn'>NA</span>, <span class='fl'>3</span>, <span class='cn'>NaN</span>, <span class='fl'>4</span>, <span class='cn'>NA</span>, <span class='fl'>5</span>, <span class='cn'>Inf</span>, <span class='op'>-</span><span class='cn'>Inf</span>, <span class='fl'>6</span>, <span class='fl'>7</span><span class='op'>)</span>
+<span class='fu'>zap_inf</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1]  1  2 NA  3 NA  4 NA  5 NA NA  6  7</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
 <span class='co'># produce some NA and NaN values</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e42dep</span>[<span class='fl'>1</span>] <span class='op'>&lt;-</span> <span class='fl'>NaN</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e42dep</span>[<span class='fl'>2</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>[<span class='fl'>1</span>] <span class='op'>&lt;-</span> <span class='fl'>NaN</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>[<span class='fl'>2</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>[<span class='fl'>2</span>] <span class='op'>&lt;-</span> <span class='fl'>NaN</span>
-<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>e17age</span>[<span class='fl'>1</span>] <span class='op'>&lt;-</span> <span class='fl'>NA</span>
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NaN</span>
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NaN</span>
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NaN</span>
+<span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='cn'>NA</span>
 
 <span class='co'># only zap NaN for c12hour</span>
-<span class='fu'>zap_inf</span>(<span class='kw'>efc</span><span class='op'>$</span><span class='kw'>c12hour</span>)</div><div class='output co'>#&gt;   [1]  NA  NA  70 168 168  16 161 110  28  40 100  25  25  24  56  20  25 126
+<span class='fu'>zap_inf</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c12hour</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1]  NA  NA  70 168 168  16 161 110  28  40 100  25  25  24  56  20  25 126
 #&gt;  [19] 168 118 150  50  18 168  15 168  12   7  35 168 150 168 168 119 168 168
 #&gt;  [37] 168  28 168  30  14 168 168  50 168  24 168  42 154  60 168 168  24 168
 #&gt;  [55] 150 168 168 168 168 168 128 168  11  50  80  15   7  21 168  24   6  30
@@ -240,7 +236,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 #&gt; [1] "average number of hours of care per week"</div><div class='input'>
 <span class='co'># only zap NaN for c12hour and e17age, not for e42dep,</span>
 <span class='co'># but return complete data framee</span>
-<span class='fu'>zap_inf</span>(<span class='kw'>efc</span>, <span class='kw'>c12hour</span>, <span class='kw'>e17age</span>)</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
+<span class='fu'>zap_inf</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c12hour</span>, <span class='va'>e17age</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        NA        2      2     NA    NaN       3       2       2       2
 #&gt; 2        NA        2      2     NA     NA       3       3       3       3
 #&gt; 3        70        1      2     82      3       2       2       1       4
@@ -2968,7 +2965,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 #&gt; 907       NA      NA      NA     NA        0        0      0      NA
 #&gt; 908       NA      NA      NA     NA        0        0      0      NA</div><div class='input'>
 <span class='co'># zap NaN for complete data frame</span>
-<span class='fu'>zap_inf</span>(<span class='kw'>efc</span>)</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
+<span class='fu'>zap_inf</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        NA        2      2     NA     NA       3       2       2       2
 #&gt; 2        NA        2      2     NA     NA       3       3       3       3
 #&gt; 3        70        1      2     82      3       2       2       1       4
@@ -5694,7 +5692,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 #&gt; 905       NA      NA      NA     NA        0        1      1       1
 #&gt; 906       NA      NA      NA     NA        0        1      2       2
 #&gt; 907       NA      NA      NA     NA        0        0      0      NA
-#&gt; 908       NA      NA      NA     NA        0        0      0      NA</div><div class='input'></div></pre>
+#&gt; 908       NA      NA      NA     NA        0        0      0      NA</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -5710,7 +5709,7 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

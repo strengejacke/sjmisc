@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,9 +142,9 @@
   a factor by removing space and punctuation characters.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tidy_values</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>tidy_values</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>clean_values</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,15 +169,18 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
     <p><code>x</code>, with "cleaned" values or levels.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span>(<span class='st'>"Char %s"</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>LETTERS</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], size = <span class='fl'>10</span>, replace = <span class='fl'>TRUE</span>))
-<span class='kw'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span>(<span class='st'>"F / %s"</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='kw'>letters</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>], size = <span class='fl'>10</span>, replace = <span class='fl'>TRUE</span>)))
-<span class='kw'>f3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, size = <span class='fl'>10</span>, replace = <span class='fl'>TRUE</span>)
+    <pre class="examples"><div class='input'><span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"Char %s"</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>as.factor</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/sprintf.html'>sprintf</a></span><span class='op'>(</span><span class='st'>"F / %s"</span>, <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>letters</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, size <span class='op'>=</span> <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>f3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, size <span class='op'>=</span> <span class='fl'>10</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>f1</span>, <span class='kw'>f2</span>, <span class='kw'>f3</span>, stringsAsFactors = <span class='fl'>FALSE</span>)
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>f1</span>, <span class='va'>f2</span>, <span class='va'>f3</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>clean_values</span>(<span class='kw'>f1</span>)</div><div class='output co'>#&gt;  [1] "Char_E" "Char_B" "Char_D" "Char_C" "Char_E" "Char_E" "Char_E" "Char_E"
-#&gt;  [9] "Char_B" "Char_D"</div><div class='input'><span class='fu'>clean_values</span>(<span class='kw'>f2</span>)</div><div class='output co'>#&gt;  [1] F_d F_e F_e F_b F_d F_d F_d F_e F_a F_a
-#&gt; Levels: F_a F_b F_d F_e</div><div class='input'><span class='fu'>clean_values</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
+<span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] "Char_E" "Char_B" "Char_D" "Char_C" "Char_E" "Char_E" "Char_E" "Char_E"
+#&gt;  [9] "Char_B" "Char_D"</div><div class='input'><span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] F_d F_e F_e F_b F_d F_d F_d F_e F_a F_a
+#&gt; Levels: F_a F_b F_d F_e</div><div class='input'><span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
 #&gt;    f1     f2       f3
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
 #&gt; </span><span style='color: #555555;'> 1</span><span> Char_E F_d       2
@@ -195,7 +192,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 #&gt; </span><span style='color: #555555;'> 7</span><span> Char_E F_d       5
 #&gt; </span><span style='color: #555555;'> 8</span><span> Char_E F_e       1
 #&gt; </span><span style='color: #555555;'> 9</span><span> Char_B F_a       3
-#&gt; </span><span style='color: #555555;'>10</span><span> Char_D F_a       5</div><div class='input'></div></span></pre>
+#&gt; </span><span style='color: #555555;'>10</span><span> Char_D F_a       5</div><div class='input'>
+</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -211,7 +209,7 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

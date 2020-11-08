@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,7 +142,7 @@
    chars, without cropping words.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>shorten_string</span>(<span class='kw'>s</span>, max.length = <span class='kw'>NULL</span>, abbr = <span class='st'>"..."</span>)</pre>
+    <pre class="usage"><span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, max.length <span class='op'>=</span> <span class='cn'>NULL</span>, abbr <span class='op'>=</span> <span class='st'>"..."</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,15 +172,19 @@
   might be shorter.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>s</span> <span class='op'>&lt;-</span> <span class='st'>"This can be considered as very long string!"</span>
+    <pre class="examples"><div class='input'><span class='va'>s</span> <span class='op'>&lt;-</span> <span class='st'>"This can be considered as very long string!"</span>
 
 <span class='co'># string is shorter than max.length, so returned as is</span>
-<span class='fu'>shorten_string</span>(<span class='kw'>s</span>, <span class='fl'>60</span>)</div><div class='output co'>#&gt; [1] "This can be considered as very long string!"</div><div class='input'>
+<span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, <span class='fl'>60</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "This can be considered as very long string!"</div><div class='input'>
 <span class='co'># string is shortened to as many words that result in</span>
 <span class='co'># a string of maximum 20 chars</span>
-<span class='fu'>shorten_string</span>(<span class='kw'>s</span>, <span class='fl'>20</span>)</div><div class='output co'>#&gt; [1] "This can be..."</div><div class='input'>
+<span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, <span class='fl'>20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "This can be..."</div><div class='input'>
 <span class='co'># string including "considered" is exactly of length 22 chars</span>
-<span class='fu'>shorten_string</span>(<span class='kw'>s</span>, <span class='fl'>22</span>)</div><div class='output co'>#&gt; [1] "This can be considered..."</div><div class='input'></div></pre>
+<span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, <span class='fl'>22</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "This can be considered..."</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -202,7 +200,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

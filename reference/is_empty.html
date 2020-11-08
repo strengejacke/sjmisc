@@ -88,12 +88,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -148,7 +142,7 @@
                length 1), a list or any vector (numeric, atomic) is empty or not.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>is_empty</span>(<span class='kw'>x</span>, first.only = <span class='fl'>TRUE</span>, all.na.empty = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span>, first.only <span class='op'>=</span> <span class='cn'>TRUE</span>, all.na.empty <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,25 +176,40 @@ and will return <code>TRUE</code> if <code>all.na.empty = TRUE</code> (default).
         'Examples') and will return <code>TRUE</code>, unless <code>all.na.empty==FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>is_empty</span>(<span class='st'>"test"</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_empty</span>(<span class='st'>""</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span>(<span class='fl'>NA</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span>(<span class='kw'>NULL</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>"test"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># string is not empty</span>
-<span class='fu'>is_empty</span>(<span class='st'>" "</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>" "</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># however, this trimmed string is</span>
-<span class='fu'>is_empty</span>(<span class='fu'><a href='trim.html'>trim</a></span>(<span class='st'>" "</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='trim.html'>trim</a></span><span class='op'>(</span><span class='st'>" "</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># numeric vector</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
-<span class='fu'>is_empty</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='kw'>x</span>[<span class='op'>-</span><span class='fl'>1</span>]
-<span class='fu'>is_empty</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># check multiple elements of character vectors</span>
-<span class='fu'>is_empty</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>""</span>, <span class='st'>"a"</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>""</span>, <span class='st'>"a"</span>), first.only = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1]  TRUE FALSE</div><div class='input'>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"a"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"a"</span><span class='op'>)</span>, first.only <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1]  TRUE FALSE</div><div class='input'>
 <span class='co'># empty data frame</span>
-<span class='kw'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>()
-<span class='fu'>is_empty</span>(<span class='kw'>d</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># empty list</span>
-<span class='fu'>is_empty</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>NULL</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># NA vector</span>
-<span class='kw'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>,<span class='fl'>5</span>)
-<span class='fu'>is_empty</span>(<span class='kw'>x</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span>(<span class='kw'>x</span>, all.na.empty = <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'></div></pre>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span>, all.na.empty <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -216,7 +225,7 @@ and will return <code>TRUE</code> if <code>all.na.empty = TRUE</code> (default).
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
