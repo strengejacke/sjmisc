@@ -40,5 +40,5 @@ Suggests:
     tidyr
 URL: https://strengejacke.github.io/sjmisc
 BugReports: https://github.com/strengejacke/sjmisc/issues
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr

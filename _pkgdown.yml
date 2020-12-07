@@ -7,6 +7,10 @@ template:
     bootswatch: flatly
 
 reference:
+- title: "Introduction"
+  contents:
+  - sjmisc-package
+
 - title: "Recode and Data Transformation Functions"
   contents:
   - rec
@@ -121,3 +125,7 @@ reference:
   - typical_value
   - var_type
   - word_wrap
+
+- title: "Sample Data"
+  contents:
+  - efc
