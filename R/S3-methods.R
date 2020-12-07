@@ -1,4 +1,4 @@
-#' @importFrom insight print_color format_table
+#' @importFrom insight print_color export_table
 #' @importFrom purrr walk
 #' @importFrom dplyr select n_distinct
 #' @importFrom rlang .data
@@ -56,7 +56,7 @@ print.sjmisc_frq <- function(x, ...) {
     colnames(dat)[names(dat) == "cum.prc"] <- "Cum. %"
 
     # print frq-table
-    cat(insight::format_table(dat, missing = "<NA>"))
+    cat(insight::export_table(dat, missing = "<NA>"))
 
     cat("\n")
   })
