@@ -17,7 +17,7 @@ select-helpers.
 See 'Examples' or \href{../doc/design_philosophy.html}{package-vignette}.}
 
 \item{abbr}{Logical, if \code{TRUE}, returns a shortened, abbreviated value
-for the variable type (as returned by \code{\link[pillar]{type_sum}}).
+for the variable type (as returned by \code{pillar::type_sum()}).
 If \code{FALSE} (default), a longer "description" is returned.}
 }
 \value{

@@ -234,5 +234,5 @@ Where applicable, the recoding-functions in **sjmisc** have "scoped" versions as
 
 ## Cheat Sheet
 
-A cheatsheet can be downloaded from the [RStudio cheatsheet collection](https://www.rstudio.com/resources/cheatsheets/).
+A cheatsheet can be downloaded from the [RStudio cheatsheet collection](https://rstudio.com/resources/cheatsheets/).
 

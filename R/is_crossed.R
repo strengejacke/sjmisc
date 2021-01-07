@@ -19,7 +19,7 @@
 #' @note If factors are nested, a message is displayed to tell whether \code{f1}
 #'   is nested within \code{f2} or vice versa.
 #'
-#' @references Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
+#' @references Grace, K. The Difference Between Crossed and Nested Factors. \href{https://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
 #'
 #' @examples
 #' # crossed factors, each category of

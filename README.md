@@ -1,6 +1,6 @@
 # sjmisc - Data and Variable Transformation Functions <img src="man/figures/logo.png" align="right" />
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sjmisc)](https://cran.r-project.org/package=sjmisc) &#160;&#160; [![DOI](http://joss.theoj.org/papers/10.21105/joss.00754/status.svg)](https://doi.org/10.21105/joss.00754) &#160;&#160; [![Documentation](https://img.shields.io/badge/documentation-sjmisc-orange.svg?colorB=E91E63)](https://strengejacke.github.io/sjmisc/) &#160;&#160; [![downloads](http://cranlogs.r-pkg.org/badges/sjmisc)](http://cranlogs.r-pkg.org/) &#160;&#160; [![total](http://cranlogs.r-pkg.org/badges/grand-total/sjmisc)](http://cranlogs.r-pkg.org/)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sjmisc)](https://cran.r-project.org/package=sjmisc) &#160;&#160; [![DOI](http://joss.theoj.org/papers/10.21105/joss.00754/status.svg)](https://doi.org/10.21105/joss.00754) &#160;&#160; [![Documentation](https://img.shields.io/badge/documentation-sjmisc-orange.svg?colorB=E91E63)](https://strengejacke.github.io/sjmisc/) &#160;&#160; [![downloads](http://cranlogs.r-pkg.org/badges/sjmisc)](https://cranlogs.r-pkg.org:443/) &#160;&#160; [![total](http://cranlogs.r-pkg.org/badges/grand-total/sjmisc)](https://cranlogs.r-pkg.org:443/)
 
 Data preparation is a common task in research, which usually takes the most amount of time in the analytical process. Packages for data preparation have been released recently as part of the _tidyverse_, focussing on the transformation of data sets. Packages with special focus on transformation of _variables_, which fit into the workflow and design-philosophy of the tidyverse, are missing.
 
@@ -33,7 +33,7 @@ install.packages("sjmisc")
 
 ## References, documentation and examples
 
-A cheatsheet can be downloaded [from here](http://strengejacke.de/sjmisc-cheatsheet.pdf) (PDF) or from the [RStudio cheatsheet collection](https://www.rstudio.com/resources/cheatsheets/).
+A cheatsheet can be downloaded [from here](http://strengejacke.de/sjmisc-cheatsheet.pdf) (PDF) or from the [RStudio cheatsheet collection](https://rstudio.com/resources/cheatsheets/).
 
 For more examples, see package vignettes (`browseVignettes("sjmisc")`).
 
