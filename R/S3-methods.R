@@ -7,8 +7,8 @@ print.sjmisc_frq <- function(x, ...) {
   purrr::walk(x, function(dat) {
 
     # get variable label
-    lab <- attr(dat, "label", exact = T)
-    vt <- attr(dat, "vartype", exact = T)
+    lab <- attr(dat, "label", exact = TRUE)
+    vt <- attr(dat, "vartype", exact = TRUE)
 
     # fix variable type string
     if (!sjmisc::is_empty(vt))
@@ -25,7 +25,7 @@ print.sjmisc_frq <- function(x, ...) {
     }
 
     # get grouping title label
-    grp <- attr(dat, "group", exact = T)
+    grp <- attr(dat, "group", exact = TRUE)
 
     # print title for grouping
     if (!is.null(grp)) {
@@ -38,8 +38,8 @@ print.sjmisc_frq <- function(x, ...) {
       "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n\n",
       sum(dat$frq, na.rm = TRUE),
       sum(dat$frq[0:(nrow(dat) - 1)], na.rm = TRUE),
-      attr(dat, "mean", exact = T),
-      attr(dat, "sd", exact = T)
+      attr(dat, "mean", exact = TRUE),
+      attr(dat, "sd", exact = TRUE)
     ), "blue")
 
     # don't print labels, if all except for the NA value are "none"

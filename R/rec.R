@@ -18,6 +18,8 @@
 #'   for examples. \code{\link{rec_pattern}} is a convenient function to
 #'   create recode strings for grouping variables.
 #' @param as.num Logical, if \code{TRUE}, return value will be numeric, not a factor.
+#' @param to.factor Logical, alias for \code{as.num}. If \code{TRUE}, return value
+#'   will be a factor, not numeric.
 #' @param var.label Optional string, to set variable label attribute for the
 #'   returned variable (see vignette \href{https://cran.r-project.org/package=sjlabelled/vignettes/intro_sjlabelled.html}{Labelled Data and the sjlabelled-Package}).
 #'   If \code{NULL} (default), variable label attribute of \code{x} will
@@ -181,17 +183,21 @@
 #' head(out)
 #' @importFrom insight print_color
 #' @export
-rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
+rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", as.factor = !as.num) {
   UseMethod("rec")
 }
 
 
 #' @importFrom dplyr quos
 #' @export
-rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
+rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
 
   # evaluate arguments, generate data
   .dat <- get_dot_data(x, dplyr::quos(...))
+
+  if (!missing(to.factor)) {
+    as.num <- !to.factor
+  }
 
   rec_core_fun(
     x = x,
@@ -209,9 +215,13 @@ rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels
 #' @importFrom dplyr bind_cols select quos
 #' @importFrom purrr map
 #' @export
-rec.mids <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
+rec.mids <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
   vars <- dplyr::quos(...)
   ndf <- prepare_mids_recode(x)
+
+  if (!missing(to.factor)) {
+    as.num <- !to.factor
+  }
 
   # select variable and compute rowsums. add this variable
   # to each imputed
@@ -242,11 +252,14 @@ rec.mids <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = 
 #' @importFrom dplyr select_if
 #' @rdname rec
 #' @export
-rec_if <- function(x, predicate, rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r") {
+rec_if <- function(x, predicate, rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
 
   # select variables that match logical conditions
   .dat <- dplyr::select_if(x, .predicate = predicate)
 
+  if (!missing(to.factor)) {
+    as.num <- !to.factor
+  }
 
   # if no variable matches the condition specified
   # in predicate, return original data

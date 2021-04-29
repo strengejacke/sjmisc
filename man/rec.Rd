@@ -13,7 +13,8 @@ rec(
   var.label = NULL,
   val.labels = NULL,
   append = TRUE,
-  suffix = "_r"
+  suffix = "_r",
+  as.factor = !as.num
 )
 
 rec_if(
@@ -24,7 +25,8 @@ rec_if(
   var.label = NULL,
   val.labels = NULL,
   append = TRUE,
-  suffix = "_r"
+  suffix = "_r",
+  to.factor = !as.num
 )
 }
 \arguments{
@@ -78,6 +80,9 @@ have been recoded/transformed will be overwritten.}
 
 \item{predicate}{A predicate function to be applied to the columns. The
 variables for which \code{predicate} returns \code{TRUE} are selected.}
+
+\item{to.factor}{Logical, alias for \code{as.num}. If \code{TRUE}, return value
+will be a factor, not numeric.}
 }
 \value{
 \code{x} with recoded categories. If \code{x} is a data frame,
