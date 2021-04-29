@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -156,7 +167,7 @@
       <td><p>Optional, unquoted names of variables that should be selected for
 further processing. Required, if <code>x</code> is a data frame (and no
 vector) and only selected variables from <code>x</code> should be processed.
-You may also use functions like <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code> or tidyselect's
+You may also use functions like <code>:</code> or tidyselect's
 select-helpers.
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
@@ -187,7 +198,7 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>to_dummy</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   e42dep_1 e42dep_2 e42dep_3 e42dep_4
+</div><div class='co'>#&gt;   e42dep_1 e42dep_2 e42dep_3 e42dep_4
 #&gt; 1        0        0        1        0
 #&gt; 2        0        0        1        0
 #&gt; 3        0        0        1        0
@@ -196,7 +207,7 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 #&gt; 6        0        0        0        1</div><div class='input'>
 <span class='co'># add value label as suffix to new variable name</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>to_dummy</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, suffix <span class='op'>=</span> <span class='st'>"label"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   e42dep_independent e42dep_slightly dependent e42dep_moderately dependent
+</div><div class='co'>#&gt;   e42dep_independent e42dep_slightly dependent e42dep_moderately dependent
 #&gt; 1                  0                         0                           1
 #&gt; 2                  0                         0                           1
 #&gt; 3                  0                         0                           1
@@ -212,7 +223,7 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 #&gt; 6                         1</div><div class='input'>
 <span class='co'># use "dummy" as new variable name</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>to_dummy</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, var.name <span class='op'>=</span> <span class='st'>"dummy"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   dummy_1 dummy_2 dummy_3 dummy_4
+</div><div class='co'>#&gt;   dummy_1 dummy_2 dummy_3 dummy_4
 #&gt; 1       0       0       1       0
 #&gt; 2       0       0       1       0
 #&gt; 3       0       0       1       0
@@ -221,7 +232,7 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 #&gt; 6       0       0       0       1</div><div class='input'>
 <span class='co'># create multiple dummies, append to data frame</span>
 <span class='fu'>to_dummy</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>c172code</span>, <span class='va'>e42dep</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     c172code_1 c172code_2 c172code_3 e42dep_1 e42dep_2 e42dep_3 e42dep_4
+</div><div class='co'>#&gt;     c172code_1 c172code_2 c172code_3 e42dep_1 e42dep_2 e42dep_3 e42dep_4
 #&gt; 1            0          1          0        0        0        1        0
 #&gt; 2            0          1          0        0        0        1        0
 #&gt; 3            1          0          0        0        0        1        0
@@ -1132,10 +1143,10 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 #&gt; 908         NA         NA         NA       NA       NA       NA       NA</div><div class='input'>
 <span class='co'># pipe-workflow</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='va'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>e16sex</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>e16sex</span>, <span class='va'>c172code</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>to_dummy</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     e42dep_1 e42dep_2 e42dep_3 e42dep_4 e16sex_1 e16sex_2 c172code_1 c172code_2
+</div><div class='co'>#&gt;     e42dep_1 e42dep_2 e42dep_3 e42dep_4 e16sex_1 e16sex_2 c172code_1 c172code_2
 #&gt; 1          0        0        1        0        0        1          0          1
 #&gt; 2          0        0        1        0        0        1          0          1
 #&gt; 3          0        0        1        0        0        1          1          0
@@ -2965,11 +2976,11 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -2977,6 +2988,8 @@ e.g. <em>x_low</em>, <em>x_mid</em>, <em>x_high</em>. May be abbreviated.</p></t
 
   
 
+
+  
 
   </body>
 </html>

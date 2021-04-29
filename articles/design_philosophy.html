@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -71,7 +73,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/strengejacke/sjmisc/">
+  <a href="https://github.com/strengejacke/sjmisc/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -90,11 +92,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>The Design Philosophy of Functions in sjmisc</h1>
-                        <h4 class="author">Daniel Lüdecke</h4>
+                        <h4 data-toc-skip class="author">Daniel Lüdecke</h4>
             
-            <h4 class="date">2021-01-07</h4>
+            <h4 data-toc-skip class="date">2021-04-29</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/master/vignettes/design_philosophy.Rmd"><code>vignettes/design_philosophy.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/master/vignettes/design_philosophy.Rmd" class="external-link"><code>vignettes/design_philosophy.Rmd</code></a></small>
       <div class="hidden name"><code>design_philosophy.Rmd</code></div>
 
     </div>
@@ -104,28 +106,28 @@
 <p>Basically, this package complements the <em>dplyr</em> package in that <em>sjmisc</em> takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc. The data transformation functions also support labelled data.</p>
 <div id="the-design-of-data-transformation-functions" class="section level1">
 <h1 class="hasAnchor">
-<a href="#the-design-of-data-transformation-functions" class="anchor"></a>The design of data transformation functions</h1>
+<a href="#the-design-of-data-transformation-functions" class="anchor" aria-hidden="true"></a>The design of data transformation functions</h1>
 <p>The design of data transformation functions in this package follows, where appropriate, the <em>tidyverse-approach</em>, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.</p>
 <div id="the-data-argument" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-data-argument" class="anchor"></a>The data-argument</h2>
-<p>A major difference to dplyr-functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> is that the data-argument (the first argument of each function), may either be a <em>data frame</em> or a <em>vector</em>. The returned object for each function <em>equals the type of the data-argument</em>:</p>
+<a href="#the-data-argument" class="anchor" aria-hidden="true"></a>The data-argument</h2>
+<p>A major difference to dplyr-functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> is that the data-argument (the first argument of each function), may either be a <em>data frame</em> or a <em>vector</em>. The returned object for each function <em>equals the type of the data-argument</em>:</p>
 <ul>
 <li>If the data-argument is a vector, the function returns a vector.</li>
 <li>If the data-argument is a data frame, the function returns a data frame.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/sjmisc/">sjmisc</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">efc</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/sjmisc/" class="external-link">sjmisc</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">efc</span><span class="op">)</span>
 
 <span class="co"># returns a vector</span>
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"1,2=1; 3,4=2"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt;  num [1:908] 2 2 2 2 2 2 2 2 2 2 ...</span>
 <span class="co">#&gt;  - attr(*, "label")= chr "elder's dependency"</span>
 
 <span class="co"># returns a data frame</span>
-<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"1,2=1; 3,4=2"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"1,2=1; 3,4=2"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   e42dep_r</span>
 <span class="co">#&gt; 1        2</span>
 <span class="co">#&gt; 2        2</span>
@@ -137,16 +139,16 @@
 </div>
 <div id="the--ellipses-argument" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the--ellipses-argument" class="anchor"></a>The …-ellipses-argument</h2>
-<p>The selection of variables specified in the <code>...</code>-ellipses-argument is powered by dplyr’s <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> and tidyselect’s <code>select_helpers()</code>. This means, you can use existing functions like <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code> to select a range of variables, or also use tidyselect’s <code>select_helpers</code>, like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/one_of.html">one_of()</a></code>.</p>
+<a href="#the--ellipses-argument" class="anchor" aria-hidden="true"></a>The …-ellipses-argument</h2>
+<p>The selection of variables specified in the <code>...</code>-ellipses-argument is powered by dplyr’s <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> and tidyselect’s <code>select_helpers()</code>. This means, you can use existing functions like <code>:</code> to select a range of variables, or also use tidyselect’s <code>select_helpers</code>, like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># select all variables with "cop" in their names, and also</span>
 <span class="co"># the range from c161sex to c175empl</span>
 <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span>
-  <span class="va">efc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"cop"</span><span class="op">)</span>, <span class="va">c161sex</span><span class="op">:</span><span class="va">c175empl</span>, 
+  <span class="va">efc</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"cop"</span><span class="op">)</span>, <span class="va">c161sex</span><span class="op">:</span><span class="va">c175empl</span>, 
   rec <span class="op">=</span> <span class="st">"0,1=0; else=1"</span>, 
   append <span class="op">=</span> <span class="cn">FALSE</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r</span>
 <span class="co">#&gt; 1         1         1         1         1         0         0         1</span>
 <span class="co">#&gt; 2         1         1         1         1         1         0         1</span>
@@ -164,7 +166,7 @@
 
 <span class="co"># center all variables with "age" in name, variable c12hour</span>
 <span class="co"># and all variables from column 19 to 21</span>
-<span class="fu"><a href="../reference/std.html">center</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c12hour</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span>, <span class="fl">19</span><span class="op">:</span><span class="fl">21</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/std.html">center</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c12hour</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span>, <span class="fl">19</span><span class="op">:</span><span class="fl">21</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c12hour_c   e17age_c  c160age_c barthtot_c  neg_c_7_c pos_v_4_c</span>
 <span class="co">#&gt; 1 -26.39911   3.878788  2.5371809  10.453001  0.1502242 -0.476731</span>
 <span class="co">#&gt; 2 105.60089   8.878788  0.5371809  10.453001  8.1502242 -1.476731</span>
@@ -175,16 +177,16 @@
 </div>
 <div id="the-function-types" class="section level2">
 <h2 class="hasAnchor">
-<a href="#the-function-types" class="anchor"></a>The function-types</h2>
+<a href="#the-function-types" class="anchor" aria-hidden="true"></a>The function-types</h2>
 <p>There are two types of function designs:</p>
 <div id="coercingconverting-functions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#coercingconverting-functions" class="anchor"></a>coercing/converting functions</h3>
-<p>Functions like <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_factor.html">to_factor()</a></code> or <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html">to_label()</a></code>, which convert variables into other types or add additional information like variable or value labels as attribute, typically <em>return the complete data frame</em> that was given as first argument <em>without any new variables</em>. The variables specified in the <code>...</code>-ellipses argument are converted (overwritten), all other variables remain unchanged.</p>
+<a href="#coercingconverting-functions" class="anchor" aria-hidden="true"></a>coercing/converting functions</h3>
+<p>Functions like <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_factor.html" class="external-link">to_factor()</a></code> or <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html" class="external-link">to_label()</a></code>, which convert variables into other types or add additional information like variable or value labels as attribute, typically <em>return the complete data frame</em> that was given as first argument <em>without any new variables</em>. The variables specified in the <code>...</code>-ellipses argument are converted (overwritten), all other variables remain unchanged.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">efc</span><span class="op">[</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
 
-<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    908 obs. of  3 variables:</span>
 <span class="co">#&gt;  $ e16sex: num  2 2 2 2 2 2 1 2 2 2 ...</span>
 <span class="co">#&gt;   ..- attr(*, "label")= chr "elder's gender"</span>
@@ -197,7 +199,7 @@
 <span class="co">#&gt;   ..- attr(*, "labels")= Named num [1:4] 1 2 3 4</span>
 <span class="co">#&gt;   .. ..- attr(*, "names")= chr [1:4] "independent" "slightly dependent" "moderately dependent" "severely dependent"</span>
 
-<span class="fu"><a href="https://strengejacke.github.io/sjlabelled/reference/as_factor.html">to_factor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">e42dep</span>, <span class="va">e16sex</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="https://strengejacke.github.io/sjlabelled/reference/as_factor.html" class="external-link">to_factor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">e42dep</span>, <span class="va">e16sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 'data.frame':    908 obs. of  3 variables:</span>
 <span class="co">#&gt;  $ e16sex: Factor w/ 2 levels "1","2": 2 2 2 2 2 2 1 2 2 2 ...</span>
 <span class="co">#&gt;   ..- attr(*, "labels")= Named num [1:2] 1 2</span>
@@ -212,11 +214,11 @@
 </div>
 <div id="transformationrecoding-functions" class="section level3">
 <h3 class="hasAnchor">
-<a href="#transformationrecoding-functions" class="anchor"></a>transformation/recoding functions</h3>
+<a href="#transformationrecoding-functions" class="anchor" aria-hidden="true"></a>transformation/recoding functions</h3>
 <p>Functions like <code><a href="../reference/rec.html">rec()</a></code> or <code><a href="../reference/dicho.html">dicho()</a></code>, which transform or recode variables, by default add <em>the transformed or recoded variables</em> to the data frame, so they return the new variables <em>and</em> the original data as combined data frame. To return <em>only the transformed and recoded variables</em> specified in the <code>...</code>-ellipses argument, use argument <code>append = FALSE</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># complete data, including new columns</span>
-<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
 <span class="co">#&gt; 1      16        2      2     83      3       3       2       2       2       1</span>
 <span class="co">#&gt; 2     148        2      2     88      3       3       3       3       3       4</span>
@@ -240,7 +242,7 @@
 <span class="co">#&gt; 6      19       9      8        1        3      2       2         0         0</span>
 
 <span class="co"># only new columns</span>
-<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c82cop1_r c83cop2_r</span>
 <span class="co">#&gt; 1         2         0</span>
 <span class="co">#&gt; 2         2         2</span>
@@ -250,10 +252,10 @@
 <span class="co">#&gt; 6         0         0</span></code></pre></div>
 <p>These variables usually get a suffix, so you can bind these variables as new columns to a data frame, for instance with <code><a href="../reference/add_columns.html">add_columns()</a></code>. The function <code><a href="../reference/add_columns.html">add_columns()</a></code> is useful if you want to bind/add columns within a pipe-chain <em>to the end</em> of a data frame.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">efc</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/add_columns.html">add_columns</a></span><span class="op">(</span><span class="va">efc</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">efc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/add_columns.html">add_columns</a></span><span class="op">(</span><span class="va">efc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
 <span class="co">#&gt; 1      16        2      2     83      3       3       2       2       2       1</span>
 <span class="co">#&gt; 2     148        2      2     88      3       3       3       3       3       4</span>
@@ -278,7 +280,7 @@
 <p>If <code>append = TRUE</code> and <code>suffix = ""</code>, recoded variables will replace (overwrite) existing variables.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># complete data, existing columns c82cop1 and c83cop2 are replaced</span>
-<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">TRUE</span>, suffix <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">c82cop1</span>, <span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span>, append <span class="op">=</span> <span class="cn">TRUE</span>, suffix <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
 <span class="co">#&gt; 1      16        2      2     83      3       2       0       2       2       1</span>
 <span class="co">#&gt; 2     148        2      2     88      3       2       2       3       3       4</span>
@@ -304,13 +306,13 @@
 </div>
 <div id="sjmisc-and-dplyr" class="section level2">
 <h2 class="hasAnchor">
-<a href="#sjmisc-and-dplyr" class="anchor"></a>sjmisc and dplyr</h2>
-<p>The functions of <strong>sjmisc</strong> are designed to work together seamlessly with other packages from the tidyverse, like <strong>dplyr</strong>. For instance, you can use the functions from <strong>sjmisc</strong> both within a pipe-worklflow to manipulate data frames, or to create new variables with <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>:</p>
+<a href="#sjmisc-and-dplyr" class="anchor" aria-hidden="true"></a>sjmisc and dplyr</h2>
+<p>The functions of <strong>sjmisc</strong> are designed to work together seamlessly with other packages from the tidyverse, like <strong>dplyr</strong>. For instance, you can use the functions from <strong>sjmisc</strong> both within a pipe-worklflow to manipulate data frames, or to create new variables with <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">efc</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">c82cop1</span>, <span class="va">c83cop2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span>rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">efc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">c82cop1</span>, <span class="va">c83cop2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span>rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c82cop1 c83cop2 c82cop1_r c83cop2_r</span>
 <span class="co">#&gt; 1       3       2         2         0</span>
 <span class="co">#&gt; 2       3       3         2         2</span>
@@ -319,13 +321,13 @@
 <span class="co">#&gt; 5       3       2         2         0</span>
 <span class="co">#&gt; 6       2       2         0         0</span>
 
-<span class="va">efc</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">c82cop1</span>, <span class="va">c83cop2</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
+<span class="va">efc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">c82cop1</span>, <span class="va">c83cop2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>
     c82cop1_dicho <span class="op">=</span> <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">c82cop1</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span><span class="op">)</span>,
     c83cop2_dicho <span class="op">=</span> <span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">c83cop2</span>, rec <span class="op">=</span> <span class="st">"1,2=0; 3:4=2"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt;   c82cop1 c83cop2 c82cop1_dicho c83cop2_dicho</span>
 <span class="co">#&gt; 1       3       2             2             0</span>
 <span class="co">#&gt; 2       3       3             2             2</span>
@@ -349,11 +351,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by <a href="https://github.com/strengejacke">Daniel Lüdecke</a>.</p>
+  <p></p>
+<p>Developed by <a href="https://github.com/strengejacke" class="external-link external-link">Daniel Lüdecke</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -361,6 +365,8 @@
 
   
 
+
+  
 
   </body>
 </html>

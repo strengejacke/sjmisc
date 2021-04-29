@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -185,7 +196,7 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>rp</span> <span class='op'>&lt;-</span> <span class='fu'>rec_pattern</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>100</span><span class='op'>)</span>
 <span class='va'>rp</span>
-</div><div class='output co'>#&gt; $pattern
+</div><div class='co'>#&gt; $pattern
 #&gt; [1] "1:5=1;6:10=2;11:15=3;16:20=4;21:25=5;26:30=6;31:35=7;36:40=8;41:45=9;46:50=10;51:55=11;56:60=12;61:65=13;66:70=14;71:75=15;76:80=16;81:85=17;86:90=18;91:95=19;96:100=20;"
 #&gt; 
 #&gt; $labels
@@ -199,7 +210,7 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 <span class='co'># sample data, inspect age of carers</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33 
 #&gt;    1    2    2    1    2    4    3    5    3    4    4    8    9    9    5   10 
 #&gt;   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49 
@@ -210,7 +221,7 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 #&gt;   18   17   14   18   15    4   11    7    7   12   10    7    5    5    5    3 
 #&gt;   82   83   85   87   89 &lt;NA&gt; 
 #&gt;    1    4    1    1    1    7 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span><span class='op'>)</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
+</div><div class='co'>#&gt; 
 #&gt;    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18 &lt;NA&gt; 
 #&gt;    5   15   28   50   51   99  126  116  122  123   82   41   32    9    2    7 </div><div class='input'>
 <span class='co'># recode carers age into groups of width 5</span>
@@ -221,11 +232,11 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 <span class='op'>)</span>
 <span class='co'># watch result</span>
 <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>carer' age (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;
-#&gt; # total N=908  valid N=901  mean=11.07  sd=2.69
-#&gt; 
-#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>carer' age (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=11.07  sd=2.69</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; -----------------------------------------------
 #&gt;     1 |    1-5 |   0 |  0.00 |    0.00 |   0.00
 #&gt;     2 |   6-10 |   0 |  0.00 |    0.00 |   0.00
@@ -249,7 +260,7 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 #&gt;    20 | 96-100 |   0 |  0.00 |    0.00 | 100.00
 #&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -261,11 +272,11 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -273,6 +284,8 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
 
   
 
+
+  
 
   </body>
 </html>

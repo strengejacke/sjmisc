@@ -56,6 +56,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -67,9 +69,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -213,10 +224,10 @@ a new data frame with model coefficients only are returned.</p></td>
   <span class='co'># create nested data frame, grouped by dependency (e42dep)</span>
   <span class='co'># and fit linear model for each group. These models are</span>
   <span class='co'># stored in the list variable "models".</span>
-  <span class='va'>model.data</span> <span class='op'>&lt;-</span> <span class='va'>efc</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>model.data</span> <span class='op'>&lt;-</span> <span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
       models <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>neg_c_7</span> <span class='op'>~</span> <span class='va'>c12hour</span> <span class='op'>+</span> <span class='va'>c172code</span>, data <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
     <span class='op'>)</span>
@@ -231,36 +242,36 @@ a new data frame with model coefficients only are returned.</p></td>
   <span class='fu'>spread_coef</span><span class='op'>(</span><span class='va'>model.data</span>, <span class='va'>models</span>, <span class='va'>c12hour</span><span class='op'>)</span>
 
   <span class='co'># spread_coef can be used directly within a pipe-chain</span>
-  <span class='va'>efc</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+    <span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>nest</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
       models <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>neg_c_7</span> <span class='op'>~</span> <span class='va'>c12hour</span> <span class='op'>+</span> <span class='va'>c172code</span>, data <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='fu'>spread_coef</span><span class='op'>(</span><span class='va'>models</span><span class='op'>)</span>
 
   <span class='co'># spread_coef() makes it easy to generate bootstrapped</span>
   <span class='co'># confidence intervals, using the 'bootstrap()' and 'boot_ci()'</span>
   <span class='co'># functions from the 'sjstats' package, which creates nested</span>
   <span class='co'># data frames of bootstrap replicates</span>
-  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/strengejacke/sjstats'>sjstats</a></span><span class='op'>)</span>
-  <span class='va'>efc</span> <span class='op'>%&gt;%</span>
+  <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjstats/'>sjstats</a></span><span class='op'>)</span>
+  <span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='co'># generate bootstrap replicates</span>
-    <span class='fu'><a href='https://strengejacke.github.io/sjstats/reference/bootstrap.html'>bootstrap</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'><a href='https://strengejacke.github.io/sjstats/reference/bootstrap.html'>bootstrap</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='co'># apply lm to all bootstrapped data sets</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>
       models <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>strap</span>, <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>neg_c_7</span> <span class='op'>~</span> <span class='va'>e42dep</span> <span class='op'>+</span> <span class='va'>c161sex</span> <span class='op'>+</span> <span class='va'>c172code</span>, data <span class='op'>=</span> <span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
-    <span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='co'># spread model coefficient for all 100 models</span>
-    <span class='fu'>spread_coef</span><span class='op'>(</span><span class='va'>models</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, p.val <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+    <span class='fu'>spread_coef</span><span class='op'>(</span><span class='va'>models</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, p.val <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
     <span class='co'># compute the CI for all bootstrapped model coefficients</span>
     <span class='fu'><a href='https://strengejacke.github.io/sjstats/reference/boot_ci.html'>boot_ci</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>c161sex</span>, <span class='va'>c172code</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: tidyr</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘tidyr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:sjmisc’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    replace_na</span></div><div class='output co'>#&gt;       term     conf.low conf.high
+</div><div class='co'>#&gt; Loading required package: tidyr</div><div class='co'>#&gt; 
+#&gt; Attaching package: ‘tidyr’</div><div class='co'>#&gt; The following object is masked from ‘package:sjmisc’:
+#&gt; 
+#&gt;     replace_na</div><div class='co'>#&gt;       term     conf.low conf.high
 #&gt; 1   e42dep  1.298953592 1.8353501
 #&gt; 2  c161sex  0.004688172 1.2119640
 #&gt; 3 c172code -0.204960868 0.7027098</div></pre>
@@ -275,11 +286,11 @@ a new data frame with model coefficients only are returned.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -287,6 +298,8 @@ a new data frame with model coefficients only are returned.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

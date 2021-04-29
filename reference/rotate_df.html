@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -171,32 +182,32 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
 <span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;      Mazda RX4 Mazda RX4 Wag Datsun 710
+</div><div class='co'>#&gt;      Mazda RX4 Mazda RX4 Wag Datsun 710
 #&gt; mpg         21            21       22.8
 #&gt; cyl          6             6        4.0
 #&gt; disp       160           160      108.0
 #&gt; hp         110           110       93.0</div><div class='input'><span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>x</span>, rn <span class='op'>=</span> <span class='st'>"property"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   property Mazda RX4 Mazda RX4 Wag Datsun 710
+</div><div class='co'>#&gt;   property Mazda RX4 Mazda RX4 Wag Datsun 710
 #&gt; 1      mpg        21            21       22.8
 #&gt; 2      cyl         6             6        4.0
 #&gt; 3     disp       160           160      108.0
 #&gt; 4       hp       110           110       93.0</div><div class='input'>
 <span class='co'># use values in 1. column as column name</span>
 <span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>x</span>, cn <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;       21  21 22.8
+</div><div class='co'>#&gt;       21  21 22.8
 #&gt; cyl    6   6    4
 #&gt; disp 160 160  108
 #&gt; hp   110 110   93</div><div class='input'><span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>x</span>, rn <span class='op'>=</span> <span class='st'>"property"</span>, cn <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   property  21  21 22.8
+</div><div class='co'>#&gt;   property  21  21 22.8
 #&gt; 1      cyl   6   6    4
 #&gt; 2     disp 160 160  108
 #&gt; 3       hp 110 110   93</div><div class='input'>
 <span class='co'># also works on list-results</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://purrr.tidyverse.org'>purrr</a></span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘purrr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:sjmisc’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    is_empty</span></div><div class='input'>
+</div><div class='co'>#&gt; 
+#&gt; Attaching package: ‘purrr’</div><div class='co'>#&gt; The following object is masked from ‘package:sjmisc’:
+#&gt; 
+#&gt;     is_empty</div><div class='input'>
 <span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>mtcars</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
 <span class='va'>tmp</span> <span class='op'>&lt;-</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>dat</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>sdev</span> <span class='op'>&lt;-</span> <span class='fu'>stats</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
@@ -205,7 +216,7 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
   <span class='va'>ulsdev</span>
 <span class='op'>}</span><span class='op'>)</span>
 <span class='va'>tmp</span>
-</div><div class='output co'>#&gt; $mpg
+</div><div class='co'>#&gt; $mpg
 #&gt; lower_sd upper_sd 
 #&gt; 20.56077 22.63923 
 #&gt; 
@@ -221,10 +232,10 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
 #&gt;  lower_sd  upper_sd 
 #&gt;  94.51838 114.14829 
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               mpg      cyl     disp        hp
+</div><div class='co'>#&gt;               mpg      cyl     disp        hp
 #&gt; lower_sd 20.56077 4.178633 112.6445  94.51838
 #&gt; upper_sd 22.63923 6.488034 172.6889 114.14829</div><div class='input'><span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        lower_sd   upper_sd
+</div><div class='co'>#&gt;        lower_sd   upper_sd
 #&gt; mpg   20.560770  22.639230
 #&gt; cyl    4.178633   6.488034
 #&gt; disp 112.644453 172.688881
@@ -236,17 +247,17 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
   <span class='va'>ulsdev</span>
 <span class='op'>}</span><span class='op'>)</span>
 <span class='va'>tmp</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 4 x 2</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 4 x 2</span>
 #&gt;   lower_sd upper_sd
-#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'>1</span><span>    20.6     22.6 
-#&gt; </span><span style='color: #555555;'>2</span><span>     4.18     6.49
-#&gt; </span><span style='color: #555555;'>3</span><span>   113.     173.  
-#&gt; </span><span style='color: #555555;'>4</span><span>    94.5    114.  </div><div class='input'><span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                V1       V2       V3        V4
+#&gt;      <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span><span>    20.6     22.6 </span>
+#&gt; <span style='color: #BCBCBC;'>2</span><span>     4.18     6.49</span>
+#&gt; <span style='color: #BCBCBC;'>3</span><span>   113.     173.  </span>
+#&gt; <span style='color: #BCBCBC;'>4</span><span>    94.5    114.  </span></div><div class='input'><span class='fu'>rotate_df</span><span class='op'>(</span><span class='va'>tmp</span><span class='op'>)</span>
+</div><div class='co'>#&gt;                V1       V2       V3        V4
 #&gt; lower_sd 20.56077 4.178633 112.6445  94.51838
 #&gt; upper_sd 22.63923 6.488034 172.6889 114.14829</div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -258,11 +269,11 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -270,6 +281,8 @@ in <code>x</code> will be used as column names in the rotated data frame.</p></t
 
   
 
+
+  
 
   </body>
 </html>

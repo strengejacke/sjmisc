@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -176,14 +187,14 @@
 
 <span class='co'># string is shorter than max.length, so returned as is</span>
 <span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, <span class='fl'>60</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "This can be considered as very long string!"</div><div class='input'>
+</div><div class='co'>#&gt; [1] "This can be considered as very long string!"</div><div class='input'>
 <span class='co'># string is shortened to as many words that result in</span>
 <span class='co'># a string of maximum 20 chars</span>
 <span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, <span class='fl'>20</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "This can be..."</div><div class='input'>
+</div><div class='co'>#&gt; [1] "This can be..."</div><div class='input'>
 <span class='co'># string including "considered" is exactly of length 22 chars</span>
 <span class='fu'>shorten_string</span><span class='op'>(</span><span class='va'>s</span>, <span class='fl'>22</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "This can be considered..."</div><div class='input'>
+</div><div class='co'>#&gt; [1] "This can be considered..."</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -196,11 +207,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -208,6 +219,8 @@
 
   
 
+
+  
 
   </body>
 </html>

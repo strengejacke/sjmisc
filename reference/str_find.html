@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -189,7 +200,7 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
     <p><strong>Computation Details</strong>
   <br /> <br />
   Fuzzy string matching is based on regular expressions, in particular
-  <code><a href='https://rdrr.io/r/base/grep.html'>grep(pattern = "(&lt;pattern&gt;){~&lt;precision&gt;}", x = string)</a></code>. This
+  <code>grep(pattern = "(&lt;pattern&gt;){~&lt;precision&gt;}", x = string)</code>. This
   means, <code>precision</code> indicates the number of chars inside <code>pattern</code>
   that may differ in <code>string</code> to cosinder it as "matching". The higher
   <code>precision</code> is, the more tolerant is the search (i.e. yielding more
@@ -198,7 +209,7 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
   <br /> <br />
   <strong>Partial Distance Matching</strong>
   <br /> <br />
-  For <code>partial = 1</code>, a substring of <code><a href='https://rdrr.io/r/base/length.html'>length(pattern)</a></code> is extracted
+  For <code>partial = 1</code>, a substring of <code>length(pattern)</code> is extracted
   from <code>string</code>, starting at position 0 in <code>string</code> until
   the end of <code>string</code> is reached. Each substring is matched against
   <code>pattern</code>, and results with a maximum distance of <code>precision</code>
@@ -219,19 +230,19 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>string</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>, <span class='st'>"Ape"</span>, <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span><span class='op'>)</span>
 <span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"hel"</span><span class='op'>)</span>   <span class='co'># partial match</span>
-</div><div class='output co'>#&gt; [1] 1 2 3 5 6 7</div><div class='input'><span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"stem"</span><span class='op'>)</span>  <span class='co'># partial match</span>
-</div><div class='output co'>#&gt; [1] 8 9</div><div class='input'><span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"R"</span><span class='op'>)</span>     <span class='co'># no match</span>
-</div><div class='output co'>#&gt; [1] -1</div><div class='input'><span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"saste"</span><span class='op'>)</span> <span class='co'># similarity to "System"</span>
-</div><div class='output co'>#&gt; [1] 8</div><div class='input'>
+</div><div class='co'>#&gt; [1] 1 2 3 5 6 7</div><div class='input'><span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"stem"</span><span class='op'>)</span>  <span class='co'># partial match</span>
+</div><div class='co'>#&gt; [1] 8 9</div><div class='input'><span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"R"</span><span class='op'>)</span>     <span class='co'># no match</span>
+</div><div class='co'>#&gt; [1] -1</div><div class='input'><span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>, <span class='st'>"saste"</span><span class='op'>)</span> <span class='co'># similarity to "System"</span>
+</div><div class='co'>#&gt; [1] 8</div><div class='input'>
 <span class='co'># finds two indices, because partial matching now</span>
 <span class='co'># also applies to "Systemic"</span>
 <span class='fu'>str_find</span><span class='op'>(</span><span class='va'>string</span>,
         <span class='st'>"sytsme"</span>,
         partial <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 8 9</div><div class='input'>
+</div><div class='co'>#&gt; [1] 8 9</div><div class='input'>
 <span class='co'># finds partial matching of similarity</span>
 <span class='fu'>str_find</span><span class='op'>(</span><span class='st'>"We are Sex Pistols!"</span>, <span class='st'>"postils"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1</div><div class='input'>
+</div><div class='co'>#&gt; [1] 1</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -244,11 +255,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -256,6 +267,8 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

@@ -55,6 +55,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -220,7 +231,7 @@ order.</p></td>
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score_t1"</span>, <span class='st'>"score_t2"</span>, <span class='st'>"score_t3"</span><span class='op'>)</span>,
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"speed_t1"</span>, <span class='st'>"speed_t2"</span>, <span class='st'>"speed_t3"</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;   age    sex     time score speed
+</div><div class='co'>#&gt;   age    sex     time score speed
 #&gt; 1  20 Female score_t1    30     2
 #&gt; 2  30   Male score_t1    35     3
 #&gt; 3  40   Male score_t1    32     1
@@ -240,7 +251,7 @@ order.</p></td>
   names.to <span class='op'>=</span> <span class='st'>"time"</span>,
   values.to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score"</span>, <span class='st'>"speed"</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;   age    sex     time score speed .id
+</div><div class='co'>#&gt;   age    sex     time score speed .id
 #&gt; 1  20 Female score_t1    30     2   1
 #&gt; 2  30   Male score_t1    35     3   2
 #&gt; 3  40   Male score_t1    32     1   3
@@ -257,7 +268,7 @@ order.</p></td>
   names.to <span class='op'>=</span> <span class='st'>"time"</span>,
   values.to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score"</span>, <span class='st'>"speed"</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;   age    sex     time score speed .id
+</div><div class='co'>#&gt;   age    sex     time score speed .id
 #&gt; 1  20 Female score_t1    30     2   1
 #&gt; 2  30   Male score_t1    35     3   2
 #&gt; 3  40   Male score_t1    32     1   3
@@ -276,7 +287,7 @@ order.</p></td>
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"speed_t1"</span>, <span class='st'>"speed_t2"</span>, <span class='st'>"speed_t3"</span><span class='op'>)</span>,
   recode.key <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;   age    sex time score speed
+</div><div class='co'>#&gt;   age    sex time score speed
 #&gt; 1  20 Female    1    30     2
 #&gt; 2  30   Male    1    35     3
 #&gt; 3  40   Male    1    32     1
@@ -295,7 +306,7 @@ order.</p></td>
   <span class='fl'>6</span><span class='op'>:</span><span class='fl'>8</span>,
   recode.key <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;   age    sex time score speed
+</div><div class='co'>#&gt;   age    sex time score speed
 #&gt; 1  20 Female    1    30     2
 #&gt; 2  30   Male    1    35     3
 #&gt; 3  40   Male    1    32     1
@@ -314,7 +325,7 @@ order.</p></td>
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"score_t1"</span>, <span class='st'>"score_t2"</span>, <span class='st'>"score_t3"</span><span class='op'>)</span>,
   <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"speed_t1"</span>, <span class='st'>"speed_t2"</span>, <span class='st'>"speed_t3"</span><span class='op'>)</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt;   age    sex time_score score time_speed speed
+</div><div class='co'>#&gt;   age    sex time_score score time_speed speed
 #&gt; 1  20 Female   score_t1    30   speed_t1     2
 #&gt; 2  30   Male   score_t1    35   speed_t1     3
 #&gt; 3  40   Male   score_t1    32   speed_t1     1
@@ -336,9 +347,9 @@ order.</p></td>
 
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>mydat</span><span class='op'>$</span><span class='va'>score</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  num [1:9] 30 35 32 33 34 37 36 35 38
+</div><div class='co'>#&gt;  num [1:9] 30 35 32 33 34 37 36 35 38
 #&gt;  - attr(*, "label")= chr "Test Score"</div><div class='input'><span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_label.html'>get_label</a></span><span class='op'>(</span><span class='va'>mydat</span><span class='op'>$</span><span class='va'>speed</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "Time needed to finish"</div><div class='input'>
+</div><div class='co'>#&gt; [1] "Time needed to finish"</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -351,11 +362,11 @@ order.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -363,6 +374,8 @@ order.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

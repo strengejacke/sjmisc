@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -156,7 +167,7 @@
       <td><p>Optional, unquoted names of variables that should be selected for
 further processing. Required, if <code>x</code> is a data frame (and no
 vector) and only selected variables from <code>x</code> should be processed.
-You may also use functions like <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code> or tidyselect's
+You may also use functions like <code>:</code> or tidyselect's
 select-helpers.
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
@@ -167,7 +178,7 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
     <p>A data frame with counted tagged NA values.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='http://haven.tidyverse.org'>"haven"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://haven.tidyverse.org'>"haven"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span><span class='op'>(</span>
     x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span><span class='op'>)</span>,
           <span class='fl'>4</span><span class='op'>:</span><span class='fl'>1</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"a"</span>, <span class='st'>"c"</span><span class='op'>)</span>,
@@ -197,10 +208,10 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
   <span class='fu'>count_na</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>x</span><span class='op'>)</span>
   <span class='fu'>count_na</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: haven</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘haven’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:sjlabelled’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    as_factor, read_sas, read_spss, read_stata, write_sas, zap_labels</span></div><div class='output co'>#&gt;      label frq raw.prc valid.prc cum.prc
+</div><div class='co'>#&gt; Loading required package: haven</div><div class='co'>#&gt; 
+#&gt; Attaching package: ‘haven’</div><div class='co'>#&gt; The following objects are masked from ‘package:sjlabelled’:
+#&gt; 
+#&gt;     as_factor, read_sas, read_spss, read_stata, write_sas, zap_labels</div><div class='co'>#&gt;      label frq raw.prc valid.prc cum.prc
 #&gt; 1    First   5   41.67     41.67   41.67
 #&gt; 2 Not home   3   25.00     25.00   66.67
 #&gt; 3  Refused   4   33.33     33.33  100.00
@@ -261,11 +272,11 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -273,6 +284,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 
   
 
+
+  
 
   </body>
 </html>

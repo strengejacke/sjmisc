@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -149,7 +160,7 @@
 
 <span class='co'># Show structure</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 'data.frame':	908 obs. of  26 variables:
+</div><div class='co'>#&gt; 'data.frame':	908 obs. of  26 variables:
 #&gt;  $ c12hour : num  16 148 70 168 168 16 161 110 28 40 ...
 #&gt;   ..- attr(*, "label")= chr "average number of hours of care per week"
 #&gt;  $ e15relat: num  2 2 1 1 2 2 1 4 2 2 ...
@@ -238,7 +249,7 @@
 #&gt;   .. ..- attr(*, "names")= chr [1:3] "Care Level 1" "Care Level 2" "Care Level 3/3+"</div><div class='input'>
 <span class='co'># show first rows</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
+</div><div class='co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
 #&gt; 1      16        2      2     83      3       3       2       2       2       1
 #&gt; 2     148        2      2     88      3       3       3       3       3       4
 #&gt; 3      70        1      2     82      3       2       2       1       4       1
@@ -270,11 +281,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -282,6 +293,8 @@
 
   
 
+
+  
 
   </body>
 </html>

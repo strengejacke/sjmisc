@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -154,7 +165,7 @@
       <td><p>Optional, unquoted names of variables that should be selected for
 further processing. Required, if <code>x</code> is a data frame (and no
 vector) and only selected variables from <code>x</code> should be processed.
-You may also use functions like <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code> or tidyselect's
+You may also use functions like <code>:</code> or tidyselect's
 select-helpers.
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
@@ -162,7 +173,7 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
       <th>lvl</th>
       <td><p>Either numeric, indicating the new reference level, or a string,
 indicating the value label from the new reference level. If <code>x</code> is a
-factor with non-numeric factor levels, <code><a href='https://rdrr.io/r/stats/relevel.html'>relevel(x, ref = lvl)</a></code> is
+factor with non-numeric factor levels, <code>relevel(x, ref = lvl)</code> is
 returned. See 'Examples'.</p></td>
     </tr>
     </table>
@@ -183,7 +194,7 @@ returned. See 'Examples'.</p></td>
   Hence, all values from lowest up to the reference level indicated by
   <code>lvl</code> are recoded, with <code>lvl</code> starting as lowest factor value.
   For factors with non-numeric factor levels, the function simply returns
-  <code><a href='https://rdrr.io/r/stats/relevel.html'>relevel(x, ref = lvl)</a></code>. See 'Examples'.</p>
+  <code>relevel(x, ref = lvl)</code>. See 'Examples'.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></code> to convert numeric vectors into factors;
@@ -193,15 +204,15 @@ returned. See 'Examples'.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  Factor w/ 4 levels "1","2","3","4": 3 3 3 4 4 4 4 4 4 4 ...
+</div><div class='co'>#&gt;  Factor w/ 4 levels "1","2","3","4": 3 3 3 4 4 4 4 4 4 4 ...
 #&gt;  - attr(*, "labels")= Named num [1:4] 1 2 3 4
 #&gt;   ..- attr(*, "names")= chr [1:4] "independent" "slightly dependent" "moderately dependent" "severely dependent"
 #&gt;  - attr(*, "label")= chr "elder's dependency"</div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
-#&gt; 
-#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; -------------------------------------------------------------
 #&gt;     1 |          independent |  66 |  7.27 |    7.33 |   7.33
 #&gt;     2 |   slightly dependent | 225 | 24.78 |   24.97 |  32.30
@@ -213,15 +224,15 @@ returned. See 'Examples'.</p></td>
 <span class='co'># how values/labels were recoded after using ref_lvl()</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>x</span>, lvl <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  Factor w/ 4 levels "1","2","3","4": 1 1 1 4 4 4 4 4 4 4 ...
+</div><div class='co'>#&gt;  Factor w/ 4 levels "1","2","3","4": 1 1 1 4 4 4 4 4 4 4 ...
 #&gt;  - attr(*, "label")= chr "elder's dependency"
 #&gt;  - attr(*, "labels")= Named num [1:4] 1 2 3 4
 #&gt;   ..- attr(*, "names")= chr [1:4] "moderately dependent" "independent" "slightly dependent" "severely dependent"</div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=2.58  sd=1.26
-#&gt; 
-#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.58  sd=1.26</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; -------------------------------------------------------------
 #&gt;     1 | moderately dependent | 306 | 33.70 |   33.96 |  33.96
 #&gt;     2 |          independent |  66 |  7.27 |    7.33 |  41.29
@@ -230,16 +241,16 @@ returned. See 'Examples'.</p></td>
 #&gt;  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>c82cop1</span>, <span class='va'>c83cop2</span>, <span class='va'>c84cop3</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>c82cop1</span>, <span class='va'>c83cop2</span>, <span class='va'>c84cop3</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span>
 
 <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>dat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>do you feel you cope well as caregiver? (c82cop1)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=3.12  sd=0.58
-#&gt; 
-#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>do you feel you cope well as caregiver? (c82cop1)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=3.12  sd=0.58</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; --------------------------------------------------
 #&gt;     1 |     never |   3 |  0.33 |    0.33 |   0.33
 #&gt;     2 | sometimes |  97 | 10.68 |   10.77 |  11.10
@@ -248,10 +259,10 @@ returned. See 'Examples'.</p></td>
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; 
 #&gt; 
-#&gt; </span><span style='color: #BB0000;'>do you find caregiving too demanding? (c83cop2)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=902  mean=2.02  sd=0.72
-#&gt; 
-#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %
+#&gt; <span style='color: #BB0000;'>do you find caregiving too demanding? (c83cop2)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=902  mean=2.02  sd=0.72</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; --------------------------------------------------
 #&gt;     1 |     Never | 186 | 20.48 |   20.62 |  20.62
 #&gt;     2 | Sometimes | 547 | 60.24 |   60.64 |  81.26
@@ -260,22 +271,22 @@ returned. See 'Examples'.</p></td>
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |   6 |  0.66 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; 
 #&gt; 
-#&gt; </span><span style='color: #BB0000;'>does caregiving cause difficulties in your relationship with your friends? (c84cop3)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=902  mean=1.63  sd=0.87
-#&gt; 
-#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %
+#&gt; <span style='color: #BB0000;'>does caregiving cause difficulties in your relationship with your friends? (c84cop3)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=902  mean=1.63  sd=0.87</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; --------------------------------------------------
 #&gt;     1 |     Never | 516 | 56.83 |   57.21 |  57.21
 #&gt;     2 | Sometimes | 252 | 27.75 |   27.94 |  85.14
 #&gt;     3 |     Often |  82 |  9.03 |    9.09 |  94.24
 #&gt;     4 |    Always |  52 |  5.73 |    5.76 | 100.00
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |   6 |  0.66 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>c82cop1</span>, <span class='va'>c83cop2</span>, lvl <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>do you feel you cope well as caregiver? (c82cop1)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=3.01  sd=0.82
-#&gt; 
-#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %
+#&gt; </div><div class='input'><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>dat</span>, <span class='va'>c82cop1</span>, <span class='va'>c83cop2</span>, lvl <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>do you feel you cope well as caregiver? (c82cop1)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=3.01  sd=0.82</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; --------------------------------------------------
 #&gt;     1 | sometimes |  97 | 10.68 |   10.77 |  10.77
 #&gt;     2 |     never |   3 |  0.33 |    0.33 |  11.10
@@ -284,10 +295,10 @@ returned. See 'Examples'.</p></td>
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; 
 #&gt; 
-#&gt; </span><span style='color: #BB0000;'>do you find caregiving too demanding? (c83cop2)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=902  mean=1.62  sd=0.88
-#&gt; 
-#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %
+#&gt; <span style='color: #BB0000;'>do you find caregiving too demanding? (c83cop2)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=902  mean=1.62  sd=0.88</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; --------------------------------------------------
 #&gt;     1 | Sometimes | 547 | 60.24 |   60.64 |  60.64
 #&gt;     2 |     Never | 186 | 20.48 |   20.62 |  81.26
@@ -296,10 +307,10 @@ returned. See 'Examples'.</p></td>
 #&gt;  &lt;NA&gt; |      &lt;NA&gt; |   6 |  0.66 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; 
 #&gt; 
-#&gt; </span><span style='color: #BB0000;'>does caregiving cause difficulties in your relationship with your friends? (c84cop3)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=902  mean=1.63  sd=0.87
-#&gt; 
-#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %
+#&gt; <span style='color: #BB0000;'>does caregiving cause difficulties in your relationship with your friends? (c84cop3)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=902  mean=1.63  sd=0.87</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; --------------------------------------------------
 #&gt;     1 |     Never | 516 | 56.83 |   57.21 |  57.21
 #&gt;     2 | Sometimes | 252 | 27.75 |   27.94 |  85.14
@@ -310,35 +321,35 @@ returned. See 'Examples'.</p></td>
 <span class='co'># compare numeric and string value for "lvl"-argument</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span><span class='op'>)</span>
 <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94
-#&gt; 
-#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; -------------------------------------------------------------
 #&gt;     1 |          independent |  66 |  7.27 |    7.33 |   7.33
 #&gt;     2 |   slightly dependent | 225 | 24.78 |   24.97 |  32.30
 #&gt;     3 | moderately dependent | 306 | 33.70 |   33.96 |  66.26
 #&gt;     4 |   severely dependent | 304 | 33.48 |   33.74 | 100.00
 #&gt;  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>x</span>, lvl <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=2.76  sd=1.16
-#&gt; 
-#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %
+#&gt; </div><div class='input'><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>x</span>, lvl <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.76  sd=1.16</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; -------------------------------------------------------------
 #&gt;     1 |   slightly dependent | 225 | 24.78 |   24.97 |  24.97
 #&gt;     2 |          independent |  66 |  7.27 |    7.33 |  32.30
 #&gt;     3 | moderately dependent | 306 | 33.70 |   33.96 |  66.26
 #&gt;     4 |   severely dependent | 304 | 33.48 |   33.74 | 100.00
 #&gt;  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>x</span>, lvl <span class='op'>=</span> <span class='st'>"slightly dependent"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;
-#&gt; # total N=908  valid N=901  mean=2.76  sd=1.16
-#&gt; 
-#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %
+#&gt; </div><div class='input'><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>x</span>, lvl <span class='op'>=</span> <span class='st'>"slightly dependent"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>elder's dependency (x)</span><span style='color: #0000BB;'> &lt;categorical&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.76  sd=1.16</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 #&gt; -------------------------------------------------------------
 #&gt;     1 |   slightly dependent | 225 | 24.78 |   24.97 |  24.97
 #&gt;     2 |          independent |  66 |  7.27 |    7.33 |  32.30
@@ -349,10 +360,10 @@ returned. See 'Examples'.</p></td>
 <span class='co'># factors with non-numeric factor levels</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "setosa"     "versicolor" "virginica" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span>, lvl <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "virginica"  "setosa"     "versicolor"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span>, lvl <span class='op'>=</span> <span class='st'>"versicolor"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "versicolor" "setosa"     "virginica" </div><div class='input'>
-</div></span></pre>
+</div><div class='co'>#&gt; [1] "setosa"     "versicolor" "virginica" </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span>, lvl <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] "virginica"  "setosa"     "versicolor"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/levels.html'>levels</a></span><span class='op'>(</span><span class='fu'>ref_lvl</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span>, lvl <span class='op'>=</span> <span class='st'>"versicolor"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1] "versicolor" "setosa"     "virginica" </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -364,11 +375,11 @@ returned. See 'Examples'.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -376,6 +387,8 @@ returned. See 'Examples'.</p></td>
 
   
 
+
+  
 
   </body>
 </html>

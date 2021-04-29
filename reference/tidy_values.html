@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -158,7 +169,7 @@
       <td><p>Optional, unquoted names of variables that should be selected for
 further processing. Required, if <code>x</code> is a data frame (and no
 vector) and only selected variables from <code>x</code> should be processed.
-You may also use functions like <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code> or tidyselect's
+You may also use functions like <code>:</code> or tidyselect's
 select-helpers.
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
@@ -176,24 +187,24 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>f1</span>, <span class='va'>f2</span>, <span class='va'>f3</span>, stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
 <span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>f1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] "Char_B" "Char_D" "Char_A" "Char_E" "Char_A" "Char_E" "Char_B" "Char_A"
+</div><div class='co'>#&gt;  [1] "Char_B" "Char_D" "Char_A" "Char_E" "Char_A" "Char_E" "Char_B" "Char_A"
 #&gt;  [9] "Char_E" "Char_C"</div><div class='input'><span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>f2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  [1] F_e F_a F_d F_e F_e F_d F_e F_b F_c F_a
+</div><div class='co'>#&gt;  [1] F_e F_a F_d F_e F_e F_d F_e F_b F_c F_a
 #&gt; Levels: F_a F_b F_c F_d F_e</div><div class='input'><span class='fu'>clean_values</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 10 x 3</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 10 x 3</span>
 #&gt;    f1     f2       f3
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> Char_B F_e       4
-#&gt; </span><span style='color: #555555;'> 2</span><span> Char_D F_a       3
-#&gt; </span><span style='color: #555555;'> 3</span><span> Char_A F_d       4
-#&gt; </span><span style='color: #555555;'> 4</span><span> Char_E F_e       4
-#&gt; </span><span style='color: #555555;'> 5</span><span> Char_A F_e       3
-#&gt; </span><span style='color: #555555;'> 6</span><span> Char_E F_d       1
-#&gt; </span><span style='color: #555555;'> 7</span><span> Char_B F_e       4
-#&gt; </span><span style='color: #555555;'> 8</span><span> Char_A F_b       1
-#&gt; </span><span style='color: #555555;'> 9</span><span> Char_E F_c       1
-#&gt; </span><span style='color: #555555;'>10</span><span> Char_C F_a       5</div><div class='input'>
-</div></span></pre>
+#&gt;    <span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;fct&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span><span> Char_B F_e       4</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span><span> Char_D F_a       3</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span><span> Char_A F_d       4</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span><span> Char_E F_e       4</span>
+#&gt; <span style='color: #BCBCBC;'> 5</span><span> Char_A F_e       3</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span><span> Char_E F_d       1</span>
+#&gt; <span style='color: #BCBCBC;'> 7</span><span> Char_B F_e       4</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span><span> Char_A F_b       1</span>
+#&gt; <span style='color: #BCBCBC;'> 9</span><span> Char_E F_c       1</span>
+#&gt; <span style='color: #BCBCBC;'>10</span><span> Char_C F_a       5</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -205,11 +216,11 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -217,6 +228,8 @@ See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.<
 
   
 
+
+  
 
   </body>
 </html>

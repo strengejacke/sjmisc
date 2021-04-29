@@ -54,6 +54,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -138,8 +149,8 @@
     </div>
 
     <div class="ref-description">
-    <p><code>seq_col(x)</code> is a convenient wrapper for <code><a href='https://rdrr.io/r/base/seq.html'>seq_len(ncol(x))</a></code>,
-   while <code>seq_row(x)</code> is a convenient wrapper for <code><a href='https://rdrr.io/r/base/seq.html'>seq_len(nrow(x))</a></code>.</p>
+    <p><code>seq_col(x)</code> is a convenient wrapper for <code>seq_len(ncol(x))</code>,
+   while <code>seq_row(x)</code> is a convenient wrapper for <code>seq_len(nrow(x))</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>seq_col</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
@@ -162,8 +173,8 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 <span class='fu'>seq_col</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 1 2 3 4 5</div><div class='input'><span class='fu'>seq_row</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
+</div><div class='co'>#&gt; [1] 1 2 3 4 5</div><div class='input'><span class='fu'>seq_row</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</div><div class='co'>#&gt;   [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18
 #&gt;  [19]  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36
 #&gt;  [37]  37  38  39  40  41  42  43  44  45  46  47  48  49  50  51  52  53  54
 #&gt;  [55]  55  56  57  58  59  60  61  62  63  64  65  66  67  68  69  70  71  72
@@ -184,11 +195,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -196,6 +207,8 @@
 
   
 
+
+  
 
   </body>
 </html>

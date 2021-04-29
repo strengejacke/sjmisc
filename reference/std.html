@@ -57,6 +57,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -68,9 +70,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -182,7 +193,7 @@
       <td><p>Optional, unquoted names of variables that should be selected for
 further processing. Required, if <code>x</code> is a data frame (and no
 vector) and only selected variables from <code>x</code> should be processed.
-You may also use functions like <code><a href='https://rdrr.io/r/base/Colon.html'>:</a></code> or tidyselect's
+You may also use functions like <code>:</code> or tidyselect's
 select-helpers.
 See 'Examples' or <a href='../doc/design_philosophy.html'>package-vignette</a>.</p></td>
     </tr>
@@ -260,18 +271,18 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-<span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  0.19002509  0.04023278  1.98753275  1.16367507 -0.48404028  0.19002509</div><div class='input'><span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     e17age_z   c160age_z
+<span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1]  0.19002509  0.04023278  1.98753275  1.16367507 -0.48404028  0.19002509</div><div class='input'><span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt;     e17age_z   c160age_z
 #&gt; 1  0.4791992  0.19002509
 #&gt; 2  1.0969170  0.04023278
 #&gt; 3  0.3556557  1.98753275
 #&gt; 4 -1.4974976  1.16367507
 #&gt; 5  0.6027428 -0.48404028
 #&gt; 6  0.7262864  0.19002509</div><div class='input'>
-<span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1]  2.5371809  0.5371809 26.5371809 15.5371809 -6.4628191  2.5371809</div><div class='input'><span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     e17age_c  c160age_c
+<span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt; [1]  2.5371809  0.5371809 26.5371809 15.5371809 -6.4628191  2.5371809</div><div class='input'><span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span>, <span class='va'>c160age</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt;     e17age_c  c160age_c
 #&gt; 1   3.878788  2.5371809
 #&gt; 2   8.878788  0.5371809
 #&gt; 3   2.878788 26.5371809
@@ -280,7 +291,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 6   5.878788  2.5371809</div><div class='input'>
 <span class='co'># NOTE!</span>
 <span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e17age</span><span class='op'>)</span> <span class='co'># returns a vector</span>
-</div><div class='output co'>#&gt;   [1]  0.47919925  1.09691703  0.35565569 -1.49749765  0.60274280  0.72628636
+</div><div class='co'>#&gt;   [1]  0.47919925  1.09691703  0.35565569 -1.49749765  0.60274280  0.72628636
 #&gt;   [7] -0.63269276  0.97337347 -0.01497498  0.47919925 -1.37395409  2.20880903
 #&gt;  [13]  0.10856858 -0.50914920  0.35565569  1.22046058  0.10856858 -0.87977987
 #&gt;  [19]  1.83817836 -0.01497498  1.22046058 -1.49749765  1.83817836  0.47919925
@@ -434,7 +445,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; [907]          NA          NA
 #&gt; attr(,"label")
 #&gt; [1] "elder' age"</div><div class='input'><span class='fu'>std</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e17age</span><span class='op'>)</span> <span class='co'># returns a data frame</span>
-</div><div class='output co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
+</div><div class='co'>#&gt;     c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4
 #&gt; 1        16        2      2     83      3       3       2       2       2
 #&gt; 2       148        2      2     88      3       3       3       3       3
 #&gt; 3        70        1      2     82      3       2       2       1       4
@@ -4072,8 +4083,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 908          NA</div><div class='input'>
 <span class='co'># with quasi-quotation</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='st'>"e17age"</span>
-<span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span>, <span class='op'>!</span><span class='op'>!</span><span class='va'>x</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     e17age_c
+<span class='fu'>center</span><span class='op'>(</span><span class='va'>efc</span>, <span class='op'>!</span><span class='op'>!</span><span class='va'>x</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='co'>#&gt;     e17age_c
 #&gt; 1   3.878788
 #&gt; 2   8.878788
 #&gt; 3   2.878788
@@ -4082,11 +4093,11 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 6   5.878788</div><div class='input'>
 <span class='co'># works with mutate()</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='va'>efc</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>neg_c_7</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>age_std <span class='op'>=</span> <span class='fu'>std</span><span class='op'>(</span><span class='va'>e17age</span><span class='op'>)</span>, burden <span class='op'>=</span> <span class='fu'>center</span><span class='op'>(</span><span class='va'>neg_c_7</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>neg_c_7</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>age_std <span class='op'>=</span> <span class='fu'>std</span><span class='op'>(</span><span class='va'>e17age</span><span class='op'>)</span>, burden <span class='op'>=</span> <span class='fu'>center</span><span class='op'>(</span><span class='va'>neg_c_7</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   e17age neg_c_7    age_std     burden
+</div><div class='co'>#&gt;   e17age neg_c_7    age_std     burden
 #&gt; 1     83      12  0.4791992  0.1502242
 #&gt; 2     88      20  1.0969170  8.1502242
 #&gt; 3     82      11  0.3556557 -0.8497758
@@ -4094,8 +4105,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 5     84      12  0.6027428  0.1502242
 #&gt; 6     85      19  0.7262864  7.1502242</div><div class='input'>
 <span class='co'># works also with grouped data frames</span>
-<span class='va'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>std</span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+<span class='va'>mtcars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'>std</span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span>
+</div><div class='co'>#&gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -4162,28 +4173,28 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; Maserati Bora        0.56703942
 #&gt; Volvo 142E          -0.88529152</div><div class='input'>
 <span class='co'># compare new column "disp_z" w/ output above</span>
-<span class='va'>mtcars</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+<span class='va'>mtcars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>cyl</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>std</span><span class='op'>(</span><span class='va'>disp</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 32 x 12</span><span>
-#&gt; </span><span style='color: #555555;'># Groups:   cyl [3]</span><span>
+</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 32 x 12</span>
+#&gt; <span style='color: #949494;'># Groups:   cyl [3]</span>
 #&gt;      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb disp_z
-#&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span>  21       6  160    110  3.9   2.62  16.5     0     1     4     4 -</span><span style='color: #BB0000;'>0.561</span><span>
-#&gt; </span><span style='color: #555555;'> 2</span><span>  21       6  160    110  3.9   2.88  17.0     0     1     4     4 -</span><span style='color: #BB0000;'>0.561</span><span>
-#&gt; </span><span style='color: #555555;'> 3</span><span>  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1  0.107
-#&gt; </span><span style='color: #555555;'> 4</span><span>  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1  1.80 
-#&gt; </span><span style='color: #555555;'> 5</span><span>  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2  0.102
-#&gt; </span><span style='color: #555555;'> 6</span><span>  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1  1.00 
-#&gt; </span><span style='color: #555555;'> 7</span><span>  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4  0.102
-#&gt; </span><span style='color: #555555;'> 8</span><span>  24.4     4  147.    62  3.69  3.19  20       1     0     4     2  1.55 
-#&gt; </span><span style='color: #555555;'> 9</span><span>  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2  1.33 
-#&gt; </span><span style='color: #555555;'>10</span><span>  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4 -</span><span style='color: #BB0000;'>0.378</span><span>
-#&gt; </span><span style='color: #555555;'># … with 22 more rows</span><span></div><div class='input'>
+#&gt;    <span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'> 1</span><span>  21       6  160    110  3.9   2.62  16.5     0     1     4     4 -</span><span style='color: #BB0000;'>0.561</span>
+#&gt; <span style='color: #BCBCBC;'> 2</span><span>  21       6  160    110  3.9   2.88  17.0     0     1     4     4 -</span><span style='color: #BB0000;'>0.561</span>
+#&gt; <span style='color: #BCBCBC;'> 3</span><span>  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1  0.107</span>
+#&gt; <span style='color: #BCBCBC;'> 4</span><span>  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1  1.80 </span>
+#&gt; <span style='color: #BCBCBC;'> 5</span><span>  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2  0.102</span>
+#&gt; <span style='color: #BCBCBC;'> 6</span><span>  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1  1.00 </span>
+#&gt; <span style='color: #BCBCBC;'> 7</span><span>  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4  0.102</span>
+#&gt; <span style='color: #BCBCBC;'> 8</span><span>  24.4     4  147.    62  3.69  3.19  20       1     0     4     2  1.55 </span>
+#&gt; <span style='color: #BCBCBC;'> 9</span><span>  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2  1.33 </span>
+#&gt; <span style='color: #BCBCBC;'>10</span><span>  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4 -</span><span style='color: #BB0000;'>0.378</span>
+#&gt; <span style='color: #949494;'># … with 22 more rows</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
 <span class='co'># also standardize factors</span>
 <span class='fu'>std</span><span class='op'>(</span><span class='va'>iris</span>, include.fac <span class='op'>=</span> <span class='cn'>TRUE</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z Species_z
+</div><div class='co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z Species_z
 #&gt; 1      -0.89767388    1.01560199    -1.33575163 -1.3110521482 -1.220656
 #&gt; 2      -1.13920048   -0.13153881    -1.33575163 -1.3110521482 -1.220656
 #&gt; 3      -1.38072709    0.32731751    -1.39239929 -1.3110521482 -1.220656
@@ -4335,7 +4346,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 149     0.43072244    0.78617383     0.93015445  1.4439940605  1.220656
 #&gt; 150     0.06843254   -0.13153881     0.76021149  0.7880306775  1.220656</div><div class='input'><span class='co'># don't standardize factors</span>
 <span class='fu'>std</span><span class='op'>(</span><span class='va'>iris</span>, include.fac <span class='op'>=</span> <span class='cn'>FALSE</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z  Species_z
+</div><div class='co'>#&gt;     Sepal.Length_z Sepal.Width_z Petal.Length_z Petal.Width_z  Species_z
 #&gt; 1      -0.89767388    1.01560199    -1.33575163 -1.3110521482     setosa
 #&gt; 2      -1.13920048   -0.13153881    -1.33575163 -1.3110521482     setosa
 #&gt; 3      -1.38072709    0.32731751    -1.39239929 -1.3110521482     setosa
@@ -4489,7 +4500,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class='co'># standardize only variables with more than 10 unique values</span>
 <span class='va'>p</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/n_distinct.html'>n_distinct</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>10</span>
 <span class='fu'>std_if</span><span class='op'>(</span><span class='va'>efc</span>, predicate <span class='op'>=</span> <span class='va'>p</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;        c12hour_z    e17age_z   c160age_z  barthtot_z   neg_c_7_z  pos_v_4_z
+</div><div class='co'>#&gt;        c12hour_z    e17age_z   c160age_z  barthtot_z   neg_c_7_z  pos_v_4_z
 #&gt; 1   -0.519615996  0.47919925  0.19002509  0.35385338  0.03890892 -0.2125309
 #&gt; 2    2.078551270  1.09691703  0.04023278  0.35385338  2.11095413 -0.6583397
 #&gt; 3    0.543270613  0.35565569  1.98753275 -1.00022044 -0.22009673  0.2332779
@@ -6307,7 +6318,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 #&gt; 906          NA
 #&gt; 907          NA
 #&gt; 908          NA</div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -6319,11 +6330,11 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -6331,6 +6342,8 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 
   
 
+
+  
 
   </body>
 </html>

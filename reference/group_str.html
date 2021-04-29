@@ -56,6 +56,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -67,9 +69,18 @@
 
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -211,23 +222,23 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 
 <span class='co'># see result</span>
 <span class='va'>newstring</span>
-</div><div class='output co'>#&gt; [1] "Hello, Helo"      "Hello, Helo"      "Hole"             "Ape, Apple"      
+</div><div class='co'>#&gt; [1] "Hello, Helo"      "Hello, Helo"      "Hole"             "Ape, Apple"      
 #&gt; [5] "Ape, Apple"       "New"              "Old"              "System, Systemic"
 #&gt; [9] "System, Systemic"</div><div class='input'>
 <span class='co'># count for each groups</span>
 <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; newstring
+</div><div class='co'>#&gt; newstring
 #&gt;       Ape, Apple      Hello, Helo             Hole              New 
 #&gt;                2                2                1                1 
 #&gt;              Old System, Systemic 
 #&gt;                1                2 </div><div class='input'>
 <span class='co'># print table to compare original and grouped string</span>
 <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
-#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74
-#&gt; 
-#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %</span>
 #&gt; ---------------------------------------
 #&gt; Ape      | 1 | 11.11 |   11.11 |  11.11
 #&gt; Apple    | 1 | 11.11 |   11.11 |  22.22
@@ -240,11 +251,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt; Systemic | 1 | 11.11 |   11.11 | 100.00
 #&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
-#&gt; # total N=9  valid N=9  mean=3.33  sd=2.00
-#&gt; 
-#&gt; </span><span>Value            | N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=3.33  sd=2.00</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value            | N | Raw % | Valid % | Cum. %</span>
 #&gt; -----------------------------------------------
 #&gt; Ape, Apple       | 2 | 22.22 |   22.22 |  22.22
 #&gt; Hello, Helo      | 2 | 22.22 |   22.22 |  44.44
@@ -257,11 +268,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 <span class='co'># larger groups</span>
 <span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span>, precision <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
 <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
-#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74
-#&gt; 
-#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %</span>
 #&gt; ---------------------------------------
 #&gt; Ape      | 1 | 11.11 |   11.11 |  11.11
 #&gt; Apple    | 1 | 11.11 |   11.11 |  22.22
@@ -274,11 +285,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt; Systemic | 1 | 11.11 |   11.11 | 100.00
 #&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
-#&gt; # total N=9  valid N=9  mean=2.44  sd=1.13
-#&gt; 
-#&gt; </span><span>Value             | N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=2.44  sd=1.13</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value             | N | Raw % | Valid % | Cum. %</span>
 #&gt; ------------------------------------------------
 #&gt; Ape, Apple        | 2 | 22.22 |   22.22 |  22.22
 #&gt; Hello, Helo, Hole | 3 | 33.33 |   33.33 |  55.56
@@ -289,11 +300,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 <span class='co'># be more strict with matching pairs</span>
 <span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span>, precision <span class='op'>=</span> <span class='fl'>3</span>, strict <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
-#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74
-#&gt; 
-#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %</span>
 #&gt; ---------------------------------------
 #&gt; Ape      | 1 | 11.11 |   11.11 |  11.11
 #&gt; Apple    | 1 | 11.11 |   11.11 |  22.22
@@ -306,11 +317,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt; Systemic | 1 | 11.11 |   11.11 | 100.00
 #&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; 
-#&gt; </span><span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;
-#&gt; # total N=9  valid N=9  mean=2.89  sd=1.54
-#&gt; 
-#&gt; </span><span>Value            | N | Raw % | Valid % | Cum. %
+</div><div class='co'>#&gt; 
+#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
+<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=2.89  sd=1.54</span>
+<span style='color: #0000BB;'>#&gt; </span>
+<span style='color: #0000BB;'>#&gt; </span><span>Value            | N | Raw % | Valid % | Cum. %</span>
 #&gt; -----------------------------------------------
 #&gt; Ape, Apple       | 2 | 22.22 |   22.22 |  22.22
 #&gt; Hello, Helo      | 2 | 22.22 |   22.22 |  44.44
@@ -319,7 +330,7 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 #&gt; System, Systemic | 2 | 22.22 |   22.22 | 100.00
 #&gt; &lt;NA&gt;             | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
 #&gt; </div><div class='input'>
-</div></span></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -331,11 +342,11 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://github.com/strengejacke'>Daniel Lüdecke</a>.</p>
+  <p><p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -343,6 +354,8 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
 
   
 
+
+  
 
   </body>
 </html>
