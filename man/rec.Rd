@@ -14,7 +14,7 @@ rec(
   val.labels = NULL,
   append = TRUE,
   suffix = "_r",
-  as.factor = !as.num
+  to.factor = !as.num
 )
 
 rec_if(
@@ -78,11 +78,11 @@ column names in a data frame depends on the function call:
 If \code{suffix = ""} and \code{append = TRUE}, existing variables that
 have been recoded/transformed will be overwritten.}
 
-\item{predicate}{A predicate function to be applied to the columns. The
-variables for which \code{predicate} returns \code{TRUE} are selected.}
-
 \item{to.factor}{Logical, alias for \code{as.num}. If \code{TRUE}, return value
 will be a factor, not numeric.}
+
+\item{predicate}{A predicate function to be applied to the columns. The
+variables for which \code{predicate} returns \code{TRUE} are selected.}
 }
 \value{
 \code{x} with recoded categories. If \code{x} is a data frame,

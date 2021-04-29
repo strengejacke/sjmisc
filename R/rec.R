@@ -183,7 +183,7 @@
 #' head(out)
 #' @importFrom insight print_color
 #' @export
-rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", as.factor = !as.num) {
+rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
   UseMethod("rec")
 }
 
