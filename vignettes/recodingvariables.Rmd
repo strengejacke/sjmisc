@@ -55,7 +55,7 @@ x <- dicho(efc$e17age, val.labels = c("young age", "old age"))
 frq(x)
 ```
 
-To split a variable at a different value, use the `dich.by`-argment. The value specified in `dich.by` is _inclusive_, i.e. all values from lowest to and including `dich.by` are recoded into the lower category, while all values _above_ `dich.by` are recoded into the higher category.
+To split a variable at a different value, use the `dich.by`-argument. The value specified in `dich.by` is _inclusive_, i.e. all values from lowest to and including `dich.by` are recoded into the lower category, while all values _above_ `dich.by` are recoded into the higher category.
 
 ```{r}
 # split at upper quartile
@@ -82,7 +82,7 @@ x2 <- efc %>%
 frq(x1)
 
 # median age of total sample, with median-split applied
-# to distibution of age by subgroups of gender
+# to distribution of age by subgroups of gender
 frq(x2)
 ```
 
@@ -168,7 +168,7 @@ frq(dummy)
 
 ## Flexible recoding of variables
 
-`rec()` recodes old values of variables into new values, and can be considered as a "classsical" recode-function. The recode-pattern, i.e. which new values should replace the old values, is defined in the `rec`-argument. This argument has a specific "syntax":
+`rec()` recodes old values of variables into new values, and can be considered as a "classical" recode-function. The recode-pattern, i.e. which new values should replace the old values, is defined in the `rec`-argument. This argument has a specific "syntax":
 
 * **recode pairs**: Each recode pair has to be separated by a ;, e.g. `rec = "1=1; 2=4; 3=2; 4=3"`
 
