@@ -216,121 +216,129 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></td>
     <div class='dont-index'><p><code><a href='str_find.html'>str_find</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>oldstring</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>,
-               <span class='st'>"Ape"</span>, <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span><span class='op'>)</span>
-<span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-
-<span class='co'># see result</span>
-<span class='va'>newstring</span>
-</div><div class='co'>#&gt; [1] "Hello, Helo"      "Hello, Helo"      "Hole"             "Ape, Apple"      
-#&gt; [5] "Ape, Apple"       "New"              "Old"              "System, Systemic"
-#&gt; [9] "System, Systemic"</div><div class='input'>
-<span class='co'># count for each groups</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; newstring
-#&gt;       Ape, Apple      Hello, Helo             Hole              New 
-#&gt;                2                2                1                1 
-#&gt;              Old System, Systemic 
-#&gt;                1                2 </div><div class='input'>
-<span class='co'># print table to compare original and grouped string</span>
-<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %</span>
-#&gt; ---------------------------------------
-#&gt; Ape      | 1 | 11.11 |   11.11 |  11.11
-#&gt; Apple    | 1 | 11.11 |   11.11 |  22.22
-#&gt; Hello    | 1 | 11.11 |   11.11 |  33.33
-#&gt; Helo     | 1 | 11.11 |   11.11 |  44.44
-#&gt; Hole     | 1 | 11.11 |   11.11 |  55.56
-#&gt; New      | 1 | 11.11 |   11.11 |  66.67
-#&gt; Old      | 1 | 11.11 |   11.11 |  77.78
-#&gt; System   | 1 | 11.11 |   11.11 |  88.89
-#&gt; Systemic | 1 | 11.11 |   11.11 | 100.00
-#&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=3.33  sd=2.00</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value            | N | Raw % | Valid % | Cum. %</span>
-#&gt; -----------------------------------------------
-#&gt; Ape, Apple       | 2 | 22.22 |   22.22 |  22.22
-#&gt; Hello, Helo      | 2 | 22.22 |   22.22 |  44.44
-#&gt; Hole             | 1 | 11.11 |   11.11 |  55.56
-#&gt; New              | 1 | 11.11 |   11.11 |  66.67
-#&gt; Old              | 1 | 11.11 |   11.11 |  77.78
-#&gt; System, Systemic | 2 | 22.22 |   22.22 | 100.00
-#&gt; &lt;NA&gt;             | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'>
-<span class='co'># larger groups</span>
-<span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span>, precision <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %</span>
-#&gt; ---------------------------------------
-#&gt; Ape      | 1 | 11.11 |   11.11 |  11.11
-#&gt; Apple    | 1 | 11.11 |   11.11 |  22.22
-#&gt; Hello    | 1 | 11.11 |   11.11 |  33.33
-#&gt; Helo     | 1 | 11.11 |   11.11 |  44.44
-#&gt; Hole     | 1 | 11.11 |   11.11 |  55.56
-#&gt; New      | 1 | 11.11 |   11.11 |  66.67
-#&gt; Old      | 1 | 11.11 |   11.11 |  77.78
-#&gt; System   | 1 | 11.11 |   11.11 |  88.89
-#&gt; Systemic | 1 | 11.11 |   11.11 | 100.00
-#&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=2.44  sd=1.13</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value             | N | Raw % | Valid % | Cum. %</span>
-#&gt; ------------------------------------------------
-#&gt; Ape, Apple        | 2 | 22.22 |   22.22 |  22.22
-#&gt; Hello, Helo, Hole | 3 | 33.33 |   33.33 |  55.56
-#&gt; New, Old          | 2 | 22.22 |   22.22 |  77.78
-#&gt; System, Systemic  | 2 | 22.22 |   22.22 | 100.00
-#&gt; &lt;NA&gt;              | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'>
-<span class='co'># be more strict with matching pairs</span>
-<span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span>, precision <span class='op'>=</span> <span class='fl'>3</span>, strict <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=5.00  sd=2.74</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value    | N | Raw % | Valid % | Cum. %</span>
-#&gt; ---------------------------------------
-#&gt; Ape      | 1 | 11.11 |   11.11 |  11.11
-#&gt; Apple    | 1 | 11.11 |   11.11 |  22.22
-#&gt; Hello    | 1 | 11.11 |   11.11 |  33.33
-#&gt; Helo     | 1 | 11.11 |   11.11 |  44.44
-#&gt; Hole     | 1 | 11.11 |   11.11 |  55.56
-#&gt; New      | 1 | 11.11 |   11.11 |  66.67
-#&gt; Old      | 1 | 11.11 |   11.11 |  77.78
-#&gt; System   | 1 | 11.11 |   11.11 |  88.89
-#&gt; Systemic | 1 | 11.11 |   11.11 | 100.00
-#&gt; &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=9  valid N=9  mean=2.89  sd=1.54</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value            | N | Raw % | Valid % | Cum. %</span>
-#&gt; -----------------------------------------------
-#&gt; Ape, Apple       | 2 | 22.22 |   22.22 |  22.22
-#&gt; Hello, Helo      | 2 | 22.22 |   22.22 |  44.44
-#&gt; Hole, Old        | 2 | 22.22 |   22.22 |  66.67
-#&gt; New              | 1 | 11.11 |   11.11 |  77.78
-#&gt; System, Systemic | 2 | 22.22 |   22.22 | 100.00
-#&gt; &lt;NA&gt;             | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>oldstring</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Hello"</span>, <span class='st'>"Helo"</span>, <span class='st'>"Hole"</span>, <span class='st'>"Apple"</span>,</span>
+<span class='r-in'>               <span class='st'>"Ape"</span>, <span class='st'>"New"</span>, <span class='st'>"Old"</span>, <span class='st'>"System"</span>, <span class='st'>"Systemic"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># see result</span></span>
+<span class='r-in'><span class='va'>newstring</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Hello, Helo"      "Hello, Helo"      "Hole"             "Ape, Apple"      </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "Ape, Apple"       "New"              "Old"              "System, Systemic"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [9] "System, Systemic"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># count for each groups</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> newstring</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       Ape, Apple      Hello, Helo             Hole              New </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                2                2                1                1 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              Old System, Systemic </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                1                2 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># print table to compare original and grouped string</span></span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value    | N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ape      | 1 | 11.11 |   11.11 |  11.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Apple    | 1 | 11.11 |   11.11 |  22.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hello    | 1 | 11.11 |   11.11 |  33.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Helo     | 1 | 11.11 |   11.11 |  44.44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hole     | 1 | 11.11 |   11.11 |  55.56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> New      | 1 | 11.11 |   11.11 |  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Old      | 1 | 11.11 |   11.11 |  77.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> System   | 1 | 11.11 |   11.11 |  88.89</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Systemic | 1 | 11.11 |   11.11 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=9  valid N=9  mean=3.33  sd=2.00</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value            | N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ape, Apple       | 2 | 22.22 |   22.22 |  22.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hello, Helo      | 2 | 22.22 |   22.22 |  44.44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hole             | 1 | 11.11 |   11.11 |  55.56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> New              | 1 | 11.11 |   11.11 |  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Old              | 1 | 11.11 |   11.11 |  77.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> System, Systemic | 2 | 22.22 |   22.22 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;NA&gt;             | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># larger groups</span></span>
+<span class='r-in'><span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span>, precision <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value    | N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ape      | 1 | 11.11 |   11.11 |  11.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Apple    | 1 | 11.11 |   11.11 |  22.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hello    | 1 | 11.11 |   11.11 |  33.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Helo     | 1 | 11.11 |   11.11 |  44.44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hole     | 1 | 11.11 |   11.11 |  55.56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> New      | 1 | 11.11 |   11.11 |  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Old      | 1 | 11.11 |   11.11 |  77.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> System   | 1 | 11.11 |   11.11 |  88.89</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Systemic | 1 | 11.11 |   11.11 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=9  valid N=9  mean=2.44  sd=1.13</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value             | N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ape, Apple        | 2 | 22.22 |   22.22 |  22.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hello, Helo, Hole | 3 | 33.33 |   33.33 |  55.56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> New, Old          | 2 | 22.22 |   22.22 |  77.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> System, Systemic  | 2 | 22.22 |   22.22 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;NA&gt;              | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># be more strict with matching pairs</span></span>
+<span class='r-in'><span class='va'>newstring</span> <span class='op'>&lt;-</span> <span class='fu'>group_str</span><span class='op'>(</span><span class='va'>oldstring</span>, precision <span class='op'>=</span> <span class='fl'>3</span>, strict <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>oldstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=9  valid N=9  mean=5.00  sd=2.74</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value    | N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ---------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ape      | 1 | 11.11 |   11.11 |  11.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Apple    | 1 | 11.11 |   11.11 |  22.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hello    | 1 | 11.11 |   11.11 |  33.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Helo     | 1 | 11.11 |   11.11 |  44.44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hole     | 1 | 11.11 |   11.11 |  55.56</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> New      | 1 | 11.11 |   11.11 |  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Old      | 1 | 11.11 |   11.11 |  77.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> System   | 1 | 11.11 |   11.11 |  88.89</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Systemic | 1 | 11.11 |   11.11 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;NA&gt;     | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>newstring</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>x</span><span style='color: #0000BB;'> &lt;character&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=9  valid N=9  mean=2.89  sd=1.54</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value            | N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ape, Apple       | 2 | 22.22 |   22.22 |  22.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hello, Helo      | 2 | 22.22 |   22.22 |  44.44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hole, Old        | 2 | 22.22 |   22.22 |  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> New              | 1 | 11.11 |   11.11 |  77.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> System, Systemic | 2 | 22.22 |   22.22 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> &lt;NA&gt;             | 0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -194,73 +194,77 @@ on the <code>else</code>-token in <code><a href='rec.html'>rec</a></code>.</p></
           <code><a href='group_var.html'>group_labels</a></code> to create the asssociated value labels.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>rp</span> <span class='op'>&lt;-</span> <span class='fu'>rec_pattern</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>100</span><span class='op'>)</span>
-<span class='va'>rp</span>
-</div><div class='co'>#&gt; $pattern
-#&gt; [1] "1:5=1;6:10=2;11:15=3;16:20=4;21:25=5;26:30=6;31:35=7;36:40=8;41:45=9;46:50=10;51:55=11;56:60=12;61:65=13;66:70=14;71:75=15;76:80=16;81:85=17;86:90=18;91:95=19;96:100=20;"
-#&gt; 
-#&gt; $labels
-#&gt;        1        2        3        4        5        6        7        8 
-#&gt;    "1-5"   "6-10"  "11-15"  "16-20"  "21-25"  "26-30"  "31-35"  "36-40" 
-#&gt;        9       10       11       12       13       14       15       16 
-#&gt;  "41-45"  "46-50"  "51-55"  "56-60"  "61-65"  "66-70"  "71-75"  "76-80" 
-#&gt;       17       18       19       20 
-#&gt;  "81-85"  "86-90"  "91-95" "96-100" 
-#&gt; </div><div class='input'>
-<span class='co'># sample data, inspect age of carers</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33 
-#&gt;    1    2    2    1    2    4    3    5    3    4    4    8    9    9    5   10 
-#&gt;   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49 
-#&gt;    9   17    6    7   13   12   13   15   21   24   25   14   22   27   26   32 
-#&gt;   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65 
-#&gt;   19   15   22   27   28   24   27   21   26   20   28   19   28   25   25   26 
-#&gt;   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80   81 
-#&gt;   18   17   14   18   15    4   11    7    7   12   10    7    5    5    5    3 
-#&gt;   82   83   85   87   89 &lt;NA&gt; 
-#&gt;    1    4    1    1    1    7 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span><span class='op'>)</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18 &lt;NA&gt; 
-#&gt;    5   15   28   50   51   99  126  116  122  123   82   41   32    9    2    7 </div><div class='input'>
-<span class='co'># recode carers age into groups of width 5</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span>
-  <span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>,
-  rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span>,
-  val.labels <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>labels</span>
-<span class='op'>)</span>
-<span class='co'># watch result</span>
-<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>carer' age (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=11.07  sd=2.69</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span>
-#&gt; -----------------------------------------------
-#&gt;     1 |    1-5 |   0 |  0.00 |    0.00 |   0.00
-#&gt;     2 |   6-10 |   0 |  0.00 |    0.00 |   0.00
-#&gt;     3 |  11-15 |   0 |  0.00 |    0.00 |   0.00
-#&gt;     4 |  16-20 |   5 |  0.55 |    0.55 |   0.55
-#&gt;     5 |  21-25 |  15 |  1.65 |    1.66 |   2.22
-#&gt;     6 |  26-30 |  28 |  3.08 |    3.11 |   5.33
-#&gt;     7 |  31-35 |  50 |  5.51 |    5.55 |  10.88
-#&gt;     8 |  36-40 |  51 |  5.62 |    5.66 |  16.54
-#&gt;     9 |  41-45 |  99 | 10.90 |   10.99 |  27.52
-#&gt;    10 |  46-50 | 126 | 13.88 |   13.98 |  41.51
-#&gt;    11 |  51-55 | 116 | 12.78 |   12.87 |  54.38
-#&gt;    12 |  56-60 | 122 | 13.44 |   13.54 |  67.92
-#&gt;    13 |  61-65 | 123 | 13.55 |   13.65 |  81.58
-#&gt;    14 |  66-70 |  82 |  9.03 |    9.10 |  90.68
-#&gt;    15 |  71-75 |  41 |  4.52 |    4.55 |  95.23
-#&gt;    16 |  76-80 |  32 |  3.52 |    3.55 |  98.78
-#&gt;    17 |  81-85 |   9 |  0.99 |    1.00 |  99.78
-#&gt;    18 |  86-90 |   2 |  0.22 |    0.22 | 100.00
-#&gt;    19 |  91-95 |   0 |  0.00 |    0.00 | 100.00
-#&gt;    20 | 96-100 |   0 |  0.00 |    0.00 | 100.00
-#&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='va'>rp</span> <span class='op'>&lt;-</span> <span class='fu'>rec_pattern</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>rp</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $pattern</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "1:5=1;6:10=2;11:15=3;16:20=4;21:25=5;26:30=6;31:35=7;36:40=8;41:45=9;46:50=10;51:55=11;56:60=12;61:65=13;66:70=14;71:75=15;76:80=16;81:85=17;86:90=18;91:95=19;96:100=20;"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $labels</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        1        2        3        4        5        6        7        8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    "1-5"   "6-10"  "11-15"  "16-20"  "21-25"  "26-30"  "31-35"  "36-40" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        9       10       11       12       13       14       15       16 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  "41-45"  "46-50"  "51-55"  "56-60"  "61-65"  "66-70"  "71-75"  "76-80" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       17       18       19       20 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  "81-85"  "86-90"  "91-95" "96-100" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># sample data, inspect age of carers</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    2    1    2    4    3    5    3    4    4    8    9    9    5   10 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    9   17    6    7   13   12   13   15   21   24   25   14   22   27   26   32 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   19   15   22   27   28   24   27   21   26   20   28   19   28   25   25   26 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   66   67   68   69   70   71   72   73   74   75   76   77   78   79   80   81 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   18   17   14   18   15    4   11    7    7   12   10    7    5    5    5    3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   82   83   85   87   89 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    4    1    1    1    7 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>, rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span><span class='op'>)</span>, exclude <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    5   15   28   50   51   99  126  116  122  123   82   41   32    9    2    7 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode carers age into groups of width 5</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='rec.html'>rec</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>efc</span><span class='op'>$</span><span class='va'>c160age</span>,</span>
+<span class='r-in'>  rec <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>pattern</span>,</span>
+<span class='r-in'>  val.labels <span class='op'>=</span> <span class='va'>rp</span><span class='op'>$</span><span class='va'>labels</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># watch result</span></span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>carer' age (x)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=908  valid N=901  mean=11.07  sd=2.69</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     1 |    1-5 |   0 |  0.00 |    0.00 |   0.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     2 |   6-10 |   0 |  0.00 |    0.00 |   0.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     3 |  11-15 |   0 |  0.00 |    0.00 |   0.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     4 |  16-20 |   5 |  0.55 |    0.55 |   0.55</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     5 |  21-25 |  15 |  1.65 |    1.66 |   2.22</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     6 |  26-30 |  28 |  3.08 |    3.11 |   5.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     7 |  31-35 |  50 |  5.51 |    5.55 |  10.88</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     8 |  36-40 |  51 |  5.62 |    5.66 |  16.54</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     9 |  41-45 |  99 | 10.90 |   10.99 |  27.52</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    10 |  46-50 | 126 | 13.88 |   13.98 |  41.51</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    11 |  51-55 | 116 | 12.78 |   12.87 |  54.38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    12 |  56-60 | 122 | 13.44 |   13.54 |  67.92</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    13 |  61-65 | 123 | 13.55 |   13.65 |  81.58</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    14 |  66-70 |  82 |  9.03 |    9.10 |  90.68</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    15 |  71-75 |  41 |  4.52 |    4.55 |  95.23</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    16 |  76-80 |  32 |  3.52 |    3.55 |  98.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    17 |  81-85 |   9 |  0.99 |    1.00 |  99.78</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    18 |  86-90 |   2 |  0.22 |    0.22 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    19 |  91-95 |   0 |  0.00 |    0.00 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    20 | 96-100 |   0 |  0.00 |    0.00 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

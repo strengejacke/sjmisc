@@ -242,289 +242,308 @@ as new columns to <code>data</code>.</p></td>
   columns will be preserved.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
-
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; Attaching package: ‘dplyr’</div><div class='co'>#&gt; The following objects are masked from ‘package:stats’:
-#&gt; 
-#&gt;     filter, lag</div><div class='co'>#&gt; The following objects are masked from ‘package:base’:
-#&gt; 
-#&gt;     intersect, setdiff, setequal, union</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1
-#&gt; 1      16        2      2     83      3       3
-#&gt; 2     148        2      2     88      3       3
-#&gt; 3      70        1      2     82      3       2
-#&gt; 4     168        1      2     67      4       4
-#&gt; 5     168        2      2     84      4       3
-#&gt; 6      16        2      2     85      4       2</div><div class='input'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   e17age e42dep c82cop1 c12hour e15relat e16sex
-#&gt; 1     83      3       3      16        2      2
-#&gt; 2     88      3       3     148        2      2
-#&gt; 3     82      3       2      70        1      2
-#&gt; 4     67      4       4     168        1      2
-#&gt; 5     84      4       3     168        2      2
-#&gt; 6     85      4       2      16        2      2</div><div class='input'>
-<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span>
-
-<span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour e15relat e17age e42dep c82cop1 e16sex
-#&gt; 1      16        2     83      3       3      2
-#&gt; 2     148        2     88      3       3      2
-#&gt; 3      70        1     82      3       2      2
-#&gt; 4     168        1     67      4       4      2
-#&gt; 5     168        2     84      4       3      2
-#&gt; 6      16        2     85      4       2      2</div><div class='input'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; New names:
-#&gt; * e15relat -&gt; e15relat...1
-#&gt; * e16sex -&gt; e16sex...2
-#&gt; * e15relat -&gt; e15relat...7
-#&gt; * e16sex -&gt; e16sex...8</div><div class='co'>#&gt;   e15relat...1 e16sex...2 e17age e42dep c82cop1 c12hour e15relat...7 e16sex...8
-#&gt; 1            2          2     83      3       3      16            2          2
-#&gt; 2            2          2     88      3       3     148            2          2
-#&gt; 3            1          2     82      3       2      70            1          2
-#&gt; 4            1          2     67      4       4     168            1          2
-#&gt; 5            2          2     84      4       3     168            2          2
-#&gt; 6            2          2     85      4       2      16            2          2</div><div class='input'>
-<span class='co'># use case: we take the original data frame, select specific</span>
-<span class='co'># variables and do some transformations or recodings</span>
-<span class='co'># (standardization in this example) and add the new, transformed</span>
-<span class='co'># variables *to the end* of the original data frame</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>c160age</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='std.html'>std</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
-#&gt; 1      16        2      2     83      3       3       2       2       2       1
-#&gt; 2     148        2      2     88      3       3       3       3       3       4
-#&gt; 3      70        1      2     82      3       2       2       1       4       1
-#&gt; 4     168        1      2     67      4       4       1       3       1       1
-#&gt; 5     168        2      2     84      4       3       2       1       2       2
-#&gt; 6      16        2      2     85      4       2       2       3       3       3
-#&gt;   c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl barthtot
-#&gt; 1       1       2       3       3      56       2        2        1       75
-#&gt; 2       1       3       2       2      54       2        2        1       75
-#&gt; 3       1       1       4       3      80       1        1        0       35
-#&gt; 4       1       1       2       4      69       1        2        0        0
-#&gt; 5       2       1       4       4      47       2        2        0       25
-#&gt; 6       2       2       1       1      56       1        2        1       60
-#&gt;   neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst   e17age_z
-#&gt; 1      12      12     14        0        4      0      NA  0.4791992
-#&gt; 2      20      11     10        4        0      0      NA  1.0969170
-#&gt; 3      11      13      7        0        1      2       2  0.3556557
-#&gt; 4      10      15     12        2        0      3       3 -1.4974976
-#&gt; 5      12      15     19        2        1      2       2  0.6027428
-#&gt; 6      19       9      8        1        3      2       2  0.7262864
-#&gt;     c160age_z
-#&gt; 1  0.19002509
-#&gt; 2  0.04023278
-#&gt; 3  1.98753275
-#&gt; 4  1.16367507
-#&gt; 5 -0.48404028
-#&gt; 6  0.19002509</div><div class='input'>
-<span class='co'># new variables with same name will overwrite old variables</span>
-<span class='co'># in "efc". order of columns is not changed.</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
-#&gt; 1      16        2      2     83      3       3       2       2       2       1
-#&gt; 2     148        2      2     88      3       3       3       3       3       4
-#&gt; 3      70        1      2     82      3       2       2       1       4       1
-#&gt; 4     168        1      2     67      4       4       1       3       1       1
-#&gt; 5     168        2      2     84      4       3       2       1       2       2
-#&gt; 6      16        2      2     85      4       2       2       3       3       3
-#&gt;   c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl barthtot
-#&gt; 1       1       2       3       3      56       2        2        1       75
-#&gt; 2       1       3       2       2      54       2        2        1       75
-#&gt; 3       1       1       4       3      80       1        1        0       35
-#&gt; 4       1       1       2       4      69       1        2        0        0
-#&gt; 5       2       1       4       4      47       2        2        0       25
-#&gt; 6       2       2       1       1      56       1        2        1       60
-#&gt;   neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst
-#&gt; 1      12      12     14        0        4      0      NA
-#&gt; 2      20      11     10        4        0      0      NA
-#&gt; 3      11      13      7        0        1      2       2
-#&gt; 4      10      15     12        2        0      3       3
-#&gt; 5      12      15     19        2        1      2       2
-#&gt; 6      19       9      8        1        3      2       2</div><div class='input'>
-<span class='co'># keep both old and new variables, automatically</span>
-<span class='co'># rename variables with identical name</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; New names:
-#&gt; * e16sex -&gt; e16sex...3
-#&gt; * e42dep -&gt; e42dep...5
-#&gt; * e16sex -&gt; e16sex...27
-#&gt; * e42dep -&gt; e42dep...28</div><div class='co'>#&gt;   c12hour e15relat e16sex...3 e17age e42dep...5 c82cop1 c83cop2 c84cop3 c85cop4
-#&gt; 1      16        2          2     83          3       3       2       2       2
-#&gt; 2     148        2          2     88          3       3       3       3       3
-#&gt; 3      70        1          2     82          3       2       2       1       4
-#&gt; 4     168        1          2     67          4       4       1       3       1
-#&gt; 5     168        2          2     84          4       3       2       1       2
-#&gt; 6      16        2          2     85          4       2       2       3       3
-#&gt;   c86cop5 c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl
-#&gt; 1       1       1       2       3       3      56       2        2        1
-#&gt; 2       4       1       3       2       2      54       2        2        1
-#&gt; 3       1       1       1       4       3      80       1        1        0
-#&gt; 4       1       1       1       2       4      69       1        2        0
-#&gt; 5       2       2       1       4       4      47       2        2        0
-#&gt; 6       3       2       2       1       1      56       1        2        1
-#&gt;   barthtot neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst e16sex...27
-#&gt; 1       75      12      12     14        0        4      0      NA           2
-#&gt; 2       75      20      11     10        4        0      0      NA           2
-#&gt; 3       35      11      13      7        0        1      2       2           2
-#&gt; 4        0      10      15     12        2        0      3       3           2
-#&gt; 5       25      12      15     19        2        1      2       2           2
-#&gt; 6       60      19       9      8        1        3      2       2           2
-#&gt;   e42dep...28
-#&gt; 1           3
-#&gt; 2           3
-#&gt; 3           3
-#&gt; 4           4
-#&gt; 5           4
-#&gt; 6           4</div><div class='input'>
-<span class='co'># create sample data frames</span>
-<span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
-<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>
-<span class='va'>d3</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>7</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span>
-<span class='va'>d4</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>10</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span>
-
-<span class='co'># show original</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>d1</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
-#&gt; 1      16        2      2     83      3       3       2       2       2       1
-#&gt; 2     148        2      2     88      3       3       3       3       3       4
-#&gt; 3      70        1      2     82      3       2       2       1       4       1
-#&gt; 4     168        1      2     67      4       4       1       3       1       1
-#&gt; 5     168        2      2     84      4       3       2       1       2       2
-#&gt; 6      16        2      2     85      4       2       2       3       3       3</div><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; Attaching package: ‘sjlabelled’</div><div class='co'>#&gt; The following object is masked from ‘package:dplyr’:
-#&gt; 
-#&gt;     as_label</div><div class='input'><span class='co'># slightly change variables, to see effect</span>
-<span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>as_label</a></span><span class='op'>(</span><span class='va'>d2</span><span class='op'>)</span>
-<span class='va'>d3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>as_label</a></span><span class='op'>(</span><span class='va'>d3</span><span class='op'>)</span>
-
-<span class='co'># replace duplicated columns, append remaining</span>
-<span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, <span class='va'>d3</span>, <span class='va'>d4</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3
-#&gt; 1      16          child female     83      3       3 Sometimes Sometimes
-#&gt; 2     148          child female     88      3       3     Often     Often
-#&gt; 3      70 spouse/partner female     82      3       2 Sometimes     Never
-#&gt; 4     168 spouse/partner female     67      4       4     Never     Often
-#&gt; 5     168          child female     84      4       3 Sometimes     Never
-#&gt; 6      16          child female     85      4       2 Sometimes     Often
-#&gt;   c85cop4 c86cop5 c87cop6 c88cop7
-#&gt; 1       2       1       1       2
-#&gt; 2       3       4       1       3
-#&gt; 3       4       1       1       1
-#&gt; 4       1       1       1       1
-#&gt; 5       2       2       2       1
-#&gt; 6       3       3       2       2</div><div class='input'>
-<span class='co'># replace duplicated columns, omit remaining</span>
-<span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, <span class='va'>d3</span>, <span class='va'>d4</span>, add.unique <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3
-#&gt; 1      16          child female     83      3       3 Sometimes Sometimes
-#&gt; 2     148          child female     88      3       3     Often     Often
-#&gt; 3      70 spouse/partner female     82      3       2 Sometimes     Never
-#&gt; 4     168 spouse/partner female     67      4       4     Never     Often
-#&gt; 5     168          child female     84      4       3 Sometimes     Never
-#&gt; 6      16          child female     85      4       2 Sometimes     Often
-#&gt;   c85cop4 c86cop5
-#&gt; 1       2       1
-#&gt; 2       3       4
-#&gt; 3       4       1
-#&gt; 4       1       1
-#&gt; 5       2       2
-#&gt; 6       3       3</div><div class='input'>
-<span class='co'># add ID to dataset</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
-<span class='fu'>add_id</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                     ID  mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-#&gt; Mazda RX4            1 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-#&gt; Mazda RX4 Wag        2 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-#&gt; Datsun 710           3 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-#&gt; Hornet 4 Drive       4 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-#&gt; Hornet Sportabout    5 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-#&gt; Valiant              6 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-#&gt; Duster 360           7 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-#&gt; Merc 240D            8 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-#&gt; Merc 230             9 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-#&gt; Merc 280            10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-#&gt; Merc 280C           11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-#&gt; Merc 450SE          12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-#&gt; Merc 450SL          13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-#&gt; Merc 450SLC         14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-#&gt; Cadillac Fleetwood  15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-#&gt; Lincoln Continental 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
-#&gt; Chrysler Imperial   17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
-#&gt; Fiat 128            18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
-#&gt; Honda Civic         19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
-#&gt; Toyota Corolla      20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
-#&gt; Toyota Corona       21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
-#&gt; Dodge Challenger    22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
-#&gt; AMC Javelin         23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
-#&gt; Camaro Z28          24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
-#&gt; Pontiac Firebird    25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
-#&gt; Fiat X1-9           26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
-#&gt; Porsche 914-2       27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
-#&gt; Lotus Europa        28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
-#&gt; Ford Pantera L      29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
-#&gt; Ferrari Dino        30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
-#&gt; Maserati Bora       31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
-#&gt; Volvo 142E          32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</div><div class='input'>
-<span class='va'>mtcars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>add_id</span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>gear</span>, <span class='va'>ID</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #949494;'># A tibble: 32 x 12</span>
-#&gt;       ID   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
-#&gt;    <span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span>
-#&gt; <span style='color: #BCBCBC;'> 1</span><span>     1  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1</span>
-#&gt; <span style='color: #BCBCBC;'> 2</span><span>     2  18.7     8 360     175  3.15  3.44  17.0     0     0     3     2</span>
-#&gt; <span style='color: #BCBCBC;'> 3</span><span>     3  18.1     6 225     105  2.76  3.46  20.2     1     0     3     1</span>
-#&gt; <span style='color: #BCBCBC;'> 4</span><span>     4  14.3     8 360     245  3.21  3.57  15.8     0     0     3     4</span>
-#&gt; <span style='color: #BCBCBC;'> 5</span><span>     5  16.4     8 276.    180  3.07  4.07  17.4     0     0     3     3</span>
-#&gt; <span style='color: #BCBCBC;'> 6</span><span>     6  17.3     8 276.    180  3.07  3.73  17.6     0     0     3     3</span>
-#&gt; <span style='color: #BCBCBC;'> 7</span><span>     7  15.2     8 276.    180  3.07  3.78  18       0     0     3     3</span>
-#&gt; <span style='color: #BCBCBC;'> 8</span><span>     8  10.4     8 472     205  2.93  5.25  18.0     0     0     3     4</span>
-#&gt; <span style='color: #BCBCBC;'> 9</span><span>     9  10.4     8 460     215  3     5.42  17.8     0     0     3     4</span>
-#&gt; <span style='color: #BCBCBC;'>10</span><span>    10  14.7     8 440     230  3.23  5.34  17.4     0     0     3     4</span>
-#&gt; <span style='color: #BCBCBC;'>11</span><span>    11  21.5     4 120.     97  3.7   2.46  20.0     1     0     3     1</span>
-#&gt; <span style='color: #BCBCBC;'>12</span><span>    12  15.5     8 318     150  2.76  3.52  16.9     0     0     3     2</span>
-#&gt; <span style='color: #BCBCBC;'>13</span><span>    13  15.2     8 304     150  3.15  3.44  17.3     0     0     3     2</span>
-#&gt; <span style='color: #BCBCBC;'>14</span><span>    14  13.3     8 350     245  3.73  3.84  15.4     0     0     3     4</span>
-#&gt; <span style='color: #BCBCBC;'>15</span><span>    15  19.2     8 400     175  3.08  3.84  17.0     0     0     3     2</span>
-#&gt; <span style='color: #BCBCBC;'>16</span><span>     1  21       6 160     110  3.9   2.62  16.5     0     1     4     4</span>
-#&gt; <span style='color: #BCBCBC;'>17</span><span>     2  21       6 160     110  3.9   2.88  17.0     0     1     4     4</span>
-#&gt; <span style='color: #BCBCBC;'>18</span><span>     3  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1</span>
-#&gt; <span style='color: #BCBCBC;'>19</span><span>     4  24.4     4 147.     62  3.69  3.19  20       1     0     4     2</span>
-#&gt; <span style='color: #BCBCBC;'>20</span><span>     5  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2</span>
-#&gt; <span style='color: #BCBCBC;'>21</span><span>     6  19.2     6 168.    123  3.92  3.44  18.3     1     0     4     4</span>
-#&gt; <span style='color: #BCBCBC;'>22</span><span>     7  17.8     6 168.    123  3.92  3.44  18.9     1     0     4     4</span>
-#&gt; <span style='color: #BCBCBC;'>23</span><span>     8  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1</span>
-#&gt; <span style='color: #BCBCBC;'>24</span><span>     9  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2</span>
-#&gt; <span style='color: #BCBCBC;'>25</span><span>    10  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1</span>
-#&gt; <span style='color: #BCBCBC;'>26</span><span>    11  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1</span>
-#&gt; <span style='color: #BCBCBC;'>27</span><span>    12  21.4     4 121     109  4.11  2.78  18.6     1     1     4     2</span>
-#&gt; <span style='color: #BCBCBC;'>28</span><span>     1  26       4 120.     91  4.43  2.14  16.7     0     1     5     2</span>
-#&gt; <span style='color: #BCBCBC;'>29</span><span>     2  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2</span>
-#&gt; <span style='color: #BCBCBC;'>30</span><span>     3  15.8     8 351     264  4.22  3.17  14.5     0     1     5     4</span>
-#&gt; <span style='color: #BCBCBC;'>31</span><span>     4  19.7     6 145     175  3.62  2.77  15.5     0     1     5     6</span>
-#&gt; <span style='color: #BCBCBC;'>32</span><span>     5  15       8 301     335  3.54  3.57  14.6     0     1     5     8</span></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘dplyr’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:stats’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     filter, lag</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following objects are masked from ‘package:base’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     intersect, setdiff, setequal, union</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/bind.html'>bind_cols</a></span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e16sex e17age e42dep c82cop1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2      2     83      3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2      2     88      3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1      2     82      3       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1      2     67      4       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2      2     84      4       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2      2     85      4       2</span>
+<span class='r-in'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   e17age e42dep c82cop1 c12hour e15relat e16sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     83      3       3      16        2      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     88      3       3     148        2      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3     82      3       2      70        1      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     67      4       4     168        1      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     84      4       3     168        2      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6     85      4       2      16        2      2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e17age e42dep c82cop1 e16sex</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2     83      3       3      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2     88      3       3      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1     82      3       2      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1     67      4       4      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2     84      4       3      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2     85      4       2      2</span>
+<span class='r-in'><span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> New names:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e15relat -&gt; e15relat...1</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e16sex -&gt; e16sex...2</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e15relat -&gt; e15relat...7</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e16sex -&gt; e16sex...8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   e15relat...1 e16sex...2 e17age e42dep c82cop1 c12hour e15relat...7 e16sex...8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1            2          2     83      3       3      16            2          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2            2          2     88      3       3     148            2          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3            1          2     82      3       2      70            1          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4            1          2     67      4       4     168            1          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5            2          2     84      4       3     168            2          2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6            2          2     85      4       2      16            2          2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># use case: we take the original data frame, select specific</span></span>
+<span class='r-in'><span class='co'># variables and do some transformations or recodings</span></span>
+<span class='r-in'><span class='co'># (standardization in this example) and add the new, transformed</span></span>
+<span class='r-in'><span class='co'># variables *to the end* of the original data frame</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e17age</span>, <span class='va'>c160age</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='std.html'>std</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2      2     83      3       3       2       2       2       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2      2     88      3       3       3       3       3       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1      2     82      3       2       2       1       4       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1      2     67      4       4       1       3       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2      2     84      4       3       2       1       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2      2     85      4       2       2       3       3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl barthtot</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       1       2       3       3      56       2        2        1       75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       1       3       2       2      54       2        2        1       75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       1       1       4       3      80       1        1        0       35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       1       1       2       4      69       1        2        0        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       2       1       4       4      47       2        2        0       25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       2       2       1       1      56       1        2        1       60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst   e17age_z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      12      12     14        0        4      0      NA  0.4791992</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      20      11     10        4        0      0      NA  1.0969170</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      11      13      7        0        1      2       2  0.3556557</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4      10      15     12        2        0      3       3 -1.4974976</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      12      15     19        2        1      2       2  0.6027428</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      19       9      8        1        3      2       2  0.7262864</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     c160age_z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  0.19002509</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  0.04023278</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  1.98753275</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  1.16367507</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 -0.48404028</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  0.19002509</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># new variables with same name will overwrite old variables</span></span>
+<span class='r-in'><span class='co'># in "efc". order of columns is not changed.</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2      2     83      3       3       2       2       2       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2      2     88      3       3       3       3       3       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1      2     82      3       2       2       1       4       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1      2     67      4       4       1       3       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2      2     84      4       3       2       1       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2      2     85      4       2       2       3       3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl barthtot</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       1       2       3       3      56       2        2        1       75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       1       3       2       2      54       2        2        1       75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       1       1       4       3      80       1        1        0       35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       1       1       2       4      69       1        2        0        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       2       1       4       4      47       2        2        0       25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       2       2       1       1      56       1        2        1       60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      12      12     14        0        4      0      NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      20      11     10        4        0      0      NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      11      13      7        0        1      2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4      10      15     12        2        0      3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      12      15     19        2        1      2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      19       9      8        1        3      2       2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># keep both old and new variables, automatically</span></span>
+<span class='r-in'><span class='co'># rename variables with identical name</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_factor.html'>to_factor</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>add_columns</span><span class='op'>(</span><span class='va'>efc</span>, replace <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> New names:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e16sex -&gt; e16sex...3</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e42dep -&gt; e42dep...5</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e16sex -&gt; e16sex...27</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> * e42dep -&gt; e42dep...28</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e16sex...3 e17age e42dep...5 c82cop1 c83cop2 c84cop3 c85cop4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2          2     83          3       3       2       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2          2     88          3       3       3       3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1          2     82          3       2       2       1       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1          2     67          4       4       1       3       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2          2     84          4       3       2       1       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2          2     85          4       2       2       3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c86cop5 c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       1       1       2       3       3      56       2        2        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       4       1       3       2       2      54       2        2        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       1       1       1       4       3      80       1        1        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       1       1       1       2       4      69       1        2        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       2       2       1       4       4      47       2        2        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       3       2       2       1       1      56       1        2        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   barthtot neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst e16sex...27</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       75      12      12     14        0        4      0      NA           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       75      20      11     10        4        0      0      NA           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       35      11      13      7        0        1      2       2           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4        0      10      15     12        2        0      3       3           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       25      12      15     19        2        1      2       2           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       60      19       9      8        1        3      2       2           2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   e42dep...28</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2           3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4           4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5           4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6           4</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># create sample data frames</span></span>
+<span class='r-in'><span class='va'>d1</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>d3</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>7</span><span class='op'>:</span><span class='fl'>8</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>d4</span> <span class='op'>&lt;-</span> <span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>10</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># show original</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>d1</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2      2     83      3       3       2       2       2       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2      2     88      3       3       3       3       3       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1      2     82      3       2       2       1       4       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1      2     67      4       4       1       3       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2      2     84      4       3       2       1       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2      2     85      4       2       2       3       3       3</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Attaching package: ‘sjlabelled’</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The following object is masked from ‘package:dplyr’:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>     as_label</span>
+<span class='r-in'><span class='co'># slightly change variables, to see effect</span></span>
+<span class='r-in'><span class='va'>d2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>as_label</a></span><span class='op'>(</span><span class='va'>d2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>d3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/as_label.html'>as_label</a></span><span class='op'>(</span><span class='va'>d3</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># replace duplicated columns, append remaining</span></span>
+<span class='r-in'><span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, <span class='va'>d3</span>, <span class='va'>d4</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16          child female     83      3       3 Sometimes Sometimes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148          child female     88      3       3     Often     Often</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70 spouse/partner female     82      3       2 Sometimes     Never</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168 spouse/partner female     67      4       4     Never     Often</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168          child female     84      4       3 Sometimes     Never</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16          child female     85      4       2 Sometimes     Often</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c85cop4 c86cop5 c87cop6 c88cop7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       2       1       1       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       3       4       1       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       4       1       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       1       1       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       2       2       2       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       3       3       2       2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># replace duplicated columns, omit remaining</span></span>
+<span class='r-in'><span class='fu'>replace_columns</span><span class='op'>(</span><span class='va'>d1</span>, <span class='va'>d2</span>, <span class='va'>d3</span>, <span class='va'>d4</span>, add.unique <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour       e15relat e16sex e17age e42dep c82cop1   c83cop2   c84cop3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16          child female     83      3       3 Sometimes Sometimes</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148          child female     88      3       3     Often     Often</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70 spouse/partner female     82      3       2 Sometimes     Never</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168 spouse/partner female     67      4       4     Never     Often</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168          child female     84      4       3 Sometimes     Never</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16          child female     85      4       2 Sometimes     Often</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c85cop4 c86cop5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       2       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       3       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       4       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       3       3</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># add ID to dataset</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>add_id</span><span class='op'>(</span><span class='va'>mtcars</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                     ID  mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mazda RX4            1 21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Mazda RX4 Wag        2 21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Datsun 710           3 22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hornet 4 Drive       4 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Hornet Sportabout    5 18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Valiant              6 18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Duster 360           7 14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 240D            8 24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 230             9 22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 280            10 19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 280C           11 17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 450SE          12 16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 450SL          13 17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Merc 450SLC         14 15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Cadillac Fleetwood  15 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lincoln Continental 16 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Chrysler Imperial   17 14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fiat 128            18 32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Honda Civic         19 30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Toyota Corolla      20 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Toyota Corona       21 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dodge Challenger    22 15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> AMC Javelin         23 15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Camaro Z28          24 13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Pontiac Firebird    25 19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Fiat X1-9           26 27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Porsche 914-2       27 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Lotus Europa        28 30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ford Pantera L      29 15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Ferrari Dino        30 19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Maserati Bora       31 15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Volvo 142E          32 21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>mtcars</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>gear</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>add_id</span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>gear</span>, <span class='va'>ID</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #949494;'># A tibble: 32 x 12</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       ID   mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    <span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 1</span><span>     1  21.4     6 258     110  3.08  3.22  19.4     1     0     3     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 2</span><span>     2  18.7     8 360     175  3.15  3.44  17.0     0     0     3     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 3</span><span>     3  18.1     6 225     105  2.76  3.46  20.2     1     0     3     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 4</span><span>     4  14.3     8 360     245  3.21  3.57  15.8     0     0     3     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 5</span><span>     5  16.4     8 276.    180  3.07  4.07  17.4     0     0     3     3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 6</span><span>     6  17.3     8 276.    180  3.07  3.73  17.6     0     0     3     3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 7</span><span>     7  15.2     8 276.    180  3.07  3.78  18       0     0     3     3</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 8</span><span>     8  10.4     8 472     205  2.93  5.25  18.0     0     0     3     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'> 9</span><span>     9  10.4     8 460     215  3     5.42  17.8     0     0     3     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>10</span><span>    10  14.7     8 440     230  3.23  5.34  17.4     0     0     3     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>11</span><span>    11  21.5     4 120.     97  3.7   2.46  20.0     1     0     3     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>12</span><span>    12  15.5     8 318     150  2.76  3.52  16.9     0     0     3     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>13</span><span>    13  15.2     8 304     150  3.15  3.44  17.3     0     0     3     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>14</span><span>    14  13.3     8 350     245  3.73  3.84  15.4     0     0     3     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>15</span><span>    15  19.2     8 400     175  3.08  3.84  17.0     0     0     3     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>16</span><span>     1  21       6 160     110  3.9   2.62  16.5     0     1     4     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>17</span><span>     2  21       6 160     110  3.9   2.88  17.0     0     1     4     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>18</span><span>     3  22.8     4 108      93  3.85  2.32  18.6     1     1     4     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>19</span><span>     4  24.4     4 147.     62  3.69  3.19  20       1     0     4     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>20</span><span>     5  22.8     4 141.     95  3.92  3.15  22.9     1     0     4     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>21</span><span>     6  19.2     6 168.    123  3.92  3.44  18.3     1     0     4     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>22</span><span>     7  17.8     6 168.    123  3.92  3.44  18.9     1     0     4     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>23</span><span>     8  32.4     4  78.7    66  4.08  2.2   19.5     1     1     4     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>24</span><span>     9  30.4     4  75.7    52  4.93  1.62  18.5     1     1     4     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>25</span><span>    10  33.9     4  71.1    65  4.22  1.84  19.9     1     1     4     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>26</span><span>    11  27.3     4  79      66  4.08  1.94  18.9     1     1     4     1</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>27</span><span>    12  21.4     4 121     109  4.11  2.78  18.6     1     1     4     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>28</span><span>     1  26       4 120.     91  4.43  2.14  16.7     0     1     5     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>29</span><span>     2  30.4     4  95.1   113  3.77  1.51  16.9     1     1     5     2</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>30</span><span>     3  15.8     8 351     264  4.22  3.17  14.5     0     1     5     4</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>31</span><span>     4  19.7     6 145     175  3.62  2.77  15.5     0     1     5     6</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BCBCBC;'>32</span><span>     5  15       8 301     335  3.54  3.57  14.6     0     1     5     8</span></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -207,56 +207,63 @@ weights that will be applied to weight all observations. Default is
          For character vectors the most common value (mode) is returned.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] 5.843333</div><div class='input'>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://purrr.tidyverse.org'>purrr</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='op'>~</span> <span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; $Sepal.Length
-#&gt; [1] 5.843333
-#&gt; 
-#&gt; $Sepal.Width
-#&gt; [1] 3.057333
-#&gt; 
-#&gt; $Petal.Length
-#&gt; [1] 3.758
-#&gt; 
-#&gt; $Petal.Width
-#&gt; [1] 1.199333
-#&gt; 
-#&gt; $Species
-#&gt; [1] "setosa"
-#&gt; </div><div class='input'>
-<span class='co'># example from ?stats::weighted.mean</span>
-<span class='va'>wt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>,  <span class='fl'>5</span>,  <span class='fl'>4</span>,  <span class='fl'>1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>15</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3.7</span>, <span class='fl'>3.3</span>, <span class='fl'>3.5</span>, <span class='fl'>2.8</span><span class='op'>)</span>
-
-<span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"weighted.mean"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] 3.325</div><div class='input'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"weighted.mean"</span>, weights <span class='op'>=</span> <span class='va'>wt</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] 3.453333</div><div class='input'>
-<span class='co'># for factors, return either reference level or mode value</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span>, size <span class='op'>=</span> <span class='fl'>30</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "setosa"</div><div class='input'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"mode"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "versicolor"</div><div class='input'>
-<span class='co'># for factors, use a named vector to apply other functions than "mode"</span>
-<span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='op'>~</span> <span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>.x</span>, fun <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='st'>"median"</span>, f <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; $Sepal.Length
-#&gt; [1] 5.8
-#&gt; 
-#&gt; $Sepal.Width
-#&gt; [1] 3
-#&gt; 
-#&gt; $Petal.Length
-#&gt; [1] 4.35
-#&gt; 
-#&gt; $Petal.Width
-#&gt; [1] 1.3
-#&gt; 
-#&gt; $Species
-#&gt; [1] 2
-#&gt; </div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Sepal.Length</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5.843333</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://purrr.tidyverse.org'>purrr</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='op'>~</span> <span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Sepal.Length</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5.843333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Sepal.Width</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3.057333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Petal.Length</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3.758</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Petal.Width</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1.199333</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Species</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "setosa"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># example from ?stats::weighted.mean</span></span>
+<span class='r-in'><span class='va'>wt</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>,  <span class='fl'>5</span>,  <span class='fl'>4</span>,  <span class='fl'>1</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>15</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3.7</span>, <span class='fl'>3.3</span>, <span class='fl'>3.5</span>, <span class='fl'>2.8</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"weighted.mean"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3.325</span>
+<span class='r-in'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"weighted.mean"</span>, weights <span class='op'>=</span> <span class='va'>wt</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3.453333</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># for factors, return either reference level or mode value</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>$</span><span class='va'>Species</span>, size <span class='op'>=</span> <span class='fl'>30</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "setosa"</span>
+<span class='r-in'><span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>x</span>, fun <span class='op'>=</span> <span class='st'>"mode"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "versicolor"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># for factors, use a named vector to apply other functions than "mode"</span></span>
+<span class='r-in'><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>iris</span>, <span class='op'>~</span> <span class='fu'>typical_value</span><span class='op'>(</span><span class='va'>.x</span>, fun <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='st'>"median"</span>, f <span class='op'>=</span> <span class='st'>"mean"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Sepal.Length</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 5.8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Sepal.Width</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Petal.Length</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 4.35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Petal.Width</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 1.3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $Species</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] 2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

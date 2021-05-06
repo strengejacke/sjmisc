@@ -215,90 +215,97 @@ to replace only specific <code>NA</code> values of <code>x</code>.</p></td>
            for re-shifting value ranges.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;   66  225  306  304    7 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, value <span class='op'>=</span> <span class='fl'>99</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2    3    4   99 &lt;NA&gt; 
-#&gt;   66  225  306  304    7    0 </div><div class='input'>
-<span class='co'># the original labels</span>
-<span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_labels.html'>get_labels</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, value <span class='op'>=</span> <span class='fl'>99</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "independent"          "slightly dependent"   "moderately dependent"
-#&gt; [4] "severely dependent"  </div><div class='input'><span class='co'># NA becomes "99", and is labelled as "former NA"</span>
-<span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_labels.html'>get_labels</a></span><span class='op'>(</span>
-  <span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, value <span class='op'>=</span> <span class='fl'>99</span>, na.label <span class='op'>=</span> <span class='st'>"former NA"</span><span class='op'>)</span>,
-  values <span class='op'>=</span> <span class='st'>"p"</span>
-<span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "[1] independent"          "[2] slightly dependent"  
-#&gt; [3] "[3] moderately dependent" "[4] severely dependent"  
-#&gt; [5] "[99] former NA"          </div><div class='input'>
-<span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
-  v1 <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>c82cop1</span>,
-  v2 <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>c83cop2</span>,
-  v3 <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>c84cop3</span>
-<span class='op'>)</span>
-<span class='co'># show original distribution</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dummy</span>, <span class='va'>table</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; $v1
-#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;    3   97  591  210    7 
-#&gt; 
-#&gt; $v2
-#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;  186  547  130   39    6 
-#&gt; 
-#&gt; $v3
-#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;  516  252   82   52    6 
-#&gt; </div><div class='input'><span class='co'># show variables, NA's replaced with 99</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>dummy</span>, <span class='va'>v2</span>, <span class='va'>v3</span>, value <span class='op'>=</span> <span class='fl'>99</span><span class='op'>)</span>, <span class='va'>table</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; $v1
-#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;    3   97  591  210    7 
-#&gt; 
-#&gt; $v2
-#&gt; 
-#&gt;    1    2    3    4   99 &lt;NA&gt; 
-#&gt;  186  547  130   39    6    0 
-#&gt; 
-#&gt; $v3
-#&gt; 
-#&gt;    1    2    3    4   99 &lt;NA&gt; 
-#&gt;  516  252   82   52    6    0 
-#&gt; </div><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://haven.tidyverse.org'>"haven"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>,
-                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Agreement"</span> <span class='op'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='op'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"c"</span><span class='op'>)</span>,
-                  <span class='st'>"Refused"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span><span class='op'>)</span>, <span class='st'>"Not home"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='co'># get current NA values</span>
-  <span class='va'>x</span>
-  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_na.html'>get_na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-
-  <span class='co'># replace only the NA, which is tagged as NA(c)</span>
-  <span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>2</span>, tagged.na <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span>
-  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_na.html'>get_na</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>2</span>, tagged.na <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
-
-  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>2</span>, tagged.na <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span>
-
-  <span class='co'># tagged NA also works for non-labelled class</span>
-  <span class='co'># init vector</span>
-  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span>
-  <span class='co'># set values 2 and 3 as tagged NA</span>
-  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/set_na.html'>set_na</a></span><span class='op'>(</span><span class='va'>x</span>, na <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>, as.tag <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-  <span class='co'># see result</span>
-  <span class='va'>x</span>
-  <span class='co'># now replace only NA tagged with 2 with value 5</span>
-  <span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>5</span>, tagged.na <span class='op'>=</span> <span class='st'>"2"</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt; [1]  1  5 NA  4</div></pre>
+    <pre class="examples"><span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://strengejacke.github.io/sjlabelled/'>sjlabelled</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   66  225  306  304    7 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, value <span class='op'>=</span> <span class='fl'>99</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4   99 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   66  225  306  304    7    0 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># the original labels</span></span>
+<span class='r-in'><span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_labels.html'>get_labels</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, value <span class='op'>=</span> <span class='fl'>99</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "independent"          "slightly dependent"   "moderately dependent"</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [4] "severely dependent"  </span>
+<span class='r-in'><span class='co'># NA becomes "99", and is labelled as "former NA"</span></span>
+<span class='r-in'><span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_labels.html'>get_labels</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, value <span class='op'>=</span> <span class='fl'>99</span>, na.label <span class='op'>=</span> <span class='st'>"former NA"</span><span class='op'>)</span>,</span>
+<span class='r-in'>  values <span class='op'>=</span> <span class='st'>"p"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "[1] independent"          "[2] slightly dependent"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [3] "[3] moderately dependent" "[4] severely dependent"  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [5] "[99] former NA"          </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span></span>
+<span class='r-in'>  v1 <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>c82cop1</span>,</span>
+<span class='r-in'>  v2 <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>c83cop2</span>,</span>
+<span class='r-in'>  v3 <span class='op'>=</span> <span class='va'>efc</span><span class='op'>$</span><span class='va'>c84cop3</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='co'># show original distribution</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>dummy</span>, <span class='va'>table</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $v1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3   97  591  210    7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $v2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  186  547  130   39    6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $v3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  516  252   82   52    6 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'><span class='co'># show variables, NA's replaced with 99</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>dummy</span>, <span class='va'>v2</span>, <span class='va'>v3</span>, value <span class='op'>=</span> <span class='fl'>99</span><span class='op'>)</span>, <span class='va'>table</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $v1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    3   97  591  210    7 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $v2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4   99 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  186  547  130   39    6    0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $v3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4   99 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  516  252   82   52    6    0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://haven.tidyverse.org'>"haven"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Agreement"</span> <span class='op'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='op'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"c"</span><span class='op'>)</span>,</span>
+<span class='r-in'>                  <span class='st'>"Refused"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span><span class='op'>)</span>, <span class='st'>"Not home"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># get current NA values</span></span>
+<span class='r-in'>  <span class='va'>x</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_na.html'>get_na</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># replace only the NA, which is tagged as NA(c)</span></span>
+<span class='r-in'>  <span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>2</span>, tagged.na <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/get_na.html'>get_na</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>2</span>, tagged.na <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>2</span>, tagged.na <span class='op'>=</span> <span class='st'>"c"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'>  <span class='co'># tagged NA also works for non-labelled class</span></span>
+<span class='r-in'>  <span class='co'># init vector</span></span>
+<span class='r-in'>  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># set values 2 and 3 as tagged NA</span></span>
+<span class='r-in'>  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://strengejacke.github.io/sjlabelled/reference/set_na.html'>set_na</a></span><span class='op'>(</span><span class='va'>x</span>, na <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>, as.tag <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># see result</span></span>
+<span class='r-in'>  <span class='va'>x</span></span>
+<span class='r-in'>  <span class='co'># now replace only NA tagged with 2 with value 5</span></span>
+<span class='r-in'>  <span class='fu'>replace_na</span><span class='op'>(</span><span class='va'>x</span>, value <span class='op'>=</span> <span class='fl'>5</span>, tagged.na <span class='op'>=</span> <span class='st'>"2"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  1  5 NA  4</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -302,249 +302,270 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
            reference level of (numeric) factors.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;   66  225  306  304    7 </div><div class='input'>
-<span class='co'># replace NA with 5</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"1=1;2=2;3=3;4=4;NA=5"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2    3    4    5 &lt;NA&gt; 
-#&gt;   66  225  306  304    7    0 </div><div class='input'>
-<span class='co'># recode 1 to 2 into 1 and 3 to 4 into 2</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"1,2=1; 3,4=2"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2 &lt;NA&gt; 
-#&gt;  291  610    7 </div><div class='input'>
-<span class='co'># keep value labels. variable label is automatically preserved</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>rec</span><span class='op'>(</span>rec <span class='op'>=</span> <span class='st'>"1,2=1; 3,4=2"</span>,
-      val.labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low dependency"</span>, <span class='st'>"high dependency"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span>
-#&gt; -------------------------------------------------------------
-#&gt;     1 |          independent |  66 |  7.27 |    7.33 |   7.33
-#&gt;     2 |   slightly dependent | 225 | 24.78 |   24.97 |  32.30
-#&gt;     3 | moderately dependent | 306 | 33.70 |   33.96 |  66.26
-#&gt;     4 |   severely dependent | 304 | 33.48 |   33.74 | 100.00
-#&gt;  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; 
-#&gt; 
-#&gt; <span style='color: #BB0000;'>elder's dependency (e42dep_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=1.68  sd=0.47</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value |           Label |   N | Raw % | Valid % | Cum. %</span>
-#&gt; --------------------------------------------------------
-#&gt;     1 |  low dependency | 291 | 32.05 |   32.30 |  32.30
-#&gt;     2 | high dependency | 610 | 67.18 |   67.70 | 100.00
-#&gt;  &lt;NA&gt; |            &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'>
-<span class='co'># works with mutate</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>e17age</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>dependency_rev <span class='op'>=</span> <span class='fu'>rec</span><span class='op'>(</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"rev"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   e42dep e17age dependency_rev
-#&gt; 1      3     83              2
-#&gt; 2      3     88              2
-#&gt; 3      3     82              2
-#&gt; 4      4     67              1
-#&gt; 5      4     84              1
-#&gt; 6      4     85              1</div><div class='input'>
-<span class='co'># recode 1 to 3 into 1 and 4 into 2</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"min:3=1; 4=2"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2 &lt;NA&gt; 
-#&gt;  597  304    7 </div><div class='input'>
-<span class='co'># recode 2 to 1 and all others into 2</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"2=1; else=2"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2 &lt;NA&gt; 
-#&gt;  225  676    7 </div><div class='input'>
-<span class='co'># reverse value order</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"rev"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;    1    2    3    4 &lt;NA&gt; 
-#&gt;  304  306  225   66    7 </div><div class='input'>
-<span class='co'># recode only selected values, copy remaining</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e15relat</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;   1   2   3   4   5   6   7   8 
-#&gt; 171 473  29  85  23  22   6  92 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e15relat</span>, rec <span class='op'>=</span> <span class='st'>"1,2,4=1; else=copy"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;   1   3   5   6   7   8 
-#&gt; 729  29  23  22   6  92 </div><div class='input'>
-<span class='co'># recode variables with same category in a data frame</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c82cop1 c83cop2 c84cop3 c85cop4
-#&gt; 1       3       2       2       2
-#&gt; 2       3       3       3       3
-#&gt; 3       2       2       1       4
-#&gt; 4       4       1       3       1
-#&gt; 5       3       2       1       2
-#&gt; 6       2       2       3       3</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span>, rec <span class='op'>=</span> <span class='st'>"1=10;2=20;3=30;4=40"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c82cop1 c83cop2 c84cop3 c85cop4 c82cop1_r c83cop2_r c84cop3_r c85cop4_r
-#&gt; 1       3       2       2       2        30        20        20        20
-#&gt; 2       3       3       3       3        30        30        30        30
-#&gt; 3       2       2       1       4        20        20        10        40
-#&gt; 4       4       1       3       1        40        10        30        10
-#&gt; 5       3       2       1       2        30        20        10        20
-#&gt; 6       2       2       3       3        20        20        30        30</div><div class='input'>
-<span class='co'># recode multiple variables and set value labels via recode-syntax</span>
-<span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'>rec</span><span class='op'>(</span>
-  <span class='va'>efc</span>, <span class='va'>c160age</span>, <span class='va'>e17age</span>,
-  rec <span class='op'>=</span> <span class='st'>"15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]"</span>,
-  append <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-<span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>dummy</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt; <span style='color: #BB0000;'>carer' age (c160age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=908  valid N=901  mean=2.40  sd=0.59</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span>
-#&gt; -----------------------------------------------
-#&gt;     1 |  young |  48 |  5.29 |    5.33 |   5.33
-#&gt;     2 | middle | 442 | 48.68 |   49.06 |  54.38
-#&gt;     3 |    old | 411 | 45.26 |   45.62 | 100.00
-#&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; 
-#&gt; 
-#&gt; <span style='color: #BB0000;'>elder' age (e17age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span>
-<span style='color: #0000BB;'>#&gt; # total N=908  valid N=891  mean=3.00  sd=0.00</span>
-<span style='color: #0000BB;'>#&gt; </span>
-<span style='color: #0000BB;'>#&gt; </span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span>
-#&gt; -----------------------------------------------
-#&gt;     1 |  young |   0 |  0.00 |       0 |      0
-#&gt;     2 | middle |   0 |  0.00 |       0 |      0
-#&gt;     3 |    old | 891 | 98.13 |     100 |    100
-#&gt;  &lt;NA&gt; |   &lt;NA&gt; |  17 |  1.87 |    &lt;NA&gt; |   &lt;NA&gt;
-#&gt; </div><div class='input'>
-<span class='co'># recode variables with same value-range</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span>
-  <span class='fu'>rec</span><span class='op'>(</span>
-    <span class='va'>efc</span>, <span class='va'>c82cop1</span>, <span class='va'>c83cop2</span>, <span class='va'>c84cop3</span>,
-    rec <span class='op'>=</span> <span class='st'>"1,2=1; NA=9; else=copy"</span>,
-    append <span class='op'>=</span> <span class='cn'>FALSE</span>
-  <span class='op'>)</span>,
-  <span class='va'>table</span>,
-  useNA <span class='op'>=</span> <span class='st'>"always"</span>
-<span class='op'>)</span>
-</div><div class='co'>#&gt; $c82cop1_r
-#&gt; 
-#&gt;    1    3    4    9 &lt;NA&gt; 
-#&gt;  100  591  210    7    0 
-#&gt; 
-#&gt; $c83cop2_r
-#&gt; 
-#&gt;    1    3    4    9 &lt;NA&gt; 
-#&gt;  733  130   39    6    0 
-#&gt; 
-#&gt; $c84cop3_r
-#&gt; 
-#&gt;    1    3    4    9 &lt;NA&gt; 
-#&gt;  768   82   52    6    0 
-#&gt; </div><div class='input'>
-<span class='co'># recode character vector</span>
-<span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"X"</span><span class='op'>)</span>
-<span class='fu'>rec</span><span class='op'>(</span><span class='va'>dummy</span>, rec <span class='op'>=</span> <span class='st'>"M=Male; F=Female; X=Refused"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "Male"    "Female"  "Female"  "Refused"</div><div class='input'>
-<span class='co'># recode numeric to character</span>
-<span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"1=first;2=2nd;3=third;else=hi"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] "third" "third" "third" "hi"    "hi"    "hi"   </div><div class='input'>
-<span class='co'># recode non-numeric factors</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>Species</span>, rec <span class='op'>=</span> <span class='st'>"setosa=huhu; else=copy"</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;       huhu versicolor  virginica 
-#&gt;         50         50         50 </div><div class='input'>
-<span class='co'># recode floating points</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span>
-  <span class='va'>iris</span>, <span class='va'>Sepal.Length</span>, rec <span class='op'>=</span> <span class='st'>"lo:5=1;5.01:6.5=2;6.501:max=3"</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; 
-#&gt;  1  2  3 
-#&gt; 32 88 30 </div><div class='input'>
-<span class='co'># preserve tagged NAs</span>
-<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://haven.tidyverse.org'>"haven"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>,
-                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Agreement"</span> <span class='op'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='op'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"c"</span><span class='op'>)</span>,
-                  <span class='st'>"Refused"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span><span class='op'>)</span>, <span class='st'>"Not home"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
-  <span class='co'># get current value labels</span>
-  <span class='va'>x</span>
-  <span class='co'># recode 2 into 5; Values of tagged NAs are preserved</span>
-  <span class='fu'>rec</span><span class='op'>(</span><span class='va'>x</span>, rec <span class='op'>=</span> <span class='st'>"2=5;else=copy"</span><span class='op'>)</span>
-<span class='op'>}</span>
-</div><div class='co'>#&gt;  [1]  1  5  3 NA NA NA  4  3  5  1
-#&gt; attr(,"labels")
-#&gt;    First  Refused Not home 
-#&gt;       NA       NA       NA </div><div class='input'>
-<span class='co'># use select-helpers from dplyr-package</span>
-<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>rec</span><span class='op'>(</span>
-  <span class='va'>efc</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"cop"</span><span class='op'>)</span>, <span class='va'>c161sex</span><span class='op'>:</span><span class='va'>c175empl</span>,
-  rec <span class='op'>=</span> <span class='st'>"0,1=0; else=1"</span>,
-  append <span class='op'>=</span> <span class='cn'>FALSE</span>
-<span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r
-#&gt; 1         1         1         1         1         0         0         1
-#&gt; 2         1         1         1         1         1         0         1
-#&gt; 3         1         1         0         1         0         0         0
-#&gt; 4         1         0         1         0         0         0         0
-#&gt; 5         1         1         0         1         1         1         0
-#&gt; 6         1         1         1         1         1         1         1
-#&gt;   c89cop8_r c90cop9_r c161sex_r c172code_r c175empl_r
-#&gt; 1         1         1         1          1          0
-#&gt; 2         1         1         1          1          0
-#&gt; 3         1         1         0          0          0
-#&gt; 4         1         1         0          1          0
-#&gt; 5         1         1         1          1          0
-#&gt; 6         0         0         0          1          0</div><div class='input'>
-<span class='co'># recode only variables that have a value range from 1-4</span>
-<span class='va'>p</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fl'>5</span>
-<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>rec_if</span><span class='op'>(</span><span class='va'>efc</span>, predicate <span class='op'>=</span> <span class='va'>p</span>, rec <span class='op'>=</span> <span class='st'>"1:3=1;4=2;else=copy"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span>
-</div><div class='co'>#&gt;   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5
-#&gt; 1      16        2      2     83      3       3       2       2       2       1
-#&gt; 2     148        2      2     88      3       3       3       3       3       4
-#&gt; 3      70        1      2     82      3       2       2       1       4       1
-#&gt; 4     168        1      2     67      4       4       1       3       1       1
-#&gt; 5     168        2      2     84      4       3       2       1       2       2
-#&gt; 6      16        2      2     85      4       2       2       3       3       3
-#&gt;   c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl barthtot
-#&gt; 1       1       2       3       3      56       2        2        1       75
-#&gt; 2       1       3       2       2      54       2        2        1       75
-#&gt; 3       1       1       4       3      80       1        1        0       35
-#&gt; 4       1       1       2       4      69       1        2        0        0
-#&gt; 5       2       1       4       4      47       2        2        0       25
-#&gt; 6       2       2       1       1      56       1        2        1       60
-#&gt;   neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst e16sex_r e42dep_r
-#&gt; 1      12      12     14        0        4      0      NA        1        1
-#&gt; 2      20      11     10        4        0      0      NA        1        1
-#&gt; 3      11      13      7        0        1      2       2        1        1
-#&gt; 4      10      15     12        2        0      3       3        1        2
-#&gt; 5      12      15     19        2        1      2       2        1        2
-#&gt; 6      19       9      8        1        3      2       2        1        2
-#&gt;   c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r
-#&gt; 1         1         1         1         1         1         1         1
-#&gt; 2         1         1         1         1         2         1         1
-#&gt; 3         1         1         1         2         1         1         1
-#&gt; 4         2         1         1         1         1         1         1
-#&gt; 5         1         1         1         1         1         1         1
-#&gt; 6         1         1         1         1         1         1         1
-#&gt;   c89cop8_r c90cop9_r c161sex_r c172code_r nur_pst_r
-#&gt; 1         1         1         1          1        NA
-#&gt; 2         1         1         1          1        NA
-#&gt; 3         2         1         1          1         1
-#&gt; 4         1         2         1          1         1
-#&gt; 5         2         2         1          1         1
-#&gt; 6         1         1         1          1         1</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   66  225  306  304    7 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># replace NA with 5</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"1=1;2=2;3=3;4=4;NA=5"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4    5 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   66  225  306  304    7    0 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode 1 to 2 into 1 and 3 to 4 into 2</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"1,2=1; 3,4=2"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  291  610    7 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># keep value labels. variable label is automatically preserved</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>rec</span><span class='op'>(</span>rec <span class='op'>=</span> <span class='st'>"1,2=1; 3,4=2"</span>,</span>
+<span class='r-in'>      val.labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"low dependency"</span>, <span class='st'>"high dependency"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>elder's dependency (e42dep)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=908  valid N=901  mean=2.94  sd=0.94</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value |                Label |   N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -------------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     1 |          independent |  66 |  7.27 |    7.33 |   7.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     2 |   slightly dependent | 225 | 24.78 |   24.97 |  32.30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     3 | moderately dependent | 306 | 33.70 |   33.96 |  66.26</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     4 |   severely dependent | 304 | 33.48 |   33.74 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  &lt;NA&gt; |                 &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>elder's dependency (e42dep_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=908  valid N=901  mean=1.68  sd=0.47</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value |           Label |   N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> --------------------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     1 |  low dependency | 291 | 32.05 |   32.30 |  32.30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     2 | high dependency | 610 | 67.18 |   67.70 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  &lt;NA&gt; |            &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># works with mutate</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e42dep</span>, <span class='va'>e17age</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>dependency_rev <span class='op'>=</span> <span class='fu'>rec</span><span class='op'>(</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"rev"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   e42dep e17age dependency_rev</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      3     83              2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      3     88              2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      3     82              2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4      4     67              1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      4     84              1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      4     85              1</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode 1 to 3 into 1 and 4 into 2</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"min:3=1; 4=2"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  597  304    7 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode 2 to 1 and all others into 2</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"2=1; else=2"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  225  676    7 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># reverse value order</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"rev"</span><span class='op'>)</span>, useNA <span class='op'>=</span> <span class='st'>"always"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    2    3    4 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  304  306  225   66    7 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode only selected values, copy remaining</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e15relat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   2   3   4   5   6   7   8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 171 473  29  85  23  22   6  92 </span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e15relat</span>, rec <span class='op'>=</span> <span class='st'>"1,2,4=1; else=copy"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   1   3   5   6   7   8 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 729  29  23  22   6  92 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode variables with same category in a data frame</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c82cop1 c83cop2 c84cop3 c85cop4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       3       2       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       3       3       3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       2       2       1       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       4       1       3       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       3       2       1       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       2       2       3       3</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>[</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>9</span><span class='op'>]</span>, rec <span class='op'>=</span> <span class='st'>"1=10;2=20;3=30;4=40"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c82cop1 c83cop2 c84cop3 c85cop4 c82cop1_r c83cop2_r c84cop3_r c85cop4_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       3       2       2       2        30        20        20        20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       3       3       3       3        30        30        30        30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       2       2       1       4        20        20        10        40</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       4       1       3       1        40        10        30        10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       3       2       1       2        30        20        10        20</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       2       2       3       3        20        20        30        30</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode multiple variables and set value labels via recode-syntax</span></span>
+<span class='r-in'><span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'>rec</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>efc</span>, <span class='va'>c160age</span>, <span class='va'>e17age</span>,</span>
+<span class='r-in'>  rec <span class='op'>=</span> <span class='st'>"15:30=1 [young]; 31:55=2 [middle]; 56:max=3 [old]"</span>,</span>
+<span class='r-in'>  append <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='frq.html'>frq</a></span><span class='op'>(</span><span class='va'>dummy</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>carer' age (c160age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=908  valid N=901  mean=2.40  sd=0.59</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     1 |  young |  48 |  5.29 |    5.33 |   5.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     2 | middle | 442 | 48.68 |   49.06 |  54.38</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     3 |    old | 411 | 45.26 |   45.62 | 100.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>elder' age (e17age_r)</span><span style='color: #0000BB;'> &lt;numeric&gt;</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'># total N=908  valid N=891  mean=3.00  sd=0.00</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #0000BB;'></span><span>Value |  Label |   N | Raw % | Valid % | Cum. %</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> -----------------------------------------------</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     1 |  young |   0 |  0.00 |       0 |      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     2 | middle |   0 |  0.00 |       0 |      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>     3 |    old | 891 | 98.13 |     100 |    100</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  &lt;NA&gt; |   &lt;NA&gt; |  17 |  1.87 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode variables with same value-range</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='fu'>rec</span><span class='op'>(</span></span>
+<span class='r-in'>    <span class='va'>efc</span>, <span class='va'>c82cop1</span>, <span class='va'>c83cop2</span>, <span class='va'>c84cop3</span>,</span>
+<span class='r-in'>    rec <span class='op'>=</span> <span class='st'>"1,2=1; NA=9; else=copy"</span>,</span>
+<span class='r-in'>    append <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'>  <span class='op'>)</span>,</span>
+<span class='r-in'>  <span class='va'>table</span>,</span>
+<span class='r-in'>  useNA <span class='op'>=</span> <span class='st'>"always"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $c82cop1_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    3    4    9 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  100  591  210    7    0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $c83cop2_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    3    4    9 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  733  130   39    6    0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> $c84cop3_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    1    3    4    9 &lt;NA&gt; </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  768   82   52    6    0 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode character vector</span></span>
+<span class='r-in'><span class='va'>dummy</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"X"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>rec</span><span class='op'>(</span><span class='va'>dummy</span>, rec <span class='op'>=</span> <span class='st'>"M=Male; F=Female; X=Refused"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "Male"    "Female"  "Female"  "Refused"</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode numeric to character</span></span>
+<span class='r-in'><span class='fu'>rec</span><span class='op'>(</span><span class='va'>efc</span><span class='op'>$</span><span class='va'>e42dep</span>, rec <span class='op'>=</span> <span class='st'>"1=first;2=2nd;3=third;else=hi"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] "third" "third" "third" "hi"    "hi"    "hi"   </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode non-numeric factors</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span><span class='va'>iris</span>, <span class='va'>Species</span>, rec <span class='op'>=</span> <span class='st'>"setosa=huhu; else=copy"</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       huhu versicolor  virginica </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         50         50         50 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode floating points</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='fu'>rec</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>iris</span>, <span class='va'>Sepal.Length</span>, rec <span class='op'>=</span> <span class='st'>"lo:5=1;5.01:6.5=2;6.501:max=3"</span>, append <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1  2  3 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 32 88 30 </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># preserve tagged NAs</span></span>
+<span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://haven.tidyverse.org'>"haven"</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/labelled.html'>labelled</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>, <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"c"</span>, <span class='st'>"z"</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span>,</span>
+<span class='r-in'>                <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Agreement"</span> <span class='op'>=</span> <span class='fl'>1</span>, <span class='st'>"Disagreement"</span> <span class='op'>=</span> <span class='fl'>4</span>, <span class='st'>"First"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"c"</span><span class='op'>)</span>,</span>
+<span class='r-in'>                  <span class='st'>"Refused"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"a"</span><span class='op'>)</span>, <span class='st'>"Not home"</span> <span class='op'>=</span> <span class='fu'><a href='https://haven.tidyverse.org/reference/tagged_na.html'>tagged_na</a></span><span class='op'>(</span><span class='st'>"z"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'>  <span class='co'># get current value labels</span></span>
+<span class='r-in'>  <span class='va'>x</span></span>
+<span class='r-in'>  <span class='co'># recode 2 into 5; Values of tagged NAs are preserved</span></span>
+<span class='r-in'>  <span class='fu'>rec</span><span class='op'>(</span><span class='va'>x</span>, rec <span class='op'>=</span> <span class='st'>"2=5;else=copy"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1]  1  5  3 NA NA NA  4  3  5  1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> attr(,"labels")</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    First  Refused Not home </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>       NA       NA       NA </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># use select-helpers from dplyr-package</span></span>
+<span class='r-in'><span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>rec</span><span class='op'>(</span></span>
+<span class='r-in'>  <span class='va'>efc</span>, <span class='fu'><a href='https://tidyselect.r-lib.org/reference/starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"cop"</span><span class='op'>)</span>, <span class='va'>c161sex</span><span class='op'>:</span><span class='va'>c175empl</span>,</span>
+<span class='r-in'>  rec <span class='op'>=</span> <span class='st'>"0,1=0; else=1"</span>,</span>
+<span class='r-in'>  append <span class='op'>=</span> <span class='cn'>FALSE</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         1         1         1         1         0         0         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         1         1         1         1         1         0         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         1         1         0         1         0         0         0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         1         0         1         0         0         0         0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         1         1         0         1         1         1         0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6         1         1         1         1         1         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c89cop8_r c90cop9_r c161sex_r c172code_r c175empl_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         1         1         1          1          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         1         1         1          1          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         1         1         0          0          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         1         1         0          1          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         1         1         1          1          0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6         0         0         0          1          0</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># recode only variables that have a value range from 1-4</span></span>
+<span class='r-in'><span class='va'>p</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>0</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>x</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>&lt;</span> <span class='fl'>5</span></span>
+<span class='r-in'><span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>rec_if</span><span class='op'>(</span><span class='va'>efc</span>, predicate <span class='op'>=</span> <span class='va'>p</span>, rec <span class='op'>=</span> <span class='st'>"1:3=1;4=2;else=copy"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c12hour e15relat e16sex e17age e42dep c82cop1 c83cop2 c84cop3 c85cop4 c86cop5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      16        2      2     83      3       3       2       2       2       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2     148        2      2     88      3       3       3       3       3       4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      70        1      2     82      3       2       2       1       4       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4     168        1      2     67      4       4       1       3       1       1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5     168        2      2     84      4       3       2       1       2       2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      16        2      2     85      4       2       2       3       3       3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c87cop6 c88cop7 c89cop8 c90cop9 c160age c161sex c172code c175empl barthtot</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1       1       2       3       3      56       2        2        1       75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2       1       3       2       2      54       2        2        1       75</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3       1       1       4       3      80       1        1        0       35</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4       1       1       2       4      69       1        2        0        0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5       2       1       4       4      47       2        2        0       25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6       2       2       1       1      56       1        2        1       60</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   neg_c_7 pos_v_4 quol_5 resttotn tot_sc_e n4pstu nur_pst e16sex_r e42dep_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1      12      12     14        0        4      0      NA        1        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2      20      11     10        4        0      0      NA        1        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3      11      13      7        0        1      2       2        1        1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4      10      15     12        2        0      3       3        1        2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5      12      15     19        2        1      2       2        1        2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6      19       9      8        1        3      2       2        1        2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c82cop1_r c83cop2_r c84cop3_r c85cop4_r c86cop5_r c87cop6_r c88cop7_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         1         1         1         1         1         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         1         1         1         1         2         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         1         1         1         2         1         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         2         1         1         1         1         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         1         1         1         1         1         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6         1         1         1         1         1         1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   c89cop8_r c90cop9_r c161sex_r c172code_r nur_pst_r</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         1         1         1          1        NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2         1         1         1          1        NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3         2         1         1          1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4         1         2         1          1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5         2         2         1          1         1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6         1         1         1          1         1</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

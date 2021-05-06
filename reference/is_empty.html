@@ -187,40 +187,54 @@ and will return <code>TRUE</code> if <code>all.na.empty = TRUE</code> (default).
         'Examples') and will return <code>TRUE</code>, unless <code>all.na.empty==FALSE</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>"test"</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># string is not empty</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>" "</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='co'># however, this trimmed string is</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='trim.html'>trim</a></span><span class='op'>(</span><span class='st'>" "</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># numeric vector</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] FALSE</div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># check multiple elements of character vectors</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"a"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"a"</span><span class='op'>)</span>, first.only <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1]  TRUE FALSE</div><div class='input'>
-<span class='co'># empty data frame</span>
-<span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># empty list</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'>
-<span class='co'># NA vector</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>5</span><span class='op'>)</span>
-<span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span>, all.na.empty <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='co'>#&gt; [1] FALSE</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>"test"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>""</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='cn'>NA</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># string is not empty</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='st'>" "</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># however, this trimmed string is</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='trim.html'>trim</a></span><span class='op'>(</span><span class='st'>" "</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># numeric vector</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fl'>1</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='va'>x</span><span class='op'>[</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>]</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># check multiple elements of character vectors</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"a"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>""</span>, <span class='st'>"a"</span><span class='op'>)</span>, first.only <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1]  TRUE FALSE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># empty data frame</span></span>
+<span class='r-in'><span class='va'>d</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># empty list</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='cn'>NULL</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># NA vector</span></span>
+<span class='r-in'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='cn'>NA</span>,<span class='fl'>5</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='fu'>is_empty</span><span class='op'>(</span><span class='va'>x</span>, all.na.empty <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

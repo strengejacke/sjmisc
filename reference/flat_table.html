@@ -211,316 +211,321 @@ observations. Default is <code>NULL</code>, so no weights are used.</p></td>
     <div class='dont-index'><p><code><a href='frq.html'>frq</a></code> for simple frequency table of labelled vectors.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span>
-
-<span class='co'># flat table with counts</span>
-<span class='fu'>flat_table</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>e16sex</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                                                      e16sex male female
-#&gt; e42dep               c172code                                          
-#&gt; independent          low level of education                    5      7
-#&gt;                      intermediate level of education          15     30
-#&gt;                      high level of education                   1      4
-#&gt; slightly dependent   low level of education                   16     25
-#&gt;                      intermediate level of education          39     96
-#&gt;                      high level of education                  13     26
-#&gt; moderately dependent low level of education                   28     33
-#&gt;                      intermediate level of education          59    104
-#&gt;                      high level of education                  18     44
-#&gt; severely dependent   low level of education                   31     34
-#&gt;                      intermediate level of education          43    120
-#&gt;                      high level of education                  11     39</div><div class='input'>
-<span class='co'># flat table with proportions</span>
-<span class='fu'>flat_table</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>e16sex</span>, margin <span class='op'>=</span> <span class='st'>"row"</span><span class='op'>)</span>
-</div><div class='co'>#&gt;                                                      e16sex  male female
-#&gt; e42dep               c172code                                           
-#&gt; independent          low level of education                 41.67  58.33
-#&gt;                      intermediate level of education        33.33  66.67
-#&gt;                      high level of education                20.00  80.00
-#&gt; slightly dependent   low level of education                 39.02  60.98
-#&gt;                      intermediate level of education        28.89  71.11
-#&gt;                      high level of education                33.33  66.67
-#&gt; moderately dependent low level of education                 45.90  54.10
-#&gt;                      intermediate level of education        36.20  63.80
-#&gt;                      high level of education                29.03  70.97
-#&gt; severely dependent   low level of education                 47.69  52.31
-#&gt;                      intermediate level of education        26.38  73.62
-#&gt;                      high level of education                22.00  78.00</div><div class='input'>
-<span class='co'># flat table from grouped data frame. You need to select</span>
-<span class='co'># the grouping variables and at least two more variables for</span>
-<span class='co'># cross tabulation.</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>c172code</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                e42dep independent slightly dependent moderately dependent severely dependent</span>
-#&gt; c172code                                                                                                     
-#&gt; low level of education                           5                 16                   28                 31
-#&gt; intermediate level of education                 15                 39                   59                 43
-#&gt; high level of education                          1                 13                   18                 11
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                e42dep independent slightly dependent moderately dependent severely dependent</span>
-#&gt; c172code                                                                                                     
-#&gt; low level of education                           7                 25                   33                 34
-#&gt; intermediate level of education                 30                 96                  104                120
-#&gt; high level of education                          4                 26                   44                 39
-#&gt; </div><div class='input'>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>n4pstu</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, independent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                             4            1            0            0             0
-#&gt; intermediate level of education                    7            2            4            2             0
-#&gt; high level of education                            1            0            0            0             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, slightly dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                             9            3            1            2             0
-#&gt; intermediate level of education                   22            7            8            2             0
-#&gt; high level of education                            8            1            2            2             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, moderately dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                            15            6            4            2             0
-#&gt; intermediate level of education                   27           14           13            4             1
-#&gt; high level of education                           11            2            5            0             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, severely dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                             8            5           10            7             0
-#&gt; intermediate level of education                    7            3           12           20             1
-#&gt; high level of education                            4            2            3            2             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, independent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                             3            1            2            1             0
-#&gt; intermediate level of education                   19            6            5            0             0
-#&gt; high level of education                            2            2            0            0             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, slightly dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                            17            4            2            1             0
-#&gt; intermediate level of education                   63           13           14            4             1
-#&gt; high level of education                           18            3            4            1             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, moderately dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                            16           11            5            1             0
-#&gt; intermediate level of education                   44           36           17            7             0
-#&gt; high level of education                           22           12            8            2             0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, severely dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span>
-#&gt; c172code                                                                                                 
-#&gt; low level of education                            14            4            8            7             0
-#&gt; intermediate level of education                   39           18           35           23             2
-#&gt; high level of education                            7            8           16            8             0
-#&gt; </div><div class='input'>
-<span class='co'># now it gets weird...</span>
-<span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>n4pstu</span>, <span class='va'>c161sex</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
-  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='co'>#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, independent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            1      3
-#&gt;                                 Care Level 1             0      1
-#&gt;                                 Care Level 2             0      0
-#&gt;                                 Care Level 3             0      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            3      4
-#&gt;                                 Care Level 1             0      2
-#&gt;                                 Care Level 2             1      3
-#&gt;                                 Care Level 3             2      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; high level of education         No Care Level            0      1
-#&gt;                                 Care Level 1             0      0
-#&gt;                                 Care Level 2             0      0
-#&gt;                                 Care Level 3             0      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, slightly dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            3      6
-#&gt;                                 Care Level 1             1      1
-#&gt;                                 Care Level 2             1      0
-#&gt;                                 Care Level 3             0      2
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            7     15
-#&gt;                                 Care Level 1             2      5
-#&gt;                                 Care Level 2             1      7
-#&gt;                                 Care Level 3             2      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; high level of education         No Care Level            1      7
-#&gt;                                 Care Level 1             0      1
-#&gt;                                 Care Level 2             0      2
-#&gt;                                 Care Level 3             1      1
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, moderately dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            7      8
-#&gt;                                 Care Level 1             0      6
-#&gt;                                 Care Level 2             0      4
-#&gt;                                 Care Level 3             0      2
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            3     24
-#&gt;                                 Care Level 1             1     13
-#&gt;                                 Care Level 2             4      9
-#&gt;                                 Care Level 3             1      3
-#&gt;                                 Care Level 3+            1      0
-#&gt; high level of education         No Care Level            5      6
-#&gt;                                 Care Level 1             2      0
-#&gt;                                 Care Level 2             1      4
-#&gt;                                 Care Level 3             0      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>male, severely dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            0      8
-#&gt;                                 Care Level 1             1      4
-#&gt;                                 Care Level 2             1      9
-#&gt;                                 Care Level 3             0      7
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            1      6
-#&gt;                                 Care Level 1             0      3
-#&gt;                                 Care Level 2             2     10
-#&gt;                                 Care Level 3             1     19
-#&gt;                                 Care Level 3+            0      1
-#&gt; high level of education         No Care Level            1      3
-#&gt;                                 Care Level 1             2      0
-#&gt;                                 Care Level 2             0      3
-#&gt;                                 Care Level 3             0      2
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, independent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            1      2
-#&gt;                                 Care Level 1             0      1
-#&gt;                                 Care Level 2             0      2
-#&gt;                                 Care Level 3             1      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            4     15
-#&gt;                                 Care Level 1             2      4
-#&gt;                                 Care Level 2             2      3
-#&gt;                                 Care Level 3             0      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; high level of education         No Care Level            0      2
-#&gt;                                 Care Level 1             0      2
-#&gt;                                 Care Level 2             0      0
-#&gt;                                 Care Level 3             0      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, slightly dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            3     14
-#&gt;                                 Care Level 1             0      4
-#&gt;                                 Care Level 2             1      1
-#&gt;                                 Care Level 3             0      1
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level           12     51
-#&gt;                                 Care Level 1             3     10
-#&gt;                                 Care Level 2             3     11
-#&gt;                                 Care Level 3             1      3
-#&gt;                                 Care Level 3+            1      0
-#&gt; high level of education         No Care Level            6     12
-#&gt;                                 Care Level 1             0      3
-#&gt;                                 Care Level 2             1      3
-#&gt;                                 Care Level 3             1      0
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, moderately dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            6     10
-#&gt;                                 Care Level 1             2      9
-#&gt;                                 Care Level 2             1      4
-#&gt;                                 Care Level 3             0      1
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            8     36
-#&gt;                                 Care Level 1            11     25
-#&gt;                                 Care Level 2             8      9
-#&gt;                                 Care Level 3             0      7
-#&gt;                                 Care Level 3+            0      0
-#&gt; high level of education         No Care Level            7     15
-#&gt;                                 Care Level 1             4      8
-#&gt;                                 Care Level 2             2      6
-#&gt;                                 Care Level 3             0      2
-#&gt;                                 Care Level 3+            0      0
-#&gt; 
-#&gt; <span style='color: #BB0000;'></span>
-<span style='color: #BB0000;'>#&gt; Grouped by: </span><span style='color: #00BBBB;'>female, severely dependent</span>
-<span style='color: #00BBBB;'>#&gt; </span>
-<span style='color: #00BBBB;'>#&gt; </span><span>                                              c161sex Male Female</span>
-#&gt; c172code                        n4pstu                           
-#&gt; low level of education          No Care Level            4     10
-#&gt;                                 Care Level 1             2      2
-#&gt;                                 Care Level 2             2      6
-#&gt;                                 Care Level 3             2      5
-#&gt;                                 Care Level 3+            0      0
-#&gt; intermediate level of education No Care Level            6     33
-#&gt;                                 Care Level 1             3     15
-#&gt;                                 Care Level 2             5     30
-#&gt;                                 Care Level 3            11     12
-#&gt;                                 Care Level 3+            1      1
-#&gt; high level of education         No Care Level            1      6
-#&gt;                                 Care Level 1             2      6
-#&gt;                                 Care Level 2             7      9
-#&gt;                                 Care Level 3             3      5
-#&gt;                                 Care Level 3+            0      0
-#&gt; </div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>efc</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># flat table with counts</span></span>
+<span class='r-in'><span class='fu'>flat_table</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>e16sex</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                      e16sex male female</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e42dep               c172code                                          </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> independent          low level of education                    5      7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education          15     30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                   1      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> slightly dependent   low level of education                   16     25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education          39     96</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                  13     26</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> moderately dependent low level of education                   28     33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education          59    104</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                  18     44</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> severely dependent   low level of education                   31     34</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education          43    120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                  11     39</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># flat table with proportions</span></span>
+<span class='r-in'><span class='fu'>flat_table</span><span class='op'>(</span><span class='va'>efc</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>e16sex</span>, margin <span class='op'>=</span> <span class='st'>"row"</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                                      e16sex  male female</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> e42dep               c172code                                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> independent          low level of education                 41.67  58.33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education        33.33  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                20.00  80.00</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> slightly dependent   low level of education                 39.02  60.98</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education        28.89  71.11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                33.33  66.67</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> moderately dependent low level of education                 45.90  54.10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education        36.20  63.80</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                29.03  70.97</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> severely dependent   low level of education                 47.69  52.31</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      intermediate level of education        26.38  73.62</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                      high level of education                22.00  78.00</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># flat table from grouped data frame. You need to select</span></span>
+<span class='r-in'><span class='co'># the grouping variables and at least two more variables for</span></span>
+<span class='r-in'><span class='co'># cross tabulation.</span></span>
+<span class='r-in'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>c172code</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                e42dep independent slightly dependent moderately dependent severely dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                           5                 16                   28                 31</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                 15                 39                   59                 43</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                          1                 13                   18                 11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                e42dep independent slightly dependent moderately dependent severely dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                     </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                           7                 25                   33                 34</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                 30                 96                  104                120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                          4                 26                   44                 39</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>n4pstu</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, independent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                             4            1            0            0             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                    7            2            4            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                            1            0            0            0             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, slightly dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                             9            3            1            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                   22            7            8            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                            8            1            2            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, moderately dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                            15            6            4            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                   27           14           13            4             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                           11            2            5            0             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, severely dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                             8            5           10            7             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                    7            3           12           20             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                            4            2            3            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, independent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                             3            1            2            1             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                   19            6            5            0             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                            2            2            0            0             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, slightly dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                            17            4            2            1             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                   63           13           14            4             1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                           18            3            4            1             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, moderately dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                            16           11            5            1             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                   44           36           17            7             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                           22           12            8            2             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, severely dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                n4pstu No Care Level Care Level 1 Care Level 2 Care Level 3 Care Level 3+</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                                                                                                 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education                            14            4            8            7             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education                   39           18           35           23             2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education                            7            8           16            8             0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># now it gets weird...</span></span>
+<span class='r-in'><span class='va'>efc</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>e16sex</span>, <span class='va'>e42dep</span>, <span class='va'>c172code</span>, <span class='va'>n4pstu</span>, <span class='va'>c161sex</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span></span>
+<span class='r-in'>  <span class='fu'>flat_table</span><span class='op'>(</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, independent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            1      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            3      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             2      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, slightly dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            3      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             1      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            7     15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             2      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            1      7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             1      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, moderately dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            7      8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            3     24</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             1     13</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             4      9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             1      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            1      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            5      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>male, severely dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            0      8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             1      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            1      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             2     10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             1     19</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            1      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, independent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            1      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             1      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            4     15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             2      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, slightly dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            3     14</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level           12     51</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             3     10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             3     11</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             1      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            1      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            6     12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             0      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             1      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, moderately dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            6     10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             1      4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            8     36</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1            11     25</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             8      9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      7</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            7     15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             4      8</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             2      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             0      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #BB0000;'>Grouped by: </span><span style='color: #00BBBB;'>female, severely dependent</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> <span style='color: #00BBBB;'></span><span>                                              c161sex Male Female</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> c172code                        n4pstu                           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> low level of education          No Care Level            4     10</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             2      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             2      5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> intermediate level of education No Care Level            6     33</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             3     15</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             5     30</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3            11     12</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            1      1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> high level of education         No Care Level            1      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 1             2      6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 2             7      9</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3             3      5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                                 Care Level 3+            0      0</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
