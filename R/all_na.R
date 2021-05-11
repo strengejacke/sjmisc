@@ -16,8 +16,6 @@
 #' all_na(y)
 #' all_na(data.frame(x, y))
 #' all_na(list(x, y))
-#'
-#'
 #' @export
 all_na <- function(x) {
   UseMethod("all_na")

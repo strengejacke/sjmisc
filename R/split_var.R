@@ -168,7 +168,7 @@ split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclu
   grp_cuts <- stats::quantile(x, qu_prob, na.rm = TRUE)
 
   # create breaks. need to check if these are non-unique
-  breaks <- unique(c(0, grp_cuts, max(x, na.rm = T)))
+  breaks <- unique(c(0, grp_cuts, max(x, na.rm = TRUE)))
 
   # cut variables into groups
   retval <- cut(

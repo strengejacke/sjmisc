@@ -32,8 +32,6 @@
 #'
 #' # zap NaN for complete data frame
 #' zap_inf(efc)
-#'
-#' @importFrom dplyr quos
 #' @export
 zap_inf <- function(x, ...) {
   # evaluate arguments, generate data

@@ -125,5 +125,4 @@ get_labels(res, attr.only = FALSE)
 \dontrun{
 library(sjPlot)
 view_df(res)}
-
 }

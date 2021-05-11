@@ -74,7 +74,7 @@ print_descr_helper <- function(x, ...) {
   digits <- 2
 
   # do we have digits argument?
-  add.args <- lapply(match.call(expand.dots = F)$`...`, function(x) x)
+  add.args <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   if ("digits" %in% names(add.args)) digits <- eval(add.args[["digits"]])
 
   # round values

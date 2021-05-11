@@ -54,7 +54,7 @@ add_rows <- function(..., id = NULL) {
 
   if (!is.null(id) && id %in% cnames) {
     id <- make.unique(c(cnames, id))[length(cnames) + 1]
-    warning(sprintf("Value of `id` already exists as column name. ID column was renamed to `%s`.", id), call. = F)
+    warning(sprintf("Value of `id` already exists as column name. ID column was renamed to `%s`.", id), call. = FALSE)
   }
 
   # remove variables with duplicated names

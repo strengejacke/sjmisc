@@ -6,7 +6,7 @@ prepare_mids_recode <- function(x) {
 
   # check classes
   if (!inherits(x, "mids"))
-    stop("`x` must be a `mids`-object, as returned by the `mice()`-function.", call. = F)
+    stop("`x` must be a `mids`-object, as returned by the `mice()`-function.", call. = FALSE)
 
 
   # convert mids into long-data.frame

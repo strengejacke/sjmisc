@@ -93,13 +93,13 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
   # check classes
   if (!inherits(imp, "mids"))
-    stop("`imp` must be a `mids`-object, as returned by the `mice()`-function.", call. = F)
+    stop("`imp` must be a `mids`-object, as returned by the `mice()`-function.", call. = FALSE)
 
   if (!is.data.frame(dat))
-    stop("`dat` must be data frame.", call. = F)
+    stop("`dat` must be data frame.", call. = FALSE)
 
   if (!is.null(ori) && !is.data.frame(ori))
-    stop("`ori` must be data frame.", call. = F)
+    stop("`ori` must be data frame.", call. = FALSE)
 
 
   # create return value
@@ -126,7 +126,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
       miss_inc_dat <- as.data.frame(lapply(seq_len(imp$m), function(x) {
         mice::complete(imp, action = x)[[i]]
-      }), stringsAsFactors = F)
+      }), stringsAsFactors = FALSE)
 
 
       # convert imputed variable to numeric. needed to perform row means.

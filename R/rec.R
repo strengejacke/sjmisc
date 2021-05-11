@@ -44,8 +44,6 @@
 #'     \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
 #'     \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
 #'     \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
-#'     \item de-meaned variables (\code{de_mean()}) will be suffixed with \code{"_dm"}
-#'     \item grouped-meaned variables (\code{de_mean()}) will be suffixed with \code{"_gm"}
 #'   }
 #'   If \code{suffix = ""} and \code{append = TRUE}, existing variables that
 #'   have been recoded/transformed will be overwritten.
@@ -380,8 +378,8 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
 
   # retrieve min and max values
-  min_val <- min(x, na.rm = T)
-  max_val <- max(x, na.rm = T)
+  min_val <- min(x, na.rm = TRUE)
+  max_val <- max(x, na.rm = TRUE)
 
   # do we have special recode-token?
   if (recodes_reversed) {
@@ -443,8 +441,8 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   rec_string <- gsub(" ", "", rec_string, useBytes = TRUE, fixed = TRUE)
 
   # remove line breaks
-  rec_string <- gsub("\n", "", rec_string, useBytes = TRUE, fixed = F)
-  rec_string <- gsub("\r", "", rec_string, useBytes = TRUE, fixed = F)
+  rec_string <- gsub("\n", "", rec_string, useBytes = TRUE, fixed = FALSE)
+  rec_string <- gsub("\r", "", rec_string, useBytes = TRUE, fixed = FALSE)
 
   # replace min and max placeholders
   rec_string <- gsub("(\\blo\\b)(.*)=(.*)", paste0(as.character(min_val), "\\2=\\3"), rec_string, useBytes = TRUE, perl = TRUE)
@@ -465,7 +463,7 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
   # found any errors in syntax?
   if (!is.null(correct_syntax)) {
-    stop(sprintf("?Syntax error in argument \"%s\"", paste(correct_syntax, collapse = "=")), call. = F)
+    stop(sprintf("?Syntax error in argument \"%s\"", paste(correct_syntax, collapse = "=")), call. = FALSE)
   }
 
 
@@ -525,11 +523,11 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
       } else if (length(grep(":", ovs, fixed = TRUE)) > 0) {
         # this value indicates a range of values to be recoded, because
         # we have found a colon. now copy from and to values from range
-        from <- suppressWarnings(as.numeric(unlist(strsplit(ovs, ":", fixed = T))[1]))
-        to <- suppressWarnings(as.numeric(unlist(strsplit(ovs, ":", fixed = T))[2]))
+        from <- suppressWarnings(as.numeric(unlist(strsplit(ovs, ":", fixed = TRUE))[1]))
+        to <- suppressWarnings(as.numeric(unlist(strsplit(ovs, ":", fixed = TRUE))[2]))
         # check for valid range values
         if (is.na(from) || is.na(to)) {
-          stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = F)
+          stop(sprintf("?Syntax error in argument \"%s\"", ovs), call. = FALSE)
         }
         # to lower than from?
         if (from > to) {
@@ -585,8 +583,8 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
       } else if (is.character(old_val[k]) && with_dec) {
         # this value indicates a range of values to be recoded, because
         # we have found a colon. now copy from and to values from range
-        from <- suppressWarnings(as.numeric(unlist(strsplit(old_val[k], ":", fixed = T))[1]))
-        to <- suppressWarnings(as.numeric(unlist(strsplit(old_val[k], ":", fixed = T))[2]))
+        from <- suppressWarnings(as.numeric(unlist(strsplit(old_val[k], ":", fixed = TRUE))[1]))
+        to <- suppressWarnings(as.numeric(unlist(strsplit(old_val[k], ":", fixed = TRUE))[2]))
         # if old_val is a character, we assume we have a double with decimal
         # points and want to recode a range
         new_var[which(x >= from & x <= to)] <- new_val

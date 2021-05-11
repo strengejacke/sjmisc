@@ -84,12 +84,12 @@ ref_lvl <- function(x, ..., lvl = NULL) {
 ref_lvl_helper <- function(x, value) {
   # check correct arguments
   if (is.null(x)) {
-    warning("`x` is NULL.", call. = F)
+    warning("`x` is NULL.", call. = FALSE)
     return(x)
   }
 
   if (!is.factor(x)) {
-    warning("`x` needs to be a factor.", call. = F)
+    warning("`x` needs to be a factor.", call. = FALSE)
     return(x)
   }
 
@@ -114,7 +114,7 @@ ref_lvl_helper <- function(x, value) {
 
   # check if ref-lvl exists in values
   if (!value %in% vals) {
-    warning("`x` has no factor level indicated by the reference level `value`.", call. = F)
+    warning("`x` has no factor level indicated by the reference level `value`.", call. = FALSE)
     return(x)
   }
 

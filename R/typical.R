@@ -83,7 +83,7 @@ typical_value <- function(x, fun = "mean", weights = NULL, ...) {
 
 
   if (!(fun %in% c("mean", "median", "mode", "weighted.mean", "zero")))
-    stop("`fun` must be one of \"mean\", \"median\", \"mode\", \"weighted.mean\" or \"zero\".", call. = F)
+    stop("`fun` must be one of \"mean\", \"median\", \"mode\", \"weighted.mean\" or \"zero\".", call. = FALSE)
 
 
   # for weighted mean, check that weights are of same length as x
@@ -94,7 +94,7 @@ typical_value <- function(x, fun = "mean", weights = NULL, ...) {
 
     if (length(weights) != length(x)) {
       # if not, tell user and change function to mean
-      warning("Vector of weights is of different length than `x`. Using `mean` as function for typical value.", call. = F)
+      warning("Vector of weights is of different length than `x`. Using `mean` as function for typical value.", call. = FALSE)
       fun <- "mean"
     }
 
@@ -103,7 +103,7 @@ typical_value <- function(x, fun = "mean", weights = NULL, ...) {
 
     if (all(weights == 1)) {
       # if not, tell user and change function to mean
-      warning("All weight values are `1`. Using `mean` as function for typical value.", call. = F)
+      warning("All weight values are `1`. Using `mean` as function for typical value.", call. = FALSE)
       fun <- "mean"
     }
   }

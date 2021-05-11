@@ -461,7 +461,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     # character vectors need to be converted with to_value
     # to avoid NAs, but only if character is non-numeric
     if (is.character(dat$val) && anyNA(suppressWarnings(as.numeric(dat$val))))
-      dat$val <- sjlabelled::as_numeric(dat$val, keep.labels = F)
+      dat$val <- sjlabelled::as_numeric(dat$val, keep.labels = FALSE)
     else
       dat$val <- as.numeric(dat$val)
 
@@ -482,7 +482,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     }
 
     colnames(dat2) <- c("val", "frq")
-    dat2$val <- sjlabelled::as_numeric(dat2$val, keep.labels = F)
+    dat2$val <- sjlabelled::as_numeric(dat2$val, keep.labels = FALSE)
 
     # join frq table and label columns
     mydat <- suppressMessages(dplyr::full_join(dat, dat2))
@@ -510,7 +510,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     colnames(mydat) <- c("val", "frq")
 
     if (!anyNA(suppressWarnings(as.numeric(attr(mydat$val, "levels"))))) {
-      mydat$val <- sjlabelled::as_numeric(mydat$val, keep.labels = F)
+      mydat$val <- sjlabelled::as_numeric(mydat$val, keep.labels = FALSE)
     }
 
     # add values as label
@@ -543,7 +543,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # need numeric
   if (is.factor(x) || is.character(x)) {
-    x <- sjlabelled::as_numeric(x, keep.labels = F)
+    x <- sjlabelled::as_numeric(x, keep.labels = FALSE)
   }
 
   # check if we have any NA-values - if not, add row for NA's
@@ -600,12 +600,12 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   if (!all(is.na(mydat$val))) {
     if (extra.vals == 1) {
       # save original order
-      reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
+      reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = FALSE)
       # sort
       if (sort.frq == "none") mydat <- mydat[order(reihe), ]
     } else if (extra.vals == 2) {
       # save original order
-      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals, valid.vals + 1)], start.at = 1, keep.labels = F))
+      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals, valid.vals + 1)], start.at = 1, keep.labels = FALSE))
       # sort
       if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals + 1), ]
     }

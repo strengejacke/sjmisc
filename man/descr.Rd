@@ -91,5 +91,4 @@ efc \%>\%
 
 # or even use select-helpers
 descr(efc, contains("cop"), max.length = 20)
-
 }

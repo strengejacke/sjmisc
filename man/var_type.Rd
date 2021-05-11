@@ -41,5 +41,4 @@ var_type(to_factor(efc$e42dep))
 
 library(dplyr)
 var_type(efc, contains("cop"))
-
 }

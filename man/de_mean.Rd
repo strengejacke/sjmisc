@@ -57,7 +57,6 @@ For \code{append = TRUE}, \code{x} including the group-/de-meaned
 data(efc)
 efc$ID <- sample(1:4, nrow(efc), replace = TRUE) # fake-ID
 de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE)
-
 }
 \references{
 Bafumi J, Gelman A. 2006. Fitting Multilevel Models When Predictors and Group Effects Correlate. In. Philadelphia, PA: Annual meeting of the American Political Science Association.

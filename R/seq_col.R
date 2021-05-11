@@ -16,7 +16,7 @@
 #' @export
 seq_col <- function(x) {
   if (!is.matrix(x) && !is.data.frame(x)) {
-    warning("`x` needs to be a matrix or data frame.", call. = F)
+    warning("`x` needs to be a matrix or data frame.", call. = FALSE)
     return(NULL)
   }
 
@@ -27,7 +27,7 @@ seq_col <- function(x) {
 #' @export
 seq_row <- function(x) {
   if (!is.matrix(x) && !is.data.frame(x)) {
-    warning("`x` needs to be a matrix or data frame.", call. = F)
+    warning("`x` needs to be a matrix or data frame.", call. = FALSE)
     return(NULL)
   }
 

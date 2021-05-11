@@ -89,14 +89,12 @@
 #' # dichotomize only variables with more than 10 unique values
 #' p <- function(x) dplyr::n_distinct(x) > 10
 #' dicho_if(efc, predicate = p, append = FALSE)
-#'
 #' @export
 dicho <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
   UseMethod("dicho")
 }
 
 
-#' @importFrom dplyr group_vars
 #' @export
 dicho.default <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
 
@@ -122,8 +120,6 @@ dicho.default <- function(x, ..., dich.by = "median", as.num = FALSE, var.label 
 }
 
 
-#' @importFrom dplyr bind_cols select quos
-#' @importFrom purrr map
 #' @export
 dicho.mids <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
   vars <- dplyr::quos(...)
@@ -156,7 +152,6 @@ dicho.mids <- function(x, ..., dich.by = "median", as.num = FALSE, var.label = N
 }
 
 
-#' @importFrom dplyr select_if
 #' @rdname dicho
 #' @export
 dicho_if <- function(x, predicate, dich.by = "median", as.num = FALSE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_d") {
@@ -195,8 +190,6 @@ dicho_if <- function(x, predicate, dich.by = "median", as.num = FALSE, var.label
 }
 
 
-#' @importFrom sjlabelled as_numeric get_label set_label set_labels
-#' @importFrom stats median
 dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
   # do we have labels? if not, try to
   # automatically get variable labels
@@ -223,10 +216,10 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
   if (is.numeric(dich.by)) {
     x <- ifelse(x <= dich.by, 0, 1)
   } else if (dich.by == "median" || dich.by == "md") {
-    x <- ifelse(x <= stats::median(x, na.rm = T), 0, 1)
+    x <- ifelse(x <= stats::median(x, na.rm = TRUE), 0, 1)
     # split at mean
   } else if (dich.by == "mean" || dich.by == "m") {
-    x <- ifelse(x <= mean(x, na.rm = T), 0, 1)
+    x <- ifelse(x <= mean(x, na.rm = TRUE), 0, 1)
   }
 
   if (!as.num) x <- as.factor(x)
@@ -239,7 +232,6 @@ dicho_helper <- function(x, dich.by, as.num, var.label, val.labels) {
 }
 
 
-#' @importFrom dplyr group_indices group_vars slice ungroup bind_cols
 recode_fun <- function(x, .dat, fun, suffix, append, ...) {
   if (is.data.frame(x)) {
 

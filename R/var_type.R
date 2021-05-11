@@ -27,8 +27,6 @@
 #'
 #' library(dplyr)
 #' var_type(efc, contains("cop"))
-#'
-#' @importFrom purrr map_chr
 #' @export
 var_type <- function(x, ..., abbr = FALSE) {
 
@@ -42,9 +40,6 @@ var_type <- function(x, ..., abbr = FALSE) {
 }
 
 
-#' @importFrom purrr flatten_chr
-#' @importFrom dplyr case_when
-#' @importFrom methods is
 get_vt <- function(x, abbr) {
 
   if (is.ordered(x))
