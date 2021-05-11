@@ -36,5 +36,5 @@ is_num_fac <- function(x) {
 #' @export
 is_num_chr <- function(x) {
   # check if we have numeric bvalues
-  is.character(x) && !anyNA(suppressWarnings(as.numeric(na.omit(x))))
+  is.character(x) && !anyNA(suppressWarnings(as.numeric(stats::na.omit(x))))
 }

@@ -55,6 +55,7 @@
 #'
 #' # or even use select-helpers
 #' descr(efc, contains("cop"), max.length = 20)
+#' @importFrom rlang .data
 #' @export
 descr <- function(x,
                   ...,

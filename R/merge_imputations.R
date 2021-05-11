@@ -161,7 +161,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
       # all imputed values for a case
 
       analyse.mw <- apply(miss_inc_dat_num[miss_inc, ], 1, mean)
-      analyse.sd <- apply(miss_inc_dat_num[miss_inc, ], 1, sd)
+      analyse.sd <- apply(miss_inc_dat_num[miss_inc, ], 1, stats::sd)
 
       merge_result <- list(
         merged = x[miss_inc],

@@ -26,6 +26,3 @@ magrittr::`%>%`
 #' @importFrom sjlabelled set_na
 #' @export
 sjlabelled::set_na
-
-
-#' @importFrom rlang .data
