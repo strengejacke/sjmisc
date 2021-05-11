@@ -14,7 +14,7 @@ Description: Collection of miscellaneous utility functions, supporting data
     'tidyverse'-workflow.
 License: GPL-3
 Depends:
-    R (>= 3.5)
+    R (>= 3.4)
 Imports:
     dplyr,
     insight,
