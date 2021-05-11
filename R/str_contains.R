@@ -66,7 +66,6 @@
 #' # no patterns in "abc"?
 #' str_contains("abc", c("a", "b", "e"), logic = "not")
 #' str_contains("abc", c("d", "e", "f"), logic = "not")
-#'
 #' @export
 str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL, switch = FALSE) {
   # check if correct length when switching

@@ -90,9 +90,6 @@
 #'     # compute the CI for all bootstrapped model coefficients
 #'     boot_ci(e42dep, c161sex, c172code)
 #' }
-#' @importFrom dplyr select bind_cols
-#' @importFrom purrr map_df
-#' @importFrom rlang .data
 #' @export
 spread_coef <- function(data, model.column, model.term, se, p.val, append = TRUE) {
   # check if we have a data frame

@@ -100,7 +100,6 @@ std <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FAL
 }
 
 
-#' @importFrom dplyr quos
 #' @export
 std.default <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
   # evaluate arguments, generate data
@@ -113,8 +112,6 @@ std.default <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.f
 }
 
 
-#' @importFrom dplyr bind_cols select quos
-#' @importFrom purrr map
 #' @export
 std.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
   vars <- dplyr::quos(...)
@@ -146,7 +143,6 @@ std.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac 
 }
 
 
-#' @importFrom dplyr select_if
 #' @rdname std
 #' @export
 std_if <- function(x, predicate, robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
@@ -178,7 +174,6 @@ center <- function(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c") {
 }
 
 
-#' @importFrom dplyr quos
 #' @export
 center.default <- function(x, ..., include.fac = FALSE, append = TRUE, suffix = "_c") {
   # evaluate arguments, generate data
@@ -188,8 +183,6 @@ center.default <- function(x, ..., include.fac = FALSE, append = TRUE, suffix = 
 }
 
 
-#' @importFrom dplyr bind_cols select quos
-#' @importFrom purrr map
 #' @export
 center.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.fac = FALSE, append = TRUE, suffix = "_z") {
   vars <- dplyr::quos(...)
@@ -221,7 +214,6 @@ center.mids <- function(x, ..., robust = c("sd", "2sd", "gmd", "mad"), include.f
 }
 
 
-#' @importFrom dplyr select_if
 #' @rdname std
 #' @export
 center_if <- function(x, predicate, include.fac = FALSE, append = TRUE, suffix = "_c") {
@@ -257,8 +249,6 @@ std_and_center <- function(x, .dat, include.fac, append, standardize, robust, su
 }
 
 
-#' @importFrom stats sd na.omit mad
-#' @importFrom sjlabelled get_label set_label
 std_helper <- function(x, include.fac, standardize, robust) {
   # check whether factors should also be standardized
   if (is.factor(x)) {
