@@ -92,7 +92,7 @@ add_rows <- function(..., id = NULL) {
       attr(x[[i]], "label") <- at[[i]][["label"]]
       attr(x[[i]], "na_values") <- at[[i]][["na_values"]]
       attr(x[[i]], "na.values") <- at[[i]][["na.values"]]
-      attr(x[[i]], "na_range") <- at[[i]][["na.range"]]
+      attr(x[[i]], "na_range") <- at[[i]][["na_range"]]
       attr(x[[i]], "na.range") <- at[[i]][["na.range"]]
     }
   }
