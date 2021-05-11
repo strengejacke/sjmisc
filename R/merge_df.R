@@ -90,6 +90,10 @@ add_rows <- function(..., id = NULL) {
     for (i in names(at)) {
       attr(x[[i]], "labels") <- at[[i]][["labels"]]
       attr(x[[i]], "label") <- at[[i]][["label"]]
+      attr(x[[i]], "na_values") <- at[[i]][["na_values"]]
+      attr(x[[i]], "na.values") <- at[[i]][["na.values"]]
+      attr(x[[i]], "na_range") <- at[[i]][["na.range"]]
+      attr(x[[i]], "na.range") <- at[[i]][["na.range"]]
     }
   }
 
