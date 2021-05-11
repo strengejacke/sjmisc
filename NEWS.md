@@ -1,3 +1,15 @@
+# sjmisc 2.8.7
+
+## New functions
+
+* A first draft of `format()` for `frq()` was implemented.
+
+## Changes to functions
+
+* `merge_df()` preserves more attributes related to labelled data.
+
+* `to.factor` is an alias for the argument `as.num`.
+
 # sjmisc 2.8.6
 
 ## General
