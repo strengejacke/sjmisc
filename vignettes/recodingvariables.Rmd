@@ -11,6 +11,10 @@ vignette: >
 
 ```{r echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, comment = "#>")
+if (!requireNamespace("dplyr", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 suppressPackageStartupMessages(library(sjmisc))
 ```
 
