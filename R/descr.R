@@ -157,7 +157,7 @@ descr_helper <- function(dd, max.length) {
 
   if (obj_has_name(dd, ".weights")) {
     weights <- dd$.weights
-    dd <- dplyr::select(dd, -rlang::.data$.weights)
+    dd <- dplyr::select(dd, -.data$.weights)
   } else {
     weights <- NULL
   }
@@ -180,24 +180,24 @@ descr_helper <- function(dd, max.length) {
       dd %>%
         dplyr::select_if(is.numeric) %>%
         .gather(key = "var", value = "val") %>%
-        dplyr::group_by(rlang::.data$var) %>%
+        dplyr::group_by(.data$var) %>%
         dplyr::summarise_all(
           dplyr::funs(
-            n = length(stats::na.omit(rlang::.data$val)),
-            NA.prc = 100 * sum(is.na(rlang::.data$val)) / length(rlang::.data$val),
-            mean = mean(rlang::.data$val, na.rm = TRUE),
-            sd = stats::sd(rlang::.data$val, na.rm = TRUE),
-            se = sqrt(stats::var(rlang::.data$val, na.rm = TRUE) / length(stats::na.omit(rlang::.data$val))),
-            md = stats::median(rlang::.data$val, na.rm = TRUE),
-            trimmed = mean(rlang::.data$val, na.rm = TRUE, trim = .1),
+            n = length(stats::na.omit(.data$val)),
+            NA.prc = 100 * sum(is.na(.data$val)) / length(.data$val),
+            mean = mean(.data$val, na.rm = TRUE),
+            sd = stats::sd(.data$val, na.rm = TRUE),
+            se = sqrt(stats::var(.data$val, na.rm = TRUE) / length(stats::na.omit(.data$val))),
+            md = stats::median(.data$val, na.rm = TRUE),
+            trimmed = mean(.data$val, na.rm = TRUE, trim = .1),
             range = sprintf(
               "%s (%s-%s)",
-              as.character(round(diff(range(rlang::.data$val, na.rm = TRUE)), 2)),
-              as.character(round(min(rlang::.data$val, na.rm = TRUE), 2)),
-              as.character(round(max(rlang::.data$val, na.rm = TRUE), 2))
+              as.character(round(diff(range(.data$val, na.rm = TRUE)), 2)),
+              as.character(round(min(.data$val, na.rm = TRUE), 2)),
+              as.character(round(max(.data$val, na.rm = TRUE), 2))
             ),
-            iqr = stats::IQR(rlang::.data$val, na.rm = TRUE),
-            skew = sjmisc.skew(rlang::.data$val)
+            iqr = stats::IQR(.data$val, na.rm = TRUE),
+            skew = sjmisc.skew(.data$val)
           ))
     ) %>%
       as.data.frame()
@@ -209,21 +209,21 @@ descr_helper <- function(dd, max.length) {
 
     x <- suppressWarnings(
       tmp %>%
-        dplyr::group_by(rlang::.data$var) %>%
+        dplyr::group_by(.data$var) %>%
         dplyr::summarise(
-          n = round(sum(rlang::.data$.weights[!is.na(rlang::.data$val)], na.rm = TRUE)),
-          NA.prc = 100 * sum(is.na(rlang::.data$val)) / length(rlang::.data$val),
-          mean = stats::weighted.mean(rlang::.data$val, w = rlang::.data$.weights, na.rm = TRUE),
-          sd = wtd_sd_helper(rlang::.data$val, weights = rlang::.data$.weights),
-          se = wtd_se_helper(rlang::.data$val, weights = rlang::.data$.weights),
+          n = round(sum(.data$.weights[!is.na(.data$val)], na.rm = TRUE)),
+          NA.prc = 100 * sum(is.na(.data$val)) / length(.data$val),
+          mean = stats::weighted.mean(.data$val, w = .data$.weights, na.rm = TRUE),
+          sd = wtd_sd_helper(.data$val, weights = .data$.weights),
+          se = wtd_se_helper(.data$val, weights = .data$.weights),
           range = sprintf(
             "%s (%s-%s)",
-            as.character(round(diff(range(rlang::.data$val, na.rm = TRUE)), 2)),
-            as.character(round(min(rlang::.data$val, na.rm = TRUE), 2)),
-            as.character(round(max(rlang::.data$val, na.rm = TRUE), 2))
+            as.character(round(diff(range(.data$val, na.rm = TRUE)), 2)),
+            as.character(round(min(.data$val, na.rm = TRUE), 2)),
+            as.character(round(max(.data$val, na.rm = TRUE), 2))
           ),
-          iqr = stats::IQR(rlang::.data$val, na.rm = TRUE),
-          skew = sjmisc.skew(rlang::.data$val)
+          iqr = stats::IQR(.data$val, na.rm = TRUE),
+          skew = sjmisc.skew(.data$val)
         )
     ) %>%
       as.data.frame()

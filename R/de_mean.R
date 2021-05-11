@@ -84,7 +84,7 @@ de_mean <- function(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "
   dat <- dat %>%
     dplyr::select(!! -group_ids) %>%
     dplyr::bind_cols(x_dm, x_gm) %>%
-    dplyr::arrange(rlang::.data$.dummyid) %>%
+    dplyr::arrange(.data$.dummyid) %>%
     dplyr::select(!! -group_ids)
 
   if (append)
