@@ -43,9 +43,6 @@
 #' str_start(x, "\\d+4")
 #' str_start(x, "\\d+4", regex = TRUE)
 #' str_end(x, "\\d+4", regex = TRUE)
-#'
-#' @importFrom dplyr pull
-#' @importFrom purrr map
 #' @export
 str_start <- function(x, pattern, ignore.case = TRUE, regex = FALSE) {
   if (regex) class(pattern) <- c("regex", class(pattern))

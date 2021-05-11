@@ -112,8 +112,6 @@
 #'   group_by(cyl) %>%
 #'   group_var(disp, size = 4, append = FALSE) %>%
 #'   table()
-#'
-#' @importFrom dplyr quos
 #' @export
 group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE, n = 30, append = TRUE, suffix = "_gr") {
 
@@ -134,7 +132,6 @@ group_var <- function(x, ..., size = 5, as.num = TRUE, right.interval = FALSE, n
 }
 
 
-#' @importFrom dplyr select_if
 #' @rdname group_var
 #' @export
 group_var_if <- function(x, predicate, size = 5, as.num = TRUE, right.interval = FALSE, n = 30, append = TRUE, suffix = "_gr") {
@@ -167,7 +164,6 @@ group_var_if <- function(x, predicate, size = 5, as.num = TRUE, right.interval =
 }
 
 
-#' @importFrom sjlabelled get_label set_label
 g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
   # do we have labels?
   varlab <- sjlabelled::get_label(x)
@@ -189,7 +185,6 @@ g_v_helper <- function(x, groupsize, as.num, right.interval, groupcount) {
 
 
 #' @rdname group_var
-#' @importFrom dplyr quos
 #' @export
 group_labels <- function(x, ..., size = 5, right.interval = FALSE, n = 30) {
   # evaluate arguments, generate data
@@ -206,7 +201,6 @@ group_labels <- function(x, ..., size = 5, right.interval = FALSE, n = 30) {
 
 
 #' @rdname group_var
-#' @importFrom dplyr select_if
 #' @export
 group_labels_if <- function(x, predicate, size = 5, right.interval = FALSE, n = 30) {
 
@@ -234,7 +228,6 @@ group_labels_if <- function(x, predicate, size = 5, right.interval = FALSE, n = 
 }
 
 
-#' @importFrom purrr map
 gl_fun <- function(x, .dat, size, right.interval, n) {
   if (is.data.frame(x)) {
     # iterate variables of data frame
@@ -259,7 +252,6 @@ gl_fun <- function(x, .dat, size, right.interval, n) {
 }
 
 
-#' @importFrom sjlabelled get_label set_label
 g_l_helper <- function(x, groupsize, right.interval, groupcount) {
   # do we have labels?
   varlab <- sjlabelled::get_label(x)
@@ -305,7 +297,6 @@ g_l_helper <- function(x, groupsize, right.interval, groupcount) {
 }
 
 
-#' @importFrom sjlabelled as_numeric
 group_helper <- function(x, groupsize, right.interval, groupcount) {
   # check if factor. factors need conversion
   # to numeric before grouped

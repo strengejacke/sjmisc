@@ -50,8 +50,6 @@
 #' newstring <- group_str(oldstring, precision = 3, strict = TRUE)
 #' frq(oldstring)
 #' frq(newstring)
-#'
-#' @importFrom utils txtProgressBar
 #' @export
 group_str <- function(
   strings,

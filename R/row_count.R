@@ -49,7 +49,6 @@ row_count <- function(x, ..., count, var = "rowcount", append = TRUE) {
 }
 
 
-#' @importFrom dplyr quos bind_cols
 #' @export
 row_count.default <- function(x, ..., count, var = "rowcount", append = TRUE) {
   # evaluate arguments, generate data
@@ -99,8 +98,6 @@ row.count <- function(.dat, count) {
 
 
 #' @rdname row_count
-#' @importFrom purrr map_df
-#' @importFrom dplyr quos bind_rows
 #' @export
 col_count <- function(x, ..., count, var = "colcount", append = TRUE) {
   # evaluate arguments, generate data

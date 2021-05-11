@@ -190,7 +190,6 @@ d <- data.frame(
 table(d$var_x, d$var_z)
 frq(d, paste0(var_x, var_z))
 frq(d, paste0(var_x, var_y, var_z))
-
 }
 \seealso{
 \code{\link{flat_table}} for labelled (proportional) tables.

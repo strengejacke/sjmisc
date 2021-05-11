@@ -43,8 +43,6 @@
 #' })
 #' tmp
 #' rotate_df(tmp)
-#'
-#' @importFrom dplyr select
 #' @export
 rotate_df <- function(x, rn = NULL, cn = FALSE) {
 

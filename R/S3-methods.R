@@ -1,7 +1,3 @@
-#' @importFrom insight print_color export_table
-#' @importFrom purrr walk
-#' @importFrom dplyr select n_distinct
-#' @importFrom rlang .data
 #' @export
 print.sjmisc_frq <- function(x, ...) {
   purrr::walk(x, function(dat) {

@@ -164,9 +164,6 @@ to_long.mids <- function(data, keys, values, ..., labels = NULL, recode.key = FA
 }
 
 
-#' @importFrom dplyr bind_cols
-#' @importFrom purrr map
-#' @importFrom sjlabelled as_numeric set_label
 to_long_helper <- function(data, keys, values, ..., labels, recode.key) {
   # get variable names for gather columns
   data_cols <- list(...)

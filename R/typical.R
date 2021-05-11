@@ -60,7 +60,6 @@
 #'
 #' # for factors, use a named vector to apply other functions than "mode"
 #' map(iris, ~ typical_value(.x, fun = c(n = "median", f = "mean")))
-#' @importFrom stats median
 #' @export
 typical_value <- function(x, fun = "mean", weights = NULL, ...) {
 

@@ -36,5 +36,4 @@ x <- data.frame(f1, f2, f3, stringsAsFactors = FALSE)
 clean_values(f1)
 clean_values(f2)
 clean_values(x)
-
 }

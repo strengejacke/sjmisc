@@ -70,7 +70,6 @@ frq(newstring)
 newstring <- group_str(oldstring, precision = 3, strict = TRUE)
 frq(oldstring)
 frq(newstring)
-
 }
 \seealso{
 \code{\link{str_find}}

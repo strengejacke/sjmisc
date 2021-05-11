@@ -147,7 +147,6 @@ mtcars \%>\%
   group_by(cyl) \%>\%
   split_var(disp, n = 3, append = FALSE) \%>\%
   table()
-
 }
 \seealso{
 \code{\link{group_var}} to group variables into equal ranged groups,

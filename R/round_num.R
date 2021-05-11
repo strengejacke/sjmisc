@@ -20,7 +20,6 @@ round_num <- function(x, digits = 0) {
 }
 
 
-#' @importFrom purrr map_if
 #' @export
 round_num.data.frame <- function(x, digits = 0) {
   xa <- attributes(x)
@@ -34,7 +33,6 @@ round_num.data.frame <- function(x, digits = 0) {
 }
 
 
-#' @importFrom purrr map_if
 #' @export
 round_num.list <- function(x, digits = 0) {
   purrr::map_if(x, is.numeric, ~ round(.x, digits = digits))

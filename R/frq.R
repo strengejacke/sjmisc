@@ -148,12 +148,6 @@
 #' table(d$var_x, d$var_z)
 #' frq(d, paste0(var_x, var_z))
 #' frq(d, paste0(var_x, var_y, var_z))
-#'
-#' @importFrom stats na.omit
-#' @importFrom dplyr full_join select_if select group_keys
-#' @importFrom sjlabelled get_label get_labels get_values copy_labels
-#' @importFrom purrr map_if
-#' @importFrom rlang quo_name enquo
 #' @export
 frq <- function(x,
                 ...,
@@ -367,9 +361,6 @@ frq <- function(x,
 }
 
 
-#' @importFrom dplyr n_distinct full_join bind_rows
-#' @importFrom stats na.omit xtabs na.pass sd weighted.mean qnorm
-#' @importFrom sjlabelled get_labels get_label as_numeric
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0) {
   # remember type
   vartype <- var_type(x)
@@ -702,9 +693,6 @@ get_title_part <- function(x, grps, level, i) {
 }
 
 
-#' @importFrom dplyr filter group_vars
-#' @importFrom stats complete.cases
-#' @importFrom rlang .data
 get_grouped_data <- function(x) {
   # nest data frame
   grps <- .nest(x)

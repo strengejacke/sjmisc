@@ -72,7 +72,6 @@ row_sums <- function(x, ...) {
 }
 
 
-#' @importFrom dplyr quos bind_cols
 #' @rdname row_sums
 #' @export
 row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
@@ -151,7 +150,6 @@ total_mean.data.frame <- function(x, ...) {
 }
 
 
-#' @importFrom dplyr quos bind_cols
 #' @rdname row_sums
 #' @export
 row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
@@ -207,8 +205,6 @@ row_means.mids <- function(x, ..., var = "rowmeans", append = TRUE) {
 }
 
 
-#' @importFrom dplyr quos group_by select
-#' @importFrom purrr map
 row_mids <- function(x, ..., var, append, rfun, count = NULL) {
   # check if suggested package is available
   if (!requireNamespace("mice", quietly = TRUE))

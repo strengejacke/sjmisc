@@ -42,8 +42,6 @@
 #' p <- function(x) max(x, na.rm = TRUE) > 7
 #' tmp <- set_na_if(dummy, predicate = p, na = 8:9)
 #' head(tmp)
-#'
-#' @importFrom dplyr select_if
 #' @export
 set_na_if <- function(x, predicate, na, drop.levels = TRUE, as.tag = FALSE) {
 
