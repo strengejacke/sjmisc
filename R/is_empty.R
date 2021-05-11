@@ -51,8 +51,6 @@
 #' x <- rep(NA,5)
 #' is_empty(x)
 #' is_empty(x, all.na.empty = FALSE)
-#'
-#' @importFrom purrr compact
 #' @export
 is_empty <- function(x, first.only = TRUE, all.na.empty = TRUE) {
   # do we have a valid vector?
@@ -140,7 +138,6 @@ empty_rows <- function(x) {
 
 
 #' @rdname empty_cols
-#' @importFrom dplyr select
 #' @export
 remove_empty_cols <- function(x) {
   # check if we have any empty columns at all
@@ -154,7 +151,6 @@ remove_empty_cols <- function(x) {
 
 
 #' @rdname empty_cols
-#' @importFrom dplyr slice
 #' @export
 remove_empty_rows <- function(x) {
   # check if we have any empty rows at all

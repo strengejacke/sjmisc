@@ -21,8 +21,6 @@
 #' efc %>%
 #'   select(e42dep, e16sex, c12hour, c160age, c172code) %>%
 #'   numeric_to_factor()
-#'
-#' @importFrom dplyr n_distinct
 #' @export
 numeric_to_factor <- function(x, n = 4) {
   as.data.frame(lapply(x, function(.x) {

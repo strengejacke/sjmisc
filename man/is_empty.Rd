@@ -63,5 +63,4 @@ is_empty(list(NULL))
 x <- rep(NA,5)
 is_empty(x)
 is_empty(x, all.na.empty = FALSE)
-
 }

@@ -76,5 +76,4 @@ complete_cases(efc, e42dep, tot_sc_e, c161sex)
 incomplete_cases(efc, e42dep, tot_sc_e, c161sex)
 complete_vars(efc, e42dep, tot_sc_e, c161sex)
 incomplete_vars(efc, e42dep, tot_sc_e, c161sex)
-
 }

@@ -48,10 +48,6 @@
 #' incomplete_cases(efc, e42dep, tot_sc_e, c161sex)
 #' complete_vars(efc, e42dep, tot_sc_e, c161sex)
 #' incomplete_vars(efc, e42dep, tot_sc_e, c161sex)
-#'
-#' @importFrom purrr map_lgl
-#' @importFrom dplyr quos
-#' @importFrom sjlabelled get_label
 #' @export
 has_na <- function(x, ..., by = c("col", "row"), out = c("table", "df", "index")) {
   out <- match.arg(out)

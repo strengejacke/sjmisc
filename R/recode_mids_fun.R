@@ -1,4 +1,3 @@
-#' @importFrom dplyr group_by
 prepare_mids_recode <- function(x) {
   # check if suggested package is available
   if (!requireNamespace("mice", quietly = TRUE))
@@ -22,7 +21,6 @@ prepare_mids_recode <- function(x) {
 }
 
 
-#' @importFrom purrr map
 final_mids_recode <- function(x) {
   # check if suggested package is available
 

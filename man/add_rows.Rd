@@ -54,5 +54,4 @@ x4 <- efc \%>\% select(11:14) \%>\% slice(31:40)
 mydf <- add_rows(x1, x2, x3, x4, id = "subsets")
 mydf
 str(mydf)
-
 }

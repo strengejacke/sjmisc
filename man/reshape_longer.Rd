@@ -106,7 +106,6 @@ x <- reshape_longer(
 library(sjlabelled)
 str(x$score)
 get_label(x$speed)
-
 }
 \seealso{
 \code{\link{to_long}}

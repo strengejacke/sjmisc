@@ -59,8 +59,6 @@
 #' levels(iris$Species)
 #' levels(ref_lvl(iris$Species, lvl = 3))
 #' levels(ref_lvl(iris$Species, lvl = "versicolor"))
-#'
-#' @importFrom dplyr quos
 #' @export
 ref_lvl <- function(x, ..., lvl = NULL) {
 
@@ -80,7 +78,6 @@ ref_lvl <- function(x, ..., lvl = NULL) {
 }
 
 
-#' @importFrom sjlabelled get_values get_labels get_label set_label set_labels
 ref_lvl_helper <- function(x, value) {
   # check correct arguments
   if (is.null(x)) {

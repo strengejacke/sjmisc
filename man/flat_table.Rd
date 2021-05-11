@@ -73,7 +73,6 @@ efc \%>\%
   group_by(e16sex, e42dep) \%>\%
   select(e16sex, e42dep, c172code, n4pstu, c161sex) \%>\%
   flat_table()
-
 }
 \seealso{
 \code{\link{frq}} for simple frequency table of labelled vectors.

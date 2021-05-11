@@ -179,14 +179,12 @@
 #' p <- function(x) min(x, na.rm = TRUE) > 0 && max(x, na.rm = TRUE) < 5
 #' out <- rec_if(efc, predicate = p, rec = "1:3=1;4=2;else=copy")
 #' head(out)
-#' @importFrom insight print_color
 #' @export
 rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
   UseMethod("rec")
 }
 
 
-#' @importFrom dplyr quos
 #' @export
 rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
 
@@ -210,8 +208,6 @@ rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels
 }
 
 
-#' @importFrom dplyr bind_cols select quos
-#' @importFrom purrr map
 #' @export
 rec.mids <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
   vars <- dplyr::quos(...)
@@ -247,7 +243,6 @@ rec.mids <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = 
 }
 
 
-#' @importFrom dplyr select_if
 #' @rdname rec
 #' @export
 rec_if <- function(x, predicate, rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
@@ -320,8 +315,6 @@ rec_core_fun <- function(x, .dat, rec, as.num = TRUE, var.label = NULL, val.labe
 }
 
 
-#' @importFrom stats na.omit
-#' @importFrom sjlabelled drop_labels get_na get_label get_labels set_label set_labels
 rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
   # retrieve variable label
   if (is.null(var.label))

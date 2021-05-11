@@ -80,7 +80,6 @@
 #'   # show summary of quality of merging imputations
 #'   merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
 #' }
-#' @importFrom dplyr bind_cols
 #' @export
 merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", "hist", "sd"), filter = NULL) {
 
@@ -226,9 +225,6 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
 
 
-#' @importFrom purrr map_df
-#' @importFrom dplyr n_distinct filter
-#' @importFrom rlang .data
 .create_imputation_plot <- function(.sum.type, .filter, .summary) {
   # check if ggplot is installed
   if (!requireNamespace("ggplot2", quietly = TRUE)) {

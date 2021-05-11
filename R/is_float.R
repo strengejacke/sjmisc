@@ -39,7 +39,6 @@ is_float.default <- function(x) {
   is.numeric(x) && !all(x %% 1 == 0, na.rm = TRUE)
 }
 
-#' @importFrom purrr map_lgl
 #' @export
 is_float.data.frame <- function(x) {
   purrr::map_lgl(x, ~ is.numeric(.x) && !all(.x %% 1 == 0, na.rm = TRUE))
@@ -66,7 +65,6 @@ is_whole.default <- function(x) {
   iwh(x)
 }
 
-#' @importFrom purrr map_lgl
 #' @export
 is_whole.data.frame <- function(x) {
   purrr::map_lgl(x, iwh)

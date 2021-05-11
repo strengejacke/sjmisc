@@ -41,9 +41,6 @@
 #' mydf <- add_rows(x1, x2, x3, x4, id = "subsets")
 #' mydf
 #' str(mydf)
-#'
-#' @importFrom dplyr bind_rows
-#' @importFrom purrr map flatten compact flatten_chr
 #' @export
 add_rows <- function(..., id = NULL) {
 

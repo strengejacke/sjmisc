@@ -52,10 +52,6 @@
 #'   group_by(e16sex, e42dep) %>%
 #'   select(e16sex, e42dep, c172code, n4pstu, c161sex) %>%
 #'   flat_table()
-#'
-#' @importFrom insight print_color
-#' @importFrom dplyr case_when select
-#' @importFrom stats ftable
 #' @export
 flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), digits = 2, show.values = FALSE, weights = NULL) {
 
@@ -118,8 +114,6 @@ flat_table <- function(data, ..., margin = c("counts", "cell", "row", "col"), di
 }
 
 
-#' @importFrom stats as.formula xtabs
-#' @importFrom sjlabelled as_label
 com_ft <- function(dd, show.values, no.prop.table, marge, digits, w = NULL) {
   # select variables, convert to label and create ftable-pbject
   x <- sjlabelled::as_label(dd, add.non.labelled = TRUE, prefix = show.values)

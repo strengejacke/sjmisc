@@ -86,8 +86,6 @@
 #' library(sjlabelled)
 #' str(x$score)
 #' get_label(x$speed)
-#'
-#' @importFrom stats reshape
 #' @export
 reshape_longer <- function(x, columns = colnames(x), names.to = "key", values.to = "value", labels = NULL, numeric.timevar = FALSE, id = ".id") {
 
