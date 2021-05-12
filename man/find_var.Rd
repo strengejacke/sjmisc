@@ -34,7 +34,7 @@ find_in_data(
 character vector of length > 1 (see 'Examples'). \code{pattern} is
 searched for in column names and variable label attributes of
 \code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern}
-might also be a regular-expression object, as returned by \code{\link[stringr:modifiers]{stringr::regex()}}.
+might also be a regular-expression object, as returned by \code{stringr::regex()}.
 Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 expression rather than a fixed string.}
 

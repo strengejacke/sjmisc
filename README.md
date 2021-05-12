@@ -33,7 +33,7 @@ install.packages("sjmisc")
 
 ## References, documentation and examples
 
-A cheatsheet can be downloaded [from here](http://strengejacke.de/sjmisc-cheatsheet.pdf) (PDF) or from the [RStudio cheatsheet collection](https://rstudio.com/resources/cheatsheets/).
+A cheatsheet can be downloaded [from here](http://strengejacke.de/sjmisc-cheatsheet.pdf) (PDF) or from the [RStudio cheatsheet collection](https://www.rstudio.com/resources/cheatsheets/).
 
 For more examples, see package vignettes (`browseVignettes("sjmisc")`).
 

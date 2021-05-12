@@ -6,7 +6,7 @@
 #'
 #' @param x A character vector.
 #' @param pattern Character string to be matched in \code{x}. \code{pattern} might also
-#'          be a regular-expression object, as returned by \code{\link[stringr:modifiers]{stringr::regex()}}.
+#'          be a regular-expression object, as returned by \code{stringr::regex()}.
 #'          Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 #'          expression rather than a fixed string.
 #'

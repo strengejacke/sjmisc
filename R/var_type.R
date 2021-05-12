@@ -2,7 +2,7 @@
 #' @name var_type
 #'
 #' @description This function returns the type of a variable as character. It
-#'              is similar to \code{\link[pillar]{type_sum}}, however, the
+#'              is similar to \code{pillar::type_sum()}, however, the
 #'              return value is not truncated, and \code{var_type()} works
 #'              on data frames and within pipe-chains.
 #'
