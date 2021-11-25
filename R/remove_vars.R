@@ -20,7 +20,7 @@
 #' mtcars %>% remove_var(drat:am)
 #' @export
 remove_var <- function(x, ...) {
-  vars_to_remove <- dplyr::select_vars(colnames(x), ...)
+  vars_to_remove <- tidyselect::vars_select(colnames(x), ...)
   x[colnames(x) %nin% vars_to_remove]
 }
 

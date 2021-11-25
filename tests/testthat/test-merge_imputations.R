@@ -1,4 +1,4 @@
-if (require("testthat") && require("sjmisc") && require("mice")) {
+if (require("testthat") && require("sjmisc") && require("mice") && require("nnet")) {
   data(iris)
   iris$Species[round(runif(5, 1, 150))] <- NA
   imp <- mice(iris)
