@@ -80,7 +80,6 @@ str_find(string,
 
 # finds partial matching of similarity
 str_find("We are Sex Pistols!", "postils")
-
 }
 \seealso{
 \code{\link{group_str}}

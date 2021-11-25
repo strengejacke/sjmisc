@@ -59,7 +59,6 @@
 #' iris %>%
 #'   move_columns(Sepal.Width, .after = !!target) %>%
 #'   head()
-#' @importFrom dplyr bind_cols
 #' @export
 move_columns <- function(data, ..., .before, .after) {
 

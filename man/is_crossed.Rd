@@ -82,5 +82,5 @@ is_cross_classified(x, y)
 
 }
 \references{
-Grace, K. The Difference Between Crossed and Nested Factors. \href{http://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
+Grace, K. The Difference Between Crossed and Nested Factors. \href{https://www.theanalysisfactor.com/the-difference-between-crossed-and-nested-factors/}{(web)}
 }

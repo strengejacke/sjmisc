@@ -49,10 +49,6 @@
 #' data(efc)
 #' efc$ID <- sample(1:4, nrow(efc), replace = TRUE) # fake-ID
 #' de_mean(efc, c12hour, barthtot, grp = ID, append = FALSE)
-#'
-#' @importFrom dplyr ungroup select mutate arrange group_by mutate_at bind_cols quos
-#' @importFrom rlang .data enquo quo_name global_env sym as_quosure
-#' @importFrom purrr map
 #' @export
 de_mean <- function(x, ..., grp, append = TRUE, suffix.dm = "_dm", suffix.gm = "_gm") {
   group_name <- rlang::quo_name(rlang::enquo(grp))

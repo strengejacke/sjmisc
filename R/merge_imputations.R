@@ -80,7 +80,6 @@
 #'   # show summary of quality of merging imputations
 #'   merge_imputations(nhanes, imp, summary = "dens", filter = c("chl", "hyp"))
 #' }
-#' @importFrom dplyr bind_cols
 #' @export
 merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", "hist", "sd"), filter = NULL) {
 
@@ -93,13 +92,13 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
   # check classes
   if (!inherits(imp, "mids"))
-    stop("`imp` must be a `mids`-object, as returned by the `mice()`-function.", call. = F)
+    stop("`imp` must be a `mids`-object, as returned by the `mice()`-function.", call. = FALSE)
 
   if (!is.data.frame(dat))
-    stop("`dat` must be data frame.", call. = F)
+    stop("`dat` must be data frame.", call. = FALSE)
 
   if (!is.null(ori) && !is.data.frame(ori))
-    stop("`ori` must be data frame.", call. = F)
+    stop("`ori` must be data frame.", call. = FALSE)
 
 
   # create return value
@@ -126,7 +125,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
       miss_inc_dat <- as.data.frame(lapply(seq_len(imp$m), function(x) {
         mice::complete(imp, action = x)[[i]]
-      }), stringsAsFactors = F)
+      }), stringsAsFactors = FALSE)
 
 
       # convert imputed variable to numeric. needed to perform row means.
@@ -162,7 +161,7 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
       # all imputed values for a case
 
       analyse.mw <- apply(miss_inc_dat_num[miss_inc, ], 1, mean)
-      analyse.sd <- apply(miss_inc_dat_num[miss_inc, ], 1, sd)
+      analyse.sd <- apply(miss_inc_dat_num[miss_inc, ], 1, stats::sd)
 
       merge_result <- list(
         merged = x[miss_inc],
@@ -226,9 +225,6 @@ merge_imputations <- function(dat, imp, ori = NULL, summary = c("none", "dens", 
 
 
 
-#' @importFrom purrr map_df
-#' @importFrom dplyr n_distinct filter
-#' @importFrom rlang .data
 .create_imputation_plot <- function(.sum.type, .filter, .summary) {
   # check if ggplot is installed
   if (!requireNamespace("ggplot2", quietly = TRUE)) {

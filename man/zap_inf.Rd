@@ -45,5 +45,4 @@ zap_inf(efc, c12hour, e17age)
 
 # zap NaN for complete data frame
 zap_inf(efc)
-
 }

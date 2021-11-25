@@ -39,8 +39,6 @@
 #'   count_na(dat, x)
 #'   count_na(dat, x, y)
 #' }
-#' @importFrom dplyr select filter quos
-#' @importFrom sjlabelled get_label
 #' @export
 count_na <- function(x, ...) {
   # evaluate arguments, generate data
@@ -80,8 +78,6 @@ count_na <- function(x, ...) {
 }
 
 
-#' @importFrom sjlabelled get_na
-#' @importFrom dplyr select filter
 count_na_helper <- function(x, cn) {
   if (!requireNamespace("haven", quietly = TRUE)) {
     stop("Package `haven` needed for this function to work. Please install it.", call. = FALSE)
@@ -94,8 +90,8 @@ count_na_helper <- function(x, cn) {
   }
 
   # get NA as tagged NA
-  nav <- haven::na_tag(sjlabelled::get_na(x, as.tag = F))
-  nav.labels <- names(sjlabelled::get_na(x, as.tag = T))
+  nav <- haven::na_tag(sjlabelled::get_na(x, as.tag = FALSE))
+  nav.labels <- names(sjlabelled::get_na(x, as.tag = TRUE))
 
   # get values from x, including different NA tags
   values <- haven::na_tag(x)

@@ -18,9 +18,6 @@
 #' clean_values(f1)
 #' clean_values(f2)
 #' clean_values(x)
-#'
-#' @importFrom dplyr quos
-#' @importFrom purrr map_df
 #' @export
 tidy_values <- function(x, ...) {
   # evaluate arguments, generate data

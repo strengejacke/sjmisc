@@ -16,3 +16,13 @@ sjlabelled::to_numeric
 #' @importFrom sjlabelled to_factor
 #' @export
 sjlabelled::to_factor
+
+
+#' @importFrom magrittr %>%
+#' @export
+magrittr::`%>%`
+
+
+#' @importFrom sjlabelled set_na
+#' @export
+sjlabelled::set_na

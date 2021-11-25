@@ -164,7 +164,6 @@ mtcars \%>\%
   group_by(cyl) \%>\%
   group_var(disp, size = 4, append = FALSE) \%>\%
   table()
-
 }
 \seealso{
 \code{\link{split_var}} to split variables into equal sized groups,

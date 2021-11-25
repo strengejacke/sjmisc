@@ -41,8 +41,6 @@
 #'
 #' add_variables(d, new = 5)
 #' add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = "b")
-#'
-#' @importFrom dplyr select
 #' @export
 add_variables <- function(data, ..., .after = Inf, .before = NULL) {
 
@@ -82,7 +80,6 @@ add_variables <- function(data, ..., .after = Inf, .before = NULL) {
 
 
 #' @rdname add_variables
-#' @importFrom dplyr select
 #' @export
 add_case <- function(data, ..., .after = Inf, .before = NULL) {
 

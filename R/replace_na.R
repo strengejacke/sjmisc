@@ -115,7 +115,6 @@ replace_na <- function(x, ..., value, na.label = NULL, tagged.na = NULL) {
 }
 
 
-#' @importFrom sjlabelled remove_labels add_labels
 replace_na_helper <- function(x, value, na.label, tagged.na) {
   # create named vector, for labelleing
   if (!is.null(na.label)) {

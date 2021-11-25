@@ -36,8 +36,6 @@
 #' table(to_value(test))
 #'
 #' # Find more examples at '?sjlabelled::as_numeric'
-#'
-#' @importFrom sjlabelled as_numeric
 #' @export
 to_value <- function(x, ..., start.at = NULL, keep.labels = TRUE, use.labels = FALSE) {
   sjlabelled::as_numeric(x = x, ..., start.at = start.at, keep.labels = keep.labels, use.labels = use.labels)

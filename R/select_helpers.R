@@ -13,7 +13,6 @@ string_ends_with <- function(pattern, x) {
   grep(pattern, x, perl = TRUE)
 }
 
-#' @importFrom purrr map
 string_one_of <- function(pattern, x) {
   m <- unlist(purrr::map(pattern, ~ grep(., x, fixed = TRUE, useBytes = TRUE)))
   x[m]

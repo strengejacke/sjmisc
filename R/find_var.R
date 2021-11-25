@@ -10,7 +10,7 @@
 #'          character vector of length > 1 (see 'Examples'). \code{pattern} is
 #'          searched for in column names and variable label attributes of
 #'          \code{data} (see \code{\link[sjlabelled]{get_label}}). \code{pattern}
-#'          might also be a regular-expression object, as returned by \code{\link[stringr:modifiers]{stringr::regex()}}.
+#'          might also be a regular-expression object, as returned by \code{stringr::regex()}.
 #'          Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 #'          expression rather than a fixed string.
 #' @param ignore.case Logical, whether matching should be case sensitive or not.
@@ -89,8 +89,6 @@
 #' \dontrun{
 #' library(sjPlot)
 #' view_df(res)}
-#'
-#' @importFrom sjlabelled get_labels
 #' @export
 find_var <- function(data,
                      pattern,
@@ -101,7 +99,7 @@ find_var <- function(data,
                      regex = FALSE) {
   # check valid args
   if (!is.data.frame(data)) {
-    stop("`data` must be a data frame.", call. = F)
+    stop("`data` must be a data frame.", call. = FALSE)
   }
 
   # match args
@@ -139,7 +137,7 @@ find_var <- function(data,
 
   # search for pattern in value labels
   if (search %in% c("value", "name_value", "label_value", "all")) {
-    labels <- sjlabelled::get_labels(data, attr.only = F)
+    labels <- sjlabelled::get_labels(data, attr.only = FALSE)
     pos3 <- which(sapply(labels, function(.x) any(grepl(pattern, x = .x, ignore.case = ignore.case, fixed = fixed)), simplify = TRUE))
 
     # if nothing found, find in near distance

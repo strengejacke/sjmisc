@@ -122,7 +122,6 @@
 #'   add_id() %>%
 #'   arrange(gear, ID) %>%
 #'   print(n = 100)
-#' @importFrom dplyr bind_cols
 #' @export
 add_columns <- function(data, ..., replace = TRUE) {
   # evaluate dots
@@ -131,7 +130,7 @@ add_columns <- function(data, ..., replace = TRUE) {
   # if add_columns had no arguments, .dots are NULL
   # this crashes R when calling bind_cols
   if (is.null(.dots)) {
-    stop("You must specify at least one more data frame with columns to add.", call. = F)
+    stop("You must specify at least one more data frame with columns to add.", call. = FALSE)
   }
 
   # check for identical column names
@@ -174,7 +173,7 @@ replace_columns <- function(data, ..., add.unique = TRUE) {
   # if add_columns had no arguments, .dots are NULL
   # this crashes R when calling bind_cols
   if (is.null(.dots)) {
-    stop("You must specify at least one more data frame with columns to add.", call. = F)
+    stop("You must specify at least one more data frame with columns to add.", call. = FALSE)
   }
 
   # bind all data frames to one
@@ -197,7 +196,6 @@ replace_columns <- function(data, ..., add.unique = TRUE) {
 }
 
 
-#' @importFrom dplyr bind_cols row_number mutate
 #' @rdname add_columns
 #' @export
 add_id <- function(data, var = "ID") {

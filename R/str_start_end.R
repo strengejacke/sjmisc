@@ -6,7 +6,7 @@
 #'
 #' @param x A character vector.
 #' @param pattern Character string to be matched in \code{x}. \code{pattern} might also
-#'          be a regular-expression object, as returned by \code{\link[stringr:modifiers]{stringr::regex()}}.
+#'          be a regular-expression object, as returned by \code{stringr::regex()}.
 #'          Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 #'          expression rather than a fixed string.
 #'
@@ -43,9 +43,6 @@
 #' str_start(x, "\\d+4")
 #' str_start(x, "\\d+4", regex = TRUE)
 #' str_end(x, "\\d+4", regex = TRUE)
-#'
-#' @importFrom dplyr pull
-#' @importFrom purrr map
 #' @export
 str_start <- function(x, pattern, ignore.case = TRUE, regex = FALSE) {
   if (regex) class(pattern) <- c("regex", class(pattern))

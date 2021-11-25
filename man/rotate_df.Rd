@@ -54,5 +54,4 @@ tmp <- purrr::map_df(dat, function(x) {
 })
 tmp
 rotate_df(tmp)
-
 }

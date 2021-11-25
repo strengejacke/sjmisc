@@ -34,7 +34,6 @@
 #'   c = c(.435, .54352, .234432)
 #' )
 #' prcn(dat)
-#'
 #' @export
 big_mark <- function(x, big.mark = ",", ...) {
   UseMethod("big_mark")

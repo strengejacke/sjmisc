@@ -36,18 +36,17 @@ is_float <- function(x) {
 
 #' @export
 is_float.default <- function(x) {
-  is.numeric(x) && !all(x %% 1 == 0, na.rm = T)
+  is.numeric(x) && !all(x %% 1 == 0, na.rm = TRUE)
 }
 
-#' @importFrom purrr map_lgl
 #' @export
 is_float.data.frame <- function(x) {
-  purrr::map_lgl(x, ~ is.numeric(.x) && !all(.x %% 1 == 0, na.rm = T))
+  purrr::map_lgl(x, ~ is.numeric(.x) && !all(.x %% 1 == 0, na.rm = TRUE))
 }
 
 #' @export
 is_float.list <- function(x) {
-  purrr::map_lgl(x, ~ is.numeric(.x) && !all(.x %% 1 == 0, na.rm = T))
+  purrr::map_lgl(x, ~ is.numeric(.x) && !all(.x %% 1 == 0, na.rm = TRUE))
 }
 
 
@@ -58,7 +57,7 @@ is_whole <- function(x) {
 }
 
 iwh <- function(x) {
-  (is.numeric(x) && all(floor(x) == x, na.rm = T)) || is.character(x) || is.factor(x)
+  (is.numeric(x) && all(floor(x) == x, na.rm = TRUE)) || is.character(x) || is.factor(x)
 }
 
 #' @export
@@ -66,7 +65,6 @@ is_whole.default <- function(x) {
   iwh(x)
 }
 
-#' @importFrom purrr map_lgl
 #' @export
 is_whole.data.frame <- function(x) {
   purrr::map_lgl(x, iwh)

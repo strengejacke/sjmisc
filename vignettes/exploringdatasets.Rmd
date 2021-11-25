@@ -11,10 +11,16 @@ vignette: >
 
 ```{r echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, comment = "#>")
+if (!requireNamespace("dplyr", quietly = TRUE) ||
+    !requireNamespace("tidyr", quietly = TRUE) ||
+    !requireNamespace("purrr", quietly = TRUE)) {
+  knitr::opts_chunk$set(eval = FALSE)
+}
+
 suppressPackageStartupMessages(library(sjmisc))
 ```
 
-Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the [tidyverse](http://tidyverse.org/) or related packages. The **sjmisc**-package fits into this workflow, especially when you work with [labelled data](https://cran.r-project.org/package=sjlabelled), because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.
+Tidying up, transforming and exploring data is an important part of data analysis, and you can manage many common tasks in this process with the *tidyverse* or related packages. The **sjmisc**-package fits into this workflow, especially when you work with [labelled data](https://cran.r-project.org/package=sjlabelled), because it offers functions for data transformation and labelled data utility functions. This vignette describes typical steps when beginning with data exploration.
 
 The examples are based on data from the EUROFAMCARE project, a survey on the situation of family carers of older people in Europe. The sample data set `efc` is part of this package. Let us see how the family carer's gender and subjective perception of negative impact of care as well as the cared-for person's dependency are associated with the family carer's quality of life.
 
@@ -103,7 +109,7 @@ In the following example, we group the data by _e42dep_, and "nest" the groups. 
 ```{r}
 # convert variable to labelled factor, because we then 
 # have the labels as factor levels in the output
-efc$e42dep <- to_label(efc$e42dep, drop.levels = T)
+efc$e42dep <- to_label(efc$e42dep, drop.levels = TRUE)
 efc %>%
   select(e42dep, burden, c161sex, quol_5) %>%
   group_by(e42dep) %>%

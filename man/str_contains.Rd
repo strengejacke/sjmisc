@@ -78,5 +78,4 @@ str_contains("abc", c("a", "b"), logic = "and")
 # no patterns in "abc"?
 str_contains("abc", c("a", "b", "e"), logic = "not")
 str_contains("abc", c("d", "e", "f"), logic = "not")
-
 }

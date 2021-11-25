@@ -55,5 +55,4 @@ add_case(d, e = "new case")
 
 add_variables(d, new = 5)
 add_variables(d, new = c(4, 4, 4), new2 = c(5, 5, 5), .after = "b")
-
 }

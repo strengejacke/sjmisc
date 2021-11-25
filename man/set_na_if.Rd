@@ -48,7 +48,6 @@ dummy <- data.frame(var1 = sample(1:8, 100, replace = TRUE),
 p <- function(x) max(x, na.rm = TRUE) > 7
 tmp <- set_na_if(dummy, predicate = p, na = 8:9)
 head(tmp)
-
 }
 \seealso{
 \code{\link{replace_na}} to replace \code{\link{NA}}'s with specific

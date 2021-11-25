@@ -13,7 +13,8 @@ rec(
   var.label = NULL,
   val.labels = NULL,
   append = TRUE,
-  suffix = "_r"
+  suffix = "_r",
+  to.factor = !as.num
 )
 
 rec_if(
@@ -24,7 +25,8 @@ rec_if(
   var.label = NULL,
   val.labels = NULL,
   append = TRUE,
-  suffix = "_r"
+  suffix = "_r",
+  to.factor = !as.num
 )
 }
 \arguments{
@@ -70,11 +72,12 @@ column names in a data frame depends on the function call:
   \item grouped variables (\code{group_var()}) will be suffixed with \code{"_gr"}
   \item standardized variables (\code{std()}) will be suffixed with \code{"_z"}
   \item centered variables (\code{center()}) will be suffixed with \code{"_c"}
-  \item de-meaned variables (\code{de_mean()}) will be suffixed with \code{"_dm"}
-  \item grouped-meaned variables (\code{de_mean()}) will be suffixed with \code{"_gm"}
 }
 If \code{suffix = ""} and \code{append = TRUE}, existing variables that
 have been recoded/transformed will be overwritten.}
+
+\item{to.factor}{Logical, alias for \code{as.num}. If \code{TRUE}, return value
+will be a factor, not numeric.}
 
 \item{predicate}{A predicate function to be applied to the columns. The
 variables for which \code{predicate} returns \code{TRUE} are selected.}

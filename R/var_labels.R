@@ -35,8 +35,6 @@
 #' # using a named vector
 #' new_names <- c(a = "first.col", c = "3rd.col")
 #' rename_variables(dummy, new_names)
-#'
-#' @importFrom rlang ensyms as_string
 #' @export
 var_rename <- function(x, ..., verbose = TRUE) {
   # get dots
@@ -68,7 +66,7 @@ var_rename <- function(x, ..., verbose = TRUE) {
         "Following elements are no valid column names in `x`: %s",
         paste(old_names[non.match], collapse = ",")
       ),
-      call. = F)
+      call. = FALSE)
     }
     # remove invalid names
     old_names <- old_names[-non.match]

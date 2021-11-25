@@ -146,5 +146,4 @@ median(mtcars$disp)
 # dichotomize only variables with more than 10 unique values
 p <- function(x) dplyr::n_distinct(x) > 10
 dicho_if(efc, predicate = p, append = FALSE)
-
 }

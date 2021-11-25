@@ -55,9 +55,7 @@
 #'
 #' # or even use select-helpers
 #' descr(efc, contains("cop"), max.length = 20)
-#'
-#' @importFrom dplyr select mutate
-#' @importFrom sjlabelled copy_labels
+#' @importFrom rlang .data
 #' @export
 descr <- function(x,
                   ...,
@@ -151,10 +149,6 @@ descr <- function(x,
 }
 
 
-#' @importFrom dplyr select_if group_by summarise_all funs summarise
-#' @importFrom sjlabelled get_label
-#' @importFrom stats var na.omit sd median weighted.mean IQR
-#' @importFrom rlang .data
 descr_helper <- function(dd, max.length) {
 
   # check if we have a single vector, because purrr would return

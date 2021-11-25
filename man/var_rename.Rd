@@ -51,5 +51,4 @@ rename_variables(dummy, !!x1 := !!v1, !!x2 := !!v2)
 # using a named vector
 new_names <- c(a = "first.col", c = "3rd.col")
 rename_variables(dummy, new_names)
-
 }

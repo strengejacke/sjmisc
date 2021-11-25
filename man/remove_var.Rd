@@ -29,5 +29,4 @@ This function removes variables from a data frame, and is
 mtcars \%>\% remove_var("disp", "cyl")
 mtcars \%>\% remove_var(c("wt", "vs"))
 mtcars \%>\% remove_var(drat:am)
-
 }

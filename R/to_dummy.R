@@ -63,7 +63,7 @@ to_dummy <- function(x, ..., var.name = "name", suffix = c("numeric", "label")) 
     )
   } else {
     # remove "data frame name"
-    dollar_pos <- regexpr("$", varname, fixed = T)[1]
+    dollar_pos <- regexpr("$", varname, fixed = TRUE)[1]
     if (dollar_pos != -1)
       varname <- substr(varname, start = dollar_pos + 1, stop = nchar(varname))
 
@@ -82,7 +82,7 @@ to_dummy_helper <- function(x, varname, suffix) {
   # make sure we have a factor, so order of values is correct
   if (is.character(x)) x <- to_factor(x)
   # check whether we have labels
-  labels <- sjlabelled::get_labels(x, attr.only = F, values = "n", non.labelled = T)
+  labels <- sjlabelled::get_labels(x, attr.only = FALSE, values = "n", non.labelled = TRUE)
   # get resp. set variable label for new dummy variables
   # get variable label
   label <- sjlabelled::get_label(x, def.value = varname)

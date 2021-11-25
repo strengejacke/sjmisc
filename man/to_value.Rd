@@ -54,5 +54,4 @@ table(test)
 table(to_value(test))
 
 # Find more examples at '?sjlabelled::as_numeric'
-
 }

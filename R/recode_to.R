@@ -69,7 +69,6 @@ recode_to <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = 
 }
 
 
-#' @importFrom dplyr quos
 #' @export
 recode_to.default <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
   # evaluate arguments, generate data
@@ -86,8 +85,6 @@ recode_to.default <- function(x, ..., lowest = 0, highest = -1, append = TRUE, s
 }
 
 
-#' @importFrom dplyr bind_cols select quos
-#' @importFrom purrr map
 #' @export
 recode_to.mids <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
   vars <- dplyr::quos(...)
@@ -118,7 +115,6 @@ recode_to.mids <- function(x, ..., lowest = 0, highest = -1, append = TRUE, suff
 
 
 #' @rdname recode_to
-#' @importFrom dplyr select_if
 #' @export
 recode_to_if <- function(x, predicate, lowest = 0, highest = -1, append = TRUE, suffix = "_r0") {
 
@@ -146,7 +142,6 @@ recode_to_if <- function(x, predicate, lowest = 0, highest = -1, append = TRUE, 
 }
 
 
-#' @importFrom dplyr bind_cols
 rec_to_fun <- function(x, .dat, lowest, highest, append, suffix) {
   if (is.data.frame(x)) {
 
@@ -179,7 +174,6 @@ rec_to_fun <- function(x, .dat, lowest, highest, append, suffix) {
 }
 
 
-#' @importFrom sjlabelled set_label set_labels
 rec_to_helper <- function(x, lowest, highest) {
   # retrieve value labels
   val_lab <- sjlabelled::get_labels(

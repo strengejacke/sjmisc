@@ -13,7 +13,7 @@ str_end(x, pattern, ignore.case = TRUE, regex = FALSE)
 \item{x}{A character vector.}
 
 \item{pattern}{Character string to be matched in \code{x}. \code{pattern} might also
-be a regular-expression object, as returned by \code{\link[stringr:modifiers]{stringr::regex()}}.
+be a regular-expression object, as returned by \code{stringr::regex()}.
 Alternatively, use \code{regex = TRUE} to treat \code{pattern} as a regular
 expression rather than a fixed string.}
 
@@ -61,5 +61,4 @@ x <- c("test1234testagain")
 str_start(x, "\\\\d+4")
 str_start(x, "\\\\d+4", regex = TRUE)
 str_end(x, "\\\\d+4", regex = TRUE)
-
 }

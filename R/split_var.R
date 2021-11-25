@@ -86,8 +86,6 @@
 #'   group_by(cyl) %>%
 #'   split_var(disp, n = 3, append = FALSE) %>%
 #'   table()
-#'
-#' @importFrom dplyr quos
 #' @export
 split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = TRUE, suffix = "_g") {
 
@@ -110,7 +108,6 @@ split_var <- function(x, ..., n, as.num = FALSE, val.labels = NULL, var.label = 
 
 
 #' @rdname split_var
-#' @importFrom dplyr select_if
 #' @export
 split_var_if <- function(x, predicate, n, as.num = FALSE, val.labels = NULL, var.label = NULL, inclusive = FALSE, append = TRUE, suffix = "_g") {
 
@@ -143,8 +140,6 @@ split_var_if <- function(x, predicate, n, as.num = FALSE, val.labels = NULL, var
 }
 
 
-#' @importFrom stats quantile
-#' @importFrom sjlabelled get_label set_label set_labels
 split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclusive) {
   # retrieve variable label
   if (is.null(var.label))
@@ -168,7 +163,7 @@ split_var_helper <- function(x, groupcount, as.num, val.labels, var.label, inclu
   grp_cuts <- stats::quantile(x, qu_prob, na.rm = TRUE)
 
   # create breaks. need to check if these are non-unique
-  breaks <- unique(c(0, grp_cuts, max(x, na.rm = T)))
+  breaks <- unique(c(0, grp_cuts, max(x, na.rm = TRUE)))
 
   # cut variables into groups
   retval <- cut(

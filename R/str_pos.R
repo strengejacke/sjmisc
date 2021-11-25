@@ -64,8 +64,6 @@
 #'
 #' # finds partial matching of similarity
 #' str_find("We are Sex Pistols!", "postils")
-#'
-#' @importFrom utils txtProgressBar setTxtProgressBar
 #' @export
 str_find <- function(
   string,
@@ -78,7 +76,7 @@ str_find <- function(
   indices <- c()
 
   # find element indices from partial matching of string and find term
-  pos <- as.numeric(grep(pattern, string, ignore.case = T))
+  pos <- as.numeric(grep(pattern, string, ignore.case = TRUE))
   if (length(pos) > 0) indices <- c(indices, pos)
 
   # find element indices from similar strings

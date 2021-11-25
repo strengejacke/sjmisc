@@ -66,12 +66,11 @@
 #' # no patterns in "abc"?
 #' str_contains("abc", c("a", "b", "e"), logic = "not")
 #' str_contains("abc", c("d", "e", "f"), logic = "not")
-#'
 #' @export
 str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL, switch = FALSE) {
   # check if correct length when switching
   if (switch && length(x) > 1) {
-    warning("`x` must be of length 1 when `switch = TRUE`. First element will be used.", call. = F)
+    warning("`x` must be of length 1 when `switch = TRUE`. First element will be used.", call. = FALSE)
     x <- x[1]
   }
   # counter for matches
@@ -85,9 +84,9 @@ str_contains <- function(x, pattern, ignore.case = FALSE, logic = NULL, switch =
   for (k in pattern) {
     # append result
     if (switch)
-      cnt <- c(cnt, !sjmisc::is_empty(grep(x, k, fixed = T)))
+      cnt <- c(cnt, !sjmisc::is_empty(grep(x, k, fixed = TRUE)))
     else
-      cnt <- c(cnt, !sjmisc::is_empty(grep(k, x, fixed = T)))
+      cnt <- c(cnt, !sjmisc::is_empty(grep(k, x, fixed = TRUE)))
   }
   # which logical combination?
   if (is.null(logic))

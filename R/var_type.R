@@ -2,12 +2,12 @@
 #' @name var_type
 #'
 #' @description This function returns the type of a variable as character. It
-#'              is similar to \code{\link[pillar]{type_sum}}, however, the
+#'              is similar to \code{pillar::type_sum()}, however, the
 #'              return value is not truncated, and \code{var_type()} works
 #'              on data frames and within pipe-chains.
 #'
 #' @param abbr Logical, if \code{TRUE}, returns a shortened, abbreviated value
-#'        for the variable type (as returned by \code{\link[pillar]{type_sum}}).
+#'        for the variable type (as returned by \code{pillar::type_sum()}).
 #'        If \code{FALSE} (default), a longer "description" is returned.
 #'
 #' @inheritParams to_dummy
@@ -27,8 +27,6 @@
 #'
 #' library(dplyr)
 #' var_type(efc, contains("cop"))
-#'
-#' @importFrom purrr map_chr
 #' @export
 var_type <- function(x, ..., abbr = FALSE) {
 
@@ -42,9 +40,6 @@ var_type <- function(x, ..., abbr = FALSE) {
 }
 
 
-#' @importFrom purrr flatten_chr
-#' @importFrom dplyr case_when
-#' @importFrom methods is
 get_vt <- function(x, abbr) {
 
   if (is.ordered(x))

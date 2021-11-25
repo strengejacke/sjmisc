@@ -41,9 +41,6 @@
 #' mydf <- add_rows(x1, x2, x3, x4, id = "subsets")
 #' mydf
 #' str(mydf)
-#'
-#' @importFrom dplyr bind_rows
-#' @importFrom purrr map flatten compact flatten_chr
 #' @export
 add_rows <- function(..., id = NULL) {
 
@@ -54,7 +51,7 @@ add_rows <- function(..., id = NULL) {
 
   if (!is.null(id) && id %in% cnames) {
     id <- make.unique(c(cnames, id))[length(cnames) + 1]
-    warning(sprintf("Value of `id` already exists as column name. ID column was renamed to `%s`.", id), call. = F)
+    warning(sprintf("Value of `id` already exists as column name. ID column was renamed to `%s`.", id), call. = FALSE)
   }
 
   # remove variables with duplicated names
@@ -90,6 +87,10 @@ add_rows <- function(..., id = NULL) {
     for (i in names(at)) {
       attr(x[[i]], "labels") <- at[[i]][["labels"]]
       attr(x[[i]], "label") <- at[[i]][["label"]]
+      attr(x[[i]], "na_values") <- at[[i]][["na_values"]]
+      attr(x[[i]], "na.values") <- at[[i]][["na.values"]]
+      attr(x[[i]], "na_range") <- at[[i]][["na_range"]]
+      attr(x[[i]], "na.range") <- at[[i]][["na.range"]]
     }
   }
 

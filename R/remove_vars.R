@@ -18,8 +18,6 @@
 #' mtcars %>% remove_var("disp", "cyl")
 #' mtcars %>% remove_var(c("wt", "vs"))
 #' mtcars %>% remove_var(drat:am)
-#'
-#' @importFrom dplyr select_vars
 #' @export
 remove_var <- function(x, ...) {
   vars_to_remove <- dplyr::select_vars(colnames(x), ...)

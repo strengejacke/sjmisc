@@ -148,12 +148,6 @@
 #' table(d$var_x, d$var_z)
 #' frq(d, paste0(var_x, var_z))
 #' frq(d, paste0(var_x, var_y, var_z))
-#'
-#' @importFrom stats na.omit
-#' @importFrom dplyr full_join select_if select group_keys
-#' @importFrom sjlabelled get_label get_labels get_values copy_labels
-#' @importFrom purrr map_if
-#' @importFrom rlang quo_name enquo
 #' @export
 frq <- function(x,
                 ...,
@@ -367,9 +361,6 @@ frq <- function(x,
 }
 
 
-#' @importFrom dplyr n_distinct full_join bind_rows
-#' @importFrom stats na.omit xtabs na.pass sd weighted.mean qnorm
-#' @importFrom sjlabelled get_labels get_label as_numeric
 frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.na = TRUE, min.frq = 0) {
   # remember type
   vartype <- var_type(x)
@@ -461,7 +452,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     # character vectors need to be converted with to_value
     # to avoid NAs, but only if character is non-numeric
     if (is.character(dat$val) && anyNA(suppressWarnings(as.numeric(dat$val))))
-      dat$val <- sjlabelled::as_numeric(dat$val, keep.labels = F)
+      dat$val <- sjlabelled::as_numeric(dat$val, keep.labels = FALSE)
     else
       dat$val <- as.numeric(dat$val)
 
@@ -482,7 +473,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     }
 
     colnames(dat2) <- c("val", "frq")
-    dat2$val <- sjlabelled::as_numeric(dat2$val, keep.labels = F)
+    dat2$val <- sjlabelled::as_numeric(dat2$val, keep.labels = FALSE)
 
     # join frq table and label columns
     mydat <- suppressMessages(dplyr::full_join(dat, dat2))
@@ -510,7 +501,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
     colnames(mydat) <- c("val", "frq")
 
     if (!anyNA(suppressWarnings(as.numeric(attr(mydat$val, "levels"))))) {
-      mydat$val <- sjlabelled::as_numeric(mydat$val, keep.labels = F)
+      mydat$val <- sjlabelled::as_numeric(mydat$val, keep.labels = FALSE)
     }
 
     # add values as label
@@ -543,7 +534,7 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
   # need numeric
   if (is.factor(x) || is.character(x)) {
-    x <- sjlabelled::as_numeric(x, keep.labels = F)
+    x <- sjlabelled::as_numeric(x, keep.labels = FALSE)
   }
 
   # check if we have any NA-values - if not, add row for NA's
@@ -600,12 +591,12 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
   if (!all(is.na(mydat$val))) {
     if (extra.vals == 1) {
       # save original order
-      reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = F)
+      reihe <- sjlabelled::as_numeric(mydat$val, start.at = 1, keep.labels = FALSE)
       # sort
       if (sort.frq == "none") mydat <- mydat[order(reihe), ]
     } else if (extra.vals == 2) {
       # save original order
-      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals, valid.vals + 1)], start.at = 1, keep.labels = F))
+      reihe <- suppressWarnings(sjlabelled::as_numeric(mydat$val[-c(valid.vals, valid.vals + 1)], start.at = 1, keep.labels = FALSE))
       # sort
       if (sort.frq == "none") mydat <- mydat[c(order(reihe), valid.vals, valid.vals + 1), ]
     }
@@ -702,9 +693,6 @@ get_title_part <- function(x, grps, level, i) {
 }
 
 
-#' @importFrom dplyr filter group_vars
-#' @importFrom stats complete.cases
-#' @importFrom rlang .data
 get_grouped_data <- function(x) {
   # nest data frame
   grps <- .nest(x)

@@ -72,7 +72,6 @@ row_sums <- function(x, ...) {
 }
 
 
-#' @importFrom dplyr quos bind_cols
 #' @rdname row_sums
 #' @export
 row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
@@ -106,7 +105,7 @@ row_sums.default <- function(x, ..., n, var = "rowsums", append = TRUE) {
 
     rs <- apply(.dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, sum(x, na.rm = TRUE), NA))
   } else {
-    stop("`x` must be a data frame.", call. = F)
+    stop("`x` must be a data frame.", call. = FALSE)
   }
 
 
@@ -151,7 +150,6 @@ total_mean.data.frame <- function(x, ...) {
 }
 
 
-#' @importFrom dplyr quos bind_cols
 #' @rdname row_sums
 #' @export
 row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
@@ -185,7 +183,7 @@ row_means.default <- function(x, ..., n, var = "rowmeans", append = TRUE) {
     rm <- apply(.dat, 1, function(x) ifelse(sum(!is.na(x)) >= n, mean(x, na.rm = TRUE), NA))
 
   } else {
-    stop("`x` must be a data frame.", call. = F)
+    stop("`x` must be a data frame.", call. = FALSE)
   }
 
   # to data frame, and rename variable
@@ -207,8 +205,6 @@ row_means.mids <- function(x, ..., var = "rowmeans", append = TRUE) {
 }
 
 
-#' @importFrom dplyr quos group_by select
-#' @importFrom purrr map
 row_mids <- function(x, ..., var, append, rfun, count = NULL) {
   # check if suggested package is available
   if (!requireNamespace("mice", quietly = TRUE))
@@ -216,7 +212,7 @@ row_mids <- function(x, ..., var, append, rfun, count = NULL) {
 
   # check classes
   if (!inherits(x, "mids"))
-    stop("`x` must be a `mids`-object, as returned by the `mice()`-function.", call. = F)
+    stop("`x` must be a `mids`-object, as returned by the `mice()`-function.", call. = FALSE)
 
 
   # quote dots and convert mids into long-data.frame

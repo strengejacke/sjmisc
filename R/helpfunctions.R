@@ -1,14 +1,3 @@
-#' @importFrom magrittr %>%
-#' @export
-magrittr::`%>%`
-
-
-#' @importFrom sjlabelled set_na
-#' @export
-sjlabelled::set_na
-
-
-#' @importFrom dplyr quos enquos select
 get_dot_data <- function(x, qs) {
   if (sjmisc::is_empty(qs))
     x
@@ -18,7 +7,6 @@ get_dot_data <- function(x, qs) {
 }
 
 
-#' @importFrom dplyr bind_cols
 build_dot_data <- function(x, qs) {
   # below lapply goes through each of the expressions in dots data
   # and the corresponding subdataframes got with build_col are saved in list out
@@ -37,7 +25,6 @@ build_col <- function(x, qs_expr) {
   }
 }
 
-#' @importFrom tidyselect vars_select_helpers
 # name or numeric expressions, regular sequences or those looked for with select helpers are selected
 # otherwise, they are transmuted
 check_qs <- function(is_expr) {

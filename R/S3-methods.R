@@ -1,14 +1,10 @@
-#' @importFrom insight print_color format_table
-#' @importFrom purrr walk
-#' @importFrom dplyr select n_distinct
-#' @importFrom rlang .data
 #' @export
 print.sjmisc_frq <- function(x, ...) {
   purrr::walk(x, function(dat) {
 
     # get variable label
-    lab <- attr(dat, "label", exact = T)
-    vt <- attr(dat, "vartype", exact = T)
+    lab <- attr(dat, "label", exact = TRUE)
+    vt <- attr(dat, "vartype", exact = TRUE)
 
     # fix variable type string
     if (!sjmisc::is_empty(vt))
@@ -25,7 +21,7 @@ print.sjmisc_frq <- function(x, ...) {
     }
 
     # get grouping title label
-    grp <- attr(dat, "group", exact = T)
+    grp <- attr(dat, "group", exact = TRUE)
 
     # print title for grouping
     if (!is.null(grp)) {
@@ -38,8 +34,8 @@ print.sjmisc_frq <- function(x, ...) {
       "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f\n\n",
       sum(dat$frq, na.rm = TRUE),
       sum(dat$frq[0:(nrow(dat) - 1)], na.rm = TRUE),
-      attr(dat, "mean", exact = T),
-      attr(dat, "sd", exact = T)
+      attr(dat, "mean", exact = TRUE),
+      attr(dat, "sd", exact = TRUE)
     ), "blue")
 
     # don't print labels, if all except for the NA value are "none"
@@ -56,7 +52,7 @@ print.sjmisc_frq <- function(x, ...) {
     colnames(dat)[names(dat) == "cum.prc"] <- "Cum. %"
 
     # print frq-table
-    cat(insight::format_table(dat, missing = "<NA>"))
+    cat(insight::export_table(dat, missing = "<NA>"))
 
     cat("\n")
   })
@@ -74,7 +70,7 @@ print_descr_helper <- function(x, ...) {
   digits <- 2
 
   # do we have digits argument?
-  add.args <- lapply(match.call(expand.dots = F)$`...`, function(x) x)
+  add.args <- lapply(match.call(expand.dots = FALSE)$`...`, function(x) x)
   if ("digits" %in% names(add.args)) digits <- eval(add.args[["digits"]])
 
   # round values

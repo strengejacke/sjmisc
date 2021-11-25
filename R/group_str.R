@@ -50,8 +50,6 @@
 #' newstring <- group_str(oldstring, precision = 3, strict = TRUE)
 #' frq(oldstring)
 #' frq(newstring)
-#'
-#' @importFrom utils txtProgressBar
 #' @export
 group_str <- function(
   strings,
@@ -72,7 +70,7 @@ group_str <- function(
 
   # remove empty values
   if (remove.empty) {
-    removers <- which(sjmisc::is_empty(strings, first.only = F))
+    removers <- which(sjmisc::is_empty(strings, first.only = FALSE))
     if (length(removers) > 0) strings <- strings[-removers]
   }
 

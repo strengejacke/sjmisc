@@ -18,8 +18,6 @@
 #' word_wrap(c("A very long string", "And another even longer string!"), 10)
 #'
 #' message(word_wrap("Much too long string for just one line!", 15))
-#'
-#' @importFrom stats na.omit
 #' @export
 word_wrap <- function(labels, wrap, linesep = NULL) {
   # infinite wrap? then return labels

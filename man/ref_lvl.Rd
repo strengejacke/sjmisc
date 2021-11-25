@@ -72,7 +72,6 @@ data(iris)
 levels(iris$Species)
 levels(ref_lvl(iris$Species, lvl = 3))
 levels(ref_lvl(iris$Species, lvl = "versicolor"))
-
 }
 \seealso{
 \code{\link{to_factor}} to convert numeric vectors into factors;

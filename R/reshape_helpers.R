@@ -94,7 +94,6 @@
 }
 
 
-#' @importFrom stats reshape
 #' @keywords internal
 .gather <- function(x, key = "key", value = "value", columns = colnames(x)) {
   if (is.numeric(columns)) columns <- colnames(x)[columns]

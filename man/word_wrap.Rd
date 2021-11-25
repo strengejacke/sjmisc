@@ -29,5 +29,4 @@ Insert line breaks in long character strings. Useful if you want to wordwrap
 word_wrap(c("A very long string", "And another even longer string!"), 10)
 
 message(word_wrap("Much too long string for just one line!", 15))
-
 }
