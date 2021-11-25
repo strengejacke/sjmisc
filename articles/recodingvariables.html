@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.8.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.1</span>
       </span>
     </div>
 
@@ -94,9 +94,9 @@
       <h1 data-toc-skip>Recoding Variables</h1>
                         <h4 data-toc-skip class="author">Daniel Lüdecke</h4>
             
-            <h4 data-toc-skip class="date">2021-05-12</h4>
+            <h4 data-toc-skip class="date">2021-11-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/master/vignettes/recodingvariables.Rmd" class="external-link"><code>vignettes/recodingvariables.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/HEAD/vignettes/recodingvariables.Rmd" class="external-link"><code>vignettes/recodingvariables.Rmd</code></a></small>
       <div class="hidden name"><code>recodingvariables.Rmd</code></div>
 
     </div>
@@ -110,9 +110,9 @@
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/sjmisc/" class="external-link">sjmisc</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">efc</span><span class="op">)</span></code></pre></div>
 <p>To show the results after recoding variables, the <code><a href="../reference/frq.html">frq()</a></code> function is used to print frequency tables.</p>
-<div id="dichotomization-dividing-variables-into-two-groups" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dichotomization-dividing-variables-into-two-groups" class="anchor" aria-hidden="true"></a>Dichotomization: dividing variables into two groups</h2>
+<div class="section level2">
+<h2 id="dichotomization-dividing-variables-into-two-groups">Dichotomization: dividing variables into two groups<a class="anchor" aria-label="anchor" href="#dichotomization-dividing-variables-into-two-groups"></a>
+</h2>
 <p><code><a href="../reference/dicho.html">dicho()</a></code> dichotomizes variables into “dummy” variables (with 0/1 coding). Dichotomization is either done by median, mean or a specific value (see argument <code>dich.by</code>).</p>
 <p>Like all recoding-functions in <strong>sjmisc</strong>, <code><a href="../reference/dicho.html">dicho()</a></code> returns the complete data frame <em>including</em> the recoded variables, if the first argument is a <code>data.frame</code>. If the first argument is a vector, only the recoded variable is returned. See <a href="design_philosophy.html">this vignette</a> for details about the function-design.</p>
 <p>If <code><a href="../reference/dicho.html">dicho()</a></code> returns a data frame, the recoded variables have the same name as the original variable, including a suffix <code>_d</code>.</p>
@@ -215,9 +215,9 @@
 <span class="co">#&gt;     2 | 442 | 48.68 |   49.61 | 100.00</span>
 <span class="co">#&gt;  &lt;NA&gt; |  17 |  1.87 |    &lt;NA&gt; |   &lt;NA&gt;</span></code></pre></div>
 </div>
-<div id="splitting-variables-into-several-groups" class="section level2">
-<h2 class="hasAnchor">
-<a href="#splitting-variables-into-several-groups" class="anchor" aria-hidden="true"></a>Splitting variables into several groups</h2>
+<div class="section level2">
+<h2 id="splitting-variables-into-several-groups">Splitting variables into several groups<a class="anchor" aria-label="anchor" href="#splitting-variables-into-several-groups"></a>
+</h2>
 <p><code><a href="../reference/split_var.html">split_var()</a></code> recodes numeric variables into equal sized groups, i.e. a variable is cut into a smaller number of groups at specific cut points. The amount of groups depends on the <code>n</code>-argument and cuts a variable into <code>n</code> quantiles.</p>
 <p>Similar to <code><a href="../reference/dicho.html">dicho()</a></code>, if the first argument in <code><a href="../reference/split_var.html">split_var()</a></code> is a data frame, the complete data frame including the new recoded variable(s), with suffix <code>_g</code>, is returned.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -317,9 +317,9 @@
 <span class="co">#&gt;     3 | 311 | 34.25 |   34.87 | 100.00</span>
 <span class="co">#&gt;  &lt;NA&gt; |  16 |  1.76 |    &lt;NA&gt; |   &lt;NA&gt;</span></code></pre></div>
 </div>
-<div id="recode-variables-into-equal-ranged-groups" class="section level2">
-<h2 class="hasAnchor">
-<a href="#recode-variables-into-equal-ranged-groups" class="anchor" aria-hidden="true"></a>Recode variables into equal-ranged groups</h2>
+<div class="section level2">
+<h2 id="recode-variables-into-equal-ranged-groups">Recode variables into equal-ranged groups<a class="anchor" aria-label="anchor" href="#recode-variables-into-equal-ranged-groups"></a>
+</h2>
 <p>With <code><a href="../reference/group_var.html">group_var()</a></code>, variables can be grouped into equal ranged categories, i.e. a variable is cut into a smaller number of groups, where each group has the same value range. <code><a href="../reference/group_var.html">group_labels()</a></code> creates the related value labels.</p>
 <p>The range of the groups is defined in the <code>size</code>-argument. At the same time, the <code>size</code>-argument also defines the <em>lower bound</em> of one of the groups.</p>
 <p>For instance, if the lowest value of a variable is 1 and the maximum is 10, and <code>size  = 5</code>, then</p>
@@ -425,9 +425,9 @@
 <span class="co">#&gt; 9-12  | 25 | 16.67 |   16.67 | 100.00</span>
 <span class="co">#&gt; &lt;NA&gt;  |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span></code></pre></div>
 </div>
-<div id="flexible-recoding-of-variables" class="section level2">
-<h2 class="hasAnchor">
-<a href="#flexible-recoding-of-variables" class="anchor" aria-hidden="true"></a>Flexible recoding of variables</h2>
+<div class="section level2">
+<h2 id="flexible-recoding-of-variables">Flexible recoding of variables<a class="anchor" aria-label="anchor" href="#flexible-recoding-of-variables"></a>
+</h2>
 <p><code><a href="../reference/rec.html">rec()</a></code> recodes old values of variables into new values, and can be considered as a “classical” recode-function. The recode-pattern, i.e. which new values should replace the old values, is defined in the <code>rec</code>-argument. This argument has a specific “syntax”:</p>
 <ul>
 <li><p><strong>recode pairs</strong>: Each recode pair has to be separated by a ;, e.g. <code>rec = "1=1; 2=4; 3=2; 4=3"</code></p></li>
@@ -565,14 +565,14 @@
 <span class="co">#&gt;     3 |    old | 891 | 98.13 |     100 |    100</span>
 <span class="co">#&gt;  &lt;NA&gt; |   &lt;NA&gt; |  17 |  1.87 |    &lt;NA&gt; |   &lt;NA&gt;</span></code></pre></div>
 </div>
-<div id="scoped-variants" class="section level2">
-<h2 class="hasAnchor">
-<a href="#scoped-variants" class="anchor" aria-hidden="true"></a>Scoped variants</h2>
+<div class="section level2">
+<h2 id="scoped-variants">Scoped variants<a class="anchor" aria-label="anchor" href="#scoped-variants"></a>
+</h2>
 <p>Where applicable, the recoding-functions in <strong>sjmisc</strong> have “scoped” versions as well, e.g. <code><a href="../reference/dicho.html">dicho_if()</a></code> or <code><a href="../reference/split_var.html">split_var_if()</a></code>, where transformation will be applied only to those variables that match the logical condition of <code>predicate</code>.</p>
 </div>
-<div id="cheat-sheet" class="section level2">
-<h2 class="hasAnchor">
-<a href="#cheat-sheet" class="anchor" aria-hidden="true"></a>Cheat Sheet</h2>
+<div class="section level2">
+<h2 id="cheat-sheet">Cheat Sheet<a class="anchor" aria-label="anchor" href="#cheat-sheet"></a>
+</h2>
 <p>A cheatsheet can be downloaded from the <a href="https://www.rstudio.com/resources/cheatsheets/" class="external-link">RStudio cheatsheet collection</a>.</p>
 </div>
   </div>
@@ -589,12 +589,12 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by <a href="https://github.com/strengejacke" class="external-link external-link">Daniel Lüdecke</a>.</p>
+<p>Developed by <a href="https://github.com/strengejacke" class="external-link">Daniel Lüdecke</a>.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
