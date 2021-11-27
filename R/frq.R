@@ -65,6 +65,9 @@
 #'       categorical variables (factors) or character vectors. In this case,
 #'       values are coerced into numeric vector to calculate the summary
 #'       statistics.
+#'       \cr \cr
+#'       To print tables in markdown or HTML format, use \code{print_md()} or
+#'       \code{print_html()}.
 #'
 #' @seealso \code{\link{flat_table}} for labelled (proportional) tables.
 #'

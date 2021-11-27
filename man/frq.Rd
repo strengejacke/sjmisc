@@ -109,6 +109,9 @@ The \dots-argument not only accepts variable names or expressions
       categorical variables (factors) or character vectors. In this case,
       values are coerced into numeric vector to calculate the summary
       statistics.
+      \cr \cr
+      To print tables in markdown or HTML format, use \code{print_md()} or
+      \code{print_html()}.
 }
 \examples{
 # simple vector

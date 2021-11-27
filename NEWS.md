@@ -1,10 +1,14 @@
 # sjmisc 2.8.7.1
 
-
 ## Changes to functions
 
-* `rec()` now keeps the labels of the old values with the new ones when there are no labels specified and there is a 1 to 1 correpondence between old and new values.
+* `rec()` now keeps the labels of the old values with the new ones when there 
+  are no labels specified and there is a 1 to 1 correspondence between old and
+  new values.
 
+* `format()` for `frq()` was revised, and now allows to format the frequency 
+  table to prepare for printing in text, markdown and HTML-format. To do so,
+  use the methods `print()`, `print_md()` or `print_html()`.
 
 # sjmisc 2.8.7
 
