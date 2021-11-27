@@ -1,5 +1,16 @@
+# Reexports ------------------------
+
+#' @importFrom insight print_md
 #' @export
-print.sjmisc_frq <- function(x, ...) {
+insight::print_md
+
+#' @importFrom insight print_html
+#' @export
+insight::print_html
+
+
+#' @export
+print.sjmisc_frq2 <- function(x, ...) {
   purrr::walk(x, function(dat) {
 
     # get variable label
@@ -56,6 +67,127 @@ print.sjmisc_frq <- function(x, ...) {
 
     cat("\n")
   })
+}
+
+
+
+
+
+#' @export
+format.sjmisc_frq <- function(x, format = NULL, ...) {
+  lapply(x, function(dat) {
+
+    # get variable label
+    lab <- attr(dat, "label", exact = TRUE)
+    vt <- attr(dat, "vartype", exact = TRUE)
+
+    # fix variable type string
+    if (!sjmisc::is_empty(vt) && !identical(format, "html"))
+      vt <- sprintf(" <%s>", vt)
+    else
+      vt <- ""
+
+    title <- NULL
+    subtitle <- NULL
+    footer <- NULL
+
+    # print label
+    if (!is.null(lab)) {
+      if (is.null(format) || identical(format, "text")) {
+        title <- paste0(insight::color_text(lab, "red"),
+                        insight::color_text(vt, "blue"))
+      } else {
+        title <- paste0(lab, vt)
+      }
+    }
+
+    # get grouping title label
+    grp <- attr(dat, "group", exact = TRUE)
+
+    # print title for grouping
+    if (!is.null(grp)) {
+      if (is.null(format) || identical(format, "text")) {
+        subtitle <- paste0(insight::color_text("# grouped by: ", "blue"),
+                           insight::color_text(grp, "cyan"))
+      } else if (identical(format, "markdown")) {
+        subtitle <- paste0("grouped by: ", grp)
+      } else {
+        title <- paste0(title, ", grouped by: ", grp)
+      }
+    }
+
+    # add Total N
+    if (is.null(format) || identical(format, "text")) {
+      footer <- insight::color_text(sprintf(
+        "# total N=%i  valid N=%i  mean=%.2f  sd=%.2f",
+        sum(dat$frq, na.rm = TRUE),
+        sum(dat$frq[0:(nrow(dat) - 1)], na.rm = TRUE),
+        attr(dat, "mean", exact = TRUE),
+        attr(dat, "sd", exact = TRUE)
+      ), "blue")
+    } else {
+      footer <- sprintf(
+        "total N=%i  valid N=%i  mean=%.2f  sd=%.2f",
+        sum(dat$frq, na.rm = TRUE),
+        sum(dat$frq[0:(nrow(dat) - 1)], na.rm = TRUE),
+        attr(dat, "mean", exact = TRUE),
+        attr(dat, "sd", exact = TRUE)
+      )
+    }
+
+    # don't print labels, if all except for the NA value are "none"
+    if ((dplyr::n_distinct(dat$label[!is.na(dat$val)]) == 1 && unique(dat$label[!is.na(dat$val)]) == "<none>") || (length(dat$val) == 1 && is.na(dat$val)))
+      dat <- dplyr::select(dat, -.data$label)
+
+
+    # fix colnames
+    colnames(dat)[names(dat) == "val"] <- "Value"
+    colnames(dat)[names(dat) == "label"] <- "Label"
+    colnames(dat)[names(dat) == "frq"] <- "N"
+    colnames(dat)[names(dat) == "raw.prc"] <- "Raw %"
+    colnames(dat)[names(dat) == "valid.prc"] <- "Valid %"
+    colnames(dat)[names(dat) == "cum.prc"] <- "Cum. %"
+
+    if (is.null(format) || identical(format, "text")) {
+      if (!is.null(subtitle)) {
+        subtitle <- paste0("\n", subtitle)
+      }
+      if (!is.null(footer)) {
+        subtitle <- paste0(subtitle, "\n", footer)
+        footer <- NULL
+      }
+    }
+
+    if (identical(format, "html")) {
+      footer <- NULL
+    }
+
+    attr(dat, "table_title") <- title
+    attr(dat, "table_subtitle") <- subtitle
+    attr(dat, "table_footer") <- footer
+
+    dat
+  })
+}
+
+#' @export
+print.sjmisc_frq <- function(x, ...) {
+  out <- format(x, format = "text", ...)
+  cat(insight::export_table(out, missing = "<NA>"))
+}
+
+
+#' @export
+print_md.sjmisc_frq <- function(x, ...) {
+  out <- format(x, format = "markdown", ...)
+  insight::export_table(out, format = "markdown", missing = "<NA>")
+}
+
+
+#' @export
+print_html.sjmisc_frq <- function(x, ...) {
+  out <- format(x, format = "html", ...)
+  insight::export_table(out, format = "html", missing = "<NA>", title = attr(x[[1]], "label", exact = TRUE))
 }
 
 
