@@ -4,7 +4,7 @@ Encoding: UTF-8
 Title: Data and Variable Transformation Functions
 Version: 2.8.7.1
 Authors@R: c(person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206")),
-    person("Iago", "Giné-Vázquez", role = c("ctb"), email = "i.gine@pssjd.org"),
+    person("Iago", "Giné-Vázquez", role = c("ctb"), email = "iago.gine@sjd.es", comment = c(ORCID = "0000-0002-6725-2638")),
     person("Alexander", "Bartel", role = "ctb", email = "alexander.bartel@fu-berlin.de", comment = c(ORCID = "0000-0002-1280-6138")))
 Maintainer: Daniel Lüdecke <d.luedecke@uke.de>
 Description: Collection of miscellaneous utility functions, supporting data 

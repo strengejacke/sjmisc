@@ -39,7 +39,7 @@ test_that("rec rev", {
   x <- sjlabelled::set_labels(x, labels = c("1" = "a", "2" = "b", "3" = "c"))
   expect_equal(
     rec(x, rec = "rev"),
-    c(4, 3, 2, 1, 4, 3, 2, 1)
+    structure(c(4, 3, 2, 1, 4, 3, 2, 1), labels = c(c = 2, b = 3, a = 4))
   )
 
 
