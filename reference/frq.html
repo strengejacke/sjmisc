@@ -175,7 +175,10 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
       standard deviations. Mean and SD are <em>always</em> printed, even for
       categorical variables (factors) or character vectors. In this case,
       values are coerced into numeric vector to calculate the summary
-      statistics.</p>
+      statistics.
+      <br><br>
+      To print tables in markdown or HTML format, use <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or
+      <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -493,56 +496,56 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 <span class="r-in"><span class="va">efc</span><span class="op">$</span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">efc</span><span class="op">)</span>, mean <span class="op">=</span> <span class="fl">1</span>, sd <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">frq</span><span class="op">(</span><span class="va">efc</span>, <span class="va">c160age</span>, auto.grp <span class="op">=</span> <span class="fl">5</span>, weights <span class="op">=</span> <span class="va">weights</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">carer' age (c160age)</span><span style="color: #0000BB;"> &lt;numeric&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=919 valid N=919 mean=53.19 sd=13.36</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=911 valid N=911 mean=53.36 sd=13.28</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value | Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 | 18-32 |  66 |  7.18 |    7.18 |   7.18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | 33-47 | 247 | 26.88 |   26.88 |  34.06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     3 | 48-62 | 368 | 40.04 |   40.04 |  74.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4 | 63-77 | 210 | 22.85 |   22.85 |  96.95</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     5 | 78-92 |  28 |  3.05 |    3.05 | 100.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 | 18-32 |  66 |  7.24 |    7.24 |   7.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | 33-47 | 239 | 26.23 |   26.23 |  33.48</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     3 | 48-62 | 368 | 40.40 |   40.40 |  73.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     4 | 63-77 | 214 | 23.49 |   23.49 |  97.37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     5 | 78-92 |  24 |  2.63 |    2.63 | 100.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |  &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co"># different weight options</span></span>
 <span class="r-in"><span class="fu">frq</span><span class="op">(</span><span class="va">efc</span>, <span class="va">c172code</span>, weights <span class="op">=</span> <span class="va">weights</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">carer's level of education (c172code)</span><span style="color: #0000BB;"> &lt;numeric&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.97 sd=0.62</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.96 sd=0.63</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value |                           Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 177 | 20.61 |   20.61 |  20.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 528 | 61.47 |   61.47 |  82.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 190 | 22.12 |   22.12 |  22.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 515 | 59.95 |   59.95 |  82.07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     3 |         high level of education | 154 | 17.93 |   17.93 | 100.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"><span class="fu">frq</span><span class="op">(</span><span class="va">efc</span>, <span class="va">c172code</span>, weights <span class="op">=</span> <span class="st">"weights"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">carer's level of education (c172code)</span><span style="color: #0000BB;"> &lt;numeric&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.97 sd=0.62</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.96 sd=0.63</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value |                           Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 177 | 20.61 |   20.61 |  20.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 528 | 61.47 |   61.47 |  82.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 190 | 22.12 |   22.12 |  22.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 515 | 59.95 |   59.95 |  82.07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     3 |         high level of education | 154 | 17.93 |   17.93 | 100.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"><span class="fu">frq</span><span class="op">(</span><span class="va">efc</span>, <span class="va">c172code</span>, weights <span class="op">=</span> <span class="va">efc</span><span class="op">$</span><span class="va">weights</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">carer's level of education (c172code)</span><span style="color: #0000BB;"> &lt;numeric&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.97 sd=0.62</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.96 sd=0.63</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value |                           Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 177 | 20.61 |   20.61 |  20.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 528 | 61.47 |   61.47 |  82.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 190 | 22.12 |   22.12 |  22.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 515 | 59.95 |   59.95 |  82.07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     3 |         high level of education | 154 | 17.93 |   17.93 | 100.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"><span class="fu">frq</span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">c172code</span>, weights <span class="op">=</span> <span class="va">efc</span><span class="op">$</span><span class="va">weights</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">carer's level of education (xw)</span><span style="color: #0000BB;"> &lt;numeric&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.97 sd=0.62</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=859 valid N=859 mean=1.96 sd=0.63</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value |                           Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 177 | 20.61 |   20.61 |  20.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 528 | 61.47 |   61.47 |  82.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1 |          low level of education | 190 | 22.12 |   22.12 |  22.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     2 | intermediate level of education | 515 | 59.95 |   59.95 |  82.07</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     3 |         high level of education | 154 | 17.93 |   17.93 | 100.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |                            &lt;NA&gt; |   0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"></span>
@@ -566,19 +569,19 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">words</span><span style="color: #0000BB;"> &lt;character&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=50 valid N=50 mean=4.70 sd=2.62</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=50 valid N=50 mean=4.48 sd=2.58</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Value    |  N | Raw % | Valid % | Cum. %</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ape      |  6 |    12 |      12 |     12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Apple    |  4 |     8 |       8 |     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hello    | 12 |    24 |      24 |     44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Helo     |  4 |     8 |       8 |     52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hole     |  4 |     8 |       8 |     60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> New      |  8 |    16 |      16 |     76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Old      |  3 |     6 |       6 |     82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> System   |  1 |     2 |       2 |     84</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Systemic |  8 |    16 |      16 |    100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ape      |  9 |    18 |      18 |  18.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Apple    |  8 |    16 |      16 |  34.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hello    |  4 |     8 |       8 |  42.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Helo     |  2 |     4 |       4 |  46.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hole     |  6 |    12 |      12 |  58.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> New      |  5 |    10 |      10 |  68.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Old      | 10 |    20 |      20 |  88.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> System   |  5 |    10 |      10 |  98.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Systemic |  1 |     2 |       2 | 100.00</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;NA&gt;     |  0 |     0 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"><span class="fu">frq</span><span class="op">(</span><span class="va">dummy</span>, grp.strings <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">e16sex</span><span style="color: #0000BB;"> &lt;numeric&gt;</span> </span>
@@ -591,16 +594,17 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  &lt;NA&gt; |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BB0000;">words</span><span style="color: #0000BB;"> &lt;character&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=50 valid N=50 mean=2.62 sd=1.37</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;"># total N=50 valid N=50 mean=3.06 sd=1.88</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Value             |  N | Raw % | Valid % | Cum. %</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> -------------------------------------------------</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Ape, Apple        | 10 |    20 |      20 |     20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Hello, Helo, Hole | 20 |    40 |      40 |     60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> New               |  8 |    16 |      16 |     76</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Old               |  3 |     6 |       6 |     82</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> System, Systemic  |  9 |    18 |      18 |    100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;NA&gt;              |  0 |     0 |    &lt;NA&gt; |   &lt;NA&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Value            |  N | Raw % | Valid % | Cum. %</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ------------------------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Ape, Apple       | 17 |    34 |      34 |  34.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hello, Helo      |  6 |    12 |      12 |  46.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Hole             |  6 |    12 |      12 |  58.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> New              |  5 |    10 |      10 |  68.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Old              | 10 |    20 |      20 |  88.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> System, Systemic |  6 |    12 |      12 | 100.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;NA&gt;             |  0 |     0 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">#### other expressions than variables</span></span>
 <span class="r-in"></span>
