@@ -115,9 +115,8 @@
 <p>The first thing that may be of interest is probably the distribution of gender. You can plot frequencies for labelled data with <code><a href="../reference/frq.html">frq()</a></code>. This function requires either a vector or data frame as input and prints the variable label as first line, followed by a frequency-table with values, labels, counts and percentages of the vector.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">c161sex</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; carer's gender (x) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=1.76  sd=0.43</span>
+<span class="co">#&gt; carer's gender (x) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=901 mean=1.76 sd=0.43</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -----------------------------------------------</span>
@@ -179,9 +178,8 @@
 <span class="op">)</span>
 <span class="co"># print frequencies</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">burden</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Subjective burden (x) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=892  mean=2.03  sd=0.81</span>
+<span class="co">#&gt; Subjective burden (x) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=892 mean=2.03 sd=0.81</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |    Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------------------</span>
@@ -200,10 +198,9 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">burden</span>, <span class="va">c161sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">c161sex</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
   <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Subjective burden (burden) &lt;categorical&gt;</span>
+<span class="co">#&gt; Subjective burden (burden) &lt;categorical&gt; </span>
 <span class="co">#&gt; # grouped by: Male</span>
-<span class="co">#&gt; # total N=215  valid N=212  mean=1.91  sd=0.81</span>
+<span class="co">#&gt; # total N=215 valid N=212 mean=1.91 sd=0.81</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |    Label |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; ------------------------------------------------</span>
@@ -212,10 +209,9 @@
 <span class="co">#&gt;     3 |     high | 60 | 27.91 |   28.30 | 100.00</span>
 <span class="co">#&gt;  &lt;NA&gt; |     &lt;NA&gt; |  3 |  1.40 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Subjective burden (burden) &lt;categorical&gt;</span>
+<span class="co">#&gt; Subjective burden (burden) &lt;categorical&gt; </span>
 <span class="co">#&gt; # grouped by: Female</span>
-<span class="co">#&gt; # total N=686  valid N=679  mean=2.08  sd=0.81</span>
+<span class="co">#&gt; # total N=686 valid N=679 mean=2.08 sd=0.81</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |    Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------------------</span>

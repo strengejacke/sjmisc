@@ -120,9 +120,8 @@
 <code class="sourceCode R"><span class="co"># age, ranged from 65 to 104, in this output</span>
 <span class="co"># grouped to get a shorter table</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">e17age</span>, auto.grp <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (e17age) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=79.12  sd=8.09</span>
+<span class="co">#&gt; elder' age (e17age) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=79.12 sd=8.09</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -----------------------------------------------</span>
@@ -140,9 +139,8 @@
 <span class="co"># the recoded variable is now named "e17age_d"</span>
 <span class="va">efc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dicho.html">dicho</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">e17age</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">efc</span>, <span class="va">e17age_d</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (e17age_d) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=0.49  sd=0.50</span>
+<span class="co">#&gt; elder' age (e17age_d) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=0.49 sd=0.50</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -153,9 +151,8 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/dicho.html">dicho</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e17age</span>, val.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"young age"</span>, <span class="st">"old age"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (x) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=0.49  sd=0.50</span>
+<span class="co">#&gt; elder' age (x) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=0.49 sd=0.50</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |     Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------------------</span>
@@ -171,9 +168,8 @@
   val.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"younger three quarters"</span>, <span class="st">"oldest quarter"</span><span class="op">)</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (x) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=0.24  sd=0.43</span>
+<span class="co">#&gt; elder' age (x) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=0.24 sd=0.43</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |                  Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; ---------------------------------------------------------------</span>
@@ -192,9 +188,8 @@
 
 <span class="co"># median age of total sample</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (x) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=0.49  sd=0.50</span>
+<span class="co">#&gt; elder' age (x) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=0.49 sd=0.50</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -205,9 +200,8 @@
 <span class="co"># median age of total sample, with median-split applied</span>
 <span class="co"># to distribution of age by subgroups of gender</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (x) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=1.50  sd=0.50</span>
+<span class="co">#&gt; elder' age (x) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=1.50 sd=0.50</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -223,9 +217,8 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/split_var.html">split_var</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e17age</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (x) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=2.05  sd=0.82</span>
+<span class="co">#&gt; elder' age (x) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=2.05 sd=0.82</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -293,9 +286,8 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/ranking.html" class="external-link">ntile</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">neg_c_7</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;integer&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=892  mean=2.00  sd=0.82</span>
+<span class="co">#&gt; x &lt;integer&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=892 mean=2.00 sd=0.82</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -306,9 +298,8 @@
 
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/split_var.html">split_var</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">neg_c_7</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Negative impact with 7 items (x) &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=892  mean=2.03  sd=0.81</span>
+<span class="co">#&gt; Negative impact with 7 items (x) &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=892 mean=2.03 sd=0.81</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -334,9 +325,8 @@
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">150</span>, <span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=5.52  sd=2.63</span>
+<span class="co">#&gt; x &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=5.52 sd=2.63</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------</span>
@@ -353,9 +343,8 @@
 <span class="co">#&gt;  &lt;NA&gt; |  0 |  0.00 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="fu"><a href="../reference/group_var.html">group_var</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=1.68  sd=0.59</span>
+<span class="co">#&gt; x &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=1.68 sd=0.59</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------</span>
@@ -370,9 +359,8 @@
 <span class="va">dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_var</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">5</span>, as.num <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_labels</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=1.68  sd=0.59</span>
+<span class="co">#&gt; x &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=1.68 sd=0.59</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------</span>
@@ -384,9 +372,8 @@
 <span class="va">dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_var</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">3</span>, as.num <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_labels</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=2.48  sd=0.96</span>
+<span class="co">#&gt; x &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=2.48 sd=0.96</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------</span>
@@ -400,9 +387,8 @@
 <code class="sourceCode R"><span class="va">dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_var</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">4</span>, as.num <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_labels</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=2.00  sd=0.74</span>
+<span class="co">#&gt; x &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=2.00 sd=0.74</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------</span>
@@ -414,9 +400,8 @@
 <span class="va">dummy</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_var</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">4</span>, as.num <span class="op">=</span> <span class="cn">FALSE</span>, right.interval <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/group_var.html">group_labels</a></span><span class="op">(</span><span class="va">x</span>, size <span class="op">=</span> <span class="fl">4</span>, right.interval <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; x &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=1.78  sd=0.71</span>
+<span class="co">#&gt; x &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=1.78 sd=0.71</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------</span>
@@ -445,9 +430,8 @@
 <p>Here are some examples:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e42dep</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=2.94  sd=0.94</span>
+<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=901 mean=2.94 sd=0.94</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------------------------------</span>
@@ -459,9 +443,8 @@
 
 <span class="co"># replace NA with 5</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"NA=5;else=copy"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=908  mean=2.96  sd=0.95</span>
+<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=908 mean=2.96 sd=0.95</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |                Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -------------------------------------------------------------</span>
@@ -474,9 +457,8 @@
 
 <span class="co"># recode 1 to 2 into 1 and 3 to 4 into 2</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"1,2=1; 3,4=2"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=1.68  sd=0.47</span>
+<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=901 mean=1.68 sd=0.47</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -486,9 +468,8 @@
 
 <span class="co"># recode 1 to 3 into 4 into 2</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"min:3=1; 4=2"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=1.34  sd=0.47</span>
+<span class="co">#&gt; elder's dependency (x) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=901 mean=1.34 sd=0.47</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -499,9 +480,8 @@
 <span class="co"># recode numeric to character, and remaining values</span>
 <span class="co"># into the highest value (="hi") of e42dep</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">efc</span><span class="op">$</span><span class="va">e42dep</span>, rec <span class="op">=</span> <span class="st">"1=first;2=2nd;else=hi"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder's dependency (x) &lt;character&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=2.43  sd=0.86</span>
+<span class="co">#&gt; elder's dependency (x) &lt;character&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=901 mean=2.43 sd=0.86</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; --------------------------------------</span>
@@ -512,9 +492,8 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="fu"><a href="../reference/rec.html">rec</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span>, rec <span class="op">=</span> <span class="st">"setosa=huhu; else=copy"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Species_r &lt;categorical&gt;</span>
-<span class="co">#&gt; # total N=150  valid N=150  mean=2.00  sd=0.82</span>
+<span class="co">#&gt; Species_r &lt;categorical&gt; </span>
+<span class="co">#&gt; # total N=150 valid N=150 mean=2.00 sd=0.82</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value      |  N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; ------------------------------------------</span>
@@ -543,9 +522,8 @@
   append <span class="op">=</span> <span class="cn">FALSE</span>
 <span class="op">)</span>
 <span class="fu"><a href="../reference/frq.html">frq</a></span><span class="op">(</span><span class="va">dummy</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; carer' age (c160age_r) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=901  mean=2.40  sd=0.59</span>
+<span class="co">#&gt; carer' age (c160age_r) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=901 mean=2.40 sd=0.59</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -----------------------------------------------</span>
@@ -554,9 +532,8 @@
 <span class="co">#&gt;     3 |    old | 411 | 45.26 |   45.62 | 100.00</span>
 <span class="co">#&gt;  &lt;NA&gt; |   &lt;NA&gt; |   7 |  0.77 |    &lt;NA&gt; |   &lt;NA&gt;</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; elder' age (e17age_r) &lt;numeric&gt;</span>
-<span class="co">#&gt; # total N=908  valid N=891  mean=3.00  sd=0.00</span>
+<span class="co">#&gt; elder' age (e17age_r) &lt;numeric&gt; </span>
+<span class="co">#&gt; # total N=908 valid N=891 mean=3.00 sd=0.00</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Value |  Label |   N | Raw % | Valid % | Cum. %</span>
 <span class="co">#&gt; -----------------------------------------------</span>
