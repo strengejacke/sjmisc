@@ -292,7 +292,8 @@ rec_core_fun <- function(x, .dat, rec, as.num = TRUE, var.label = NULL, val.labe
         recodes = rec,
         as.num = as.num,
         var.label = var.label,
-        val.labels = val.labels
+        val.labels = val.labels,
+        column_name = i
       )
     }
 
@@ -315,7 +316,7 @@ rec_core_fun <- function(x, .dat, rec, as.num = TRUE, var.label = NULL, val.labe
 }
 
 
-rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
+rec_helper <- function(x, recodes, as.num, var.label, val.labels, column_name = NULL) {
   # retrieve variable label
   if (is.null(var.label))
     var_lab <- sjlabelled::get_label(x)
@@ -324,6 +325,15 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
   # do we have any value labels?
   val_lab <- val.labels
+
+  if (all_na(x)) {
+    if (!is.null(column_name)) {
+      msg <- paste0("Variable '", column_name, "' has no non-missing values.")
+    } else {
+      msg <- "Variable has no non-missing values."
+    }
+    warning(insight::format_message(msg), call. = FALSE)
+  }
 
   # remember if NA's have been recoded...
   na_recoded <- FALSE
@@ -371,8 +381,8 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
 
 
   # retrieve min and max values
-  min_val <- min(x, na.rm = TRUE)
-  max_val <- max(x, na.rm = TRUE)
+  min_val <- suppressWarnings(min(x, na.rm = TRUE))
+  max_val <- suppressWarnings(max(x, na.rm = TRUE))
 
   # do we have special recode-token?
   if (recodes_reversed) {
@@ -403,10 +413,10 @@ rec_helper <- function(x, recodes, as.num, var.label, val.labels) {
       gregexpr(
         pattern = "=([^\\]]*)\\]",
         text = recodes,
-        perl = T
+        perl = TRUE
       )
     )),
-    split = "\\[", perl = T
+    split = "\\[", perl = TRUE
   ),
   function(x) {
     tmp <- as.numeric(trim(substr(x[1], 2, nchar(x[1]))))
