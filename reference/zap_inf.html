@@ -70,9 +70,8 @@
                values with regular <code>NA</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">zap_inf</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">zap_inf</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
@@ -89,11 +88,10 @@ See 'Examples' or <a href="../doc/design_philosophy.html">package-vignette</a>.<
     <h2>Value</h2>
     <p><code>x</code>, where all <code>Inf</code>, <code>-Inf</code> and <code>NaN</code> are converted to <code>NA</code>.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="cn">NaN</span>, <span class="fl">4</span>, <span class="cn">NA</span>, <span class="fl">5</span>, <span class="cn">Inf</span>, <span class="op">-</span><span class="cn">Inf</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="cn">NaN</span>, <span class="fl">4</span>, <span class="cn">NA</span>, <span class="fl">5</span>, <span class="cn">Inf</span>, <span class="op">-</span><span class="cn">Inf</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">zap_inf</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1  2 NA  3 NA  4 NA  5 NA NA  6  7</span>
 <span class="r-in"></span>

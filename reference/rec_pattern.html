@@ -72,9 +72,8 @@
                vectors into smaller groups.</p>
     </div>
 
-    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">rec_pattern</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, width <span class="op">=</span> <span class="fl">5</span>, other <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rec_pattern</span><span class="op">(</span><span class="va">from</span>, <span class="va">to</span>, width <span class="op">=</span> <span class="fl">5</span>, other <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>from</dt>
@@ -103,11 +102,10 @@ on the <code>else</code>-token in <code><a href="rec.html">rec</a></code>.</p></
     <div class="dont-index"><p><code><a href="group_var.html">group_var</a></code> for recoding variables into smaller groups, and
           <code><a href="group_var.html">group_labels</a></code> to create the asssociated value labels.</p></div>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rp</span> <span class="op">&lt;-</span> <span class="fu">rec_pattern</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">rp</span> <span class="op">&lt;-</span> <span class="fu">rec_pattern</span><span class="op">(</span><span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">rp</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $pattern</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1:5=1;6:10=2;11:15=3;16:20=4;21:25=5;26:30=6;31:35=7;36:40=8;41:45=9;46:50=10;51:55=11;56:60=12;61:65=13;66:70=14;71:75=15;76:80=16;81:85=17;86:90=18;91:95=19;96:100=20;"</span>

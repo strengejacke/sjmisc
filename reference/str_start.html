@@ -72,11 +72,10 @@
   of <code>pattern</code> in each element of <code>x</code>.</p>
     </div>
 
-    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">str_start</span><span class="op">(</span><span class="va">x</span>, <span class="va">pattern</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span>, regex <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">str_start</span><span class="op">(</span><span class="va">x</span>, <span class="va">pattern</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span>, regex <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 
-<span class="fu">str_end</span><span class="op">(</span><span class="va">x</span>, <span class="va">pattern</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span>, regex <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<span class="fu">str_end</span><span class="op">(</span><span class="va">x</span>, <span class="va">pattern</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span>, regex <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
@@ -99,11 +98,10 @@ expression rather than a fixed string.</p></dd>
     <p>A numeric vector with index of start/end position(s) of <code>pattern</code>         found in <code>x</code>, or <code>-1</code>, if <code>pattern</code> was not found
          in <code>x</code>.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"this/is/my/fileofinterest.csv"</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">path</span> <span class="op">&lt;-</span> <span class="st">"this/is/my/fileofinterest.csv"</span></span>
 <span class="r-in"><span class="fu">str_start</span><span class="op">(</span><span class="va">path</span>, <span class="st">"/"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  5  8 11</span>
 <span class="r-in"></span>

@@ -74,7 +74,7 @@
                chance to be combined into a group.</p>
     </div>
 
-    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">group_str</span><span class="op">(</span>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">group_str</span><span class="op">(</span>
   <span class="va">strings</span>,
   precision <span class="op">=</span> <span class="fl">2</span>,
   strict <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -82,9 +82,8 @@
   remove.empty <span class="op">=</span> <span class="cn">TRUE</span>,
   verbose <span class="op">=</span> <span class="cn">FALSE</span>,
   <span class="va">maxdist</span>
-<span class="op">)</span></code></pre></div>
+<span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>strings</dt>
@@ -118,11 +117,10 @@ Default in <code>FALSE</code>, hence the bar is hidden.</p></dd>
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="str_find.html">str_find</a></code></p></div>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">oldstring</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"Helo"</span>, <span class="st">"Hole"</span>, <span class="st">"Apple"</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">oldstring</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"Helo"</span>, <span class="st">"Hole"</span>, <span class="st">"Apple"</span>,</span>
 <span class="r-in">               <span class="st">"Ape"</span>, <span class="st">"New"</span>, <span class="st">"Old"</span>, <span class="st">"System"</span>, <span class="st">"Systemic"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">newstring</span> <span class="op">&lt;-</span> <span class="fu">group_str</span><span class="op">(</span><span class="va">oldstring</span><span class="op">)</span></span>
 <span class="r-in"></span>

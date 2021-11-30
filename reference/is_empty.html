@@ -70,9 +70,8 @@
                length 1), a list or any vector (numeric, atomic) is empty or not.</p>
     </div>
 
-    <div class="ref-usage sourceCode">Usage,<pre class="sourceCode r"><code><span class="fu">is_empty</span><span class="op">(</span><span class="va">x</span>, first.only <span class="op">=</span> <span class="cn">TRUE</span>, all.na.empty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">is_empty</span><span class="op">(</span><span class="va">x</span>, first.only <span class="op">=</span> <span class="cn">TRUE</span>, all.na.empty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div></div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>x</dt>
@@ -97,11 +96,10 @@ and will return <code>TRUE</code> if <code>all.na.empty = TRUE</code> (default).
     <p><code>NULL</code>- or <code>NA</code>-values are also considered as "empty" (see
         'Examples') and will return <code>TRUE</code>, unless <code>all.na.empty==FALSE</code>.</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">is_empty</span><span class="op">(</span><span class="st">"test"</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">is_empty</span><span class="op">(</span><span class="st">"test"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-in"><span class="fu">is_empty</span><span class="op">(</span><span class="st">""</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
