@@ -70,7 +70,8 @@
   variable labels.</p>
     </div>
 
-    <div id="ref-usage">Usage,<div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">descr</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">descr</span><span class="op">(</span>
   <span class="va">x</span>,
   <span class="va">...</span>,
   max.length <span class="op">=</span> <span class="cn">NULL</span>,
@@ -79,7 +80,8 @@
   out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"txt"</span>, <span class="st">"viewer"</span>, <span class="st">"browser"</span><span class="op">)</span>,
   encoding <span class="op">=</span> <span class="st">"UTF-8"</span>,
   file <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div></div>
+<span class="op">)</span></code></pre></div>
+    </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
@@ -152,11 +154,11 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">## Basic descriptive statistics</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       var    type                                    label   n NA.prc  mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   c12hour numeric average number of hours of care per week 898   0.66 42.28</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  barthtot numeric                Total score BARTHEL INDEX 879   2.75 64.59</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     sd  se       range   iqr  skew</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  50.92 1.7 164 (4-168) 32.75  1.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  29.69 1.0 100 (0-100) 45.00 -0.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   c12hour numeric average number of hours of care per week 888   0.66 42.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  barthtot numeric                Total score BARTHEL INDEX 872   2.75 64.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     sd   se       range   iqr  skew</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  50.58 1.68 164 (4-168) 32.75  1.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29.81 1.00 100 (0-100) 45.00 -0.73</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="va">efc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">e42dep</span>, <span class="va">e15relat</span>, <span class="va">c172code</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">descr</span><span class="op">(</span><span class="op">)</span></span>
@@ -290,7 +292,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.9000.</p>
 </div>
 
       </footer></div>
