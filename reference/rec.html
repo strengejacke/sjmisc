@@ -21,7 +21,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.2</span>
       </span>
     </div>
 
@@ -30,7 +30,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -384,7 +384,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class="r-in"><span class="co"># recode non-numeric factors</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">rec</span><span class="op">(</span><span class="va">iris</span>, <span class="va">Species</span>, rec <span class="op">=</span> <span class="st">"setosa=huhu; else=copy"</span>, append <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Species_r</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       huhu versicolor  virginica </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         50         50         50 </span>
 <span class="r-in"></span>
@@ -392,7 +392,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">rec</span><span class="op">(</span></span>
 <span class="r-in">  <span class="va">iris</span>, <span class="va">Sepal.Length</span>, rec <span class="op">=</span> <span class="st">"lo:5=1;5.01:6.5=2;6.501:max=3"</span>, append <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span class="r-in"><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sepal.Length_r</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1  2  3 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 32 88 30 </span>
 <span class="r-in"></span>
@@ -486,7 +486,7 @@ variables for which <code>predicate</code> returns <code>TRUE</code> are selecte
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>

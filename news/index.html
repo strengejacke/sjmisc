@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.2</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -70,13 +70,15 @@
 <ul><li><p><code><a href="../reference/rec.html">rec()</a></code> now keeps the labels of the old values with the new ones when there are no labels specified and there is a 1 to 1 correspondence between old and new values.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> for <code><a href="../reference/frq.html">frq()</a></code> was revised, and now allows to format the frequency table to prepare for printing in text, markdown and HTML-format. To do so, use the methods <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_md()</a></code> or <code><a href="https://easystats.github.io/insight/reference/display.html" class="external-link">print_html()</a></code>.</p></li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-2-8-7-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-8-7-1"></a></h3>
+<ul><li>Fix CRAN check issues.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.8.7" id="sjmisc-287">sjmisc 2.8.7<small>2021-05-12</small><a class="anchor" aria-label="anchor" href="#sjmisc-287"></a></h2>
 <div class="section level3">
 <h3 id="new-functions-2-8-7">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-8-7"></a></h3>
-<ul><li>A first draft of <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> for <code><a href="../reference/frq.html">frq()</a></code> was implemented.</li>
-</ul></div>
+<ul><li>A first draft of <code><a href="https://rdrr.io/r/base/format.html" class="external-link">format()</a></code> for <code><a href="../reference/frq.html">frq()</a></code> was implemented.</li></ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-2-8-7">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-8-7"></a></h3>
 <ul><li><p><code><a href="../reference/add_rows.html">merge_df()</a></code> preserves more attributes related to labelled data.</p></li>
@@ -87,20 +89,17 @@
 <h2 class="page-header" data-toc-text="2.8.6" id="sjmisc-286">sjmisc 2.8.6<small>2021-01-07</small><a class="anchor" aria-label="anchor" href="#sjmisc-286"></a></h2>
 <div class="section level3">
 <h3 id="general-2-8-6">General<a class="anchor" aria-label="anchor" href="#general-2-8-6"></a></h3>
-<ul><li>Updating imports.</li>
-</ul></div>
+<ul><li>Updating imports.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-8-6">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-8-6"></a></h3>
-<ul><li>Fixed bug in <code><a href="../reference/move_columns.html">move_columns()</a></code> (using a variable as value for argument <code>.after</code> didn’t work).</li>
-</ul></div>
+<ul><li>Fixed bug in <code><a href="../reference/move_columns.html">move_columns()</a></code> (using a variable as value for argument <code>.after</code> didn’t work).</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.8.5" id="sjmisc-285">sjmisc 2.8.5<small>2020-05-28</small><a class="anchor" aria-label="anchor" href="#sjmisc-285"></a></h2>
 <div class="section level3">
 <h3 id="changes-to-functions-2-8-5">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-8-5"></a></h3>
 <ul><li>
-<code><a href="../reference/flat_table.html">flat_table()</a></code> gains a <code>weights</code>-argument.</li>
-</ul></div>
+<code><a href="../reference/flat_table.html">flat_table()</a></code> gains a <code>weights</code>-argument.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-8-5">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-8-5"></a></h3>
 <ul><li>
@@ -123,8 +122,7 @@
 <h2 class="page-header" data-toc-text="2.8.3" id="sjmisc-283">sjmisc 2.8.3<small>2020-01-10</small><a class="anchor" aria-label="anchor" href="#sjmisc-283"></a></h2>
 <div class="section level3">
 <h3 id="new-functions-2-8-3">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-8-3"></a></h3>
-<ul><li>Added <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for <code><a href="../reference/frq.html">frq()</a></code>.</li>
-</ul></div>
+<ul><li>Added <code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code> for <code><a href="../reference/frq.html">frq()</a></code>.</li></ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-2-8-3">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-8-3"></a></h3>
 <ul><li>
@@ -185,25 +183,21 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-8-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-8-1"></a></h3>
-<ul><li>Fixed issue with forthcoming update of the <strong>rlang</strong> package.</li>
-</ul></div>
+<ul><li>Fixed issue with forthcoming update of the <strong>rlang</strong> package.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.8.0" id="sjmisc-280">sjmisc 2.8.0<small>2019-06-11</small><a class="anchor" aria-label="anchor" href="#sjmisc-280"></a></h2>
 <div class="section level3">
 <h3 id="general-2-8-0">General<a class="anchor" aria-label="anchor" href="#general-2-8-0"></a></h3>
-<ul><li>Some print-methods, especially for grouped data frames, are now more compact.</li>
-</ul></div>
+<ul><li>Some print-methods, especially for grouped data frames, are now more compact.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functions-2-8-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-8-0"></a></h3>
 <ul><li>
-<code><a href="../reference/reshape_longer.html">reshape_longer()</a></code>, as alternative to <code><a href="../reference/to_long.html">to_long()</a></code>, probably easier to remember (function and argument-names).</li>
-</ul></div>
+<code><a href="../reference/reshape_longer.html">reshape_longer()</a></code>, as alternative to <code><a href="../reference/to_long.html">to_long()</a></code>, probably easier to remember (function and argument-names).</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-8-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-8-0"></a></h3>
 <ul><li>
-<code><a href="../reference/frq.html">frq()</a></code> displayed labels as <code>NA</code> in some situations for grouped data frames with more than one group, when data were not labelled.</li>
-</ul></div>
+<code><a href="../reference/frq.html">frq()</a></code> displayed labels as <code>NA</code> in some situations for grouped data frames with more than one group, when data were not labelled.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.7.8" id="sjmisc-278">sjmisc 2.7.8<small>2019-03-12</small><a class="anchor" aria-label="anchor" href="#sjmisc-278"></a></h2>
@@ -217,8 +211,7 @@
 <div class="section level3">
 <h3 id="new-functions-2-7-8">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-7-8"></a></h3>
 <ul><li>
-<code><a href="../reference/typical_value.html">typical_value()</a></code>, which was formerly located in package <em>sjstats</em>.</li>
-</ul></div>
+<code><a href="../reference/typical_value.html">typical_value()</a></code>, which was formerly located in package <em>sjstats</em>.</li></ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-2-7-8">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-7-8"></a></h3>
 <ul><li>
@@ -278,8 +271,7 @@
 <h2 class="page-header" data-toc-text="2.7.5" id="sjmisc-275">sjmisc 2.7.5<small>2018-09-13</small><a class="anchor" aria-label="anchor" href="#sjmisc-275"></a></h2>
 <div class="section level3">
 <h3 id="general-2-7-5">General<a class="anchor" aria-label="anchor" href="#general-2-7-5"></a></h3>
-<ul><li>Reduce package dependencies.</li>
-</ul></div>
+<ul><li>Reduce package dependencies.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functions-2-7-5">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-7-5"></a></h3>
 <ul><li>
@@ -341,13 +333,11 @@
 <div class="section level3">
 <h3 id="new-functions-2-7-3">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-7-3"></a></h3>
 <ul><li>
-<code><a href="../reference/is_crossed.html">is_cross_classified()</a></code> to check whether two factors are partially crossed.</li>
-</ul></div>
+<code><a href="../reference/is_crossed.html">is_cross_classified()</a></code> to check whether two factors are partially crossed.</li></ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-2-7-3">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-7-3"></a></h3>
 <ul><li>
-<code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also accepts value labels as value for the <code>lvl</code>-argument. Additionally, <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also works for factor with non-numeric factor levels and simply returns <code>relevel(x, ref = lvl)</code> in such cases.</li>
-</ul></div>
+<code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also accepts value labels as value for the <code>lvl</code>-argument. Additionally, <code><a href="../reference/ref_lvl.html">ref_lvl()</a></code> now also works for factor with non-numeric factor levels and simply returns <code>relevel(x, ref = lvl)</code> in such cases.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-7-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-7-3"></a></h3>
 <ul><li>Fixed encoding issues in <code><a href="../reference/rec.html">rec()</a></code> with direct labelling for certain locales.</li>
@@ -361,8 +351,7 @@
 <div class="section level3">
 <h3 id="new-functions-2-7-2">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-7-2"></a></h3>
 <ul><li>
-<code><a href="../reference/round_num.html">round_num()</a></code> to round only numeric values in a data frame.</li>
-</ul></div>
+<code><a href="../reference/round_num.html">round_num()</a></code> to round only numeric values in a data frame.</li></ul></div>
 <div class="section level3">
 <h3 id="general-2-7-2">General<a class="anchor" aria-label="anchor" href="#general-2-7-2"></a></h3>
 <ul><li>Improved performance for <code><a href="../reference/add_rows.html">merge_df()</a></code>. Furthermore, <code><a href="../reference/add_rows.html">add_rows()</a></code> was added as alias for <code><a href="../reference/add_rows.html">merge_df()</a></code>.</li>
@@ -376,20 +365,17 @@
 </div>
 <div class="section level3">
 <h3 id="changes-to-functions-2-7-2">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-7-2"></a></h3>
-<ul><li>The <code>weight.by</code>-argument in <code><a href="../reference/frq.html">frq()</a></code> now should be a variable name from a variable in <code>x</code>, and no longer a separate vector.</li>
-</ul></div>
+<ul><li>The <code>weight.by</code>-argument in <code><a href="../reference/frq.html">frq()</a></code> now should be a variable name from a variable in <code>x</code>, and no longer a separate vector.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-7-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-7-2"></a></h3>
 <ul><li>
-<code><a href="../reference/descr.html">descr()</a></code> does not work with character vectors, so these are being removed now.</li>
-</ul></div>
+<code><a href="../reference/descr.html">descr()</a></code> does not work with character vectors, so these are being removed now.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.7.1" id="sjmisc-271">sjmisc 2.7.1<small>2018-03-25</small><a class="anchor" aria-label="anchor" href="#sjmisc-271"></a></h2>
 <div class="section level3">
 <h3 id="general-2-7-1">General<a class="anchor" aria-label="anchor" href="#general-2-7-1"></a></h3>
-<ul><li>Fix typos and revise outdated paragraphs in vignettes.</li>
-</ul></div>
+<ul><li>Fix typos and revise outdated paragraphs in vignettes.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functions-2-7-1">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-7-1"></a></h3>
 <p>The recoding and transformation functions get scoped variants, allowing to select variables based on logical conditions described in a function:</p>
@@ -439,8 +425,7 @@
 <div class="section level3">
 <h3 id="new-functions-2-7-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-7-0"></a></h3>
 <ul><li>
-<code><a href="../reference/is_float.html">is_whole()</a></code> as counterpart to <code><a href="../reference/is_float.html">is_float()</a></code>.</li>
-</ul></div>
+<code><a href="../reference/is_float.html">is_whole()</a></code> as counterpart to <code><a href="../reference/is_float.html">is_float()</a></code>.</li></ul></div>
 <div class="section level3">
 <h3 id="changes-to-functions-2-7-0">Changes to functions<a class="anchor" aria-label="anchor" href="#changes-to-functions-2-7-0"></a></h3>
 <ul><li>
@@ -504,27 +489,23 @@
 </ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-6-2">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-6-2"></a></h3>
-<ul><li>Fixed bug for <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html" class="external-link">to_label()</a></code>, when <code>x</code> was a character vector and argument <code>drop.levels</code> was <code>TRUE</code>.</li>
-</ul></div>
+<ul><li>Fixed bug for <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html" class="external-link">to_label()</a></code>, when <code>x</code> was a character vector and argument <code>drop.levels</code> was <code>TRUE</code>.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.6.1" id="sjmisc-261">sjmisc 2.6.1<small>2017-08-20</small><a class="anchor" aria-label="anchor" href="#sjmisc-261"></a></h2>
 <div class="section level3">
 <h3 id="general-2-6-1">General<a class="anchor" aria-label="anchor" href="#general-2-6-1"></a></h3>
-<ul><li>Fixed issue with latest tidyr-update on CRAN.</li>
-</ul></div>
+<ul><li>Fixed issue with latest tidyr-update on CRAN.</li></ul></div>
 <div class="section level3">
 <h3 id="bug-fixes-2-6-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-2-6-1"></a></h3>
 <ul><li>
-<code><a href="../reference/frq.html">frq()</a></code> did not correctly calculate valid and cumulative percentages when using weights.</li>
-</ul></div>
+<code><a href="../reference/frq.html">frq()</a></code> did not correctly calculate valid and cumulative percentages when using weights.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.6.0" id="sjmisc-260">sjmisc 2.6.0<small>2017-08-05</small><a class="anchor" aria-label="anchor" href="#sjmisc-260"></a></h2>
 <div class="section level3">
 <h3 id="general-2-6-0">General<a class="anchor" aria-label="anchor" href="#general-2-6-0"></a></h3>
-<ul><li>All labelled-data functions were removed and are now in package <em>sjlabelled</em>.</li>
-</ul></div>
+<ul><li>All labelled-data functions were removed and are now in package <em>sjlabelled</em>.</li></ul></div>
 <div class="section level3">
 <h3 id="new-functions-2-6-0">New functions<a class="anchor" aria-label="anchor" href="#new-functions-2-6-0"></a></h3>
 <ul><li>
@@ -604,7 +585,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>

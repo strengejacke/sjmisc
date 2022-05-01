@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.2</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -189,10 +189,10 @@ as new columns to <code>data</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6      16        2     85      4       2      2</span>
 <span class="r-in"><span class="fu">add_columns</span><span class="op">(</span><span class="va">d1</span>, <span class="va">d2</span>, replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e15relat -&gt; e15relat...1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e15relat -&gt; e15relat...7</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...8</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e15relat` -&gt; `e15relat...1`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...2`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e15relat` -&gt; `e15relat...7`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...8`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   e15relat...1 e16sex...2 e17age e42dep c82cop1 c12hour e15relat...7 e16sex...8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1            2          2     83      3       3      16            2          2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2            2          2     88      3       3     148            2          2</span>
@@ -276,10 +276,10 @@ as new columns to <code>data</code>.</p></dd>
 <span class="r-in">  <span class="fu">add_columns</span><span class="op">(</span><span class="va">efc</span>, replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e42dep -&gt; e42dep...5</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...27</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e42dep -&gt; e42dep...28</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...3`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e42dep` -&gt; `e42dep...5`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...27`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e42dep` -&gt; `e42dep...28`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   c12hour e15relat e16sex...3 e17age e42dep...5 c82cop1 c83cop2 c84cop3 c85cop4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1      16        2          2     83          3       3       2       2       2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2     148        2          2     88          3       3       3       3       3</span>
@@ -461,7 +461,7 @@ as new columns to <code>data</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>

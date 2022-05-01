@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.2</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -94,7 +94,7 @@
       <h1 data-toc-skip>The Design Philosophy of Functions in sjmisc</h1>
                         <h4 data-toc-skip class="author">Daniel Lüdecke</h4>
             
-            <h4 data-toc-skip class="date">2021-12-02</h4>
+            <h4 data-toc-skip class="date">2022-05-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/strengejacke/sjmisc/blob/HEAD/vignettes/design_philosophy.Rmd" class="external-link"><code>vignettes/design_philosophy.Rmd</code></a></small>
       <div class="hidden name"><code>design_philosophy.Rmd</code></div>
@@ -104,13 +104,13 @@
     
     
 <p>Basically, this package complements the <em>dplyr</em> package in that <em>sjmisc</em> takes over data transformation tasks on variables, like recoding, dichotomizing or grouping variables, setting and replacing missing values, etc. The data transformation functions also support labelled data.</p>
-<div class="section level1">
-<h1 id="the-design-of-data-transformation-functions">The design of data transformation functions<a class="anchor" aria-label="anchor" href="#the-design-of-data-transformation-functions"></a>
-</h1>
-<p>The design of data transformation functions in this package follows, where appropriate, the <em>tidyverse-approach</em>, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.</p>
 <div class="section level2">
-<h2 id="the-data-argument">The data-argument<a class="anchor" aria-label="anchor" href="#the-data-argument"></a>
+<h2 id="the-design-of-data-transformation-functions">The design of data transformation functions<a class="anchor" aria-label="anchor" href="#the-design-of-data-transformation-functions"></a>
 </h2>
+<p>The design of data transformation functions in this package follows, where appropriate, the <em>tidyverse-approach</em>, with the first argument of a function always being the data (either a data frame or vector), followed by variable names that should be processed by the function. If no variables are specified as argument, the function applies to the complete data that was indicated as first function argument.</p>
+<div class="section level3">
+<h3 id="the-data-argument">The data-argument<a class="anchor" aria-label="anchor" href="#the-data-argument"></a>
+</h3>
 <p>A major difference to dplyr-functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter()</a></code> is that the data-argument (the first argument of each function), may either be a <em>data frame</em> or a <em>vector</em>. The returned object for each function <em>equals the type of the data-argument</em>:</p>
 <ul>
 <li>If the data-argument is a vector, the function returns a vector.</li>
@@ -137,9 +137,9 @@
 <span class="co">#&gt; 6        2</span></code></pre></div>
 <p>This design-choice is mainly due to compatibility- and convenience-reasons. It does not affect the usual “tidyverse-workflow” or when using pipe-chains.</p>
 </div>
-<div class="section level2">
-<h2 id="the--ellipses-argument">The …-ellipses-argument<a class="anchor" aria-label="anchor" href="#the--ellipses-argument"></a>
-</h2>
+<div class="section level3">
+<h3 id="the--ellipses-argument">The …-ellipses-argument<a class="anchor" aria-label="anchor" href="#the--ellipses-argument"></a>
+</h3>
 <p>The selection of variables specified in the <code>...</code>-ellipses-argument is powered by dplyr’s <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select()</a></code> and tidyselect’s <code>select_helpers()</code>. This means, you can use existing functions like <code>:</code> to select a range of variables, or also use tidyselect’s <code>select_helpers</code>, like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code> or <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># select all variables with "cop" in their names, and also</span>
@@ -175,13 +175,13 @@
 <span class="co">#&gt; 5 125.60089   4.878788 -6.4628191 -39.546999  0.1502242  2.523269</span>
 <span class="co">#&gt; 6 -26.39911   5.878788  2.5371809  -4.546999  7.1502242 -3.476731</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="the-function-types">The function-types<a class="anchor" aria-label="anchor" href="#the-function-types"></a>
-</h2>
-<p>There are two types of function designs:</p>
 <div class="section level3">
-<h3 id="coercingconverting-functions">coercing/converting functions<a class="anchor" aria-label="anchor" href="#coercingconverting-functions"></a>
+<h3 id="the-function-types">The function-types<a class="anchor" aria-label="anchor" href="#the-function-types"></a>
 </h3>
+<p>There are two types of function designs:</p>
+<div class="section level4">
+<h4 id="coercingconverting-functions">coercing/converting functions<a class="anchor" aria-label="anchor" href="#coercingconverting-functions"></a>
+</h4>
 <p>Functions like <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_factor.html" class="external-link">to_factor()</a></code> or <code><a href="https://strengejacke.github.io/sjlabelled/reference/as_label.html" class="external-link">to_label()</a></code>, which convert variables into other types or add additional information like variable or value labels as attribute, typically <em>return the complete data frame</em> that was given as first argument <em>without any new variables</em>. The variables specified in the <code>...</code>-ellipses argument are converted (overwritten), all other variables remain unchanged.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">efc</span><span class="op">[</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
@@ -212,9 +212,9 @@
 <span class="co">#&gt;   .. ..- attr(*, "names")= chr [1:4] "independent" "slightly dependent" "moderately dependent" "severely dependent"</span>
 <span class="co">#&gt;   ..- attr(*, "label")= chr "elder's dependency"</span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="transformationrecoding-functions">transformation/recoding functions<a class="anchor" aria-label="anchor" href="#transformationrecoding-functions"></a>
-</h3>
+<div class="section level4">
+<h4 id="transformationrecoding-functions">transformation/recoding functions<a class="anchor" aria-label="anchor" href="#transformationrecoding-functions"></a>
+</h4>
 <p>Functions like <code><a href="../reference/rec.html">rec()</a></code> or <code><a href="../reference/dicho.html">dicho()</a></code>, which transform or recode variables, by default add <em>the transformed or recoded variables</em> to the data frame, so they return the new variables <em>and</em> the original data as combined data frame. To return <em>only the transformed and recoded variables</em> specified in the <code>...</code>-ellipses argument, use argument <code>append = FALSE</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># complete data, including new columns</span>
@@ -304,9 +304,9 @@
 <span class="co">#&gt; 6      19       9      8        1        3      2       2</span></code></pre></div>
 </div>
 </div>
-<div class="section level2">
-<h2 id="sjmisc-and-dplyr">sjmisc and dplyr<a class="anchor" aria-label="anchor" href="#sjmisc-and-dplyr"></a>
-</h2>
+<div class="section level3">
+<h3 id="sjmisc-and-dplyr">sjmisc and dplyr<a class="anchor" aria-label="anchor" href="#sjmisc-and-dplyr"></a>
+</h3>
 <p>The functions of <strong>sjmisc</strong> are designed to work together seamlessly with other packages from the tidyverse, like <strong>dplyr</strong>. For instance, you can use the functions from <strong>sjmisc</strong> both within a pipe-worklflow to manipulate data frames, or to create new variables with <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">efc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
@@ -357,7 +357,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer>

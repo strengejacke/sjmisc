@@ -18,7 +18,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sjmisc</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.8.7.2</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -154,11 +154,11 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">## Basic descriptive statistics</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       var    type                                    label   n NA.prc  mean</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   c12hour numeric average number of hours of care per week 888   0.66 42.02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  barthtot numeric                Total score BARTHEL INDEX 872   2.75 64.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   c12hour numeric average number of hours of care per week 896   0.66 43.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  barthtot numeric                Total score BARTHEL INDEX 878   2.75 64.51</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     sd   se       range   iqr  skew</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  50.58 1.68 164 (4-168) 32.75  1.66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  29.81 1.00 100 (0-100) 45.00 -0.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  51.83 1.73 164 (4-168) 32.75  1.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  29.64 1.00 100 (0-100) 45.00 -0.73</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span class="r-in"><span class="va">efc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">e42dep</span>, <span class="va">e15relat</span>, <span class="va">c172code</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">descr</span><span class="op">(</span><span class="op">)</span></span>
@@ -221,12 +221,14 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 <span class="r-in">  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">e16sex</span>, <span class="va">c172code</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span class="r-in">  <span class="fu">descr</span><span class="op">(</span><span class="va">e16sex</span>, <span class="va">c172code</span>, <span class="va">e17age</span>, <span class="va">c160age</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> New names:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * c172code -&gt; c172code...1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * c172code -&gt; c172code...4</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * e16sex -&gt; e16sex...5</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> * ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `c172code` -&gt; `c172code...1`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...2`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...3`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `c172code` -&gt; `c172code...4`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...5`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `c172code` -&gt; `c172code...6`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `e16sex` -&gt; `e16sex...8`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">•</span> `c172code` -&gt; `c172code...9`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">## Basic descriptive statistics</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -292,7 +294,7 @@ Only used when <code>out</code> is not <code>"txt"</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.9000.</p>
 </div>
 
       </footer></div>
