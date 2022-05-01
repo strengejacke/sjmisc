@@ -56,7 +56,7 @@
 #' d1 <- efc[, 1:3]
 #' d2 <- efc[, 4:6]
 #'
-#' library(dplyr)
+#' if (require("dplyr") && require("sjlabelled")) {
 #' head(bind_cols(d1, d2))
 #' add_columns(d1, d2) %>% head()
 #'
@@ -122,6 +122,7 @@
 #'   add_id() %>%
 #'   arrange(gear, ID) %>%
 #'   print(n = 100)
+#' }
 #' @export
 add_columns <- function(data, ..., replace = TRUE) {
   # evaluate dots
