@@ -10,6 +10,10 @@
   table to prepare for printing in text, markdown and HTML-format. To do so,
   use the methods `print()`, `print_md()` or `print_html()`.
 
+## Bug fixes
+
+* Fix CRAN check issues.
+
 # sjmisc 2.8.7
 
 ## New functions
