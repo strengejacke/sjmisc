@@ -1,4 +1,4 @@
-# sjmisc 2.8.7.1
+# sjmisc 2.8.8
 
 ## Changes to functions
 
@@ -9,6 +9,8 @@
 * `format()` for `frq()` was revised, and now allows to format the frequency 
   table to prepare for printing in text, markdown and HTML-format. To do so,
   use the methods `print()`, `print_md()` or `print_html()`.
+
+* Address changes in forthcoming update of _sjstats_.
 
 ## Bug fixes
 

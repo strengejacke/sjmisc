@@ -2,7 +2,7 @@ Package: sjmisc
 Type: Package
 Encoding: UTF-8
 Title: Data and Variable Transformation Functions
-Version: 2.8.7.2
+Version: 2.8.8
 Authors@R: c(person("Daniel", "Lüdecke", role = c("aut", "cre"), email = "d.luedecke@uke.de", comment = c(ORCID = "0000-0002-8895-3206")),
     person("Iago", "Giné-Vázquez", role = c("ctb"), email = "i.gine@pssjd.org"),
     person("Alexander", "Bartel", role = "ctb", email = "alexander.bartel@fu-berlin.de", comment = c(ORCID = "0000-0002-1280-6138")))
@@ -18,6 +18,7 @@ Depends:
 Imports:
     dplyr,
     insight,
+    datawizard,
     magrittr,
     methods,
     purrr,
@@ -41,5 +42,5 @@ Suggests:
     tidyr
 URL: https://strengejacke.github.io/sjmisc/
 BugReports: https://github.com/strengejacke/sjmisc/issues
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 VignetteBuilder: knitr

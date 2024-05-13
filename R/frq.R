@@ -398,8 +398,8 @@ frq_helper <- function(x, sort.frq, weight.by, cn, auto.grp, title = NULL, show.
 
     mean.value <- stats::weighted.mean(stats::na.omit(xnum), w = stats::na.omit(weight.by))
 
-    if (requireNamespace("sjstats", quietly = TRUE))
-      sd.value <- sjstats::wtd_sd(stats::na.omit(xnum), weights = stats::na.omit(weight.by))
+    if (requireNamespace("datawizard", quietly = TRUE))
+      sd.value <- datawizard::weighted_sd(stats::na.omit(xnum), weights = stats::na.omit(weight.by))
     else
       sd.value <- NA
 
