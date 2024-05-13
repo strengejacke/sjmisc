@@ -71,6 +71,7 @@ For \code{add_columns()}, by default, columns in \code{data} with
   columns will be preserved.
 }
 \examples{
+\dontshow{if (require("haven")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(efc)
 d1 <- efc[, 1:3]
 d2 <- efc[, 4:6]
@@ -142,4 +143,5 @@ mtcars \%>\%
   arrange(gear, ID) \%>\%
   print(n = 100)
 }
+\dontshow{\}) # examplesIf}
 }

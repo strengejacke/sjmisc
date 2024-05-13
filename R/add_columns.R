@@ -51,7 +51,7 @@
 #'   are not added to the end of the data frame. Rather, the original order of
 #'   columns will be preserved.
 #'
-#' @examples
+#' @examplesIf require("haven")
 #' data(efc)
 #' d1 <- efc[, 1:3]
 #' d2 <- efc[, 4:6]
