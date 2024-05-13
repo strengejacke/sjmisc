@@ -13,3 +13,4 @@
 ^_pkgdown\.yml$
 ^doc$
 ^Meta$
+^sjmisc\.code-workspace$

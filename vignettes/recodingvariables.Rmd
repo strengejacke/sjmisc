@@ -235,8 +235,3 @@ frq(dummy)
 ## Scoped variants
 
 Where applicable, the recoding-functions in **sjmisc** have "scoped" versions as well, e.g. `dicho_if()` or `split_var_if()`, where transformation will be applied only to those variables that match the logical condition of `predicate`.
-
-## Cheat Sheet
-
-A cheatsheet can be downloaded from the [RStudio cheatsheet collection](https://www.rstudio.com/resources/cheatsheets/).
-

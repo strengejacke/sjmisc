@@ -28,7 +28,7 @@ build_col <- function(x, qs_expr) {
 # name or numeric expressions, regular sequences or those looked for with select helpers are selected
 # otherwise, they are transmuted
 check_qs <- function(is_expr) {
-  if (class(is_expr) != "call") {
+  if (!inherits(is_expr, "call")) {
     TRUE
   } else if (as.character(is_expr)[1] == ":") {
     TRUE
