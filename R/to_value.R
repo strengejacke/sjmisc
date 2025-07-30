@@ -12,7 +12,8 @@
 #'          are not numeric).
 #' @param keep.labels Logical, if \code{TRUE}, former factor levels will be added as
 #'          value labels. For numeric factor levels, values labels will be used,
-#'          if present. See 'Examples' and \code{\link{set_labels}} for more details.
+#'          if present. See 'Examples' and \code{\link[sjlabelled]{set_labels}}
+#'          for more details.
 #' @param use.labels Logical, if \code{TRUE} and \code{x} has numeric value labels,
 #'          these value labels will be set as numeric values.
 #'
