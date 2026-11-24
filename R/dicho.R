@@ -104,7 +104,7 @@ dicho.default <- function(x, ..., dich.by = "median", as.num = FALSE, var.label 
   }
 
   # evaluate arguments, generate data
-  .dat <- get_dot_data(x, dplyr::quos(...))
+  .dat <- get_recode_data(x, dplyr::quos(...), suffix, append, groupwise = TRUE)
 
   recode_fun(
     x = x,
@@ -297,10 +297,12 @@ append_columns <- function(x, orix, suffix, append) {
 
   # combine data
   if (append) {
-    if (append.replace)
-      x <- add_columns(x, orix, replace = TRUE)
-    else
+    if (append.replace) {
+      orix[names(x)] <- x
+      x <- orix
+    } else {
       x <- dplyr::bind_cols(orix, x)
+    }
   }
 
   x

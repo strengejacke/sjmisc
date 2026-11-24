@@ -189,7 +189,7 @@ rec <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL,
 rec.default <- function(x, ..., rec, as.num = TRUE, var.label = NULL, val.labels = NULL, append = TRUE, suffix = "_r", to.factor = !as.num) {
 
   # evaluate arguments, generate data
-  .dat <- get_dot_data(x, dplyr::quos(...))
+  .dat <- get_recode_data(x, dplyr::quos(...), suffix, append)
 
   if (!missing(to.factor)) {
     as.num <- !to.factor

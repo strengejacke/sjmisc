@@ -7,6 +7,23 @@ get_dot_data <- function(x, qs) {
 }
 
 
+get_recode_data <- function(x, qs, suffix, append, groupwise = FALSE) {
+  if (
+    append && !is.null(suffix) && sjmisc::is_empty(suffix) &&
+      inherits(x, "grouped_df") && length(qs) && !any(nzchar(names(qs))) &&
+      all(vapply(qs, function(q) check_qs(rlang::get_expr(q)), logical(1)))
+  ) {
+    # Select once so each grouping column occurs at most once.
+    if (!groupwise) {
+      x <- dplyr::ungroup(x)
+    }
+    suppressMessages(dplyr::select(x, !!!qs))
+  } else {
+    get_dot_data(x, qs)
+  }
+}
+
+
 build_dot_data <- function(x, qs) {
   # below lapply goes through each of the expressions in dots data
   # and the corresponding subdataframes got with build_col are saved in list out
