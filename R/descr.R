@@ -116,7 +116,8 @@ descr <- function(x,
       # copy back labels to grouped data frame
       tmp <- sjlabelled::copy_labels(grps$data[[i]], dd)
 
-      dummy <- descr_helper(tmp, max.length)[, show]
+      dummy <- descr_helper(tmp, max.length)
+      dummy <- dummy[, show[show %in% names(dummy)], drop = FALSE]
       attr(dummy, "group") <- get_grouped_title(x, grps, i, sep = ", ", long = FALSE)
 
       # save data frame for return value
@@ -158,7 +159,7 @@ descr_helper <- function(dd, max.length) {
 
   if (obj_has_name(dd, ".weights")) {
     weights <- dd$.weights
-    dd <- dplyr::select(dd, -.data$.weights)
+    dd$.weights <- NULL
   } else {
     weights <- NULL
   }
