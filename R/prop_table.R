@@ -122,7 +122,19 @@ com_ft <- function(dd, show.values, no.prop.table, marge, digits, w = NULL) {
     f <- paste(colnames(x), collapse = " + ")
     x$.weights <- w
     f <- stats::as.formula(paste(".weights ~ ", f))
-    x <- round(stats::xtabs(formula = f, data = x))
+    x <- stats::xtabs(formula = f, data = x)
+    if (no.prop.table) {
+      x <- round(x)
+    } else if (length(dim(x)) == 1L) {
+      # ftable() tabulates a one-dimensional table as individual values.
+      x <- structure(
+        as.numeric(x),
+        dim = c(1L, length(x)),
+        row.vars = dimnames(x)[0L],
+        col.vars = dimnames(x),
+        class = "ftable"
+      )
+    }
   }
   x <- stats::ftable(x)
 
