@@ -1,5 +1,6 @@
 # sjmisc 2.8.11
 
+* `flat_table()` keeps fractional weights when calculating percentages (#151).
 * Fix CRAN notes.
 
 # sjmisc 2.8.8
