@@ -60,3 +60,34 @@ if (requireNamespace("haven", quietly = TRUE) && requireNamespace("sjlabelled", 
   }
   )
 }
+
+test_that("rec overwrites columns by name and preserves their order", {
+  data <- data.frame(first = c(1, 4, 2), middle = 5:7, last = c(9, 2, 1))
+  rownames(data) <- c("a", "b", "c")
+  result <- rec(data, last, first, rec = "1:3=99;else=copy", suffix = "")
+
+  expect_identical(names(result), names(data))
+  expect_identical(rownames(result), rownames(data))
+  expect_equal(result$first, c(99, 4, 99))
+  expect_equal(result$last, c(9, 99, 99))
+  expect_identical(result$middle, data$middle)
+})
+
+test_that("rec handles explicit and implicit grouping keys during overwrite", {
+  data <- dplyr::group_by(dplyr::as_tibble(mtcars), carb)
+  result <- rec(data, dplyr::ends_with("b"), dplyr::ends_with("s"),
+                rec = "0:3=99;else=copy", suffix = "")
+
+  expected <- dplyr::mutate(data, carb = ifelse(carb <= 3, 99, carb), vs = 99)
+  expect_identical(names(result), names(data))
+  expect_equal(result$carb, expected$carb)
+  expect_equal(result$vs, expected$vs)
+  expect_equal(dplyr::group_data(result), dplyr::group_data(expected))
+
+  result <- rec(data, vs, am, rec = "0:3=99;else=copy", suffix = "")
+  expect_identical(names(result), names(data))
+  expect_identical(result$carb, data$carb)
+  expect_equal(result$vs, rep(99, nrow(data)))
+  expect_equal(result$am, rep(99, nrow(data)))
+  expect_equal(dplyr::group_data(result), dplyr::group_data(data))
+})
